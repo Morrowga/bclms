@@ -1,0 +1,15 @@
+
+/* custom font import */
+@font-face {
+    font-family: "fredoka";
+    src: url('fonts/fredoka_one/fredoka_one.ttf');
+}
+
+@font-face {
+    font-family: "worksans";
+    src: url('fonts/work_sans/work_sans.ttf');
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

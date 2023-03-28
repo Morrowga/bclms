@@ -1,0 +1,90 @@
+import { createApp, h } from 'vue'
+import { createInertiaApp } from '@inertiajs/vue3'
+import { Ziggy } from './ziggy';
+import PrimeVue from "primevue/config";
+
+/***
+ * configure lib
+ *
+ *
+ */
+// vue good table plugin
+import VueGoodTablePlugin from "vue-good-table-next";
+import { VueGoodTable } from "vue-good-table-next";
+
+//primevue-components
+import Button from 'primevue/button';
+import Image from 'primevue/image';
+import Card from 'primevue/card';
+import Divider from 'primevue/divider';
+import InputText from 'primevue/inputtext';
+import PanelMenu from 'primevue/panelmenu';
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
+import DataTable  from 'primevue/datatable';
+import Column from 'primevue/column';
+import IconButton from "@Composables/IconButton.vue";
+import AddIcon from "@Composables/icons/AddIcon.vue";
+import { Link, usePage } from "@inertiajs/vue3";
+//this is popup
+import Toast from 'primevue/toast';
+import ToastService from 'primevue/toastservice';
+
+// confirm dialog
+
+import ConfirmDialog from 'primevue/confirmdialog';
+import ConfirmationService from 'primevue/confirmationservice';
+
+
+
+
+
+//core
+import "primevue/resources/primevue.min.css";
+import "primeicons/primeicons.css";
+import "animate.css";
+import "vue-good-table-next/dist/vue-good-table-next.css";
+import "primevue/resources/themes/lara-light-indigo/theme.css"
+
+
+// import Button from "primevue/button"
+
+
+
+
+createInertiaApp({
+    resolve: async (name) => {
+        console.log(name)
+        let page = null;
+        let isModule=name.split("::");
+        if (isModule.length > 1){
+            let module =  isModule[0];
+            let pathTo = isModule[1];
+            page = await import(`../../src/${module}/${pathTo}.vue`,{
+                eager: true,
+            })
+        }else{
+
+        }
+        return page.default;
+    },
+  setup({ el, App, props, plugin }) {
+    createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .use(VueGoodTablePlugin)
+      .use(Ziggy)
+      .use(PrimeVue)
+      .use(ToastService)
+      .use(Toast)
+      .use(ConfirmDialog)
+      .use(ConfirmationService)
+      .mixin({
+        methods:{route},
+        components:
+        { VueGoodTable,Button, Image, Card,
+          Divider,InputText, PanelMenu, Accordion,
+          AccordionTab,DataTable,Column,IconButton,
+          Link,usePage,AddIcon,Toast,ConfirmDialog}})
+      .mount(el)
+  },
+})
