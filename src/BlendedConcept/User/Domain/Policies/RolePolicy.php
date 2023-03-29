@@ -36,4 +36,5 @@ class RolePolicy
     {
         return $user->hasPermission('delete_role');
     }
+
 }

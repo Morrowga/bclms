@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         
-                        <div class="grid grid-cols-12 gap-2 align-items-center">
+                        <div class="grid grid-cols-12 gap-2 align-items-center mt-4">
                             <div class="col-span-12 sm:col-span-6 mt-5">
                                 <span class="p-float-label">
                                     <Textarea class="w-full"

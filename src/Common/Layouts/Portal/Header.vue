@@ -32,16 +32,70 @@
       </template>
       <template #end>
         <div class="flex gap-[10px]">
-          <!-- <div class="bg-primary rounded-full"> -->
-            <img src="images/notification.png" width="50" height="30" alt="">
-            <!-- <i class="pi pi-bell p-3 text-white" style="font-size: 1.7rem"></i> -->
-          <!-- </div> -->
-          <Link :href="route('login')">
+          <!-- #################### Notification Start ########### -->
+            <div class="card" v-if="auth != null">
+                <Button :badge="unread_notifications_count" label="" icon="pi pi-bell" @click="openPosition('topright')" severity="dark" style="min-width: 5rem;"/>
+
+
+                <Dialog v-model:visible="visible" header="Notifications" :style="{ width: '50vw' }" :position="position" :modal="true" :draggable="false">
+                    <div v-if="notifications.length > 0">
+                      <Message  v-for="(notifcation, index) in notifications" :key="index" severity="info" icon="pi pi-bell">{{ notifcation.data.message  }}</Message>
+                    </div>
+                    <div v-else>
+                      <p>Empty Notifications...</p>
+                    </div>
+                </Dialog>
+            </div>
+          <!-- #################### Notification End ########### -->
+          <div v-if="auth == null">
+            <Link :href="route('login')" v-if="route().current() != 'login'" class="px-1">
             <Button label="Login" />
-          </Link>
-          <Link :href="route('register')">
-            <Button label="Sign Up" />
-          </Link>
+            </Link>
+            <Link :href="route('register')" v-if="route().current() != 'register'" class="px-1">
+              <Button label="Sign Up" />
+            </Link>
+          </div>
+          <div v-else>
+            <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" size="large" @click="toggle" class="mr-2" shape="circle" />
+            <div
+              class="absolute w-auto right-3 z-10 mt-2 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              v-if="showProfile"
+            >
+              <div class="p-5">
+                <div class="flex flex-col">
+                  <div
+                    class="grid grid-rows-3 grid-flow-col gap-x-4 gap-y-1"
+                  >
+                    <img
+                      src="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+                      class="col-span-5 rounded row-span-3"
+                    />
+
+                    <div class="col-span-2">
+                      <span class="font-bold whitespace-nowrap">
+                        Admin
+                      </span>
+                    </div>
+                    <div class="row-span-2 col-span-2">
+                      admin@admin.com
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-2 grid-rows-3">
+                    <span class="row-span-1 col-span-2"> </span>
+                  </div>
+
+                  <button
+                    type="submit"
+                    @click.prevent="Logout"
+                    class="mt-4 justify-self-end w-100 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </template>
     </Menubar>
@@ -51,18 +105,19 @@
 <script setup>
 import Menubar from "primevue/menubar";
 import InputText from "primevue/inputtext";
-import Avatar from "primevue/avatar";
-import Button from "primevue/button";
 import TreeSelect from "primevue/treeselect";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
+import {router } from "@inertiajs/vue3";
+
 let auth = computed(() => usePage().props.auth);
+let notifications = computed(() => usePage().props.notifications);
+let unread_notifications_count = computed(() => usePage().props.unreadNotificationsCount);
+
 const selectedCountry = ref();
 
 const showProfile = ref(false);
 const items = ref([1]);
-
-defineProps(["route_data"]);
 
 const countries = ref([
   { "key": "1",
@@ -86,9 +141,25 @@ const countries = ref([
    },
 ]);
 
+
+function Logout()
+{
+    router.post('/logout');
+}
+
 const toggle = () => {
   showProfile.value = !showProfile.value;
 };
+
+const position = ref('center');
+
+const visible = ref(false);
+
+const openPosition = (pos) => {
+    position.value = pos;
+    visible.value = true;
+}
+
 </script>
 
 <style>

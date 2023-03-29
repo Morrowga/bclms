@@ -6,7 +6,7 @@
                <h1 class="text-h4 text-blue-800 pl-5">Logo</h1>
             </template>
             <template #end>
-            <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"  @click="toggle" class="mr-2" shape="circle" />
+                <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" size="large"  @click="toggle" class="mr-2" shape="circle" />
                  <div
                   class="absolute w-auto right-3 z-10 mt-2 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   v-if="showProfile"
@@ -53,7 +53,6 @@
 <script setup>
 import Menubar from "primevue/menubar"
 import InputText from "primevue/inputtext"
-import Avatar from "primevue/avatar"
 import axios from 'axios';
 import {router } from "@inertiajs/vue3";
 

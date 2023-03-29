@@ -27,8 +27,8 @@
                 />
               </div>
             </div>
-            <div class="grid grid-cols-12 gap-2 mt-5">
-                <div class="sm:col-span-6 col-span-12">
+            <div class="grid grid-cols-12 gap-2 mt-4">
+                <div class="sm:col-span-6 col-span-12 mt-5">
                     <span class="p-float-label">
                         <Textarea class="w-full"
                             v-model="form.description"

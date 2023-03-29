@@ -30,7 +30,8 @@ class UserRepository implements UserRepositoryInterface
                 'contact_number' => $request->contact_number,
                 "email" => $request->email,
                 "password" => $request->password,
-                "is_active" => 1
+                "is_active" => 1,
+                "email_verified_at" => Carbon::now()
             ]
         );
 

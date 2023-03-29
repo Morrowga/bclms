@@ -3,11 +3,12 @@
 namespace Src\Auth\Application\Repositories\Eloquent;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Mail;
 use Src\Auth\Domain\Mail\VerifyEmail;
-use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Model\User;
+use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
+use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
 
 class AuthRepository implements AuthRepositoryInterface
 {
@@ -28,8 +29,9 @@ class AuthRepository implements AuthRepositoryInterface
                     "error" => $error
                 ]);
             }
-
             if (auth()->attempt($credentials)) {
+                $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'data' => $user]));
+
                 return redirect()->route('dashboard');
             } else {
                 $error = "Invalid Creditional";
