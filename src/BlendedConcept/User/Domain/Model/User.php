@@ -28,7 +28,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         'name',
         'organization_id',
         'email_verified_at',
-        'name',
         'dob',
         'contact_number',
         'storage_limit',
@@ -39,7 +38,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         'pm_last_four',
         'trial_end_at',
         'email',
-
     ];
 
     protected $hidden = [

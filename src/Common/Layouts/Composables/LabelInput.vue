@@ -6,6 +6,7 @@
       >{{ label }}</label
     >
     <input
+      :title="title"
       :type="type"
       :value="modelValue"
       @input="updateValue"
@@ -49,6 +50,10 @@ let props = defineProps({
   required: {
     type: Boolean,
     default: false,
+  },
+  title: {
+    type: String,
+    default: "",
   },
 });
 let emit = defineEmits(["update:modelValue"]);

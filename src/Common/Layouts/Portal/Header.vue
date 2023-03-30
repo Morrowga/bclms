@@ -59,7 +59,7 @@
               :draggable="false"
             >
               <div
-                v-if="notifications.length > 0"
+                v-if="notifications != null"
                 class="flex flex-col justify-between"
               >
                 <Message
@@ -157,7 +157,7 @@ import { computed, ref, onMounted } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 
-let auth = computed(() => usePage().props.auth);
+let auth = computed(() => usePage().props.auth.data);
 let notifications = computed(() => usePage().props.notifications);
 let unread_notifications_count = computed(
   () => usePage().props.unreadNotificationsCount
