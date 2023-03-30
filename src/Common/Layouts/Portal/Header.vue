@@ -70,7 +70,7 @@
                   @close.prevent="markAsRead(notifcation.id)"
                   >{{ notifcation.data.message }}</Message
                 >
-                <div class="d-flex text-center w-100">
+                <div class="d-flex text-center w-100 mt-5">
                   <Button
                     size="small"
                     class="w-1/3"
