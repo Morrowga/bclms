@@ -31,11 +31,9 @@ import Badge from 'primevue/badge';
 import Message from 'primevue/message';
 import Menu from 'primevue/menu';
 import Avatar from "primevue/avatar"
-import BadgeDirective from 'primevue/badgedirective';
 import DataView from 'primevue/dataview';
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'   // optional
 import Fieldset from 'primevue/fieldset';
-
 import { Link, usePage } from "@inertiajs/vue3";
 import OverlayPanel from 'primevue/overlaypanel';
 //this is popup

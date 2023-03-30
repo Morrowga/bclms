@@ -6,7 +6,7 @@
           <div class="flex flex-col w-80 p-14 z-10">
           <h3 class="text-h4 font-fredoka text-secondary leading-[44px] align-top uppercase whitespace-nowrap">50% off ALL ITEMS</h3>
           <p class="font-fredoka font-[400] ">
-            <span class="text-primary text-[56px] tracking-[8.5%]">Special</span> <span class="text-[108px] text-primary leading-[114px] whitespace-wrap">DISCOUNT</span>
+            <span class="text-primary text-[56px] tracking-[8.5%]">Special</span> <span class="text-[70px] lg:text-[108px] text-primary leading-[114px]  whitespace-wrap">DISCOUNT</span>
 
           </p>
           <Button label="View Detail >>" class="w-[152px] text-[16px] whitespace-nowrap h-[48px] leading-[24px] bg-secondary hover:bg-yellow-900 text-primary font-bold"/>
@@ -147,16 +147,16 @@
         </div>
 
         <!-- Pricing Plan -->
-        <div class="card px-5 text-primary p-7">
+        <div class="card  text-primary p-7">
             <h1 class="text-4xl mt-2  text-[48px] mb-4  font-[500] text-primary  pl-10">Pricing Plan</h1>
             <p class="mt-2 text-primary font-[400] text-normal  leading-[150%] text-body pl-10">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
             </p>
 
-            <div class="card grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 justify-items-center gap-5 mt-10">
+            <div class="card grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 justify-items-center  gap-5 mt-10">
                 <Card
-                    class="col-span-2 border-2 text-primary border-indigo-500/50"
-                    style="width: 25em"
+                    class="col-span-2   border-2 text-primary border-indigo-500/50"
+                    style="width: 23em"
                 >
                     <template #title> Basic Plan </template>
                     <template #subtitle>
@@ -191,8 +191,8 @@
                     </template>
                 </Card>
                 <Card
-                    class="col-span-2 border-2 text-primary border-indigo-500/50"
-                    style="width: 25em"
+                    class="col-span-2  border-2 text-primary border-indigo-500/50"
+                    style="width: 23em"
                 >
                     <template #title> Business Plan </template>
                     <template #subtitle>
@@ -228,8 +228,8 @@
                     </template>
                 </Card>
                 <Card
-                    class="col-span-2 border-2 text-primary border-indigo-500/50"
-                    style="width: 25em"
+                    class="col-span-2  border-2 text-primary border-indigo-500/50"
+                    style="width: 23em"
                 >
                     <template #title> Enterprise Plan </template>
                     <template #subtitle>
