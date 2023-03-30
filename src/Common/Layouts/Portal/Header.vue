@@ -63,8 +63,8 @@
                 class="flex flex-col justify-between"
               >
                 <Message
-                  v-for="(notifcation, index) in notifications"
-                  :key="index"
+                  v-for="notifcation in notifications"
+                  :key="notifcation.id"
                   severity="info"
                   icon="pi pi-bell"
                   @close.prevent="markAsRead(notifcation.id)"
@@ -205,15 +205,15 @@ const openPosition = (pos) => {
   position.value = pos;
   visible.value = true;
 };
-const markAsRead = async (noti_id) => {
-  await router.post(route("markAsRead", { id: noti_id }), {
+const markAsRead = (noti_id) => {
+  router.post(route("markAsRead", { id: noti_id }), {
     onSuccess: () => {
       console.log("deleted");
     },
   });
 };
-const markAsReadAll = async (noti_id) => {
-  await router.post(route("markAsReadAll"), {
+const markAsReadAll = (noti_id) => {
+  router.post(route("markAsReadAll"), {
     onSuccess: () => {
       console.log("deleted all");
     },
