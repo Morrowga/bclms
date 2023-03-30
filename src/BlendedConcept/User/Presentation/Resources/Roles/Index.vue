@@ -64,7 +64,10 @@
                     placeholder="Search"
                   />
                 </div>
-                <Link :href="route('roles.create')">
+                <Link
+                  :href="route('roles.create')"
+                  v-if="checkPermission('create_role')"
+                >
                   <AddIcon />
                 </Link>
               </div>
@@ -92,7 +95,10 @@
                 v-if="props.column.field == 'action'"
                 class="flex flex-nowrap"
               >
-                <IconButton buttonColor="blue">
+                <IconButton
+                  buttonColor="blue"
+                  v-if="checkPermission('show_role')"
+                >
                   <i class="pi pi-icon pi-eye"></i>
                 </IconButton>
                 <Link
@@ -102,11 +108,18 @@
                     })
                   "
                 >
-                  <IconButton buttonColor="yellow">
+                  <IconButton
+                    buttonColor="yellow"
+                    v-if="checkPermission('edit_role')"
+                  >
                     <i class="pi pi-icon pi-file-edit"></i>
                   </IconButton>
                 </Link>
-                <IconButton @click="deleteRole(props.row.id)" buttonColor="red">
+                <IconButton
+                  @click="deleteRole(props.row.id)"
+                  buttonColor="red"
+                  v-if="checkPermission('delete_role')"
+                >
                   <i
                     class="pi pi-icon pi-delete-left"
                     style="font-size: 1rem"
@@ -133,9 +146,10 @@ let props = defineProps([
 ]);
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import { usePage } from "@inertiajs/vue3";
 let Confirm = useConfirm();
 let toast = useToast();
-
+let permissions = computed(() => usePage().props.auth.data.permissions);
 //for datable configuration
 let columns = [
   {
@@ -248,6 +262,10 @@ let truncatedText = (text) => {
       return text?.substring(0, 30) + "...";
     }
   }
+};
+//check permission
+let checkPermission = (permission) => {
+  return permissions.value.includes(permission);
 };
 //deleting role
 let deleteRole = (id) => {

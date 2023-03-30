@@ -54,7 +54,10 @@
                     placeholder="Search"
                   />
                 </div>
-                <Link :href="route('permissions.create')">
+                <Link
+                  :href="route('permissions.create')"
+                  v-if="checkPermission('create_permission')"
+                >
                   <AddIcon />
                 </Link>
               </div>
@@ -83,11 +86,18 @@
                 class="flex flex-nowrap"
               >
                 <Link :href="route('permissions.edit', { id: props.row.id })">
-                  <IconButton buttonColor="yellow">
+                  <IconButton
+                    buttonColor="yellow"
+                    v-if="checkPermission('edit_permission')"
+                  >
                     <i class="pi pi-icon pi-file-edit"></i>
                   </IconButton>
                 </Link>
-                <IconButton @click="destroy(props.row.id)" buttonColor="red">
+                <IconButton
+                  @click="destroy(props.row.id)"
+                  buttonColor="red"
+                  v-if="checkPermission('delete_permission')"
+                >
                   <i
                     class="pi pi-icon pi-delete-left"
                     style="font-size: 1rem"
@@ -103,9 +113,9 @@
 </template>
 
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import AdminLayout from "@dashboard/AdminLayout.vue";
 import IconButton from "@Composables/IconButton.vue";
 
@@ -115,7 +125,7 @@ let Confirm = useConfirm();
 let toast = useToast();
 
 let props = defineProps(["permissions", "flash", "auth"]);
-
+let permissions = computed(() => usePage().props.auth.data.permissions);
 let columns = [
   {
     label: "Name",
@@ -220,6 +230,10 @@ let truncatedText = (text) => {
       return text?.substring(0, 30) + "...";
     }
   }
+};
+//check permission
+let checkPermission = (permission) => {
+  return permissions.value.includes(permission);
 };
 // delete record
 function destroy(id) {
