@@ -53,7 +53,10 @@
                     placeholder="Search"
                   />
                 </div>
-                <Link :href="route('users.create')">
+                <Link
+                  :href="route('users.create')"
+                  v-if="checkPermission('create_permission')"
+                >
                   <AddIcon />
                 </Link>
               </div>
@@ -89,7 +92,10 @@
                 v-if="props.column.field == 'action'"
                 class="flex flex-nowrap"
               >
-                <IconButton buttonColor="blue">
+                <IconButton
+                  buttonColor="blue"
+                  v-if="checkPermission('show_permission')"
+                >
                   <i class="pi pi-icon pi-eye"></i>
                 </IconButton>
 
@@ -101,12 +107,19 @@
                     })
                   "
                 >
-                  <IconButton buttonColor="yellow">
+                  <IconButton
+                    buttonColor="yellow"
+                    v-if="checkPermission('edit_permission')"
+                  >
                     <i class="pi pi-icon pi-file-edit"></i>
                   </IconButton>
                 </Link>
 
-                <IconButton @click="destroy(props.row.id)" buttonColor="red">
+                <IconButton
+                  @click="destroy(props.row.id)"
+                  buttonColor="red"
+                  v-if="checkPermission('delete_permission')"
+                >
                   <i
                     class="pi pi-icon pi-delete-left"
                     style="font-size: 1rem"
@@ -130,6 +143,7 @@ import IconButton from "@Composables/IconButton.vue";
 import { Bootstrap5Pagination } from "laravel-vue-pagination";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import { usePage } from "@inertiajs/vue3";
 
 let props = defineProps(["users", "flash", "users_name", "roles_name"]);
 let auth = computed(() => usePage().props.auth);
@@ -137,8 +151,7 @@ let auth = computed(() => usePage().props.auth);
 let Confirm = useConfirm();
 let toast = useToast();
 // let permissions = auth.value.data.permissions;
-let permissions = "";
-
+let permissions = computed(() => usePage().props.auth.data.permissions);
 // delete record
 
 let columns = [
@@ -248,7 +261,9 @@ let loadItems = () => {
     preserveScroll: true,
   });
 };
-
+let checkPermission = (permission) => {
+  return permissions.value.includes(permission);
+};
 // delete item
 function destroy(id) {
   Confirm.require({

@@ -7,7 +7,14 @@
       </template>
       <template #item="{ item }">
         <div v-if="item.is_dropdown">
-          <a href="#" class="p-menuitem-link" tabindex="-1" aria-hidden="true">
+          <a
+            href="#"
+            class="p-menuitem-link"
+            :class="[item.active_class ? 'active' : '']"
+            tabindex="-1"
+            aria-hidden="true"
+            v-if="item.is_active"
+          >
             <span class="p-menuitem-icon pi pi-fw pi-user"></span>
             <span class="p-menuitem-text">{{ item.label }}</span>
             <span class="p-submenu-icon pi pi-angle-down"></span>
@@ -28,6 +35,7 @@
                 <Link
                   :href="sub_item.url"
                   class="p-menuitem-link"
+                  :class="[item.active_class ? 'active' : '']"
                   tabindex="-1"
                   aria-hidden="true"
                 >
@@ -43,8 +51,10 @@
           <Link
             :href="item.url"
             class="p-menuitem-link"
+            :class="[item.active_class ? 'active' : '']"
             tabindex="-1"
             aria-hidden="true"
+            v-if="item.is_active"
           >
             <span class="p-menuitem-icon" :class="item.icon"></span>
             <span class="p-menuitem-text">{{ item.label }}</span>
@@ -72,9 +82,13 @@
                 />
 
                 <div class="col-span-2">
-                  <span class="font-bold whitespace-nowrap"> Admin </span>
+                  <span class="font-bold whitespace-nowrap">
+                    {{ props.auth?.data?.name ?? "" }}
+                  </span>
                 </div>
-                <div class="row-span-2 col-span-2">admin@admin.com</div>
+                <div class="row-span-2 col-span-2">
+                  {{ props.auth?.data?.email ?? "" }}
+                </div>
               </div>
 
               <div class="grid grid-cols-2 grid-rows-3">
@@ -104,42 +118,64 @@ import { router, usePage, Link } from "@inertiajs/vue3";
 
 import { computed, ref } from "vue";
 let props = computed(() => usePage().props);
-let permissions = props.value.auth.data.permissions;
+const permissions = props.value.auth.data.permissions;
+
+const role = props.value.auth.data.roles;
 const showProfile = ref(false);
+const role_name = role?.[0]?.name;
+
 let checkPermission = (permission) => {
-  permission.includes(permission) ? true : false;
+  return permissions.includes(permission) ? true : false;
+};
+let activate_class = (route_name) => {
+  return route().current().includes(route_name);
 };
 const items = ref([
   {
     label: "Home",
     url: "/",
     icon: "pi pi-home",
+    is_active: true,
+    active_class: activate_class("dashboard"),
   },
   {
     label: "Organization",
     icon: "pi pi-fw pi-pencil",
     url: "#",
+    is_active: checkPermission("access_organization"),
+    active_class: false,
   },
   {
     label: "Users",
     icon: "pi pi-fw pi-user",
     url: "#",
     is_dropdown: true,
+    is_active: checkPermission("access_user"),
+    active_class:
+      activate_class("users.index") ||
+      activate_class("permissions.index") ||
+      activate_class("roles.index"),
     items: [
       {
         label: "Roles",
         url: "/roles",
         icon: "pi pi-fw pi-user-plus",
+        is_active: checkPermission("access_role"),
+        active_class: activate_class("roles.index"),
       },
       {
         label: "Permission",
         url: "/permissions",
         icon: "pi pi-fw pi-user-minus",
+        is_active: checkPermission("access_permission"),
+        active_class: activate_class("permissions.index"),
       },
       {
         label: "Management",
         url: "/users",
         icon: "pi pi-fw pi-users",
+        is_active: checkPermission("access_user"),
+        active_class: activate_class("users.index"),
       },
     ],
   },
@@ -147,13 +183,15 @@ const items = ref([
     label: "Announment",
     icon: "pi pi-fw pi-calendar",
     url: "/",
+    is_active: checkPermission("access_announcement"),
+    active_class: false,
   },
 ]);
 
 function Logout() {
   router.post("/logout");
 }
-
+console.log(items.value);
 const toggle = () => {
   showProfile.value = !showProfile.value;
 };
@@ -166,5 +204,9 @@ const toggle = () => {
 <style >
 .p-menubar .p-menubar-root-list {
   margin-left: auto;
+}
+.active {
+  color: #495057;
+  background: #e9ecef;
 }
 </style>

@@ -95,6 +95,6 @@ createInertiaApp({
           Divider,InputText, PanelMenu, Accordion,Badge,Sidebar,Dialog,Menu,Avatar,
           AccordionTab,DataTable,Column,OverlayPanel,DataView,DataViewLayoutOptions,Message,Fieldset,IconButton,
           Link,usePage,AddIcon,Toast,ConfirmDialog}})
-      .mount(el)
+      .mount(el);
   },
 })
