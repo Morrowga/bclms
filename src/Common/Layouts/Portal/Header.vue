@@ -70,6 +70,11 @@
                   @close.prevent="markAsRead(notifcation.id)"
                   >{{ notifcation.data.message }}</Message
                 >
+                <Skeleton
+                  height="4.5rem"
+                  class="mb-2"
+                  v-if="isLoading"
+                ></Skeleton>
                 <div class="d-flex text-center w-100 mt-5">
                   <Button
                     size="small"
@@ -164,7 +169,7 @@ let unread_notifications_count = computed(
 );
 
 const selectedCountry = ref();
-
+let isLoading = ref(true);
 const showProfile = ref(false);
 const items = ref([1]);
 

@@ -32,6 +32,7 @@ import Message from 'primevue/message';
 import Menu from 'primevue/menu';
 import Avatar from "primevue/avatar"
 import DataView from 'primevue/dataview';
+import Skeleton from 'primevue/skeleton';
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'   // optional
 import Fieldset from 'primevue/fieldset';
 import { Link, usePage } from "@inertiajs/vue3";
@@ -89,10 +90,36 @@ createInertiaApp({
       .mixin({
         methods:{route},
         components:
-        { VueGoodTable,Button, Image, Card,
-          Divider,InputText, PanelMenu, Accordion,Badge,Sidebar,Dialog,Menu,Avatar,
-          AccordionTab,DataTable,Column,OverlayPanel,DataView,DataViewLayoutOptions,Message,Fieldset,IconButton,
-          Link,usePage,AddIcon,Toast,ConfirmDialog}})
+        { 
+          VueGoodTable, 
+          Button, 
+          Image, 
+          Card,
+          Divider, 
+          InputText, 
+          PanelMenu, 
+          Accordion, 
+          Badge, 
+          Sidebar, 
+          Dialog, 
+          Menu, 
+          Avatar,
+          AccordionTab, 
+          DataTable, 
+          Column, 
+          OverlayPanel, 
+          DataView, 
+          DataViewLayoutOptions, 
+          Message, 
+          Fieldset, 
+          IconButton,
+          Link, 
+          usePage, 
+          AddIcon, 
+          Toast, 
+          ConfirmDialog, 
+          Skeleton
+        }})
       .mount(el);
   },
 })
