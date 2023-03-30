@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories\Src\BlendedConcept\User\Domain\Model;
+namespace Database\Factories;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;

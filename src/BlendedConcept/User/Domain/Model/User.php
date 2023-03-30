@@ -28,7 +28,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         'name',
         'organization_id',
         'email_verified_at',
-        'name',
         'dob',
         'contact_number',
         'storage_limit',
@@ -39,7 +38,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         'pm_last_four',
         'trial_end_at',
         'email',
-
     ];
 
     protected $hidden = [
@@ -103,11 +101,5 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         $user_role = Role::find($role);
 
         return $user_role->permissions->where('name', $permission)->first() ? true : false;
-    }
-
-    public function scopeFilter($query, $filter)
-    {
-        // $query->when($filter[])
-        // dd($filter);
     }
 }
