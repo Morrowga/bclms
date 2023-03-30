@@ -129,7 +129,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                         <td align="center" valign="top" style="padding: 36px 24px;">
-                            <a href="{{env('APP_URL')}}" target="_blank" style="display: inline-block">
+                            <a href="{{ env('APP_URL') }}" target="_blank" style="display: inline-block">
                                 ELI
                             </a>
                         </td>
@@ -186,7 +186,7 @@
                         <td align="left" bgcolor="#ffffff"
                             style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
                             <p style="margin: 0;">Tap the button below to confirm your email address. If you didn't
-                                create an account with <a href="{{env('APP_URL')}}">Paste</a>, you can safely delete
+                                create an account with <a href="{{ env('APP_URL') }}">Paste</a>, you can safely delete
                                 this email.</p>
                         </td>
                     </tr>
@@ -220,8 +220,8 @@
                             style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
                             <p style="margin: 0;">If that doesn't work, copy and paste the following link in your
                                 browser:</p>
-                            <p style="margin: 0;"><a href="{{env('APP_URL').'/verification/'.$user->id}}"
-                                    target="_blank">{{env('APP_URL').'/verification/'.$user->id}}</a></p>
+                            <p style="margin: 0;"><a href="{{ env('APP_URL') . '/verification?id=' . $id }}"
+                                    target="_blank">{{ env('APP_URL') . '/verification?id=' . $id }}</a></p>
                         </td>
                     </tr>
                     <!-- end copy -->

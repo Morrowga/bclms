@@ -140,7 +140,7 @@ import AdminLayout from "@dashboard/AdminLayout.vue";
 import { computed, onMounted, defineProps, watch, ref } from "vue";
 import moment from "moment";
 import IconButton from "@Composables/IconButton.vue";
-import { Bootstrap5Pagination } from "laravel-vue-pagination";
+
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { usePage } from "@inertiajs/vue3";

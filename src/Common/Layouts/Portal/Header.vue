@@ -34,30 +34,34 @@
         </div>
       </template>
       <template #end>
-        <div class="flex gap-[10px]">
+        <div class="flex gap-[10px] items-center">
           <!-- #################### Notification Start ########### -->
           <div class="card" v-if="auth != null">
             <Button
               label=""
+              style="padding: 7px"
+              rounded
               @click="openPosition('topright')"
-              style="min-width: 5rem; position: relative"
             >
-              <i style="font-size: 1.2rem" class="pi pi-bell"></i>
-              <Badge
-                :value="unread_notifications_count"
-                severity="success"
-                style="position: absolute; top: 5px; right: 15px"
-              ></Badge>
+              <i style="font-size: 1.3rem" class="pi pi-bell"></i>
             </Button>
+            <Badge
+              class="mb-4"
+              :value="unread_notifications_count"
+              severity="danger"
+            ></Badge>
             <Dialog
               v-model:visible="visible"
               header="Notifications"
-              :style="{ width: '50vw' }"
+              :style="{ width: '40vw' }"
               :position="position"
               :modal="true"
               :draggable="false"
             >
-              <div v-if="notifications.length > 0">
+              <div
+                v-if="notifications.length > 0"
+                class="flex flex-col justify-between"
+              >
                 <Message
                   v-for="(notifcation, index) in notifications"
                   :key="index"
@@ -66,6 +70,15 @@
                   @close="markAsRead(notifcation.id)"
                   >{{ notifcation.data.message }}</Message
                 >
+                <div class="d-flex text-center w-100">
+                  <Button
+                    size="small"
+                    class="w-1/3"
+                    label="Clear All"
+                    outlined
+                    @click="markAsReadAll"
+                  />
+                </div>
               </div>
               <div v-else>
                 <p>Empty Notifications...</p>
@@ -196,6 +209,13 @@ const markAsRead = async (noti_id) => {
   await router.post(route("markAsRead", { id: noti_id }), {
     onSuccess: () => {
       console.log("deleted");
+    },
+  });
+};
+const markAsReadAll = async (noti_id) => {
+  await router.post(route("markAsReadAll"), {
+    onSuccess: () => {
+      console.log("deleted all");
     },
   });
 };

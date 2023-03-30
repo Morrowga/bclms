@@ -6,11 +6,12 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 class VerifyEmail extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $user;
 
     /**
@@ -31,7 +32,8 @@ class VerifyEmail extends Mailable
     public function build()
     {
         $user = $this->user;
+        $id = Crypt::encryptString($user->id);
         return $this->subject("Received Contact Mail")
-            ->view('emails.verifyEmail', compact('user'));
+            ->view('emails.verifyEmail', compact('user', 'id'));
     }
 }
