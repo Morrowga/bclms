@@ -43,7 +43,7 @@ class UserController extends Controller
     $this->authorize('create', User::class);
     $roles = $this->userInterFace->getRole();
     return Inertia::render('BlendedConcept::User/Presentation/Resources/Users/Create', [
-      'roles' => $roles
+      'roles' => $roles["default_roles"],
     ]);
   }
 
@@ -61,7 +61,7 @@ class UserController extends Controller
     $roles = $this->userInterFace->getRole();
     $user->load('roles');
     return Inertia::render('BlendedConcept::User/Presentation/Resources/Users/Edit', [
-      "roles" => $roles,
+      "roles" => $roles['default_roles'],
       "user" => $user
     ]);
   }

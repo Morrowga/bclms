@@ -28,7 +28,7 @@ class RoleController extends Controller
     $roles = $this->userInterFace->getRole($filters);
     $roles_name = $this->userInterFace->getRolesName();
     return Inertia::render('BlendedConcept::User/Presentation/Resources/Roles/Index', [
-      "roles" => $roles,
+      "roles" => $roles['paginate_roles'],
       "roles_name" => $roles_name
     ]);
   }

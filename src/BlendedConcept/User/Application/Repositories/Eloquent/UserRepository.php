@@ -125,8 +125,12 @@ class UserRepository implements UserRepositoryInterface
     // get roles
     public function getRole($filters = [])
     {
-        $roles = RoleResource::collection(Role::filter($filters)->with('permissions')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
-        return $roles;
+        $paginate_roles = RoleResource::collection(Role::filter($filters)->with('permissions')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $default_roles = Role::with('permissions')->get();
+        return [
+            "paginate_roles" => $paginate_roles,
+            "default_roles" => $default_roles
+        ];
     }
 
     //get only roles name
