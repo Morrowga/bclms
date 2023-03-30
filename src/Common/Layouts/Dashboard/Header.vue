@@ -128,7 +128,7 @@ let checkPermission = (permission) => {
   return permissions.includes(permission) ? true : false;
 };
 let activate_class = (route_name) => {
-  return route().current().includes(route_name);
+  return route().current()?.includes(route_name);
 };
 const items = ref([
   {
