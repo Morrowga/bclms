@@ -186,6 +186,12 @@ const items = ref([
     is_active: checkPermission("access_announcement"),
     active_class: false,
   },
+  {
+    label: "Settings",
+    icon: "pi pi-spin pi-cog",
+    is_active: checkPermission("access_announcement"),
+    url: "/settings",
+  },
 ]);
 
 function Logout() {
