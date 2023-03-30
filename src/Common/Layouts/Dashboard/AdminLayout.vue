@@ -1,6 +1,6 @@
 <template>
   <div class="hight-full flex flex-col">
-    <Header :auth="auth" />
+    <Header />
     <main class="grow">
       <slot />
     </main>

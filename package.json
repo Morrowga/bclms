@@ -28,6 +28,8 @@
         "flowbite": "^1.6.3",
         "flowbite-vue": "^0.0.10",
         "heroicons": "^2.0.16",
+        "laravel-vue-pagination": "^4.1.0",
+        "moment": "^2.29.4",
         "primeicons": "^6.0.1",
         "primevue": "^3.25.0",
         "sweetalert2": "^11.7.3",

@@ -95,8 +95,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         return $this->hasManyThrough(Permission::class, Role::class);
     }
 
-
-
     public function hasPermission($permission)
     {
         $role = auth()->user()->roles[0]->id;
@@ -105,9 +103,18 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         return $user_role->permissions->where('name', $permission)->first() ? true : false;
     }
 
-    public function scopeFilter($query, $filter)
+    public function scopeFilter($query, $filters)
     {
-        // $query->when($filter[])
-        // dd($filter);
+        $query->when($filters['name'] ?? false, function ($query, $name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        });
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        });
+        $query->when($filters['roles'] ?? false, function ($query, $role) {
+            $query->whereHas('roles', function ($query) use ($role) {
+                $query->where('name', 'like', '%' . $role . '%');
+            });
+        });
     }
 }

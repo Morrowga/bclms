@@ -11,16 +11,26 @@ use Src\BlendedConcept\User\Domain\Model\Permission;
 use Src\BlendedConcept\User\Domain\Model\Role;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Model\User;
+use Src\BlendedConcept\User\Domain\Resources\PermissionResource;
+use Src\BlendedConcept\User\Domain\Resources\RoleResource;
+use Src\BlendedConcept\User\Domain\Resources\UserResource;
 
 class UserRepository implements UserRepositoryInterface
 {
 
     // get user
-    public function getUsers($filters = [], $perPage = 10)
+    public function getUsers($filters = [])
     {
-        return User::filter($filters)->with('roles')->orderBy('id', 'desc')->paginate($perPage);
+        //set roles
+        $users = UserResource::collection(User::filter($filters)->with('roles')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        return $users;
     }
-
+    //get only user name
+    public function getUsersName()
+    {
+        $user_names = User::pluck('name');
+        return $user_names;
+    }
     // store user
     public function createUser($request)
     {
@@ -89,9 +99,14 @@ class UserRepository implements UserRepositoryInterface
     }
 
     // get permission
-    public function getPermission()
+    public function getPermission($filters = [])
     {
-        return Permission::all();
+        $permissions = PermissionResource::collection(Permission::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $default_permissions = Permission::all();
+        return [
+            "permissions" => $permissions,
+            "default_permissions" => $default_permissions
+        ];
     }
 
     // store permission
@@ -108,9 +123,17 @@ class UserRepository implements UserRepositoryInterface
     }
 
     // get roles
-    public function getRole()
+    public function getRole($filters = [])
     {
-        return Role::all();
+        $roles = RoleResource::collection(Role::filter($filters)->with('permissions')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        return $roles;
+    }
+
+    //get only roles name
+    public function getRolesName()
+    {
+        $roles_name = Role::pluck('name');
+        return $roles_name;
     }
 
 

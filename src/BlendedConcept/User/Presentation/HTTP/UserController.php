@@ -27,21 +27,29 @@ class UserController extends Controller
   public function index(Request $request)
   {
     $this->authorize('view', User::class);
-    $filters = request()->only(['name', 'email', 'role']);
-    $users = $this->userInterFace->getUsers($filters, 20);
-    return Inertia::render('BlendedConcept::User/Presentation/Resources/Users/Index', compact('users'));
+    $filters = request()->only(['name', 'email', 'role', 'search', 'perPage', 'roles']);
+    $users = $this->userInterFace->getUsers($filters);
+    $users_name = $this->userInterFace->getUsersName();
+    $roles_name = $this->userInterFace->getRolesName();
+    return Inertia::render('BlendedConcept::User/Presentation/Resources/Users/Index', [
+      'users' => $users,
+      'users_name' => $users_name,
+      'roles_name' => $roles_name
+    ]);
   }
 
   public function create()
   {
     $this->authorize('create', User::class);
     $roles = $this->userInterFace->getRole();
-    return Inertia::render('BlendedConcept::User/Presentation/Resources/Users/Create', compact('roles'));
+    return Inertia::render('BlendedConcept::User/Presentation/Resources/Users/Create', [
+      'roles' => $roles
+    ]);
   }
 
   public function store(StoreUserRequest $request)
   {
-    $this->authorize('store', User::class);
+    $this->authorize('create', User::class);
     $request->validated();
     $this->userInterFace->createUser($request);
     return redirect()->route('users.index')->with("successMessage", "User create Successfully!");
@@ -52,12 +60,15 @@ class UserController extends Controller
     $this->authorize('edit', User::class);
     $roles = $this->userInterFace->getRole();
     $user->load('roles');
-    return Inertia::render('BlendedConcept::User/Presentation/Resources/Users/Edit', compact('roles', 'user'));
+    return Inertia::render('BlendedConcept::User/Presentation/Resources/Users/Edit', [
+      "roles" => $roles,
+      "user" => $user
+    ]);
   }
 
   public function update(UpdateUserRequest $request, User $user)
   {
-    $this->authorize('update', User::class);
+    $this->authorize('edit', User::class);
     $this->userInterFace->updateUser($request, $user);
 
     return redirect()->route('users.index')->with("successMessage", "User Updated Successfully!");

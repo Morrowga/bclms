@@ -5,6 +5,7 @@ namespace Src\Common\Infrastructure\Laravel\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Src\BlendedConcept\User\Domain\Resources\AuthResource;
 
 class HandleInertiaRequest extends Middleware
 {
@@ -45,7 +46,7 @@ class HandleInertiaRequest extends Middleware
             ],
             'notifications' => getNotifications() != null ? getNotifications()['notifications'] : null,
             'unreadNotificationsCount' => getNotifications() != null ? getNotifications()['unread'] : 0,
-            'auth' => auth()->user()
+            'auth' =>  new AuthResource(auth()->user())
         ]);
     }
 }

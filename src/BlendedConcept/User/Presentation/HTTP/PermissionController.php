@@ -26,8 +26,11 @@ class PermissionController extends Controller
     public function index()
     {
         $this->authorize('view', Permission::class);
-        $permissions = $this->userInterFace->getPermission();
-        return Inertia::render('BlendedConcept::User/Presentation/Resources/Permissions/Index', compact('permissions'));
+        $filters = request()->only(['name', 'search', 'perPage']);
+        $permissions = $this->userInterFace->getPermission($filters);
+        return Inertia::render('BlendedConcept::User/Presentation/Resources/Permissions/Index', [
+            "permissions" => $permissions['permissions']
+        ]);
     }
 
     public function create()
@@ -38,7 +41,7 @@ class PermissionController extends Controller
 
     public function store(StorepermissionRequest $request)
     {
-        $this->authorize('store', Permission::class);
+        $this->authorize('create', Permission::class);
         $request->validated();
         $this->userInterFace->createPermission($request);
         return redirect()->route('permissions.index')->with("successMessage", "Permission created Successfully!");
@@ -48,12 +51,14 @@ class PermissionController extends Controller
     {
         $this->authorize('edit', Permission::class);
         //edit permisiion
-        return Inertia::render('BlendedConcept::User/Presentation/Resources/Permissions/Edit', compact('permission'));
+        return Inertia::render('BlendedConcept::User/Presentation/Resources/Permissions/Edit', [
+            "permission" => $permission
+        ]);
     }
 
     public function update(UpdatepermissionRequest $request, Permission $permission)
     {
-        $this->authorize('update', Permission::class);
+        $this->authorize('edit', Permission::class);
         $request->validated();
         $this->userInterFace->updatePermission($request, $permission);
 

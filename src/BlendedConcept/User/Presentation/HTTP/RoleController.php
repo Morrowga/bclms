@@ -24,20 +24,27 @@ class RoleController extends Controller
   public function index()
   {
     $this->authorize('view', Role::class);
-    $roles = $this->userInterFace->getRole()->load('permissions');
-    return Inertia::render('BlendedConcept::User/Presentation/Resources/Roles/Index', compact('roles'));
+    $filters = request()->only(['name', 'search', 'perPage']);
+    $roles = $this->userInterFace->getRole($filters);
+    $roles_name = $this->userInterFace->getRolesName();
+    return Inertia::render('BlendedConcept::User/Presentation/Resources/Roles/Index', [
+      "roles" => $roles,
+      "roles_name" => $roles_name
+    ]);
   }
 
   public function create()
   {
     $this->authorize('create', Role::class);
     $permissions = $this->userInterFace->getPermission();
-    return Inertia::render('BlendedConcept::User/Presentation/Resources/Roles/Create', compact('permissions'));
+    return Inertia::render('BlendedConcept::User/Presentation/Resources/Roles/Create', [
+      "permissions" => $permissions["default_permissions"]
+    ]);
   }
 
   public function store(StoreRoleRequest $request)
   {
-    $this->authorize('store', Role::class);
+    $this->authorize('create', Role::class);
     $request->validated();
     $this->userInterFace->createRole($request);
     return redirect()->route('roles.index')->with("successMessage", "Roles created Successfully!");
@@ -48,12 +55,15 @@ class RoleController extends Controller
     $this->authorize('edit', Role::class);
     $role =  $role->load('permissions');
     $permissions = $this->userInterFace->getPermission();
-    return Inertia::render('BlendedConcept::User/Presentation/Resources/Roles/Edit', compact('role', 'permissions'));
+    return Inertia::render('BlendedConcept::User/Presentation/Resources/Roles/Edit', [
+      "role" => $role,
+      "permissions" => $permissions['default_permissions']
+    ]);
   }
 
   public function update(UpdateRoleRequest $request, Role $role)
   {
-    $this->authorize('update', Role::class);
+    $this->authorize('edit', Role::class);
     $this->userInterFace->updateRole($request, $role);
     return redirect()->route('roles.index')->with("successMessage", "Role updated Successfully!");
   }

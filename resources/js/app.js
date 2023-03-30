@@ -59,10 +59,7 @@ import "vue-good-table-next/dist/vue-good-table-next.css";
 import "primevue/resources/themes/lara-light-indigo/theme.css"
 
 
-// import Button from "primevue/button"
-
-
-
+// import Button from "primevue/button
 
 createInertiaApp({
     resolve: async (name) => {

@@ -13,21 +13,61 @@
         <div class="relative overflow-x-auto">
           <vue-good-table
             class="data-table"
-            :columns="columns"
-            :rows="props.roles"
-            styleClass="vgt-table striped"
-            :pagination-options="{
-              enabled: true,
-            }"
-            :search-options="{
-              enabled: true,
-            }"
+            mode="remote"
+            @page-change="onPageChange"
+            @column-filter="onColumnFilter"
+            @per-page-change="onPerPageChange"
+            :totalRows="props.roles.meta.total"
             :line-numbers="true"
+            styleClass="vgt-table striped"
+            :pagination-options="options"
+            :rows="props.roles.data"
+            :columns="columns"
           >
+            <template #table-column="props">
+              <span
+                class="whitespace-nowrap"
+                v-if="props.column.label == 'Guard Name'"
+              >
+                {{ props.column.label }}
+              </span>
+              <span v-else>
+                {{ props.column.label }}
+              </span>
+            </template>
             <template #table-actions>
-              <Link :href="route('roles.create')">
-                <AddIcon />
-              </Link>
+              <div class="flex">
+                <div class="relative w-full mr-3">
+                  <div
+                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    id="simple-search"
+                    @keyup.enter="loadItems"
+                    v-model="serverParams.search"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search"
+                  />
+                </div>
+                <Link :href="route('roles.create')">
+                  <AddIcon />
+                </Link>
+              </div>
             </template>
             <template #table-row="props">
               <div
@@ -41,6 +81,12 @@
                   class="bg-blue-100 mt-2 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
                   >{{ permission.name }}</span
                 >
+              </div>
+              <div
+                v-if="props.column.field == 'description'"
+                class="flex flex-wrap"
+              >
+                <span>{{ truncatedText(props.row.description) }}</span>
               </div>
               <div
                 v-if="props.column.field == 'action'"
@@ -76,9 +122,15 @@
 </template>
 <script setup>
 import AdminLayout from "@dashboard/AdminLayout.vue";
-import { computed, onMounted, defineProps, watch } from "vue";
+import { computed, onMounted, defineProps, watch, ref } from "vue";
 import { router } from "@inertiajs/core";
-let props = defineProps(["roles", "flash", "permissions", "auth"]);
+let props = defineProps([
+  "roles",
+  "flash",
+  "permissions",
+  "auth",
+  "roles_name",
+]);
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 let Confirm = useConfirm();
@@ -89,20 +141,114 @@ let columns = [
   {
     label: "Name",
     field: "name",
+    sortable: false,
+    filterOptions: {
+      styleClass: "class1", // class to be added to the parent th element
+      enabled: true, // enable filter for this column
+      placeholder: "Filter All", // placeholder for filter input
+      filterDropdownItems: props.roles_name, // dropdown (with selected values) instead of text input
+      trigger: "enter", //only trigger on enter not on keyup
+    },
   },
   {
     label: "Permission",
     field: "permission",
+    sortable: false,
+  },
+  {
+    label: "Description",
+    field: "description",
+    sortable: false,
   },
   {
     label: "Guard Name",
     field: "guard_name",
+    sortable: false,
   },
   {
-    label: "action",
+    label: "Action",
     field: "action",
+    sortable: false,
   },
 ];
+//initial state
+let serverParams = ref({
+  columnFilters: {},
+  search: "",
+  sort: {
+    field: "",
+    type: "",
+  },
+  page: 1,
+  perPage: 10,
+});
+
+// options for datatable
+let options = ref({
+  enabled: true,
+  mode: "pages",
+  perPage: props.roles.meta.per_page,
+  setCurrentPage: props.roles.meta.current_page,
+  perPageDropdown: [10, 20, 50, 100],
+  dropdownAllowAll: false,
+});
+//deleting role
+
+//updateParams
+let updateParams = (newProps) => {
+  serverParams.value = Object.assign({}, serverParams.value, newProps);
+};
+//page change on pagination
+let onPageChange = (params) => {
+  updateParams({ page: params.currentPage });
+  loadItems();
+};
+
+// perpage change selectbox
+let onPerPageChange = (params) => {
+  updateParams({ page: params.currentPage });
+};
+
+// filter folumn by name
+let onColumnFilter = (params) => {
+  updateParams(params);
+  serverParams.value.page = 1;
+  loadItems();
+};
+
+// query params to controller
+let getQueryParams = () => {
+  let data = {
+    page: serverParams.value.page,
+    perPage: serverParams.value.perPage,
+    search: serverParams.value.search,
+  };
+
+  for (const [key, value] of Object.entries(serverParams.value.columnFilters)) {
+    if (value) {
+      data[key] = value;
+    }
+  }
+  return data;
+};
+// load items is what brings back the rows from server
+let loadItems = () => {
+  router.get(route(route().current()), getQueryParams(), {
+    replace: false,
+    preserveState: true,
+    preserveScroll: true,
+  });
+};
+//truncatedText
+let truncatedText = (text) => {
+  if (text) {
+    if (text?.length <= 30) {
+      return text;
+    } else {
+      return text?.substring(0, 30) + "...";
+    }
+  }
+};
 //deleting role
 let deleteRole = (id) => {
   Confirm.require({
