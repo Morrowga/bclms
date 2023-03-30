@@ -59,7 +59,7 @@
               :draggable="false"
             >
               <div
-                v-if="notifications.length > 0"
+                v-if="notifications != null"
                 class="flex flex-col justify-between"
               >
                 <Message
