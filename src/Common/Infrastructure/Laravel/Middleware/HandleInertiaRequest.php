@@ -46,7 +46,7 @@ class HandleInertiaRequest extends Middleware
             ],
             'notifications' => getNotifications() != null ? getNotifications()['notifications'] : null,
             'unreadNotificationsCount' => getNotifications() != null ? getNotifications()['unread'] : 0,
-            'auth' =>  new AuthResource(auth()->user())
+            'auth' => auth()->check() ? new AuthResource(auth()->user()) : ""
         ]);
     }
 }
