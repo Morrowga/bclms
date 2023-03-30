@@ -59,7 +59,7 @@
               :draggable="false"
             >
               <div
-                v-if="notifications != null"
+                v-if="notifications?.length > 0"
                 class="flex flex-col justify-between"
               >
                 <Message
@@ -67,7 +67,7 @@
                   :key="index"
                   severity="info"
                   icon="pi pi-bell"
-                  @close="markAsRead(notifcation.id)"
+                  @close.prevent="markAsRead(notifcation.id)"
                   >{{ notifcation.data.message }}</Message
                 >
                 <div class="d-flex text-center w-100 mt-5">
