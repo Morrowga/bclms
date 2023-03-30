@@ -10,7 +10,10 @@ interface UserRepositoryInterface
 {
 
     // get user
-    public function getUsers($filters = [], $perPage = 10);
+    public function getUsers($filters = []);
+
+    // get only user name
+    public function getUsersName();
 
     // store user
     public function createUser($request);
@@ -24,7 +27,7 @@ interface UserRepositoryInterface
 
 
     // get permission
-    public function getPermission();
+    public function getPermission($filters = []);
 
     // store permission
     public function createPermission($request);
@@ -33,7 +36,11 @@ interface UserRepositoryInterface
     public function updatePermission($request, $permission);
 
     // get roles
-    public function getRole();
+    public function getRole($filters = []);
+
+    //get only roles name
+    public function getRolesName();
+
     // store role
     public function createRole($request);
 

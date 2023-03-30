@@ -65,8 +65,9 @@ class AuthController extends Controller
         return redirect()->route('verify');
     }
     // verifing email
-    public function verification($id)
+    public function verification(Request $request)
     {
+        $id = $request->id;
         $user = $this->authInterface->verification($id);
         return Inertia::render('Auth::Presentation/Resources/Verify', [
             "verified" => true

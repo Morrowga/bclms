@@ -3,6 +3,7 @@
 namespace Src\Auth\Application\Repositories\Eloquent;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
 use Src\Auth\Domain\Mail\VerifyEmail;
@@ -68,7 +69,8 @@ class AuthRepository implements AuthRepositoryInterface
     //verification email
     public function verification($id)
     {
-        $user = User::find($id);
+        $decode_id = Crypt::decryptString($id);
+        $user = User::find($decode_id);
         $user->update([
             "email_verified_at" => Carbon::now()
         ]);

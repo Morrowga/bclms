@@ -1,5 +1,5 @@
 <template>
-  <Admin>
+  <AdminLayout>
     <form @submit.prevent="updateRole(props.role.id)">
       <div
         class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 rounded-lg bg-white p-6 shadow-lg my-14"
@@ -111,16 +111,17 @@
             </div>
           </div>
         </div>
-         <div class="col-span-12 mt-5">
-                    <span class="p-float-label">
-                        <Textarea class="w-full"
-                            v-model="form.description"
-                            autoResize
-                            rows="3"
-                        />
-                        <label>Description</label>
-                    </span>
-                </div>
+        <div class="col-span-12 mt-5">
+          <span class="p-float-label">
+            <Textarea
+              class="w-full"
+              v-model="form.description"
+              autoResize
+              rows="3"
+            />
+            <label>Description</label>
+          </span>
+        </div>
         <div
           class="flex justify-end items-center p-6 space-x-2 rounded-b dark:border-gray-600"
         >
@@ -131,7 +132,7 @@
         </div>
       </div>
     </form>
-  </Admin>
+  </AdminLayout>
 </template>
 <script setup>
 import { ref, watch, defineEmits, onMounted, defineProps, computed } from "vue";
@@ -172,7 +173,7 @@ let permissions_modules = computed(() => {
 //for form submit
 let form = useForm({
   name: props.role.name,
-  description:props.role.description,
+  description: props.role.description,
   selectedIds: [],
 });
 

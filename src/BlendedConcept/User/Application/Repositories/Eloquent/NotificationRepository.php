@@ -11,23 +11,14 @@ class NotificationRepository implements NotificationRepositoryInterface
     //mark as read with id 
     public function read($id)
     {
-         $notification = auth()->user()->notifications()->where('id', $id)->firstOrFail();
-         $notification->markAsRead();
- 
-         return response()->json([
-             "message" => "success"
-         ]);
+        $notification = auth()->user()->notifications()->where('id', $id)->firstOrFail();
+        $notification->markAsRead();
     }
- 
+
     //mark as read all
     public function readAll()
     {
-         $notification = auth()->user()->unreadNotifications()->get();
-         $notification->markAsRead();
- 
-         return response()->json([
-             "message" => "success"
-         ]);
+        $notification = auth()->user()->unreadNotifications()->get();
+        $notification->markAsRead();
     }
-    
 }
