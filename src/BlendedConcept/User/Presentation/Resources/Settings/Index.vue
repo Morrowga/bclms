@@ -23,12 +23,6 @@
                         </span>
                         Banner
                     </li>
-                    <!-- <li class="flex items-center gap-2 justify-items-center ">
-                        <span class="material-symbols-outlined p-3">
-                            settings
-                        </span>
-                        Dashboard Mode
-                    </li> -->
                 </ul>
             </div>
         </div>
@@ -48,7 +42,7 @@ import Globle from "./Globle.vue";
 import DateFormat from "./DateFormat.vue"
 import Banner from "./Banner.vue"
 
-let currentSettings = ref("");
+let currentSettings = ref("global");
 // globale setting function
 
 function settings(value)
