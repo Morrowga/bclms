@@ -20,6 +20,7 @@
               @submit.prevent="login"
             >
               <LabelInput
+                title="Enter your email"
                 type="email"
                 label="Enter Your work email address"
                 placeholder="name@mail.com"
