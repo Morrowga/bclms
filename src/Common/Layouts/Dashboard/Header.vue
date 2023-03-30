@@ -133,7 +133,7 @@ let activate_class = (route_name) => {
 const items = ref([
   {
     label: "Home",
-    url: "/",
+    url: "/home",
     icon: "pi pi-home",
     is_active: true,
     active_class: activate_class("dashboard"),

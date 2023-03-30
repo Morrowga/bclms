@@ -1,19 +1,22 @@
 <template>
-  <div class="card relative z-2 ">
+  <div class="card relative z-2">
     <Menubar :model="items" class="flex items-center">
       <template #start>
         <h1 class="text-h4 text-blue-800 pl-5">Logo</h1>
       </template>
-      <template #item
+      <template
+        #item
         v-if="route().current() != 'login' && route().current() != 'register'"
       >
         <div class="flex gap-3">
-           <select class="py-3 px-4 pr-9 block w-full text-primary font-bold rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+          <select
+            class="py-3 px-4 pr-9 block w-full text-primary font-bold rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+          >
             <option selected>Categories</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
-            </select>
+          </select>
           <div class="card flex justify-content-center">
             <span class="p-input-icon-left">
               <i class="pi pi-search" />
@@ -33,52 +36,83 @@
       <template #end>
         <div class="flex gap-[10px]">
           <!-- #################### Notification Start ########### -->
-            <div class="card" v-if="auth != null">
-                <Button :badge="unread_notifications_count" label="" icon="pi pi-bell" @click="openPosition('topright')" severity="dark" style="min-width: 5rem;"/>
-
-
-                <Dialog v-model:visible="visible" header="Notifications" :style="{ width: '50vw' }" :position="position" :modal="true" :draggable="false">
-                    <div v-if="notifications.length > 0">
-                      <Message  v-for="(notifcation, index) in notifications" :key="index" severity="info" icon="pi pi-bell">{{ notifcation.data.message  }}</Message>
-                    </div>
-                    <div v-else>
-                      <p>Empty Notifications...</p>
-                    </div>
-                </Dialog>
-            </div>
+          <div class="card" v-if="auth != null">
+            <Button
+              label=""
+              @click="openPosition('topright')"
+              style="min-width: 5rem; position: relative"
+            >
+              <i style="font-size: 1.2rem" class="pi pi-bell"></i>
+              <Badge
+                :value="unread_notifications_count"
+                severity="success"
+                style="position: absolute; top: 5px; right: 15px"
+              ></Badge>
+            </Button>
+            <Dialog
+              v-model:visible="visible"
+              header="Notifications"
+              :style="{ width: '50vw' }"
+              :position="position"
+              :modal="true"
+              :draggable="false"
+            >
+              <div v-if="notifications.length > 0">
+                <Message
+                  v-for="(notifcation, index) in notifications"
+                  :key="index"
+                  severity="info"
+                  icon="pi pi-bell"
+                  @close="markAsRead(notifcation.id)"
+                  >{{ notifcation.data.message }}</Message
+                >
+              </div>
+              <div v-else>
+                <p>Empty Notifications...</p>
+              </div>
+            </Dialog>
+          </div>
           <!-- #################### Notification End ########### -->
           <div v-if="auth == null">
-            <Link :href="route('login')" v-if="route().current() != 'login'" class="px-1">
-            <Button label="Login" />
+            <Link
+              :href="route('login')"
+              v-if="route().current() != 'login'"
+              class="px-1"
+            >
+              <Button label="Login" />
             </Link>
-            <Link :href="route('register')" v-if="route().current() != 'register'" class="px-1">
+            <Link
+              :href="route('register')"
+              v-if="route().current() != 'register'"
+              class="px-1"
+            >
               <Button label="Sign Up" />
             </Link>
           </div>
           <div v-else>
-            <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" size="large" @click="toggle" class="mr-2" shape="circle" />
+            <Avatar
+              image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+              size="large"
+              @click="toggle"
+              class="mr-2"
+              shape="circle"
+            />
             <div
               class="absolute w-auto right-3 z-10 mt-2 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               v-if="showProfile"
             >
               <div class="p-5">
                 <div class="flex flex-col">
-                  <div
-                    class="grid grid-rows-3 grid-flow-col gap-x-4 gap-y-1"
-                  >
+                  <div class="grid grid-rows-3 grid-flow-col gap-x-4 gap-y-1">
                     <img
                       src="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
                       class="col-span-5 rounded row-span-3"
                     />
 
                     <div class="col-span-2">
-                      <span class="font-bold whitespace-nowrap">
-                        Admin
-                      </span>
+                      <span class="font-bold whitespace-nowrap"> Admin </span>
                     </div>
-                    <div class="row-span-2 col-span-2">
-                      admin@admin.com
-                    </div>
+                    <div class="row-span-2 col-span-2">admin@admin.com</div>
                   </div>
 
                   <div class="grid grid-cols-2 grid-rows-3">
@@ -108,11 +142,13 @@ import InputText from "primevue/inputtext";
 import TreeSelect from "primevue/treeselect";
 import { computed, ref, onMounted } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
-import {router } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 
 let auth = computed(() => usePage().props.auth);
 let notifications = computed(() => usePage().props.notifications);
-let unread_notifications_count = computed(() => usePage().props.unreadNotificationsCount);
+let unread_notifications_count = computed(
+  () => usePage().props.unreadNotificationsCount
+);
 
 const selectedCountry = ref();
 
@@ -120,46 +156,49 @@ const showProfile = ref(false);
 const items = ref([1]);
 
 const countries = ref([
-  { "key": "1",
-    "label": "Movies",
-    "icon": "pi pi-fw pi-calendar",
-    "data": "Movies Folder",
-
-   },
   {
-    "key": "2",
-    "label": "Movies",
-    "icon": "pi pi-fw pi-calendar",
-    "data": "Movies Folder",
-
+    key: "1",
+    label: "Movies",
+    icon: "pi pi-fw pi-calendar",
+    data: "Movies Folder",
   },
   {
-    "key": "3",
-    "label": "Movies",
-    "icon": "pi pi-fw pi-calendar",
-    "data": "Movies Folder",
-   },
+    key: "2",
+    label: "Movies",
+    icon: "pi pi-fw pi-calendar",
+    data: "Movies Folder",
+  },
+  {
+    key: "3",
+    label: "Movies",
+    icon: "pi pi-fw pi-calendar",
+    data: "Movies Folder",
+  },
 ]);
 
-
-function Logout()
-{
-    router.post('/logout');
+function Logout() {
+  router.post("/logout");
 }
 
 const toggle = () => {
   showProfile.value = !showProfile.value;
 };
 
-const position = ref('center');
+const position = ref("center");
 
 const visible = ref(false);
 
 const openPosition = (pos) => {
-    position.value = pos;
-    visible.value = true;
-}
-
+  position.value = pos;
+  visible.value = true;
+};
+const markAsRead = async (noti_id) => {
+  await router.post(route("markAsRead", { id: noti_id }), {
+    onSuccess: () => {
+      console.log("deleted");
+    },
+  });
+};
 </script>
 
 <style>
@@ -173,8 +212,7 @@ const openPosition = (pos) => {
   color: aliceblue !important;
 }
 
-.p-treeselect-items-wrapper	{
-   padding-left:-200px !important;
+.p-treeselect-items-wrapper {
+  padding-left: -200px !important;
 }
-
 </style>

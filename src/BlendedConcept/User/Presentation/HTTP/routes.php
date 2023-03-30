@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Src\BlendedConcept\User\Presentation\HTTP\NotificationController;
 use Src\BlendedConcept\User\Presentation\HTTP\PermissionController;
 use Src\BlendedConcept\User\Presentation\HTTP\PortalController;
 use Src\BlendedConcept\User\Presentation\HTTP\RoleController;
@@ -12,9 +13,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', UserController::class);
 
     //mark as read with id
-    Route::post('/notifications/{id}/read', [NotificationController::class, 'read']);
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'read'])->name("markAsRead");
 
     //mark as read all
-    Route::post('/notifications/{id}/read', [NotificationController::class, 'readAll']);
+    Route::post('/notifications/readall', [NotificationController::class, 'readAll'])->name("markAsReadAll");
 });
 Route::get('/', [PortalController::class, 'index'])->name('portal');
