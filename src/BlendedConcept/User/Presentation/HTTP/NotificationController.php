@@ -26,4 +26,10 @@ class NotificationController extends Controller
           $this->notificationInterface->readAll();
           return redirect()->back();
      }
+
+     public function getAllNotifications()
+     {
+          $notifications = $this->notificationInterface->notifications();
+          return $notifications;
+     }
 }

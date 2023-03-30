@@ -1,11 +1,12 @@
 <?php
 
 //Notification Helper to Vue Component
-if (! function_exists('getNotifications')) {
-    function getNotifications() {
+if (!function_exists('getNotifications')) {
+    function getNotifications()
+    {
         if (auth()->check()) {
             $notification = [
-                "notifications" => auth()->user()->unreadNotifications()->get(),
+                "notifications" => auth()->user()->unreadNotifications()->paginate(8),
                 "unread" =>  auth()->user()->unreadNotifications()->count()
             ];
         } else {

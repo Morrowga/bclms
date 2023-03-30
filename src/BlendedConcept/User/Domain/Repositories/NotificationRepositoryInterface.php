@@ -9,4 +9,7 @@ interface NotificationRepositoryInterface
 
     // mark as read all
     public function readAll();
+
+    //get notification by user
+    public function notifications();
 }

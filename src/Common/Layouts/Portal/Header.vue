@@ -52,29 +52,56 @@
             ></Badge>
             <Dialog
               v-model:visible="visible"
-              header="Notifications"
               :style="{ width: '40vw' }"
               :position="position"
               :modal="true"
               :draggable="false"
             >
+              <template #header>
+                <div class="flex items-center">
+                  <span id="pv_id_3_header" class="p-dialog-title"
+                    >Notifications</span
+                  >
+                  <Badge
+                    class="ml-2"
+                    :value="unread_notifications_count"
+                    severity="danger"
+                  ></Badge>
+                </div>
+              </template>
               <div
                 v-if="notifications?.length > 0"
                 class="flex flex-col justify-between"
+                style="max-height: 400px"
               >
-                <Message
-                  v-for="notifcation in notifications"
-                  :key="notifcation.id"
-                  severity="info"
-                  icon="pi pi-bell"
-                  @close.prevent="markAsRead(notifcation.id)"
-                  >{{ notifcation.data.message }}</Message
+                <div
+                  ref="scroll_el"
+                  class="flex flex-col overflow-y-scroll bg-gray-500/5 rounded"
                 >
-                <Skeleton
-                  height="4.5rem"
-                  class="mb-2"
-                  v-if="isLoading"
-                ></Skeleton>
+                  <!-- <div
+                    v-for="item in data"
+                    :key="item"
+                    class="h-30 bg-gray-500/5 rounded p-3"
+                  >
+                    {{ item }}
+                  </div> -->
+                  <Message
+                    v-for="notifcation in allNotifications"
+                    :key="notifcation.id"
+                    severity="info"
+                    icon="pi pi-bell"
+                    @close.prevent="markAsRead(notifcation.id)"
+                    >{{ notifcation.data.message }}</Message
+                  >
+                  <div>
+                    <Skeleton
+                      height="4.5rem"
+                      class="my-4"
+                      v-if="isLoading"
+                    ></Skeleton>
+                  </div>
+                </div>
+
                 <div class="d-flex text-center w-100 mt-5">
                   <Button
                     size="small"
@@ -128,9 +155,11 @@
                     />
 
                     <div class="col-span-2">
-                      <span class="font-bold whitespace-nowrap"> Admin </span>
+                      <span class="font-bold whitespace-nowrap">
+                        {{ auth?.name }}
+                      </span>
                     </div>
-                    <div class="row-span-2 col-span-2">admin@admin.com</div>
+                    <div class="row-span-2 col-span-2">{{ auth?.email }}</div>
                   </div>
 
                   <div class="grid grid-cols-2 grid-rows-3">
@@ -161,18 +190,48 @@ import TreeSelect from "primevue/treeselect";
 import { computed, ref, onMounted } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
-
+import { Inertia } from "@inertiajs/inertia";
+import { useInfiniteScroll } from "@vueuse/core";
+import axios from "axios";
 let auth = computed(() => usePage().props.auth.data);
-let notifications = computed(() => usePage().props.notifications);
+let notifications = computed(() => usePage().props.notifications?.data);
 let unread_notifications_count = computed(
   () => usePage().props.unreadNotificationsCount
 );
-
+let allNotifications = notifications.value;
 const selectedCountry = ref();
-let isLoading = ref(true);
+let isLoading = ref(false);
 const showProfile = ref(false);
 const items = ref([1]);
+let current_page = ref(usePage().props.notifications?.current_page);
+let last_page = ref(usePage().props.notifications?.last_page);
 
+const scroll_el = ref("");
+useInfiniteScroll(
+  scroll_el,
+  () => {
+    current_page.value = current_page.value + 1;
+    if (current_page.value > last_page.value) {
+      return;
+    }
+    isLoading.value = true;
+    axios
+      .get(
+        route("notifications", {
+          page: current_page.value,
+        })
+      )
+      .then((resp) => {
+        last_page.value = resp.data.notifications.last_page;
+        allNotifications = [
+          ...allNotifications,
+          ...resp.data.notifications.data,
+        ];
+        isLoading.value = false;
+      });
+  },
+  { distance: 10 }
+);
 const countries = ref([
   {
     key: "1",

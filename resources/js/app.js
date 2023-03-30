@@ -3,6 +3,7 @@ import { createInertiaApp } from '@inertiajs/vue3'
 import { Ziggy } from './ziggy';
 import PrimeVue from "primevue/config";
 
+
 /***
  * configure lib
  *
