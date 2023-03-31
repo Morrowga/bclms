@@ -9,7 +9,7 @@
         <div v-if="item.is_dropdown">
           <a
             href="#"
-            class="p-menuitem-link"
+            class="p-menuitem-link mx-2"
             :class="[item.active_class ? 'active' : '']"
             tabindex="-1"
             aria-hidden="true"
