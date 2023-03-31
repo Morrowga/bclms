@@ -62,6 +62,7 @@ import "primevue/resources/themes/lara-light-indigo/theme.css"
 // import Button from "primevue/button
 
 createInertiaApp({
+
     resolve: async (name) => {
         console.log(name)
         let page = null;
@@ -69,10 +70,7 @@ createInertiaApp({
         if (isModule.length > 1){
             let module =  isModule[0];
             let pathTo = isModule[1];
-            page = await import(`../../src/${module}/${pathTo}.vue`,{
-                /* @vite-ignore */
-                eager: true,
-            })
+            page = await import(`../../src/${module}/${pathTo}.vue`)
         }else{
 
         }
@@ -91,34 +89,34 @@ createInertiaApp({
       .mixin({
         methods:{route},
         components:
-        { 
-          VueGoodTable, 
-          Button, 
-          Image, 
+        {
+          VueGoodTable,
+          Button,
+          Image,
           Card,
-          Divider, 
-          InputText, 
-          PanelMenu, 
-          Accordion, 
-          Badge, 
-          Sidebar, 
-          Dialog, 
-          Menu, 
+          Divider,
+          InputText,
+          PanelMenu,
+          Accordion,
+          Badge,
+          Sidebar,
+          Dialog,
+          Menu,
           Avatar,
-          AccordionTab, 
-          DataTable, 
-          Column, 
-          OverlayPanel, 
-          DataView, 
-          DataViewLayoutOptions, 
-          Message, 
-          Fieldset, 
+          AccordionTab,
+          DataTable,
+          Column,
+          OverlayPanel,
+          DataView,
+          DataViewLayoutOptions,
+          Message,
+          Fieldset,
           IconButton,
-          Link, 
-          usePage, 
-          AddIcon, 
-          Toast, 
-          ConfirmDialog, 
+          Link,
+          usePage,
+          AddIcon,
+          Toast,
+          ConfirmDialog,
           Skeleton
         }})
       .mount(el);
