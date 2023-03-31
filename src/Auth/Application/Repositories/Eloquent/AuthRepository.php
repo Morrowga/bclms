@@ -52,8 +52,9 @@ class AuthRepository implements AuthRepositoryInterface
     //  register b2c register
     public function b2cRegister($request)
     {
+        $name = explode("@", $request->email);
         $user = User::create([
-            "name" => "default user",
+            "name" => $name[0],
             "email" => $request->email,
             "password" => $request->password,
 

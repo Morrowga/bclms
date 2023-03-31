@@ -21,4 +21,18 @@ class NotificationRepository implements NotificationRepositoryInterface
         $notification = auth()->user()->unreadNotifications()->get();
         $notification->markAsRead();
     }
+
+    //get notifications by user
+    public function notifications()
+    {
+        if (auth()->check()) {
+            $notification = [
+                "notifications" => auth()->user()->unreadNotifications()->paginate(8),
+                "unread" =>  auth()->user()->unreadNotifications()->count()
+            ];
+        } else {
+            $notification = null;
+        }
+        return $notification;
+    }
 }
