@@ -62,21 +62,10 @@ import "primevue/resources/themes/lara-light-indigo/theme.css"
 // import Button from "primevue/button
 
 createInertiaApp({
-    resolve: async (name) => {
-        console.log(name)
-        let page = null;
-        let isModule=name.split("::");
-        if (isModule.length > 1){
-            let module =  isModule[0];
-            let pathTo = isModule[1];
-            page = await import(`../../src/${module}/${pathTo}.vue`,{
-                /* @vite-ignore */
-                eager: true,
-            })
-        }else{
-
-        }
-        return page.default;
+    
+    resolve:  (name) => {
+      const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
+      return pages[`./Pages/${name}.vue`]
     },
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })

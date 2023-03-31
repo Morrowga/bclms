@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 use Src\BlendedConcept\User\Presentation\HTTP\NotificationController;
 use Src\BlendedConcept\User\Presentation\HTTP\PermissionController;
 use Src\BlendedConcept\User\Presentation\HTTP\PortalController;
@@ -25,3 +26,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/notifications/index', [NotificationController::class, "getAllNotifications"])->name("notifications");
 });
 Route::get('/', [PortalController::class, 'index'])->name('portal');
+Route::get("testing/route", function () {
+    return Inertia::render('Index');
+});
