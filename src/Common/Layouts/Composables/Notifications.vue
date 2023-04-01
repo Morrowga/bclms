@@ -1,5 +1,19 @@
 <template>
   <div>
+    <Button
+      label=""
+      style="padding: 7px"
+      rounded
+      class="bg-primary"
+      @click="openPosition('topright')"
+    >
+      <i style="font-size: 1.3rem" class="pi pi-bell"></i>
+    </Button>
+    <Badge
+      class="mb-4"
+      :value="unread_notifications_count"
+      severity="danger"
+    ></Badge>
     <Dialog
       v-model:visible="visible"
       :style="{ width: '40vw' }"
@@ -63,7 +77,7 @@
   </div>
 </template>
 <script setup>
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, defineProps } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia";
@@ -119,4 +133,18 @@ useInfiniteScroll(
   },
   { distance: 10 }
 );
+const markAsRead = (noti_id) => {
+  router.post(route("markAsRead", { id: noti_id }), {
+    onSuccess: () => {
+      console.log("deleted");
+    },
+  });
+};
+const markAsReadAll = (noti_id) => {
+  router.post(route("markAsReadAll"), {
+    onSuccess: () => {
+      console.log("deleted all");
+    },
+  });
+};
 </script>
