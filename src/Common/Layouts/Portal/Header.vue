@@ -41,6 +41,7 @@
               label=""
               style="padding: 7px"
               rounded
+              class="bg-primary"
               @click="openPosition('topright')"
             >
               <i style="font-size: 1.3rem" class="pi pi-bell"></i>
