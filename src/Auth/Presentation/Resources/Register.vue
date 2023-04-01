@@ -1,10 +1,10 @@
 <template>
   <FrontendLayout :route="{ name: route('login'), label: 'Login' }">
-    <div class="overflow-hidden register-bg mt-14">
+    <div class="overflow-hidden register-bg">
       <div class="mx-auto" style="max-width: 1024px">
         <form action="#" @submit.prevent="register">
           <div class="flex flex-col justify-around p-3 md:flex-row">
-            <div :class="organization == 'on' ? '' : 'text-clip'">
+            <div class="mt-14" :class="organization == 'on' ? '' : 'text-clip'">
               <h1
                 class="text-center align-middle mt-4 text-xl font-extrabold leading-none tracking-tight text-blue-800 md:text-lg lg:text-2xl animate-fadein transition-opacity duration-500"
               >

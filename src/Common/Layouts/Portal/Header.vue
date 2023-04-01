@@ -125,14 +125,14 @@
               v-if="route().current() != 'login'"
               class="px-1"
             >
-              <Button label="Login"  class="bg-primary"/>
+              <Button label="Login" class="bg-primary" />
             </Link>
             <Link
               :href="route('register')"
               v-if="route().current() != 'register'"
               class="px-1"
             >
-              <Button label="Sign Up" />
+              <Button label="Sign Up" class="bg-primary" />
             </Link>
           </div>
           <div v-else>

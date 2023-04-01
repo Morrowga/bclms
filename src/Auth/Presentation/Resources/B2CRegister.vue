@@ -1,5 +1,5 @@
 <template>
-  <div class="basis-1/3">
+  <div class="basis-1/3 mt-14">
     <h1
       class="align-middle mt-4 text-xl font-extrabold leading-none tracking-tight text-blue-900 md:text-lg lg:text-xl"
     >
