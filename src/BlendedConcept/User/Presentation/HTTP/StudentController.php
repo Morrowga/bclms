@@ -16,7 +16,7 @@ class StudentController extends Controller
 
   public function create()
   {
-    return Inertia::render('BlendedConcept::User/Presentation/Resources/Students/Create');
+    return Inertia::render('BlendedConcept/User/Presentation/Resources/Students/Create');
   }
 
 

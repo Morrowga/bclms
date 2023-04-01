@@ -1,13 +1,12 @@
 <template>
   <div>
-    <input
-      :type="type"
+
+    <InputText :type="type"
       :value="modelValue"
       @input="updateValue"
       :required="required"
-      class="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-25"
       :placeholder="placeholder"
-    />
+      class="p-inputtext-sm w-full " />
     <p
       id="filled_error_help"
       class="mt-2 text-xs text-red-600 dark:text-red-400"
