@@ -192,6 +192,7 @@ import { Link, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia";
 import { useInfiniteScroll } from "@vueuse/core";
+import Notifications from "@Composables/Notifications.vue";
 import axios from "axios";
 let auth = computed(() => usePage().props.auth.data);
 let notifications = computed(() => usePage().props.notifications?.data);

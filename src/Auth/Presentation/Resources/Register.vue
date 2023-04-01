@@ -1,22 +1,22 @@
 <template>
   <FrontendLayout :route="{ name: route('login'), label: 'Login' }">
-    <div class="overflow-hidden register-bg">
-      <div class="mx-auto mt-14" style="max-width: 1024px">
+    <div class="overflow-hidden register-bg mt-14">
+      <div class="mx-auto" style="max-width: 1024px">
         <form action="#" @submit.prevent="register">
           <div class="flex flex-col justify-around p-3 md:flex-row">
             <div :class="organization == 'on' ? '' : 'text-clip'">
               <h1
-                class="text-center align-middle mt-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-lg lg:text-xl dark:text-white animate-fadein transition-opacity duration-500"
+                class="text-center align-middle mt-4 text-xl font-extrabold leading-none tracking-tight text-blue-800 md:text-lg lg:text-2xl animate-fadein transition-opacity duration-500"
               >
                 Are you signing up under
               </h1>
               <h1
-                class="text-center align-middle mt-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-lg lg:text-xl dark:text-white"
+                class="text-center align-middle mt-4 text-xl font-extrabold leading-none tracking-tight text-blue-800 md:text-lg lg:text-2xl"
               >
                 an Organization account ?
               </h1>
               <div
-                class="border-dashed my-5 border-4 border-purple-600 p-3 text-center flex justify-between"
+                class="scale-90 border-dashed my-5 border-4 border-purple-600 p-3 text-center flex justify-between"
               >
                 <div class="px-5">
                   <input
@@ -30,7 +30,7 @@
 
                   <label
                     for="default-radio-1"
-                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    class="ml-2 text-sm font-medium text-gray-900"
                     >Yes</label
                   >
                 </div>
@@ -45,7 +45,7 @@
                   />
                   <label
                     for="default-radio-2"
-                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    class="ml-2 text-sm font-medium text-gray-900"
                     >No</label
                   >
                 </div>
@@ -90,7 +90,13 @@
                 </Dropdown>
               </div>
 
-              <div class="flex gap-3 my-4">
+              <div class="flex gap-3 my-16" v-if="organization == 'initial'">
+                <hr style="border: 1px solid #3b82f6; width: 100%" />
+              </div>
+              <div
+                class="flex gap-3 my-4 w-full"
+                v-if="organization == 'on' || organization == 'off'"
+              >
                 <Checkbox
                   v-model="checked"
                   class="mt-2"
@@ -98,10 +104,21 @@
                   name="pizza"
                   value="Onion"
                 />
-                <label for="ingredient4" class="text-sm w-48">
+                <label for="ingredient4" class="text-sm w-72">
                   Yes! I would like to receive udpates, special offers, and
                   other information from Ed+
                 </label>
+              </div>
+              <div
+                class="flex gap-3 my-4 w-full justify-center"
+                v-if="organization == 'initial'"
+              >
+                <span
+                  >Already have an account?
+                  <Link class="text-blue-500" :href="route('login')"
+                    >Log In</Link
+                  ></span
+                >
               </div>
             </div>
             <B2BRegister
@@ -129,14 +146,14 @@
 
 <script setup>
 import { ref, watch } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import Checkbox from "primevue/checkbox";
 import Dropdown from "primevue/dropdown";
 import FrontendLayout from "@Layouts/Portal/FrontendLayout.vue";
 import B2CRegister from "./B2CRegister.vue";
 import B2BRegister from "./B2BRegister.vue";
 
-let organization = ref();
+let organization = ref("initial");
 const checked = ref();
 const selectedCountry = ref();
 

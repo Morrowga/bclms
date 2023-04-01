@@ -1,18 +1,20 @@
 <template>
   <FrontendLayout :route="{ name: route('login'), label: 'Login' }">
-    <div class="container mr-auto mt-28">
-      <div class="w-80 m-auto">
-        <h1 v-if="verified" class="text-2xl font-bold text-justify mb-10">
-          Email is successfully verified!
-        </h1>
-        <h1 v-else class="text-2xl font-bold text-justify mb-10">
-          Welcome to Ed+. Please verify your email account to proceed
-        </h1>
-        <!-- <a href="/" class="pl-20  underline decoration-1 mt-32 ">Email account verify</a> -->
+    <div class="verify-bg">
+      <div class="container mr-auto h-full">
+        <div class="w-80 m-auto pt-40 text-center">
+          <h1 v-if="verified" class="text-2xl font-bold mb-10 text-blue-900">
+            Email is successfully verified!
+          </h1>
+          <h1 v-else class="text-2xl font-bold mb-10 text-blue-900">
+            Welcome to Ed+. Please verify your email account to proceed
+          </h1>
+          <!-- <a href="/" class="pl-20  underline decoration-1 mt-32 ">Email account verify</a> -->
 
-        <Link :href="route('portal')" class="pl-auto">
-          <Button label="Back" icon="pi pi-arrow-left" />
-        </Link>
+          <Link :href="route('portal')" class="pl-auto">
+            <Button label="Back" icon="pi pi-arrow-left" />
+          </Link>
+        </div>
       </div>
     </div>
   </FrontendLayout>
@@ -37,3 +39,10 @@ onMounted(() => {
   }
 });
 </script>
+<style scoped>
+.verify-bg {
+  background: url("/public/images/verifybanner.png") 100% no-repeat;
+  height: 100%;
+  background-size: 100% 100%;
+}
+</style>

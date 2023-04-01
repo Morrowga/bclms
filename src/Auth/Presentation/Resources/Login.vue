@@ -5,14 +5,12 @@
       <div
         class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
       >
-        <div
-          class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0"
-        >
+        <div class="w-full md:mt-0 sm:max-w-md xl:p-0">
           <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1
-              class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl"
+              class="text-3xl font-bold text-center leading-tight tracking-tight text-blue-900"
             >
-              Sign in to your account
+              Enter your email address
             </h1>
             <form
               class="space-y-4 md:space-y-6"
@@ -28,6 +26,7 @@
                 :error="form.errors.email"
                 :required="true"
               />
+              <br />
               <LabelInput
                 type="password"
                 label="Enter Your Password"
@@ -36,8 +35,9 @@
                 :error="form.errors.password ?? props.error"
                 :required="true"
               />
+              <br />
 
-              <div class="flex items-center justify-between">
+              <!-- <div class="flex items-center justify-between">
                 <div class="flex items-start">
                   <div class="flex items-center h-5">
                     <input
@@ -60,20 +60,23 @@
                   class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                   >Forgot password?</a
                 >
-              </div>
+              </div> -->
               <button
                 type="submit"
                 class="text-white bg-blue-700 w-full hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
               >
                 Sign In
               </button>
-
-              <p class="text-sm font-light text-gray-500">
-                Don’t have an account yet?
-                <a href="#" class="font-medium text-primary-600 hover:underline"
-                  >Sign up</a
-                >
-              </p>
+              <div class="flex justify-center">
+                <p class="text-sm font-light text-gray-500">
+                  Don’t have an account yet?
+                  <Link
+                    :href="route('register')"
+                    class="font-medium rounded-none text-blue-500 hover:underline"
+                    >Sign up</Link
+                  >
+                </p>
+              </div>
             </form>
           </div>
         </div>
@@ -84,7 +87,7 @@
 
 <script setup>
 import FrontendLayout from "@Layouts/Portal/FrontendLayout.vue";
-import { useForm, usePage } from "@inertiajs/vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { computed, defineProps, onMounted, watch } from "vue";
 import LabelInput from "@Composables/LabelInput.vue";
 import { useToast } from "primevue/usetoast";
@@ -122,7 +125,7 @@ onMounted(() => {
 </script>
 <style scoped>
 .register-bg {
-  background: url("/public/images/LoginPage.svg") 100% 100% no-repeat;
+  background: url("/public/images/LoginPage.svg") no-repeat;
   height: 100%;
   background-size: cover;
   background-position: center;
