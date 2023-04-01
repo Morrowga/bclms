@@ -34,6 +34,7 @@ import Menu from 'primevue/menu';
 import Avatar from "primevue/avatar"
 import DataView from 'primevue/dataview';
 import Skeleton from 'primevue/skeleton';
+
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'   // optional
 import Fieldset from 'primevue/fieldset';
 import { Link, usePage } from "@inertiajs/vue3";
@@ -57,26 +58,12 @@ import "primeicons/primeicons.css";
 import "animate.css";
 import "vue-good-table-next/dist/vue-good-table-next.css";
 import "primevue/resources/themes/lara-light-indigo/theme.css"
-
+import pages from './route';
 
 // import Button from "primevue/button
-
 createInertiaApp({
     resolve: async (name) => {
-        console.log(name)
-        let page = null;
-        let isModule=name.split("::");
-        if (isModule.length > 1){
-            let module =  isModule[0];
-            let pathTo = isModule[1];
-            page = await import(`../../src/${module}/${pathTo}.vue`,{
-                /* @vite-ignore */
-                eager: true,
-            })
-        }else{
-
-        }
-        return page.default;
+        return pages[name];
     },
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
@@ -108,6 +95,7 @@ createInertiaApp({
           AccordionTab,
           DataTable,
           Column,
+        
           OverlayPanel,
           DataView,
           DataViewLayoutOptions,

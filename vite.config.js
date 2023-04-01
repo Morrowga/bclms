@@ -9,7 +9,7 @@ export default defineConfig({
             "@Composables": path.resolve(__dirname , "./src/Common/Layouts/Composables"),
             "@Layouts": path.resolve(__dirname , "./src/Common/Layouts"),
             "@dashboard" : path.resolve(__dirname,'./src/Common/Layouts/Dashboard'),
-            "@" : path.resolve(__dirname,"./src")
+            "@" : path.resolve(__dirname,"./src"),
         }
     },
 
