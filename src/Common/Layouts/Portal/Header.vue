@@ -124,7 +124,7 @@
               v-if="route().current() != 'login'"
               class="px-1"
             >
-              <Button label="Login" />
+              <Button label="Login"  class="bg-primary"/>
             </Link>
             <Link
               :href="route('register')"
