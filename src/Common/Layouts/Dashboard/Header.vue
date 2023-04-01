@@ -63,17 +63,19 @@
       </template>
       <template #end>
         <!-- #################### Notification Start ########### -->
-        <div class="card" v-if="auth != null">
-          <Notifications />
-          <h1>Hello</h1>
+
+        <div class="flex items-center">
+          <div class="card" v-if="auth != null">
+            <Notifications />
+          </div>
+          <Avatar
+            image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+            size="large"
+            @click="toggle"
+            class="mr-2"
+            shape="circle"
+          />
         </div>
-        <Avatar
-          image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
-          size="large"
-          @click="toggle"
-          class="mr-2"
-          shape="circle"
-        />
         <div
           class="absolute w-auto right-3 z-10 mt-2 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           v-if="showProfile"
@@ -124,6 +126,7 @@ import Notifications from "@Composables/Notifications.vue";
 
 import { computed, ref } from "vue";
 let props = computed(() => usePage().props);
+let auth = computed(() => usePage().props.auth.data);
 const permissions = props.value.auth.data.permissions;
 
 const role = props.value.auth.data.roles;
@@ -220,5 +223,6 @@ const toggle = () => {
 .active {
   color: #495057;
   background: #e9ecef;
+  border-radius: 6px;
 }
 </style>
