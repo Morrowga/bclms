@@ -62,6 +62,11 @@
         </div>
       </template>
       <template #end>
+        <!-- #################### Notification Start ########### -->
+        <div class="card" v-if="auth != null">
+          <Notifications />
+          <h1>Hello</h1>
+        </div>
         <Avatar
           image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
           size="large"
@@ -115,6 +120,7 @@ import Menubar from "primevue/menubar";
 import InputText from "primevue/inputtext";
 import axios from "axios";
 import { router, usePage, Link } from "@inertiajs/vue3";
+import Notifications from "@Composables/Notifications.vue";
 
 import { computed, ref } from "vue";
 let props = computed(() => usePage().props);
