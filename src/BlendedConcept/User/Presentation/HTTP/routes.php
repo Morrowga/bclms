@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth']], function () {
     // student add
 
     Route::get("addstudent",[StudentController::class,'create']);
+
+    Route::get("studentdashboard",[StudentController::class,'dashboard']);
 });
 Route::get('/', [PortalController::class, 'index'])->name('portal');
 Route::get("testing/route", function () {

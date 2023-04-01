@@ -19,5 +19,9 @@ class StudentController extends Controller
     return Inertia::render('BlendedConcept/User/Presentation/Resources/Students/Create');
   }
 
+  public function dashboard()
+  {
+    return Inertia::render('BlendedConcept/User/Presentation/Resources/Students/Dashboard');
+  }
 
 }
