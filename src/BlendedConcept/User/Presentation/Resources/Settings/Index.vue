@@ -49,9 +49,9 @@
         </div>
       </div>
       <div class="container col-span-10 pt-10 pl-10">
-        <!-- <Globle v-if="currentSettings=='global'"/> -->
-        <!-- <DateFormat v-if="currentSettings=='date_format'"/> -->
-        <!-- <Banner v-if="currentSettings == 'banner'"/> -->
+        <GlobleSetting v-if="currentSettings=='global'"/>
+        <DateFormat v-if="currentSettings=='date_format'"/>
+        <Banner v-if="currentSettings == 'banner'"/>
       </div>
     </div>
   </AdminLayout>
@@ -60,7 +60,7 @@
 <script setup>
 import { ref } from "vue";
 import AdminLayout from "@dashboard/AdminLayout.vue";
-import Globle from "./GlobleSetting.vue";
+import GlobleSetting from "./GlobleSetting.vue";
 import DateFormat from "./DateFormat.vue";
 import Banner from "./Banner.vue";
 

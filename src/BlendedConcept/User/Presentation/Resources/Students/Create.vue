@@ -19,7 +19,7 @@
                                         placeholder="First Name"
                                         :type="number"
                                         :error="form.errors?.firstname"
-                                        class="w-96"
+                                        class="w-full"
                                     />
                                     <NoLabelInput
                                         v-model="form.lastname"
