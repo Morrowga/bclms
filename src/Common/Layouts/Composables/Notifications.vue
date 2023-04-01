@@ -90,15 +90,11 @@ let unread_notifications_count = computed(
 let allNotifications = notifications.value;
 const selectedCountry = ref();
 let isLoading = ref(false);
-const showProfile = ref(false);
 const items = ref([1]);
 let current_page = ref(usePage().props.notifications?.current_page);
 let last_page = ref(usePage().props.notifications?.last_page);
 
 const scroll_el = ref("");
-const toggle = () => {
-  showProfile.value = !showProfile.value;
-};
 
 const position = ref("center");
 

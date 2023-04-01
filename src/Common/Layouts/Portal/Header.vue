@@ -118,6 +118,7 @@ import Notifications from "@Composables/Notifications.vue";
 import axios from "axios";
 let auth = computed(() => usePage().props.auth.data);
 const items = ref([1]);
+const showProfile = ref(false);
 const selectedCountry = ref();
 const countries = ref([
   {
@@ -143,6 +144,9 @@ const countries = ref([
 function Logout() {
   router.post("/logout");
 }
+const toggle = () => {
+  showProfile.value = !showProfile.value;
+};
 </script>
 
 <style>
