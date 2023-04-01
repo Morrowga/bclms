@@ -20,7 +20,7 @@ const pages ={
     "BlendedConcept/User/Presentation/Resources/Permissions/Edit" : import('../../src/BlendedConcept/User/Presentation/Resources/Permissions/Edit.vue'),
 
     //site setting
-    // "BlendedConcept/User/Presentation/Resources/Settings/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Settings/Index.vue'),
+    "BlendedConcept/User/Presentation/Resources/Settings/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Settings/Index.vue'),
 
     //auth
     "Auth/Presentation/Resources/Login" : import("../../src/Auth/Presentation/Resources/Login.vue"),
