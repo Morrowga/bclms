@@ -47,6 +47,7 @@ import ToastService from 'primevue/toastservice';
 
 import ConfirmDialog from 'primevue/confirmdialog';
 import ConfirmationService from 'primevue/confirmationservice';
+import pages from './route';
 
 
 
@@ -58,7 +59,6 @@ import "primeicons/primeicons.css";
 import "animate.css";
 import "vue-good-table-next/dist/vue-good-table-next.css";
 import "primevue/resources/themes/lara-light-indigo/theme.css"
-import pages from './route';
 
 // import Button from "primevue/button
 createInertiaApp({
@@ -95,7 +95,7 @@ createInertiaApp({
           AccordionTab,
           DataTable,
           Column,
-        
+
           OverlayPanel,
           DataView,
           DataViewLayoutOptions,

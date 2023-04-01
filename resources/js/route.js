@@ -18,7 +18,7 @@ const pages ={
     "BlendedConcept/User/Presentation/Resources/Permissions/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Permissions/Index.vue'),
     "BlendedConcept/User/Presentation/Resources/Permissions/Create" : import('../../src/BlendedConcept/User/Presentation/Resources/Permissions/Create.vue'),
     "BlendedConcept/User/Presentation/Resources/Permissions/Edit" : import('../../src/BlendedConcept/User/Presentation/Resources/Permissions/Edit.vue'),
-    
+
     //site setting
     "BlendedConcept/User/Presentation/Resources/Settings/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Settings/Index.vue'),
 
