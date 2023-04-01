@@ -29,6 +29,11 @@ module.exports = {
               'secondary':'#FAB141 !important',
               'ccblue':'#5271FF !important',
               'cwhite':'#F9F8FF !important',
+              'cta':"#5271FF !important",
+              'bg1':"#FFFFFF !important",
+              'bg2':"#F9F8FF !important",
+              'bg3':"#F9F8FF !important"
+
             }
       },
     },

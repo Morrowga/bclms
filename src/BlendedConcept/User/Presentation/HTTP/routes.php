@@ -6,6 +6,7 @@ use Src\BlendedConcept\User\Presentation\HTTP\PermissionController;
 use Src\BlendedConcept\User\Presentation\HTTP\PortalController;
 use Src\BlendedConcept\User\Presentation\HTTP\RoleController;
 use Src\BlendedConcept\User\Presentation\HTTP\SettingController;
+use Src\BlendedConcept\User\Presentation\HTTP\StudentController;
 use Src\BlendedConcept\User\Presentation\HTTP\UserController;
 
 Route::group(['middleware' => ['auth']], function () {
@@ -23,5 +24,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     //get all notifications
     Route::get('/notifications/index', [NotificationController::class, "getAllNotifications"])->name("notifications");
+
+
+    // student add
+
+    Route::get("addstudent",[StudentController::class,'create']);
 });
 Route::get('/', [PortalController::class, 'index'])->name('portal');
