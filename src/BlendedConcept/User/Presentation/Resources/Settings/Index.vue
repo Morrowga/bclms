@@ -27,9 +27,9 @@
             </div>
         </div>
         <div class="container col-span-10 pt-10 pl-10">
-            <Globle v-if="currentSettings=='global'"/>
-            <DateFormat v-if="currentSettings=='date_format'"/>
-            <Banner v-if="currentSettings == 'banner'"/>
+            <!-- <Globle v-if="currentSettings=='global'"/> -->
+            <!-- <DateFormat v-if="currentSettings=='date_format'"/> -->
+            <!-- <Banner v-if="currentSettings == 'banner'"/> -->
         </div>
          </div>
     </AdminLayout>
