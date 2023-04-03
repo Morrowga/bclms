@@ -160,44 +160,17 @@
                 >
                   Add Profile Picture
                 </h1>
-                <div class="flex flex-wrap justify-center mt-3">
-                  <div
-                    class="w-6/12 sm:w-4/12 px-4 dropzone"
-                    @click="SelectImage"
-                  >
-                    <input
-                      type="file"
-                      ref="file"
-                      @change="fileData"
-                      accept="image/*"
-                      hidden
-                    />
-                    <div class="img-area" data-img="">
-                      <img
-                        :src="
-                          props?.student?.image[0]?.original_url ||
-                          'https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg'
-                        "
-                        class="shadow-lg rounded max-w-full h-auto align-middle border-none"
-                      />
-                      <h3>Upload Image</h3>
-                      <p>
-                        Image size must be less than
-                        <span>2MB</span>
-                      </p>
-                    </div>
-                    <!-- <button type="button" class="select-image">Select Image</button> -->
-                  </div>
-                </div>
+                <ImageUpload
+                  v-model="form.image"
+                  :old_img="props?.student?.image[0]?.original_url"
+                />
                 <div
-                  class="flex justify-end items-center p-6 space-x-2 rounded-b dark:border-gray-600"
+                  class="flex justify-center items-center p-6 rounded-b dark:border-gray-600"
                 >
-                  <Link :href="route('studentdashboard')">
-                    <DefaultButton title="Back" type="button" />
-                  </Link>
                   <DefaultButton
                     type="submit"
-                    title="Create"
+                    title="Add Profile"
+                    class="w-96"
                     buttonColor="blue"
                   />
                 </div>
@@ -218,6 +191,7 @@ import Calendar from "primevue/calendar";
 import NoLabelSelectInput from "@Composables/NoLabelSelectInput.vue";
 import NoLabelInput from "@Composables/NoLabelInput.vue";
 import DefaultButton from "@Composables/DefaultButton.vue";
+import ImageUpload from "@Composables/ImageUpload.vue";
 let props = defineProps(["errors", "student"]);
 let needs = ref({
   name: "need",
