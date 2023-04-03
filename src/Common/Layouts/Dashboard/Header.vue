@@ -238,21 +238,25 @@ const menuItems = [
     label: "Settings",
     icon: "pi pi-cog",
     url: "#",
+    is_active: true,
   },
   {
     label: "Edit Profile",
     icon: "pi pi-user-edit",
     url: "#",
+    is_active: true,
   },
   {
     label: "Subscription",
     icon: "pi pi-money-bill",
     url: "#",
+    is_active: true,
   },
   {
     label: "Help",
     icon: "pi pi-compass",
     url: "#",
+    is_active: true,
   },
 ];
 function Logout() {

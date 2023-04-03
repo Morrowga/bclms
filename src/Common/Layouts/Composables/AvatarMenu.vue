@@ -21,7 +21,6 @@
           >
             <!--[--><!--[-->
             <li class="p-menuitem-separator" style="" role="separator"></li>
-
             <li
               id="pv_id_4_1"
               class="p-menuitem"
@@ -32,6 +31,7 @@
               :key="index"
             >
               <div
+                v-if="item.is_active"
                 class="p-menuitem-content"
                 :class="[isActive(item.url) ? 'active' : '']"
               >

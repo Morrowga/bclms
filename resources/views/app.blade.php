@@ -13,6 +13,7 @@
     @inertiaHead
 </head>
 
+
 <body>
     @inertia
 </body>
