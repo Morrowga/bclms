@@ -9,8 +9,10 @@ use Src\Auth\Application\Repositories\Eloquent\DashboardRepository;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
 use Src\Auth\Domain\Repositories\DashboardRepositoryInterface;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\NotificationRepository;
+use Src\BlendedConcept\User\Application\Repositories\Eloquent\StudentRepository;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\UserRepository;
 use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
+use Src\BlendedConcept\User\Domain\Repositories\StudentRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,6 +35,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             DashboardRepositoryInterface::class,
             DashboardRepository::class
+        );
+
+        $this->app->bind(
+            StudentRepositoryInterface::class,
+            StudentRepository::class
         );
     }
 

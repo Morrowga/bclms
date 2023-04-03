@@ -59,6 +59,11 @@ return [
             'root' => storage_path('app/public/organization'),
             'url' => env('APP_URL'). '/storage/organization',
         ],
+        'media_student' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/students'),
+            'url' => env('APP_URL'). '/storage/students',
+        ],
 
         's3' => [
             'driver' => 's3',
