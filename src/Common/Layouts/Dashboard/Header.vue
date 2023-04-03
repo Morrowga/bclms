@@ -9,7 +9,7 @@
         <div v-if="item.is_dropdown">
           <a
             href="#"
-            class="p-menuitem-link mx-2"
+            class="p-menuitem-link"
             :class="[item.active_class ? 'active' : '']"
             tabindex="-1"
             aria-hidden="true"
@@ -50,7 +50,7 @@
         <div v-else>
           <Link
             :href="item.url"
-            class="p-menuitem-link mx-2"
+            class="p-menuitem-link"
             :class="[item.active_class ? 'active' : '']"
             tabindex="-1"
             aria-hidden="true"
@@ -263,6 +263,6 @@ const toggle = () => {
 .active {
   color: #495057;
   background: #e9ecef;
-  border-radius: 6px;
+  border-radius: none;
 }
 </style>
