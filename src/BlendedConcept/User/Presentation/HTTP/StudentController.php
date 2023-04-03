@@ -8,9 +8,17 @@ use Src\Common\Infrastructure\Laravel\Controller;
 
 use Inertia\Inertia;
 use Src\BlendedConcept\User\Domain\Model\Student;
+use Src\BlendedConcept\User\Domain\Repositories\StudentRepositoryInterface;
 
 class StudentController extends Controller
 {
+
+  private $studentRepositoryInterface;
+
+  public function __construct(StudentRepositoryInterface $studentInterface)
+  {
+    $this->studentRepositoryInterface = $studentInterface;
+  }
   public function create()
   {
     return Inertia::render('BlendedConcept/User/Presentation/Resources/Students/Create');
