@@ -15,7 +15,7 @@ class StudentRepository implements StudentRepositoryInterface
          $student =  Student::create([
             "name" => $request->name,
             "nickname" => $request->nickname,
-             "dob" => $request->dob,
+             "dob" => null,
              "grade" => $request->grade
          ]);
 

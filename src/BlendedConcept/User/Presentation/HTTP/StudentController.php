@@ -9,15 +9,16 @@ use Src\Common\Infrastructure\Laravel\Controller;
 use Inertia\Inertia;
 use Src\BlendedConcept\User\Domain\Model\Student;
 use Src\BlendedConcept\User\Domain\Repositories\StudentRepositoryInterface;
+use Src\BlendedConcept\User\Domain\Requests\StoreStudentRequest;
 
 class StudentController extends Controller
 {
 
-  private $studentRepositoryInterface;
+  private $studentInterface;
 
   public function __construct(StudentRepositoryInterface $studentInterface)
   {
-    $this->studentRepositoryInterface = $studentInterface;
+    $this->studentInterface = $studentInterface;
   }
   public function create()
   {
@@ -31,9 +32,10 @@ class StudentController extends Controller
     ]);
   }
 
-  public function store(Request $request)
+  public function store(StoreStudentRequest $request)
   {
-    return $request->all();
+    $this->studentInterface->createStudent($request);
+    return redirect()->route('studentdashboard');
   }
   public function dashboard()
   {
