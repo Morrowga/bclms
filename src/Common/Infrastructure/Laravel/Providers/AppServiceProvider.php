@@ -5,7 +5,9 @@ namespace Src\Common\Infrastructure\Laravel\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Src\Auth\Application\Repositories\Eloquent\AuthRepository;
+use Src\Auth\Application\Repositories\Eloquent\DashboardRepository;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
+use Src\Auth\Domain\Repositories\DashboardRepositoryInterface;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\NotificationRepository;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\UserRepository;
 use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
@@ -27,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             AuthRepositoryInterface::class,
             AuthRepository::class
+        );
+        $this->app->bind(
+            DashboardRepositoryInterface::class,
+            DashboardRepository::class
         );
     }
 

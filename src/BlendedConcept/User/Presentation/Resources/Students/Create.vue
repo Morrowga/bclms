@@ -263,16 +263,7 @@ function fileData(event) {
 }
 
 let saveForm = () => {
-    form.post(route("users.store"), {
-        onSuccess: () => {},
-        onError: (error) => {
-            form.setError("role", error?.role);
-            form.setError("name", error?.name);
-            form.setError("email", error?.email);
-            form.setError("password", error?.password);
-            form.setError("contact_number", error?.contact_number);
-        },
-    });
+   alert("student created in progress");
 };
 </script>
 <style>
