@@ -15,7 +15,7 @@
         <slot name="items">
           <ul
             id="pv_id_4_list"
-            class="p-menu-list p-reset"
+            class="p-menu-list p-reset a-menu-link"
             role="menu"
             tabindex="0"
           >
@@ -105,5 +105,8 @@ const isActive = (url) => {
 .active {
   color: #495057;
   background: #e9ecef;
+}
+.a-menu-link .p-menuitem {
+  margin: 0 !important;
 }
 </style>

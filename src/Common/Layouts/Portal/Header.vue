@@ -108,6 +108,11 @@ const showProfile = ref(false);
 const selectedCountry = ref();
 const menuItems = [
   {
+    label: "Students",
+    icon: "pi pi-users",
+    url: route("dashboard"),
+  },
+  {
     label: "Settings",
     icon: "pi pi-cog",
     url: "#",

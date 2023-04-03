@@ -141,7 +141,7 @@
         <Image src="images/profile/profiletwo.png" />
         <div class="description pl-4">
           <Link
-            href="#"
+            :href="route('studentdashboard')"
             class="text-primary text-[20px] font-semibold leading-[150%]"
           >
             Student One
