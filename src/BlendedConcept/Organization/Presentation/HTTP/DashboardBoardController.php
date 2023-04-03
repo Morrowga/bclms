@@ -1,6 +1,7 @@
 <?php
 
 namespace Src\BlendedConcept\Organization\Presentation\HTTP;
+
 use Inertia\Inertia;
 use Src\Auth\Domain\Repositories\DashboardRepositoryInterface;
 
@@ -14,9 +15,8 @@ class DashboardBoardController
     }
     public function dashboard()
     {
-
         $users =  $this->dashboardInertface->getUsers();
-
-        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Index',compact('users'));
+        // return  $users;
+        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Index', compact('users'));
     }
 }

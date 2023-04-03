@@ -10,12 +10,10 @@ class DashboardRepository implements DashboardRepositoryInterface
     public function getUsers()
     {
         $roles = auth()->user()->roles->first()->name;
-        $user = '';
-        if($roles == 'superadmin')
-        {
-            $user = User::with('roles')->orderBy('created_at','desc')->take(3)->get();
+        $users = '';
+        if ($roles == 'superadmin') {
+            $users = User::with('roles')->orderBy('created_at', 'desc')->take(3)->get();
         }
-
-        return $user;
+        return $users;
     }
 }
