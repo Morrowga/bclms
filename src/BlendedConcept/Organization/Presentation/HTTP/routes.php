@@ -8,4 +8,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', function () {
         return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Index');
     })->name('dashboard');
+    Route::get('/organization', function () {
+        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Dashboard');
+    })->name('dashboard.organization');
 });

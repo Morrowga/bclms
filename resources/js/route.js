@@ -3,6 +3,8 @@ const pages ={
     "BlendedConcept/User/Presentation/Resources/Portal/Portal" :import('../../src/BlendedConcept/User/Presentation/Resources/Portal/Portal.vue'),
     //organization
     "BlendedConcept/Organization/Presentation/Resources/Index" : import('../../src/BlendedConcept/Organization/Presentation/Resources/Index.vue'),
+    //org
+    "BlendedConcept/Organization/Presentation/Resources/Dashboard" : import('../../src/BlendedConcept/Organization/Presentation/Resources/Dashboard.vue'),
     //user module
     "BlendedConcept/User/Presentation/Resources/Users/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Index.vue'),
     "BlendedConcept/User/Presentation/Resources/Users/Create" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Create.vue'),
