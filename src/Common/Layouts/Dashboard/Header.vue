@@ -93,7 +93,14 @@
               @click.prevent="Logout"
             >
               <div class="pl-6">
-                <i class="pi pi-sign-out"></i><span class="ml-2">Log Out</span>
+                <i class="pi pi-sign-out"></i>
+                <span class="ml-2">
+                  {{
+                    route().current().includes("studentdashboard")
+                      ? "Go To Teacher"
+                      : "Log Out"
+                  }}
+                </span>
               </div>
             </button>
           </template>

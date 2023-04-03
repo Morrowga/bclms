@@ -32,7 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get("addstudent", [StudentController::class, 'create']);
 
-    Route::get("studentdashboard", [StudentController::class, 'dashboard']);
+    Route::get("studentdashboard", [StudentController::class, 'dashboard'])->name('studentdashboard');
 
     // teacher 
     Route::get("teacherdashboard", [TeacherController::class, 'dashboard'])->name('teacherdashboard');
