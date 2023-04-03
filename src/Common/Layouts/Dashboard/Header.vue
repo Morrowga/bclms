@@ -96,7 +96,7 @@
                 <i class="pi pi-sign-out"></i>
                 <span class="ml-2">
                   {{
-                    route().current().includes("studentdashboard")
+                    route().current()?.includes("studentdashboard")
                       ? "Go To Teacher"
                       : "Log Out"
                   }}

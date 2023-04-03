@@ -69,7 +69,7 @@ class AuthController extends Controller
     {
         $id = $request->id;
         $user = $this->authInterface->verification($id);
-        return Inertia::render('Auth::Presentation/Resources/Verify', [
+        return Inertia::render('Auth/Presentation/Resources/Verify', [
             "verified" => true
         ])->with("successMessage", "Email verify successfully!");
     }

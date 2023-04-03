@@ -37,5 +37,8 @@ const pages ={
     // student dashboard
     "BlendedConcept/User/Presentation/Resources/Students/Dashboard" : import("../../src/BlendedConcept/User/Presentation/Resources/Students/Dashboard.vue"),
 
+    //verify
+    "Auth/Presentation/Resources/Verify" : import("../../src/Auth/Presentation/Resources/Verify.vue"),
+
   };
   export default pages;
