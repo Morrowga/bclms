@@ -8,6 +8,7 @@ use Src\BlendedConcept\User\Presentation\HTTP\PortalController;
 use Src\BlendedConcept\User\Presentation\HTTP\RoleController;
 use Src\BlendedConcept\User\Presentation\HTTP\SettingController;
 use Src\BlendedConcept\User\Presentation\HTTP\StudentController;
+use Src\BlendedConcept\User\Presentation\HTTP\TeacherController;
 use Src\BlendedConcept\User\Presentation\HTTP\UserController;
 
 Route::group(['middleware' => ['auth']], function () {
@@ -29,9 +30,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     // student add
 
-    Route::get("addstudent",[StudentController::class,'create']);
+    Route::get("addstudent", [StudentController::class, 'create']);
 
-    Route::get("studentdashboard",[StudentController::class,'dashboard']);
+    Route::get("studentdashboard", [StudentController::class, 'dashboard']);
+
+    // teacher 
+    Route::get("teacherdashboard", [TeacherController::class, 'dashboard'])->name('teacherdashboard');
 });
 Route::get('/', [PortalController::class, 'index'])->name('portal');
 Route::get("testing/route", function () {

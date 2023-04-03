@@ -24,10 +24,14 @@ const pages ={
 
     //auth
     "Auth/Presentation/Resources/Login" : import("../../src/Auth/Presentation/Resources/Login.vue"),
+    "Auth/Presentation/Resources/Register" : import("../../src/Auth/Presentation/Resources/Register.vue"),
 
 
     // b2b
     "BlendedConcept/User/Presentation/Resources/Students/Create" : import("../../src/BlendedConcept/User/Presentation/Resources/Students/Create.vue"),
+
+    //teacher
+    "BlendedConcept/User/Presentation/Resources/Teachers/Dashboard" : import("../../src/BlendedConcept/User/Presentation/Resources/Teachers/Dashboard.vue"),
 
 
   };

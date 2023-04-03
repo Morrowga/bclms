@@ -33,6 +33,9 @@ class AuthRepository implements AuthRepositoryInterface
             if (auth()->attempt($credentials)) {
                 $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'data' => $user]));
 
+                // if ($user->roles()->first()->name == 'teacher/parent') {
+                //     return redirect()->route('teacherdashboard');
+                // }
                 return redirect()->route('dashboard');
             } else {
                 $error = "Invalid Creditional";

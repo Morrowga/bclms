@@ -50,7 +50,7 @@
         <div v-else>
           <Link
             :href="item.url"
-            class="p-menuitem-link"
+            class="p-menuitem-link mx-2"
             :class="[item.active_class ? 'active' : '']"
             tabindex="-1"
             aria-hidden="true"
@@ -64,7 +64,7 @@
       <template #end>
         <!-- #################### Notification Start ########### -->
 
-        <div class="flex items-center">
+        <div class="flex gap-[10px] items-center">
           <div class="card" v-if="auth != null">
             <Notifications />
           </div>
@@ -72,11 +72,28 @@
             image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
             size="large"
             @click="toggle"
-            class="mr-2"
             shape="circle"
           />
         </div>
-        <div
+        <AvatarMenu
+          v-if="showProfile"
+          :title="props.auth?.data?.name"
+          :subtitle="props.auth?.data?.email"
+          :items="menuItems"
+        >
+          <template #footer>
+            <button
+              class="w-full p-link flex items-center p-2 pl-4 text-color hover:surface-200 border-noround"
+              type="submit"
+              @click.prevent="Logout"
+            >
+              <div class="pl-6">
+                <i class="pi pi-sign-out"></i><span class="ml-2">Log Out</span>
+              </div>
+            </button>
+          </template>
+        </AvatarMenu>
+        <!-- <div
           class="absolute w-auto right-3 z-10 mt-2 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           v-if="showProfile"
         >
@@ -111,7 +128,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </div> -->
       </template>
     </Menubar>
   </div>
@@ -123,6 +140,7 @@ import InputText from "primevue/inputtext";
 import axios from "axios";
 import { router, usePage, Link } from "@inertiajs/vue3";
 import Notifications from "@Composables/Notifications.vue";
+import AvatarMenu from "@Composables/AvatarMenu.vue";
 
 import { computed, ref } from "vue";
 let props = computed(() => usePage().props);
@@ -203,6 +221,28 @@ const items = ref([
   },
 ]);
 
+const menuItems = [
+  {
+    label: "Settings",
+    icon: "pi pi-cog",
+    url: "#",
+  },
+  {
+    label: "Edit Profile",
+    icon: "pi pi-user-edit",
+    url: "#",
+  },
+  {
+    label: "Subscription",
+    icon: "pi pi-money-bill",
+    url: "#",
+  },
+  {
+    label: "Help",
+    icon: "pi pi-compass",
+    url: "#",
+  },
+];
 function Logout() {
   router.post("/logout");
 }

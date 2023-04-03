@@ -16,7 +16,7 @@
     ></Badge>
     <Dialog
       v-model:visible="visible"
-      :style="{ width: '40vw' }"
+      class="w-full md:w-1/2"
       :position="position"
       :modal="true"
       :draggable="false"

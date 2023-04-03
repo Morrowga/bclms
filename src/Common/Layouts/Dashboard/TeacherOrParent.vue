@@ -1,8 +1,11 @@
 <template>
-  <div class="hight-full flex flex-col  bg-cover bg-no-repeat" style="background:url('images/teacherprofile.svg')  100%">
+  <div
+    class="hight-full flex flex-col bg-cover bg-no-repeat"
+    style="background: url('images/teacherprofile.svg') 100%"
+  >
     <Header />
     <main class="grow">
-      <slot/>
+      <slot />
     </main>
   </div>
 </template>
@@ -17,7 +20,7 @@ import Footer from "./Footer.vue";
   height: 100vh;
 }
 Image {
-    width: 141px;
-    height: 141px;
+  width: 141px;
+  height: 141px;
 }
 </style>
