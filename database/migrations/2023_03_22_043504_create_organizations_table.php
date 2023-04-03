@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('plan_id')->default(0);
+            $table->foreignId('plan_id')->nullable()->references('id')->on('plans')->cascadeOnDelete();
             $table->string("name")->nullable();
             $table->longText("description")->nullable();
             $table->string("type")->nullable();
