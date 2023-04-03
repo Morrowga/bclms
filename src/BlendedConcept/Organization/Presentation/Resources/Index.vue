@@ -1,6 +1,6 @@
 <template>
   <!-- for superadmin dashboard check -->
-  <!-- <AdminLayout v-if="auth.data.roles[0].name == 'superadmin'"></AdminLayout> -->
+  <AdminLayout v-if="auth.data.roles[0].name == 'superadmin'"></AdminLayout>
 
   <!-- for teacher and parent roles check -->
   <TeacherOrParent v-if="auth.data.roles[0].name == 'teacher/parent'">
@@ -52,7 +52,7 @@
     </div>
     <!-- end student view -->
   </TeacherOrParent>
-  <TeacherOrParentDashboard />
+  <!-- <TeacherOrParentDashboard /> -->
 </template>
 
 <script setup>
