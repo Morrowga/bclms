@@ -34,7 +34,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get("studentdashboard", [StudentController::class, 'dashboard'])->name('studentdashboard');
 
-    // teacher 
+    Route::post("students", [StudentController::class, 'store'])->name('students.store');
+
+
+    // teacher
     Route::get("teacherdashboard", [TeacherController::class, 'dashboard'])->name('teacherdashboard');
 });
 Route::get('/', [PortalController::class, 'index'])->name('portal');

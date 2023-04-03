@@ -2,7 +2,7 @@
 
 namespace Src\BlendedConcept\User\Presentation\HTTP;
 
-
+use Illuminate\Http\Request;
 use Src\Common\Infrastructure\Laravel\Controller;
 
 
@@ -19,6 +19,10 @@ class StudentController extends Controller
     return Inertia::render('BlendedConcept/User/Presentation/Resources/Students/Create');
   }
 
+  public function store(Request $request)
+  {
+    return $request->all();
+  }
   public function dashboard()
   {
     return Inertia::render('BlendedConcept/User/Presentation/Resources/Students/Dashboard');

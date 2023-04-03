@@ -15,21 +15,21 @@
 
                                 <div class="flex gap-5 justify-center">
                                     <NoLabelInput
-                                        v-model="form.firstname"
+                                        v-model="form.name"
                                         placeholder="First Name"
                                         :type="number"
                                         :error="form.errors?.firstname"
                                         class="w-full"
                                     />
                                     <NoLabelInput
-                                        v-model="form.lastname"
+                                        v-model="form.nickname"
                                         placeholder="Last Name"
                                         :error="form.errors?.lastname"
                                         class="w-96"
                                     />
                                 </div>
                                 <div class="flex pt-7 ">
-                                 <Calendar v-model="form.dob" showIcon  class="w-96 h-10"/>
+                                 <Calendar v-model="form.dob" showIcon  class=" w-96 h-10"/>
                                 </div>
                                <h1
                                     class="text-left pb-5 align-middle text-primary mt-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-lg lg:text-xl dark:text-white">
@@ -49,7 +49,7 @@
                                         placeholder="Grade"
                                         :type="text"
                                         :error="form.errors?.grade"
-                                        class="w-60"
+                                        class="w-96  pb-10"
                                     />
                                 </div>
                                  <h1
@@ -162,46 +162,19 @@
                                 >
                                     Add Profile Picture
                                 </h1>
-                                <div class="flex flex-wrap justify-center mt-3">
-                                    <div
-                                        class="w-6/12 sm:w-4/12 px-4 dropzone"
-                                        @click="SelectImage"
-                                    >
-                                        <input
-                                            type="file"
-                                            ref="file"
-                                            @change="fileData"
-                                            accept="image/*"
-                                            hidden
-                                        />
-                                        <div class="img-area" data-img="">
-                                            <img
-                                                src="https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
-                                                class="shadow-lg rounded max-w-full h-auto align-middle border-none"
-                                            />
-                                            <h3>Upload Image</h3>
-                                            <p>
-                                                Image size must be less than
-                                                <span>2MB</span>
-                                            </p>
-                                        </div>
-                                        <!-- <button type="button" class="select-image">Select Image</button> -->
-                                    </div>
-                                </div>
+                                <ImageUpload v-model="form.image"/>
+
+
                                 <div
-                                    class="flex justify-end items-center p-6 space-x-2 rounded-b dark:border-gray-600"
+                                    class="flex justify-center items-center p-6  rounded-b dark:border-gray-600"
                                 >
-                                    <Link :href="route('users.index')">
-                                        <DefaultButton
-                                            title="Back"
-                                            type="button"
-                                        />
-                                    </Link>
-                                    <DefaultButton
+
+                                <DefaultButton
                                         type="submit"
-                                        title="Create"
-                                        buttonColor="blue"
-                                    />
+                                        title="Add Profile"
+                                        class="w-96"
+                                        buttonColor="blue"/>
+
                                 </div>
                             </div>
                         </div>
@@ -217,53 +190,35 @@ import { ref } from "vue";
 import Student from "@dashboard/Student.vue";
 import Dropdown from "primevue/dropdown";
 import Calendar from "primevue/calendar"
+import ImageUpload from "@Composables/ImageUpload.vue";
 import NoLabelSelectInput from "@Composables/NoLabelSelectInput.vue";
 import NoLabelInput from "@Composables/NoLabelInput.vue";
 import DefaultButton from "@Composables/DefaultButton.vue";
 let props = defineProps(["errors"]);
 let needs = ref({
-name:'need'
+name:''
 })
 let form = useForm({
-    firstname: "",
-    lastname: "",
+    name: "",
+    nickname: "",
     dob: "",
+    grade:"",
     need: "needs",
-    role: "selected",
     image: null,
-    password: "",
 });
 let file = ref(null);
-function SelectImage() {
-    //select image from hidden field
-    file.value.click();
-}
-
-function fileData(event) {
-    let image = event.target.files[0];
-    let imgArea = document.querySelector(".img-area");
-    // file is less than
-    if (image.size < 5000000) {
-        let reader = new FileReader();
-        reader.onload = () => {
-            let allImg = imgArea.querySelectorAll("img");
-            allImg.forEach((item) => item.remove());
-            let imgUrl = reader.result;
-            let img = document.createElement("img");
-            img.src = imgUrl;
-            form.image = event.target.files[0];
-            imgArea.appendChild(img);
-            imgArea.classList.add("active");
-            imgArea.dataset.img = image.name;
-        };
-        reader.readAsDataURL(image);
-    } else {
-        alert("Image size more than 5MB");
-    }
-}
 
 let saveForm = () => {
-   alert("student created in progress");
+    form.post(route("students.store"), {
+        onSuccess: () => {},
+        onError: (error) => {
+            form.setError("firstname", error?.firstname);
+            form.setError("name", error?.name);
+            form.setError("email", error?.email);
+            form.setError("password", error?.password);
+            form.setError("contact_number", error?.contact_number);
+        },
+    });
 };
 </script>
 <style>
