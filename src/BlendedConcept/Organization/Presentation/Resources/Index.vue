@@ -64,7 +64,6 @@
     </div>
     <!-- end student view -->
   </TeacherOrParent>
-  <!-- <TeacherOrParentDashboard /> -->
 </template>
 
 <script setup>
@@ -76,7 +75,6 @@ import ColumnGroup from "primevue/columngroup"; // optional
 import Row from "primevue/row";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import TeacherOrParent from "@Layouts/Dashboard/TeacherOrParent.vue";
-import TeacherOrParentDashboard from "@Layouts/Dashboard/TeacherOrParentDashboard.vue";
 
 let auth = computed(() => usePage().props.auth);
 </script>
