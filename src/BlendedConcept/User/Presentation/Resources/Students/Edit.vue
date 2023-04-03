@@ -16,16 +16,16 @@
 
                 <div class="flex gap-5 justify-center">
                   <NoLabelInput
-                    v-model="form.firstname"
-                    placeholder="First Name"
+                    v-model="form.fullname"
+                    placeholder="Full Name"
                     :type="number"
-                    :error="form.errors?.firstname"
+                    :error="form.errors?.fullname"
                     class="w-full"
                   />
                   <NoLabelInput
-                    v-model="form.lastname"
-                    placeholder="Last Name"
-                    :error="form.errors?.lastname"
+                    v-model="form.nickname"
+                    placeholder="Nickname"
+                    :error="form.errors?.nickname"
                     class="w-96"
                   />
                 </div>
@@ -174,7 +174,10 @@
                     />
                     <div class="img-area" data-img="">
                       <img
-                        src="https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
+                        :src="
+                          props?.student?.image[0]?.original_url ||
+                          'https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg'
+                        "
                         class="shadow-lg rounded max-w-full h-auto align-middle border-none"
                       />
                       <h3>Upload Image</h3>
@@ -189,7 +192,7 @@
                 <div
                   class="flex justify-end items-center p-6 space-x-2 rounded-b dark:border-gray-600"
                 >
-                  <Link :href="route('users.index')">
+                  <Link :href="route('studentdashboard')">
                     <DefaultButton title="Back" type="button" />
                   </Link>
                   <DefaultButton
@@ -208,21 +211,22 @@
 </template>
 <script setup>
 import { useForm, Link } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import Student from "@dashboard/Student.vue";
 import Dropdown from "primevue/dropdown";
 import Calendar from "primevue/calendar";
 import NoLabelSelectInput from "@Composables/NoLabelSelectInput.vue";
 import NoLabelInput from "@Composables/NoLabelInput.vue";
 import DefaultButton from "@Composables/DefaultButton.vue";
-let props = defineProps(["errors"]);
+let props = defineProps(["errors", "student"]);
 let needs = ref({
   name: "need",
 });
 let form = useForm({
-  firstname: "",
-  lastname: "",
-  dob: "",
+  fullname: props.student.name ?? "",
+  nickname: props.student.nickname ?? "",
+  dob: props.student.dob ?? "",
+  grade: props.student.grade ?? "",
   need: "needs",
   role: "selected",
   image: null,
@@ -260,6 +264,9 @@ function fileData(event) {
 let saveForm = () => {
   alert("student created in progress");
 };
+onMounted(() => {
+  console.log(props.student);
+});
 </script>
 <style>
 .dropzone {
