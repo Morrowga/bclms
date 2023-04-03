@@ -64,40 +64,25 @@
               class="mr-2"
               shape="circle"
             />
-            <div
-              class="absolute w-auto right-3 z-10 mt-2 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            <AvatarMenu
               v-if="showProfile"
+              :title="auth?.name"
+              :subtitle="auth?.email"
+              :items="menuItems"
             >
-              <div class="p-5">
-                <div class="flex flex-col">
-                  <div class="grid grid-rows-3 grid-flow-col gap-x-4 gap-y-1">
-                    <img
-                      src="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
-                      class="col-span-5 rounded row-span-3"
-                    />
-
-                    <div class="col-span-2">
-                      <span class="font-bold whitespace-nowrap">
-                        {{ auth?.name }}
-                      </span>
-                    </div>
-                    <div class="row-span-2 col-span-2">{{ auth?.email }}</div>
+              <template #footer>
+                <button
+                  class="w-full p-link flex items-center p-2 pl-4 text-color hover:surface-200 border-noround"
+                  type="submit"
+                  @click.prevent="Logout"
+                >
+                  <div class="pl-6">
+                    <i class="pi pi-sign-out"></i
+                    ><span class="ml-2">Log Out</span>
                   </div>
-
-                  <div class="grid grid-cols-2 grid-rows-3">
-                    <span class="row-span-1 col-span-2"> </span>
-                  </div>
-
-                  <button
-                    type="submit"
-                    @click.prevent="Logout"
-                    class="mt-4 justify-self-end w-100 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                  >
-                    Sign Out
-                  </button>
-                </div>
-              </div>
-            </div>
+                </button>
+              </template>
+            </AvatarMenu>
           </div>
         </div>
       </template>
@@ -115,11 +100,34 @@ import { router } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia";
 import { useInfiniteScroll } from "@vueuse/core";
 import Notifications from "@Composables/Notifications.vue";
+import AvatarMenu from "@Composables/AvatarMenu.vue";
 import axios from "axios";
 let auth = computed(() => usePage().props.auth.data);
 const items = ref([1]);
 const showProfile = ref(false);
 const selectedCountry = ref();
+const menuItems = [
+  {
+    label: "Settings",
+    icon: "pi pi-cog",
+    url: "#",
+  },
+  {
+    label: "Edit Profile",
+    icon: "pi pi-user-edit",
+    url: "#",
+  },
+  {
+    label: "Subscription",
+    icon: "pi pi-money-bill",
+    url: "#",
+  },
+  {
+    label: "Help",
+    icon: "pi pi-compass",
+    url: "#",
+  },
+];
 const countries = ref([
   {
     key: "1",
