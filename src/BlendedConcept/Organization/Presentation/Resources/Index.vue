@@ -8,9 +8,12 @@
       <div class="flex flex-col">
         <Image src="images/profile/profiletwo.png" />
         <div class="description pl-4">
-          <h4 class="text-primary text-[20px] font-semibold leading-[150%]">
+          <Link
+            :href="route('teacherdashboard')"
+            class="text-primary text-[20px] font-semibold leading-[150%]"
+          >
             Teacher One
-          </h4>
+          </Link>
           <p class="text-primary text-[18px] font-normal">Teacher/Parent</p>
         </div>
       </div>
@@ -20,27 +23,36 @@
       <div class="flex flex-col">
         <Image src="images/profile/profiletwo.png" />
         <div class="description pl-4">
-          <h4 class="text-primary text-[20px] font-semibold leading-[150%]">
+          <Link
+            href="#"
+            class="text-primary text-[20px] font-semibold leading-[150%]"
+          >
             Student One
-          </h4>
+          </Link>
           <p class="text-primary text-[18px] font-normal">Student</p>
         </div>
       </div>
       <div class="flex flex-col">
         <Image src="images/profile/profiletwo.png" />
         <div class="description pl-4">
-          <h4 class="text-primary text-[20px] font-semibold leading-[150%]">
+          <Link
+            href="#"
+            class="text-primary text-[20px] font-semibold leading-[150%]"
+          >
             Student Two
-          </h4>
+          </Link>
           <p class="text-primary text-[18px] font-normal">Student</p>
         </div>
       </div>
       <div class="flex flex-col" v-for="i in 10" :key="i">
         <Image src="images/profile/profiletwo.png" />
         <div class="description pl-4">
-          <h4 class="text-primary text-[20px] font-semibold leading-[150%]">
+          <Link
+            href="#"
+            class="text-primary text-[20px] font-semibold leading-[150%]"
+          >
             Student three
-          </h4>
+          </Link>
           <p class="text-primary text-[18px] font-normal">Student</p>
         </div>
       </div>
@@ -57,7 +69,7 @@
 
 <script setup>
 import { computed } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import ColumnGroup from "primevue/columngroup"; // optional
