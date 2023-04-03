@@ -29,9 +29,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     // student add
-
     Route::get("addstudent", [StudentController::class, 'create'])->name('students.store');
     Route::get('editstudent/{student}', [StudentController::class, 'edit'])->name('students.edit');
+    Route::put('updatestudent/{student}', [StudentController::class, 'update'])->name('students.update');
     Route::get("studentdashboard", [StudentController::class, 'dashboard'])->name('studentdashboard');
 
     Route::post("students", [StudentController::class, 'store'])->name('students.store');

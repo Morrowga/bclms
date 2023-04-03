@@ -5,7 +5,7 @@
     >
       <div class="flex flex-col mb-10">
         <div class="relative">
-          <form @submit.prevent="saveForm">
+          <form @submit.prevent="updateForm">
             <div class="grid grid-cols-12 gap-y-2">
               <div class="col-span-12 sm:col-span-6">
                 <h1
@@ -169,7 +169,7 @@
                 >
                   <DefaultButton
                     type="submit"
-                    title="Add Profile"
+                    title="Update Profile"
                     class="w-96"
                     buttonColor="blue"
                   />
@@ -205,6 +205,7 @@ let form = useForm({
   role: "selected",
   image: null,
   password: "",
+  _method: "put",
 });
 let file = ref(null);
 function SelectImage() {
@@ -235,8 +236,17 @@ function fileData(event) {
   }
 }
 
-let saveForm = () => {
-  alert("student created in progress");
+let updateForm = () => {
+  form.post(route("students.update", props.student.id), {
+    onSuccess: () => {
+      form.reset();
+    },
+    onError: (error) => {
+      form.setError("fullname", error?.name);
+      form.setError("nickname", error?.nickname);
+      form.setError("dob", error?.dob);
+    },
+  });
 };
 onMounted(() => {
   console.log(props.student);

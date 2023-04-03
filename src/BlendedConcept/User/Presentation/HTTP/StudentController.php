@@ -30,7 +30,12 @@ class StudentController extends Controller
       'student' => $student
     ]);
   }
-
+  public function update(Request $request, Student $student)
+  {
+    // dd($request->all());
+    $this->studentRepositoryInterface->updateStudent($request, $student);
+    return redirect()->route('studentdashboard')->with("successMessage", "User Updated Successfully!");
+  }
   public function store(Request $request)
   {
     return $request->all();

@@ -9,4 +9,5 @@ interface StudentRepositoryInterface
 {
 
     public function createStudent($request);
+    public function updateStudent($request, $student);
 }
