@@ -125,6 +125,7 @@
   <!-- for teacher and parent roles check -->
   <TeacherOrParent v-if="auth.data.roles[0].name == 'teacher/parent'">
     <div class="flex flex-row mt-10 place-content-center">
+    <!-- teacher profile -->
       <div class="flex flex-col">
         <Image src="images/profile/profiletwo.png" />
         <div class="description pl-4">
@@ -137,36 +138,21 @@
           <p class="text-primary text-[18px] font-normal">Teacher/Parent</p>
         </div>
       </div>
+      <!-- teacher profile end -->
     </div>
     <!-- student show  -->
     <div class="flex flex-row flex-wrap mt-10 gap-4 place-content-center">
-      <div class="flex flex-col">
+      <div class="flex flex-col" v-for="(user,index) in users" :key="user.id">
+        <!-- <Image :src="user?.image[0]?.original_url ?? 'images/profile/profiletwo.png'" /> -->
         <Image src="images/profile/profiletwo.png" />
+
         <div class="description pl-4">
           <Link
             :href="route('studentdashboard')"
-            class="text-primary text-[20px] font-semibold leading-[150%]"
+            class="text-primary text-[16px] font-semibold leading-[150%]"
           >
-            Student One
+           {{user.name}}
           </Link>
-          <p class="text-primary text-[18px] font-normal">Student</p>
-        </div>
-      </div>
-      <div class="flex flex-col">
-        <Image src="images/profile/profiletwo.png" />
-        <div class="description pl-4">
-          <h4 class="text-primary text-[20px] font-semibold leading-[150%]">
-            Student One
-          </h4>
-          <p class="text-primary text-[18px] font-normal">Student</p>
-        </div>
-      </div>
-      <div class="flex flex-col">
-        <Image src="images/profile/profiletwo.png" />
-        <div class="description pl-4">
-          <h4 class="text-primary text-[20px] font-semibold leading-[150%]">
-            Student Two
-          </h4>
           <p class="text-primary text-[18px] font-normal">Student</p>
         </div>
       </div>

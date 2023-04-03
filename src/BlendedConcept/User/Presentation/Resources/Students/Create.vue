@@ -17,20 +17,20 @@
                 <div class="flex gap-5 justify-center">
                   <NoLabelInput
                     v-model="form.name"
-                    placeholder="First Name"
+                    placeholder="Full Name"
                     :type="number"
-                    :error="form.errors?.firstname"
+                    :error="form.errors?.name"
                     class="w-full"
                   />
                   <NoLabelInput
                     v-model="form.nickname"
-                    placeholder="Last Name"
-                    :error="form.errors?.lastname"
+                    placeholder="Nick Name"
+                    :error="form.errors?.nickname"
                     class="w-96"
                   />
                 </div>
                 <div class="flex pt-7">
-                  <Calendar v-model="form.dob" showIcon class="w-96 h-10" />
+                  <Calendar v-model="form.dob" dateFormat="dd-mm-yy" showIcon class="w-96 h-10" />
                 </div>
                 <h1
                   class="text-left pb-5 align-middle text-primary mt-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-lg lg:text-xl dark:text-white"
