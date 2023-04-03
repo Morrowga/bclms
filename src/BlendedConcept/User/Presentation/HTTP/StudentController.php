@@ -32,7 +32,7 @@ class StudentController extends Controller
     ]);
   }
 
-  public function store(StoreStudentRequest $request)
+  public function store(Request $request)
   {
     $this->studentInterface->createStudent($request);
     return redirect()->route('studentdashboard');

@@ -23,9 +23,22 @@ class StudentRepository implements StudentRepositoryInterface
          if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $student->addMediaFromRequest('image')->toMediaCollection('image', 'media_student');
         }
-
     }
 
+    public function updateStudent($request, $student)
+    {
+        $student->update($request->all());
+        //  delete image if reupload or insert if does not exit
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
 
+            $old_image = $student->getFirstMedia('image');
+            if ($old_image != null) {
+                $old_image->delete();
 
+                $student->addMediaFromRequest('image')->toMediaCollection('image', 'media_student');
+            } else {
+                $student->addMediaFromRequest('image')->toMediaCollection('image', 'media_student');
+            }
+        }
+    }
 }
