@@ -32,6 +32,10 @@ const pages ={
 
     //teacher
     "BlendedConcept/User/Presentation/Resources/Teachers/Dashboard" : import("../../src/BlendedConcept/User/Presentation/Resources/Teachers/Dashboard.vue"),
+    // student dashboard
+    "BlendedConcept/User/Presentation/Resources/Students/Dashboard" : import("../../src/BlendedConcept/User/Presentation/Resources/Students/Dashboard.vue"),
+
+
 
 
   };
