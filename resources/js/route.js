@@ -29,6 +29,11 @@ const pages ={
     // b2b
     "BlendedConcept/User/Presentation/Resources/Students/Create" : import("../../src/BlendedConcept/User/Presentation/Resources/Students/Create.vue"),
 
+    // student dashboard
+    "BlendedConcept/User/Presentation/Resources/Students/Dashboard" : import("../../src/BlendedConcept/User/Presentation/Resources/Students/Dashboard.vue"),
+
+
+
 
   };
   export default pages;
