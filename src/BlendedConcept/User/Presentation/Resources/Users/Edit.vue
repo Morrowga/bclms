@@ -44,32 +44,7 @@
                                 >
                                     Add Profile Picture
                                 </h1>
-                                <div class="flex flex-wrap justify-center mt-3">
-                                    <div
-                                        class="w-6/12 sm:w-4/12 px-4 dropzone"
-                                        @click="SelectImage"
-                                    >
-                                        <input
-                                            type="file"
-                                            ref="file"
-                                            @change="fileData"
-                                            accept="image/*"
-                                            hidden
-                                        />
-                                        <div class="img-area" data-img="">
-                                            <img
-                                                :src="form.old_image"
-                                                class="shadow-lg rounded max-w-full h-auto align-middle border-none"
-                                            />
-                                            <h3>Upload Image</h3>
-                                            <p>
-                                                Image size must be less than
-                                                <span>2MB</span>
-                                            </p>
-                                        </div>
-                                        <!-- <button type="button" class="select-image">Select Image</button> -->
-                                    </div>
-                                </div>
+                                <ImageUpload v-model="form.image"/>
                                 <div
                                     class="flex justify-end items-center p-6 space-x-2 rounded-b dark:border-gray-600"
                                 >
@@ -99,6 +74,7 @@ import { ref } from "vue";
 import AdminLayout from "@dashboard/AdminLayout.vue";
 import Dropdown from "primevue/dropdown"
 import NoLabelSelectInput from "@Composables/NoLabelSelectInput.vue";
+import ImageUpload from "@Composables/ImageUpload.vue";
 import NoLabelInput from "@Composables/NoLabelInput.vue";
 import DefaultButton from "@Composables/DefaultButton.vue";
 let props = defineProps(["roles", "errors",'user']);
@@ -109,8 +85,7 @@ let form = useForm({
     email: props.user.email,
     role: props?.user?.roles[0].id,
     _method: "put",
-    image: null,
-    old_image: props?.user?.image[0]?.original_url || "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg",
+    image: props?.user?.image[0]?.original_url || "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg",
 });
 
 let file = ref(null);
