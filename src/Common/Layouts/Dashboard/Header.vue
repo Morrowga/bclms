@@ -6,59 +6,64 @@
         <h1 class="text-h4 text-blue-800 pl-5">Logo</h1>
       </template>
       <template #item="{ item }">
-        <div v-if="item.is_dropdown">
-          <a
-            href="#"
-            class="p-menuitem-link"
-            :class="[item.active_class ? 'active' : '']"
-            tabindex="-1"
-            aria-hidden="true"
-            v-if="item.is_active"
-          >
-            <span class="p-menuitem-icon pi pi-fw pi-user"></span>
-            <span class="p-menuitem-text">{{ item.label }}</span>
-            <span class="p-submenu-icon pi pi-angle-down"></span>
-          </a>
-          <ul role="menu" class="p-submenu-list">
-            <li
-              v-for="(sub_item, index) in item.items"
-              :key="index"
-              id="pv_id_8_2_0"
-              class="p-menuitem"
-              role="menuitem"
-              aria-label="Roles"
-              aria-level="2"
-              aria-setsize="3"
-              aria-posinset="1"
+        <div class="menu-list-custom">
+          <div v-if="item.is_dropdown" class="">
+            <a
+              href="#"
+              class="p-menuitem-link"
+              :class="[item.active_class ? 'active' : '']"
+              tabindex="-1"
+              aria-hidden="true"
+              v-if="item.is_active"
             >
-              <div class="p-menuitem-content">
-                <Link
-                  :href="sub_item.url"
-                  class="p-menuitem-link"
-                  :class="[item.active_class ? 'active' : '']"
-                  tabindex="-1"
-                  aria-hidden="true"
-                >
-                  <span class="p-menuitem-icons" :class="sub_item.icon"></span>
-                  <span class="p-menuitem-text">{{ sub_item.label }}</span>
-                </Link>
-              </div>
-              <!---->
-            </li>
-          </ul>
-        </div>
-        <div v-else>
-          <Link
-            :href="item.url"
-            class="p-menuitem-link"
-            :class="[item.active_class ? 'active' : '']"
-            tabindex="-1"
-            aria-hidden="true"
-            v-if="item.is_active"
-          >
-            <span class="p-menuitem-icon" :class="item.icon"></span>
-            <span class="p-menuitem-text">{{ item.label }}</span>
-          </Link>
+              <span class="p-menuitem-icon pi pi-fw pi-user"></span>
+              <span class="p-menuitem-text">{{ item.label }}</span>
+              <span class="p-submenu-icon pi pi-angle-down"></span>
+            </a>
+            <ul role="menu" class="p-submenu-list">
+              <li
+                v-for="(sub_item, index) in item.items"
+                :key="index"
+                id="pv_id_8_2_0"
+                class="p-menuitem"
+                role="menuitem"
+                aria-label="Roles"
+                aria-level="2"
+                aria-setsize="3"
+                aria-posinset="1"
+              >
+                <div class="p-menuitem-content">
+                  <Link
+                    :href="sub_item.url"
+                    class="p-menuitem-link"
+                    :class="[item.active_class ? 'active' : '']"
+                    tabindex="-1"
+                    aria-hidden="true"
+                  >
+                    <span
+                      class="p-menuitem-icons"
+                      :class="sub_item.icon"
+                    ></span>
+                    <span class="p-menuitem-text">{{ sub_item.label }}</span>
+                  </Link>
+                </div>
+                <!---->
+              </li>
+            </ul>
+          </div>
+          <div v-else>
+            <Link
+              :href="item.url"
+              class="p-menuitem-link"
+              :class="[item.active_class ? 'active' : '']"
+              tabindex="-1"
+              aria-hidden="true"
+              v-if="item.is_active"
+            >
+              <span class="p-menuitem-icon" :class="item.icon"></span>
+              <span class="p-menuitem-text">{{ item.label }}</span>
+            </Link>
+          </div>
         </div>
       </template>
       <template #end>
@@ -264,5 +269,14 @@ const toggle = () => {
   color: #495057;
   background: #e9ecef;
   border-radius: none;
+}
+.p-menuitem {
+  margin: 0 6px !important;
+}
+.p-submenu-list .p-menuitem {
+  margin: 0 !important;
+}
+.p-menuitem-content {
+  border-radius: 0 !important;
 }
 </style>
