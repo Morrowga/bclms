@@ -30,7 +30,9 @@ const pages ={
 
 
     // b2b
+    //students
     "BlendedConcept/User/Presentation/Resources/Students/Create" : import("../../src/BlendedConcept/User/Presentation/Resources/Students/Create.vue"),
+    "BlendedConcept/User/Presentation/Resources/Students/Edit" : import("../../src/BlendedConcept/User/Presentation/Resources/Students/Edit.vue"),
 
     //teacher
     "BlendedConcept/User/Presentation/Resources/Teachers/Dashboard" : import("../../src/BlendedConcept/User/Presentation/Resources/Teachers/Dashboard.vue"),
