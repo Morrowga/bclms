@@ -8,15 +8,13 @@ use Carbon\Carbon;
 class StudentRepository implements StudentRepositoryInterface
 {
 
-
     public function createStudent($request)
     {
-         $request->validated();
 
          $student =  Student::create([
             "name" => $request->name,
             "nickname" => $request->nickname,
-             "dob" => Carbon::parse($request->dob)->format('Y-m-d'),
+             "dob" => $request->dob,
              "grade" => $request->grade
          ]);
 

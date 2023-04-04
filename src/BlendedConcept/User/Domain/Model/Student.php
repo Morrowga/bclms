@@ -37,5 +37,9 @@ class Student extends Model implements HasMedia
     }
 
 
+    public function setDobAttribute($value)
+    {
+       return Carbon::parse($value)->format('Y-m-d');
+    }
 
 }
