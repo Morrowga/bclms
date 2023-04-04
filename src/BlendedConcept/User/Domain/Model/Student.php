@@ -36,7 +36,6 @@ class Student extends Model implements HasMedia
         return $this->getMedia('image');
     }
 
-
     public function setDobAttribute($value)
     {
        return Carbon::parse($value)->format('Y-m-d');

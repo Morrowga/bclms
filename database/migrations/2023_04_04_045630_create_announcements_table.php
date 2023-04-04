@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('devices', function (Blueprint $table) {
+        Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('brand')->nullable();
-            $table->longText('description')->nullable();
+            $table->string('title');
+            $table->string('message');
+            $table->integer('created_by');
+            $table->string('trigger_on');
+            $table->string('send_to');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('devices');
+        Schema::dropIfExists('announcements');
     }
 };
