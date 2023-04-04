@@ -10,6 +10,7 @@ use Src\BlendedConcept\User\Presentation\HTTP\SettingController;
 use Src\BlendedConcept\User\Presentation\HTTP\StudentController;
 use Src\BlendedConcept\User\Presentation\HTTP\TeacherController;
 use Src\BlendedConcept\User\Presentation\HTTP\UserController;
+use Src\BlendedConcept\User\Presentation\HTTP\AnnouncementController;
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('permissions', PermissionController::class);
@@ -33,8 +34,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('editstudent/{student}', [StudentController::class, 'edit'])->name('students.edit');
     Route::put('updatestudent/{student}', [StudentController::class, 'update'])->name('students.update');
     Route::get("studentdashboard", [StudentController::class, 'dashboard'])->name('studentdashboard');
-
     Route::post("students", [StudentController::class, 'store'])->name('students.store');
+
+    // announcement
+    Route::resource("announcements", AnnouncementController::class);
 
 
     // teacher

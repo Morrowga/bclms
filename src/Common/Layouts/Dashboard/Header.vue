@@ -219,7 +219,7 @@ const items = ref([
     ],
   },
   {
-    label: "Announment",
+    label: "Announcement",
     icon: "pi pi-fw pi-calendar",
     url: "/",
     is_active: checkPermission("access_announcement"),
