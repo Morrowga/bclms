@@ -1,21 +1,44 @@
-<template>
-  <div class="hight-full flex flex-col">
-    <Header :auth="auth" :route_data="route" />
-    <main class="grow">
-      <slot />
-    </main>
-    <hr />
-    <Footer />
-  </div>
-</template>
 
+<template>
+  <AppLayout>
+    <template v-if="appContentLayoutNav !== AppContentLayoutNav.Vertical">
+      <DefaultLayoutWithVerticalNav v-bind="layoutAttrs">
+        <slot />
+      </DefaultLayoutWithVerticalNav>
+    </template>
+    <template v-else>
+      <DefaultLayoutWithHorizontalNav v-bind="layoutAttrs">
+        <slot />
+      </DefaultLayoutWithHorizontalNav>
+    </template>
+  </AppLayout>
+</template>
 <script setup>
-import Header from "./Header.vue";
-import Footer from "./Footer.vue";
-defineProps(["route"]);
+import { useSkins } from "@core/composable/useSkins";
+import { useThemeConfig } from "@core/composable/useThemeConfig";
+import AppLayout from "@AppRoot/AppLayout.vue";
+
+// @layouts plugin
+import { AppContentLayoutNav } from "@layouts/enums";
+
+const DefaultLayoutWithHorizontalNav = defineAsyncComponent(() =>
+  import("@/layouts/components/DefaultLayoutWithHorizontalNav.vue")
+);
+const DefaultLayoutWithVerticalNav = defineAsyncComponent(() =>
+  import("@layouts/components/DefaultLayoutWithVerticalNav.vue")
+);
+const { width: windowWidth } = useWindowSize();
+const { appContentLayoutNav, switchToVerticalNavOnLtOverlayNavBreakpoint } =
+  useThemeConfig();
+
+// Remove below composable usage if you are not using horizontal nav layout in your app
+switchToVerticalNavOnLtOverlayNavBreakpoint(windowWidth);
+
+const { layoutAttrs, injectSkinClasses } = useSkins();
+
+injectSkinClasses();
 </script>
-<style>
-.hight-full {
-  height: 100vh;
-}
+<style lang="scss">
+// As we are using `layouts` plugin we need its styles to be imported
+@use "@layouts/styles/default-layout";
 </style>
