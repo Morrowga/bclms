@@ -1,24 +1,13 @@
 <script setup>
 import { initialAbility } from "@/plugins/casl/ability";
 import { useAppAbility } from "@/plugins/casl/useAppAbility";
-
+import { router, usePage, Link } from "@inertiajs/vue3";
 const ability = useAppAbility();
 const userData = JSON.parse(localStorage.getItem("userData") || "null");
 
 const logout = () => {
-  // Remove "userData" from localStorage
-  localStorage.removeItem("userData");
 
-  // Remove "accessToken" from localStorage
-  localStorage.removeItem("accessToken");
-  // router.push('/login').then(() => {
-
-  //   // Remove "userAbilities" from localStorage
-  //   localStorage.removeItem('userAbilities')
-
-  //   // Reset ability to initial ability
-  //   ability.update(initialAbility)
-  // })
+ router.post("/logout");
 };
 </script>
 
