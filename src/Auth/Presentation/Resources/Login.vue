@@ -11,11 +11,11 @@ let form = useForm({
 });
 const rememberMe = ref(false);
 
-const login = () => {
-   form.post(route("login"), form, {
+const onSubmit = () => {
+   form.post(route("login"), {
     onSuccess: () => {},
     onError: (error) => {
-      console.log(form.errors,'Hello')
+
     },
   });
 };
@@ -45,7 +45,7 @@ const login = () => {
 
         </VCardText>
         <VCardText>
-          <VForm ref="refVForm"  @submit.prevent="onSubmit">
+          <VForm   @submit.prevent="onSubmit">
             <VRow>
               <!-- email -->
               <VCol cols="12">
