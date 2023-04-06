@@ -29,7 +29,7 @@ export default defineConfig({
       },
     }),
     Components({
-      dirs: ['resources/js/@core/components', 'resources/js/views/demos'],
+      dirs: ['./src/Common/UI/js/@core/components', './src/Common/UI/js/views/demos'],
       dts: true,
     }),
     AutoImport({
@@ -68,8 +68,5 @@ export default defineConfig({
       '@validators': fileURLToPath(new URL('./src/Common/UI/js/@core/utils/validators', import.meta.url)),
       'apexcharts': fileURLToPath(new URL('node_modules/apexcharts-clevision', import.meta.url)),
     },
-  },
-  build: {
-    chunkSizeWarningLimit: 5000,
   }
 })
