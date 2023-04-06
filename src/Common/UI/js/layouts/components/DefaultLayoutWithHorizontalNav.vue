@@ -11,34 +11,48 @@ import NavSearchBar from "@/layouts/components/NavSearchBar.vue";
 import UserProfile from "@/layouts/components/UserProfile.vue";
 import { HorizontalNavLayout } from "@layouts";
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
+import MobileSidebar from "./MobileSidebar.vue";
 const { appRouteTransition } = useThemeConfig();
 import { Link } from "@inertiajs/inertia-vue3";
+import { ref } from "vue";
+let drawer = ref(false);
+let toggle = () => {
+  drawer.value = !drawer.value;
+};
 </script>
 <template>
-  <HorizontalNavLayout :nav-items="navItems">
+  <HorizontalNavLayout :nav-items="navItems" :drawer="drawer">
     <!-- :point_right: navbar -->
     <template #navbar>
-      <v-app-bar class="px-4" elevation="0">
-        <Link to="/" class="d-flex align-start gap-x-2">
+      <v-app-bar elevation="1">
+        <!-- mobile side navigation -->
+        <v-app-bar-nav-icon
+          variant="text"
+          @click="toggle"
+          class="d-flex d-md-none"
+        ></v-app-bar-nav-icon>
+
+        <Link to="/" class="d-none d-md-flex align-start gap-x-2 ps-15">
           <VNodeRenderer :nodes="themeConfig.app.logo" />
           <h1 class="font-weight-bold leading-normal text-xl">
             {{ themeConfig.app.title }}
           </h1>
         </Link>
-        <VSpacer />
+        <VSpacer class="d-none d-md-flex" />
         <NavSearchBar trigger-btn-class="ms-lg-n3" />
         <VSpacer />
         <NavbarThemeSwitcher class="me-1" />
         <NavbarShortcuts class="me-1" />
         <NavBarNotifications class="me-3" />
-        <UserProfile />
+        <UserProfile class="d-none d-md-flex pe-15" />
+        <UserProfile class="d-flex d-md-none pe-3" />
       </v-app-bar>
     </template>
     <!-- :point_right: Pages -->
     <Transition :name="appRouteTransition" mode="out-in">
-      <v-main class="" style="height: 600px">
+      <main class="" style="height: 600px">
         <slot> </slot>
-      </v-main>
+      </main>
     </Transition>
     <!-- :point_right: Footer -->
     <template #footer>

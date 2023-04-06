@@ -3,11 +3,22 @@ import { HorizontalNav } from "@layouts/components";
 
 // import { useLayouts } from '@layouts'
 import { useLayouts } from "@layouts/composable/useLayouts";
+import { ref, watch } from "vue";
+import HorizontalMobileNav from "./HorizontalMobileNav.vue";
+import HorizontalMobileNavLink from "./HorizontalMobileNavLink.vue";
+import HorizontalMobileNavGroup from "./HorizontalMobileNavGroup.vue";
+import { themeConfig } from "@themeConfig";
+import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
+import { Link } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
   navItems: {
     type: null,
     required: true,
+  },
+  drawer: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -16,6 +27,16 @@ const { width: windowWidth } = useWindowSize();
 const shallShowPageLoading = ref(false);
 
 const { _layoutClasses: layoutClasses, isNavbarBlurEnabled } = useLayouts();
+let open = ref(false);
+
+watch(props, (value) => {
+  open.value = !open.value;
+});
+const resolveNavItemComponent = (item) => {
+  if ("children" in item) return HorizontalMobileNavGroup;
+
+  return HorizontalMobileNavLink;
+};
 </script>
 
 <template>
@@ -23,6 +44,29 @@ const { _layoutClasses: layoutClasses, isNavbarBlurEnabled } = useLayouts();
     class="layout-wrapper"
     :class="layoutClasses(windowWidth, windowScrollY)"
   >
+    <HorizontalMobileNav>
+      <v-navigation-drawer v-model="open" temporary>
+        <template v-slot:prepend>
+          <Link to="/" class="d-flex align-start gap-x-2 pa-5">
+            <VNodeRenderer :nodes="themeConfig.app.logo" />
+            <h1 class="font-weight-bold leading-normal text-xl">
+              {{ themeConfig.app.title }}
+            </h1>
+          </Link>
+        </template>
+
+        <v-divider></v-divider>
+
+        <v-list density="compact" nav>
+          <Component
+            :is="resolveNavItemComponent(item)"
+            v-for="(item, index) in navItems"
+            :key="index"
+            :item="item"
+          />
+        </v-list>
+      </v-navigation-drawer>
+    </HorizontalMobileNav>
     <div
       class="layout-navbar-and-nav-container"
       :class="isNavbarBlurEnabled && 'header-blur'"
@@ -34,11 +78,9 @@ const { _layoutClasses: layoutClasses, isNavbarBlurEnabled } = useLayouts();
         </div>
       </div>
       <!-- 👉 Navigation -->
-      <div class="layout-horizontal-nav">
+      <div class="layout-horizontal-nav d-none d-md-flex pb-15">
         <div class="horizontal-nav-content-container">
-          <v-app-bar class="px-4" elevation="0">
-            <HorizontalNav :nav-items="navItems" />
-          </v-app-bar>
+          <HorizontalNav :nav-items="navItems" />
         </div>
       </div>
     </div>
