@@ -1,289 +1,445 @@
-<template>
-  <AdminLayout :auth="auth">
-    <div class="flex flex-wrap justify-content-center gap-2 mb-2">
-      <ConfirmDialog group="positionDialog"></ConfirmDialog>
-    </div>
-    <div class="card flex justify-content-center">
-      <Toast />
-    </div>
+<script setup>
+import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
+import { useUserListStore } from "@/views/apps/user/useUserListStore";
+import { avatarText } from "@core/utils/formatters";
+import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import { Link } from "@inertiajs/vue3";
+import MoreBtn from "@core/components/MoreBtn.vue";
 
-    <div
-      class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 rounded-lg bg-white p-6 shadow-lg my-4"
-    >
-      <div class="flex flex-col mb-10">
-        <div class="relative">
-          <vue-good-table
-            class="data-table"
-            mode="remote"
-            @page-change="onPageChange"
-            @column-filter="onColumnFilter"
-            @per-page-change="onPerPageChange"
-            :totalRows="props.permissions.meta.total"
-            :line-numbers="true"
-            styleClass="vgt-table striped"
-            :pagination-options="options"
-            :rows="props.permissions.data"
-            :columns="columns"
+const searchQuery = ref("");
+const selectedRole = ref();
+const selectedPlan = ref();
+const selectedStatus = ref();
+const rowPerPage = ref(10);
+const currentPage = ref(1);
+const totalPage = ref(1);
+const totalUsers = ref(0);
+const users = ref([]);
+
+// 👉 Fetching users
+const fetchUsers = () => {};
+
+watchEffect(fetchUsers);
+
+// 👉 watching current page
+watchEffect(() => {
+  if (currentPage.value > totalPage.value) currentPage.value = totalPage.value;
+});
+
+// 👉 search filters
+const roles = [
+  {
+    title: "Admin",
+    value: "admin",
+  },
+  {
+    title: "Author",
+    value: "author",
+  },
+  {
+    title: "Editor",
+    value: "editor",
+  },
+  {
+    title: "Maintainer",
+    value: "maintainer",
+  },
+  {
+    title: "Subscriber",
+    value: "subscriber",
+  },
+];
+
+const plans = [
+  {
+    title: "Basic",
+    value: "basic",
+  },
+  {
+    title: "Company",
+    value: "company",
+  },
+  {
+    title: "Enterprise",
+    value: "enterprise",
+  },
+  {
+    title: "Team",
+    value: "team",
+  },
+];
+
+const status = [
+  {
+    title: "Pending",
+    value: "pending",
+  },
+  {
+    title: "Active",
+    value: "active",
+  },
+  {
+    title: "Inactive",
+    value: "inactive",
+  },
+];
+
+const resolveUserRoleVariant = (role) => {
+  const roleLowerCase = role.toLowerCase();
+  if (roleLowerCase === "subscriber")
+    return {
+      color: "primary",
+      icon: "mdi-account-outline",
+    };
+  if (roleLowerCase === "author")
+    return {
+      color: "warning",
+      icon: "mdi-cog-outline",
+    };
+  if (roleLowerCase === "maintainer")
+    return {
+      color: "success",
+      icon: "mdi-chart-donut",
+    };
+  if (roleLowerCase === "editor")
+    return {
+      color: "info",
+      icon: "mdi-pencil-outline",
+    };
+  if (roleLowerCase === "admin")
+    return {
+      color: "error",
+      icon: "mdi-laptop",
+    };
+
+  return {
+    color: "primary",
+    icon: "mdi-account-outline",
+  };
+};
+
+const resolveUserStatusVariant = (stat) => {
+  const statLowerCase = stat.toLowerCase();
+  if (statLowerCase === "pending") return "warning";
+  if (statLowerCase === "active") return "success";
+  if (statLowerCase === "inactive") return "secondary";
+
+  return "primary";
+};
+
+const isAddNewUserDrawerVisible = ref(false);
+
+// 👉 watching current page
+watchEffect(() => {
+  if (currentPage.value > totalPage.value) currentPage.value = totalPage.value;
+});
+
+// 👉 Computing pagination data
+const paginationData = computed(() => {
+  const firstIndex = users.value.length
+    ? (currentPage.value - 1) * rowPerPage.value + 1
+    : 0;
+  const lastIndex =
+    users.value.length + (currentPage.value - 1) * rowPerPage.value;
+
+  return `${firstIndex}-${lastIndex} of ${totalUsers.value}`;
+});
+
+// SECTION Checkbox toggle
+const selectedRows = ref([]);
+const selectAllUser = ref(false);
+
+// 👉 add/remove all checkbox ids in array
+const selectUnselectAll = () => {
+  selectAllUser.value = !selectAllUser.value;
+  if (selectAllUser.value) {
+    users.value.forEach((user) => {
+      if (!selectedRows.value.includes(`check${user.id}`))
+        selectedRows.value.push(`check${user.id}`);
+    });
+  } else {
+    selectedRows.value = [];
+  }
+};
+
+// 👉 watch if checkbox array is empty all select should be uncheck
+watch(
+  selectedRows,
+  () => {
+    if (!selectedRows.value.length) selectAllUser.value = false;
+  },
+  { deep: true }
+);
+
+const addRemoveIndividualCheckbox = (checkID) => {
+  if (selectedRows.value.includes(checkID)) {
+    const index = selectedRows.value.indexOf(checkID);
+
+    selectedRows.value.splice(index, 1);
+  } else {
+    selectedRows.value.push(checkID);
+    selectAllUser.value = true;
+  }
+};
+
+const addNewUser = (userData) => {};
+
+const computedMoreList = computed(() => {
+  return (paramId) => [
+    {
+      title: "View",
+      value: "view",
+      prependIcon: "mdi-eye-outline",
+      to: {
+        name: "apps-user-view-id",
+        params: { id: paramId },
+      },
+    },
+    {
+      title: "Edit",
+      value: "edit",
+      prependIcon: "mdi-pencil-outline",
+    },
+    {
+      title: "Delete",
+      value: "delete",
+      prependIcon: "mdi-delete-outline",
+    },
+  ];
+});
+</script>
+
+<template>
+  <AdminLayout>
+    <section>
+      <VCard title="Search Filters" class="mb-6">
+        <VCardText>
+          <VRow>
+            <!-- 👉 Select Role -->
+            <VCol cols="12" sm="4">
+              <VSelect
+                v-model="selectedRole"
+                label="Select Role"
+                :items="roles"
+                clearable
+                clear-icon="mdi-close"
+              />
+            </VCol>
+
+            <!-- 👉 Select Plan -->
+            <VCol cols="12" sm="4">
+              <VSelect
+                v-model="selectedPlan"
+                label="Select Plan"
+                :items="plans"
+                clearable
+                clear-icon="mdi-close"
+              />
+            </VCol>
+
+            <!-- 👉 Select Status -->
+            <VCol cols="12" sm="4">
+              <VSelect
+                v-model="selectedStatus"
+                label="Select Status"
+                :items="status"
+                clearable
+                clear-icon="mdi-close"
+              />
+            </VCol>
+          </VRow>
+        </VCardText>
+      </VCard>
+
+      <VCard>
+        <VCardText class="d-flex flex-wrap gap-4">
+          <!-- 👉 Export button -->
+          <VBtn
+            variant="tonal"
+            color="secondary"
+            prepend-icon="mdi-tray-arrow-up"
           >
-            <template #table-actions>
-              <div class="flex">
-                <div class="relative w-full mr-3">
-                  <div
-                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+            Export
+          </VBtn>
+
+          <VSpacer />
+
+          <div class="app-user-search-filter d-flex align-center gap-6">
+            <!-- 👉 Search  -->
+            <VTextField
+              v-model="searchQuery"
+              placeholder="Search User"
+              density="compact"
+            />
+
+            <!-- 👉 Add user button -->
+            <VBtn @click="isAddNewUserDrawerVisible = true"> Add User </VBtn>
+          </div>
+        </VCardText>
+
+        <VDivider />
+
+        <VTable class="text-no-wrap table-header-bg rounded-0">
+          <!-- 👉 table head -->
+          <thead>
+            <tr>
+              <th scope="col" style="width: 3rem">
+                <VCheckbox
+                  :model-value="selectAllUser"
+                  :indeterminate="
+                    users.length !== selectedRows.length &&
+                    !!selectedRows.length
+                  "
+                  class="mx-1"
+                  @click="selectUnselectAll"
+                />
+              </th>
+              <th scope="col">USER</th>
+              <th scope="col">EMAIL</th>
+              <th scope="col">ROLE</th>
+              <th scope="col">PLAN</th>
+              <th scope="col">STATUS</th>
+              <th scope="col">ACTIONS</th>
+            </tr>
+          </thead>
+
+          <!-- 👉 table body -->
+          <tbody>
+            <tr v-for="user in users" :key="user.id">
+              <!-- 👉 Checkbox -->
+              <td>
+                <VCheckbox
+                  :id="`check${user.id}`"
+                  :model-value="selectedRows.includes(`check${user.id}`)"
+                  class="mx-1"
+                  @click="addRemoveIndividualCheckbox(`check${user.id}`)"
+                />
+              </td>
+
+              <!-- 👉 User -->
+              <td>
+                <div class="d-flex align-center">
+                  <VAvatar
+                    variant="tonal"
+                    :color="resolveUserRoleVariant(user.role).color"
+                    class="me-3"
+                    size="34"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
+                    <VImg v-if="user.avatar" :src="user.avatar" />
+                    <span v-else class="text-sm">{{
+                      avatarText(user.fullName)
+                    }}</span>
+                  </VAvatar>
+
+                  <div class="d-flex flex-column">
+                    <h6 class="text-sm">
+                      <Link href="#" class="font-weight-medium user-list-name">
+                        {{ user.fullName }}
+                      </Link>
+                    </h6>
+                    <span class="text-xs">@{{ user.username }}</span>
                   </div>
-                  <input
-                    type="text"
-                    id="simple-search"
-                    @keyup.enter="loadItems"
-                    v-model="serverParams.search"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search"
-                  />
                 </div>
-                <Link
-                  :href="route('permissions.create')"
-                  v-if="checkPermission('create_permission')"
+              </td>
+
+              <!-- 👉 Email -->
+              <td>
+                {{ user.email }}
+              </td>
+
+              <!-- 👉 Role -->
+              <td>
+                <VIcon
+                  :icon="resolveUserRoleVariant(user.role).icon"
+                  :color="resolveUserRoleVariant(user.role).color"
+                  :size="22"
+                  class="me-3"
+                />
+                <span class="text-capitalize text-base">{{ user.role }}</span>
+              </td>
+
+              <!-- 👉 Plan -->
+              <td class="text-high-emphasis text-base text-capitalize">
+                {{ user.currentPlan }}
+              </td>
+
+              <!-- 👉 Status -->
+              <td>
+                <VChip
+                  :color="resolveUserStatusVariant(user.status)"
+                  size="small"
+                  class="text-capitalize"
                 >
-                  <AddIcon />
-                </Link>
-              </div>
-            </template>
-            <template #table-row="props">
-              <div
-                v-if="props.column.field == 'permission'"
-                class="flex flex-wrap"
-              >
-                <span
-                  v-for="permission in props.row.permissions"
-                  :key="permission.id"
-                  class="bg-blue-100 mt-2 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
-                >
-                  {{ permission.name }}
-                </span>
-              </div>
-              <div
-                v-if="props.column.field == 'description'"
-                class="flex flex-wrap"
-              >
-                <span>{{ truncatedText(props.row.description) }}</span>
-              </div>
-              <div
-                v-if="props.column.field == 'action'"
-                class="flex flex-nowrap"
-              >
-                <Link :href="route('permissions.edit', { id: props.row.id })">
-                  <IconButton
-                    buttonColor="yellow"
-                    v-if="checkPermission('edit_permission')"
-                  >
-                    <i class="pi pi-icon pi-file-edit"></i>
-                  </IconButton>
-                </Link>
-                <IconButton
-                  @click="destroy(props.row.id)"
-                  buttonColor="red"
-                  v-if="checkPermission('delete_permission')"
-                >
-                  <i
-                    class="pi pi-icon pi-delete-left"
-                    style="font-size: 1rem"
-                  ></i>
-                </IconButton>
-              </div>
-            </template>
-          </vue-good-table>
-        </div>
-      </div>
-    </div>
+                  {{ user.status }}
+                </VChip>
+              </td>
+
+              <!-- 👉 Actions -->
+              <td class="text-center" style="width: 5rem">
+                <MoreBtn :menu-list="computedMoreList(user.id)" item-props />
+              </td>
+            </tr>
+          </tbody>
+
+          <!-- 👉 table footer  -->
+          <tfoot v-show="!users.length">
+            <tr>
+              <td colspan="7" class="text-center">No data available</td>
+            </tr>
+          </tfoot>
+        </VTable>
+
+        <VDivider />
+
+        <VCardText class="d-flex align-center flex-wrap justify-end gap-4 pa-2">
+          <div class="d-flex align-center me-3" style="width: 171px">
+            <span class="text-no-wrap me-3">Rows per page:</span>
+
+            <VSelect
+              v-model="rowPerPage"
+              density="compact"
+              variant="plain"
+              class="mt-n4"
+              :items="[10, 20, 30, 50]"
+            />
+          </div>
+
+          <div class="d-flex align-center">
+            <h6 class="text-sm font-weight-regular">
+              {{ paginationData }}
+            </h6>
+
+            <VPagination
+              v-model="currentPage"
+              size="small"
+              :total-visible="1"
+              :length="totalPage"
+              @next="selectedRows = []"
+              @prev="selectedRows = []"
+            />
+          </div>
+        </VCardText>
+      </VCard>
+
+      <!-- 👉 Add New User -->
+      <AddNewUserDrawer
+        v-model:isDrawerOpen="isAddNewUserDrawerVisible"
+        @user-data="addNewUser"
+      />
+    </section>
   </AdminLayout>
 </template>
 
-<script setup>
-import { Link, usePage } from "@inertiajs/vue3";
-import { router } from "@inertiajs/core";
-import { computed, onMounted, ref } from "vue";
-import AdminLayout from "@dashboard/AdminLayout.vue";
-import IconButton from "@Composables/IconButton.vue";
-
-import { useConfirm } from "primevue/useconfirm";
-import { useToast } from "primevue/usetoast";
-let Confirm = useConfirm();
-let toast = useToast();
-
-let props = defineProps(["permissions", "flash", "auth"]);
-let permissions = computed(() => usePage().props.auth.data.permissions);
-let columns = [
-  {
-    label: "Name",
-    field: "name",
-    sortable: false,
-    filterOptions: {
-      styleClass: "class1", // class to be added to the parent th element
-      enabled: true, // enable filter for this column
-      placeholder: "Filter All", // placeholder for filter input
-      filterDropdownItems: ["access", "edit", "show", "create", "delete"], // dropdown (with selected values) instead of text input
-      trigger: "enter", //only trigger on enter not on keyup
-    },
-  },
-  {
-    label: "Description",
-    field: "description",
-    sortable: false,
-  },
-  {
-    label: "Guard Name",
-    field: "guard_name",
-    sortable: false,
-  },
-  {
-    label: "Action",
-    field: "action",
-    sortable: false,
-  },
-];
-//initial state
-let serverParams = ref({
-  columnFilters: {},
-  search: "",
-  sort: {
-    field: "",
-    type: "",
-  },
-  page: 1,
-  perPage: 10,
-});
-
-// options for datatable
-let options = ref({
-  enabled: true,
-  mode: "pages",
-  perPage: props.permissions.meta.per_page,
-  setCurrentPage: props.permissions.meta.current_page,
-  perPageDropdown: [10, 20, 50, 100],
-  dropdownAllowAll: false,
-});
-//updateParams
-let updateParams = (newProps) => {
-  serverParams.value = Object.assign({}, serverParams.value, newProps);
-};
-//page change on pagination
-let onPageChange = (params) => {
-  updateParams({ page: params.currentPage });
-  loadItems();
-};
-
-// perpage change selectbox
-let onPerPageChange = (params) => {
-  updateParams({ page: params.currentPage });
-};
-
-// filter folumn by name
-let onColumnFilter = (params) => {
-  updateParams(params);
-  serverParams.value.page = 1;
-  loadItems();
-};
-
-// query params to controller
-let getQueryParams = () => {
-  let data = {
-    page: serverParams.value.page,
-    perPage: serverParams.value.perPage,
-    search: serverParams.value.search,
-  };
-
-  for (const [key, value] of Object.entries(serverParams.value.columnFilters)) {
-    if (value) {
-      data[key] = value;
-    }
-  }
-  return data;
-};
-// load items is what brings back the rows from server
-let loadItems = () => {
-  router.get(route(route().current()), getQueryParams(), {
-    replace: false,
-    preserveState: true,
-    preserveScroll: true,
-  });
-};
-//truncatedText
-let truncatedText = (text) => {
-  if (text) {
-    if (text?.length <= 30) {
-      return text;
-    } else {
-      return text?.substring(0, 30) + "...";
-    }
-  }
-};
-//check permission
-let checkPermission = (permission) => {
-  return permissions.value.includes(permission);
-};
-// delete record
-function destroy(id) {
-  Confirm.require({
-    group: "positionDialog",
-    message: "Do you want to delete this record?",
-    header: "Delete Confirmation",
-    icon: "pi pi-info-circle",
-    position: "center",
-    accept: () => {
-      router.delete(`permissions/${id}`, {
-        onSuccess: () => {
-          toast.add({
-            severity: "success",
-            summary: "Delected",
-            detail: "Permission Delected successfully",
-            life: 3000,
-          });
-        },
-      });
-    },
-    reject: () => {
-      toast.add({
-        severity: "success",
-        summary: "Rejected",
-        detail: "You have rejected",
-        life: 3000,
-      });
-    },
-  });
+<style lang="scss">
+.app-user-search-filter {
+  inline-size: 24.0625rem;
 }
-onMounted(() => {
-  if (props?.flash?.successMessage) {
-    toast.add({
-      severity: "success",
-      summary: "Role created",
-      detail: props?.flash?.successMessage,
-      life: 3000,
-    });
-  }
-});
-</script>
-<style scoped>
-.data-table :deep(.vgt-wrap__footer select) {
-  width: 80px;
+
+.text-capitalize {
+  text-transform: capitalize;
 }
-.data-table :deep(.vgt-wrap__footer .footer__row-count::after) {
-  display: none;
-}
-.data-table :deep(.vgt-global-search form) {
-  width: 25%;
+
+.user-list-name:not(:hover) {
+  color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
 </style>

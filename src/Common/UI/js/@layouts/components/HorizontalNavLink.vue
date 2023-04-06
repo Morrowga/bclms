@@ -1,5 +1,5 @@
 <script setup>
-import { useLayouts } from "@layouts";
+// import { useLayouts } from "@layouts";
 import { config } from "@layouts/config";
 import { Link } from "@inertiajs/inertia-vue3";
 import { router } from "@inertiajs/core";
@@ -19,7 +19,7 @@ const props = defineProps({
   },
 });
 
-const { dynamicI18nProps } = useLayouts();
+// const { dynamicI18nProps } = useLayouts();
 let isLinkActive = (currentRoute) => {
   return route().current().includes(currentRoute);
 };
