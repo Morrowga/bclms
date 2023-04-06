@@ -25,7 +25,7 @@ const pages ={
 
         // //auth
         "Auth/Presentation/Resources/Login" : import("../../src/Auth/Presentation/Resources/Login.vue"),
-        // "Auth/Presentation/Resources/Register" : import("../../src/Auth/Presentation/Resources/Register.vue"),
+        "Auth/Presentation/Resources/Register" : import("../../src/Auth/Presentation/Resources/Register.vue"),
 
 
         // // b2b
