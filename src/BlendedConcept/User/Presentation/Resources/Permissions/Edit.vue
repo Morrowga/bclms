@@ -3,6 +3,7 @@ import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import AppDrawerHeaderSection from "@core/components/AppDrawerHeaderSection.vue";
 import { emailValidator, requiredValidator } from "@validators";
 import { computed } from "vue";
+import { useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
   isDrawerOpen: {
@@ -18,8 +19,10 @@ const emit = defineEmits(["update:isDrawerOpen", "userData"]);
 
 const isFormValid = ref(false);
 const refForm = ref();
-const permission_name = props.permission?.name;
-const permission_description = props.permission?.description;
+const form = useForm({
+  name: "",
+  description: "",
+});
 // 👉 drawer close
 const closeNavigationDrawer = () => {
   emit("update:isDrawerOpen", false);
@@ -34,8 +37,8 @@ const onSubmit = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
       emit("userData", {
-        name: permission_name.value,
-        description: permission_description.value,
+        name: form.name,
+        description: form.description,
       });
       emit("update:isDrawerOpen", false);
       nextTick(() => {
@@ -49,6 +52,10 @@ const onSubmit = () => {
 const handleDrawerModelValueUpdate = (val) => {
   emit("update:isDrawerOpen", val);
 };
+onUpdated(() => {
+  form.name = props.permission?.name;
+  form.description = props.permission?.description;
+});
 </script>
 
 <template>
@@ -72,15 +79,16 @@ const handleDrawerModelValueUpdate = (val) => {
               <!-- 👉 Full name -->
               <VCol cols="12">
                 <VTextField
-                  v-model="permission_name"
+                  v-model="form.name"
                   :rules="[requiredValidator]"
                   label="Permission Name"
                 />
               </VCol>
               <!-- 👉 Full name -->
+
               <VCol cols="12">
                 <VTextarea
-                  v-model="permission_description"
+                  v-model="form.description"
                   :rules="[requiredValidator]"
                   label="Description"
                 />

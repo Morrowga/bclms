@@ -1,6 +1,7 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { Ziggy } from './ziggy';
+import Swal from 'sweetalert2';
 /* eslint-disable import/order */
 // import '@/@fake-db/db'
 import '@/@iconify/icons-bundle'
@@ -18,7 +19,7 @@ import '@styles/styles.scss'
 // loadFonts()
 //this is popup
 
-
+window.Swal = Swal;
 // confirm dialog
 import pages from './route';
 //core
