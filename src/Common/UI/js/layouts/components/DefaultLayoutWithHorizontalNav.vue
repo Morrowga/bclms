@@ -9,7 +9,7 @@ import NavbarShortcuts from "@/layouts/components/NavbarShortcuts.vue";
 import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
 import NavSearchBar from "@/layouts/components/NavSearchBar.vue";
 import UserProfile from "@/layouts/components/UserProfile.vue";
-import  HorizontalNavLayout  from "@layouts/components/HorizontalNavLayout.vue";
+import HorizontalNavLayout from "@layouts/components/HorizontalNavLayout.vue";
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import MobileSidebar from "./MobileSidebar.vue";
 const { appRouteTransition } = useThemeConfig();
@@ -50,7 +50,7 @@ let toggle = () => {
     </template>
     <!-- :point_right: Pages -->
     <Transition :name="appRouteTransition" mode="out-in">
-      <main class="" style="height: 600px">
+      <main class="">
         <slot> </slot>
       </main>
     </Transition>

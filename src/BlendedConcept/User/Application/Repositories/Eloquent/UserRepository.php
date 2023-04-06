@@ -102,9 +102,10 @@ class UserRepository implements UserRepositoryInterface
     public function getPermission($filters = [])
     {
         $permissions = PermissionResource::collection(Permission::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
-        $default_permissions = Permission::all();
+        $default_permissions = Permission::orderBy('id', 'desc')->get();
         return [
-            "permissions" => $permissions,
+            // "permissions" => $permissions,
+            "permissions" => $default_permissions,
             "default_permissions" => $default_permissions
         ];
     }

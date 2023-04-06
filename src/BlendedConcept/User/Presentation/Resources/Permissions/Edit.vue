@@ -1,76 +1,108 @@
-<template>
-  <AdminLayout>
-    <div
-      class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 rounded-lg bg-white p-6 shadow-lg my-14"
-    >
-      <div class="flex flex-col mb-10">
-        <div class="relative">
-          <h1
-            class="text-left align-middle mt-4 mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-lg lg:text-xl dark:text-white"
-          >
-            Permission Create
-          </h1>
-          <form @submit.prevent="updateForm(props.permission.id)">
-            <div class="grid grid-cols-12 gap-2">
-              <div class="sm:col-span-6 col-span-12">
-                <p
-                  id="filled_error_help"
-                  class="mt-2 text-xs italic text-red-600 dark:text-red-400"
-                >
-                  permission need at least one underscore ( ‘_’ ) for creation
-                </p>
-                <NoLabelInput
-                  type="name"
-                  v-model="form.name"
-                  :error="form.errors?.name"
-                  placeholder="Name"
-                />
-              </div>
-            </div>
-            <div class="grid grid-cols-12 gap-2 mt-4">
-                <div class="sm:col-span-6 col-span-12 mt-5">
-                    <span class="p-float-label">
-                        <Textarea class="w-full"
-                            v-model="form.description"
-                            autoResize
-                            rows="3"
-                        />
-                        <label>Description</label>
-                    </span>
-                </div>
-            </div>
-            <div
-              class="flex justify-end items-center p-6 space-x-2 rounded-b dark:border-gray-600"
-            >
-              <Link :href="route('permissions.index')">
-                <DefaultButton title="Back" />
-              </Link>
-              <DefaultButton buttonColor="blue" title="Save" type="submit" />
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </AdminLayout>
-</template>
 <script setup>
-import AdminLayout from "@dashboard/AdminLayout.vue";
-import { Link, useForm } from "@inertiajs/vue3";
-import NoLabelInput from "@Composables/NoLabelInput.vue";
-import Textarea from "primevue/textarea";
-import DefaultButton from "@Composables/DefaultButton.vue";
-let props = defineProps(["errors", "permission"]);
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
+import AppDrawerHeaderSection from "@core/components/AppDrawerHeaderSection.vue";
+import { emailValidator, requiredValidator } from "@validators";
+import { computed } from "vue";
 
-let form = useForm({
-  name:props.permission.name,
-  description:props?.permission?.description
+const props = defineProps({
+  isDrawerOpen: {
+    type: Boolean,
+    required: true,
+  },
+  permission: {
+    type: Object,
+  },
 });
-let updateForm = (id) => {
-  form.put(route("permissions.update", id), {
-    onSuccess: () => {},
-    onError: (error) => {
-      form.setError("name", error.name);
-    },
+
+const emit = defineEmits(["update:isDrawerOpen", "userData"]);
+
+const isFormValid = ref(false);
+const refForm = ref();
+const permission_name = props.permission?.name;
+const permission_description = props.permission?.description;
+// 👉 drawer close
+const closeNavigationDrawer = () => {
+  emit("update:isDrawerOpen", false);
+
+  nextTick(() => {
+    refForm.value?.reset();
+    refForm.value?.resetValidation();
   });
 };
+
+const onSubmit = () => {
+  refForm.value?.validate().then(({ valid }) => {
+    if (valid) {
+      emit("userData", {
+        name: permission_name.value,
+        description: permission_description.value,
+      });
+      emit("update:isDrawerOpen", false);
+      nextTick(() => {
+        refForm.value?.reset();
+        refForm.value?.resetValidation();
+      });
+    }
+  });
+};
+
+const handleDrawerModelValueUpdate = (val) => {
+  emit("update:isDrawerOpen", val);
+};
 </script>
+
+<template>
+  <VNavigationDrawer
+    temporary
+    :width="400"
+    location="end"
+    class="scrollable-content"
+    :model-value="props.isDrawerOpen"
+    @update:model-value="handleDrawerModelValueUpdate"
+  >
+    <!-- 👉 Title -->
+    <AppDrawerHeaderSection title="Add User" @cancel="closeNavigationDrawer" />
+
+    <PerfectScrollbar :options="{ wheelPropagation: false }">
+      <VCard flat>
+        <VCardText>
+          <!-- 👉 Form -->
+          <VForm ref="refForm" v-model="isFormValid" @submit.prevent="onSubmit">
+            <VRow>
+              <!-- 👉 Full name -->
+              <VCol cols="12">
+                <VTextField
+                  v-model="permission_name"
+                  :rules="[requiredValidator]"
+                  label="Permission Name"
+                />
+              </VCol>
+              <!-- 👉 Full name -->
+              <VCol cols="12">
+                <VTextarea
+                  v-model="permission_description"
+                  :rules="[requiredValidator]"
+                  label="Description"
+                />
+              </VCol>
+              <!-- 👉 Submit and Cancel -->
+              <VCol cols="12">
+                <VBtn type="submit" class="me-3"> Submit </VBtn>
+                <VBtn
+                  type="reset"
+                  variant="tonal"
+                  color="secondary"
+                  @click="closeNavigationDrawer"
+                >
+                  Cancel
+                </VBtn>
+              </VCol>
+            </VRow>
+          </VForm>
+        </VCardText>
+      </VCard>
+    </PerfectScrollbar>
+  </VNavigationDrawer>
+</template>
+
+
