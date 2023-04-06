@@ -1,75 +1,106 @@
-<template>
-  <div class="basis-1/3 mt-14">
-    <h1
-      class="align-middle mt-4 text-xl font-extrabold leading-none tracking-tight text-blue-900 md:text-lg lg:text-xl"
-    >
-      Enter your B2C Register
-    </h1>
-    <br />
-    <form @submit.prevent="RegisterAsB2C">
-      <div class="mb-4">
-        <LabelInput
-          type="email"
-          label="Your Email"
-          placeholder="name@mail.com"
-          v-model="form.email"
-          :error="form.errors.email"
-          :required="true"
-        />
-      </div>
-      <div class="mb-4">
-        <LabelInput
-          type="password"
-          label="Password"
-          placeholder="••••••••"
-          v-model="form.password"
-          :error="form.errors.password"
-          :required="true"
-        />
-      </div>
-
-      <div class="mb-4 text-justify">
-        <span>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui commodi
-          exercitationem, dolores beatae quae eveniet neque maiores obcaecati
-          nostrum quod at quidem autem. Dolorum repudiandae cum rem incidunt
-          labore suscipit!
-        </span>
-      </div>
-      <div class="mb-4">
-        <button
-          type="submit"
-          class="text-white bg-blue-700 w-full hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-        >
-          Register
-        </button>
-      </div>
-      <div class="flex gap-3 my-4 w-full justify-center">
-        <span
-          >Already have an account?
-          <Link class="text-blue-500" :href="route('login')">Log In</Link></span
-        >
-      </div>
-    </form>
-  </div>
-</template>
-
 <script setup>
-import LabelInput from "@Composables/LabelInput.vue";
-import { Link, useForm } from "@inertiajs/vue3";
-let form = useForm({
-  email: "",
-  password: "",
-});
+import { useGenerateImageVariant } from '@/@core/composable/useGenerateImageVariant'
+import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
+import authV1RegisterMaskDark from '@images/pages/auth-v1-register-mask-dark.png'
+import authV1RegisterMaskLight from '@images/pages/auth-v1-register-mask-light.png'
+import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
+import { themeConfig } from '@themeConfig'
 
-function RegisterAsB2C() {
-  form.post(route("b2cstore"), form, {
-    onSuccess: () => {},
+// inertia
+import { Link, useForm } from "@inertiajs/vue3";
+import { router } from "@inertiajs/core";
+
+
+const form = useForm({
+  email: '',
+  password: '',
+})
+
+// register function
+let register = () => {
+  form.post(route("b2cstore"), {
+    onSuccess: () => {
+        alert("success")
+    },
     onError: (error) => {
-      form.setError("user", error?.user);
       form.setError("email", error?.email);
       form.setError("password", error?.password);
     },
   });
-}
+};
+
+const isPasswordVisible = ref(false)
 </script>
+
+<template>
+  <div class="auth-wrapper d-flex align-center justify-center pa-2">
+    <VCard
+      class="auth-card pa-2 pt-7"
+      max-width="448">
+
+      <VCardText class="pt-2">
+        <h5 class="text-h5 font-weight-semibold mb-1">
+         Enter Your Email Address(B2C)
+        </h5>
+
+      </VCardText>
+
+      <VCardText>
+        <VForm @submit.prevent="register">
+          <VRow>
+            <!-- Email -->
+            <VCol cols="12">
+              <VLabel>Enter Your Work Email</VLabel>
+              <VTextField
+               placeholder="Email"
+                v-model="form.email"
+                :error-messages="form?.errors?.email"
+
+              />
+            </VCol>
+            <!-- password -->
+            <VCol cols="12">
+              <VLabel>Enter Your Work Password</VLabel>
+              <VTextField
+                 v-model="form.password"
+                 placeholder="Enter Your Password"
+                :error-messages="form?.errors?.password"
+                :type="isPasswordVisible ? 'text' : 'password'"
+                :append-inner-icon="isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                @click:append-inner="isPasswordVisible = !isPasswordVisible"
+              />
+              <VCol cols="12">
+              <p class=" font-weight-bold text-blue-grey-lighten-3">Ed+ will use your data to personalize and improve your experience and to send you information about Ed+. You can change your communication preference anytime. We may use yor data as described in our Privacy Policy. By clicking “Agree and Sign up”, you agree to our Subcriber Agreement and acknowledge that you have read our Privacy Policy for Singapore.</p>
+              </VCol>
+              <VBtn
+                block
+                type="submit"
+              >
+                Agree and Sign up
+              </VBtn>
+            </VCol>
+
+            <!-- login instead -->
+            <VCol
+              cols="12"
+              class="text-center text-base"
+            >
+              <span>Already have an account?</span>
+               <Link
+                class="ms-2 text-decoration-underline"
+                :href="login">
+                Log in
+              </Link>
+            </VCol>
+          </VRow>
+        </VForm>
+      </VCardText>
+    </VCard>
+  </div>
+</template>
+@use "@styles/@core/template/pages/page-auth.scss";
+
+<style lang="scss">
+</style>
+
+

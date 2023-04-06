@@ -23,10 +23,10 @@ const pages ={
         // //site setting
         // "BlendedConcept/User/Presentation/Resources/Settings/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Settings/Index.vue'),
 
-        // //auth
+        // //authnication route :🧑
         "Auth/Presentation/Resources/Login" : import("../../src/Auth/Presentation/Resources/Login.vue"),
         "Auth/Presentation/Resources/Register" : import("../../src/Auth/Presentation/Resources/Register.vue"),
-
+        "Auth/Presentation/Resources/Verify" : import("../../src/Auth/Presentation/Resources/Verify.vue"),
 
         // // b2b
         // //students
@@ -38,8 +38,7 @@ const pages ={
         // // student dashboard
         // "BlendedConcept/User/Presentation/Resources/Students/Dashboard" : import("../../src/BlendedConcept/User/Presentation/Resources/Students/Dashboard.vue"),
 
-        // //verify
-        // "Auth/Presentation/Resources/Verify" : import("../../src/Auth/Presentation/Resources/Verify.vue"),
+
 
   };
   export default pages;

@@ -15,8 +15,10 @@ import { abilitiesPlugin } from '@casl/vue'
 import '@core-scss/template/index.scss'
 import '@styles/styles.scss'
 
-// loadFonts()
-//this is popup
+
+//animation css
+import 'animate.css';
+
 
 
 // confirm dialog
