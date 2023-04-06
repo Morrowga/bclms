@@ -21,12 +21,10 @@ import AppLayout from "@AppRoot/AppLayout.vue";
 // @layouts plugin
 import { AppContentLayoutNav } from "@layouts/enums";
 
-const DefaultLayoutWithHorizontalNav = defineAsyncComponent(() =>
-  import("@/layouts/components/DefaultLayoutWithHorizontalNav.vue")
-);
-const DefaultLayoutWithVerticalNav = defineAsyncComponent(() =>
-  import("@layouts/components/DefaultLayoutWithVerticalNav.vue")
-);
+import DefaultLayoutWithHorizontalNav from "@/layouts/components/DefaultLayoutWithHorizontalNav.vue"
+import DefaultLayoutWithVerticalNav from "@/layouts/components/DefaultLayoutWithHorizontalNav.vue"
+
+
 const { width: windowWidth } = useWindowSize();
 const { appContentLayoutNav, switchToVerticalNavOnLtOverlayNavBreakpoint } =
   useThemeConfig();
