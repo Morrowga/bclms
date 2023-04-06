@@ -171,23 +171,6 @@ const openEditModel = (permission) => {
 <template>
   <AdminLayout>
     <section>
-      <VCard title="Search Filters" class="mb-6">
-        <VCardText>
-          <VRow>
-            <!-- 👉 Select Name -->
-            <VCol cols="12" sm="4">
-              <VSelect
-                v-model="selectedName"
-                label="Select Status"
-                :items="names"
-                clearable
-                clear-icon="mdi-close"
-              />
-            </VCol>
-          </VRow>
-        </VCardText>
-      </VCard>
-
       <VCard>
         <VCardText class="d-flex flex-wrap gap-4">
           <!-- 👉 Export button -->
