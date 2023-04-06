@@ -8,7 +8,7 @@ import ability from '@/plugins/casl/ability'
 import i18n from '@/plugins/i18n'
 import layoutsPlugin from '@/plugins/layouts'
 import vuetify from '@/plugins/vuetify'
-import { loadFonts } from '@/plugins/webfontloader'
+
 import { abilitiesPlugin } from '@casl/vue'
 
 //scss group
@@ -39,11 +39,7 @@ createInertiaApp({
         useGlobalProperties: true,
       })
       .mixin({
-        methods:{route},
-        components:
-        {
-
-        }})
+        methods:{route},})
       .mount(el);
   },
 })

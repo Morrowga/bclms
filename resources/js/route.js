@@ -16,7 +16,7 @@ const pages ={
         // "BlendedConcept/User/Presentation/Resources/Roles/Edit" : import('../../src/BlendedConcept/User/Presentation/Resources/Roles/Edit.vue'),
 
         // //permission module
-        // "BlendedConcept/User/Presentation/Resources/Permissions/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Permissions/Index.vue'),
+        "BlendedConcept/User/Presentation/Resources/Permissions/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Permissions/Index.vue'),
         // "BlendedConcept/User/Presentation/Resources/Permissions/Create" : import('../../src/BlendedConcept/User/Presentation/Resources/Permissions/Create.vue'),
         // "BlendedConcept/User/Presentation/Resources/Permissions/Edit" : import('../../src/BlendedConcept/User/Presentation/Resources/Permissions/Edit.vue'),
 
