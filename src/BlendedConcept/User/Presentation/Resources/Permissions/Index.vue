@@ -9,86 +9,19 @@ import { router } from "@inertiajs/core";
 import MoreBtn from "@core/components/MoreBtn.vue";
 import { computed, defineProps } from "vue";
 let props = defineProps(["permissions", "flash", "auth"]);
-const searchQuery = ref("");
-const selectedName = ref();
-const rowPerPage = ref(10);
-const currentPage = ref(1);
-const totalPage = ref(1);
-const totalUsers = ref(0);
-const users = ref([]);
+let permissions = computed(() => usePage().props.auth.data.permissions);
 const form = useForm({
   name: "",
   description: "",
   _method: "",
 });
 let currentPermission = ref();
-// 👉 Fetching users
-const fetchUsers = () => {};
-
-watchEffect(fetchUsers);
-
-// 👉 watching current page
-watchEffect(() => {
-  if (currentPage.value > totalPage.value) currentPage.value = totalPage.value;
-});
-
 // 👉 search filters
 const names = [];
 const isAddNewUserDrawerVisible = ref(false);
 const isEditUserDrawerVisible = ref(false);
-
-// 👉 watching current page
-watchEffect(() => {
-  if (currentPage.value > totalPage.value) currentPage.value = totalPage.value;
-});
-
-// 👉 Computing pagination data
-const paginationData = computed(() => {
-  const firstIndex = users.value.length
-    ? (currentPage.value - 1) * rowPerPage.value + 1
-    : 0;
-  const lastIndex =
-    props.permissions.length + (currentPage.value - 1) * rowPerPage.value;
-
-  return `${firstIndex}-${lastIndex} of ${totalUsers.value}`;
-});
-
-// SECTION Checkbox toggle
-const selectedRows = ref([]);
-const selectAllPermissions = ref(false);
-
-// 👉 add/remove all checkbox ids in array
-const selectUnselectAll = () => {
-  selectAllPermissions.value = !selectAllPermissions.value;
-  if (selectAllPermissions.value) {
-    props.permissions.forEach((permission) => {
-      if (!selectedRows.value.includes(`check${permission.id}`))
-        selectedRows.value.push(`check${permission.id}`);
-    });
-  } else {
-    selectedRows.value = [];
-  }
-};
-
-// 👉 watch if checkbox array is empty all select should be uncheck
-watch(
-  selectedRows,
-  () => {
-    if (!selectedRows.value.length) selectAllPermissions.value = false;
-  },
-  { deep: true }
-);
-
-const addRemoveIndividualCheckbox = (checkID) => {
-  if (selectedRows.value.includes(checkID)) {
-    const index = selectedRows.value.indexOf(checkID);
-
-    selectedRows.value.splice(index, 1);
-  } else {
-    selectedRows.value.push(checkID);
-    selectAllPermissions.value = true;
-  }
-};
+let serverPage = ref(props.permissions.meta.current_page ?? 1);
+let serverPerPage = ref(10);
 
 const addNewUser = (userData) => {
   form.name = userData.name;
@@ -135,37 +68,131 @@ const deletePermission = (id) => {
     }
   });
 };
-// const computedMoreList = computed(() => {
-//   return (paramId) => [
-//     {
-//       title: "View",
-//       value: "view",
-//       prependIcon: "mdi-eye-outline",
-//       to: {
-//         name: "apps-user-view-id",
-//         params: { id: paramId },
-//       },
-//     },
-//     {
-//       title: "Edit",
-//       value: "edit",
-//       prependIcon: "mdi-pencil-outline",
-//     },
-//     {
-//       title: "Delete",
-//       value: "delete",
-//       prependIcon: "mdi-delete-outline",
-//     },
-//   ];
-// });
-const perPageChange = (e) => {
-  alert("hello");
-};
+
 const openEditModel = (permission) => {
   console.log(permission);
   currentPermission.value = permission;
   isEditUserDrawerVisible.value = true;
 };
+let columns = [
+  {
+    label: "Name",
+    field: "name",
+    sortable: false,
+    // filterOptions: {
+    //   styleClass: "class1", // class to be added to the parent th element
+    //   enabled: true, // enable filter for this column
+    //   placeholder: "Filter All", // placeholder for filter input
+    //   filterDropdownItems: ["access", "edit", "show", "create", "delete"], // dropdown (with selected values) instead of text input
+    //   trigger: "enter", //only trigger on enter not on keyup
+    // },
+  },
+  {
+    label: "Description",
+    field: "description",
+    sortable: false,
+  },
+  {
+    label: "Guard Name",
+    field: "guard_name",
+    sortable: false,
+  },
+  {
+    label: "Action",
+    field: "action",
+    sortable: false,
+  },
+];
+//initial state
+let serverParams = ref({
+  columnFilters: {},
+  search: "",
+  sort: {
+    field: "",
+    type: "",
+  },
+  page: 1,
+  perPage: 10,
+});
+
+// options for datatable
+let options = ref({
+  enabled: true,
+  mode: "pages",
+  perPage: props.permissions.meta.per_page,
+  setCurrentPage: props.permissions.meta.current_page,
+  perPageDropdown: [10, 20, 50, 100],
+  dropdownAllowAll: false,
+});
+//updateParams
+let updateParams = (newProps) => {
+  serverParams.value = Object.assign({}, serverParams.value, newProps);
+};
+//page change on pagination
+let onPageChange = () => {
+  updateParams({ page: serverPage.value });
+  loadItems();
+};
+
+// perpage change selectbox
+let onPerPageChange = (value) => {
+  serverPage.value = 1;
+  updateParams({ page: 1, perPage: value });
+  loadItems();
+};
+watch(serverPerPage, function (value) {
+  onPerPageChange(value);
+});
+// filter folumn by name
+let onColumnFilter = (params) => {
+  updateParams(params);
+  serverParams.value.page = 1;
+  loadItems();
+};
+
+// query params to controller
+let getQueryParams = () => {
+  let data = {
+    page: serverParams.value.page,
+    perPage: serverParams.value.perPage,
+    search: serverParams.value.search,
+  };
+
+  for (const [key, value] of Object.entries(serverParams.value.columnFilters)) {
+    if (value) {
+      data[key] = value;
+    }
+  }
+  return data;
+};
+//search items
+let searchItems = () => {
+  updateParams({ page: 1 });
+  loadItems();
+};
+// load items is what brings back the rows from server
+let loadItems = () => {
+  router.get(route(route().current()), getQueryParams(), {
+    replace: false,
+    preserveState: true,
+    preserveScroll: true,
+  });
+};
+//truncatedText
+let truncatedText = (text) => {
+  if (text) {
+    if (text?.length <= 30) {
+      return text;
+    } else {
+      return text?.substring(0, 30) + "...";
+    }
+  }
+};
+//check permission
+let checkPermission = (permission) => {
+  return permissions.value.includes(permission);
+};
+// delete record
 </script>
 
 <template>
@@ -174,108 +201,105 @@ const openEditModel = (permission) => {
       <VCard>
         <VCardText class="d-flex flex-wrap gap-4">
           <!-- 👉 Export button -->
-          <VBtn
-            variant="tonal"
-            color="secondary"
-            prepend-icon="mdi-tray-arrow-up"
-          >
-            Export
-          </VBtn>
+          <div class="d-flex align-center">
+            <span class="me-2">Show</span>
+            <VSelect
+              v-model="serverPerPage"
+              density="compact"
+              :items="[10, 20, 50]"
+            ></VSelect>
+          </div>
 
           <VSpacer />
 
           <div class="app-user-search-filter d-flex align-center gap-6">
             <!-- 👉 Search  -->
             <VTextField
-              v-model="searchQuery"
+              @keyup.enter="searchItems"
+              v-model="serverParams.search"
               placeholder="Search User"
               density="compact"
             />
 
             <!-- 👉 Add user button -->
-            <VBtn @click="isAddNewUserDrawerVisible = true"> Add User </VBtn>
+            <VBtn @click="isAddNewUserDrawerVisible = true">
+              Add Permission
+            </VBtn>
           </div>
         </VCardText>
 
         <VDivider />
 
-        <VTable class="text-no-wrap table-header-bg rounded-0">
-          <!-- 👉 table head -->
-          <thead>
-            <tr>
-              <th scope="col" style="width: 3rem">
-                <VCheckbox
-                  :model-value="selectAllPermissions"
-                  :indeterminate="
-                    permissions.length !== selectedRows.length &&
-                    !!selectedRows.length
-                  "
-                  class="mx-1"
-                  @click="selectUnselectAll"
+        <vue-good-table
+          class="data-table"
+          mode="remote"
+          @column-filter="onColumnFilter"
+          :totalRows="props.permissions.meta.total"
+          styleClass="vgt-table "
+          :pagination-options="options"
+          :rows="props.permissions.data"
+          :columns="columns"
+        >
+          <template #table-row="props">
+            <div
+              v-if="props.column.field == 'permission'"
+              class="flex flex-wrap"
+            >
+              <span
+                v-for="permission in props.row.permissions"
+                :key="permission.id"
+                class="bg-blue-100 mt-2 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
+              >
+                {{ permission.name }}
+              </span>
+            </div>
+            <div
+              v-if="props.column.field == 'description'"
+              class="flex flex-wrap"
+            >
+              <span>{{ truncatedText(props.row.description) }}</span>
+            </div>
+            <div v-if="props.column.field == 'action'">
+              <div class="d-flex">
+                <VBtn
+                  density="compact"
+                  icon="mdi-pencil"
+                  class="ml-2 bg-success"
+                  @click="openEditModel(props.row)"
+                >
+                </VBtn>
+
+                <VBtn
+                  density="compact"
+                  icon="mdi-trash"
+                  class="ml-2 bg-error"
+                  @click="deletePermission(props.row.id)"
+                >
+                </VBtn>
+              </div>
+            </div>
+          </template>
+          <template #pagination-bottom>
+            <VRow class="pa-4">
+              <VCol cols="12" class="d-flex justify-space-between">
+                <span
+                  >Showing {{ props.permissions.meta.from }} to
+                  {{ props.permissions.meta.to }} of
+                  {{ props.permissions.meta.total }} entries</span
+                >
+                <VPagination
+                  v-model="serverPage"
+                  size="small"
+                  :total-visible="5"
+                  :length="props.permissions.meta.last_page"
+                  @next="onPageChange"
+                  @prev="onPageChange"
+                  @click="onPageChange"
                 />
-              </th>
-              <th scope="col">Name</th>
-              <th scope="col">ACTIONS</th>
-            </tr>
-          </thead>
-
-          <!-- 👉 table body -->
-          <tbody>
-            <tr v-for="permission in props.permissions" :key="permission.id">
-              <!-- 👉 Checkbox -->
-              <td>
-                <VCheckbox
-                  :id="`check${permission.id}`"
-                  :model-value="selectedRows.includes(`check${permission.id}`)"
-                  class="mx-1"
-                  @click="addRemoveIndividualCheckbox(`check${permission.id}`)"
-                />
-              </td>
-
-              <!-- 👉 User -->
-              <td>
-                <div class="d-flex align-center">
-                  <div class="d-flex flex-column">
-                    <h6 class="text-sm">
-                      <Link href="#" class="font-weight-medium user-list-name">
-                        {{ permission.name }}
-                      </Link>
-                    </h6>
-                    <span class="text-xs">@{{ permission.name }}</span>
-                  </div>
-                </div>
-              </td>
-              <!-- 👉 Actions -->
-              <td class="text-center" style="width: 5rem">
-                <div class="d-flex">
-                  <!-- <VBtn density="compact" icon="mdi-eye" class="ml-2"> </VBtn> -->
-                  <VBtn
-                    density="compact"
-                    icon="mdi-pencil"
-                    class="ml-2 bg-success"
-                    @click="openEditModel(permission)"
-                  >
-                  </VBtn>
-
-                  <VBtn
-                    density="compact"
-                    icon="mdi-trash"
-                    class="ml-2 bg-error"
-                    @click="deletePermission(permission.id)"
-                  >
-                  </VBtn>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-
-          <!-- 👉 table footer  -->
-          <tfoot v-show="!permissions.length">
-            <tr>
-              <td colspan="7" class="text-center">No data available</td>
-            </tr>
-          </tfoot>
-        </VTable>
+              </VCol>
+            </VRow>
+          </template>
+        </vue-good-table>
 
         <VDivider />
       </VCard>

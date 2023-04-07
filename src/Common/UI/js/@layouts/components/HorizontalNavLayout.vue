@@ -45,7 +45,7 @@ const resolveNavItemComponent = (item) => {
     :class="layoutClasses(windowWidth, windowScrollY)"
   >
     <HorizontalMobileNav>
-      <v-navigation-drawer v-model="open" temporary>
+      <VNavigation-drawer v-model="open" temporary>
         <template v-slot:prepend>
           <Link to="/" class="d-flex align-start gap-x-2 pa-5">
             <VNodeRenderer :nodes="themeConfig.app.logo" />
@@ -65,7 +65,7 @@ const resolveNavItemComponent = (item) => {
             :item="item"
           />
         </v-list>
-      </v-navigation-drawer>
+      </VNavigation-drawer>
     </HorizontalMobileNav>
     <div
       class="layout-navbar-and-nav-container"
@@ -78,14 +78,14 @@ const resolveNavItemComponent = (item) => {
         </div>
       </div>
       <!-- 👉 Navigation -->
-      <div class="layout-horizontal-nav d-none d-md-flex pb-15">
-        <div class="horizontal-nav-content-container">
+      <div class="layout-horizontal-nav d-none d-md-flex toolbar-fixed">
+        <v-toolbar class="w-100 px-13" elevation="1" color="#fff">
           <HorizontalNav :nav-items="navItems" />
-        </div>
+        </v-toolbar>
       </div>
     </div>
 
-    <main class="layout-page-content">
+    <main class="layout-page-content" style="padding-top: 100px">
       <template v-if="$slots['content-loading']">
         <template v-if="shallShowPageLoading">
           <slot name="content-loading" />
@@ -111,7 +111,10 @@ const resolveNavItemComponent = (item) => {
 @use "@configured-variables" as variables;
 @use "@layouts/styles/placeholders";
 @use "@layouts/styles/mixins";
-
+.toolbar-fixed {
+  position: fixed;
+  width: 100%;
+}
 .layout-wrapper {
   &.layout-nav-type-horizontal {
     display: flex;

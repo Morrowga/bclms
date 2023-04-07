@@ -52,7 +52,7 @@ let goLink = (url) => {
           variant="text"
           :prepend-icon="item.icon.icon"
           append-icon="mdi-chevron-down"
-          class="mx-2"
+          class="mx-2 text-none"
           :class="isParentActive(item.children) ? 'bg-primary' : ''"
           :color="isParentActive(item.children) ? '#fff' : ''"
           v-bind="props"
@@ -61,13 +61,13 @@ let goLink = (url) => {
         </v-btn>
       </template>
 
-      <v-list>
+      <v-list density="compact">
         <v-list-item
           v-for="(sitem, sindex) in item.children"
           :key="sindex"
           :value="sitem"
           @click="goLink(sitem.url)"
-          :class="isLinkActive(sitem.route_name) ? 'bg-primary' : ''"
+          :class="isLinkActive(sitem.route_name) ? 'active-list' : ''"
         >
           <template v-slot:prepend>
             <v-icon :icon="sitem.icon.icon"></v-icon>
@@ -80,6 +80,10 @@ let goLink = (url) => {
 </template>
 
 <style lang="scss">
+.active-list {
+  background-color: #ededff !important;
+  color: #666cff !important;
+}
 .layout-horizontal-nav {
   .nav-group {
     .nav-group-label {

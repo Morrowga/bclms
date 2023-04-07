@@ -9,11 +9,16 @@ import i18n from '@/plugins/i18n'
 import layoutsPlugin from '@/plugins/layouts'
 import vuetify from '@/plugins/vuetify'
 
+//plugin
 import { abilitiesPlugin } from '@casl/vue'
+// vue good table plugin
+import VueGoodTablePlugin from "vue-good-table-next";
+import { VueGoodTable } from "vue-good-table-next";
 
 //scss group
 import '@core-scss/template/index.scss'
 import '@styles/styles.scss'
+import "vue-good-table-next/dist/vue-good-table-next.css";
 
 
 //animation css
@@ -34,12 +39,17 @@ createInertiaApp({
       .use(Ziggy)
       .use(vuetify)
       .use(layoutsPlugin)
+      .use(VueGoodTablePlugin)
       .use(i18n)
       .use(abilitiesPlugin, ability, {
         useGlobalProperties: true,
       })
       .mixin({
-        methods:{route},components:{}})
+        methods:{route},
+      components:{
+        VueGoodTable
+      }
+      })
       .mount(el);
   },
 })

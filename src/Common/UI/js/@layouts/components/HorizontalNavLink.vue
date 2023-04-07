@@ -32,12 +32,12 @@ let goLink = (url) => {
   <v-btn
     variant="text"
     :prepend-icon="item.icon.icon"
-    class="mx-2"
+    class="mx-2 text-none"
     :class="isLinkActive(item.route_name) ? 'bg-primary' : ''"
     :color="isLinkActive(item.route_name) ? '#fff' : ''"
     @click="goLink(item.url)"
   >
-    <span :style="isLinkActive(item.route_name) ? 'color: #fff' : 'color:#000'">
+    <span :style="isLinkActive(item.route_name) ? 'color: #fff' : ''">
       {{ item.title }}
     </span>
   </v-btn>
