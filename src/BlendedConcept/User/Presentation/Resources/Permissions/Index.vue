@@ -79,13 +79,13 @@ let columns = [
     label: "Name",
     field: "name",
     sortable: false,
-    filterOptions: {
-      styleClass: "class1", // class to be added to the parent th element
-      enabled: true, // enable filter for this column
-      placeholder: "Filter All", // placeholder for filter input
-      filterDropdownItems: ["access", "edit", "show", "create", "delete"], // dropdown (with selected values) instead of text input
-      trigger: "enter", //only trigger on enter not on keyup
-    },
+    // filterOptions: {
+    //   styleClass: "class1", // class to be added to the parent th element
+    //   enabled: true, // enable filter for this column
+    //   placeholder: "Filter All", // placeholder for filter input
+    //   filterDropdownItems: ["access", "edit", "show", "create", "delete"], // dropdown (with selected values) instead of text input
+    //   trigger: "enter", //only trigger on enter not on keyup
+    // },
   },
   {
     label: "Description",
