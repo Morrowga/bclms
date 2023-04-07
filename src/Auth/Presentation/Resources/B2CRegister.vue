@@ -33,9 +33,9 @@ const isPasswordVisible = ref(false)
 </script>
 
 <template>
-  <div class="auth-wrapper d-flex align-center justify-center pa-2">
-    <VCard
-      class="auth-card pa-2 pt-7"
+  <div class="auth-wrapper d-flex align-center justify-center">
+    <div
+      class="auth-card"
       max-width="448">
 
       <VCardText class="pt-2">
@@ -95,7 +95,7 @@ const isPasswordVisible = ref(false)
           </VRow>
         </VForm>
       </VCardText>
-    </VCard>
+    </div>
   </div>
 </template>
 @use "@styles/@core/template/pages/page-auth.scss";
