@@ -1,430 +1,314 @@
 <script setup>
-import AddNewUserDrawer from "@/views/apps/user/list/AddNewUserDrawer.vue";
+import Create from "./Create.vue";
+import Edit from "./Edit.vue";
 import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import { avatarText } from "@core/utils/formatters";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/core";
 import MoreBtn from "@core/components/MoreBtn.vue";
-
-const searchQuery = ref("");
-const selectedRole = ref();
-const selectedPlan = ref();
-const selectedStatus = ref();
-const rowPerPage = ref(10);
-const currentPage = ref(1);
-const totalPage = ref(1);
-const totalUsers = ref(0);
-const users = ref([]);
-
-// 👉 Fetching users
-const fetchUsers = () => {};
-
-watchEffect(fetchUsers);
-
-// 👉 watching current page
-watchEffect(() => {
-  if (currentPage.value > totalPage.value) currentPage.value = totalPage.value;
+import { computed, defineProps } from "vue";
+let props = defineProps(["permissions", "flash", "auth"]);
+let permissions = computed(() => usePage().props.auth.data.permissions);
+const form = useForm({
+  name: "",
+  description: "",
+  _method: "",
 });
-
+let currentPermission = ref();
 // 👉 search filters
-const roles = [
-  {
-    title: "Admin",
-    value: "admin",
-  },
-  {
-    title: "Author",
-    value: "author",
-  },
-  {
-    title: "Editor",
-    value: "editor",
-  },
-  {
-    title: "Maintainer",
-    value: "maintainer",
-  },
-  {
-    title: "Subscriber",
-    value: "subscriber",
-  },
-];
-
-const plans = [
-  {
-    title: "Basic",
-    value: "basic",
-  },
-  {
-    title: "Company",
-    value: "company",
-  },
-  {
-    title: "Enterprise",
-    value: "enterprise",
-  },
-  {
-    title: "Team",
-    value: "team",
-  },
-];
-
-const status = [
-  {
-    title: "Pending",
-    value: "pending",
-  },
-  {
-    title: "Active",
-    value: "active",
-  },
-  {
-    title: "Inactive",
-    value: "inactive",
-  },
-];
-
-const resolveUserRoleVariant = (role) => {
-  const roleLowerCase = role.toLowerCase();
-  if (roleLowerCase === "subscriber")
-    return {
-      color: "primary",
-      icon: "mdi-account-outline",
-    };
-  if (roleLowerCase === "author")
-    return {
-      color: "warning",
-      icon: "mdi-cog-outline",
-    };
-  if (roleLowerCase === "maintainer")
-    return {
-      color: "success",
-      icon: "mdi-chart-donut",
-    };
-  if (roleLowerCase === "editor")
-    return {
-      color: "info",
-      icon: "mdi-pencil-outline",
-    };
-  if (roleLowerCase === "admin")
-    return {
-      color: "error",
-      icon: "mdi-laptop",
-    };
-
-  return {
-    color: "primary",
-    icon: "mdi-account-outline",
-  };
-};
-
-const resolveUserStatusVariant = (stat) => {
-  const statLowerCase = stat.toLowerCase();
-  if (statLowerCase === "pending") return "warning";
-  if (statLowerCase === "active") return "success";
-  if (statLowerCase === "inactive") return "secondary";
-
-  return "primary";
-};
-
+const names = [];
 const isAddNewUserDrawerVisible = ref(false);
+const isEditUserDrawerVisible = ref(false);
+let serverPage = ref(props.permissions.meta.current_page ?? 1);
+let serverPerPage = ref(10);
 
-// 👉 watching current page
-watchEffect(() => {
-  if (currentPage.value > totalPage.value) currentPage.value = totalPage.value;
-});
-
-// 👉 Computing pagination data
-const paginationData = computed(() => {
-  const firstIndex = users.value.length
-    ? (currentPage.value - 1) * rowPerPage.value + 1
-    : 0;
-  const lastIndex =
-    users.value.length + (currentPage.value - 1) * rowPerPage.value;
-
-  return `${firstIndex}-${lastIndex} of ${totalUsers.value}`;
-});
-
-// SECTION Checkbox toggle
-const selectedRows = ref([]);
-const selectAllUser = ref(false);
-
-// 👉 add/remove all checkbox ids in array
-const selectUnselectAll = () => {
-  selectAllUser.value = !selectAllUser.value;
-  if (selectAllUser.value) {
-    users.value.forEach((user) => {
-      if (!selectedRows.value.includes(`check${user.id}`))
-        selectedRows.value.push(`check${user.id}`);
-    });
-  } else {
-    selectedRows.value = [];
-  }
+const addNewUser = (userData) => {
+  form.name = userData.name;
+  form.description = userData.description;
+  form._method = "POST";
+  form.post(route("permissions.store"), {
+    onSuccess: () => {},
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 };
-
-// 👉 watch if checkbox array is empty all select should be uncheck
-watch(
-  selectedRows,
-  () => {
-    if (!selectedRows.value.length) selectAllUser.value = false;
-  },
-  { deep: true }
-);
-
-const addRemoveIndividualCheckbox = (checkID) => {
-  if (selectedRows.value.includes(checkID)) {
-    const index = selectedRows.value.indexOf(checkID);
-
-    selectedRows.value.splice(index, 1);
-  } else {
-    selectedRows.value.push(checkID);
-    selectAllUser.value = true;
-  }
-};
-
-const addNewUser = (userData) => {};
-
-const computedMoreList = computed(() => {
-  return (paramId) => [
+const updateUser = (userData) => {
+  console.log(userData);
+  form.name = userData.name;
+  form.description = userData.description;
+  form._method = "PUT";
+  form.post(
+    route("permissions.update", {
+      id: currentPermission.value.id,
+    }),
     {
-      title: "View",
-      value: "view",
-      prependIcon: "mdi-eye-outline",
-      to: {
-        name: "apps-user-view-id",
-        params: { id: paramId },
+      onSuccess: () => {},
+      onError: (error) => {
+        console.log(error);
       },
-    },
-    {
-      title: "Edit",
-      value: "edit",
-      prependIcon: "mdi-pencil-outline",
-    },
-    {
-      title: "Delete",
-      value: "delete",
-      prependIcon: "mdi-delete-outline",
-    },
-  ];
+    }
+  );
+};
+const deletePermission = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      router.delete(`permissions/${id}`, {
+        onSuccess: () => {},
+      });
+    }
+  });
+};
+
+const openEditModel = (permission) => {
+  console.log(permission);
+  currentPermission.value = permission;
+  isEditUserDrawerVisible.value = true;
+};
+let columns = [
+  {
+    label: "Name",
+    field: "name",
+    sortable: false,
+    // filterOptions: {
+    //   styleClass: "class1", // class to be added to the parent th element
+    //   enabled: true, // enable filter for this column
+    //   placeholder: "Filter All", // placeholder for filter input
+    //   filterDropdownItems: ["access", "edit", "show", "create", "delete"], // dropdown (with selected values) instead of text input
+    //   trigger: "enter", //only trigger on enter not on keyup
+    // },
+  },
+  {
+    label: "Description",
+    field: "description",
+    sortable: false,
+  },
+  {
+    label: "Guard Name",
+    field: "guard_name",
+    sortable: false,
+  },
+  {
+    label: "Action",
+    field: "action",
+    sortable: false,
+  },
+];
+//initial state
+let serverParams = ref({
+  columnFilters: {},
+  search: "",
+  sort: {
+    field: "",
+    type: "",
+  },
+  page: 1,
+  perPage: 10,
 });
+
+// options for datatable
+let options = ref({
+  enabled: true,
+  mode: "pages",
+  perPage: props.permissions.meta.per_page,
+  setCurrentPage: props.permissions.meta.current_page,
+  perPageDropdown: [10, 20, 50, 100],
+  dropdownAllowAll: false,
+});
+//updateParams
+let updateParams = (newProps) => {
+  serverParams.value = Object.assign({}, serverParams.value, newProps);
+};
+//page change on pagination
+let onPageChange = () => {
+  updateParams({ page: serverPage.value });
+  loadItems();
+};
+
+// perpage change selectbox
+let onPerPageChange = (value) => {
+  serverPage.value = 1;
+  updateParams({ page: 1, perPage: value });
+  loadItems();
+};
+watch(serverPerPage, function (value) {
+  onPerPageChange(value);
+});
+// filter folumn by name
+let onColumnFilter = (params) => {
+  updateParams(params);
+  serverParams.value.page = 1;
+  loadItems();
+};
+
+// query params to controller
+let getQueryParams = () => {
+  let data = {
+    page: serverParams.value.page,
+    perPage: serverParams.value.perPage,
+    search: serverParams.value.search,
+  };
+
+  for (const [key, value] of Object.entries(serverParams.value.columnFilters)) {
+    if (value) {
+      data[key] = value;
+    }
+  }
+  return data;
+};
+// load items is what brings back the rows from server
+let loadItems = () => {
+  router.get(route(route().current()), getQueryParams(), {
+    replace: false,
+    preserveState: true,
+    preserveScroll: true,
+  });
+};
+//truncatedText
+let truncatedText = (text) => {
+  if (text) {
+    if (text?.length <= 30) {
+      return text;
+    } else {
+      return text?.substring(0, 30) + "...";
+    }
+  }
+};
+//check permission
+let checkPermission = (permission) => {
+  return permissions.value.includes(permission);
+};
+// delete record
 </script>
 
 <template>
   <AdminLayout>
     <section>
-      <VCard title="Search Filters" class="mb-6">
-        <VCardText>
-          <VRow>
-            <!-- 👉 Select Role -->
-            <VCol cols="12" sm="4">
-              <VSelect
-                v-model="selectedRole"
-                label="Select Role"
-                :items="roles"
-                clearable
-                clear-icon="mdi-close"
-              />
-            </VCol>
-
-            <!-- 👉 Select Plan -->
-            <VCol cols="12" sm="4">
-              <VSelect
-                v-model="selectedPlan"
-                label="Select Plan"
-                :items="plans"
-                clearable
-                clear-icon="mdi-close"
-              />
-            </VCol>
-
-            <!-- 👉 Select Status -->
-            <VCol cols="12" sm="4">
-              <VSelect
-                v-model="selectedStatus"
-                label="Select Status"
-                :items="status"
-                clearable
-                clear-icon="mdi-close"
-              />
-            </VCol>
-          </VRow>
-        </VCardText>
-      </VCard>
-
       <VCard>
         <VCardText class="d-flex flex-wrap gap-4">
           <!-- 👉 Export button -->
-          <VBtn
-            variant="tonal"
-            color="secondary"
-            prepend-icon="mdi-tray-arrow-up"
-          >
-            Export
-          </VBtn>
+          <div class="d-flex align-center">
+            <span class="me-2">Show</span>
+            <VSelect
+              v-model="serverPerPage"
+              density="compact"
+              :items="[10, 20, 50]"
+            ></VSelect>
+          </div>
 
           <VSpacer />
 
           <div class="app-user-search-filter d-flex align-center gap-6">
             <!-- 👉 Search  -->
             <VTextField
-              v-model="searchQuery"
+              @keyup.enter="loadItems"
+              v-model="serverParams.search"
               placeholder="Search User"
               density="compact"
             />
 
             <!-- 👉 Add user button -->
-            <VBtn @click="isAddNewUserDrawerVisible = true"> Add User </VBtn>
+            <VBtn @click="isAddNewUserDrawerVisible = true">
+              Add Permission
+            </VBtn>
           </div>
         </VCardText>
 
         <VDivider />
 
-        <VTable class="text-no-wrap table-header-bg rounded-0">
-          <!-- 👉 table head -->
-          <thead>
-            <tr>
-              <th scope="col" style="width: 3rem">
-                <VCheckbox
-                  :model-value="selectAllUser"
-                  :indeterminate="
-                    users.length !== selectedRows.length &&
-                    !!selectedRows.length
-                  "
-                  class="mx-1"
-                  @click="selectUnselectAll"
-                />
-              </th>
-              <th scope="col">USER</th>
-              <th scope="col">EMAIL</th>
-              <th scope="col">ROLE</th>
-              <th scope="col">PLAN</th>
-              <th scope="col">STATUS</th>
-              <th scope="col">ACTIONS</th>
-            </tr>
-          </thead>
-
-          <!-- 👉 table body -->
-          <tbody>
-            <tr v-for="user in users" :key="user.id">
-              <!-- 👉 Checkbox -->
-              <td>
-                <VCheckbox
-                  :id="`check${user.id}`"
-                  :model-value="selectedRows.includes(`check${user.id}`)"
-                  class="mx-1"
-                  @click="addRemoveIndividualCheckbox(`check${user.id}`)"
-                />
-              </td>
-
-              <!-- 👉 User -->
-              <td>
-                <div class="d-flex align-center">
-                  <VAvatar
-                    variant="tonal"
-                    :color="resolveUserRoleVariant(user.role).color"
-                    class="me-3"
-                    size="34"
-                  >
-                    <VImg v-if="user.avatar" :src="user.avatar" />
-                    <span v-else class="text-sm">{{
-                      avatarText(user.fullName)
-                    }}</span>
-                  </VAvatar>
-
-                  <div class="d-flex flex-column">
-                    <h6 class="text-sm">
-                      <Link href="#" class="font-weight-medium user-list-name">
-                        {{ user.fullName }}
-                      </Link>
-                    </h6>
-                    <span class="text-xs">@{{ user.username }}</span>
-                  </div>
-                </div>
-              </td>
-
-              <!-- 👉 Email -->
-              <td>
-                {{ user.email }}
-              </td>
-
-              <!-- 👉 Role -->
-              <td>
-                <VIcon
-                  :icon="resolveUserRoleVariant(user.role).icon"
-                  :color="resolveUserRoleVariant(user.role).color"
-                  :size="22"
-                  class="me-3"
-                />
-                <span class="text-capitalize text-base">{{ user.role }}</span>
-              </td>
-
-              <!-- 👉 Plan -->
-              <td class="text-high-emphasis text-base text-capitalize">
-                {{ user.currentPlan }}
-              </td>
-
-              <!-- 👉 Status -->
-              <td>
-                <VChip
-                  :color="resolveUserStatusVariant(user.status)"
-                  size="small"
-                  class="text-capitalize"
+        <vue-good-table
+          class="data-table"
+          mode="remote"
+          @per-page-change="onPerPageChange"
+          @column-filter="onColumnFilter"
+          :totalRows="props.permissions.meta.total"
+          styleClass="vgt-table "
+          :pagination-options="options"
+          :rows="props.permissions.data"
+          :columns="columns"
+        >
+          <template #table-row="props">
+            <div
+              v-if="props.column.field == 'permission'"
+              class="flex flex-wrap"
+            >
+              <span
+                v-for="permission in props.row.permissions"
+                :key="permission.id"
+                class="bg-blue-100 mt-2 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
+              >
+                {{ permission.name }}
+              </span>
+            </div>
+            <div
+              v-if="props.column.field == 'description'"
+              class="flex flex-wrap"
+            >
+              <span>{{ truncatedText(props.row.description) }}</span>
+            </div>
+            <div v-if="props.column.field == 'action'">
+              <div class="d-flex">
+                <VBtn
+                  density="compact"
+                  icon="mdi-pencil"
+                  class="ml-2 bg-success"
+                  @click="openEditModel(props.row)"
                 >
-                  {{ user.status }}
-                </VChip>
-              </td>
+                </VBtn>
 
-              <!-- 👉 Actions -->
-              <td class="text-center" style="width: 5rem">
-                <MoreBtn :menu-list="computedMoreList(user.id)" item-props />
-              </td>
-            </tr>
-          </tbody>
-
-          <!-- 👉 table footer  -->
-          <tfoot v-show="!users.length">
-            <tr>
-              <td colspan="7" class="text-center">No data available</td>
-            </tr>
-          </tfoot>
-        </VTable>
+                <VBtn
+                  density="compact"
+                  icon="mdi-trash"
+                  class="ml-2 bg-error"
+                  @click="deletePermission(props.row.id)"
+                >
+                </VBtn>
+              </div>
+            </div>
+          </template>
+          <template #pagination-bottom>
+            <VRow class="pa-4">
+              <VCol cols="12" class="d-flex justify-space-between">
+                <span
+                  >Showing {{ props.permissions.meta.from }} to
+                  {{ props.permissions.meta.to }} of
+                  {{ props.permissions.meta.total }} entries</span
+                >
+                <VPagination
+                  v-model="serverPage"
+                  size="small"
+                  :total-visible="5"
+                  :length="props.permissions.meta.last_page"
+                  @next="onPageChange"
+                  @prev="onPageChange"
+                  @click="onPageChange"
+                />
+              </VCol>
+            </VRow>
+          </template>
+        </vue-good-table>
 
         <VDivider />
-
-        <VCardText class="d-flex align-center flex-wrap justify-end gap-4 pa-2">
-          <div class="d-flex align-center me-3" style="width: 171px">
-            <span class="text-no-wrap me-3">Rows per page:</span>
-
-            <VSelect
-              v-model="rowPerPage"
-              density="compact"
-              variant="plain"
-              class="mt-n4"
-              :items="[10, 20, 30, 50]"
-            />
-          </div>
-
-          <div class="d-flex align-center">
-            <h6 class="text-sm font-weight-regular">
-              {{ paginationData }}
-            </h6>
-
-            <VPagination
-              v-model="currentPage"
-              size="small"
-              :total-visible="1"
-              :length="totalPage"
-              @next="selectedRows = []"
-              @prev="selectedRows = []"
-            />
-          </div>
-        </VCardText>
       </VCard>
 
       <!-- 👉 Add New User -->
-      <AddNewUserDrawer
+      <Create
         v-model:isDrawerOpen="isAddNewUserDrawerVisible"
         @user-data="addNewUser"
+      />
+      <Edit
+        v-model:isDrawerOpen="isEditUserDrawerVisible"
+        @user-data="updateUser"
+        :permission="currentPermission"
       />
     </section>
   </AdminLayout>

@@ -46,7 +46,7 @@ class AuthController extends Controller
 
     public function verify()
     {
-        return Inertia::render('Auth::Presentation/Resources/Verify');
+        return Inertia::render('Auth/Presentation/Resources/Verify');
     }
 
     //register page render
