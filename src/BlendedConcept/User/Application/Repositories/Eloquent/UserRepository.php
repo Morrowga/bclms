@@ -73,7 +73,7 @@ class UserRepository implements UserRepositoryInterface
             }
         }
 
-        $roles = Role::where("id", $request->role)->pluck("id");
+        $roles = Role::where("name", $request->role)->pluck("id");
         $user->roles()->sync($roles);
     }
     //user filter

@@ -8,6 +8,7 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import MoreBtn from "@core/components/MoreBtn.vue";
 import { computed, defineProps } from "vue";
+import Swal from "sweetalert2";
 let props = defineProps(["permissions", "flash", "auth"]);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const form = useForm({
@@ -231,7 +232,7 @@ let checkPermission = (permission) => {
         <VDivider />
 
         <vue-good-table
-          class="data-table"
+          class="permission-data-table"
           mode="remote"
           @column-filter="onColumnFilter"
           :totalRows="props.permissions.meta.total"
@@ -319,6 +320,17 @@ let checkPermission = (permission) => {
 </template>
 
 <style lang="scss">
+.permission-data-table table.vgt-table {
+  background-color: rgb(var(--v-theme-surface));
+  border-color: rgb(var(--v-theme-surface));
+}
+.permission-data-table table.vgt-table td {
+  color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
+.permission-data-table table.vgt-table thead th {
+  background: rgb(var(--v-theme-surface)) !important;
+  color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
 .app-user-search-filter {
   inline-size: 24.0625rem;
 }

@@ -1,10 +1,106 @@
 <script setup>
-import { ref } from "vue";
+import { watch, defineEmits, defineProps, computed, ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
+import { router } from "@inertiajs/core";
+import { emailValidator, requiredValidator } from "@validators";
 const isDialogVisible = ref(false);
+let props = defineProps(["permissions"]);
+const isFormValid = ref(false);
+const refForm = ref();
+
+//get only module from permission
+let modules = computed(() => {
+  let permissions = [];
+  props.permissions.forEach((permission) => {
+    let perArray = permission.name.split("_");
+    permissions.push(perArray[1]);
+  });
+  return new Set(permissions);
+});
+
+//get modules with related permission
+let permissions_modules = computed(() => {
+  let newArrays = [];
+  modules.value.forEach((item, index) => {
+    newArrays.push({
+      key: index,
+      name: item,
+      permissions: props.permissions.filter((permission) =>
+        permission.name.includes(item)
+      ),
+    });
+  });
+  return newArrays;
+});
+//for form submit
+let form = useForm({
+  name: "",
+  description: "",
+  selectedIds: [],
+});
+// uncheck modules when selectedIds array is empty
+let watchSelectedIds = watch(form.selectedIds, (value) => {
+  if (value.length <= 0) {
+    document.getElementById("check-all").checked = false;
+  }
+});
+// select all permissions
+let selectAll = () => {
+  form.selectedIds = [];
+  let isChecked = document.getElementById("check-all").checked;
+  if (isChecked) {
+    modules.value.forEach((item, index) => {
+      document.getElementById(`module-checkbox-${index}`).checked = true;
+      selectByModule(item, index);
+    });
+  } else {
+    modules.value.forEach((item, index) => {
+      document.getElementById(`module-checkbox-${index}`).checked = false;
+    });
+    form.selectedIds = [];
+  }
+};
+//select permission by module
+let selectByModule = (item, index) => {
+  let isChecked = document.getElementById(`module-checkbox-${index}`).checked;
+  if (isChecked) {
+    props.permissions.forEach((per) => {
+      if (
+        per.name.split("_")[1].includes(item) &&
+        !form.selectedIds.includes(per.id)
+      ) {
+        form.selectedIds.push(per.id);
+      }
+    });
+  } else {
+    props.permissions.forEach((per) => {
+      if (per.name.split("_")[1].includes(item)) {
+        form.selectedIds = form.selectedIds.filter((item) => item != per.id);
+      }
+    });
+  }
+};
+//save role
+let saveRole = () => {
+  refForm.value?.validate().then(({ valid }) => {
+    if (valid) {
+      form.post(route("roles.store"), form, {
+        onSuccess: () => {},
+        onError: (error) => {
+          form.setError("name", error?.name);
+        },
+      });
+      form.reset();
+      isDialogVisible.value = false;
+      refForm.value?.reset();
+      refForm.value?.resetValidation();
+    }
+  });
+};
 </script>
 
 <template>
-  <VDialog v-model="isDialogVisible" max-width="900">
+  <VDialog v-model="isDialogVisible" max-width="1000">
     <!-- Dialog Activator -->
     <template #activator="{ props }">
       <VBtn v-bind="props"> Add Role </VBtn>
@@ -12,26 +108,113 @@ const isDialogVisible = ref(false);
 
     <!-- Dialog Content -->
     <VCard title="Add Role">
-      <DialogCloseBtn
-        variant="text"
-        size="small"
-        @click="isDialogVisible = false"
-      />
+      <VForm ref="refForm" v-model="isFormValid" @submit.prevent="saveRole">
+        <DialogCloseBtn
+          variant="text"
+          size="small"
+          @click="isDialogVisible = false"
+        />
 
-      <VCardText>
-        <VRow>
-          <VCol cols="12">
-            <VTextField label="Role Name" />
-          </VCol>
-          <VCol cols="12"> </VCol>
-        </VRow>
-      </VCardText>
+        <VCardText>
+          <VRow>
+            <VCol cols="12">
+              <VTextField
+                label="Role Name"
+                v-model="form.name"
+                :rules="[requiredValidator]"
+              />
+            </VCol>
+            <VCol cols="12">
+              <VTextarea label="Description" v-model="form.description" />
+            </VCol>
+            <VCol cols="12">
+              <div class="mb-6 flex-auto">
+                <label for="permission" class="px-6"
+                  >Assign Permission To Roles</label
+                >
 
-      <VCardActions>
-        <VSpacer />
-        <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
-        <VBtn color="success" @click="isDialogVisible = false"> Save </VBtn>
-      </VCardActions>
+                <div class="relative overflow-x-auto">
+                  <table class="w-100">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="px-4 py-4">
+                          <div class="flex items-center">
+                            <VCheckbox
+                              id="check-all"
+                              label="Module"
+                              density="compact"
+                              @click="selectAll"
+                              style="font-weight: bold"
+                            >
+                              <template #label="{ label }">
+                                <span>{{ label }}</span>
+                              </template>
+                            </VCheckbox>
+                          </div>
+                        </th>
+                        <th scope="col" class="px-6 py-3" align="start">
+                          <VLabel> Permissions </VLabel>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-xs">
+                      <tr v-for="item in permissions_modules" :key="item.key">
+                        <td class="px-4 py-4">
+                          <VCheckbox
+                            :id="'module-checkbox-' + item.key"
+                            @click="selectByModule(item.name, item.key)"
+                            :label="item.name"
+                            density="compact"
+                            style="font-weight: bold"
+                          >
+                            <template #label="{ label }">
+                              <span class="text-no-wrap">{{ label }}</span>
+                            </template>
+                          </VCheckbox>
+                        </td>
+                        <td class="px-4 py-4">
+                          <VRow>
+                            <VCol
+                              cols="4"
+                              md="2"
+                              v-for="permission in item.permissions"
+                              :key="permission.id"
+                            >
+                              <VCheckbox
+                                v-model="form.selectedIds"
+                                :value="permission.id"
+                                :label="permission.name"
+                                density="compact"
+                                style="font-weight: bold"
+                              >
+                                <template #label="{ label }">
+                                  <span>{{ label.split("_")[0] }}</span>
+                                </template>
+                              </VCheckbox>
+                            </VCol>
+                          </VRow>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </VCol>
+          </VRow>
+        </VCardText>
+
+        <VCardActions>
+          <VSpacer />
+          <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
+          <VBtn type="submit" color="success"> Save </VBtn>
+        </VCardActions>
+      </VForm>
     </VCard>
   </VDialog>
 </template>
+<style lang="scss" scoped>
+table td,
+table td * {
+  vertical-align: top;
+}
+</style>

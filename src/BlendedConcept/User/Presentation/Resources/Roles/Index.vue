@@ -1,5 +1,6 @@
 <script setup>
 import Create from "./Create.vue";
+import Edit from "./Edit.vue";
 import { useUserListStore } from "@/views/apps/user/useUserListStore";
 import { avatarText } from "@core/utils/formatters";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
@@ -7,7 +8,8 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import MoreBtn from "@core/components/MoreBtn.vue";
 import { computed, defineProps } from "vue";
-let props = defineProps(["roles", "flash", "auth"]);
+import Swal from "sweetalert2";
+let props = defineProps(["roles", "permissions", "flash", "auth"]);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const form = useForm({
   name: "",
@@ -132,6 +134,23 @@ let options = ref({
 let updateParams = (newProps) => {
   serverParams.value = Object.assign({}, serverParams.value, newProps);
 };
+const deleteRole = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      router.delete(`roles/${id}`, {
+        onSuccess: () => {},
+      });
+    }
+  });
+};
 //page change on pagination
 let onPageChange = () => {
   updateParams({ page: serverPage.value });
@@ -226,14 +245,14 @@ let checkPermission = (permission) => {
             />
 
             <!-- 👉 Add user button -->
-            <Create />
+            <Create :permissions="props.permissions" />
           </div>
         </VCardText>
 
         <VDivider />
 
         <vue-good-table
-          class="data-table"
+          class="role-data-table"
           mode="remote"
           @column-filter="onColumnFilter"
           :totalRows="props.roles.meta.total"
@@ -242,14 +261,14 @@ let checkPermission = (permission) => {
           :rows="props.roles.data"
           :columns="columns"
         >
-          <template #table-row="props">
+          <template #table-row="dataProps">
             <div
-              v-if="props.column.field == 'permission'"
+              v-if="dataProps.column.field == 'permission'"
               class="flex flex-wrap"
               style="max-width: 600px"
             >
               <v-chip
-                v-for="permission in props.row.permissions"
+                v-for="permission in dataProps.row.permissions"
                 :key="permission.id"
                 class="ma-2"
                 color="primary"
@@ -258,21 +277,23 @@ let checkPermission = (permission) => {
               >
             </div>
             <div
-              v-if="props.column.field == 'description'"
+              v-if="dataProps.column.field == 'description'"
               class="flex flex-wrap"
             >
-              <span>{{ truncatedText(props.row.description) }}</span>
+              <span>{{ truncatedText(dataProps.row.description) }}</span>
             </div>
-            <div v-if="props.column.field == 'action'" class="flex flex-nowrap">
+            <div
+              v-if="dataProps.column.field == 'action'"
+              class="flex flex-nowrap"
+            >
               <div class="d-flex">
+                <Edit :permissions="props.permissions" :role="dataProps.row" />
                 <VBtn
                   density="compact"
-                  icon="mdi-pencil"
-                  class="ml-2 bg-success"
+                  icon="mdi-trash"
+                  class="ml-2 bg-error"
+                  @click="deleteRole(dataProps.row.id)"
                 >
-                </VBtn>
-
-                <VBtn density="compact" icon="mdi-trash" class="ml-2 bg-error">
                 </VBtn>
               </div>
             </div>
@@ -309,7 +330,17 @@ let checkPermission = (permission) => {
 .app-user-search-filter {
   inline-size: 24.0625rem;
 }
-
+.role-data-table table.vgt-table {
+  background-color: rgb(var(--v-theme-surface));
+  border-color: rgb(var(--v-theme-surface));
+}
+.role-data-table table.vgt-table td {
+  color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
+.role-data-table table.vgt-table thead th {
+  background: rgb(var(--v-theme-surface)) !important;
+  color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
 .text-capitalize {
   text-transform: capitalize;
 }

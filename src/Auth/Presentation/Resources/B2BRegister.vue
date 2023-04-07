@@ -39,8 +39,8 @@ const isPasswordVisible = ref(false)
       max-width="448">
 
       <VCardText class="pt-2">
-        <h5 class="text-h5 font-weight-semibold mb-1">
-         Enter Your Email Address(B2B)
+        <h5 class="text-h5 text-center font-weight-semibold mb-1 primary">
+         Enter your email address(B2B)
         </h5>
 
       </VCardText>
@@ -50,7 +50,7 @@ const isPasswordVisible = ref(false)
           <VRow>
             <!-- Email -->
             <VCol cols="12">
-              <VLabel>Enter Your Work Email</VLabel>
+              <VLabel class="primary">Enter your work email</VLabel>
               <VTextField
                placeholder="Email"
                 v-model="form.email"
@@ -60,7 +60,7 @@ const isPasswordVisible = ref(false)
             </VCol>
             <!-- password -->
             <VCol cols="12">
-              <VLabel>Enter Your Work Password</VLabel>
+              <VLabel class="primary">Enter your work password</VLabel>
               <VTextField
                  v-model="form.password"
                  placeholder="Enter Your Password"
@@ -70,11 +70,12 @@ const isPasswordVisible = ref(false)
                 @click:append-inner="isPasswordVisible = !isPasswordVisible"
               />
               <VCol cols="12">
-              <p class=" font-weight-bold text-blue-grey-lighten-3">Ed+ will use your data to personalize and improve your experience and to send you information about Ed+. You can change your communication preference anytime. We may use yor data as described in our Privacy Policy. By clicking “Agree and Sign up”, you agree to our Subcriber Agreement and acknowledge that you have read our Privacy Policy for Singapore.</p>
+              <p class=" font-weight-bold text-blue-grey-lighten-3 text-justify primary">Ed+ will use your data to personalize and improve your experience and to send you information about Ed+. You can change your communication preference anytime. We may use yor data as described in our Privacy Policy. By clicking “Agree and Sign up”, you agree to our Subcriber Agreement and acknowledge that you have read our Privacy Policy for Singapore.</p>
               </VCol>
               <VBtn
                 block
                 type="submit"
+                class="primary"
               >
                 Agree and Sign up
               </VBtn>
@@ -85,9 +86,9 @@ const isPasswordVisible = ref(false)
               cols="12"
               class="text-center text-base"
             >
-              <span>Already have an account?</span>
+              <span class="primary">Already have an account?</span>
                <Link
-                class="ms-2 text-decoration-underline"
+                class="ms-2 text-decoration-underline primary"
                 :href="login">
                 Log in
               </Link>

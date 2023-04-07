@@ -10,6 +10,7 @@ import MoreBtn from "@core/components/MoreBtn.vue";
 import { computed, defineProps } from "vue";
 let props = defineProps(["users",'roles_name', "flash", "auth"]);
 let users = computed(() => usePage().props.auth.data.users);
+import Swal  from "sweetalert2";
 
 let currentPermission = ref();
 // 👉 search filters
@@ -48,7 +49,7 @@ const updateUser = (userData) => {
     }
   );
 };
-const deletePermission = (id) => {
+const deleteUser = (id) => {
   Swal.fire({
     title: "Are you sure?",
     text: "You won't be able to revert this!",
@@ -224,11 +225,11 @@ let checkPermission = (user) => {
             <VTextField
               @keyup.enter="searchItems"
               v-model="serverParams.search"
-              placeholder="Search Permission"
+              placeholder="Search Users"
               density="compact"
             />
             <!-- 👉 Add User button -->
-            <Create  :roles="props.roles_name"/>
+            <Create  :roles="roles_name"/>
           </div>
         </VCardText>
 
@@ -264,19 +265,13 @@ let checkPermission = (user) => {
             </div>
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
-                <VBtn
-                  density="compact"
-                  icon="mdi-pencil"
-                  class="ml-2 bg-success"
-                  @click="openEditModel(props.row)"
-                >
-                </VBtn>
+               <Edit :user="props.row" :roles="roles_name"/>
 
                 <VBtn
                   density="compact"
                   icon="mdi-trash"
                   class="ml-2 bg-error"
-                  @click="deletePermission(props.row.id)"
+                  @click="deleteUser(props.row.id)"
                 >
                 </VBtn>
               </div>

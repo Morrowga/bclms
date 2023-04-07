@@ -27,9 +27,11 @@ class RoleController extends Controller
     $filters = request()->only(['name', 'search', 'perPage']);
     $roles = $this->userInterFace->getRole($filters);
     $roles_name = $this->userInterFace->getRolesName();
+    $permissions =  $this->userInterFace->getPermission();
     return Inertia::render('BlendedConcept/User/Presentation/Resources/Roles/Index', [
       "roles" => $roles['paginate_roles'],
-      "roles_name" => $roles_name
+      "roles_name" => $roles_name,
+      "permissions" => $permissions["default_permissions"]
     ]);
   }
 

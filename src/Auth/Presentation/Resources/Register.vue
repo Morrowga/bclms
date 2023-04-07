@@ -28,15 +28,27 @@ let agreed = ref("");
 </script>
 
 <template>
-    <div style="max-width:1024px;margin-inline:auto;margin-top:100px;background-image:url('images/register.svg');">
-    <VRow class="d-flex justify-center  text-center">
-        <VCol lg="6" md="6" sm="12">
+   <div class="layout-navbar">
+        <div class="navbar-content-container d-flex justify-space-between px-10 py-5">
+        <h1 class="text-h5 font-weight-bold leading-normal text-capitalize">  {{ themeConfig.app.title }}</h1>
+        <VBtn color="primary" class="b-0 text-white">
+        <Link :href="route('login')" class="text-white">
+         Login
+        </Link>
+       </VBtn>
+        </div>
+      </div>
+      <VDivider></VDivider>
+    <div class="regiser-image">
+    <div style="max-width:1024px;margin-inline:auto">
+    <VRow class="d-flex justify-center" style="padding-top:100px">
+        <VCol lg="6" md="6" sm="12" class="text-center">
             <div class="auth-card" max-width="448">
                 <VCardText class="pt-2">
-                    <h1 class="mb-1 pb-3 text-center">
+                    <h1 class="mb-1 pb-3 text-center primary">
                         Are you signing up under
                     </h1>
-                    <h1 class="text-center">an Organization account?</h1>
+                    <h1 class="text-center primary">an Organization account?</h1>
                 </VCardText>
 
                 <VCardText>
@@ -45,24 +57,24 @@ let agreed = ref("");
                             <VRadioGroup
                                 v-model="organization"
                                 inline
-                                class="border-dashed border-3"
-                                style="padding-left: 120px"
+                                class="border-dashed  pl-14 w-50 mx-auto"
+                                style="border: 3px solid #5271FF;border-radius:10px;"
                             >
-                                <VRadio label="Yes" value="on" />
-                                <VRadio label="No" value="off" />
+                                <VRadio label="Yes" class="primary" value="on" />
+                                <VRadio label="No" class="primary" value="off" />
                             </VRadioGroup>
                         </VCol>
                         <VCol v-if="organization == 'on'">
-                            <h2 class="text-center pb-3">
+                            <h2 class="text-center pb-3 primary">
                                 Please Select Organization
                             </h2>
-                            <VAutocomplete variant="outlined" :items="items" />
+                            <VAutocomplete variant="outlined" :items="items" class="w-75 mx-auto" />
                         </VCol>
 
                         <!-- login instead -->
-                        <VCol cols="12" class="d-flex">
-                            <VCheckbox v-model="agreed" />
-                            <Vlabel class="text-justify pt-3 pl-3">
+                        <VCol cols="9" class="d-flex mx-auto">
+                            <VCheckbox v-model="agreed" class="primary"/>
+                            <Vlabel class="text-justify pt-3 pl-3 primary">
                                 Yes! I would like to receive udpates, special
                                 offers, and other information from Ed+
                             </Vlabel>
@@ -83,7 +95,17 @@ let agreed = ref("");
         </VCol>
     </VRow>
     </div>
+    </div>
 </template>
-@use "@styles/@core/template/pages/page-auth.scss";
 
-<style lang="scss"></style>
+<style lang="scss">
+@use "@styles/@core/template/pages/page-auth.scss";
+.regiser-image {
+  background: url("/public/images/signupnew.png") 100% no-repeat;
+  height: 100vh;
+  background-size: cover;
+}
+.primary {
+  color: #001a8f !important;
+}
+</style>
