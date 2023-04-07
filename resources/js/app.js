@@ -21,8 +21,10 @@ import '@core-scss/template/index.scss'
 import '@styles/styles.scss'
 import "vue-good-table-next/dist/vue-good-table-next.css";
 
-// loadFonts()
-//this is popup
+
+//animation css
+import 'animate.css';
+
 
 window.Swal = Swal;
 // confirm dialog

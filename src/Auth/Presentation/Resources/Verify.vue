@@ -1,48 +1,86 @@
-<template>
-  <FrontendLayout :route="{ name: route('login'), label: 'Login' }">
-    <div class="verify-bg">
-      <div class="container mr-auto h-full">
-        <div class="w-80 m-auto pt-40 text-center">
-          <h1 v-if="verified" class="text-2xl font-bold mb-10 text-blue-900">
-            Email is successfully verified!
-          </h1>
-          <h1 v-else class="text-2xl font-bold mb-10 text-blue-900">
-            Welcome to Ed+. Please verify your email account to proceed
-          </h1>
-          <!-- <a href="/" class="pl-20  underline decoration-1 mt-32 ">Email account verify</a> -->
+<script setup>
+import { useGenerateImageVariant } from '@/@core/composable/useGenerateImageVariant'
+import authV2LoginMaskDark from '@images/pages/auth-v2-login-mask-dark.png'
+import authV2LoginMaskLight from '@images/pages/auth-v2-login-mask-light.png'
+import authV2VerifyEmailIllustrationBorderedDark from '@images/pages/auth-v2-verify-email-illustration-bordered-dark.png'
+import authV2VerifyEmailIllustrationBorderedLight from '@images/pages/auth-v2-verify-email-illustration-bordered-light.png'
+import authV2VerifyEmailIllustrationDark from '@images/pages/auth-v2-verify-email-illustration-dark.png'
+import authV2VerifyEmailIllustrationLight from '@images/pages/auth-v2-verify-email-illustration-light.png'
+import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
+import { themeConfig } from '@themeConfig'
 
-          <Link :href="route('portal')" class="pl-auto">
-            <Button label="Back" icon="pi pi-arrow-left" />
-          </Link>
-        </div>
-      </div>
+const authV1ThemeVerifyEmailMask = useGenerateImageVariant(authV2LoginMaskLight, authV2LoginMaskDark)
+const authV2VerifyEmailIllustration = useGenerateImageVariant(authV2VerifyEmailIllustrationLight, authV2VerifyEmailIllustrationDark, authV2VerifyEmailIllustrationBorderedLight, authV2VerifyEmailIllustrationBorderedDark, true)
+</script>
+
+<template>
+  <div class="auth-logo d-flex align-center gap-x-2">
+    <div>
+      <VNodeRenderer :nodes="themeConfig.app.logo" />
     </div>
-  </FrontendLayout>
+
+    <h5 class="text-h5 font-weight-bold leading-normal text-capitalize">
+      {{ themeConfig.app.title }}
+    </h5>
+  </div>
+  <VRow
+    class="auth-wrapper"
+    no-gutters
+  >
+    <VCol
+      md="8"
+      class="d-none d-md-flex align-center justify-center position-relative"
+    >
+      <div class="d-flex align-center justify-center pa-10">
+        <img
+          :src="authV2VerifyEmailIllustration"
+          class="auth-illustration w-100"
+          alt="auth-illustration"
+        >
+      </div>
+      <VImg
+        :src="authV1ThemeVerifyEmailMask"
+        class="d-none d-md-flex auth-footer-mask"
+        alt="auth-mask"
+      />
+    </VCol>
+
+    <VCol
+      cols="12"
+      md="4"
+      class="auth-card-v2 d-flex align-center justify-center"
+      style="background-color: rgb(var(--v-theme-surface));"
+    >
+      <VCard
+        flat
+        :max-width="500"
+        class="mt-12 mt-sm-0 pa-4"
+      >
+        <VCardText>
+          <h5 class="text-h5 font-weight-semibold mb-1">
+            Verify your email ✉️
+          </h5>
+          <p>
+            Account activation link sent to your email address: hello@example.com Please follow the link inside to continue.
+          </p>
+
+          <VBtn
+            block
+            to="/"
+            class="mb-6"
+          >
+            Skip for now
+          </VBtn>
+
+          <div class="d-flex align-center justify-center">
+            <span class="me-1">Didn't get the mail? </span><a href="#">Resend</a>
+          </div>
+        </VCardText>
+      </VCard>
+    </VCol>
+  </VRow>
 </template>
 
-<script setup>
-import FrontendLayout from "@Layouts/Portal/FrontendLayout.vue";
-import Button from "primevue/button";
-import { Link, usePage } from "@inertiajs/vue3";
-import { computed, defineProps, onMounted, watch } from "vue";
-import { useToast } from "primevue/usetoast";
-let props = defineProps(["verified", "flash"]);
-let toast = useToast();
-onMounted(() => {
-  if (props?.flash?.successMessage) {
-    toast.add({
-      severity: "success",
-      summary: "Verified!",
-      detail: props?.flash?.successMessage,
-      life: 3000,
-    });
-  }
-});
-</script>
-<style scoped>
-.verify-bg {
-  background: url("/public/images/verifybanner.png") 100% no-repeat;
-  height: 100%;
-  background-size: 100% 100%;
-}
+<style lang="scss">
+@use "@styles/@core/template/pages/page-auth.scss";
 </style>
