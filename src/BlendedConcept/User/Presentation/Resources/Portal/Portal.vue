@@ -1,12 +1,6 @@
 <template>
   <FrontendLayout>
-    <v-container>
-      <v-row>
-        <v-col cols="12">
-          <h1>Portal Layout</h1>
-        </v-col>
-      </v-row>
-    </v-container>
+    <h1>Portal Layout</h1>
   </FrontendLayout>
 </template>
 <script setup>

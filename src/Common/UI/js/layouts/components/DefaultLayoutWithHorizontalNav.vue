@@ -24,7 +24,7 @@ let toggle = () => {
   <HorizontalNavLayout :nav-items="navItems" :drawer="drawer">
     <!-- :point_right: navbar -->
     <template #navbar>
-      <v-app-bar elevation="0">
+      <v-app-bar elevation="0" class="w-100">
         <!-- mobile side navigation -->
         <v-app-bar-nav-icon
           variant="text"
@@ -38,11 +38,10 @@ let toggle = () => {
             {{ themeConfig.app.title }}
           </h1>
         </Link>
-        <VSpacer class="d-none d-md-flex" />
-        <NavSearchBar trigger-btn-class="ms-lg-n3" />
+
         <VSpacer />
         <NavbarThemeSwitcher class="me-1" />
-        <NavbarShortcuts class="me-1" />
+        <!-- <NavbarShortcuts class="me-1" /> -->
         <NavBarNotifications class="me-3" />
         <UserProfile class="d-none d-md-flex pe-15" />
         <UserProfile class="d-flex d-md-none pe-3" />
@@ -50,7 +49,7 @@ let toggle = () => {
     </template>
     <!-- :point_right: Pages -->
     <Transition :name="appRouteTransition" mode="out-in">
-      <main class="">
+      <main class="" style="min-height: 485px">
         <slot> </slot>
       </main>
     </Transition>

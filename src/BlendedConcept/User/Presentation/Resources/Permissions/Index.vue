@@ -165,6 +165,11 @@ let getQueryParams = () => {
   }
   return data;
 };
+//search items
+let searchItems = () => {
+  updateParams({ page: 1 });
+  loadItems();
+};
 // load items is what brings back the rows from server
 let loadItems = () => {
   router.get(route(route().current()), getQueryParams(), {
@@ -210,7 +215,7 @@ let checkPermission = (permission) => {
           <div class="app-user-search-filter d-flex align-center gap-6">
             <!-- 👉 Search  -->
             <VTextField
-              @keyup.enter="loadItems"
+              @keyup.enter="searchItems"
               v-model="serverParams.search"
               placeholder="Search User"
               density="compact"
@@ -228,7 +233,6 @@ let checkPermission = (permission) => {
         <vue-good-table
           class="data-table"
           mode="remote"
-          @per-page-change="onPerPageChange"
           @column-filter="onColumnFilter"
           :totalRows="props.permissions.meta.total"
           styleClass="vgt-table "

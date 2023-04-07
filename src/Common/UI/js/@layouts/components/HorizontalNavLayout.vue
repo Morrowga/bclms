@@ -78,14 +78,14 @@ const resolveNavItemComponent = (item) => {
         </div>
       </div>
       <!-- 👉 Navigation -->
-      <div class="layout-horizontal-nav d-none d-md-flex">
+      <div class="layout-horizontal-nav d-none d-md-flex toolbar-fixed">
         <v-toolbar class="w-100 px-13" elevation="1" color="#fff">
           <HorizontalNav :nav-items="navItems" />
         </v-toolbar>
       </div>
     </div>
 
-    <main class="layout-page-content">
+    <main class="layout-page-content" style="padding-top: 100px">
       <template v-if="$slots['content-loading']">
         <template v-if="shallShowPageLoading">
           <slot name="content-loading" />
@@ -111,7 +111,10 @@ const resolveNavItemComponent = (item) => {
 @use "@configured-variables" as variables;
 @use "@layouts/styles/placeholders";
 @use "@layouts/styles/mixins";
-
+.toolbar-fixed {
+  position: fixed;
+  width: 100%;
+}
 .layout-wrapper {
   &.layout-nav-type-horizontal {
     display: flex;
