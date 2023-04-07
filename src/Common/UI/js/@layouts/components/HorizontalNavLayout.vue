@@ -45,7 +45,7 @@ const resolveNavItemComponent = (item) => {
     :class="layoutClasses(windowWidth, windowScrollY)"
   >
     <HorizontalMobileNav>
-      <v-navigation-drawer v-model="open" temporary>
+      <VNavigation-drawer v-model="open" temporary>
         <template v-slot:prepend>
           <Link to="/" class="d-flex align-start gap-x-2 pa-5">
             <VNodeRenderer :nodes="themeConfig.app.logo" />
@@ -65,7 +65,7 @@ const resolveNavItemComponent = (item) => {
             :item="item"
           />
         </v-list>
-      </v-navigation-drawer>
+      </VNavigation-drawer>
     </HorizontalMobileNav>
     <div
       class="layout-navbar-and-nav-container"
@@ -78,10 +78,10 @@ const resolveNavItemComponent = (item) => {
         </div>
       </div>
       <!-- 👉 Navigation -->
-      <div class="layout-horizontal-nav d-none d-md-flex pb-15">
-        <div class="horizontal-nav-content-container">
+      <div class="layout-horizontal-nav d-none d-md-flex">
+        <v-toolbar class="w-100 px-13" elevation="1" color="#fff">
           <HorizontalNav :nav-items="navItems" />
-        </div>
+        </v-toolbar>
       </div>
     </div>
 

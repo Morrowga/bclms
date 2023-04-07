@@ -57,7 +57,10 @@ const handleDrawerModelValueUpdate = (val) => {
     @update:model-value="handleDrawerModelValueUpdate"
   >
     <!-- 👉 Title -->
-    <AppDrawerHeaderSection title="Add User" @cancel="closeNavigationDrawer" />
+    <AppDrawerHeaderSection
+      title="Add Permission"
+      @cancel="closeNavigationDrawer"
+    />
 
     <PerfectScrollbar :options="{ wheelPropagation: false }">
       <VCard flat>

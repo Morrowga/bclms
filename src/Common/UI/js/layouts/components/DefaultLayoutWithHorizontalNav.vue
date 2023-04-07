@@ -24,7 +24,7 @@ let toggle = () => {
   <HorizontalNavLayout :nav-items="navItems" :drawer="drawer">
     <!-- :point_right: navbar -->
     <template #navbar>
-      <v-app-bar elevation="1">
+      <v-app-bar elevation="0">
         <!-- mobile side navigation -->
         <v-app-bar-nav-icon
           variant="text"

@@ -68,7 +68,10 @@ onUpdated(() => {
     @update:model-value="handleDrawerModelValueUpdate"
   >
     <!-- 👉 Title -->
-    <AppDrawerHeaderSection title="Add User" @cancel="closeNavigationDrawer" />
+    <AppDrawerHeaderSection
+      title="Edit Permission"
+      @cancel="closeNavigationDrawer"
+    />
 
     <PerfectScrollbar :options="{ wheelPropagation: false }">
       <VCard flat>
