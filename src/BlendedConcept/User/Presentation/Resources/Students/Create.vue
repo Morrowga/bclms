@@ -160,7 +160,7 @@
                 >
                   Add Profile Picture
                 </h1>
-                <ImageUpload v-model="form.image" />
+                <ImageUpload v-model="form.image" class="mb-10" />
                 <div
                   class="flex justify-center items-center p-6 rounded-b dark:border-gray-600"
                 >

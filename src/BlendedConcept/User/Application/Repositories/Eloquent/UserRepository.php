@@ -49,7 +49,7 @@ class UserRepository implements UserRepositoryInterface
             $user->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');
         }
 
-        $roles = Role::where("id", $request->role)->pluck("id");
+        $roles = Role::where("name", $request->role)->pluck("id");
         $user->roles()->sync($roles);
     }
 

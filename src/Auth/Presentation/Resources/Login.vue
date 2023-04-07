@@ -9,8 +9,9 @@ const isPasswordVisible = ref(false);
 import { toastAlert } from "../../../Common/Layouts/Composables/useToastAlert";
 const rememberMe = ref(false);
 // recevied error message
-let errorMessage = computed(() => usePage().props.flash);
+let errorMessage = defineProps(['errorMessage'])
 
+console.log(errorMessage.value)
 
 
 let form = useForm({
@@ -21,11 +22,11 @@ const onSubmit = () => {
   form.post(route("login-post"), {
     onSuccess: () => {},
     onError: (error) => {
-      console.log(errorMessage,'hello world')
+      console.log(error,'hello world')
       toastAlert({
-          title:errorMessage.email,
-          icon: "success",
-          bgColor: "green",
+          title:errorMessage.value,
+          icon: "error",
+          bgColor: "red",
           textColor: "white",
           iconColor: "white",
         });

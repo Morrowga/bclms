@@ -6,7 +6,7 @@ const pages ={
         // //org
         // "BlendedConcept/Organization/Presentation/Resources/Dashboard" : import('../../src/BlendedConcept/Organization/Presentation/Resources/Dashboard.vue'),
         // //user module
-        // "BlendedConcept/User/Presentation/Resources/Users/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Index.vue'),
+        "BlendedConcept/User/Presentation/Resources/Users/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Index.vue'),
         // "BlendedConcept/User/Presentation/Resources/Users/Create" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Create.vue'),
         // "BlendedConcept/User/Presentation/Resources/Users/Edit" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Edit.vue'),
         // "BlendedConcept/User/Presentation/Resources/Users/Show" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Show.vue'),

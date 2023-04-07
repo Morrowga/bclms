@@ -14,6 +14,8 @@ import { abilitiesPlugin } from '@casl/vue'
 // vue good table plugin
 import VueGoodTablePlugin from "vue-good-table-next";
 import { VueGoodTable } from "vue-good-table-next";
+import moment from 'moment'; //monentjs
+
 
 //scss group
 import '@core-scss/template/index.scss'
@@ -45,7 +47,7 @@ createInertiaApp({
         useGlobalProperties: true,
       })
       .mixin({
-        methods:{route},
+        methods:{route,moment},
       components:{
         VueGoodTable
       }
