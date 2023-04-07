@@ -194,10 +194,8 @@ const resolveNavItemComponent = (item) => {
 
 // 👉 Horizontal nav nav
 .layout-horizontal-nav {
-  border-top: 1px solid rgba(176, 176, 176, 0.259);
-
+  border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
   z-index: variables.$layout-horizontal-nav-z-index;
-
   // .horizontal-nav-sticky & {
   //   width: 100%;
   //   will-change: transform;
