@@ -1,7 +1,6 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { Ziggy } from './ziggy';
-import Swal from 'sweetalert2';
 /* eslint-disable import/order */
 // import '@/@fake-db/db'
 import '@/@iconify/icons-bundle'
@@ -25,8 +24,6 @@ import "vue-good-table-next/dist/vue-good-table-next.css";
 //animation css
 import 'animate.css';
 
-
-window.Swal = Swal;
 // confirm dialog
 import pages from './route';
 //core

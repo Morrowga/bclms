@@ -14,7 +14,7 @@ class StoreLoginRequest  extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'exists:users,email', 'email'],
+            'email' => ['required', 'email', 'email'],
             'password' => ['required']
         ];
     }

@@ -28,10 +28,10 @@ let agreed = ref("");
 </script>
 
 <template>
-    <div style="max-width:1024px;margin-inline:auto;margin-top:100px;background:url('images/signup.svg') 100vw">
+    <div style="max-width:1024px;margin-inline:auto;margin-top:100px;background-image:url('images/register.svg');">
     <VRow class="d-flex justify-center  text-center">
         <VCol lg="6" md="6" sm="12">
-            <VCard class="auth-card pa-2 pt-16" max-width="448">
+            <div class="auth-card" max-width="448">
                 <VCardText class="pt-2">
                     <h1 class="mb-1 pb-3 text-center">
                         Are you signing up under
@@ -52,7 +52,7 @@ let agreed = ref("");
                                 <VRadio label="No" value="off" />
                             </VRadioGroup>
                         </VCol>
-                        <VCol>
+                        <VCol v-if="organization == 'on'">
                             <h2 class="text-center pb-3">
                                 Please Select Organization
                             </h2>
@@ -69,7 +69,7 @@ let agreed = ref("");
                         </VCol>
                     </VRow>
                 </VCardText>
-            </VCard>
+            </div>
         </VCol>
         <VCol md="6" lg="6" sm="12" v-if="organization">
             <B2BRegister

@@ -26,30 +26,21 @@ class AuthRepository implements AuthRepositoryInterface
         if ($user) {
             if (!$user->email_verified_at) {
                 $error = "Please Verify your email";
-                return Inertia::render('Auth/Presentation/Resources/Login', [
-                    "error" => $error
-                ]);
+                return ["errorMessage"=>$error,"isCheck" => false];
             }
             if (auth()->attempt($credentials)) {
                 $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'data' => $user]));
+                return ["errorMessage"=>"Successfully","isCheck" => true];
 
-                // if ($user->roles()->first()->name == 'teacher/parent') {
-                //     return redirect()->route('teacherdashboard');
-                // }
-                return redirect()->route('dashboard');
             } else {
                 $error = "Invalid Creditional";
-                return Inertia::render('Auth/Presentation/Resources/Login', [
-                    "error" => $error
-                ]);
+                return ["errorMessage"=>$error,"isCheck" => false];
             }
         }
         // if not fail log in
         else {
             $error = "Invalid Creditional";
-            return Inertia::render('Auth/Presentation/Resources/Login', [
-                "error" => $error
-            ]);
+            return ["errorMessage"=>$error,"isCheck" => false];
         }
     }
     //  register b2c register

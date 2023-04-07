@@ -34,8 +34,22 @@ class AuthController extends Controller
     //login
     public function login(StoreLoginRequest $request)
     {
-        $user = $this->authInterface->login($request);
-        return $user;
+        $IsAuthnicated = $this->authInterface->login($request);
+
+
+        // check if your correct creditional or not
+
+
+        if($IsAuthnicated['isCheck'])
+        {
+
+           return redirect()->route('dashboard');
+        }
+        else
+        {
+            return Inertia::render('Auth/Presentation/Resources/Login')->with("errorMessage", $IsAuthnicated['errorMessage']);
+        }
+
     }
 
     public function logout()
