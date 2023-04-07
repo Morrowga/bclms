@@ -115,6 +115,9 @@ const resolveNavItemComponent = (item) => {
   position: fixed;
   width: 100%;
 }
+.v-toolbar {
+  background: rgb(var(--v-theme-surface));
+}
 .layout-wrapper {
   &.layout-nav-type-horizontal {
     display: flex;
