@@ -8,6 +8,7 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import MoreBtn from "@core/components/MoreBtn.vue";
 import { computed, defineProps } from "vue";
+import Swal from "sweetalert2";
 let props = defineProps(["permissions", "flash", "auth"]);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const form = useForm({
