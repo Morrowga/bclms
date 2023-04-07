@@ -8,6 +8,7 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import MoreBtn from "@core/components/MoreBtn.vue";
 import { computed, defineProps } from "vue";
+import Swal from "sweetalert2";
 let props = defineProps(["roles", "permissions", "flash", "auth"]);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const form = useForm({
@@ -132,6 +133,23 @@ let options = ref({
 //updateParams
 let updateParams = (newProps) => {
   serverParams.value = Object.assign({}, serverParams.value, newProps);
+};
+const deleteRole = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      router.delete(`roles/${id}`, {
+        onSuccess: () => {},
+      });
+    }
+  });
 };
 //page change on pagination
 let onPageChange = () => {
@@ -270,7 +288,12 @@ let checkPermission = (permission) => {
             >
               <div class="d-flex">
                 <Edit :permissions="props.permissions" :role="dataProps.row" />
-                <VBtn density="compact" icon="mdi-trash" class="ml-2 bg-error">
+                <VBtn
+                  density="compact"
+                  icon="mdi-trash"
+                  class="ml-2 bg-error"
+                  @click="deleteRole(dataProps.row.id)"
+                >
                 </VBtn>
               </div>
             </div>
