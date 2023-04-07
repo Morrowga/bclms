@@ -11,7 +11,7 @@ const pages ={
         // "BlendedConcept/User/Presentation/Resources/Users/Edit" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Edit.vue'),
         // "BlendedConcept/User/Presentation/Resources/Users/Show" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Show.vue'),
         // //role module
-        // "BlendedConcept/User/Presentation/Resources/Roles/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Roles/Index.vue'),
+        "BlendedConcept/User/Presentation/Resources/Roles/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Roles/Index.vue'),
         // "BlendedConcept/User/Presentation/Resources/Roles/Create" : import('../../src/BlendedConcept/User/Presentation/Resources/Roles/Create.vue'),
         // "BlendedConcept/User/Presentation/Resources/Roles/Edit" : import('../../src/BlendedConcept/User/Presentation/Resources/Roles/Edit.vue'),
 

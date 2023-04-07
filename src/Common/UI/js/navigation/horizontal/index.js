@@ -20,7 +20,7 @@ export default [
       icon: { icon: 'mdi-account' },
         children: [
           { title: 'Permissions', url: '/permissions',icon: { icon: 'mdi-shield' }, route_name:'permissions',},
-          { title: 'Roles', url: '/',icon: { icon: 'mdi-alpha-r-circle' }, route_name:'roles',},
+          { title: 'Roles', url: '/roles',icon: { icon: 'mdi-alpha-r-circle' }, route_name:'roles',},
           { title: 'Users', url: '/',icon: { icon: 'mdi-account-group' }, route_name:'users',},
         ],
     },

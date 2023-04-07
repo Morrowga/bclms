@@ -1,168 +1,90 @@
-<template>
-  <AdminLayout>
-    <div class="flex flex-wrap justify-content-center gap-2 mb-2">
-      <ConfirmDialog group="positionDialog"></ConfirmDialog>
-    </div>
-    <div class="card flex justify-content-center">
-      <Toast />
-    </div>
-    <div
-      class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 rounded-lg bg-white p-6 shadow-lg my-4"
-    >
-      <div class="flex flex-col">
-        <div class="relative overflow-x-auto">
-          <vue-good-table
-            class="data-table"
-            mode="remote"
-            @page-change="onPageChange"
-            @column-filter="onColumnFilter"
-            @per-page-change="onPerPageChange"
-            :totalRows="props.roles.meta.total"
-            :line-numbers="true"
-            styleClass="vgt-table striped"
-            :pagination-options="options"
-            :rows="props.roles.data"
-            :columns="columns"
-          >
-            <template #table-column="props">
-              <span
-                class="whitespace-nowrap"
-                v-if="props.column.label == 'Guard Name'"
-              >
-                {{ props.column.label }}
-              </span>
-              <span v-else>
-                {{ props.column.label }}
-              </span>
-            </template>
-            <template #table-actions>
-              <div class="flex">
-                <div class="relative w-full mr-3">
-                  <div
-                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </div>
-                  <input
-                    type="text"
-                    id="simple-search"
-                    @keyup.enter="loadItems"
-                    v-model="serverParams.search"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search"
-                  />
-                </div>
-                <Link
-                  :href="route('roles.create')"
-                  v-if="checkPermission('create_role')"
-                >
-                  <AddIcon />
-                </Link>
-              </div>
-            </template>
-            <template #table-row="props">
-              <div
-                v-if="props.column.field == 'permission'"
-                class="flex flex-wrap"
-                style="max-width: 600px"
-              >
-                <span
-                  v-for="permission in props.row.permissions"
-                  :key="permission.id"
-                  class="bg-blue-100 mt-2 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
-                  >{{ permission.name }}</span
-                >
-              </div>
-              <div
-                v-if="props.column.field == 'description'"
-                class="flex flex-wrap"
-              >
-                <span>{{ truncatedText(props.row.description) }}</span>
-              </div>
-              <div
-                v-if="props.column.field == 'action'"
-                class="flex flex-nowrap"
-              >
-                <IconButton
-                  buttonColor="blue"
-                  v-if="checkPermission('show_role')"
-                >
-                  <i class="pi pi-icon pi-eye"></i>
-                </IconButton>
-                <Link
-                  :href="
-                    route('roles.edit', {
-                      id: props.row.id,
-                    })
-                  "
-                >
-                  <IconButton
-                    buttonColor="yellow"
-                    v-if="checkPermission('edit_role')"
-                  >
-                    <i class="pi pi-icon pi-file-edit"></i>
-                  </IconButton>
-                </Link>
-                <IconButton
-                  @click="deleteRole(props.row.id)"
-                  buttonColor="red"
-                  v-if="checkPermission('delete_role')"
-                >
-                  <i
-                    class="pi pi-icon pi-delete-left"
-                    style="font-size: 1rem"
-                  ></i>
-                </IconButton>
-              </div>
-            </template>
-          </vue-good-table>
-        </div>
-      </div>
-    </div>
-  </AdminLayout>
-</template>
 <script setup>
-import AdminLayout from "@dashboard/AdminLayout.vue";
-import { computed, onMounted, defineProps, watch, ref } from "vue";
+import Create from "./Create.vue";
+import { useUserListStore } from "@/views/apps/user/useUserListStore";
+import { avatarText } from "@core/utils/formatters";
+import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-let props = defineProps([
-  "roles",
-  "flash",
-  "permissions",
-  "auth",
-  "roles_name",
-]);
-import { useConfirm } from "primevue/useconfirm";
-import { useToast } from "primevue/usetoast";
-import { usePage } from "@inertiajs/vue3";
-let Confirm = useConfirm();
-let toast = useToast();
+import MoreBtn from "@core/components/MoreBtn.vue";
+import { computed, defineProps } from "vue";
+let props = defineProps(["roles", "flash", "auth"]);
 let permissions = computed(() => usePage().props.auth.data.permissions);
-//for datable configuration
+const form = useForm({
+  name: "",
+  description: "",
+  _method: "",
+});
+let currentPermission = ref();
+// 👉 search filters
+const names = [];
+const isAddNewUserDrawerVisible = ref(false);
+const isEditUserDrawerVisible = ref(false);
+let serverPage = ref(props.roles.meta.current_page ?? 1);
+let serverPerPage = ref(10);
+
+const addNewUser = (userData) => {
+  form.name = userData.name;
+  form.description = userData.description;
+  form._method = "POST";
+  form.post(route("roles.store"), {
+    onSuccess: () => {},
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+};
+const updateUser = (userData) => {
+  console.log(userData);
+  form.name = userData.name;
+  form.description = userData.description;
+  form._method = "PUT";
+  form.post(
+    route("roles.update", {
+      id: currentPermission.value.id,
+    }),
+    {
+      onSuccess: () => {},
+      onError: (error) => {
+        console.log(error);
+      },
+    }
+  );
+};
+const deletePermission = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      router.delete(`roles/${id}`, {
+        onSuccess: () => {},
+      });
+    }
+  });
+};
+
+const openEditModel = (permission) => {
+  console.log(permission);
+  currentPermission.value = permission;
+  isEditUserDrawerVisible.value = true;
+};
 let columns = [
   {
     label: "Name",
     field: "name",
     sortable: false,
-    filterOptions: {
-      styleClass: "class1", // class to be added to the parent th element
-      enabled: true, // enable filter for this column
-      placeholder: "Filter All", // placeholder for filter input
-      filterDropdownItems: props.roles_name, // dropdown (with selected values) instead of text input
-      trigger: "enter", //only trigger on enter not on keyup
-    },
+    // filterOptions: {
+    //   styleClass: "class1", // class to be added to the parent th element
+    //   enabled: true, // enable filter for this column
+    //   placeholder: "Filter All", // placeholder for filter input
+    //   filterDropdownItems: props.roles_name, // dropdown (with selected values) instead of text input
+    //   trigger: "enter", //only trigger on enter not on keyup
+    // },
   },
   {
     label: "Permission",
@@ -206,23 +128,25 @@ let options = ref({
   perPageDropdown: [10, 20, 50, 100],
   dropdownAllowAll: false,
 });
-//deleting role
-
 //updateParams
 let updateParams = (newProps) => {
   serverParams.value = Object.assign({}, serverParams.value, newProps);
 };
 //page change on pagination
-let onPageChange = (params) => {
-  updateParams({ page: params.currentPage });
+let onPageChange = () => {
+  updateParams({ page: serverPage.value });
   loadItems();
 };
 
 // perpage change selectbox
-let onPerPageChange = (params) => {
-  updateParams({ page: params.currentPage });
+let onPerPageChange = (value) => {
+  serverPage.value = 1;
+  updateParams({ page: 1, perPage: value });
+  loadItems();
 };
-
+watch(serverPerPage, function (value) {
+  onPerPageChange(value);
+});
 // filter folumn by name
 let onColumnFilter = (params) => {
   updateParams(params);
@@ -244,6 +168,11 @@ let getQueryParams = () => {
     }
   }
   return data;
+};
+//search items
+let searchItems = () => {
+  updateParams({ page: 1 });
+  loadItems();
 };
 // load items is what brings back the rows from server
 let loadItems = () => {
@@ -267,56 +196,125 @@ let truncatedText = (text) => {
 let checkPermission = (permission) => {
   return permissions.value.includes(permission);
 };
-//deleting role
-let deleteRole = (id) => {
-  Confirm.require({
-    group: "positionDialog",
-    message: "Do you want to delete this record?",
-    header: "Delete Confirmation",
-    icon: "pi pi-info-circle",
-    position: "center",
-    accept: () => {
-      router.delete(`roles/${id}`, {
-        onSuccess: () => {
-          toast.add({
-            severity: "success",
-            summary: "Delected",
-            detail: "Roles Delected successfully",
-            life: 3000,
-          });
-        },
-      });
-    },
-    reject: () => {
-      toast.add({
-        severity: "error",
-        summary: "Rejected",
-        detail: "You have rejected",
-        life: 3000,
-      });
-    },
-  });
-};
-onMounted(() => {
-  //fire alert when user make actions
-  if (props?.flash?.successMessage) {
-    toast.add({
-      severity: "success",
-      summary: "Role created",
-      detail: props?.flash?.successMessage,
-      life: 3000,
-    });
-  }
-});
+// delete record
 </script>
-<style scoped>
-.data-table :deep(.vgt-wrap__footer select) {
-  width: 80px;
+
+<template>
+  <AdminLayout>
+    <section>
+      <VCard>
+        <VCardText class="d-flex flex-wrap gap-4">
+          <!-- 👉 Export button -->
+          <div class="d-flex align-center">
+            <span class="me-2">Show</span>
+            <VSelect
+              v-model="serverPerPage"
+              density="compact"
+              :items="[10, 20, 50]"
+            ></VSelect>
+          </div>
+
+          <VSpacer />
+
+          <div class="app-user-search-filter d-flex align-center gap-6">
+            <!-- 👉 Search  -->
+            <VTextField
+              @keyup.enter="searchItems"
+              v-model="serverParams.search"
+              placeholder="Search Role"
+              density="compact"
+            />
+
+            <!-- 👉 Add user button -->
+            <Create />
+          </div>
+        </VCardText>
+
+        <VDivider />
+
+        <vue-good-table
+          class="data-table"
+          mode="remote"
+          @column-filter="onColumnFilter"
+          :totalRows="props.roles.meta.total"
+          styleClass="vgt-table"
+          :pagination-options="options"
+          :rows="props.roles.data"
+          :columns="columns"
+        >
+          <template #table-row="props">
+            <div
+              v-if="props.column.field == 'permission'"
+              class="flex flex-wrap"
+              style="max-width: 600px"
+            >
+              <v-chip
+                v-for="permission in props.row.permissions"
+                :key="permission.id"
+                class="ma-2"
+                color="primary"
+                size="small"
+                >{{ permission.name }}</v-chip
+              >
+            </div>
+            <div
+              v-if="props.column.field == 'description'"
+              class="flex flex-wrap"
+            >
+              <span>{{ truncatedText(props.row.description) }}</span>
+            </div>
+            <div v-if="props.column.field == 'action'" class="flex flex-nowrap">
+              <div class="d-flex">
+                <VBtn
+                  density="compact"
+                  icon="mdi-pencil"
+                  class="ml-2 bg-success"
+                >
+                </VBtn>
+
+                <VBtn density="compact" icon="mdi-trash" class="ml-2 bg-error">
+                </VBtn>
+              </div>
+            </div>
+          </template>
+          <template #pagination-bottom>
+            <VRow class="pa-4">
+              <VCol cols="12" class="d-flex justify-space-between">
+                <span
+                  >Showing {{ props.roles.meta.from }} to
+                  {{ props.roles.meta.to }} of
+                  {{ props.roles.meta.total }} entries</span
+                >
+                <VPagination
+                  v-model="serverPage"
+                  size="small"
+                  :total-visible="5"
+                  :length="props.roles.meta.last_page"
+                  @next="onPageChange"
+                  @prev="onPageChange"
+                  @click="onPageChange"
+                />
+              </VCol>
+            </VRow>
+          </template>
+        </vue-good-table>
+
+        <VDivider />
+      </VCard>
+    </section>
+  </AdminLayout>
+</template>
+
+<style lang="scss">
+.app-user-search-filter {
+  inline-size: 24.0625rem;
 }
-.data-table :deep(.vgt-wrap__footer .footer__row-count::after) {
-  display: none;
+
+.text-capitalize {
+  text-transform: capitalize;
 }
-.data-table :deep(.vgt-global-search form) {
-  width: 25%;
+
+.user-list-name:not(:hover) {
+  color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
 </style>

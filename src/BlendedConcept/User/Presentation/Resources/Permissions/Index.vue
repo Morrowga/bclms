@@ -217,11 +217,11 @@ let checkPermission = (permission) => {
             <VTextField
               @keyup.enter="searchItems"
               v-model="serverParams.search"
-              placeholder="Search User"
+              placeholder="Search Permission"
               density="compact"
             />
 
-            <!-- 👉 Add user button -->
+            <!-- 👉 Add Permission button -->
             <VBtn @click="isAddNewUserDrawerVisible = true">
               Add Permission
             </VBtn>
@@ -304,14 +304,14 @@ let checkPermission = (permission) => {
         <VDivider />
       </VCard>
 
-      <!-- 👉 Add New User -->
+      <!-- 👉 Add New Permission -->
       <Create
         v-model:isDrawerOpen="isAddNewUserDrawerVisible"
-        @user-data="addNewUser"
+        @data="addNewUser"
       />
       <Edit
         v-model:isDrawerOpen="isEditUserDrawerVisible"
-        @user-data="updateUser"
+        @data="updateUser"
         :permission="currentPermission"
       />
     </section>

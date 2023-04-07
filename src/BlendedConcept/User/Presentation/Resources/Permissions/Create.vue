@@ -10,7 +10,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:isDrawerOpen", "userData"]);
+const emit = defineEmits(["update:isDrawerOpen", "data"]);
 
 const isFormValid = ref(false);
 const refForm = ref();
@@ -29,7 +29,7 @@ const closeNavigationDrawer = () => {
 const onSubmit = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
-      emit("userData", {
+      emit("data", {
         name: permission_name.value,
         description: permission_description.value,
       });
@@ -80,7 +80,6 @@ const handleDrawerModelValueUpdate = (val) => {
               <VCol cols="12">
                 <VTextarea
                   v-model="permission_description"
-                  :rules="[requiredValidator]"
                   label="Description"
                 />
               </VCol>
