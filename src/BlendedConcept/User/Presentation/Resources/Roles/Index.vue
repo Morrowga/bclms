@@ -1,15 +1,12 @@
 <script setup>
 import Create from "./Create.vue";
 import Edit from "./Edit.vue";
-import { useUserListStore } from "@/views/apps/user/useUserListStore";
-import { avatarText } from "@core/utils/formatters";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import MoreBtn from "@core/components/MoreBtn.vue";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
-let props = defineProps(["roles", "permissions", "flash", "auth"]);
+let props = defineProps(["roles", "permissions", "auth"]);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const form = useForm({
   name: "",
@@ -99,7 +96,7 @@ const deleteRole = (id) => {
     }
   });
 };
-//page change on pagination
+//## page change on pagination
 let onPageChange = () => {
   updateParams({ page: serverPage.value });
   loadItems();
@@ -187,7 +184,7 @@ let truncatedText = (text) => {
               density="compact"
             />
 
-            <!-- 👉 Add user button -->
+            <!-- 👉 Add permission button -->
             <Create :permissions="props.permissions" />
           </div>
         </VCardText>

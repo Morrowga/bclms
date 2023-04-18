@@ -5,9 +5,12 @@ import ImageUpload from "@Composables/ImageUpload.vue";
 
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
+import { emailValidator, requiredValidator } from "@validators";
 const isDialogVisible = ref(false);
 // check passwor visible
 const isPasswordVisible = ref(false);
+const isFormValid = ref(false);
+const refForm = ref();
 // get current user and roles
 let props = defineProps(["user", "roles"]);
 
@@ -24,13 +27,28 @@ let form = useForm({
 
 // Update create form
 let handleUpdate = (id) => {
-  form.post(route("users.update", { id: id }), {
-    onSuccess: () => {},
-    onError: (error) => {
-      alert("something was wrong");
-    },
+  refForm.value?.validate().then(({ valid }) => {
+    if (valid) {
+      form.post(route("users.update", { id: id }), form, {
+        onError: (error) => {
+          alert("something was wrong");
+        },
+      });
+      //## form.reset();
+      refForm.value?.reset();
+      refForm.value?.resetValidation();
+      isDialogVisible.value = false;
+    }
   });
 };
+onUpdated(() => {
+  form.role = props?.user?.roles[0]?.name;
+  form.name = props.user.name;
+  form.contact_number = props.user.contact_number;
+  form.email = props.user.email;
+  form.image = props?.user?.image[0]?.original_url || "";
+  form.dob = props.user.dob;
+});
 </script>
 
 <template>
@@ -48,7 +66,11 @@ let handleUpdate = (id) => {
 
     <!-- Dialog Content -->
     <VCard title="User Particulars">
-      <form @submit.prevent="handleUpdate(props.user.id)">
+      <VForm
+        @submit.prevent="handleUpdate(props.user.id)"
+        ref="refForm"
+        v-model="isFormValid"
+      >
         <DialogCloseBtn
           variant="text"
           size="small"
@@ -64,6 +86,7 @@ let handleUpdate = (id) => {
                     v-model="form.role"
                     :items="roles"
                     :error-messages="form?.errors?.role_id"
+                    :rules="[requiredValidator]"
                   />
                 </VCol>
                 <VCol cols="12">
@@ -72,6 +95,7 @@ let handleUpdate = (id) => {
                     v-model="form.name"
                     class="w-100"
                     :error-messages="form?.errors?.name"
+                    :rules="[requiredValidator]"
                   />
                 </VCol>
                 <VCol cols="12">
@@ -80,6 +104,7 @@ let handleUpdate = (id) => {
                     v-model="form.contact_number"
                     class="w-100"
                     :error-messages="form?.errors?.contact_number"
+                    :rules="[requiredValidator]"
                   />
                 </VCol>
                 <VCol cols="12">
@@ -88,6 +113,7 @@ let handleUpdate = (id) => {
                     v-model="form.email"
                     class="w-100"
                     :error-messages="form?.errors?.email"
+                    :rules="[requiredValidator]"
                   />
                 </VCol>
                 <!-- <VCol cols="12">
@@ -119,11 +145,9 @@ let handleUpdate = (id) => {
         <VCardActions>
           <VSpacer />
           <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
-          <VBtn type="submit" color="success" @click="isDialogVisible = false">
-            Save
-          </VBtn>
+          <VBtn type="submit" color="success"> Save </VBtn>
         </VCardActions>
-      </form>
+      </VForm>
     </VCard>
   </VDialog>
 </template>

@@ -1,6 +1,7 @@
 <script setup>
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import AppDrawerHeaderSection from "@core/components/AppDrawerHeaderSection.vue";
+import { requiredValidator } from "@validators";
 import { computed } from "vue";
 import { useForm } from "@inertiajs/vue3";
 //## define props for toggle drawer

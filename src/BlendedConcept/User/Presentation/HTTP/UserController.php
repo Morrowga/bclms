@@ -15,14 +15,12 @@ use Src\BlendedConcept\User\Domain\Requests\UpdateUserRequest;
 class UserController extends Controller
 {
 
-
   private $userInterFace;
 
   public function __construct(UserRepositoryInterface $userRepository)
   {
     $this->userInterFace = $userRepository;
   }
-
 
   public function index(Request $request)
   {

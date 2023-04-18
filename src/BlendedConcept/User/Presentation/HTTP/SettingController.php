@@ -11,9 +11,6 @@ use Inertia\Inertia;
 class SettingController extends Controller
 {
 
-
-
-
   public function index()
   {
     return Inertia::render('BlendedConcept/User/Presentation/Resources/Settings/Index');

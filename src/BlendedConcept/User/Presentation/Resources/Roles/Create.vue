@@ -2,7 +2,7 @@
 import { watch, defineEmits, defineProps, computed, ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-
+import { requiredValidator } from "@validators";
 const isDialogVisible = ref(false);
 let props = defineProps(["permissions"]);
 const isFormValid = ref(false);
