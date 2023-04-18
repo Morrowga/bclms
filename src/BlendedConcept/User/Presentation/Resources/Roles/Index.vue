@@ -17,64 +17,10 @@ const form = useForm({
   _method: "",
 });
 let currentPermission = ref();
-// 👉 search filters
-const names = [];
-const isAddNewUserDrawerVisible = ref(false);
-const isEditUserDrawerVisible = ref(false);
+
 let serverPage = ref(props.roles.meta.current_page ?? 1);
 let serverPerPage = ref(10);
 
-const addNewUser = (userData) => {
-  form.name = userData.name;
-  form.description = userData.description;
-  form._method = "POST";
-  form.post(route("roles.store"), {
-    onSuccess: () => {},
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-};
-const updateUser = (userData) => {
-  console.log(userData);
-  form.name = userData.name;
-  form.description = userData.description;
-  form._method = "PUT";
-  form.post(
-    route("roles.update", {
-      id: currentPermission.value.id,
-    }),
-    {
-      onSuccess: () => {},
-      onError: (error) => {
-        console.log(error);
-      },
-    }
-  );
-};
-const deletePermission = (id) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      router.delete(`roles/${id}`, {
-        onSuccess: () => {},
-      });
-    }
-  });
-};
-
-const openEditModel = (permission) => {
-  console.log(permission);
-  currentPermission.value = permission;
-  isEditUserDrawerVisible.value = true;
-};
 let columns = [
   {
     label: "Name",
@@ -109,7 +55,7 @@ let columns = [
     sortable: false,
   },
 ];
-//initial state
+//## initial state
 let serverParams = ref({
   columnFilters: {},
   search: "",
@@ -121,7 +67,7 @@ let serverParams = ref({
   perPage: 10,
 });
 
-// options for datatable
+//## options for datatable
 let options = ref({
   enabled: true,
   mode: "pages",
@@ -130,10 +76,12 @@ let options = ref({
   perPageDropdown: [10, 20, 50, 100],
   dropdownAllowAll: false,
 });
-//updateParams
+//## updateParams
 let updateParams = (newProps) => {
   serverParams.value = Object.assign({}, serverParams.value, newProps);
 };
+
+//## delete role and delete in database
 const deleteRole = (id) => {
   Swal.fire({
     title: "Are you sure?",
@@ -157,7 +105,7 @@ let onPageChange = () => {
   loadItems();
 };
 
-// perpage change selectbox
+//## perpage change selectbox
 let onPerPageChange = (value) => {
   serverPage.value = 1;
   updateParams({ page: 1, perPage: value });
@@ -166,14 +114,14 @@ let onPerPageChange = (value) => {
 watch(serverPerPage, function (value) {
   onPerPageChange(value);
 });
-// filter folumn by name
+//## filter folumn by name
 let onColumnFilter = (params) => {
   updateParams(params);
   serverParams.value.page = 1;
   loadItems();
 };
 
-// query params to controller
+//## query params to controller
 let getQueryParams = () => {
   let data = {
     page: serverParams.value.page,
@@ -188,12 +136,12 @@ let getQueryParams = () => {
   }
   return data;
 };
-//search items
+//## search items
 let searchItems = () => {
   updateParams({ page: 1 });
   loadItems();
 };
-// load items is what brings back the rows from server
+//## load items is what brings back the rows from server
 let loadItems = () => {
   router.get(route(route().current()), getQueryParams(), {
     replace: false,
@@ -201,7 +149,7 @@ let loadItems = () => {
     preserveScroll: true,
   });
 };
-//truncatedText
+//## truncatedText
 let truncatedText = (text) => {
   if (text) {
     if (text?.length <= 30) {
@@ -211,11 +159,6 @@ let truncatedText = (text) => {
     }
   }
 };
-//check permission
-let checkPermission = (permission) => {
-  return permissions.value.includes(permission);
-};
-// delete record
 </script>
 
 <template>
