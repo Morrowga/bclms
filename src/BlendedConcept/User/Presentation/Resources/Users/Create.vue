@@ -9,7 +9,6 @@ const isDialogVisible = ref(false);
 // check passwor visible
 const isPasswordVisible = ref(false);
 let form = useForm({
-<<<<<<< HEAD
     role:'Select',
     name:' ',
     password:'',
@@ -18,16 +17,6 @@ let form = useForm({
     image:"",
     dob:"",
 })
-=======
-  role: "",
-  name: " ",
-  password: "",
-  contact_number: "",
-  email: "",
-  image: "",
-  dob: "",
-});
->>>>>>> c1f45902f4e6ffb8d302fef8c7c428ef24f2c075
 
 // submit create form
 let handleSubmit = () => {
