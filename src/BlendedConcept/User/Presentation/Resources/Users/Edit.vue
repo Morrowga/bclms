@@ -13,7 +13,6 @@ const isFormValid = ref(false);
 const refForm = ref();
 // get current user and roles
 let props = defineProps(["user", "roles"]);
-console.log(props.roles)
 let form = useForm({
   role: props?.user?.roles[0]?.name,
   name: props.user.name,

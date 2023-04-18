@@ -2,13 +2,13 @@
 import { watch, defineEmits, defineProps, computed, ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import { emailValidator, requiredValidator } from "@validators";
+import { requiredValidator } from "@validators";
 const isDialogVisible = ref(false);
 let props = defineProps(["permissions"]);
 const isFormValid = ref(false);
 const refForm = ref();
 
-//get only module from permission
+//## get only module from permission
 let modules = computed(() => {
   let permissions = [];
   props.permissions.forEach((permission) => {
@@ -18,7 +18,7 @@ let modules = computed(() => {
   return new Set(permissions);
 });
 
-//get modules with related permission
+//## get modules with related permission
 let permissions_modules = computed(() => {
   let newArrays = [];
   modules.value.forEach((item, index) => {
@@ -32,19 +32,19 @@ let permissions_modules = computed(() => {
   });
   return newArrays;
 });
-//for form submit
+//##for form submit
 let form = useForm({
   name: "",
   description: "",
   selectedIds: [],
 });
-// uncheck modules when selectedIds array is empty
+//## uncheck modules when selectedIds array is empty
 let watchSelectedIds = watch(form.selectedIds, (value) => {
   if (value.length <= 0) {
     document.getElementById("check-all").checked = false;
   }
 });
-// select all permissions
+//## select all permissions
 let selectAll = () => {
   form.selectedIds = [];
   let isChecked = document.getElementById("check-all").checked;
@@ -60,7 +60,7 @@ let selectAll = () => {
     form.selectedIds = [];
   }
 };
-//select permission by module
+//## select permission by module
 let selectByModule = (item, index) => {
   let isChecked = document.getElementById(`module-checkbox-${index}`).checked;
   if (isChecked) {
@@ -80,7 +80,7 @@ let selectByModule = (item, index) => {
     });
   }
 };
-//save role
+//## save role
 let saveRole = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {

@@ -1,10 +1,10 @@
 <script setup>
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import AppDrawerHeaderSection from "@core/components/AppDrawerHeaderSection.vue";
-import { emailValidator, requiredValidator } from "@validators";
+import { requiredValidator } from "@validators";
 import { computed } from "vue";
 import { useForm } from "@inertiajs/vue3";
-
+//## define props for toggle drawer
 const props = defineProps({
   isDrawerOpen: {
     type: Boolean,
@@ -23,7 +23,7 @@ const form = useForm({
   name: "",
   description: "",
 });
-// 👉 drawer close
+//## drawer close
 const closeNavigationDrawer = () => {
   emit("update:isDrawerOpen", false);
 
@@ -32,7 +32,7 @@ const closeNavigationDrawer = () => {
     refForm.value?.resetValidation();
   });
 };
-
+//##pass form data to parent
 const onSubmit = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
@@ -48,10 +48,11 @@ const onSubmit = () => {
     }
   });
 };
-
+//## toggle drawer
 const handleDrawerModelValueUpdate = (val) => {
   emit("update:isDrawerOpen", val);
 };
+//## reative name and description when edit
 onUpdated(() => {
   form.name = props.permission?.name;
   form.description = props.permission?.description;

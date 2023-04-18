@@ -1,6 +1,6 @@
 <script setup>
 // component
-import AppDateTimePicker from '@core/components/AppDateTimePicker.vue'
+import AppDateTimePicker from "@core/components/AppDateTimePicker.vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
 
 import { Link, useForm, usePage } from "@inertiajs/vue3";
@@ -9,6 +9,7 @@ const isDialogVisible = ref(false);
 // check passwor visible
 const isPasswordVisible = ref(false);
 let form = useForm({
+<<<<<<< HEAD
     role:'Select',
     name:' ',
     password:'',
@@ -17,6 +18,16 @@ let form = useForm({
     image:"",
     dob:"",
 })
+=======
+  role: "",
+  name: " ",
+  password: "",
+  contact_number: "",
+  email: "",
+  image: "",
+  dob: "",
+});
+>>>>>>> c1f45902f4e6ffb8d302fef8c7c428ef24f2c075
 
 // submit create form
 let handleSubmit = () => {
@@ -25,13 +36,12 @@ let handleSubmit = () => {
         console.log("hello");
     },
     onError: (error) => {
-      alert("something was wrong")
+      alert("something was wrong");
     },
   });
 };
 // get roles
-defineProps(['roles'])
-
+defineProps(["roles"]);
 </script>
 
 <template>
@@ -85,7 +95,7 @@ defineProps(['roles'])
                     "
                     @click:append-inner="isPasswordVisible = !isPasswordVisible"
                   />
-              </VCol>
+                </VCol>
 
               <VCol cols="12">
                  <AppDateTimePicker v-model="form.dob" label="Dob"/>
@@ -97,13 +107,13 @@ defineProps(['roles'])
           </VCol>
         </VRow>
 
-      </VCardText>
-
-      <VCardActions>
-        <VSpacer />
-        <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
-        <VBtn type="submit" color="success" @click="isDialogVisible = false"> Save </VBtn>
-      </VCardActions>
+        <VCardActions>
+          <VSpacer />
+          <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
+          <VBtn type="submit" color="success" @click="isDialogVisible = false">
+            Save
+          </VBtn>
+        </VCardActions>
       </form>
     </VCard>
   </VDialog>

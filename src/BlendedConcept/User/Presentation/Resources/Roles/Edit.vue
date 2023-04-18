@@ -10,13 +10,13 @@ import {
 } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import { emailValidator, requiredValidator } from "@validators";
+import { requiredValidator } from "@validators";
 const isDialogVisible = ref(false);
 let props = defineProps(["permissions", "role"]);
 const isFormValid = ref(false);
 const refForm = ref();
 let module_arr = ref([]);
-//get only module from permission
+//## get only module from permission
 let modules = computed(() => {
   let permissions = [];
   props.permissions.forEach((permission) => {
@@ -26,7 +26,7 @@ let modules = computed(() => {
   return new Set(permissions);
 });
 
-//get modules with related permission
+//## get modules with related permission
 let permissions_modules = computed(() => {
   let newArrays = [];
   modules.value.forEach((item, index) => {
@@ -40,19 +40,19 @@ let permissions_modules = computed(() => {
   });
   return newArrays;
 });
-//for form submit
+//## for form submit
 let form = useForm({
   name: props.role.name,
   description: props.role.description,
   selectedIds: [],
 });
-// uncheck modules when selectedIds array is empty
+//## uncheck modules when selectedIds array is empty
 let watchSelectedIds = watch(form.selectedIds, (value) => {
   if (value.length <= 0) {
     document.getElementById("check-all-edit" + props.role.id).checked = false;
   }
 });
-// select all permissions
+//## select all permissions
 let selectAll = () => {
   form.selectedIds = [];
   let isChecked = document.getElementById(
@@ -74,7 +74,7 @@ let selectAll = () => {
     form.selectedIds = [];
   }
 };
-//select permission by module
+//## select permission by module
 let selectByModule = (item, index) => {
   let isChecked = document.getElementById(
     `${props.role.id}-edit-checkbox-${index}`
@@ -96,7 +96,7 @@ let selectByModule = (item, index) => {
     });
   }
 };
-//updateRole
+//## updateRole
 let updateRole = (id) => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
@@ -106,7 +106,7 @@ let updateRole = (id) => {
           form.setError("name", error?.name);
         },
       });
-      // form.reset();
+      //## form.reset();
       isDialogVisible.value = false;
       refForm.value?.reset();
       refForm.value?.resetValidation();
@@ -115,6 +115,7 @@ let updateRole = (id) => {
 };
 
 onUpdated(() => {
+  //## reative name and description when edit
   form.selectedIds = [];
   props.role.permissions.filter((rp) => form.selectedIds.push(rp.id));
   form.name = props.role.name;

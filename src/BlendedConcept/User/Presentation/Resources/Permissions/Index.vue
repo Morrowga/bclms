@@ -1,15 +1,13 @@
 <script setup>
 import Create from "./Create.vue";
 import Edit from "./Edit.vue";
-import { useUserListStore } from "@/views/apps/user/useUserListStore";
-import { avatarText } from "@core/utils/formatters";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import MoreBtn from "@core/components/MoreBtn.vue";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 let props = defineProps(["permissions", "flash", "auth"]);
+//## get permissions from view share
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const form = useForm({
   name: "",
@@ -17,14 +15,14 @@ const form = useForm({
   _method: "",
 });
 let currentPermission = ref();
-// 👉 search filters
-const names = [];
-const isAddNewUserDrawerVisible = ref(false);
-const isEditUserDrawerVisible = ref(false);
+
+const isAddNewPermissionDrawerVisible = ref(false);
+const isEditPermissionDrawerVisible = ref(false);
 let serverPage = ref(props.permissions.meta.current_page ?? 1);
 let serverPerPage = ref(10);
 
-const addNewUser = (userData) => {
+//## add permission and save in database
+const addNewPermission = (userData) => {
   form.name = userData.name;
   form.description = userData.description;
   form._method = "POST";
@@ -35,7 +33,8 @@ const addNewUser = (userData) => {
     },
   });
 };
-const updateUser = (userData) => {
+//## update permission and update in database
+const updatePermission = (userData) => {
   console.log(userData);
   form.name = userData.name;
   form.description = userData.description;
@@ -52,6 +51,8 @@ const updateUser = (userData) => {
     }
   );
 };
+
+//## delete permission and delete in database
 const deletePermission = (id) => {
   Swal.fire({
     title: "Are you sure?",
@@ -69,11 +70,11 @@ const deletePermission = (id) => {
     }
   });
 };
-
+//## open model for edit
 const openEditModel = (permission) => {
   console.log(permission);
   currentPermission.value = permission;
-  isEditUserDrawerVisible.value = true;
+  isEditPermissionDrawerVisible.value = true;
 };
 let columns = [
   {
@@ -104,7 +105,7 @@ let columns = [
     sortable: false,
   },
 ];
-//initial state
+//## initial state
 let serverParams = ref({
   columnFilters: {},
   search: "",
@@ -116,7 +117,7 @@ let serverParams = ref({
   perPage: 10,
 });
 
-// options for datatable
+//## options for datatable
 let options = ref({
   enabled: true,
   mode: "pages",
@@ -125,33 +126,34 @@ let options = ref({
   perPageDropdown: [10, 20, 50, 100],
   dropdownAllowAll: false,
 });
-//updateParams
+//## updateParams
 let updateParams = (newProps) => {
   serverParams.value = Object.assign({}, serverParams.value, newProps);
 };
-//page change on pagination
+//## page change on pagination
 let onPageChange = () => {
   updateParams({ page: serverPage.value });
   loadItems();
 };
 
-// perpage change selectbox
+//## perpage change selectbox
 let onPerPageChange = (value) => {
   serverPage.value = 1;
   updateParams({ page: 1, perPage: value });
   loadItems();
 };
+//## watch per page change in datatable
 watch(serverPerPage, function (value) {
   onPerPageChange(value);
 });
-// filter folumn by name
+//## filter folumn by name
 let onColumnFilter = (params) => {
   updateParams(params);
   serverParams.value.page = 1;
   loadItems();
 };
 
-// query params to controller
+//## query params to controller
 let getQueryParams = () => {
   let data = {
     page: serverParams.value.page,
@@ -166,12 +168,12 @@ let getQueryParams = () => {
   }
   return data;
 };
-//search items
+//## search items
 let searchItems = () => {
   updateParams({ page: 1 });
   loadItems();
 };
-// load items is what brings back the rows from server
+//## load items is what brings back the rows from server
 let loadItems = () => {
   router.get(route(route().current()), getQueryParams(), {
     replace: false,
@@ -179,7 +181,7 @@ let loadItems = () => {
     preserveScroll: true,
   });
 };
-//truncatedText
+//## truncatedText
 let truncatedText = (text) => {
   if (text) {
     if (text?.length <= 30) {
@@ -189,11 +191,6 @@ let truncatedText = (text) => {
     }
   }
 };
-//check permission
-let checkPermission = (permission) => {
-  return permissions.value.includes(permission);
-};
-// delete record
 </script>
 
 <template>
@@ -223,7 +220,7 @@ let checkPermission = (permission) => {
             />
 
             <!-- 👉 Add Permission button -->
-            <VBtn @click="isAddNewUserDrawerVisible = true">
+            <VBtn @click="isAddNewPermissionDrawerVisible = true">
               Add Permission
             </VBtn>
           </div>
@@ -307,12 +304,12 @@ let checkPermission = (permission) => {
 
       <!-- 👉 Add New Permission -->
       <Create
-        v-model:isDrawerOpen="isAddNewUserDrawerVisible"
-        @data="addNewUser"
+        v-model:isDrawerOpen="isAddNewPermissionDrawerVisible"
+        @data="addNewPermission"
       />
       <Edit
-        v-model:isDrawerOpen="isEditUserDrawerVisible"
-        @data="updateUser"
+        v-model:isDrawerOpen="isEditPermissionDrawerVisible"
+        @data="updatePermission"
         :permission="currentPermission"
       />
     </section>
@@ -320,6 +317,7 @@ let checkPermission = (permission) => {
 </template>
 
 <style lang="scss">
+//## style for darkmode
 .permission-data-table table.vgt-table {
   background-color: rgb(var(--v-theme-surface));
   border-color: rgb(var(--v-theme-surface));
