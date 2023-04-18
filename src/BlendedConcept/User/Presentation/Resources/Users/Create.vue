@@ -95,7 +95,7 @@ defineProps(["roles"]);
              <ImageUpload v-model="form.image"/>
           </VCol>
         </VRow>
-
+      </VCardText>
         <VCardActions>
           <VSpacer />
           <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
@@ -103,6 +103,7 @@ defineProps(["roles"]);
             Save
           </VBtn>
         </VCardActions>
+
       </form>
     </VCard>
   </VDialog>
