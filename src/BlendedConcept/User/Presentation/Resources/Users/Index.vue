@@ -8,9 +8,9 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import MoreBtn from "@core/components/MoreBtn.vue";
 import { computed, defineProps } from "vue";
-let props = defineProps(["users",'roles_name', "flash", "auth"]);
+let props = defineProps(["users", "roles_name", "flash", "auth"]);
 let users = computed(() => usePage().props.auth.data.users);
-import Swal  from "sweetalert2";
+import Swal from "sweetalert2";
 
 let currentPermission = ref();
 // 👉 search filters
@@ -229,14 +229,14 @@ let checkPermission = (user) => {
               density="compact"
             />
             <!-- 👉 Add User button -->
-            <Create  :roles="roles_name"/>
+            <Create :roles="roles_name" />
           </div>
         </VCardText>
 
         <VDivider />
 
         <vue-good-table
-          class="data-table"
+          class="user-data-table"
           mode="remote"
           @column-filter="onColumnFilter"
           :totalRows="props.users.meta.total"
@@ -246,26 +246,25 @@ let checkPermission = (user) => {
           :columns="columns"
         >
           <template #table-row="props">
-
             <!-- <span>{{props.row}}</span> -->
-            <div
-              v-if="props.column.field == 'roles'"
-              class="flex flex-wrap"
-            >
-              <VChip color="primary" v-for="role in props.row.roles"
-                :key="role.id">
-                {{role.name}}
-               </VChip>
+            <div v-if="props.column.field == 'roles'" class="flex flex-wrap">
+              <VChip
+                color="primary"
+                v-for="role in props.row.roles"
+                :key="role.id"
+              >
+                {{ role.name }}
+              </VChip>
             </div>
             <div
               v-if="props.column.field == 'created_at'"
               class="flex flex-wrap"
             >
-               {{ moment(props.row.created_at).format("DD-MM-YYYY h:mm A") }}
+              {{ moment(props.row.created_at).format("DD-MM-YYYY h:mm A") }}
             </div>
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
-               <Edit :user="props.row" :roles="roles_name"/>
+                <Edit :user="props.row" :roles="roles_name" />
 
                 <VBtn
                   density="compact"
@@ -313,7 +312,17 @@ let checkPermission = (user) => {
 .text-capitalize {
   text-transform: capitalize;
 }
-
+.user-data-table table.vgt-table {
+  background-color: rgb(var(--v-theme-surface));
+  border-color: rgb(var(--v-theme-surface));
+}
+.user-data-table table.vgt-table td {
+  color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
+.user-data-table table.vgt-table thead th {
+  background: rgb(var(--v-theme-surface)) !important;
+  color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
 .user-list-name:not(:hover) {
   color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
