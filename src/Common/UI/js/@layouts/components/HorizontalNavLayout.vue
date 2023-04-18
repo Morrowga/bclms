@@ -79,7 +79,7 @@ const resolveNavItemComponent = (item) => {
       </div>
       <!-- 👉 Navigation -->
       <div class="layout-horizontal-nav d-none d-md-flex toolbar-fixed">
-        <v-toolbar class="w-100 px-13" elevation="1">
+        <v-toolbar class="w-100 tb px-13" elevation="1">
           <HorizontalNav :nav-items="navItems" />
         </v-toolbar>
       </div>
@@ -115,8 +115,8 @@ const resolveNavItemComponent = (item) => {
   position: fixed;
   width: 100%;
 }
-.v-toolbar {
-  background: rgb(var(--v-theme-surface));
+.v-toolbar.tb {
+  background: rgb(var(--v-theme-surface)) !important;
 }
 .layout-wrapper {
   &.layout-nav-type-horizontal {
