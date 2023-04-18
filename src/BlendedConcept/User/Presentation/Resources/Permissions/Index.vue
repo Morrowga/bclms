@@ -78,7 +78,7 @@ const openEditModel = (permission) => {
 };
 let columns = [
   {
-    label: "Name",
+    label: "Permission Name",
     field: "name",
     sortable: false,
     // filterOptions: {
@@ -99,11 +99,11 @@ let columns = [
     field: "guard_name",
     sortable: false,
   },
-  {
-    label: "Action",
-    field: "action",
-    sortable: false,
-  },
+//   {
+//     label: "Action",
+//     field: "action",
+//     sortable: false,
+//   },
 ];
 //## initial state
 let serverParams = ref({
@@ -219,10 +219,10 @@ let truncatedText = (text) => {
               density="compact"
             />
 
-            <!-- 👉 Add Permission button -->
+            <!-- 👉 Add Permission button
             <VBtn @click="isAddNewPermissionDrawerVisible = true">
               Add Permission
-            </VBtn>
+            </VBtn> -->
           </div>
         </VCardText>
 
@@ -240,16 +240,10 @@ let truncatedText = (text) => {
         >
           <template #table-row="props">
             <div
-              v-if="props.column.field == 'permission'"
+              v-if="props.column.field == 'name'"
               class="flex flex-wrap"
             >
-              <span
-                v-for="permission in props.row.permissions"
-                :key="permission.id"
-                class="bg-blue-100 mt-2 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
-              >
-                {{ permission.name }}
-              </span>
+              <span class="">{{props.row.name}}</span>
             </div>
             <div
               v-if="props.column.field == 'description'"
@@ -259,21 +253,21 @@ let truncatedText = (text) => {
             </div>
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
-                <VBtn
+                <!-- <VBtn
                   density="compact"
                   icon="mdi-pencil"
                   class="ml-2 bg-success"
                   @click="openEditModel(props.row)"
                 >
-                </VBtn>
+                </VBtn> -->
 
-                <VBtn
+                <!-- <VBtn
                   density="compact"
                   icon="mdi-trash"
                   class="ml-2 bg-error"
                   @click="deletePermission(props.row.id)"
                 >
-                </VBtn>
+                </VBtn> -->
               </div>
             </div>
           </template>

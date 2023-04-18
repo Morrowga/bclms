@@ -45,7 +45,7 @@ onUpdated(() => {
   form.contact_number = props.user.contact_number;
   form.email = props.user.email;
   form.image = props?.user?.image[0]?.original_url || "";
-  form.dob = moment(props.user.dob).format("DD-MM-YYYY");
+  form.dob =props.user.dob;
 });
 </script>
 <template>
