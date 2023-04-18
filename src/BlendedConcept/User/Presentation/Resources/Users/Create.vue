@@ -9,19 +9,21 @@ const isDialogVisible = ref(false);
 // check passwor visible
 const isPasswordVisible = ref(false);
 let form = useForm({
-  role: "",
-  name: " ",
-  password: "",
-  contact_number: "",
-  email: "",
-  image: "",
-  dob: "",
-});
+    role:'Select',
+    name:' ',
+    password:'',
+    contact_number:"",
+    email:"",
+    image:"",
+    dob:"",
+})
 
 // submit create form
 let handleSubmit = () => {
-  form.post(route("users.store"), {
-    onSuccess: () => {},
+  form.post(route("users.store"),form, {
+    onSuccess: () => {
+        console.log("hello");
+    },
     onError: (error) => {
       alert("something was wrong");
     },
@@ -40,50 +42,37 @@ defineProps(["roles"]);
 
     <!-- Dialog Content -->
     <VCard title="User Particulars">
-      <form @submit.prevent="handleSubmit">
-        <DialogCloseBtn
-          variant="text"
-          size="small"
-          @click="isDialogVisible = false"
-        />
-        <VCardText>
-          <VRow>
-            <VCol cols="6">
-              <VRow>
-                <VCol cols="12">
-                  <VSelect
-                    label="User Roles"
-                    v-model="form.role"
-                    :items="roles"
-                    :error-messages="form?.errors?.role_id"
-                  />
-                </VCol>
-                <VCol cols="12">
-                  <VTextField
-                    label="Name"
-                    v-model="form.name"
-                    class="w-100"
-                    :error-messages="form?.errors?.name"
-                  />
-                </VCol>
-                <VCol cols="12">
-                  <VTextField
-                    label="Contact Number"
-                    v-model="form.contact_number"
-                    class="w-100"
-                    :error-messages="form?.errors?.contact_number"
-                  />
-                </VCol>
-                <VCol cols="12">
-                  <VTextField
-                    label="Email"
-                    v-model="form.email"
-                    class="w-100"
-                    :error-messages="form?.errors?.email"
-                  />
-                </VCol>
-                <VCol cols="12">
-                  <VTextField
+    <form @submit.prevent="handleSubmit">
+      <DialogCloseBtn
+        variant="text"
+        size="small"
+        @click="isDialogVisible = false"
+      />
+      <VCardText>
+
+        <VRow>
+          <VCol cols="6">
+            <VRow>
+              <VCol cols="12">
+                <VSelect
+                 label="User Roles"
+                 v-model="form.role"
+                :items="roles"
+                :error-messages="form?.errors?.role_id"
+              />
+              </VCol>
+               <VCol cols="12">
+                <VTextField label="Name" v-model="form.name" class="w-100" :error-messages="form?.errors?.name"/>
+              </VCol>
+              <VCol cols="12">
+                <VTextField label="Contact Number" v-model="form.contact_number" class="w-100" :error-messages="form?.errors?.contact_number"/>
+              </VCol>
+              <VCol cols="12">
+                <VTextField label="Email" v-model="form.email" class="w-100" :error-messages="form?.errors?.email"/>
+              </VCol>
+              <VCol cols="12">
+               <VTextField
+                    label="Password"
                     v-model="form.password"
                     :rules="[requiredValidator]"
                     :type="isPasswordVisible ? 'text' : 'password'"
@@ -97,17 +86,16 @@ defineProps(["roles"]);
                   />
                 </VCol>
 
-                <VCol cols="12">
-                  <AppDateTimePicker v-model="form.dob" label="Dob" />
-                </VCol>
-              </VRow>
-            </VCol>
-            <VCol cols="6">
-              <ImageUpload v-model="form.image" />
-            </VCol>
-          </VRow>
-        </VCardText>
-
+              <VCol cols="12">
+                 <AppDateTimePicker v-model="form.dob" label="Dob"/>
+              </VCol>
+            </VRow>
+          </VCol>
+          <VCol cols="6">
+             <ImageUpload v-model="form.image"/>
+          </VCol>
+        </VRow>
+      </VCardText>
         <VCardActions>
           <VSpacer />
           <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
@@ -115,6 +103,7 @@ defineProps(["roles"]);
             Save
           </VBtn>
         </VCardActions>
+
       </form>
     </VCard>
   </VDialog>

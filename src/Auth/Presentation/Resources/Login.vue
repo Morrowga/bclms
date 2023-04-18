@@ -8,7 +8,9 @@ import { toastAlert } from "../../../Common/Layouts/Composables/useToastAlert";
 //## start variable section
 const isPasswordVisible = ref(false);
 const rememberMe = ref(false);
-let errorMessage = defineProps(["errorMessage"]);
+// recevied error message
+let props = defineProps(["errorMessage"]);
+
 let form = useForm({
   email: "",
   password: "",
@@ -100,6 +102,11 @@ const onSubmit = () => {
                         isPasswordVisible = !isPasswordVisible
                       "
                     />
+                    <span
+                      style="color: red; padding-top: 10px"
+                      v-if="props?.errorMessage"
+                      >{{ props?.errorMessage }}</span
+                    >
                     <div
                       class="d-flex align-center flex-wrap justify-space-between mt-1 mb-4"
                     >

@@ -2,10 +2,10 @@
 // component
 import AppDateTimePicker from "@core/components/AppDateTimePicker.vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
-
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
+import moment from "moment";
 const isDialogVisible = ref(false);
 // check passwor visible
 const isPasswordVisible = ref(false);
@@ -13,7 +13,6 @@ const isFormValid = ref(false);
 const refForm = ref();
 // get current user and roles
 let props = defineProps(["user", "roles"]);
-
 let form = useForm({
   role: props?.user?.roles[0]?.name,
   name: props.user.name,
@@ -24,7 +23,6 @@ let form = useForm({
   _method: "put",
   dob: props.user.dob,
 });
-
 // Update create form
 let handleUpdate = (id) => {
   refForm.value?.validate().then(({ valid }) => {
@@ -47,10 +45,9 @@ onUpdated(() => {
   form.contact_number = props.user.contact_number;
   form.email = props.user.email;
   form.image = props?.user?.image[0]?.original_url || "";
-  form.dob = props.user.dob;
+  form.dob =props.user.dob;
 });
 </script>
-
 <template>
   <VDialog v-model="isDialogVisible" max-width="900" persistent>
     <!-- Dialog Activator -->
@@ -63,7 +60,6 @@ onUpdated(() => {
       >
       </VBtn>
     </template>
-
     <!-- Dialog Content -->
     <VCard title="User Particulars">
       <VForm
@@ -116,21 +112,6 @@ onUpdated(() => {
                     :rules="[requiredValidator]"
                   />
                 </VCol>
-                <!-- <VCol cols="12">
-               <VTextField
-                    v-model="form.password"
-                    :rules="[requiredValidator]"
-                    :type="isPasswordVisible ? 'text' : 'password'"
-                    :error-messages="form?.errors?.password"
-                    :append-inner-icon="
-                      isPasswordVisible
-                        ? 'mdi-eye-off-outline'
-                        : 'mdi-eye-outline'
-                    "
-                    @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                  />
-              </VCol> -->
-
                 <VCol cols="12">
                   <AppDateTimePicker v-model="form.dob" label="Dob" />
                 </VCol>
@@ -141,7 +122,6 @@ onUpdated(() => {
             </VCol>
           </VRow>
         </VCardText>
-
         <VCardActions>
           <VSpacer />
           <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>

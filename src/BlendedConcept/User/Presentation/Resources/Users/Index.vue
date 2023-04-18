@@ -11,15 +11,10 @@ import { computed, defineProps } from "vue";
 let props = defineProps(["users", "roles_name", "flash", "auth"]);
 let users = computed(() => usePage().props.auth.data.users);
 import Swal from "sweetalert2";
-
 let currentPermission = ref();
-// 👉 search filters
-const names = [];
-const isAddNewUserDrawerVisible = ref(false);
-const isEditUserDrawerVisible = ref(false);
 let serverPage = ref(props.users.meta.current_page ?? 1);
 let serverPerPage = ref(10);
-
+// ## add users
 const addNewUser = (userData) => {
   console.log(userData);
   form.name = userData.name;
@@ -49,6 +44,7 @@ const updateUser = (userData) => {
     }
   );
 };
+// ## delete user
 const deleteUser = (id) => {
   Swal.fire({
     title: "Are you sure?",
@@ -67,11 +63,6 @@ const deleteUser = (id) => {
   });
 };
 
-const openEditModel = (permission) => {
-  console.log(permission);
-  currentPermission.value = permission;
-  isEditUserDrawerVisible.value = true;
-};
 let columns = [
   {
     label: "Name",
@@ -196,11 +187,6 @@ let loadItems = () => {
   });
 };
 
-//check permission
-let checkPermission = (user) => {
-  return users.value.includes(user);
-};
-// delete record
 </script>
 
 <template>
