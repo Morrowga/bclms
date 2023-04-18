@@ -3,12 +3,15 @@ import { watch, defineEmits, defineProps, computed, ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { requiredValidator } from "@validators";
+
+//# start variable section
 const isDialogVisible = ref(false);
 let props = defineProps(["permissions"]);
 const isFormValid = ref(false);
 const refForm = ref();
+//## end variable  section
 
-//## get only module from permission
+//## start get only module from permission
 let modules = computed(() => {
   let permissions = [];
   props.permissions.forEach((permission) => {
@@ -17,8 +20,9 @@ let modules = computed(() => {
   });
   return new Set(permissions);
 });
+//## end get only module from permission
 
-//## get modules with related permission
+//## start get modules with related permission
 let permissions_modules = computed(() => {
   let newArrays = [];
   modules.value.forEach((item, index) => {
@@ -32,19 +36,25 @@ let permissions_modules = computed(() => {
   });
   return newArrays;
 });
-//##for form submit
+//## end get modules with related permission
+
+//## start for form submit
 let form = useForm({
   name: "",
   description: "",
   selectedIds: [],
 });
-//## uncheck modules when selectedIds array is empty
+//## end for form submit
+
+//## start uncheck modules when selectedIds array is empty
 let watchSelectedIds = watch(form.selectedIds, (value) => {
   if (value.length <= 0) {
     document.getElementById("check-all").checked = false;
   }
 });
-//## select all permissions
+//## end uncheck modules when selectedIds array is empty
+
+//## start select all permissions
 let selectAll = () => {
   form.selectedIds = [];
   let isChecked = document.getElementById("check-all").checked;
@@ -60,7 +70,9 @@ let selectAll = () => {
     form.selectedIds = [];
   }
 };
-//## select permission by module
+//## end select all permissions
+
+//## start select permission by module
 let selectByModule = (item, index) => {
   let isChecked = document.getElementById(`module-checkbox-${index}`).checked;
   if (isChecked) {
@@ -80,7 +92,9 @@ let selectByModule = (item, index) => {
     });
   }
 };
-//## save role
+//## end select permission by module
+
+//## start save role
 let saveRole = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
@@ -97,6 +111,7 @@ let saveRole = () => {
     }
   });
 };
+//## end save role
 </script>
 
 <template>

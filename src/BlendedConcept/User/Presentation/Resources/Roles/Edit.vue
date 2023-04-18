@@ -16,7 +16,7 @@ let props = defineProps(["permissions", "role"]);
 const isFormValid = ref(false);
 const refForm = ref();
 let module_arr = ref([]);
-//## get only module from permission
+//## start get only module from permission
 let modules = computed(() => {
   let permissions = [];
   props.permissions.forEach((permission) => {
@@ -25,8 +25,9 @@ let modules = computed(() => {
   });
   return new Set(permissions);
 });
+//## end get only module from permission
 
-//## get modules with related permission
+//## start get modules with related permission
 let permissions_modules = computed(() => {
   let newArrays = [];
   modules.value.forEach((item, index) => {
@@ -40,19 +41,25 @@ let permissions_modules = computed(() => {
   });
   return newArrays;
 });
-//## for form submit
+//## end get modules with related permission
+
+//## start for form submit
 let form = useForm({
   name: props.role.name,
   description: props.role.description,
   selectedIds: [],
 });
-//## uncheck modules when selectedIds array is empty
+//## end for form submit
+
+//## start uncheck modules when selectedIds array is empty
 let watchSelectedIds = watch(form.selectedIds, (value) => {
   if (value.length <= 0) {
     document.getElementById("check-all-edit" + props.role.id).checked = false;
   }
 });
-//## select all permissions
+//## end uncheck modules when selectedIds array is empty
+
+//## start select all permissions
 let selectAll = () => {
   form.selectedIds = [];
   let isChecked = document.getElementById(
@@ -74,7 +81,9 @@ let selectAll = () => {
     form.selectedIds = [];
   }
 };
-//## select permission by module
+//## end select all permissions
+
+//## start select permission by module
 let selectByModule = (item, index) => {
   let isChecked = document.getElementById(
     `${props.role.id}-edit-checkbox-${index}`
@@ -96,7 +105,9 @@ let selectByModule = (item, index) => {
     });
   }
 };
-//## updateRole
+//## end select permission by module
+
+//## start updateRole
 let updateRole = (id) => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
@@ -113,14 +124,16 @@ let updateRole = (id) => {
     }
   });
 };
+//## end updateRole
 
+//## start reative name and description when edit
 onUpdated(() => {
-  //## reative name and description when edit
   form.selectedIds = [];
   props.role.permissions.filter((rp) => form.selectedIds.push(rp.id));
   form.name = props.role.name;
   form.description = props.role.description;
 });
+//## end reative name and description when edit
 </script>
 
 <template>

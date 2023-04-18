@@ -4,7 +4,8 @@ import AppDrawerHeaderSection from "@core/components/AppDrawerHeaderSection.vue"
 import { requiredValidator } from "@validators";
 import { computed } from "vue";
 import { useForm } from "@inertiajs/vue3";
-//## define props for toggle drawer
+
+//## start define props for toggle drawer
 const props = defineProps({
   isDrawerOpen: {
     type: Boolean,
@@ -14,25 +15,29 @@ const props = defineProps({
     type: Object,
   },
 });
+//## end define props for toggle drawer
 
+//## start variable section
 const emit = defineEmits(["update:isDrawerOpen", "data"]);
-
 const isFormValid = ref(false);
 const refForm = ref();
 const form = useForm({
   name: "",
   description: "",
 });
-//## drawer close
+//## end variable section
+
+//## start drawer close
 const closeNavigationDrawer = () => {
   emit("update:isDrawerOpen", false);
-
   nextTick(() => {
     refForm.value?.reset();
     refForm.value?.resetValidation();
   });
 };
-//##pass form data to parent
+//## end drawer close
+
+//## start pass form data to parent
 const onSubmit = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
@@ -48,15 +53,20 @@ const onSubmit = () => {
     }
   });
 };
-//## toggle drawer
+//## end pass form data to parent
+
+//## start toggle drawer
 const handleDrawerModelValueUpdate = (val) => {
   emit("update:isDrawerOpen", val);
 };
-//## reative name and description when edit
+//## end toggle drawer
+
+//## start reative name and description when edit
 onUpdated(() => {
   form.name = props.permission?.name;
   form.description = props.permission?.description;
 });
+//## end reative name and description when edit
 </script>
 
 <template>

@@ -2,22 +2,25 @@
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import AppDrawerHeaderSection from "@core/components/AppDrawerHeaderSection.vue";
 import { requiredValidator } from "@validators";
-//## define props for toggle drawer
+//## start define props for toggle drawer
 const props = defineProps({
   isDrawerOpen: {
     type: Boolean,
     required: true,
   },
 });
+//##end define props for toggle drawer
 
+//## start variable section
 const emit = defineEmits(["update:isDrawerOpen", "data"]);
-
 const isFormValid = ref(false);
 const refForm = ref();
 const permission_name = ref();
 const permission_description = ref();
 
-//## drawer close
+//## end variable section
+
+//## start drawer close
 const closeNavigationDrawer = () => {
   emit("update:isDrawerOpen", false);
   nextTick(() => {
@@ -25,7 +28,9 @@ const closeNavigationDrawer = () => {
     refForm.value?.resetValidation();
   });
 };
-//## pass form data to parent
+//## end drawer close
+
+//## start pass form data to parent
 const onSubmit = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
@@ -41,10 +46,13 @@ const onSubmit = () => {
     }
   });
 };
-//## toggle drawer
+//## end pass form data to parent
+
+//## start toggle drawer
 const handleDrawerModelValueUpdate = (val) => {
   emit("update:isDrawerOpen", val);
 };
+//## end toggle drawer
 </script>
 
 <template>

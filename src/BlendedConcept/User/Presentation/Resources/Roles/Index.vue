@@ -6,6 +6,8 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
+
+//## start variable section
 let props = defineProps(["roles", "permissions", "auth"]);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const form = useForm({
@@ -14,10 +16,11 @@ const form = useForm({
   _method: "",
 });
 let currentPermission = ref();
-
 let serverPage = ref(props.roles.meta.current_page ?? 1);
 let serverPerPage = ref(10);
+//## end variable section
 
+//## start datatable section
 let columns = [
   {
     label: "Name",
@@ -52,6 +55,7 @@ let columns = [
     sortable: false,
   },
 ];
+
 //## initial state
 let serverParams = ref({
   columnFilters: {},
@@ -73,6 +77,7 @@ let options = ref({
   perPageDropdown: [10, 20, 50, 100],
   dropdownAllowAll: false,
 });
+
 //## updateParams
 let updateParams = (newProps) => {
   serverParams.value = Object.assign({}, serverParams.value, newProps);
@@ -96,6 +101,7 @@ const deleteRole = (id) => {
     }
   });
 };
+
 //## page change on pagination
 let onPageChange = () => {
   updateParams({ page: serverPage.value });
@@ -108,9 +114,12 @@ let onPerPageChange = (value) => {
   updateParams({ page: 1, perPage: value });
   loadItems();
 };
+
+//## watch per page change
 watch(serverPerPage, function (value) {
   onPerPageChange(value);
 });
+
 //## filter folumn by name
 let onColumnFilter = (params) => {
   updateParams(params);
@@ -133,11 +142,13 @@ let getQueryParams = () => {
   }
   return data;
 };
+
 //## search items
 let searchItems = () => {
   updateParams({ page: 1 });
   loadItems();
 };
+
 //## load items is what brings back the rows from server
 let loadItems = () => {
   router.get(route(route().current()), getQueryParams(), {
@@ -146,6 +157,7 @@ let loadItems = () => {
     preserveScroll: true,
   });
 };
+
 //## truncatedText
 let truncatedText = (text) => {
   if (text) {
@@ -156,6 +168,8 @@ let truncatedText = (text) => {
     }
   }
 };
+
+//## end datatable section
 </script>
 
 <template>

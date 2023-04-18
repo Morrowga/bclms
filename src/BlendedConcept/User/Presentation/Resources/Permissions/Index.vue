@@ -6,8 +6,9 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
+
+//## start variable section
 let props = defineProps(["permissions", "flash", "auth"]);
-//## get permissions from view share
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const form = useForm({
   name: "",
@@ -15,13 +16,13 @@ const form = useForm({
   _method: "",
 });
 let currentPermission = ref();
-
 const isAddNewPermissionDrawerVisible = ref(false);
 const isEditPermissionDrawerVisible = ref(false);
 let serverPage = ref(props.permissions.meta.current_page ?? 1);
 let serverPerPage = ref(10);
+//## end variable section
 
-//## add permission and save in database
+//## start add permission and save in database
 const addNewPermission = (userData) => {
   form.name = userData.name;
   form.description = userData.description;
@@ -33,7 +34,9 @@ const addNewPermission = (userData) => {
     },
   });
 };
-//## update permission and update in database
+//## end permission and save in database
+
+//## start update permission and update in database
 const updatePermission = (userData) => {
   console.log(userData);
   form.name = userData.name;
@@ -51,8 +54,9 @@ const updatePermission = (userData) => {
     }
   );
 };
+//## end update permission and update in database
 
-//## delete permission and delete in database
+//## start delete permission and delete in database
 const deletePermission = (id) => {
   Swal.fire({
     title: "Are you sure?",
@@ -70,12 +74,17 @@ const deletePermission = (id) => {
     }
   });
 };
-//## open model for edit
+//## end delete permission and delete in database
+
+//## start open model for edit
 const openEditModel = (permission) => {
   console.log(permission);
   currentPermission.value = permission;
   isEditPermissionDrawerVisible.value = true;
 };
+//## end open model for edit
+
+//start datatable section
 let columns = [
   {
     label: "Name",
@@ -126,10 +135,12 @@ let options = ref({
   perPageDropdown: [10, 20, 50, 100],
   dropdownAllowAll: false,
 });
+
 //## updateParams
 let updateParams = (newProps) => {
   serverParams.value = Object.assign({}, serverParams.value, newProps);
 };
+
 //## page change on pagination
 let onPageChange = () => {
   updateParams({ page: serverPage.value });
@@ -142,10 +153,12 @@ let onPerPageChange = (value) => {
   updateParams({ page: 1, perPage: value });
   loadItems();
 };
+
 //## watch per page change in datatable
 watch(serverPerPage, function (value) {
   onPerPageChange(value);
 });
+
 //## filter folumn by name
 let onColumnFilter = (params) => {
   updateParams(params);
@@ -168,6 +181,7 @@ let getQueryParams = () => {
   }
   return data;
 };
+
 //## search items
 let searchItems = () => {
   updateParams({ page: 1 });
@@ -191,6 +205,7 @@ let truncatedText = (text) => {
     }
   }
 };
+//## end datatable section
 </script>
 
 <template>

@@ -1,49 +1,52 @@
 <script setup>
 import { VForm } from "vuetify/components";
 import { themeConfig } from "@themeConfig";
-import { emailValidator, requiredValidator } from "@validators";
+import { requiredValidator } from "@validators";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { defineProps } from "vue";
-const isPasswordVisible = ref(false);
-// toast
 import { toastAlert } from "../../../Common/Layouts/Composables/useToastAlert";
+//## start variable section
+const isPasswordVisible = ref(false);
 const rememberMe = ref(false);
-// recevied error message
-let errorMessage = defineProps(['errorMessage'])
-
+let errorMessage = defineProps(["errorMessage"]);
 let form = useForm({
   email: "",
   password: "",
 });
+//## end variable section
+
+//## start onsubmit function
 const onSubmit = () => {
   form.post(route("login-post"), {
     onSuccess: () => {},
     onError: (error) => {
-      console.log(error,'hello world')
       toastAlert({
-          title:errorMessage.value,
-          icon: "error",
-          bgColor: "red",
-          textColor: "white",
-          iconColor: "white",
-        });
+        title: errorMessage.value,
+        icon: "error",
+        bgColor: "red",
+        textColor: "white",
+        iconColor: "white",
+      });
     },
   });
 };
+//## end onsubmit function
 </script>
 <template>
   <div class="container">
     <div class="layout-navbar">
-        <div class="navbar-content-container d-flex justify-space-between px-10 py-5">
-        <h1 class="text-h5 font-weight-bold leading-normal text-capitalize">  {{ themeConfig.app.title }}</h1>
+      <div
+        class="navbar-content-container d-flex justify-space-between px-10 py-5"
+      >
+        <h1 class="text-h5 font-weight-bold leading-normal text-capitalize">
+          {{ themeConfig.app.title }}
+        </h1>
         <VBtn color="primary" class="b-0 text-white">
-        <Link :href="route('register')" class="text-white">
-         Register
-        </Link>
-       </VBtn>
-        </div>
+          <Link :href="route('register')" class="text-white"> Register </Link>
+        </VBtn>
       </div>
-      <VDivider></VDivider>
+    </div>
+    <VDivider></VDivider>
     <div class="login-bg">
       <VRow
         no-gutters

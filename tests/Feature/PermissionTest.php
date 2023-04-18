@@ -21,7 +21,7 @@ class PermissionTest extends TestCase
      * @return void
      */
 
-     protected function getAdminUser()
+    protected function getAdminUser()
     {
         $admin = UserFactory::factory()->create();
         // $adminRole = Role::factory()->create(['name' => 'admin']);
@@ -34,19 +34,19 @@ class PermissionTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         dd($this->getAdminUser());
         // Create a test user and log them in
 
-        Auth::login($user);
+        // Auth::login($user);
     }
 
-    
+
     /** @test create*/
     public function test_user_can_be_created()
-    {        
+    {
 
-        dd($this->getAdminUser());
+        // dd($this->getAdminUser());
         // $permissionData = [
         //     'name' => $this->faker->name,
         //     'guard_name' => 'web',

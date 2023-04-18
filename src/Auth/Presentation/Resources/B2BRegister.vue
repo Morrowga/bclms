@@ -1,26 +1,25 @@
 <script setup>
-import { useGenerateImageVariant } from '@/@core/composable/useGenerateImageVariant'
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
-import authV1RegisterMaskDark from '@images/pages/auth-v1-register-mask-dark.png'
-import authV1RegisterMaskLight from '@images/pages/auth-v1-register-mask-light.png'
-import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
-import { themeConfig } from '@themeConfig'
+import { useGenerateImageVariant } from "@/@core/composable/useGenerateImageVariant";
+import AuthProvider from "@/views/pages/authentication/AuthProvider.vue";
+import authV1RegisterMaskDark from "@images/pages/auth-v1-register-mask-dark.png";
+import authV1RegisterMaskLight from "@images/pages/auth-v1-register-mask-light.png";
+import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
+import { themeConfig } from "@themeConfig";
 
 // inertia
 import { Link, useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 
-
 const form = useForm({
-  email: '',
-  password: '',
-})
-
-// register function
+  email: "",
+  password: "",
+});
+const isPasswordVisible = ref(false);
+//## start register function
 let register = () => {
   form.post(route("b2cstore"), {
     onSuccess: () => {
-        alert("success")
+      alert("success");
     },
     onError: (error) => {
       form.setError("email", error?.email);
@@ -28,21 +27,16 @@ let register = () => {
     },
   });
 };
-
-const isPasswordVisible = ref(false)
+//## end register function
 </script>
 
 <template>
   <div class="auth-wrapper d-flex align-center justify-center">
-    <div
-      class="auth-card"
-      max-width="448">
-
+    <div class="auth-card" max-width="448">
       <VCardText class="pt-2">
         <h5 class="text-h5 text-center font-weight-semibold mb-1 primary">
-         Enter your email address(B2B)
+          Enter your email address(B2B)
         </h5>
-
       </VCardText>
 
       <VCardText>
@@ -52,44 +46,49 @@ const isPasswordVisible = ref(false)
             <VCol cols="12">
               <VLabel class="primary">Enter your work email</VLabel>
               <VTextField
-               placeholder="Email"
+                placeholder="Email"
                 v-model="form.email"
                 :error-messages="form?.errors?.email"
-
               />
             </VCol>
             <!-- password -->
             <VCol cols="12">
               <VLabel class="primary">Enter your work password</VLabel>
               <VTextField
-                 v-model="form.password"
-                 placeholder="Enter Your Password"
+                v-model="form.password"
+                placeholder="Enter Your Password"
                 :error-messages="form?.errors?.password"
                 :type="isPasswordVisible ? 'text' : 'password'"
-                :append-inner-icon="isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                :append-inner-icon="
+                  isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
+                "
                 @click:append-inner="isPasswordVisible = !isPasswordVisible"
               />
               <VCol cols="12">
-              <p class=" font-weight-bold text-blue-grey-lighten-3 text-justify primary">Ed+ will use your data to personalize and improve your experience and to send you information about Ed+. You can change your communication preference anytime. We may use yor data as described in our Privacy Policy. By clicking “Agree and Sign up”, you agree to our Subcriber Agreement and acknowledge that you have read our Privacy Policy for Singapore.</p>
+                <p
+                  class="font-weight-bold text-blue-grey-lighten-3 text-justify primary"
+                >
+                  Ed+ will use your data to personalize and improve your
+                  experience and to send you information about Ed+. You can
+                  change your communication preference anytime. We may use yor
+                  data as described in our Privacy Policy. By clicking “Agree
+                  and Sign up”, you agree to our Subcriber Agreement and
+                  acknowledge that you have read our Privacy Policy for
+                  Singapore.
+                </p>
               </VCol>
-              <VBtn
-                block
-                type="submit"
-                class="primary"
-              >
+              <VBtn block type="submit" class="primary">
                 Agree and Sign up
               </VBtn>
             </VCol>
 
             <!-- login instead -->
-            <VCol
-              cols="12"
-              class="text-center text-base"
-            >
+            <VCol cols="12" class="text-center text-base">
               <span class="primary">Already have an account?</span>
-               <Link
+              <Link
                 class="ms-2 text-decoration-underline primary"
-                :href="login">
+                :href="login"
+              >
                 Log in
               </Link>
             </VCol>
