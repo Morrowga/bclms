@@ -1,6 +1,7 @@
 <?php
 
 namespace Src\BlendedConcept\User\Domain\Requests;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorepermissionRequest  extends FormRequest
@@ -15,6 +16,7 @@ class StorepermissionRequest  extends FormRequest
         return [
             'name' => [
                 'string',
+                'unique:permissions,name',
                 'required',
             ],
         ];
