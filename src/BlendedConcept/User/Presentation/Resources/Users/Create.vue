@@ -9,7 +9,7 @@ const isDialogVisible = ref(false);
 // check passwor visible
 const isPasswordVisible = ref(false);
 let form = useForm({
-    role:'',
+    role:'Select',
     name:' ',
     password:'',
     contact_number:"",
@@ -20,8 +20,10 @@ let form = useForm({
 
 // submit create form
 let handleSubmit = () => {
-  form.post(route("users.store"), {
-    onSuccess: () => {},
+  form.post(route("users.store"),form, {
+    onSuccess: () => {
+        console.log("hello");
+    },
     onError: (error) => {
       alert("something was wrong")
     },
@@ -71,6 +73,7 @@ defineProps(['roles'])
               </VCol>
               <VCol cols="12">
                <VTextField
+                    label="Password"
                     v-model="form.password"
                     :rules="[requiredValidator]"
                     :type="isPasswordVisible ? 'text' : 'password'"
@@ -85,7 +88,7 @@ defineProps(['roles'])
               </VCol>
 
               <VCol cols="12">
-                 <AppDateTimePicker v-model="form.dob" label="Dob" />
+                 <AppDateTimePicker v-model="form.dob" label="Dob"/>
               </VCol>
             </VRow>
           </VCol>

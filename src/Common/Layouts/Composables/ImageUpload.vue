@@ -104,7 +104,7 @@ function handleRemoveImage() {
 .img-area {
   position: relative;
   width: 100%;
-  height: 240px;
+  height: 270px;
   background: var(--grey);
   margin-bottom: 30px;
   border-radius: 15px;

@@ -34,12 +34,14 @@ class UserRepository implements UserRepositoryInterface
     // store user
     public function createUser($request)
     {
+
         $user = User::create(
             [
                 'name' => $request->name,
                 'contact_number' => $request->contact_number,
                 "email" => $request->email,
                 "password" => $request->password,
+                "dob" =>$request->dob,
                 "is_active" => 1,
                 "email_verified_at" => Carbon::now()
             ]
@@ -57,7 +59,7 @@ class UserRepository implements UserRepositoryInterface
     public function updateUser($request, $user)
     {
 
-        $user->update($request->only(['name', 'contact_number', 'email']));
+        $user->update($request->only(['name', 'contact_number', 'email','dob']));
 
         //  delete image if reupload or insert if does not exit
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
@@ -137,7 +139,7 @@ class UserRepository implements UserRepositoryInterface
     //get only roles name
     public function getRolesName()
     {
-        $roles_name = Role::pluck('name');
+        $roles_name = Role::pluck('name')->prepend('Select');
         return $roles_name;
     }
 

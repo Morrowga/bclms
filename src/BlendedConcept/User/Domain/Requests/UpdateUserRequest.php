@@ -13,10 +13,11 @@ class UpdateUserRequest  extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'string',
-                'required',
-            ],
+            'role' => ['required','string'],
+            'name' => ['required'],
+            'dob'  => ['required'],
+            'contact_number' => ['required'],
+            'email' => ['required','email',  'unique:users,email,' . request()->route('user')->id],
         ];
     }
 }
