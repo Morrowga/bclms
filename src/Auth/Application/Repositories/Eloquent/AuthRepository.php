@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Mail;
 use Src\Auth\Domain\Mail\VerifyEmail;
 use Src\BlendedConcept\User\Domain\Model\User;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
+
+
 use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
 
 class AuthRepository implements AuthRepositoryInterface
@@ -26,21 +28,20 @@ class AuthRepository implements AuthRepositoryInterface
         if ($user) {
             if (!$user->email_verified_at) {
                 $error = "Please Verify your email";
-                return ["errorMessage"=>$error,"isCheck" => false];
+                return ["errorMessage" => $error, "isCheck" => false];
             }
             if (auth()->attempt($credentials)) {
                 $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'data' => $user]));
-                return ["errorMessage"=>"Successfully","isCheck" => true];
-
+                return ["errorMessage" => "Successfully", "isCheck" => true];
             } else {
                 $error = "Invalid Creditional";
-                return ["errorMessage"=>$error,"isCheck" => false];
+                return ["errorMessage" => $error, "isCheck" => false];
             }
         }
         // if not fail log in
         else {
             $error = "Invalid Creditional";
-            return ["errorMessage"=>$error,"isCheck" => false];
+            return ["errorMessage" => $error, "isCheck" => false];
         }
     }
     //  register b2c register
@@ -51,7 +52,6 @@ class AuthRepository implements AuthRepositoryInterface
             "name" => $name[0],
             "email" => $request->email,
             "password" => $request->password,
-
         ]);
 
         //  sync 2 mean this user is register using teacher or parent roles
