@@ -8,7 +8,6 @@ import { ref } from "vue";
 const isDialogVisible = ref(false);
 // check passwor visible
 const isPasswordVisible = ref(false);
-
 let form = useForm({
     role:'',
     name:' ',
@@ -34,7 +33,7 @@ defineProps(['roles'])
 </script>
 
 <template>
-  <VDialog v-model="isDialogVisible" max-width="900">
+  <VDialog v-model="isDialogVisible" max-width="900" persistent>
     <!-- Dialog Activator -->
     <template #activator="{ props }">
       <VBtn v-bind="props"> Add Users </VBtn>
@@ -86,7 +85,7 @@ defineProps(['roles'])
               </VCol>
 
               <VCol cols="12">
-                 <AppDateTimePicker v-model="form.dob" label="Dob"/>
+                 <AppDateTimePicker v-model="form.dob" label="Dob" />
               </VCol>
             </VRow>
           </VCol>

@@ -36,7 +36,7 @@ let handleUpdate = (id) => {
 </script>
 
 <template>
-  <VDialog v-model="isDialogVisible" max-width="900">
+  <VDialog v-model="isDialogVisible" max-width="900" persistent>
     <!-- Dialog Activator -->
     <template #activator="{ props }">
 
@@ -79,7 +79,7 @@ let handleUpdate = (id) => {
               <VCol cols="12">
                 <VTextField label="Email" v-model="form.email" class="w-100" :error-messages="form?.errors?.email"/>
               </VCol>
-              <VCol cols="12">
+              <!-- <VCol cols="12">
                <VTextField
                     v-model="form.password"
                     :rules="[requiredValidator]"
@@ -92,7 +92,7 @@ let handleUpdate = (id) => {
                     "
                     @click:append-inner="isPasswordVisible = !isPasswordVisible"
                   />
-              </VCol>
+              </VCol> -->
 
               <VCol cols="12">
                  <AppDateTimePicker v-model="form.dob" label="Dob"/>
