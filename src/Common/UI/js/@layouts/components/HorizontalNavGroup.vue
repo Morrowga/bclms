@@ -5,6 +5,8 @@ import { config } from "@layouts/config";
 import { canViewNavMenuGroup } from "@layouts/plugins/casl";
 import { isNavGroupActive } from "@layouts/utils";
 import { router } from "@inertiajs/core";
+import { usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 
 const props = defineProps({
   item: {
@@ -24,6 +26,8 @@ const props = defineProps({
 });
 
 defineOptions({ name: "HorizontalNavGroup" });
+
+const auth = computed(() => usePage().props.auth);
 
 const { dynamicI18nProps, isAppRtl } = useLayouts();
 const isGroupActive = ref(false);
@@ -56,6 +60,12 @@ let goLink = (url) => {
           :class="isParentActive(item.children) ? 'bg-primary' : ''"
           :color="isParentActive(item.children) ? '#fff' : ''"
           v-bind="props"
+          :hidden="
+            !auth?.data?.permissions?.includes(item?.access_module) &&
+            item?.access_module != 'access_dashboard'
+              ? true
+              : false
+          "
         >
           {{ item.title }}
         </v-btn>
@@ -68,6 +78,7 @@ let goLink = (url) => {
           :value="sitem"
           @click="goLink(sitem.url)"
           :class="isLinkActive(sitem.route_name) ? 'active-list' : ''"
+          :hidden="!auth?.data?.permissions?.includes(sitem?.access_module)"
         >
           <template v-slot:prepend>
             <v-icon :icon="sitem.icon.icon"></v-icon>
