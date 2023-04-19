@@ -1,7 +1,7 @@
 <script setup>
 import { VForm } from "vuetify/components";
 import { themeConfig } from "@themeConfig";
-import { requiredValidator } from "@validators";
+import { requiredValidator, emailValidator } from "@validators";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { defineProps } from "vue";
 import { toastAlert } from "../../../Common/Layouts/Composables/useToastAlert";

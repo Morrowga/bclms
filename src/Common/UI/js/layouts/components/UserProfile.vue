@@ -2,12 +2,12 @@
 import { initialAbility } from "@/plugins/casl/ability";
 import { useAppAbility } from "@/plugins/casl/useAppAbility";
 import { router, usePage, Link } from "@inertiajs/vue3";
+import { computed } from "vue";
 const ability = useAppAbility();
-const userData = JSON.parse(localStorage.getItem("userData") || "null");
+const userData = computed(() => usePage().props.auth);
 
 const logout = () => {
-
- router.post("/logout");
+  router.post("/logout");
 };
 </script>
 
@@ -21,7 +21,10 @@ const logout = () => {
     bordered
   >
     <VAvatar class="cursor-pointer" color="primary" variant="tonal">
-      <VImg v-if="userData && userData.avatar" :src="userData.avatar" />
+      <VImg
+        v-if="userData?.data && userData?.data?.avatar"
+        :src="userData?.data?.avatar"
+      />
       <VIcon v-else icon="mdi-account-outline" />
 
       <!-- SECTION Menu -->
@@ -40,8 +43,8 @@ const logout = () => {
                 >
                   <VAvatar color="primary" variant="tonal">
                     <VImg
-                      v-if="userData && userData.avatar"
-                      :src="userData.avatar"
+                      v-if="userData?.data && userData?.data?.avatar"
+                      :src="userData?.data?.avatar"
                     />
                     <VIcon v-else icon="mdi-account-outline" />
                   </VAvatar>
@@ -50,9 +53,11 @@ const logout = () => {
             </template>
 
             <VListItemTitle class="font-weight-semibold">
-              {{ userData?.fullName || userData?.username }}
+              {{ userData?.data?.name }}
             </VListItemTitle>
-            <VListItemSubtitle>{{ userData?.role }}</VListItemSubtitle>
+            <VListItemSubtitle>{{
+              userData?.data?.roles?.[0]?.name
+            }}</VListItemSubtitle>
           </VListItem>
 
           <VDivider class="my-2" />
