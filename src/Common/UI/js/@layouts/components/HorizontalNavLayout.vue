@@ -84,8 +84,8 @@ const resolveNavItemComponent = (item) => {
         </v-toolbar>
       </div>
     </div>
-
-    <main class="layout-page-content" style="padding-top: 100px">
+    <div class="d-none d-md-flex" style="padding-top: 100px"></div>
+    <main class="layout-page-content">
       <template v-if="$slots['content-loading']">
         <template v-if="shallShowPageLoading">
           <slot name="content-loading" />
