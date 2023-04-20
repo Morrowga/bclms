@@ -11,6 +11,7 @@
 
     <title><?= $page->get('title') ?></title>
     <link rel="stylesheet" href="<?= phpb_theme_asset('css/style.css') ?>" />
+
     <!-- Favicon -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
