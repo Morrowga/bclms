@@ -16,37 +16,40 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{{ asset('materialui/assets/vendor/fonts/materialdesignicons.css') }}" />
-    <link rel="stylesheet" href="{{ asset('materialui/assets/vendor/fonts/fontawesome.css') }}" />
+    <link rel="stylesheet" href="<?= phpb_theme_asset('materialui/assets/vendor/fonts/materialdesignicons.css')?>" />
+    <link rel="stylesheet" href="<?= phpb_theme_asset('materialui/assets/vendor/fonts/fontawesome.css')?>" />
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('materialui/assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{ asset('materialui/assets/vendor/css/rtl/theme-default.css') }}" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{{ asset('materialui/assets/css/demo.css') }}" />
+    <link rel="stylesheet" href="<?= phpb_theme_asset('materialui/assets/vendor/css/rtl/core.css')?>" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="<?= phpb_theme_asset('materialui/assets/vendor/css/rtl/theme-default.css')?>" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="<?= phpb_theme_asset('materialui/assets/css/demo.css')?>" />
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('materialui/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-    <link rel="stylesheet" href="{{ asset('materialui/assets/vendor/libs/node-waves/node-waves.css') }}" />
-    <link rel="stylesheet" href="{{ asset('materialui/assets/vendor/libs/select2/select2.css') }}" />
+    <link rel="stylesheet" href="<?= phpb_theme_asset('materialui/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')?>" />
+    <link rel="stylesheet" href="<?= phpb_theme_asset('materialui/assets/vendor/libs/node-waves/node-waves.css')?>" />
+    <!-- <link rel="stylesheet" href="<?= phpb_theme_asset('materialui/assets/vendor/libs/select2/select2.css')?>" /> -->
     <!-- sweet alert  -->
-    <link rel="stylesheet" href="{{ asset('materialui/assets/vendor/libs/animate-css/animate.css') }}" />
-    <link rel="stylesheet" href="{{ asset('materialui/assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
+    <link rel="stylesheet" href="<?= phpb_theme_asset('materialui/assets/vendor/libs/animate-css/animate.css')?>" />
+    <link rel="stylesheet" href="<?= phpb_theme_asset('materialui/assets/vendor/libs/sweetalert2/sweetalert2.css')?>" />
 </head>
 
 <body>
 
     <?= $body ?>
 
-    <script src="{{ asset('materialui/assets/vendor/libs/jquery/jquery.js') }}"></script>
-    <script src="{{ asset('materialui/assets/vendor/libs/popper/popper.js') }}"></script>
-    <script src="{{ asset('materialui/assets/vendor/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('materialui/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-    <script src="{{ asset('materialui/assets/vendor/libs/node-waves/node-waves.js') }}"></script>
-    <script src="{{ asset('materialui/assets/vendor/libs/hammer/hammer.js') }}"></script>
-    <script src="{{ asset('materialui/assets/js/main.js') }}"></script>
-    <script src="{{ asset('materialui/assets/vendor/js/menu.js') }}"></script>
-    <script src="{{asset('materialui/assets/vendor/js/dropdown-hover.js')}}"></script>
-    <script src="{{asset('materialui/assets/vendor/js/mega-dropdown.js')}}"></script>
-    <script src="{{asset('materialui/assets/js/ui-navbar.js')}}"></script>
-    <script src="{{asset('materialui/assets/js/tables-datatables-advanced.js')}}"></script>
+
+
+
+    <script src="<?= phpb_theme_asset('materialui/assets/vendor/libs/jquery/jquery.js')?>"></script>
+    <script src="<?= phpb_theme_asset('materialui/assets/vendor/libs/popper/popper.js')?>"></script>
+    <script src="<?= phpb_theme_asset('materialui/assets/vendor/js/bootstrap.js')?>"></script>
+    <script src="<?= phpb_theme_asset('materialui/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')?>"></script>
+    <script src="<?= phpb_theme_asset('materialui/assets/vendor/libs/node-waves/node-waves.js')?>"></script>
+    <script src="<?= phpb_theme_asset('materialui/assets/vendor/libs/hammer/hammer.js')?>"></script>
+    <script src="<?= phpb_theme_asset('materialui/assets/js/main.js')?>"></script>
+    <script src="<?= phpb_theme_asset('materialui/assets/vendor/js/menu.js')?>"></script>
+    <script src="<?= phpb_theme_asset('materialui/assets/vendor/js/dropdown-hover.js')?>"></script>
+    <script src="<?= phpb_theme_asset('materialui/assets/vendor/js/mega-dropdown.js')?>"></script>
+    <script src="<?= phpb_theme_asset('materialui/assets/js/ui-navbar.js')?>"></script>
+    <script src="<?= phpb_theme_asset('materialui/assets/js/tables-datatables-advanced.js')?>"></script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
