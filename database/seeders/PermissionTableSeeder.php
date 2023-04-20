@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Src\BlendedConcept\User\Domain\Model\Permission;
 
@@ -129,7 +130,19 @@ class PermissionTableSeeder extends Seeder
             [
                 "name" => "delete_student",
                 "guard_name" => "web"
-            ]
+            ],
+            [
+                "name" => "access_library",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "access_subscriber",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "access_system",
+                "guard_name" => "web"
+            ],
         ];
 
         foreach ($permissions as $permission) {

@@ -1,6 +1,7 @@
 <script setup>
 import navItems from "@/navigation/horizontal";
 import { useThemeConfig } from "@core/composable/useThemeConfig";
+import TheCustomizer from "@core/components/TheCustomizer.vue";
 import { themeConfig } from "@themeConfig";
 // Components
 import Footer from "@/layouts/components/Footer.vue";
@@ -11,9 +12,9 @@ import NavSearchBar from "@/layouts/components/NavSearchBar.vue";
 import UserProfile from "@/layouts/components/UserProfile.vue";
 import HorizontalNavLayout from "@layouts/components/HorizontalNavLayout.vue";
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
+import { Link } from "@inertiajs/inertia-vue3";
 import MobileSidebar from "./MobileSidebar.vue";
 const { appRouteTransition } = useThemeConfig();
-import { Link } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 let drawer = ref(false);
 let toggle = () => {
@@ -58,6 +59,7 @@ let toggle = () => {
       <Footer />
     </template>
     <!-- :point_right: Customizer -->
-    <!-- <TheCustomizer /> -->
+    <!-- 👉 Customizer -->
+    <TheCustomizer />
   </HorizontalNavLayout>
 </template>

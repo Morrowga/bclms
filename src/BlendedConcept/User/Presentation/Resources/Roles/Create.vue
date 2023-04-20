@@ -98,16 +98,17 @@ let selectByModule = (item, index) => {
 let saveRole = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
-      form.post(route("roles.store"), form, {
-        onSuccess: () => {},
+      form.post(route("roles.store"), {
+        onSuccess: () => {
+          isDialogVisible.value = false;
+          form.reset();
+          refForm.value?.reset();
+          refForm.value?.resetValidation();
+        },
         onError: (error) => {
           form.setError("name", error?.name);
         },
       });
-      form.reset();
-      isDialogVisible.value = false;
-      refForm.value?.reset();
-      refForm.value?.resetValidation();
     }
   });
 };

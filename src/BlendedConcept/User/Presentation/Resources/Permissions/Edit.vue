@@ -7,6 +7,10 @@ import { useForm } from "@inertiajs/vue3";
 
 //## start define props for toggle drawer
 const props = defineProps({
+  serverError: {
+    type: Object,
+    default: null,
+  },
   isDrawerOpen: {
     type: Boolean,
     required: true,
@@ -45,9 +49,9 @@ const onSubmit = () => {
         name: form.name,
         description: form.description,
       });
-      emit("update:isDrawerOpen", false);
+      // emit("update:isDrawerOpen", false);
       nextTick(() => {
-        refForm.value?.reset();
+        // refForm.value?.reset();
         refForm.value?.resetValidation();
       });
     }
@@ -67,6 +71,11 @@ onUpdated(() => {
   form.description = props.permission?.description;
 });
 //## end reative name and description when edit
+
+//## check error
+const checkError = computed(() => {
+  return props.serverError.name == "" ? false : true;
+});
 </script>
 
 <template>
@@ -93,6 +102,9 @@ onUpdated(() => {
               <!-- 👉 Full name -->
               <VCol cols="12">
                 <VTextField
+                  :error="checkError"
+                  :error-messages="serverError?.name"
+                  @input="serverError.name = ''"
                   v-model="form.name"
                   :rules="[requiredValidator]"
                   label="Permission Name"

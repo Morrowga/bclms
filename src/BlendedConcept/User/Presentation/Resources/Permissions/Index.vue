@@ -21,16 +21,20 @@ const isEditPermissionDrawerVisible = ref(false);
 let serverPage = ref(props.permissions.meta.current_page ?? 1);
 let serverPerPage = ref(10);
 //## end variable section
-
+let serverError = ref({
+  name: "",
+});
 //## start add permission and save in database
 const addNewPermission = (userData) => {
   form.name = userData.name;
   form.description = userData.description;
   form._method = "POST";
   form.post(route("permissions.store"), {
-    onSuccess: () => {},
+    onSuccess: () => {
+      isAddNewPermissionDrawerVisible.value = false;
+    },
     onError: (error) => {
-      console.log(error);
+      serverError.value.name = error?.name;
     },
   });
 };
@@ -47,9 +51,11 @@ const updatePermission = (userData) => {
       id: currentPermission.value.id,
     }),
     {
-      onSuccess: () => {},
+      onSuccess: () => {
+        isEditPermissionDrawerVisible.value = false;
+      },
       onError: (error) => {
-        console.log(error);
+        serverError.value.name = error?.name;
       },
     }
   );
@@ -78,7 +84,7 @@ const deletePermission = (id) => {
 
 //## start open model for edit
 const openEditModel = (permission) => {
-  console.log(permission);
+  serverError.value.name = "";
   currentPermission.value = permission;
   isEditPermissionDrawerVisible.value = true;
 };
@@ -108,11 +114,11 @@ let columns = [
     field: "guard_name",
     sortable: false,
   },
-//   {
-//     label: "Action",
-//     field: "action",
-//     sortable: false,
-//   },
+  // {
+  //   label: "Action",
+  //   field: "action",
+  //   sortable: false,
+  // },
 ];
 //## initial state
 let serverParams = ref({
@@ -234,8 +240,8 @@ let truncatedText = (text) => {
               density="compact"
             />
 
-            <!-- 👉 Add Permission button
-            <VBtn @click="isAddNewPermissionDrawerVisible = true">
+            <!-- 👉 Add Permission button -->
+            <!-- <VBtn @click="isAddNewPermissionDrawerVisible = true">
               Add Permission
             </VBtn> -->
           </div>
@@ -254,11 +260,8 @@ let truncatedText = (text) => {
           :columns="columns"
         >
           <template #table-row="props">
-            <div
-              v-if="props.column.field == 'name'"
-              class="flex flex-wrap"
-            >
-              <span class="">{{props.row.name}}</span>
+            <div v-if="props.column.field == 'name'" class="flex flex-wrap">
+              <span class="">{{ props.row.name }}</span>
             </div>
             <div
               v-if="props.column.field == 'description'"
@@ -313,10 +316,12 @@ let truncatedText = (text) => {
 
       <!-- 👉 Add New Permission -->
       <Create
+        :serverError="serverError"
         v-model:isDrawerOpen="isAddNewPermissionDrawerVisible"
         @data="addNewPermission"
       />
       <Edit
+        :serverError="serverError"
         v-model:isDrawerOpen="isEditPermissionDrawerVisible"
         @data="updatePermission"
         :permission="currentPermission"

@@ -1,95 +1,60 @@
 <script setup>
-import navItems from '@/navigation/vertical'
-import { useThemeConfig } from '@core/composable/useThemeConfig'
+import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
+import { Link } from "@inertiajs/inertia-vue3";
+import { themeConfig } from "@themeConfig";
+import navItems from "@/navigation/horizontal";
+import TheCustomizer from "@core/components/TheCustomizer.vue";
+import VerticalNavLink from "@layouts/components/VerticalNavLink.vue";
+import VerticalNavGroup from "@layouts/components/VerticalNavGroup.vue";
+import { ref } from "vue";
+const resolveNavItemComponent = (item) => {
+  if ("children" in item) return VerticalNavGroup;
 
-// Components
-import Footer from '@/layouts/components/Footer.vue'
-import NavBarI18n from '@/layouts/components/NavBarI18n.vue'
-import NavBarNotifications from '@/layouts/components/NavBarNotifications.vue'
-import NavbarShortcuts from '@/layouts/components/NavbarShortcuts.vue'
-import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
-import NavSearchBar from '@/layouts/components/NavSearchBar.vue'
-import UserProfile from '@/layouts/components/UserProfile.vue'
-
-// @layouts plugin
-import { VerticalNavLayout } from '@layouts'
-
-const { appRouteTransition, isLessThanOverlayNavBreakpoint, isVerticalNavCollapsed } = useThemeConfig()
-const { width: windowWidth } = useWindowSize()
-
-// ℹ️ Provide animation name for vertical nav collapse icon.
-const verticalNavHeaderActionAnimationName = ref(null)
-
-watch(isVerticalNavCollapsed, val => {
-  verticalNavHeaderActionAnimationName.value = val ? 'rotate-180' : 'rotate-back-180'
-})
+  return VerticalNavLink;
+};
+let drawer = ref(true);
+const toggle = () => {
+  drawer.value = !drawer.value;
+};
 </script>
-
 <template>
-  <VerticalNavLayout :nav-items="navItems">
-    <!-- 👉 navbar -->
-    <template #navbar="{ toggleVerticalOverlayNavActive }">
-      <div class="d-flex h-100 align-center">
-        <IconBtn
-          v-if="isLessThanOverlayNavBreakpoint(windowWidth)"
-          class="ms-n3"
-          @click="toggleVerticalOverlayNavActive(true)"
-        >
-          <VIcon icon="mdi-menu" />
-        </IconBtn>
+  <v-layout>
+    <VNavigation-drawer v-model="drawer" app>
+      <template v-slot:prepend>
+        <Link to="/" class="d-flex align-start gap-x-2 pa-5">
+          <VNodeRenderer :nodes="themeConfig.app.logo" />
+          <h1 class="font-weight-bold leading-normal text-xl">
+            {{ themeConfig.app.title }}
+          </h1>
+        </Link>
+      </template>
 
-        <NavSearchBar class="ms-lg-n3" />
+      <v-divider></v-divider>
 
-        <VSpacer />
+      <v-list density="compact" nav>
+        <Component
+          :is="resolveNavItemComponent(item)"
+          v-for="(item, index) in navItems"
+          :key="index"
+          :item="item"
+        />
+      </v-list>
+    </VNavigation-drawer>
 
-        <NavBarI18n class="me-1" />
-        <NavbarThemeSwitcher class="me-1" />
-        <NavbarShortcuts class="me-1" />
-        <NavBarNotifications class="me-3" />
-        <UserProfile />
-      </div>
-    </template>
+    <v-app-bar>
+      <v-app-bar-nav-icon
+        variant="text"
+        @click="toggle"
+        class="d-flex d-md-none"
+      ></v-app-bar-nav-icon>
+    </v-app-bar>
 
-    <!-- 👉 Pages -->
-    <RouterView v-slot="{ Component }">
-      <Transition
-        :name="appRouteTransition"
-        mode="out-in"
-      >
-        <Component :is="Component" />
-      </Transition>
-    </RouterView>
-
-    <!-- 👉 Footer -->
-    <template #footer>
-      <Footer />
-    </template>
-
+    <v-main style="height: 100vh">
+      <v-container>
+        <slot />
+      </v-container>
+    </v-main>
     <!-- 👉 Customizer -->
     <TheCustomizer />
-  </VerticalNavLayout>
+  </v-layout>
 </template>
-
-<style lang="scss">
-@keyframes rotate-180 {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(180deg); }
-}
-
-@keyframes rotate-back-180 {
-  from { transform: rotate(180deg); }
-  to { transform: rotate(0deg); }
-}
-
-.layout-vertical-nav {
-  .nav-header {
-    .header-action {
-      animation-duration: 0s;
-      animation-duration: 0.35s;
-      animation-fill-mode: forwards;
-      animation-name: v-bind(verticalNavHeaderActionAnimationName);
-      transform: rotate(0deg);
-    }
-  }
-}
-</style>

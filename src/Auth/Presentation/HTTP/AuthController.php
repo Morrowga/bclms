@@ -36,20 +36,13 @@ class AuthController extends Controller
     {
         $IsAuthnicated = $this->authInterface->login($request);
 
-
         // check if your correct creditional or not
 
-
-        if($IsAuthnicated['isCheck'])
-        {
-
-           return redirect()->route('dashboard');
-        }
-        else
-        {
+        if ($IsAuthnicated['isCheck']) {
+            return redirect()->route('dashboard');
+        } else {
             return Inertia::render('Auth/Presentation/Resources/Login')->with("errorMessage", $IsAuthnicated['errorMessage']);
         }
-
     }
 
     public function logout()

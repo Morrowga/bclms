@@ -19,7 +19,7 @@ class AuthTest extends TestCase
     * @return void
     */
 
-   /** @test create*/
+   /** @test blank_b2b_name*/
    public function test_blank_b2b_name()
    {
       $data = [
@@ -30,7 +30,7 @@ class AuthTest extends TestCase
       $response->assertStatus(500);
    }
 
-   /** @test create*/
+   /** @test blank_b2b_password*/
    public function test_blank_b2b_password()
    {
       $data = [
@@ -41,7 +41,7 @@ class AuthTest extends TestCase
       $response->assertStatus(500);
    }
 
-   /** @test create*/
+   /** @test unique_b2b_email*/
    public function test_unique_b2b_email()
    {
       $existingUser = User::factory()->create();

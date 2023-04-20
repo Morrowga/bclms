@@ -2,5 +2,5 @@
 </script>
 
 <template>
-  <h1>Organization Dashboard !</h1>
+  <h1>Staff Dashboard !</h1>
 </template>

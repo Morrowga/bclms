@@ -59,6 +59,7 @@ const headerValues = computed(() => {
 
   return entries;
 });
+const layout = ref("horizontal");
 </script>
 
 <template>
@@ -218,21 +219,19 @@ const headerValues = computed(() => {
         <!-- SECTION Menu -->
         <CustomizerSection title="MENU">
           <!-- 👉 Menu Type -->
-          <h6 class="text-base font-weight-regular">Menu Type</h6>
-          <VRadioGroup v-model="appContentLayoutNav" inline>
+          <!-- <h6 class="text-base font-weight-regular">Menu Type</h6>
+          <VRadioGroup v-model="layout" inline>
             <VRadio
               v-for="[key, val] in Object.entries(AppContentLayoutNav)"
+              :hidden="true"
               :key="key"
               :label="key"
               :value="val"
             />
-          </VRadioGroup>
+          </VRadioGroup> -->
 
           <!-- 👉 Collapsed Menu -->
-          <!-- <div
-            v-if="appContentLayoutNav === AppContentLayoutNav.Vertical"
-            class="d-flex align-center justify-space-between"
-          >
+          <div v-if="false" class="d-flex align-center justify-space-between">
             <VLabel for="customizer-menu-collapsed" class="text-high-emphasis">
               Collapsed Menu
             </VLabel>
@@ -243,10 +242,10 @@ const headerValues = computed(() => {
                 class="ms-2"
               />
             </div>
-          </div> -->
+          </div>
 
           <!-- 👉 Semi Dark Menu -->
-          <!-- <div
+          <div
             class="align-center justify-space-between"
             :class="
               vuetifyTheme.global.name.value === 'light' &&
@@ -265,7 +264,7 @@ const headerValues = computed(() => {
                 class="ms-2"
               />
             </div>
-          </div> -->
+          </div>
         </CustomizerSection>
         <!-- !SECTION -->
 
@@ -282,7 +281,7 @@ const headerValues = computed(() => {
           </div>
 
           <!-- 👉 Route Transition -->
-          <!-- <div class="mt-6">
+          <div class="mt-6">
             <VRow>
               <VCol cols="5" class="d-flex align-center">
                 <VLabel for="route-transition" class="text-high-emphasis">
@@ -306,7 +305,7 @@ const headerValues = computed(() => {
                 />
               </VCol>
             </VRow>
-          </div> -->
+          </div>
         </CustomizerSection>
         <!-- !SECTION -->
       </PerfectScrollbar>

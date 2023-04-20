@@ -2,8 +2,13 @@
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import AppDrawerHeaderSection from "@core/components/AppDrawerHeaderSection.vue";
 import { requiredValidator } from "@validators";
+import { computed } from "vue";
 //## start define props for toggle drawer
 const props = defineProps({
+  serverError: {
+    type: Object,
+    default: null,
+  },
   isDrawerOpen: {
     type: Boolean,
     required: true,
@@ -38,9 +43,9 @@ const onSubmit = () => {
         name: permission_name.value,
         description: permission_description.value,
       });
-      emit("update:isDrawerOpen", false);
+      // emit("update:isDrawerOpen", false);
       nextTick(() => {
-        refForm.value?.reset();
+        // refForm.value?.reset();
         refForm.value?.resetValidation();
       });
     }
@@ -53,6 +58,11 @@ const handleDrawerModelValueUpdate = (val) => {
   emit("update:isDrawerOpen", val);
 };
 //## end toggle drawer
+
+//## check error
+const checkError = computed(() => {
+  return props.serverError.name == "" ? false : true;
+});
 </script>
 
 <template>
@@ -79,6 +89,9 @@ const handleDrawerModelValueUpdate = (val) => {
               <!-- 👉  name -->
               <VCol cols="12">
                 <VTextField
+                  :error="checkError"
+                  :error-messages="serverError?.name"
+                  @input="serverError.name = ''"
                   v-model="permission_name"
                   :rules="[requiredValidator]"
                   label="Permission Name"

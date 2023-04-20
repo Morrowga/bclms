@@ -84,8 +84,8 @@ const resolveNavItemComponent = (item) => {
         </v-toolbar>
       </div>
     </div>
-
-    <main class="layout-page-content" style="padding-top: 100px">
+    <div class="d-none d-md-flex" style="padding-top: 100px"></div>
+    <main class="layout-page-content">
       <template v-if="$slots['content-loading']">
         <template v-if="shallShowPageLoading">
           <slot name="content-loading" />
@@ -196,6 +196,7 @@ const resolveNavItemComponent = (item) => {
 .layout-horizontal-nav {
   border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
   z-index: variables.$layout-horizontal-nav-z-index;
+  padding-block: 0px !important;
   // .horizontal-nav-sticky & {
   //   width: 100%;
   //   will-change: transform;

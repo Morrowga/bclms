@@ -2,5 +2,5 @@
 </script>
 
 <template>
-  <h1>Organization Dashboard !</h1>
+  <h1>Teacher Or Parent Dashboard</h1>
 </template>

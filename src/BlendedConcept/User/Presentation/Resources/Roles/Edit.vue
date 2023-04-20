@@ -111,16 +111,17 @@ let selectByModule = (item, index) => {
 let updateRole = (id) => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
-      form.put(route("roles.update", { id: id }), form, {
-        onSuccess: () => {},
+      form.put(route("roles.update", { id: id }), {
+        onSuccess: () => {
+          isDialogVisible.value = false;
+          refForm.value?.reset();
+          refForm.value?.resetValidation();
+        },
         onError: (error) => {
           form.setError("name", error?.name);
         },
       });
       //## form.reset();
-      isDialogVisible.value = false;
-      refForm.value?.reset();
-      refForm.value?.resetValidation();
     }
   });
 };

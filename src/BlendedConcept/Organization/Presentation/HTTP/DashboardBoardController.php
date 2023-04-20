@@ -13,10 +13,20 @@ class DashboardBoardController
     {
         $this->dashboardInertface = $dashboardInertface;
     }
-    public function dashboard()
+    public function superAdminDashboard()
     {
-        $users =  $this->dashboardInertface->getUsers();
-        // return  $users;
-        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Index', compact('users'));
+        // $users =  $this->dashboardInertface->getUsers();
+        $user_role = auth()->user()->roles()->first()->name;
+        $current_user_role = "";
+        if ($user_role == 'superadmin') {
+            $current_user_role = $user_role;
+        } elseif ($user_role == 'staff') {
+            $current_user_role = $user_role;
+        } else {
+            $current_user_role = $user_role;
+        }
+        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Index', [
+            'current_user_role' => $current_user_role
+        ]);
     }
 }

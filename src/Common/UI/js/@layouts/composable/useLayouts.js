@@ -99,7 +99,6 @@ export const useLayouts = () => {
       `layout-content-width-${appContentWidth.value}`,
       { 'layout-overlay-nav': isLessThanOverlayNavBreakpoint.value(windowWidth) },
       { 'window-scrolled': unref(windowScrollY) },
-      // route.meta.layoutWrapperClasses ? route.meta.layoutWrapperClasses : null,
     ]
   })
 

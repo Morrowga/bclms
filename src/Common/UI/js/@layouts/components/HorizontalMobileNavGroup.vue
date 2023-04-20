@@ -7,6 +7,12 @@
         :title="item.title"
         :class="isParentActive(item.children) ? 'bg-primary' : ''"
         :color="isParentActive(item.children) ? '#fff' : ''"
+        :hidden="
+          !auth?.data?.permissions?.includes(item?.access_module) &&
+          item?.access_module != 'access_dashboard'
+            ? true
+            : false
+        "
       ></v-list-item>
     </template>
     <v-list-item
@@ -16,11 +22,20 @@
       :title="sitem.title"
       @click="goLink(sitem.url)"
       :class="isLinkActive(sitem.route_name) ? 'active-list' : ''"
+      :hidden="
+        !auth?.data?.permissions?.includes(sitem?.access_module) &&
+        item?.access_module != 'access_dashboard'
+          ? true
+          : false
+      "
     ></v-list-item>
   </v-list-group>
 </template>
 <script setup>
 import { router } from "@inertiajs/core";
+import { usePage } from "@inertiajs/vue3";
+
+const auth = computed(() => usePage().props.auth);
 defineProps(["item"]);
 let isLinkActive = (currentRoute) => {
   return route().current().includes(currentRoute);

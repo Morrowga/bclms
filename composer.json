@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
+        "hansschouten/laravel-pagebuilder": "0.22",
         "inertiajs/inertia-laravel": "^0.6.9",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.2",
