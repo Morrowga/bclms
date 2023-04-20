@@ -6,6 +6,11 @@ import navItems from "@/navigation/horizontal";
 import TheCustomizer from "@core/components/TheCustomizer.vue";
 import VerticalNavLink from "@layouts/components/VerticalNavLink.vue";
 import VerticalNavGroup from "@layouts/components/VerticalNavGroup.vue";
+import NavBarNotifications from "@/layouts/components/NavBarNotifications.vue";
+import NavbarShortcuts from "@/layouts/components/NavbarShortcuts.vue";
+import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
+import NavSearchBar from "@/layouts/components/NavSearchBar.vue";
+import UserProfile from "@/layouts/components/UserProfile.vue";
 import { ref } from "vue";
 const resolveNavItemComponent = (item) => {
   if ("children" in item) return VerticalNavGroup;
@@ -47,6 +52,11 @@ const toggle = () => {
         @click="toggle"
         class="d-flex d-md-none"
       ></v-app-bar-nav-icon>
+      <VSpacer />
+      <NavbarThemeSwitcher class="me-1" />
+      <!-- <NavbarShortcuts class="me-1" /> -->
+      <NavBarNotifications class="me-3" />
+      <UserProfile class="pe-15" />
     </v-app-bar>
 
     <v-main style="height: 100vh">

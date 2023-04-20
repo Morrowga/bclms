@@ -28,7 +28,7 @@ return [
         'use_database' => true,
         'database' => [
             'driver'    => 'mysql',
-            'host'      => env('DB_HOST').':'.env('DB_PORT',3306),
+            'host'      => env('DB_HOST') . ':' . env('DB_PORT', 3306),
             'database'  => env('DB_DATABASE'),
             'username'  => env('DB_USERNAME'),
             'password'  => env('DB_PASSWORD'),
@@ -51,7 +51,7 @@ return [
     'auth' => [
         'use_login' => true,
         'class' => PHPageBuilder\Modules\Auth\Auth::class,
-        'url' => '/admin/auth',
+        'url' => '/bc/admin/auth',
         'username' => 'admin',
         'password' => 'admin'
     ],
@@ -67,7 +67,7 @@ return [
     'website_manager' => [
         'use_website_manager' => true,
         'class' => PHPageBuilder\Modules\WebsiteManager\WebsiteManager::class,
-        'url' => '/admin'
+        'url' => '/bc/admin'
     ],
 
     /*
@@ -92,9 +92,9 @@ return [
      */
     'pagebuilder' => [
         'class' => PHPageBuilder\Modules\GrapesJS\PageBuilder::class,
-        'url' => '/admin/pagebuilder',
+        'url' => '/bc/admin/pagebuilder',
         'actions' => [
-            'back' => '/admin'
+            'back' => '/bc/admin'
         ]
     ],
 
@@ -174,6 +174,5 @@ return [
      | Important: when overriding a class always extend the original class.
      |
      */
-    'class_replacements' => [
-    ],
+    'class_replacements' => [],
 ];

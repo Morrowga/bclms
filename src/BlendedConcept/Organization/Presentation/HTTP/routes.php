@@ -4,6 +4,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Src\BlendedConcept\Organization\Presentation\HTTP\DashboardBoardController;
 
+Route::get('/', function () {
+    return redirect('/bc/index');
+});
+Route::get('/admin', function () {
+    return redirect('/home');
+});
 Route::group(['middleware' => ['auth']], function () {
 
     /**
