@@ -1,7 +1,7 @@
 
 <template>
   <AppLayout>
-    <template v-if="appContentLayoutNav !== AppContentLayoutNav.Vertical">
+    <template v-if="appContentLayoutNav === AppContentLayoutNav.Vertical">
       <DefaultLayoutWithVerticalNav v-bind="layoutAttrs">
         <slot />
       </DefaultLayoutWithVerticalNav>
@@ -21,8 +21,8 @@ import AppLayout from "@AppRoot/AppLayout.vue";
 // @layouts plugin
 import { AppContentLayoutNav } from "@layouts/enums";
 
-import DefaultLayoutWithHorizontalNav from "@/layouts/components/DefaultLayoutWithHorizontalNav.vue"
-import DefaultLayoutWithVerticalNav from "@/layouts/components/DefaultLayoutWithHorizontalNav.vue"
+import DefaultLayoutWithHorizontalNav from "@/layouts/components/DefaultLayoutWithHorizontalNav.vue";
+import DefaultLayoutWithVerticalNav from "@/layouts/components/DefaultLayoutWithVerticalNav.vue";
 const { width: windowWidth } = useWindowSize();
 const { appContentLayoutNav, switchToVerticalNavOnLtOverlayNavBreakpoint } =
   useThemeConfig();

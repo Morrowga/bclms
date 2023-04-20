@@ -7,6 +7,8 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    __TheCustomizer: typeof import('./src/Common/UI/js/@core/components/__TheCustomizer.vue')['default']
+    _TheCustomizer: typeof import('./src/Common/UI/js/@core/components/_TheCustomizer.vue')['default']
     AddAuthenticatorAppDialog: typeof import('./src/Common/UI/js/@core/components/AddAuthenticatorAppDialog.vue')['default']
     AddEditAddressDialog: typeof import('./src/Common/UI/js/@core/components/AddEditAddressDialog.vue')['default']
     AppBarSearch: typeof import('./src/Common/UI/js/@core/components/AppBarSearch.vue')['default']
