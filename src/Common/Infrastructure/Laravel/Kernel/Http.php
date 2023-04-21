@@ -38,6 +38,7 @@ class Http extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'isSuperAdmin' => \Src\Auth\Domain\Middleware\CheckIsSuperAdmin::class
     ];
 
     /**
@@ -84,6 +85,4 @@ class Http extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
-
-
 }

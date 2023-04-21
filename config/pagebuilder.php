@@ -49,7 +49,7 @@ return [
      |
      */
     'auth' => [
-        'use_login' => true,
+        'use_login' => false,
         'class' => PHPageBuilder\Modules\Auth\Auth::class,
         'url' => '/bc/admin/auth',
         'username' => 'admin',

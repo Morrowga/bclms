@@ -43,44 +43,44 @@ class PermissionTest extends TestCase
 
 
     /** @test create*/
-    public function test_user_can_be_created()
-    {
+    // public function test_user_can_be_created()
+    // {
 
-        // dd($this->getAdminUser());
-        // $permissionData = [
-        //     'name' => $this->faker->name,
-        //     'guard_name' => 'web',
-        // ];
+    // dd($this->getAdminUser());
+    // $permissionData = [
+    //     'name' => $this->faker->name,
+    //     'guard_name' => 'web',
+    // ];
 
-        // $response = $this->actingAs($this->getAdminUser())->post('/permissions', $permissionData);
+    // $response = $this->actingAs($this->getAdminUser())->post('/permissions', $permissionData);
 
-        // $response->assertStatus(201);
+    // $response->assertStatus(201);
 
-        // $this->assertDatabaseHas('permissions', [
-        //     'name' => $userData['name'],
-        //     'guard_name' => 'web'
-        // ]);
-        // // $this->authorize('view', Permission::class);
-        // $role = RoleFactory::new(['id'=> 1, 'name' => 'user']);
+    // $this->assertDatabaseHas('permissions', [
+    //     'name' => $userData['name'],
+    //     'guard_name' => 'web'
+    // ]);
+    // // $this->authorize('view', Permission::class);
+    // $role = RoleFactory::new(['id'=> 1, 'name' => 'user']);
 
-        // $permission = PermissionFactory::new(['id' => 1, 'name' => 'create_permission']);
+    // $permission = PermissionFactory::new(['id' => 1, 'name' => 'create_permission']);
 
-        // $role->permissions()->sync([$permission->id]);
+    // $role->permissions()->sync([$permission->id]);
 
-        // auth()->user()->roles()->sync([$role->id]);
+    // auth()->user()->roles()->sync([$role->id]);
 
-        // $permissionData = [
-        //     'name' => $this->faker->name,
-        //     'guard' => 'web'
-        // ];
+    // $permissionData = [
+    //     'name' => $this->faker->name,
+    //     'guard' => 'web'
+    // ];
 
-        // $response = $this->post('/permissions', $permissionData);
+    // $response = $this->post('/permissions', $permissionData);
 
-        // $response->assertStatus(201);
+    // $response->assertStatus(201);
 
-        // $this->assertDatabaseHas('permissions', [
-        //     'name' => $permissionData['name'],
-        //     'web' => 'web'
-        // ]);
-    }
+    // $this->assertDatabaseHas('permissions', [
+    //     'name' => $permissionData['name'],
+    //     'web' => 'web'
+    // ]);
+    // }
 }

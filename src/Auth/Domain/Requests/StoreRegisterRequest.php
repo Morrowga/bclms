@@ -16,7 +16,8 @@ class StoreRegisterRequest  extends FormRequest
         return [
             'email' => [
                 'required',
-                'unique:users,email'
+                'unique:users,email',
+                'email'
             ],
             'password' => [
                 'required',
