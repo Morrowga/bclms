@@ -1,16 +1,4 @@
 /* stylelint-disable */
-
-*{
-    background-color: red;
-}
-.image-width {
-    width: 200px;
-    height: 262px
-}
-
-.image-gap {
-    gap: 5.5rem !important
-}
 .line {
     margin-left: 10px;
     width: 1px;

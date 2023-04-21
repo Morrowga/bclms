@@ -33,8 +33,11 @@
 </head>
 
 <body>
+     <div class="container-fluid">
+         <?= $body ?>
+     </div>
 
-    <?= $body ?>
+
 
 
 

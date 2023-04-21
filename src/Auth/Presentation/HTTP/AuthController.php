@@ -35,6 +35,11 @@ class AuthController extends Controller
     //login
     public function login(StoreLoginRequest $request)
     {
+
+
+
+        $request->session()->put('item',true);
+        dd($request->session()->get('item'));
         $IsAuthnicated = $this->authInterface->login($request);
         $request->session()->put('phpb_logged_in', true);
         // check if your correct creditional or not
