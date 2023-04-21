@@ -35,10 +35,6 @@ class AuthController extends Controller
     public function login(StoreLoginRequest $request)
     {
 
-
-
-        $request->session()->put('item',true);
-        dd($request->session()->get('item'));
         $IsAuthnicated = $this->authInterface->login($request);
 
         // check if your correct creditional or not
