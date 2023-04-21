@@ -18,6 +18,7 @@ class AuthRepository implements AuthRepositoryInterface
     //login
     public function login($request)
     {
+
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],

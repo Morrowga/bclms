@@ -5,6 +5,7 @@ namespace Src\Auth\Presentation\HTTP;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 use Src\BlendedConcept\User\Domain\Model\User;
@@ -36,7 +37,7 @@ class AuthController extends Controller
     {
 
         $IsAuthnicated = $this->authInterface->login($request);
-
+        $request->session()->put('phpb_logged_in', true);
         // check if your correct creditional or not
 
         if ($IsAuthnicated['isCheck']) {
@@ -49,6 +50,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
+        session()->remove('phpb_logged_in');
         return redirect()->route('login');
     }
 
