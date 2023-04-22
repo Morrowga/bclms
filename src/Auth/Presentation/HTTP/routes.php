@@ -26,15 +26,6 @@ Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
         $builder->handlePageBuilderAssetRequest();
     })->where('any', '.*');
 
-
-    // handle requests to retrieve uploaded file
-    Route::any(config('pagebuilder.general.uploads_url') . '{any}', function () {
-
-        $builder = new LaravelPageBuilder(config('pagebuilder'));
-        $builder->handleUploadedFileRequest();
-    })->where('any', '.*');
-
-
     if (config('pagebuilder.website_manager.use_website_manager')) {
 
         // handle all website manager requests
@@ -58,3 +49,10 @@ Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
         })->where('any', '.*')->withoutMiddleware(['auth', 'isSuperAdmin']);
     }
 });
+
+// handle requests to retrieve uploaded file
+Route::any(config('pagebuilder.general.uploads_url') . '{any}', function () {
+
+    $builder = new LaravelPageBuilder(config('pagebuilder'));
+    $builder->handleUploadedFileRequest();
+})->where('any', '.*');

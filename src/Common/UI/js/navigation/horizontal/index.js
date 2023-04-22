@@ -49,7 +49,9 @@ export default [
       icon: { icon: 'mdi-cog' },
       route_name:'system',
       access_module:"access_system",
-      children: []
+      children: [
+        { title: 'PageBuilder', url: '/bc/admin',icon: { icon: 'mdi-alpha-r-circle' }, route_name:'/bc/admin', access_module : "access_role"},
+      ]
     },
     {
         title: 'Announcment',
