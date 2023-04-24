@@ -68,37 +68,37 @@ let columns = [
     label: "Name",
     field: "name",
     sortable: false,
-    filterOptions: {
-      styleClass: "class1", // class to be added to the parent th element
-      enabled: true, // enable filter for this column
-      placeholder: "Filter All", // placeholder for filter input
-      filterDropdownItems: props.users_name, // dropdown (with selected values) instead of text input
-      trigger: "enter", //only trigger on enter not on keyup
-    },
+    // filterOptions: {
+    //   styleClass: "class1", // class to be added to the parent th element
+    //   enabled: true, // enable filter for this column
+    //   placeholder: "Filter All", // placeholder for filter input
+    //   filterDropdownItems: props.users_name, // dropdown (with selected values) instead of text input
+    //   trigger: "enter", //only trigger on enter not on keyup
+    // },
   },
   {
     label: "email",
     field: "email",
-    sortable: false,
-    filterOptions: {
-      styleClass: "class1", // class to be added to the parent th element
-      enabled: true, // enable filter for this column
-      placeholder: "Filter All", // placeholder for filter input
-      filterDropdownItems: props.users_name, // dropdown (with selected values) instead of text input
-      trigger: "enter", //only trigger on enter not on keyup
-    },
+    sortable: false
+    // filterOptions: {
+    //   styleClass: "class1", // class to be added to the parent th element
+    //   enabled: true, // enable filter for this column
+    //   placeholder: "Filter All", // placeholder for filter input
+    //   filterDropdownItems: props.users_name, // dropdown (with selected values) instead of text input
+    //   trigger: "enter", //only trigger on enter not on keyup
+    // },
   },
   {
     label: "Roles",
     field: "roles",
     sortable: false,
-    filterOptions: {
-      styleClass: "class1", // class to be added to the parent th element
-      enabled: true, // enable filter for this column
-      placeholder: "Filter All", // placeholder for filter input
-      filterDropdownItems: props.roles_name, // dropdown (with selected values) instead of text input
-      trigger: "enter", //only trigger on enter not on keyup
-    },
+    // filterOptions: {
+    //   styleClass: "class1", // class to be added to the parent th element
+    //   enabled: true, // enable filter for this column
+    //   placeholder: "Filter All", // placeholder for filter input
+    //   filterDropdownItems: props.roles_name, // dropdown (with selected values) instead of text input
+    //   trigger: "enter", //only trigger on enter not on keyup
+    // },
   },
   {
     label: "Register At",
@@ -256,6 +256,7 @@ let loadItems = () => {
                   density="compact"
                   icon="mdi-trash"
                   class="ml-2 bg-error"
+                  v-if="props.row.roles[0].name !== 'superadmin'"
                   @click="deleteUser(props.row.id)"
                 >
                 </VBtn>

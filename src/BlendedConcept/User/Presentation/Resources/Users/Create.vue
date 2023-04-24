@@ -20,12 +20,12 @@ let form = useForm({
 
 // submit create form
 let handleSubmit = () => {
-  form.post(route("users.store"),form, {
+  form.post(route("users.store"), {
     onSuccess: () => {
-        console.log("hello");
+        isDialogVisible.value = false
     },
     onError: (error) => {
-      alert("something was wrong");
+    //   alert("something was wrong");
     },
   });
 };
@@ -58,7 +58,7 @@ defineProps(["roles"]);
                  label="User Roles"
                  v-model="form.role"
                 :items="roles"
-                :error-messages="form?.errors?.role_id"
+                :error-messages="form?.errors?.role"
               />
               </VCol>
                <VCol cols="12">
@@ -99,7 +99,7 @@ defineProps(["roles"]);
         <VCardActions>
           <VSpacer />
           <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
-          <VBtn type="submit" color="success" @click="isDialogVisible = false">
+          <VBtn type="submit" color="success">
             Save
           </VBtn>
         </VCardActions>

@@ -25,19 +25,14 @@ let form = useForm({
 });
 // Update create form
 let handleUpdate = (id) => {
-  refForm.value?.validate().then(({ valid }) => {
-    if (valid) {
-      form.post(route("users.update", { id: id }), form, {
+      form.post(route("users.update", { id: id }), {
+        onSuccess:(status) =>{
+            isDialogVisible.value = false
+        },
         onError: (error) => {
           alert("something was wrong");
         },
       });
-      //## form.reset();
-      refForm.value?.reset();
-      refForm.value?.resetValidation();
-      isDialogVisible.value = false;
-    }
-  });
 };
 onUpdated(() => {
   form.role = props?.user?.roles[0]?.name;
@@ -81,7 +76,7 @@ onUpdated(() => {
                     label="User Roles"
                     v-model="form.role"
                     :items="roles"
-                    :error-messages="form?.errors?.role_id"
+                    :error-messages="form?.errors?.role"
                     :rules="[requiredValidator]"
                   />
                 </VCol>
@@ -112,13 +107,27 @@ onUpdated(() => {
                     :rules="[requiredValidator]"
                   />
                 </VCol>
+                 <VCol cols="12">
+               <VTextField
+                    label="Password"
+                    v-model="form.password"
+                    :type="isPasswordVisible ? 'text' : 'password'"
+                    :error-messages="form?.errors?.password"
+                    :append-inner-icon="
+                      isPasswordVisible
+                        ? 'mdi-eye-off-outline'
+                        : 'mdi-eye-outline'
+                    "
+                    @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                  />
+                </VCol>
                 <VCol cols="12">
                   <AppDateTimePicker v-model="form.dob" label="Dob" />
                 </VCol>
               </VRow>
             </VCol>
             <VCol cols="6">
-              <ImageUpload v-model="form.image" />
+              <ImageUpload v-model="form.image" :old_img="form.image" />
             </VCol>
           </VRow>
         </VCardText>
