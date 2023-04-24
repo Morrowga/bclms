@@ -20,8 +20,8 @@
       :key="sindex"
       :value="sitem.title"
       :title="sitem.title"
-      @click="goLink(sitem)"
-      :class="isLinkActive(sitem.route_name) ? 'active-list' : ''"
+      @click="goLink(sitem, item)"
+      :variant="isLinkActive(sitem.route_name) ? 'tonal' : ''"
       :hidden="
         !auth?.data?.permissions?.includes(sitem?.access_module) &&
         item?.access_module != 'access_dashboard'
@@ -34,16 +34,19 @@
 <script setup>
 import { router } from "@inertiajs/core";
 import { usePage } from "@inertiajs/vue3";
+import { defineEmits } from "vue";
 
 const auth = computed(() => usePage().props.auth);
 defineProps(["item"]);
+const emit = defineEmits(["open_menu"]);
 let isLinkActive = (currentRoute) => {
   return route().current().includes(currentRoute);
 };
-let isParentActive = (routeList) => {
+const isParentActive = (routeList) => {
   return routeList.find((item) => route().current().includes(item.route_name));
 };
-let goLink = (item) => {
+const goLink = (item, pitem) => {
+  emit("open_menu", pitem.title);
   if (item?.isNativeLink) {
     window.location.href = item.url;
   } else {

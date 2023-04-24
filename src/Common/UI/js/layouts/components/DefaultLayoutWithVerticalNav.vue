@@ -11,7 +11,7 @@ import NavbarShortcuts from "@/layouts/components/NavbarShortcuts.vue";
 import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
 import NavSearchBar from "@/layouts/components/NavSearchBar.vue";
 import UserProfile from "@/layouts/components/UserProfile.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 const resolveNavItemComponent = (item) => {
   if ("children" in item) return VerticalNavGroup;
 
@@ -21,8 +21,14 @@ let drawer = ref(true);
 const toggle = () => {
   drawer.value = !drawer.value;
 };
-
 let open = ref([]);
+const openmenu = (title) => {
+  localStorage.setItem("menu_title", title);
+};
+onMounted(() => {
+  let title = localStorage.getItem("menu_title");
+  open.value = [title];
+});
 </script>
 <template>
   <v-layout>
@@ -44,6 +50,7 @@ let open = ref([]);
           v-for="(item, index) in navItems"
           :key="index"
           :item="item"
+          @open_menu="openmenu"
         />
       </v-list>
     </VNavigation-drawer>

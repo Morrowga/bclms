@@ -81,7 +81,7 @@ let goLink = (item) => {
           :key="sindex"
           :value="sitem"
           @click="goLink(sitem)"
-          :class="isLinkActive(sitem.route_name) ? 'active-list' : ''"
+          :variant="isLinkActive(sitem.route_name) ? 'tonal' : ''"
           :hidden="!auth?.data?.permissions?.includes(sitem?.access_module)"
         >
           <template v-slot:prepend>
