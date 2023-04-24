@@ -26,7 +26,7 @@ let open = ref([]);
 </script>
 <template>
   <v-layout>
-    <VNavigation-drawer v-model="drawer" app>
+    <VNavigation-drawer v-model="drawer" style="position: fixed">
       <template v-slot:prepend>
         <Link to="/" class="d-flex align-start gap-x-2 pa-5">
           <VNodeRenderer :nodes="themeConfig.app.logo" />
@@ -61,7 +61,7 @@ let open = ref([]);
       <UserProfile class="pe-15" />
     </v-app-bar>
 
-    <v-main style="height: 100vh">
+    <v-main style="min-height: 100vh">
       <v-container>
         <slot />
       </v-container>

@@ -4,13 +4,13 @@ namespace Tests\Feature;
 
 use Carbon\Carbon;
 use Tests\TestCase;
-use Database\Factories\UserFactory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Src\BlendedConcept\User\Domain\Model\User;
+use Illuminate\Database\Eloquent\Factory;
 
 class AuthTest extends TestCase
 {
@@ -22,6 +22,12 @@ class AuthTest extends TestCase
     */
 
 
+   public function setUp(): void
+   {
+      parent::setUp();
+      User::factory()->times(10)->create();
+      // Set up some test data
+   }
    /** @test blank_b2c_register_email*/
    public function test_blank_b2c_register_email()
    {

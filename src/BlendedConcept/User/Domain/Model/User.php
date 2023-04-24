@@ -50,7 +50,10 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-
+    protected static function newFactory()
+    {
+        return \Src\BlendedConcept\User\Domain\Factories\UserFactory::new();
+    }
     public function getImageAttribute()
     {
         return $this->getMedia('image');
