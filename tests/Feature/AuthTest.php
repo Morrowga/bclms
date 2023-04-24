@@ -26,6 +26,7 @@ class AuthTest extends TestCase
    {
       parent::setUp();
       User::factory()->times(10)->create();
+      // Set up some test data
    }
    /** @test blank_b2c_register_email*/
    public function test_blank_b2c_register_email()

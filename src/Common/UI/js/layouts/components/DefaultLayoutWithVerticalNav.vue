@@ -61,7 +61,7 @@ let open = ref([]);
       <UserProfile class="pe-15" />
     </v-app-bar>
 
-    <v-main style="height: 100vh">
+    <v-main style="min-height: 100vh">
       <v-container>
         <slot />
       </v-container>
