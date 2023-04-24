@@ -22,8 +22,8 @@ const logout = () => {
   >
     <VAvatar class="cursor-pointer" color="primary" variant="tonal">
       <VImg
-        v-if="userData?.data && userData?.data?.avatar"
-        :src="userData?.data?.avatar"
+        v-if="userData?.data && userData?.data?.image"
+        :src="userData?.data?.image"
       />
       <VIcon v-else icon="mdi-account-outline" />
 
@@ -43,8 +43,8 @@ const logout = () => {
                 >
                   <VAvatar color="primary" variant="tonal">
                     <VImg
-                      v-if="userData?.data && userData?.data?.avatar"
-                      :src="userData?.data?.avatar"
+                      v-if="userData?.data && userData?.data?.image"
+                      :src="userData?.data?.image"
                     />
                     <VIcon v-else icon="mdi-account-outline" />
                   </VAvatar>
