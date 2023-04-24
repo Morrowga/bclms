@@ -41,7 +41,7 @@ class UserRepository implements UserRepositoryInterface
                 'contact_number' => $request->contact_number,
                 "email" => $request->email,
                 "password" => $request->password,
-                "dob" =>$request->dob,
+                "dob" => $request->dob,
                 "is_active" => 1,
                 "email_verified_at" => Carbon::now()
             ]
@@ -59,7 +59,7 @@ class UserRepository implements UserRepositoryInterface
     public function updateUser($request, $user)
     {
 
-        $user->update($request->only(['name', 'contact_number', 'email','dob']));
+        $user->update($request->only(['name', 'contact_number', 'email', 'dob']));
 
         //  delete image if reupload or insert if does not exit
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
@@ -104,7 +104,7 @@ class UserRepository implements UserRepositoryInterface
     public function getPermission($filters = [])
     {
         $permissions = PermissionResource::collection(Permission::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
-        $default_permissions = Permission::orderBy('id', 'desc')->whereNotIn('id',[1,2,3,4])->get();
+        $default_permissions = Permission::orderBy('id', 'desc')->whereNotIn('id', [1, 2, 3, 4])->get();
         return [
             "permissions" => $permissions,
             // "permissions" => $default_permissions,

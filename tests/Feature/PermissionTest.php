@@ -23,13 +23,12 @@ class PermissionTest extends TestCase
 
     protected function getAdminUser()
     {
-        $admin = UserFactory::factory()->create();
+        // $admin = UserFactory::factory()->create();
         // $adminRole = Role::factory()->create(['name' => 'admin']);
         // $permissions = Permission::all();
         // $adminRole->permissions()->sync($permissions);
         // $admin->roles()->sync([$adminRole->id]);
-
-        dd($admin);
+        // dd($admin);
     }
     protected function setUp(): void
     {
