@@ -50,7 +50,7 @@ export default [
       route_name:'system',
       access_module:"access_system",
       children: [
-        { title: 'PageBuilder', url: '/bc/admin',icon: { icon: 'mdi-alpha-r-circle' }, route_name:'/bc/admin', access_module : "access_role"},
+        { title: 'Website Manager', url: '/bc/admin',icon: { icon: 'mdi-alpha-r-circle' }, route_name:'/bc/admin', access_module : "access_pagebuilder",isNativeLink:true},
       ]
     },
     {

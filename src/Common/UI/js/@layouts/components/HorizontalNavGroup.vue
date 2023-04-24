@@ -43,8 +43,12 @@ let isLinkActive = (currentRoute) => {
 let isParentActive = (routeList) => {
   return routeList.find((item) => route().current().includes(item.route_name));
 };
-let goLink = (url) => {
-  router.get(url);
+let goLink = (item) => {
+  if (item?.isNativeLink) {
+    window.location.href = item.url;
+  } else {
+    router.get(item.url);
+  }
 };
 </script>
 
@@ -76,7 +80,7 @@ let goLink = (url) => {
           v-for="(sitem, sindex) in item.children"
           :key="sindex"
           :value="sitem"
-          @click="goLink(sitem.url)"
+          @click="goLink(sitem)"
           :class="isLinkActive(sitem.route_name) ? 'active-list' : ''"
           :hidden="!auth?.data?.permissions?.includes(sitem?.access_module)"
         >

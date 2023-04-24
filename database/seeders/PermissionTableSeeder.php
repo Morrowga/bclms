@@ -143,6 +143,11 @@ class PermissionTableSeeder extends Seeder
                 "name" => "access_system",
                 "guard_name" => "web"
             ],
+            [
+                "name" => "access_pagebuilder",
+                "guard_name" => "web"
+            ],
+
         ];
 
         foreach ($permissions as $permission) {

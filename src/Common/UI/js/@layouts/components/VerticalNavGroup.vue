@@ -20,7 +20,7 @@
       :key="sindex"
       :value="sitem.title"
       :title="sitem.title"
-      @click="goLink(sitem.url)"
+      @click="goLink(sitem)"
       :class="isLinkActive(sitem.route_name) ? 'active-list' : ''"
       :hidden="
         !auth?.data?.permissions?.includes(sitem?.access_module) &&
@@ -43,8 +43,12 @@ let isLinkActive = (currentRoute) => {
 let isParentActive = (routeList) => {
   return routeList.find((item) => route().current().includes(item.route_name));
 };
-let goLink = (url) => {
-  router.get(url);
+let goLink = (item) => {
+  if (item?.isNativeLink) {
+    window.location.href = item.url;
+  } else {
+    router.get(item.url);
+  }
 };
 </script>
 <style scoped>
