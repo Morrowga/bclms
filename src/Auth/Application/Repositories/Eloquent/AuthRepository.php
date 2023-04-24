@@ -32,6 +32,7 @@ class AuthRepository implements AuthRepositoryInterface
                 return ["errorMessage" => $error, "isCheck" => false];
             }
             if (auth()->attempt($credentials)) {
+
                 $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'data' => $user]));
                 return ["errorMessage" => "Successfully", "isCheck" => true];
             } else {

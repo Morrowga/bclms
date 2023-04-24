@@ -6,7 +6,7 @@ if (!function_exists('getNotifications')) {
     {
         if (auth()->check()) {
             $notification = [
-                "notifications" => auth()->user()->unreadNotifications()->paginate(8),
+                "notifications" => auth()->user()->unreadNotifications()->paginate(7),
                 "unread" =>  auth()->user()->unreadNotifications()->count()
             ];
         } else {

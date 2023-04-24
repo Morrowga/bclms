@@ -21,6 +21,8 @@ let drawer = ref(true);
 const toggle = () => {
   drawer.value = !drawer.value;
 };
+
+let open = ref([]);
 </script>
 <template>
   <v-layout>
@@ -36,7 +38,7 @@ const toggle = () => {
 
       <v-divider></v-divider>
 
-      <v-list density="compact" nav>
+      <v-list density="compact" nav v-model:opened="open">
         <Component
           :is="resolveNavItemComponent(item)"
           v-for="(item, index) in navItems"
