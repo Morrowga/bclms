@@ -26,7 +26,7 @@ let open = ref([]);
 </script>
 <template>
   <v-layout>
-    <VNavigation-drawer v-model="drawer" app>
+    <VNavigation-drawer v-model="drawer" style="position: fixed">
       <template v-slot:prepend>
         <Link to="/" class="d-flex align-start gap-x-2 pa-5">
           <VNodeRenderer :nodes="themeConfig.app.logo" />
