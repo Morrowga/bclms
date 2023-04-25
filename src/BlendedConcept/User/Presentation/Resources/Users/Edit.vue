@@ -6,13 +6,14 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
 import moment from "moment";
+import { toastAlert } from "@Composables/useToastAlert";
 const isDialogVisible = ref(false);
 // check passwor visible
 const isPasswordVisible = ref(false);
 const isFormValid = ref(false);
 const refForm = ref();
 // get current user and roles
-let props = defineProps(["user", "roles"]);
+let props = defineProps(["user", "roles", "flash"]);
 let form = useForm({
   role: props?.user?.roles[0]?.name,
   name: props.user.name,
@@ -25,14 +26,17 @@ let form = useForm({
 });
 // Update create form
 let handleUpdate = (id) => {
-      form.post(route("users.update", { id: id }), {
-        onSuccess:(status) =>{
-            isDialogVisible.value = false
-        },
-        onError: (error) => {
-          alert("something was wrong");
-        },
+  form.post(route("users.update", { id: id }), {
+    onSuccess: (status) => {
+      toastAlert({
+        title: props.flash?.successMessage,
       });
+      isDialogVisible.value = false;
+    },
+    onError: (error) => {
+      alert("something was wrong");
+    },
+  });
 };
 onUpdated(() => {
   form.role = props?.user?.roles[0]?.name;
@@ -40,7 +44,7 @@ onUpdated(() => {
   form.contact_number = props.user.contact_number;
   form.email = props.user.email;
   form.image = props?.user?.image[0]?.original_url || "";
-  form.dob =props.user.dob;
+  form.dob = props.user.dob;
 });
 </script>
 <template>
@@ -107,8 +111,8 @@ onUpdated(() => {
                     :rules="[requiredValidator]"
                   />
                 </VCol>
-                 <VCol cols="12">
-               <VTextField
+                <VCol cols="12">
+                  <VTextField
                     label="Password"
                     v-model="form.password"
                     :type="isPasswordVisible ? 'text' : 'password'"

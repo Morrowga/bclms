@@ -35,7 +35,7 @@ class AnnouncementController extends Controller
           $this->authorize('create', Announcement::class);
           $request->validated();
           $this->announcementInterface->createAnnouncement($request);
-          return redirect()->route('announcements.index')->with("successMessage", "Permission created Successfully!");
+          return redirect()->route('announcements.index')->with("successMessage", "Announcement created Successfully!");
      }
 
      //update announcement
@@ -45,7 +45,7 @@ class AnnouncementController extends Controller
           $request->validated();
           $this->announcementInterface->updateAnnouncement($request, $announcement);
 
-          return redirect()->route('announcements.index')->with("successMessage", "Permission updated Successfully!");
+          return redirect()->route('announcements.index')->with("successMessage", "Announcement updated Successfully!");
      }
 
      //destroy announcement

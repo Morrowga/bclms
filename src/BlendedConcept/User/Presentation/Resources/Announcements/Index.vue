@@ -6,10 +6,10 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
+import { toastAlert } from "@Composables/useToastAlert";
 
 //## start variable section
 let props = defineProps(["announcements", "flash", "auth"]);
-let permissions = computed(() => usePage().props.auth.data.announcements);
 const form = useForm({
   title: "",
   message: "",
@@ -30,7 +30,10 @@ const addNewAnnouncement = (announcementData) => {
   form.message = announcementData.message;
   form._method = "POST";
   form.post(route("announcements.store"), {
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toastAlert({
+        title: props.flash?.successMessage,
+      });
       isAddNewAnnouncementDrawerVisible.value = false;
     },
     onError: (error) => {
@@ -51,6 +54,9 @@ const updateAnnouncement = (announcementData) => {
     }),
     {
       onSuccess: () => {
+        toastAlert({
+          title: props.flash?.successMessage,
+        });
         isEditAnnouncementDrawerVisible.value = false;
       },
       onError: (error) => {
@@ -73,8 +79,12 @@ const deleteAnnouncement = (id) => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      router.delete(`announcements/${id}`, {
-        onSuccess: () => {},
+      form.delete(`announcements/${id}`, {
+        onSuccess: () => {
+          toastAlert({
+            title: props.flash?.successMessage,
+          });
+        },
       });
     }
   });

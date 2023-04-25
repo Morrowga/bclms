@@ -3,10 +3,11 @@ import { watch, defineEmits, defineProps, computed, ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { requiredValidator } from "@validators";
+import { toastAlert } from "@Composables/useToastAlert";
 
 //# start variable section
 const isDialogVisible = ref(false);
-let props = defineProps(["permissions"]);
+let props = defineProps(["permissions", "flash"]);
 const isFormValid = ref(false);
 const refForm = ref();
 //## end variable  section
@@ -100,6 +101,9 @@ let saveRole = () => {
     if (valid) {
       form.post(route("roles.store"), {
         onSuccess: () => {
+          toastAlert({
+            title: props.flash?.successMessage,
+          });
           isDialogVisible.value = false;
           form.reset();
           refForm.value?.reset();

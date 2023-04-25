@@ -4,6 +4,7 @@ import Edit from "./Edit.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
+import { toastAlert } from "@Composables/useToastAlert";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 
@@ -31,6 +32,9 @@ const addNewPermission = (userData) => {
   form._method = "POST";
   form.post(route("permissions.store"), {
     onSuccess: () => {
+      toastAlert({
+        title: props.flash?.successMessage,
+      });
       isAddNewPermissionDrawerVisible.value = false;
     },
     onError: (error) => {
@@ -52,6 +56,9 @@ const updatePermission = (userData) => {
     }),
     {
       onSuccess: () => {
+        toastAlert({
+          title: props.flash?.successMessage,
+        });
         isEditPermissionDrawerVisible.value = false;
       },
       onError: (error) => {
@@ -74,8 +81,12 @@ const deletePermission = (id) => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      router.delete(`permissions/${id}`, {
-        onSuccess: () => {},
+      form.delete(`permissions/${id}`, {
+        onSuccess: () => {
+          toastAlert({
+            title: props.flash?.successMessage,
+          });
+        },
       });
     }
   });

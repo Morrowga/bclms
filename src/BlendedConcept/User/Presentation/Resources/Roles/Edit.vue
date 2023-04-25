@@ -11,8 +11,9 @@ import {
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { requiredValidator } from "@validators";
+import { toastAlert } from "@Composables/useToastAlert";
 const isDialogVisible = ref(false);
-let props = defineProps(["permissions", "role"]);
+let props = defineProps(["permissions", "role", "flash"]);
 const isFormValid = ref(false);
 const refForm = ref();
 let module_arr = ref([]);
@@ -113,6 +114,9 @@ let updateRole = (id) => {
     if (valid) {
       form.put(route("roles.update", { id: id }), {
         onSuccess: () => {
+          toastAlert({
+            title: props.flash?.successMessage,
+          });
           isDialogVisible.value = false;
           refForm.value?.reset();
           refForm.value?.resetValidation();

@@ -54,7 +54,7 @@ export default [
       ]
     },
     {
-        title: 'Announcment',
+        title: 'Announcement',
         url: "/announcements",
         icon: { icon: 'mdi-bullhorn' },
         route_name:'announcements',
