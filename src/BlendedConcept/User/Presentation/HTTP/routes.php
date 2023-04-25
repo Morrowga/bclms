@@ -17,6 +17,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
 
+    //announcement
+    Route::resource('announcements', AnnouncementController::class);
+
     Route::get('settings', [SettingController::class, 'index']);
 
     //mark as read with id

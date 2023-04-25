@@ -22,6 +22,7 @@ class UserController extends Controller
     $this->userInterFace = $userRepository;
   }
 
+  //get all users
   public function index(Request $request)
   {
     $this->authorize('view', User::class);
@@ -36,15 +37,7 @@ class UserController extends Controller
     ]);
   }
 
-  public function create()
-  {
-    $this->authorize('create', User::class);
-    $roles = $this->userInterFace->getRole();
-    return Inertia::render('BlendedConcept/User/Presentation/Resources/Users/Create', [
-      'roles' => $roles["default_roles"],
-    ]);
-  }
-
+  //store user
   public function store(StoreUserRequest $request)
   {
     $this->authorize('create', User::class);
@@ -53,17 +46,7 @@ class UserController extends Controller
     return redirect()->route('users.index')->with("successMessage", "User create Successfully!");
   }
 
-  public function edit(User $user)
-  {
-    $this->authorize('edit', User::class);
-    $roles = $this->userInterFace->getRole();
-    $user->load('roles');
-    return Inertia::render('BlendedConcept/User/Presentation/Resources/Users/Edit', [
-      "roles" => $roles['default_roles'],
-      "user" => $user
-    ]);
-  }
-
+  //update user
   public function update(UpdateUserRequest $request, User $user)
   {
     $this->authorize('edit', User::class);
@@ -72,10 +55,7 @@ class UserController extends Controller
     return redirect()->route('users.index')->with("successMessage", "User Updated Successfully!");
   }
 
-  public function show(User $user)
-  {
-  }
-
+  //destroy user
   public function destroy(User $user)
   {
     $this->authorize('destroy', User::class);

@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('message');
-            $table->integer('created_by');
-            $table->string('trigger_on');
-            $table->string('send_to');
+            $table->string('title')->nullable();
+            $table->string('message')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->string('trigger_on')->nullable();
+            $table->string('send_to')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

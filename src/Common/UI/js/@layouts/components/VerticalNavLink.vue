@@ -23,6 +23,7 @@ let isLinkActive = (currentRoute) => {
   return route().current().includes(currentRoute);
 };
 let goLink = (url) => {
+  localStorage.removeItem("menu_title");
   router.get(url);
 };
 </script>
