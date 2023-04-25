@@ -1,5 +1,4 @@
-<template>
- <script setup>
+<script setup>
 import {
   avatarText,
   kFormatter,
@@ -377,5 +376,3 @@ const resolveUserRoleVariant = role => {
   text-transform: capitalize !important;
 }
 </style>
-
-</template>
