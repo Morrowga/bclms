@@ -11,6 +11,8 @@ use Src\BlendedConcept\User\Domain\Requests\StoreUserRequest;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Src\BlendedConcept\User\Domain\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -74,7 +76,7 @@ class UserController extends Controller
 
   public function show(User $user)
   {
-    return $user;
+    // return Inertia::render('Common/Layouts/Dashboard/UserProfile')
   }
 
   public function destroy(User $user)
@@ -83,4 +85,31 @@ class UserController extends Controller
     $user->delete();
     return redirect()->route('users.index')->with("successMessage", "User deleted Successfully!");
   }
+
+  public function changePassword(Request $request)
+  {
+     $user = Auth::user();
+
+    //  check passord same or not
+     if(Hash::check($request->currentpassword,$user->password))
+     {
+        User::find($user->id)->update([
+            "password" => $request->updatedpassword
+        ]);
+
+        return response()->json([
+            "data" => "password successfully"
+        ]);
+
+     }
+     return response()->json([
+        "data" => "current password are not same"
+     ]);
+
+
+  }
+
+
+
+
 }

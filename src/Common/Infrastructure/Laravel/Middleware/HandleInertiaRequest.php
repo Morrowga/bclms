@@ -4,6 +4,7 @@ namespace Src\Common\Infrastructure\Laravel\Middleware;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 use Src\BlendedConcept\User\Domain\Resources\AuthResource;
 
@@ -43,6 +44,10 @@ class HandleInertiaRequest extends Middleware
             'flash' => [
                 'successMessage' => fn () => $request->session()->get('successMessage'),
                 'errorMessage'  => fn () => $request->session()->get('errorMessage')
+            ],
+            'user_info' => [
+                'user_detail' => Auth::check() == true ? Auth::user() : " ",
+                'user_role' => Auth::check() == true ? Auth::user()->roles()->first() : " ",
             ],
             'notifications' => getNotifications() != null ? getNotifications()['notifications'] : null,
             'unreadNotificationsCount' => getNotifications() != null ? getNotifications()['unread'] : 0,

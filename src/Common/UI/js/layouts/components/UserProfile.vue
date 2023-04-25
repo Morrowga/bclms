@@ -1,8 +1,9 @@
 <script setup>
 import { initialAbility } from "@/plugins/casl/ability";
 import { useAppAbility } from "@/plugins/casl/useAppAbility";
-import { router, usePage, Link } from "@inertiajs/vue3";
+import { usePage, Link } from "@inertiajs/vue3";
 import { computed } from "vue";
+import { router } from "@inertiajs/core";
 const ability = useAppAbility();
 const userData = computed(() => usePage().props.auth);
 
@@ -63,7 +64,7 @@ const logout = () => {
           <VDivider class="my-2" />
 
           <!-- 👉 Profile -->
-          <VListItem :to="{ name: 'apps-user-view-id', params: { id: 21 } }">
+          <VListItem @click="() => router.get('userprofile')">
             <template #prepend>
               <VIcon class="me-2" icon="mdi-account-outline" size="22" />
             </template>

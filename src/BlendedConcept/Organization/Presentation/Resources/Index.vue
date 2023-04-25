@@ -1,6 +1,6 @@
 <template>
   <!-- for superadmin dashboard check -->
-  <AdminLayout>
+  <AdminLayout :user="user" :user_role="current_user_role">
     <div v-if="current_user_role == 'superadmin'">
       <SuperAdminDashboard> </SuperAdminDashboard>
     </div>
@@ -23,5 +23,5 @@ import TeacherOrParentDashboard from "@Layouts/Dashboard/TeacherOrParentDashboar
 import { defineProps } from "vue";
 
 //## variable section
-let props = defineProps(["current_user_role"]);
+let props = defineProps(["current_user_role",'user']);
 </script>

@@ -13,6 +13,7 @@ Route::group(['middleware' => ['guest']], function () {
     Route::post("b2cstore", [AuthController::class, 'B2CStore'])->name('b2cstore');
     Route::get("verification", [AuthController::class, 'verification'])->name("verification");
 });
+
 Route::group(['middleware' => ['auth']], function () {
     // logout function
     Route::post("logout", [AuthController::class, 'logout'])->name('logout');

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Src\BlendedConcept\Organization\Presentation\HTTP\DashboardBoardController;
 use Src\BlendedConcept\User\Presentation\HTTP\NotificationController;
 use Src\BlendedConcept\User\Presentation\HTTP\PermissionController;
 use Src\BlendedConcept\User\Presentation\HTTP\PortalController;
@@ -16,6 +17,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
+    Route::post('changepassword', [UserController::class,'changePassword'])->name('changepassword');
+
 
     Route::get('settings', [SettingController::class, 'index']);
 
@@ -42,6 +45,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     // teacher
     Route::get("teacherdashboard", [TeacherController::class, 'dashboard'])->name('teacherdashboard');
+
+
+    Route::get("userprofile", [DashboardBoardController::class, 'userProfile'])->name('userprofile');
+
+
+
 });
 Route::get('/', [PortalController::class, 'index'])->name('portal');
 Route::get("testing/route", function () {

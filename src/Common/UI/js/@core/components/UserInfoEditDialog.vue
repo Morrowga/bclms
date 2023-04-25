@@ -4,21 +4,9 @@ const props = defineProps({
     type: Object,
     required: false,
     default: () => ({
-      id: 0,
-      fullName: '',
-      company: '',
-      role: '',
-      username: '',
-      country: '',
-      contact: '',
-      email: '',
-      currentPlan: '',
-      status: '',
-      avatar: '',
-      taskDone: null,
-      projectDone: null,
-      taxId: '',
-      language: '',
+      currentpassword:"",
+      updatedpassword:""
+
     }),
   },
   isDialogVisible: {
@@ -40,7 +28,6 @@ watch(props, () => {
 })
 
 const onFormSubmit = () => {
-  emit('update:isDialogVisible', false)
   emit('submit', userData.value)
 }
 
@@ -70,11 +57,8 @@ const dialogVisibleUpdate = val => {
 
       <VCardItem class="text-center">
         <VCardTitle class="text-h5 mb-2">
-          Edit User Information
+          Edit User Password
         </VCardTitle>
-        <VCardSubtitle>
-          Updating user details will receive a privacy audit.
-        </VCardSubtitle>
       </VCardItem>
 
       <VCardText>
@@ -84,60 +68,18 @@ const dialogVisibleUpdate = val => {
           @submit.prevent="onFormSubmit"
         >
           <VRow>
-            <!-- 👉 Full Name -->
+            <!-- 👉 Contact -->
             <VCol
               cols="12"
               md="6"
             >
               <VTextField
-                v-model="userData.fullName"
-                label="Full Name"
+                type="password"
+                v-model="userData.currentpassword"
+                label="Current Password"
               />
             </VCol>
 
-            <!-- 👉 Username -->
-            <VCol
-              cols="12"
-              md="6"
-            >
-              <VTextField
-                v-model="userData.username"
-                label="Username"
-              />
-            </VCol>
-
-            <!-- 👉 Billing Email -->
-            <VCol
-              cols="12"
-              md="6"
-            >
-              <VTextField
-                v-model="userData.email"
-                label="Billing Email"
-              />
-            </VCol>
-
-            <!-- 👉 Status -->
-            <VCol
-              cols="12"
-              md="6"
-            >
-              <VTextField
-                v-model="userData.status"
-                label="Status"
-              />
-            </VCol>
-
-            <!-- 👉 Tax Id -->
-            <VCol
-              cols="12"
-              md="6"
-            >
-              <VTextField
-                v-model="userData.taxId"
-                label="Tax Id"
-              />
-            </VCol>
 
             <!-- 👉 Contact -->
             <VCol
@@ -145,41 +87,9 @@ const dialogVisibleUpdate = val => {
               md="6"
             >
               <VTextField
-                v-model="userData.contact"
-                label="Contact"
-              />
-            </VCol>
-
-            <!-- 👉 Language -->
-            <VCol
-              cols="12"
-              md="6"
-            >
-              <VSelect
-                v-model="userData.language"
-                label="Language"
-                :items="['English', 'Spanish', 'Portuguese', 'Russian', 'French', 'German']"
-              />
-            </VCol>
-
-            <!-- 👉 Country -->
-            <VCol
-              cols="12"
-              md="6"
-            >
-              <VSelect
-                v-model="userData.country"
-                label="Country"
-                :items="['USA', 'UK', 'Spain', 'Russia', 'France', 'Germany']"
-              />
-            </VCol>
-
-            <!-- 👉 Switch -->
-            <VCol cols="12">
-              <VSwitch
-                v-model="isUseAsBillingAddress"
-                density="compact"
-                label="Use as a billing address?"
+                type="password"
+                v-model="userData.updatedpassword"
+                label="Update Password"
               />
             </VCol>
 
