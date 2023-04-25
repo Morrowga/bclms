@@ -8,42 +8,16 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import MoreBtn from "@core/components/MoreBtn.vue";
 import { computed, defineProps } from "vue";
-let props = defineProps(["users", "roles_name", "flash", "auth"]);
-let users = computed(() => usePage().props.auth.data.users);
+import { toastAlert } from "@Composables/useToastAlert";
 import Swal from "sweetalert2";
+
+let props = defineProps(["users", "roles_name", "flash", "auth"]);
+let flash = computed(() => usePage().props.flash);
+let users = computed(() => usePage().props.auth.data.users);
 let currentPermission = ref();
 let serverPage = ref(props.users.meta.current_page ?? 1);
 let serverPerPage = ref(10);
-// ## add users
-const addNewUser = (userData) => {
-  console.log(userData);
-  form.name = userData.name;
-  form.description = userData.description;
-  form._method = "POST";
-  form.post(route("users.store"), {
-    onSuccess: () => {},
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-};
-const updateUser = (userData) => {
-  console.log(userData);
-  form.name = userData.name;
-  form.description = userData.description;
-  form._method = "PUT";
-  form.post(
-    route("users.update", {
-      id: currentPermission.value.id,
-    }),
-    {
-      onSuccess: () => {},
-      onError: (error) => {
-        console.log(error);
-      },
-    }
-  );
-};
+
 // ## delete user
 const deleteUser = (id) => {
   Swal.fire({
@@ -57,7 +31,11 @@ const deleteUser = (id) => {
   }).then((result) => {
     if (result.isConfirmed) {
       router.delete(`users/${id}`, {
-        onSuccess: () => {},
+        onSuccess: () => {
+          toastAlert({
+            title: flash?.value.successMessage,
+          });
+        },
       });
     }
   });
@@ -214,7 +192,7 @@ let loadItems = () => {
               density="compact"
             />
             <!-- 👉 Add User button -->
-            <Create :roles="roles_name" />
+            <Create :roles="roles_name" :flash="flash" />
           </div>
         </VCardText>
 
@@ -249,7 +227,7 @@ let loadItems = () => {
             </div>
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
-                <Edit :user="props.row" :roles="roles_name" />
+                <Edit :user="props.row" :roles="roles_name" :flash="flash" />
 
                 <VBtn
                   density="compact"

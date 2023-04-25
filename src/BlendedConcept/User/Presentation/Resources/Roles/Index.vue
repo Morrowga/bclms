@@ -6,9 +6,10 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
+import { toastAlert } from "@Composables/useToastAlert";
 
 //## start variable section
-let props = defineProps(["roles", "permissions", "auth"]);
+let props = defineProps(["roles", "permissions", "auth", "flash"]);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const form = useForm({
   name: "",
@@ -95,8 +96,12 @@ const deleteRole = (id) => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      router.delete(`roles/${id}`, {
-        onSuccess: () => {},
+      form.delete(`roles/${id}`, {
+        onSuccess: () => {
+          toastAlert({
+            title: props.flash?.successMessage,
+          });
+        },
       });
     }
   });
@@ -199,7 +204,7 @@ let truncatedText = (text) => {
             />
 
             <!-- 👉 Add permission button -->
-            <Create :permissions="props.permissions" />
+            <Create :permissions="props.permissions" :flash="flash" />
           </div>
         </VCardText>
 
@@ -241,7 +246,11 @@ let truncatedText = (text) => {
               class="flex flex-nowrap"
             >
               <div class="d-flex">
-                <Edit :permissions="props.permissions" :role="dataProps.row" />
+                <Edit
+                  :permissions="props.permissions"
+                  :role="dataProps.row"
+                  :flash="flash"
+                />
                 <VBtn
                   density="compact"
                   icon="mdi-trash"
