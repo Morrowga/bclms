@@ -79,7 +79,7 @@ let columns = [
   {
     label: "email",
     field: "email",
-    sortable: false
+    sortable: false,
     // filterOptions: {
     //   styleClass: "class1", // class to be added to the parent th element
     //   enabled: true, // enable filter for this column
@@ -186,7 +186,6 @@ let loadItems = () => {
     preserveScroll: true,
   });
 };
-
 </script>
 
 <template>
@@ -200,7 +199,7 @@ let loadItems = () => {
             <VSelect
               v-model="serverPerPage"
               density="compact"
-              :items="[10, 20, 50]"
+              :items="options.perPageDropdown"
             ></VSelect>
           </div>
 

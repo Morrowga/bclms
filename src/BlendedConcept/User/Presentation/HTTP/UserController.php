@@ -11,8 +11,7 @@ use Src\BlendedConcept\User\Domain\Requests\StoreUserRequest;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
 use Src\BlendedConcept\User\Domain\Requests\UpdateUserRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Src\BlendedConcept\User\Domain\Requests\updateUserPasswordRequest;
 
 class UserController extends Controller
 {
@@ -24,6 +23,7 @@ class UserController extends Controller
     $this->userInterFace = $userRepository;
   }
 
+  //get all users
   public function index(Request $request)
   {
     $this->authorize('view', User::class);
@@ -38,15 +38,7 @@ class UserController extends Controller
     ]);
   }
 
-  public function create()
-  {
-    $this->authorize('create', User::class);
-    $roles = $this->userInterFace->getRole();
-    return Inertia::render('BlendedConcept/User/Presentation/Resources/Users/Create', [
-      'roles' => $roles["default_roles"],
-    ]);
-  }
-
+  //store user
   public function store(StoreUserRequest $request)
   {
     $this->authorize('create', User::class);
@@ -55,28 +47,13 @@ class UserController extends Controller
     return redirect()->route('users.index')->with("successMessage", "User create Successfully!");
   }
 
-  public function edit(User $user)
-  {
-    $this->authorize('edit', User::class);
-    $roles = $this->userInterFace->getRole();
-    $user->load('roles');
-    return Inertia::render('BlendedConcept/User/Presentation/Resources/Users/Edit', [
-      "roles" => $roles['default_roles'],
-      "user" => $user
-    ]);
-  }
-
+  //update user
   public function update(UpdateUserRequest $request, User $user)
   {
     $this->authorize('edit', User::class);
     $this->userInterFace->updateUser($request, $user);
 
     return redirect()->route('users.index')->with("successMessage", "User Updated Successfully!");
-  }
-
-  public function show(User $user)
-  {
-    // return Inertia::render('Common/Layouts/Dashboard/UserProfile')
   }
 
   public function destroy(User $user)
@@ -86,27 +63,10 @@ class UserController extends Controller
     return redirect()->route('users.index')->with("successMessage", "User deleted Successfully!");
   }
 
-  public function changePassword(Request $request)
+  public function changePassword(updateUserPasswordRequest $request)
   {
-     $user = Auth::user();
 
-    //  check passord same or not
-     if(Hash::check($request->currentpassword,$user->password))
-     {
-        User::find($user->id)->update([
-            "password" => $request->updatedpassword
-        ]);
-
-        return response()->json([
-            "data" => "password successfully"
-        ]);
-
-     }
-     return response()->json([
-        "data" => "current password are not same"
-     ]);
-
-
+     $this->userInterFace->changepassword($request);
   }
 
 

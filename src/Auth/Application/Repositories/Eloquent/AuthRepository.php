@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Mail;
 use Src\Auth\Domain\Mail\VerifyEmail;
 use Src\BlendedConcept\User\Domain\Model\User;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
-
-
 use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
 
 class AuthRepository implements AuthRepositoryInterface
@@ -74,4 +72,6 @@ class AuthRepository implements AuthRepositoryInterface
         ]);
         return  $user;
     }
+
+
 }

@@ -20,7 +20,7 @@ class RoleController extends Controller
     $this->userInterFace = $userRepository;
   }
 
-
+  // get all roles
   public function index()
   {
     $this->authorize('view', Role::class);
@@ -35,15 +35,7 @@ class RoleController extends Controller
     ]);
   }
 
-  public function create()
-  {
-    $this->authorize('create', Role::class);
-    $permissions = $this->userInterFace->getPermission();
-    return Inertia::render('BlendedConcept/User/Presentation/Resources/Roles/Create', [
-      "permissions" => $permissions["default_permissions"]
-    ]);
-  }
-
+  //store role
   public function store(StoreRoleRequest $request)
   {
     $this->authorize('create', Role::class);
@@ -52,17 +44,7 @@ class RoleController extends Controller
     return redirect()->route('roles.index')->with("successMessage", "Roles created Successfully!");
   }
 
-  public function edit(Role $role)
-  {
-    $this->authorize('edit', Role::class);
-    $role =  $role->load('permissions');
-    $permissions = $this->userInterFace->getPermission();
-    return Inertia::render('BlendedConcept/User/Presentation/Resources/Roles/Edit', [
-      "role" => $role,
-      "permissions" => $permissions['default_permissions']
-    ]);
-  }
-
+  //update role
   public function update(UpdateRoleRequest $request, Role $role)
   {
     $this->authorize('edit', Role::class);
@@ -70,10 +52,7 @@ class RoleController extends Controller
     return redirect()->route('roles.index')->with("successMessage", "Role updated Successfully!");
   }
 
-  public function show(Role $role)
-  {
-  }
-
+  //destroy role
   public function destroy(Role $role)
   {
     $this->authorize('destroy', Role::class);

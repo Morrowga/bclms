@@ -35,7 +35,7 @@ const pages ={
         // "BlendedConcept/User/Presentation/Resources/Students/Dashboard" : import("../../src/BlendedConcept/User/Presentation/Resources/Students/Dashboard.vue"),
 
         //announcement
-        "BlendedConcept/User/Presentation/Resources/Annoucements/Index": import('../../src/BlendedConcept/User/Presentation/Resources/Announcements/Index.vue'),
+        "BlendedConcept/User/Presentation/Resources/Announcements/Index": import('../../src/BlendedConcept/User/Presentation/Resources/Announcements/Index.vue'),
 
 
 

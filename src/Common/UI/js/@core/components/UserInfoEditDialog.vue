@@ -1,5 +1,8 @@
 <script setup>
 const props = defineProps({
+  form :{
+    type : Object
+  },
   userData: {
     type: Object,
     required: false,
@@ -76,6 +79,7 @@ const dialogVisibleUpdate = val => {
               <VTextField
                 type="password"
                 v-model="userData.currentpassword"
+                :error-messages="props?.form?.errors?.currentpassword"
                 label="Current Password"
               />
             </VCol>
@@ -89,6 +93,7 @@ const dialogVisibleUpdate = val => {
               <VTextField
                 type="password"
                 v-model="userData.updatedpassword"
+                :error-messages="props?.form?.errors?.updatedpassword"
                 label="Update Password"
               />
             </VCol>

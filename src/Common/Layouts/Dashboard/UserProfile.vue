@@ -19,11 +19,11 @@ const hanleSubmit = (data) =>
 
  form.post(route('changepassword'),{
     onSuccess:(data)=>{
-    isUserInfoEditDialogVisible = false
+    isUserInfoEditDialogVisible.value = false
     },
     onError:(error)=>
     {
-     isUserInfoEditDialogVisible = true
+     isUserInfoEditDialogVisible.value = true
     }
  })
 }
@@ -144,6 +144,7 @@ const hanleSubmit = (data) =>
     <UserInfoEditDialog
         v-model:isDialogVisible="isUserInfoEditDialogVisible"
         :user-data="user"
+        :form="form"
         @submit="hanleSubmit"
     />
 </template>

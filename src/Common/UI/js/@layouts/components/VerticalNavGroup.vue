@@ -21,7 +21,7 @@
       :value="sitem.title"
       :title="sitem.title"
       @click="goLink(sitem, item)"
-      :variant="isLinkActive(sitem.route_name) ? 'tonal' : ''"
+      :variant="isLinkActive(sitem.route_name) ? 'tonal' : 'text'"
       :hidden="
         !auth?.data?.permissions?.includes(sitem?.access_module) &&
         item?.access_module != 'access_dashboard'

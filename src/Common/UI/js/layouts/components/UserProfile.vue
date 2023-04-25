@@ -8,6 +8,7 @@ const ability = useAppAbility();
 const userData = computed(() => usePage().props.auth);
 
 const logout = () => {
+  localStorage.removeItem("menu_title");
   router.post("/logout");
 };
 </script>

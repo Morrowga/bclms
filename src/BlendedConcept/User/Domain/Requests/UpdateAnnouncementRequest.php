@@ -1,9 +1,10 @@
 <?php
 
 namespace Src\BlendedConcept\User\Domain\Requests;
+
 use Illuminate\Foundation\Http\FormRequest;
 
-class updateUserPasswordRequest  extends FormRequest
+class UpdateAnnouncementRequest  extends FormRequest
 {
     public function authorize()
     {
@@ -13,15 +14,11 @@ class updateUserPasswordRequest  extends FormRequest
     public function rules()
     {
         return [
-            'currentpassword' => [
-
-                'min:8',
+            'title' => [
+                'string',
+                'unique:permissions,name',
                 'required',
             ],
-            'updatedpassword' => [
-                'required',
-                'min:8'
-            ]
         ];
     }
 }

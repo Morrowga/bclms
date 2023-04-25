@@ -225,7 +225,7 @@ let truncatedText = (text) => {
             <VSelect
               v-model="serverPerPage"
               density="compact"
-              :items="[10, 20, 50]"
+              :items="options.perPageDropdown"
             ></VSelect>
           </div>
 

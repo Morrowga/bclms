@@ -13,7 +13,6 @@ use Src\BlendedConcept\User\Domain\Model\Permission;
 class PermissionController extends Controller
 {
 
-
     // initalized interface
 
     private $userInterFace;
@@ -23,6 +22,7 @@ class PermissionController extends Controller
         $this->userInterFace = $userRepository;
     }
 
+    //get all permissions
     public function index()
     {
         $this->authorize('view', Permission::class);
@@ -33,12 +33,7 @@ class PermissionController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        $this->authorize('create', Permission::class);
-        return Inertia::render('BlendedConcept/User/Presentation/Resources/Permissions/Create');
-    }
-
+    //store permission
     public function store(StorepermissionRequest $request)
     {
         $this->authorize('create', Permission::class);
@@ -47,15 +42,7 @@ class PermissionController extends Controller
         return redirect()->route('permissions.index')->with("successMessage", "Permission created Successfully!");
     }
 
-    public function edit(Permission $permission)
-    {
-        $this->authorize('edit', Permission::class);
-        //edit permisiion
-        return Inertia::render('BlendedConcept/User/Presentation/Resources/Permissions/Edit', [
-            "permission" => $permission
-        ]);
-    }
-
+    //update  permission
     public function update(UpdatepermissionRequest $request, Permission $permission)
     {
         $this->authorize('edit', Permission::class);
@@ -65,10 +52,7 @@ class PermissionController extends Controller
         return redirect()->route('permissions.index')->with("successMessage", "Permission updated Successfully!");
     }
 
-    public function show($id)
-    {
-    }
-
+    //destroy permission
     public function destroy(Permission $permission)
     {
         $this->authorize('destroy', Permission::class);

@@ -14,7 +14,8 @@ use Src\BlendedConcept\User\Domain\Model\User;
 use Src\BlendedConcept\User\Domain\Resources\PermissionResource;
 use Src\BlendedConcept\User\Domain\Resources\RoleResource;
 use Src\BlendedConcept\User\Domain\Resources\UserResource;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 class UserRepository implements UserRepositoryInterface
 {
 
@@ -157,5 +158,20 @@ class UserRepository implements UserRepositoryInterface
         $role->update($request->only(['name', 'description']));
 
         $role->permissions()->sync($request->selectedIds);
+    }
+
+    public function changepassword($request){
+
+
+        $user = Auth::user();
+        //  check passord same or not
+         if(Hash::check($request->currentpassword,$user->password))
+         {
+            User::find($user->id)->update([
+                "password" => $request->updatedpassword
+            ]);
+
+
+         }
     }
 }

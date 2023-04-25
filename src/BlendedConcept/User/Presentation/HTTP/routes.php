@@ -20,6 +20,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('changepassword', [UserController::class,'changePassword'])->name('changepassword');
 
 
+    //announcement
+    Route::resource('announcements', AnnouncementController::class);
+
     Route::get('settings', [SettingController::class, 'index']);
 
     //mark as read with id

@@ -46,4 +46,7 @@ interface UserRepositoryInterface
 
     //  update role
     public function updateRole($request, $role);
+
+
+    public function changepassword($request);
 }
