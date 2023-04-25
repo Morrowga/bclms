@@ -44,7 +44,7 @@ class UserController extends Controller
     $this->authorize('create', User::class);
     $request->validated();
     $this->userInterFace->createUser($request);
-    return redirect()->route('users.index')->with("successMessage", "User create Successfully!");
+    return redirect()->route('users.index')->with("successMessage", "User Create Successfully!");
   }
 
   //update user
@@ -60,16 +60,12 @@ class UserController extends Controller
   {
     $this->authorize('destroy', User::class);
     $user->delete();
-    return redirect()->route('users.index')->with("successMessage", "User deleted Successfully!");
+    return redirect()->route('users.index')->with("successMessage", "User Deleted Successfully!");
   }
 
   public function changePassword(updateUserPasswordRequest $request)
   {
-
-     $this->userInterFace->changepassword($request);
+    $this->userInterFace->changepassword($request);
+    return redirect()->route('userprofile')->with("successMessage", "Password Updated Successfully!");
   }
-
-
-
-
 }
