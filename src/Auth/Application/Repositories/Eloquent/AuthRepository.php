@@ -54,9 +54,7 @@ class AuthRepository implements AuthRepositoryInterface
             "password" => $request->password,
         ]);
         //  sync 2 mean this user is register using teacher or parent roles
-        if ($user->roles()->count() > 0) {
-            $user->roles()->sync([2]);
-        }
+        $user->roles()->sync([2]);
 
         //send verify email
         Mail::to($request->email)->send(new VerifyEmail($user));
@@ -72,6 +70,4 @@ class AuthRepository implements AuthRepositoryInterface
         ]);
         return  $user;
     }
-
-
 }
