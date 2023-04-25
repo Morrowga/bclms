@@ -28,6 +28,7 @@ const openmenu = (title) => {
 onMounted(() => {
   let title = localStorage.getItem("menu_title");
   open.value = [title];
+  localStorage.removeItem("menu_title");
 });
 </script>
 <template>
