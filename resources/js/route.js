@@ -7,18 +7,10 @@ const pages ={
         // "BlendedConcept/Organization/Presentation/Resources/Dashboard" : import('../../src/BlendedConcept/Organization/Presentation/Resources/Dashboard.vue'),
         // //user module
         "BlendedConcept/User/Presentation/Resources/Users/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Index.vue'),
-        // "BlendedConcept/User/Presentation/Resources/Users/Create" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Create.vue'),
-        // "BlendedConcept/User/Presentation/Resources/Users/Edit" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Edit.vue'),
-        // "BlendedConcept/User/Presentation/Resources/Users/Show" : import('../../src/BlendedConcept/User/Presentation/Resources/Users/Show.vue'),
-        // //role module
         "BlendedConcept/User/Presentation/Resources/Roles/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Roles/Index.vue'),
-        // "BlendedConcept/User/Presentation/Resources/Roles/Create" : import('../../src/BlendedConcept/User/Presentation/Resources/Roles/Create.vue'),
-        // "BlendedConcept/User/Presentation/Resources/Roles/Edit" : import('../../src/BlendedConcept/User/Presentation/Resources/Roles/Edit.vue'),
 
         // //permission module
         "BlendedConcept/User/Presentation/Resources/Permissions/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Permissions/Index.vue'),
-        // "BlendedConcept/User/Presentation/Resources/Permissions/Create" : import('../../src/BlendedConcept/User/Presentation/Resources/Permissions/Create.vue'),
-        // "BlendedConcept/User/Presentation/Resources/Permissions/Edit" : import('../../src/BlendedConcept/User/Presentation/Resources/Permissions/Edit.vue'),
 
         // //site setting
         // "BlendedConcept/User/Presentation/Resources/Settings/Index" : import('../../src/BlendedConcept/User/Presentation/Resources/Settings/Index.vue'),
@@ -37,6 +29,9 @@ const pages ={
         // "BlendedConcept/User/Presentation/Resources/Teachers/Dashboard" : import("../../src/BlendedConcept/User/Presentation/Resources/Teachers/Dashboard.vue"),
         // // student dashboard
         // "BlendedConcept/User/Presentation/Resources/Students/Dashboard" : import("../../src/BlendedConcept/User/Presentation/Resources/Students/Dashboard.vue"),
+
+        //announcement
+        "BlendedConcept/User/Presentation/Resources/Annoucements/Index": import('../../src/BlendedConcept/User/Presentation/Resources/Announcements/Index.vue'),
 
 
 

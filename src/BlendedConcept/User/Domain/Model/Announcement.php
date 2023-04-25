@@ -4,24 +4,30 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\User\Domain\Model;
 
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 
-class Announcement extends Model implements HasMedia
+class Announcement extends Model
 {
-    use InteractsWithMedia;
+    protected $tables = 'permissions';
 
-    // for images
-    protected $appends = [
-        'image',
+    protected $fillable = [
+        'title',
+        'message',
+        'created_by',
+        'trigger_on',
+        'send_to'
     ];
 
-    protected $guarded = [];
-    public function getImageAttribute()
+    public function scopeFilter($query, $filters)
     {
-        return $this->getMedia('image');
+        $query->when($filters['name'] ?? false, function ($query, $name) {
+            $query->where('title', 'like', '%' . $name . '%');
+        });
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            $query->where('title', 'like', '%' . $search . '%');
+        });
     }
 }

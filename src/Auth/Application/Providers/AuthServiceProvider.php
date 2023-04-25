@@ -7,6 +7,7 @@ use Src\Auth\Application\Repositories\AuthRepository;
 use Src\Auth\Domain\AuthInterface;
 use Src\BlendedConcept\User\Domain\Policies\UserPolicy;
 use Gate;
+use Src\BlendedConcept\User\Domain\Model\Announcement;
 use Src\BlendedConcept\User\Domain\Policies\PermissionPolicy;
 use Src\BlendedConcept\User\Domain\Policies\RolePolicy;
 
@@ -31,7 +32,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        $policies = [UserPolicy::class, PermissionPolicy::class, RolePolicy::class];
+        $policies = [UserPolicy::class, PermissionPolicy::class, RolePolicy::class, Announcement::class];
         foreach ($policies as $policy) {
             Gate::define('view', [$policy, 'view']);
             Gate::define('create', [$policy, 'create']);
