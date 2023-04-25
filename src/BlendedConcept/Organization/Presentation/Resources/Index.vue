@@ -1,10 +1,10 @@
 <template>
   <!-- for superadmin dashboard check -->
   <AdminLayout :user="user" :user_role="current_user_role">
-    <div v-if="current_user_role == 'superadmin'">
+    <div v-if="current_user_role == 'BC Super Admin'">
       <SuperAdminDashboard> </SuperAdminDashboard>
     </div>
-    <div v-else-if="current_user_role == 'teacher/parent'">
+    <div v-else-if="current_user_role == 'BC Subscriber'">
       <TeacherOrParentDashboard> </TeacherOrParentDashboard>
     </div>
     <div v-else>

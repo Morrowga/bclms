@@ -85,7 +85,7 @@ let goLink = (item) => {
           :hidden="!auth?.data?.permissions?.includes(sitem?.access_module)"
         >
           <template v-slot:prepend>
-            <v-icon :icon="sitem.icon.icon"></v-icon>
+            <v-icon icon="mdi-circle-small"></v-icon>
           </template>
           <v-list-item-title>{{ sitem.title }}</v-list-item-title>
         </v-list-item>

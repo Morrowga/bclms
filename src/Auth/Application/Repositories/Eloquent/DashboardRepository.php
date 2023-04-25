@@ -12,16 +12,11 @@ class DashboardRepository implements DashboardRepositoryInterface
     {
         $roles = auth()->user()->roles->first()->name;
 
-        if ($roles == 'superadmin') {
+        if ($roles == 'BC Super Admin') {
             $users = User::with('roles')->orderBy('created_at', 'desc')->take(3)->get();
-        }
-
-        else if ($roles = 'teacher/parent')
-        {
-           $users = Student::all();
-        }
-        else
-        {
+        } else if ($roles = 'BC Subscriber') {
+            $users = Student::all();
+        } else {
             $users = '';
         }
 

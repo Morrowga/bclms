@@ -233,7 +233,7 @@ let loadItems = () => {
                   density="compact"
                   icon="mdi-trash"
                   class="ml-2 bg-error"
-                  v-if="props.row.roles[0].name !== 'superadmin'"
+                  v-if="props.row.roles[0].name !== 'BC Super Admin'"
                   @click="deleteUser(props.row.id)"
                 >
                 </VBtn>

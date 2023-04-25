@@ -19,6 +19,7 @@
       v-for="(sitem, sindex) in item.children"
       :key="sindex"
       :value="sitem.title"
+      prepend-icon="mdi-circle-small"
       :title="sitem.title"
       @click="goLink(sitem, item)"
       :variant="isLinkActive(sitem.route_name) ? 'tonal' : 'text'"
@@ -54,9 +55,12 @@ const goLink = (item, pitem) => {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .active-list {
   background-color: #ededff !important;
   color: #666cff !important;
+}
+.v-list-group--prepend {
+  --parent-padding: var(--indent-padding) !important;
 }
 </style>
