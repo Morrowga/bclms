@@ -12,6 +12,7 @@ import { toastAlert } from "@Composables/useToastAlert";
 import Swal from "sweetalert2";
 
 let props = defineProps(["users", "roles_name", "flash", "auth"]);
+let flash = computed(() => usePage().props.flash);
 let users = computed(() => usePage().props.auth.data.users);
 let currentPermission = ref();
 let serverPage = ref(props.users.meta.current_page ?? 1);
@@ -29,10 +30,10 @@ const deleteUser = (id) => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      form.delete(`users/${id}`, {
+      router.delete(`users/${id}`, {
         onSuccess: () => {
           toastAlert({
-            title: props.flash?.successMessage,
+            title: flash?.value.successMessage,
           });
         },
       });
@@ -191,7 +192,7 @@ let loadItems = () => {
               density="compact"
             />
             <!-- 👉 Add User button -->
-            <Create :roles="roles_name" :flash="props.flash" />
+            <Create :roles="roles_name" :flash="flash" />
           </div>
         </VCardText>
 
@@ -226,11 +227,7 @@ let loadItems = () => {
             </div>
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
-                <Edit
-                  :user="props.row"
-                  :roles="roles_name"
-                  :flash="props.flash"
-                />
+                <Edit :user="props.row" :roles="roles_name" :flash="flash" />
 
                 <VBtn
                   density="compact"

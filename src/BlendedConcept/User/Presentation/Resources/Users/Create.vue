@@ -5,9 +5,10 @@ import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
+import { emailValidator, requiredValidator } from "@validators";
 
 // get roles
-defineProps(["roles", "flash"]);
+let props = defineProps(["roles", "flash"]);
 const isDialogVisible = ref(false);
 // check passwor visible
 const isPasswordVisible = ref(false);
@@ -26,7 +27,7 @@ let handleSubmit = () => {
   form.post(route("users.store"), {
     onSuccess: () => {
       toastAlert({
-        title: flash?.successMessage,
+        title: props.flash?.successMessage,
       });
       isDialogVisible.value = false;
     },

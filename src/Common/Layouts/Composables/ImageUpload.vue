@@ -12,7 +12,11 @@
         />
         <div class="img-area" data-img="">
           <img
-            :src="old_img ? 'old_img': 'https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg'"
+            :src="
+              old_img
+                ? old_img
+                : 'https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg'
+            "
             class="shadow-lg rounded max-w-full h-auto align-middle border-none"
           />
           <h3 v-if="!hasImage">Upload Image</h3>
