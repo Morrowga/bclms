@@ -54,6 +54,7 @@
     <script src="<?= phpb_theme_asset('materialui/assets/vendor/js/mega-dropdown.js')?>"></script>
     <script src="<?= phpb_theme_asset('materialui/assets/js/ui-navbar.js')?>"></script>
     <script src="<?= phpb_theme_asset('materialui/assets/js/tables-datatables-advanced.js')?>"></script>
+    <!-- <script src="<?= phpb_theme_asset('materialui/js/ckeditor.js')?>"></script> -->
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
