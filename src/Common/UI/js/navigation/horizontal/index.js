@@ -14,7 +14,9 @@ export default [
       icon: { icon: 'mdi-home-city' },
       route_name:'organizations',
       access_module : "access_organization",
-      children: []
+      children: [
+        { title: 'Organizations', url: '/organizations',icon: { icon: 'mdi-account-group-outline ' }, route_name:'organizations', access_module : "access_organization",},
+      ]
     },
     {
       title: 'User Managements',
@@ -33,7 +35,9 @@ export default [
       icon: { icon: 'mdi-youtube-subscription' },
       route_name:'subscribers',
       access_module : "access_subscriber",
-      children: []
+      children: [
+        { title: 'Plans', url: '/plans',icon: { icon: 'mdi-account-group-outline ' }, route_name:'plans', access_module : "access_plan",},
+      ]
     },
     {
       title: 'Libraries',

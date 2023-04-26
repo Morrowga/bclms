@@ -2,6 +2,7 @@
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { Link } from "@inertiajs/inertia-vue3";
 import { themeConfig } from "@themeConfig";
+import Footer from "@/layouts/components/Footer.vue";
 import navItems from "@/navigation/horizontal";
 import TheCustomizer from "@core/components/TheCustomizer.vue";
 import VerticalNavLink from "@layouts/components/VerticalNavLink.vue";
@@ -58,7 +59,7 @@ onMounted(() => {
       </v-list>
     </VNavigation-drawer>
 
-    <v-app-bar>
+    <v-app-bar style="position: fixed">
       <v-app-bar-nav-icon
         variant="text"
         @click="toggle"
@@ -70,13 +71,12 @@ onMounted(() => {
       <NavBarNotifications class="me-3" />
       <UserProfile class="pe-15" />
     </v-app-bar>
-
+    <!-- 👉 Customizer -->
+    <TheCustomizer />
     <v-main style="min-height: 100vh">
       <v-container>
         <slot />
       </v-container>
     </v-main>
-    <!-- 👉 Customizer -->
-    <TheCustomizer />
   </v-layout>
 </template>

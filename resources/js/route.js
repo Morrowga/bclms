@@ -1,8 +1,15 @@
 const pages ={
     //portal
     "BlendedConcept/User/Presentation/Resources/Portal/Portal" :import('../../src/BlendedConcept/User/Presentation/Resources/Portal/Portal.vue'),
+
         // //organization
         "BlendedConcept/Organization/Presentation/Resources/Index" : import('../../src/BlendedConcept/Organization/Presentation/Resources/Index.vue'),
+
+        "BlendedConcept/Organization/Presentation/Resources/Organizations/Index" : import('../../src/BlendedConcept/Organization/Presentation/Resources/Organizations/Index.vue'),
+
+        // plans
+        "BlendedConcept/Organization/Presentation/Resources/Plans/Index" : import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Index.vue'),
+
         // //org
         // "BlendedConcept/Organization/Presentation/Resources/Dashboard" : import('../../src/BlendedConcept/Organization/Presentation/Resources/Dashboard.vue'),
         // //user module

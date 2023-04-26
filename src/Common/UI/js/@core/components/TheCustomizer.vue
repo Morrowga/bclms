@@ -76,6 +76,7 @@ const headerValues = computed(() => {
     <VNavigationDrawer
       v-model="isNavDrawerOpen"
       temporary
+      style="position: fixed"
       location="end"
       width="400"
       :scrim="false"

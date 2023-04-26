@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Organization\Domain\Model;
 
+use Hash;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Organization implements HasMedia
+class Plan implements HasMedia
 {
     use HasFactory, Notifiable, InteractsWithMedia;
 
@@ -22,24 +22,17 @@ class Organization implements HasMedia
 
     protected $fillable = [
         'id',
-        'plan_id',
+        'stripe_id',
         'name',
         'description',
-        'type',
-        'contact_person',
-        'contact_email',
-        'contact_number'
+        'price',
+        'payment_period',
+        'allocated_storage',
+        'teacher_license',
+        'student_license',
+        'is_hidden'
     ];
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
     public function getImageAttribute()
     {
         return $this->getMedia('image');
