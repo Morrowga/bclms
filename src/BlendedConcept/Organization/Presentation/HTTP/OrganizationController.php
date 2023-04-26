@@ -16,6 +16,8 @@ class OrganizationController
     public function index()
     {
         $organizations = $this->organizationInterface->getOrganizations();
-        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Organizations/Index');
+        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Organizations/Index', [
+            'organizations' => $organizations['paginate_organizations']
+        ]);
     }
 }

@@ -9,8 +9,9 @@ use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Plan implements HasMedia
+class Plan extends Model implements HasMedia
 {
     use HasFactory, Notifiable, InteractsWithMedia;
 

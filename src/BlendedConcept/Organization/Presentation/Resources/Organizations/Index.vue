@@ -11,14 +11,13 @@ import { computed, defineProps } from "vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import Swal from "sweetalert2";
 
-let props = defineProps(["users", "roles_name", "flash", "auth"]);
+let props = defineProps(["organizations", "flash", "auth"]);
 let flash = computed(() => usePage().props.flash);
-let users = computed(() => usePage().props.auth.data.users);
-let currentPermission = ref();
-let serverPage = ref(props.users.meta.current_page ?? 1);
+let currentOrganization = ref();
+let serverPage = ref(props.organizations.meta.current_page ?? 1);
 let serverPerPage = ref(10);
 
-// ## delete user
+// ## delete organizations
 const deleteUser = (id) => {
   Swal.fire({
     title: "Are you sure?",

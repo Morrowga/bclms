@@ -8,8 +8,13 @@ use Src\BlendedConcept\Organization\Domain\Resources\OrganizationResource;
 
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
-    public function getOrganizations()
+    public function getOrganizations($filters = [])
     {
-        // $organizations = OrganizationResource::collection(Organization::get());
+        $paginate_organizations = OrganizationResource::collection(Organization::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $default_organizations = Organization::get();
+        return [
+            "paginate_organizations" => $paginate_organizations,
+            "default_organizations" => $default_organizations
+        ];
     }
 }
