@@ -15,8 +15,8 @@ class PermissionRoleTableSeeder extends Seeder
     public function run()
     {
         $datas = [
-            ['name' => 'superadmin','guard_name' => 'web'],
-            ['name' => "teacher/parent", "guard_name" => "web"],
+            ['name' => 'BC Super Admin', 'guard_name' => 'web'],
+            ['name' => "BC Subscriber", "guard_name" => "web"],
         ];
         foreach ($datas as $data) {
             $role = Role::create($data);

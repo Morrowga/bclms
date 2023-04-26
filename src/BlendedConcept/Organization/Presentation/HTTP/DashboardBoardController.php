@@ -22,9 +22,9 @@ class DashboardBoardController
 
         $user_role = auth()->user()->roles()->first()->name;
         $current_user_role = "";
-        if ($user_role == 'superadmin') {
+        if ($user_role == 'BC Super Admin') {
             $current_user_role = $user_role;
-        } elseif ($user_role == 'staff') {
+        } elseif ($user_role == 'BC Staff') {
             $current_user_role = $user_role;
         } else {
             $current_user_role = $user_role;
@@ -34,12 +34,12 @@ class DashboardBoardController
 
 
 
-        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Index',compact('current_user_role','user'));
+        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Index', compact('current_user_role', 'user'));
     }
 
 
     public function userProfile()
     {
-       return Inertia::render('Common/Layouts/Dashboard/UserProfile');
+        return Inertia::render('Common/Layouts/Dashboard/UserProfile');
     }
 }
