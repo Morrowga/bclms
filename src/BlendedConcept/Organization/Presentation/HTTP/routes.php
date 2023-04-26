@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Src\BlendedConcept\Organization\Presentation\HTTP\DashboardBoardController;
+use Src\BlendedConcept\Organization\Presentation\HTTP\OrganizationController;
+use Src\BlendedConcept\Organization\Presentation\HTTP\PlanController;
 
 Route::get('/', function () {
     return redirect('/bc/index');
@@ -16,8 +18,6 @@ Route::group(['middleware' => ['auth']], function () {
      * Dashboard view organization,superadmin,teacher
      */
     Route::get('/home', [DashboardBoardController::class, 'superAdminDashboard'])->name('dashboard');
-
-    Route::get('/organization', function () {
-        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Dashboard');
-    })->name('dashboard.organization');
+    Route::resource('organizations', OrganizationController::class);
+    Route::resource('plans', PlanController::class);
 });

@@ -147,6 +147,22 @@ class PermissionTableSeeder extends Seeder
                 "name" => "access_pagebuilder",
                 "guard_name" => "web"
             ],
+            [
+                "name" => "access_plan",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "create_plan",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "edit_plan",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "delete_plan",
+                "guard_name" => "web"
+            ],
 
         ];
 
