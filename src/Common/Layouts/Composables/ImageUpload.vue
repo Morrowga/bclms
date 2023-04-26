@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-wrap justify-center">
-    <div class="w-6/12 sm:w-4/12 px-4 dropzone">
+    <div class="w-6/12 sm:w-4/12 pa-0 pb-4 dropzone">
       <div @click="SelectImage">
         <input
           type="file"
@@ -17,7 +17,7 @@
                 ? old_img
                 : 'https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg'
             "
-            class="shadow-lg rounded max-w-full h-auto align-middle border-none"
+            class=""
           />
           <h3 v-if="!hasImage">Upload Image</h3>
           <p v-if="!hasImage">
@@ -26,15 +26,18 @@
           </p>
         </div>
       </div>
-      <button
-        type="button"
-        v-if="hasImage"
-        @click="handleRemoveImage"
-        class="flex items-center justify-center select-image"
-      >
-        <i class="pi pi-delete-left pt-1"></i>
-        Remove Image
-      </button>
+      <div class="d-flex justify-end w-100">
+        <VBtn
+          size="small"
+          variant="outlined"
+          color="error"
+          v-if="hasImage"
+          @click="handleRemoveImage"
+        >
+          <i class="pi pi-delete-left pt-1"></i>
+          Remove Image
+        </VBtn>
+      </div>
     </div>
   </div>
 </template>
@@ -179,5 +182,10 @@ function handleRemoveImage() {
 }
 .select-image:hover {
   background: rgb(205, 11, 11) !important;
+}
+.img-area img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 </style>
