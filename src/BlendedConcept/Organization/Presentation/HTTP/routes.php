@@ -18,6 +18,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [DashboardBoardController::class, 'superAdminDashboard'])->name('dashboard');
 
     Route::get('/organization', function () {
-        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Dashboard');
+        return "hello world";
     })->name('dashboard.organization');
 });
