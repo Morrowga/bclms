@@ -48,7 +48,15 @@ let handleSubmit = () => {
     </template>
 
     <!-- Dialog Content -->
-    <VCard title="Organization Details">
+    <VCard>
+      <VCardTitle>
+        <span class="text-xl">Organization Details</span>
+      </VCardTitle>
+      <VCardSubtitle>
+        <span class="text-xs"
+          >Updating user details will receive a privacy audit.</span
+        >
+      </VCardSubtitle>
       <form @submit.prevent="handleSubmit">
         <DialogCloseBtn
           variant="text"
@@ -58,6 +66,7 @@ let handleSubmit = () => {
         <VCardText>
           <VRow>
             <VCol cols="6">
+              <!-- Organization Details -->
               <VRow>
                 <VCol cols="12">
                   <VTextField
@@ -96,14 +105,12 @@ let handleSubmit = () => {
                   />
                 </VCol>
               </VRow>
-            </VCol>
-            <VCol cols="6">
-              <ImageUpload v-model="form.image" />
-            </VCol>
-          </VRow>
-          <VRow>
-            <VCol cols="6">
+              <!--  -->
+              <!-- Organization Plan -->
               <VRow>
+                <VCol cols="12">
+                  <span class="text-xl">Organization Plan</span>
+                </VCol>
                 <VCol cols="6">
                   <VTextField
                     label="User License"
@@ -150,15 +157,28 @@ let handleSubmit = () => {
                   />
                 </VCol>
               </VRow>
+              <!--  -->
             </VCol>
-            <VCol cols="6"> </VCol>
+            <!-- Image Upload -->
+            <VCol cols="6">
+              <ImageUpload v-model="form.image" />
+            </VCol>
+            <!--  -->
+          </VRow>
+          <VRow>
+            <VCol cols="7" class="d-flex justify-end gap-2">
+              <VBtn type="submit" color="primary" size="small"> Submit </VBtn>
+              <VBtn
+                color="secondary"
+                variant="outlined"
+                @click="isDialogVisible = false"
+                size="small"
+              >
+                Cancel
+              </VBtn>
+            </VCol>
           </VRow>
         </VCardText>
-        <VCardActions>
-          <VSpacer />
-          <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
-          <VBtn type="submit" color="success"> Save </VBtn>
-        </VCardActions>
       </form>
     </VCard>
   </VDialog>
