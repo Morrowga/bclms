@@ -44,7 +44,7 @@ const deleteUser = (id) => {
 
 let columns = [
   {
-    label: "Name",
+    label: "NAME",
     field: "name",
     sortable: false,
     // filterOptions: {
@@ -56,7 +56,7 @@ let columns = [
     // },
   },
   {
-    label: "email",
+    label: "EMAIL",
     field: "email",
     sortable: false,
     // filterOptions: {
@@ -68,7 +68,7 @@ let columns = [
     // },
   },
   {
-    label: "Roles",
+    label: "ROLES",
     field: "roles",
     sortable: false,
     // filterOptions: {
@@ -80,12 +80,12 @@ let columns = [
     // },
   },
   {
-    label: "Register At",
+    label: "REGISTER AT",
     field: "created_at",
     sortable: false,
   },
   {
-    label: "Action",
+    label: "ACTION",
     field: "action",
     sortable: false,
   },
