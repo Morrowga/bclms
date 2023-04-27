@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 let props = defineProps(["users", "roles_name", "flash", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let users = computed(() => usePage().props.auth.data.users);
+let permissions = computed(() => usePage().props.auth.data.permissions);
 let currentPermission = ref();
 let serverPage = ref(props.users.meta.current_page ?? 1);
 let serverPerPage = ref(10);
@@ -183,7 +184,11 @@ let loadItems = () => {
 
           <div class="app-user-search-filter d-flex align-center justify-end">
             <!-- 👉 Add User button -->
-            <Create :roles="roles_name" :flash="flash" />
+            <Create
+              :roles="roles_name"
+              :flash="flash"
+              v-if="permissions.includes('create_user')"
+            />
           </div>
         </VCardText>
 
@@ -218,18 +223,24 @@ let loadItems = () => {
             </div>
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
-                <Edit :user="props.row" :roles="roles_name" :flash="flash" />
-
-                <VBtn
-                  density="compact"
-                  icon="mdi-trash"
-                  class="ml-2"
-                  color="secondary"
-                  variant="text"
-                  v-if="props.row.roles[0].name !== 'BC Super Admin'"
-                  @click="deleteUser(props.row.id)"
-                >
-                </VBtn>
+                <Edit
+                  :user="props.row"
+                  :roles="roles_name"
+                  :flash="flash"
+                  v-if="permissions.includes('edit_user')"
+                />
+                <div v-if="permissions.includes('delete_user')">
+                  <VBtn
+                    density="compact"
+                    icon="mdi-trash"
+                    class="ml-2"
+                    color="secondary"
+                    variant="text"
+                    v-if="props.row.roles[0].name !== 'BC Super Admin'"
+                    @click="deleteUser(props.row.id)"
+                  >
+                  </VBtn>
+                </div>
               </div>
             </div>
           </template>

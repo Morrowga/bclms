@@ -16,7 +16,7 @@ let flash = computed(() => usePage().props.flash);
 
 let serverPage = ref(props.organizations.meta.current_page ?? 1);
 let serverPerPage = ref(10);
-
+let permissions = computed(() => usePage().props.auth.data.permissions);
 // ## delete organization
 const deleteOrganization = (id) => {
   Swal.fire({
@@ -162,7 +162,10 @@ const selectionChanged = (value) => {};
               density="compact"
             />
             <!-- 👉 Add User button -->
-            <Create :flash="flash" />
+            <Create
+              :flash="flash"
+              v-if="permissions.includes('create_organization')"
+            />
           </div>
         </VCardText>
         <VDivider />
@@ -189,8 +192,13 @@ const selectionChanged = (value) => {};
             </div>
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
-                <Edit :organization="props.row" :flash="flash" />
+                <Edit
+                  :organization="props.row"
+                  :flash="flash"
+                  v-if="permissions.includes('edit_organization')"
+                />
                 <VBtn
+                  v-if="permissions.includes('delete_organization')"
                   density="compact"
                   icon="mdi-trash"
                   class="ml-2"

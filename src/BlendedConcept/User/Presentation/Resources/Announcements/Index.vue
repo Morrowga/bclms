@@ -19,6 +19,7 @@ let currentAnnouncement = ref();
 const isAddNewAnnouncementDrawerVisible = ref(false);
 const isEditAnnouncementDrawerVisible = ref(false);
 let serverPage = ref(props.announcements.meta.current_page ?? 1);
+let permissions = computed(() => usePage().props.auth.data.permissions);
 let serverPerPage = ref(10);
 //## end variable section
 let serverError = ref({
@@ -235,7 +236,10 @@ let truncatedText = (text) => {
 
           <div class="app-user-search-filter d-flex justify-end align-center">
             <!-- 👉 Add Announcement button -->
-            <VBtn @click="isAddNewAnnouncementDrawerVisible = true">
+            <VBtn
+              @click="isAddNewAnnouncementDrawerVisible = true"
+              v-if="permissions.includes('create_announcement')"
+            >
               Add Announcement
             </VBtn>
           </div>
@@ -268,6 +272,7 @@ let truncatedText = (text) => {
                   class="ml-2"
                   color="secondary"
                   variant="text"
+                  v-if="permissions.includes('edit_announcement')"
                   @click="openEditModel(props.row)"
                 >
                 </VBtn>
@@ -278,6 +283,7 @@ let truncatedText = (text) => {
                   class="ml-2"
                   color="secondary"
                   variant="text"
+                  v-if="permissions.includes('delete_announcement')"
                   @click="deleteAnnouncement(props.row.id)"
                 >
                 </VBtn>
