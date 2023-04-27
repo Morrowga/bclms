@@ -76,9 +76,9 @@ const selectionChanged = (data) => {
 
         <VSpacer />
 
-        <div class="app-user-search-filter d-flex align-center gap-6">
+        <div class="app-user-search-filter d-flex justify-end align-center gap-6">
           <!-- 👉 Search  -->
-          <VTextField placeholder="Search Role" density="compact" />
+          <!-- <VTextField placeholder="Search Role" density="compact" /> -->
 
           <!-- 👉 View More button -->
           <v-btn>View More</v-btn>
@@ -175,7 +175,7 @@ const selectionChanged = (data) => {
   font-size: 10pt !important;
 }
 .vgt-table th.vgt-checkbox-col {
-  background: #fff !important;
+  background: rgb(var(--v-theme-surface)) !important;
   padding: 15px;
   border-right: none;
   border-bottom: 1px solid #dcdfe6;
