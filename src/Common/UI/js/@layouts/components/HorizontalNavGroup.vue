@@ -82,7 +82,12 @@ let goLink = (item) => {
           :value="sitem"
           @click="goLink(sitem)"
           :variant="isLinkActive(sitem.route_name) ? 'tonal' : 'text'"
-          :hidden="!auth?.data?.permissions?.includes(sitem?.access_module)"
+          :hidden="
+            !auth?.data?.permissions?.includes(sitem?.access_module) &&
+            item?.access_module != 'access_dashboard'
+              ? true
+              : false
+          "
         >
           <template v-slot:prepend>
             <v-icon icon="mdi-circle-small"></v-icon>
