@@ -7,6 +7,11 @@ import avatar4 from "@images/avatars/avatar-4.png";
 import LatestModifiedOrganizations from "./LatestModifiedOrganizations.vue";
 import TotalUsers from "./TotalUsers.vue";
 const avatars = [avatar1, avatar2, avatar3, avatar4];
+import { defineProps } from "vue";
+
+let users = defineProps(['users']);
+
+console.log(users,"hello world");
 </script>
 
 <template>

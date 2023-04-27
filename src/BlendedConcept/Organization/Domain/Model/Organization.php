@@ -68,4 +68,6 @@ class Organization extends Model implements HasMedia
 
         return $user_role->permissions->where('name', $permission)->first() ? true : false;
     }
+
+
 }

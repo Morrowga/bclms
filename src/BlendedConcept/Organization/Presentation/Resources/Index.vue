@@ -2,7 +2,7 @@
   <!-- for superadmin dashboard check -->
   <AdminLayout :user="user" :user_role="current_user_role">
     <div v-if="current_user_role == 'BC Super Admin'">
-      <SuperAdminDashboard> </SuperAdminDashboard>
+      <SuperAdminDashboard :users="props.users"> </SuperAdminDashboard>
     </div>
     <div v-else-if="current_user_role == 'BC Subscriber'">
       <TeacherOrParentDashboard> </TeacherOrParentDashboard>
@@ -23,5 +23,5 @@ import TeacherOrParentDashboard from "@Layouts/Dashboard/TeacherOrParentDashboar
 import { defineProps } from "vue";
 
 //## variable section
-let props = defineProps(["current_user_role",'user']);
+let props = defineProps(["current_user_role",'user','users']);
 </script>

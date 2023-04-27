@@ -100,7 +100,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
     {
         $role = auth()->user()->roles[0]->id;
         $user_role = Role::find($role);
-
         return $user_role->permissions->where('name', $permission)->first() ? true : false;
     }
 

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Src\Auth\Domain\Repositories\DashboardRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 
+use function PHPUnit\Framework\returnValueMap;
 
 class DashboardBoardController
 {
@@ -20,9 +21,11 @@ class DashboardBoardController
     }
     public function superAdminDashboard()
     {
-        // $users =  $this->dashboardInertface->getUsers();
+
 
         $user_role = auth()->user()->roles()->first()->name;
+        $filters = request()->only(['name', 'email', 'role', 'search', 'perPage', 'roles']);
+        $users = $this->userRepositoryInterface->getUsers($filters) ?? [];
         $current_user_role = "";
         if ($user_role == 'BC Super Admin') {
             $current_user_role = $user_role;
@@ -35,9 +38,7 @@ class DashboardBoardController
         $user = Auth::user();
 
 
-
-
-        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Index', compact('current_user_role', 'user'));
+        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Index', compact('current_user_role', 'user','users'));
     }
 
 

@@ -21,6 +21,7 @@ class OrganizationController extends Controller
     {
 
         $this->authorize('view', Organization::class);
+
         $organizations = $this->organizationInterface->getOrganizations();
         return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Organizations/Index', [
             'organizations' => $organizations['paginate_organizations']
