@@ -7,8 +7,9 @@ use Src\BlendedConcept\Organization\Domain\Model\Organization;
 use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\Organization\Domain\Requests\StoreOrganizationRequest;
 use Src\BlendedConcept\Organization\Domain\Requests\UpdateOrganizationRequest;
+use Src\Common\Infrastructure\Laravel\Controller;
 
-class OrganizationController
+class OrganizationController extends Controller
 {
     private $organizationInterface;
     public function __construct(OrganizationRepositoryInterface $organizationInterface)

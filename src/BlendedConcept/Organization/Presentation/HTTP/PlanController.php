@@ -16,6 +16,7 @@ class PlanController
 
     public function index()
     {
+
         $plans = $this->planInterface->getPlans();
         return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Plans/Index');
     }

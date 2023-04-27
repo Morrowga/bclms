@@ -38,6 +38,7 @@ class RoleController extends Controller
   //store role
   public function store(StoreRoleRequest $request)
   {
+    dd($this);
     $this->authorize('create', Role::class);
     $request->validated();
     $this->userInterFace->createRole($request);
