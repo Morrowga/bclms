@@ -34,7 +34,7 @@ class SuperAdminSeeder extends Seeder
 
 
         $user = User::create($data);
-        $permission = Permission::pluck('id');
+        $permission = Permission::whereNotIn('name', ['create_organization', 'edit_organization', 'delete_organization'])->pluck('id');
         $role = Role::find(1);
         $role->permissions()->sync($permission);
         $user->roles()->sync(['1']);

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Src\BlendedConcept\User\Domain\Model\Permission;
 use Src\BlendedConcept\User\Domain\Model\Role;
 
 class PermissionRoleTableSeeder extends Seeder
@@ -22,5 +23,9 @@ class PermissionRoleTableSeeder extends Seeder
             $role = Role::create($data);
             $role->permissions()->sync([25, 26, 27, 28, 29]);
         }
+
+        $staffPermission = Permission::pluck('id');
+        $role = Role::create(["name" => "BC Staff", "guard_name" => "web"]);
+        $role->permissions()->sync($staffPermission);
     }
 }

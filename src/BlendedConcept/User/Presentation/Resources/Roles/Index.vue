@@ -194,7 +194,11 @@ let truncatedText = (text) => {
 
           <div class="app-user-search-filter d-flex align-center justify-end">
             <!-- 👉 Add permission button -->
-            <Create :permissions="props.permissions" :flash="flash" />
+            <Create
+              :permissions="props.permissions"
+              :flash="flash"
+              v-if="permissions.includes('create_organization')"
+            />
           </div>
         </VCardText>
 
@@ -240,6 +244,7 @@ let truncatedText = (text) => {
                   :permissions="props.permissions"
                   :role="dataProps.row"
                   :flash="flash"
+                  v-if="permissions.includes('edit_role')"
                 />
                 <VBtn
                   density="compact"
@@ -247,6 +252,7 @@ let truncatedText = (text) => {
                   class="ml-2"
                   color="secondary"
                   variant="text"
+                  v-if="permissions.includes('delete_role')"
                   @click="deleteRole(dataProps.row.id)"
                 >
                 </VBtn>
