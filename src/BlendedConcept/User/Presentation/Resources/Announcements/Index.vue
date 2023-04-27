@@ -103,7 +103,7 @@ const openEditModel = (announcement) => {
 //start datatable section
 let columns = [
   {
-    label: "Title",
+    label: "TITLE",
     field: "title",
     sortable: false,
     // filterOptions: {
@@ -115,12 +115,12 @@ let columns = [
     // },
   },
   {
-    label: "Message",
+    label: "MESSAGE",
     field: "message",
     sortable: false,
   },
   {
-    label: "Action",
+    label: "ACTION",
     field: "action",
     sortable: false,
   },

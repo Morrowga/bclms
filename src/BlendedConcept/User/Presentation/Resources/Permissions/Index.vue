@@ -104,7 +104,7 @@ const openEditModel = (permission) => {
 //start datatable section
 let columns = [
   {
-    label: "Permission Name",
+    label: "PERMISSION NAME",
     field: "name",
     sortable: false,
     // filterOptions: {
@@ -116,12 +116,12 @@ let columns = [
     // },
   },
   {
-    label: "Description",
+    label: "DESCRIPTION",
     field: "description",
     sortable: false,
   },
   {
-    label: "Guard Name",
+    label: "GUARD NAME",
     field: "guard_name",
     sortable: false,
   },
