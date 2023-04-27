@@ -56,11 +56,7 @@ let columns = [
     field: "plan",
     sortable: false,
   },
-  {
-    label: "STATUS",
-    field: "created_at",
-    sortable: false,
-  },
+
   {
     label: "ACTION",
     field: "action",
@@ -142,6 +138,7 @@ let loadItems = () => {
     preserveScroll: true,
   });
 };
+const selectionChanged = (value) => {};
 </script>
 
 <template>
@@ -150,7 +147,9 @@ let loadItems = () => {
       <VCard>
         <VCardText class="d-flex flex-wrap gap-4">
           <!-- 👉 Export button -->
-          <VBtn variant="outlined" color="secondary">Export</VBtn>
+          <VBtn prepend-icon="mdi-export" variant="outlined" color="secondary"
+            >Export</VBtn
+          >
 
           <VSpacer />
 
@@ -173,25 +172,31 @@ let loadItems = () => {
           mode="remote"
           @column-filter="onColumnFilter"
           :totalRows="props.organizations.meta.total"
+          :selected-rows-change="selectionChanged"
           styleClass="vgt-table "
           :pagination-options="options"
           :rows="props.organizations.data"
           :columns="columns"
           :select-options="{
             enabled: true,
+            selectOnCheckboxOnly: true,
           }"
         >
           <template #table-row="props">
             <!-- <span>{{props.row}}</span> -->
+            <div v-if="props.column.field == 'plan'">
+              <span>{{ props.row?.plan?.name }}</span>
+            </div>
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
-                <!-- <Edit :user="props.row" :roles="roles_name" :flash="flash" /> -->
+                <Edit :organization="props.row" :flash="flash" />
                 <VBtn
                   density="compact"
                   icon="mdi-trash"
                   class="ml-2"
+                  color="secondary"
                   variant="text"
-                  @click="deleteUser(props.row.id)"
+                  @click="deleteOrganization(props.row.id)"
                 >
                 </VBtn>
               </div>
@@ -250,6 +255,9 @@ let loadItems = () => {
 .user-data-table table.vgt-table td {
   color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
+// .user-data-table table.vgt-table th {
+//   font-size: 10pt !important;
+// }
 .user-data-table table.vgt-table thead th {
   background: rgb(var(--v-theme-surface)) !important;
   color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));

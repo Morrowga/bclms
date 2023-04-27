@@ -39,7 +39,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -52,17 +52,17 @@ return [
         'media_user' => [
             'driver' => 'local',
             'root' => storage_path('app/public/users'),
-            'url' => env('APP_URL'). '/storage/users',
+            'url' => env('APP_URL') . '/storage/users',
         ],
         'media_organization' => [
             'driver' => 'local',
             'root' => storage_path('app/public/organization'),
-            'url' => env('APP_URL'). '/storage/organization',
+            'url' => env('APP_URL') . '/storage/organization',
         ],
         'media_student' => [
             'driver' => 'local',
             'root' => storage_path('app/public/students'),
-            'url' => env('APP_URL'). '/storage/students',
+            'url' => env('APP_URL') . '/storage/students',
         ],
 
         's3' => [

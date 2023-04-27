@@ -46,6 +46,10 @@ class Organization extends Model implements HasMedia
         return $this->getMedia('image');
     }
 
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {

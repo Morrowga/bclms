@@ -54,7 +54,9 @@ onUpdated(() => {
       <VBtn
         density="compact"
         icon="mdi-pencil"
-        class="ml-2 bg-success"
+        class="ml-2"
+        color="secondary"
+        variant="text"
         v-bind="props"
       >
       </VBtn>

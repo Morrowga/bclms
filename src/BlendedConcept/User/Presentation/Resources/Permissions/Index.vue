@@ -231,26 +231,16 @@ let truncatedText = (text) => {
       <VCard>
         <VCardText class="d-flex flex-wrap gap-4">
           <!-- 👉 Export button -->
-          <div class="d-flex align-center">
-            <span class="me-2">Show</span>
-            <VSelect
-              v-model="serverPerPage"
-              density="compact"
-              :items="options.perPageDropdown"
-            ></VSelect>
-          </div>
-
+          <!-- 👉 Search  -->
+          <VTextField
+            @keyup.enter="searchItems"
+            v-model="serverParams.search"
+            placeholder="Search Permission"
+            density="compact"
+          />
           <VSpacer />
 
-          <div class="app-user-search-filter d-flex align-center gap-6">
-            <!-- 👉 Search  -->
-            <VTextField
-              @keyup.enter="searchItems"
-              v-model="serverParams.search"
-              placeholder="Search Permission"
-              density="compact"
-            />
-
+          <div class="app-user-search-filter d-flex align-center justify-end">
             <!-- 👉 Add Permission button -->
             <!-- <VBtn @click="isAddNewPermissionDrawerVisible = true">
               Add Permission
@@ -283,17 +273,21 @@ let truncatedText = (text) => {
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
                 <!-- <VBtn
+                variant="text"
                   density="compact"
                   icon="mdi-pencil"
-                  class="ml-2 bg-success"
+                  class="ml-2"
+                  color="secondary"
                   @click="openEditModel(props.row)"
                 >
                 </VBtn> -->
 
                 <!-- <VBtn
+                variant="text"
                   density="compact"
                   icon="mdi-trash"
-                  class="ml-2 bg-error"
+                  class="ml-2"
+                  color="secondary"
                   @click="deletePermission(props.row.id)"
                 >
                 </VBtn> -->
@@ -308,15 +302,25 @@ let truncatedText = (text) => {
                   {{ props.permissions.meta.to }} of
                   {{ props.permissions.meta.total }} entries</span
                 >
-                <VPagination
-                  v-model="serverPage"
-                  size="small"
-                  :total-visible="5"
-                  :length="props.permissions.meta.last_page"
-                  @next="onPageChange"
-                  @prev="onPageChange"
-                  @click="onPageChange"
-                />
+                <div>
+                  <div class="d-flex align-center">
+                    <span class="me-2">Show</span>
+                    <VSelect
+                      v-model="serverPerPage"
+                      density="compact"
+                      :items="options.perPageDropdown"
+                    ></VSelect>
+                    <VPagination
+                      v-model="serverPage"
+                      size="small"
+                      :total-visible="5"
+                      :length="props.permissions.meta.last_page"
+                      @next="onPageChange"
+                      @prev="onPageChange"
+                      @click="onPageChange"
+                    />
+                  </div>
+                </div>
               </VCol>
             </VRow>
           </template>

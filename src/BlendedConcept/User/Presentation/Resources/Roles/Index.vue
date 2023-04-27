@@ -183,26 +183,16 @@ let truncatedText = (text) => {
       <VCard>
         <VCardText class="d-flex flex-wrap gap-4">
           <!-- 👉 Export button -->
-          <div class="d-flex align-center">
-            <span class="me-2">Show</span>
-            <VSelect
-              v-model="serverPerPage"
-              density="compact"
-              :items="options.perPageDropdown"
-            ></VSelect>
-          </div>
-
+          <!-- 👉 Search  -->
+          <VTextField
+            @keyup.enter="searchItems"
+            v-model="serverParams.search"
+            placeholder="Search Role"
+            density="compact"
+          />
           <VSpacer />
 
-          <div class="app-user-search-filter d-flex align-center gap-6">
-            <!-- 👉 Search  -->
-            <VTextField
-              @keyup.enter="searchItems"
-              v-model="serverParams.search"
-              placeholder="Search Role"
-              density="compact"
-            />
-
+          <div class="app-user-search-filter d-flex align-center justify-end">
             <!-- 👉 Add permission button -->
             <Create :permissions="props.permissions" :flash="flash" />
           </div>
@@ -254,7 +244,9 @@ let truncatedText = (text) => {
                 <VBtn
                   density="compact"
                   icon="mdi-trash"
-                  class="ml-2 bg-error"
+                  class="ml-2"
+                  color="secondary"
+                  variant="text"
                   @click="deleteRole(dataProps.row.id)"
                 >
                 </VBtn>
@@ -269,15 +261,25 @@ let truncatedText = (text) => {
                   {{ props.roles.meta.to }} of
                   {{ props.roles.meta.total }} entries</span
                 >
-                <VPagination
-                  v-model="serverPage"
-                  size="small"
-                  :total-visible="5"
-                  :length="props.roles.meta.last_page"
-                  @next="onPageChange"
-                  @prev="onPageChange"
-                  @click="onPageChange"
-                />
+                <div>
+                  <div class="d-flex align-center">
+                    <span class="me-2">Show</span>
+                    <VSelect
+                      v-model="serverPerPage"
+                      density="compact"
+                      :items="options.perPageDropdown"
+                    ></VSelect>
+                    <VPagination
+                      v-model="serverPage"
+                      size="small"
+                      :total-visible="5"
+                      :length="props.roles.meta.last_page"
+                      @next="onPageChange"
+                      @prev="onPageChange"
+                      @click="onPageChange"
+                    />
+                  </div>
+                </div>
               </VCol>
             </VRow>
           </template>

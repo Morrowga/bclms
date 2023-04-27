@@ -4,13 +4,12 @@ import AppDateTimePicker from "@core/components/AppDateTimePicker.vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, defineProps } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
 
-// get roles
+const isFormValid = ref(false);
+const refForm = ref();
 const isDialogVisible = ref(false);
-// check passwor visible
-const isPasswordVisible = ref(false);
 let form = useForm({
   name: "",
   contact_person: "",
@@ -19,23 +18,28 @@ let form = useForm({
   price: "00",
   license: "user102",
   storage: "30GB",
-  payment_peroid: "mm",
-  payment_type: "card",
+  payment_period: "mm",
+  // payment_type: "card",
   image: "",
 });
+let props = defineProps(["flash"]);
 
 // submit create form
 let handleSubmit = () => {
-  form.post(route("organizations.store"), {
-    onSuccess: () => {
-      toastAlert({
-        title: props.flash?.successMessage,
+  refForm.value?.validate().then(({ valid }) => {
+    if (valid) {
+      form.post(route("organizations.store"), {
+        onSuccess: () => {
+          toastAlert({
+            title: props.flash?.successMessage,
+          });
+          isDialogVisible.value = false;
+        },
+        onError: (error) => {
+          //   alert("something was wrong");
+        },
       });
-      isDialogVisible.value = false;
-    },
-    onError: (error) => {
-      //   alert("something was wrong");
-    },
+    }
   });
 };
 </script>
@@ -57,7 +61,7 @@ let handleSubmit = () => {
           >Updating user details will receive a privacy audit.</span
         >
       </VCardSubtitle>
-      <form @submit.prevent="handleSubmit">
+      <VForm ref="refForm" v-model="isFormValid" @submit.prevent="handleSubmit">
         <DialogCloseBtn
           variant="text"
           size="small"
@@ -75,6 +79,7 @@ let handleSubmit = () => {
                     v-model="form.name"
                     class="w-100"
                     :error-messages="form?.errors?.name"
+                    :rules="[requiredValidator]"
                   />
                 </VCol>
                 <VCol cols="12">
@@ -118,6 +123,7 @@ let handleSubmit = () => {
                     v-model="form.license"
                     class="w-100"
                     :error-messages="form?.errors?.license"
+                    :rules="[requiredValidator]"
                   />
                 </VCol>
                 <VCol cols="6">
@@ -142,12 +148,12 @@ let handleSubmit = () => {
                   <VTextField
                     label="Payment Period"
                     density="compact"
-                    v-model="form.payment_peroid"
+                    v-model="form.payment_period"
                     class="w-100"
-                    :error-messages="form?.errors?.payment_peroid"
+                    :error-messages="form?.errors?.payment_period"
                   />
                 </VCol>
-                <VCol cols="6">
+                <!-- <VCol cols="6">
                   <VTextField
                     label="Payment Type"
                     density="compact"
@@ -155,7 +161,7 @@ let handleSubmit = () => {
                     class="w-100"
                     :error-messages="form?.errors?.payment_type"
                   />
-                </VCol>
+                </VCol> -->
               </VRow>
               <!--  -->
             </VCol>
@@ -165,6 +171,8 @@ let handleSubmit = () => {
             </VCol>
             <!--  -->
           </VRow>
+
+          <!-- Buttons -->
           <VRow>
             <VCol cols="7" class="d-flex justify-end gap-2">
               <VBtn type="submit" color="primary" size="small"> Submit </VBtn>
@@ -178,8 +186,9 @@ let handleSubmit = () => {
               </VBtn>
             </VCol>
           </VRow>
+          <!--  -->
         </VCardText>
-      </form>
+      </VForm>
     </VCard>
   </VDialog>
 </template>

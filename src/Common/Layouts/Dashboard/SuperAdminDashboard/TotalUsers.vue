@@ -113,7 +113,9 @@ const selectionChanged = (data) => {
       <VCardText class="d-flex flex-wrap gap-4">
         <!-- 👉 Export button -->
         <div class="d-flex align-center">
-          <v-btn variant="outlined" color="secondary">Export</v-btn>
+          <v-btn prepend-icon="mdi-export" variant="outlined" color="secondary"
+            >Export</v-btn
+          >
         </div>
 
         <VSpacer />
