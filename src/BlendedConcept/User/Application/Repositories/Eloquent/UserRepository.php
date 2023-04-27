@@ -16,6 +16,7 @@ use Src\BlendedConcept\User\Domain\Resources\RoleResource;
 use Src\BlendedConcept\User\Domain\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Src\BlendedConcept\Organization\Domain\Model\Organization;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -159,6 +160,13 @@ class UserRepository implements UserRepositoryInterface
         $role->update($request->only(['name', 'description']));
 
         $role->permissions()->sync($request->selectedIds);
+    }
+
+    public function getUserForDashBoard()
+    {
+        $users = User::with('roles')->latest()->take(10)->get();
+        $organizations = Organization::with('plan')->latest()->take(10)->get();
+        return [$users ,$organizations];
     }
 
     public function changepassword($request)

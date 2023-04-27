@@ -6,16 +6,22 @@ import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 
+
+
+let props = defineProps(['organization']);
+
+console.log(props.organization)
+
 //## start datatable section
 let columns = [
   {
     label: "USER",
-    field: "user",
+    field: "name",
     sortable: false,
   },
   {
     label: "EMAIL",
-    field: "email",
+    field: "contact_email",
     sortable: false,
   },
   {
@@ -40,57 +46,7 @@ let columns = [
   },
 ];
 
-let rows = [
-  {
-    user: "Jordan Smith",
-    email: "jordan@mail.com",
-    role: "Admin",
-    plan: "Enterprise",
-    status: "pending",
-  },
-  {
-    user: "John Doe",
-    email: "jogn@mail.com",
-    role: "Editor",
-    plan: "Team",
-    status: "active",
-  },
-  {
-    user: "Jane Smith",
-    email: "jane@mail.com",
-    role: "Author",
-    plan: "Company",
-    status: "pending",
-  },
-  {
-    user: "Jordan Smith",
-    email: "jordan@mail.com",
-    role: "Admin",
-    plan: "Enterprise",
-    status: "pending",
-  },
-  {
-    user: "Jordan Smith",
-    email: "jordan@mail.com",
-    role: "Admin",
-    plan: "Enterprise",
-    status: "pending",
-  },
-  {
-    user: "Jordan Smith",
-    email: "jordan@mail.com",
-    role: "Admin",
-    plan: "Enterprise",
-    status: "inactive",
-  },
-  {
-    user: "Jordan Smith",
-    email: "jordan@mail.com",
-    role: "Admin",
-    plan: "Enterprise",
-    status: "inactive",
-  },
-];
+let rows = props.organization
 
 //## truncatedText
 let truncatedText = (text) => {
@@ -165,24 +121,31 @@ const selectionChanged = (data) => {
             </VListItem>
           </div>
           <div
+            v-if="dataProps.column.field == 'plan'"
+            class="flex flex-nowrap"
+          >
+          {{dataProps.row.plan.name}}
+          </div>
+          <div
+            v-if="dataProps.column.field == 'role'"
+            class="flex flex-nowrap"
+          >
+           <VChip
+              size="small"
+              color="primary"
+              >organization</VChip>
+          </div>
+           <div
             v-if="dataProps.column.field == 'status'"
             class="flex flex-nowrap"
           >
             <VChip
               size="small"
-              v-if="dataProps.row.status == 'pending'"
-              color="warning"
-              >{{ dataProps.row.status }}</VChip
+              color="danger"
+              >
+               pending
+              </VChip
             >
-            <VChip
-              size="small"
-              v-else-if="dataProps.row.status == 'active'"
-              color="success"
-              >{{ dataProps.row.status }}</VChip
-            >
-            <VChip size="small" v-else color="secondary">{{
-              dataProps.row.status
-            }}</VChip>
           </div>
           <div
             v-if="dataProps.column.field == 'action'"

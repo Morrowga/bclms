@@ -1,4 +1,5 @@
 <script setup>
+import { defineProps } from "vue";
 import RoleCard from "@Composables/RoleCard.vue";
 import avatar1 from "@images/avatars/avatar-1.png";
 import avatar2 from "@images/avatars/avatar-2.png";
@@ -7,11 +8,9 @@ import avatar4 from "@images/avatars/avatar-4.png";
 import LatestModifiedOrganizations from "./LatestModifiedOrganizations.vue";
 import TotalUsers from "./TotalUsers.vue";
 const avatars = [avatar1, avatar2, avatar3, avatar4];
-import { defineProps } from "vue";
 
-let users = defineProps(['users']);
+let orgainzations_users = defineProps(['orgainzations_users']);
 
-console.log(users,"hello world");
 </script>
 
 <template>
@@ -52,7 +51,7 @@ console.log(users,"hello world");
       <br />
     </div>
     <br />
-    <LatestModifiedOrganizations />
+    <LatestModifiedOrganizations  :organization="orgainzations_users.orgainzations_users[1]"/>
   </section>
   <br />
   <br />
@@ -68,6 +67,6 @@ console.log(users,"hello world");
       <br />
     </div>
     <br />
-    <TotalUsers />
+    <TotalUsers  :users="orgainzations_users.orgainzations_users[0]"/>
   </section>
 </template>

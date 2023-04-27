@@ -24,8 +24,6 @@ class DashboardBoardController
 
 
         $user_role = auth()->user()->roles()->first()->name;
-        $filters = request()->only(['name', 'email', 'role', 'search', 'perPage', 'roles']);
-        $users = $this->userRepositoryInterface->getUsers($filters) ?? [];
         $current_user_role = "";
         if ($user_role == 'BC Super Admin') {
             $current_user_role = $user_role;
@@ -37,8 +35,9 @@ class DashboardBoardController
 
         $user = Auth::user();
 
+        $orgainzations_users = $this->userRepositoryInterface->getUserForDashBoard();
 
-        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Index', compact('current_user_role', 'user','users'));
+        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Index', compact('current_user_role', 'user','orgainzations_users'));
     }
 
 
