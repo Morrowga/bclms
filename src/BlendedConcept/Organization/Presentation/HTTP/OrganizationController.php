@@ -18,6 +18,8 @@ class OrganizationController
 
     public function index()
     {
+
+        $this->authorize('view', Organization::class);
         $organizations = $this->organizationInterface->getOrganizations();
         return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Organizations/Index', [
             'organizations' => $organizations['paginate_organizations']
@@ -26,6 +28,7 @@ class OrganizationController
 
     public function store(StoreOrganizationRequest $request)
     {
+        $this->authorize('create', Organization::class);
         $request->validated();
         $this->organizationInterface->createOrganization($request);
         return redirect()->route('organizations.index')->with("successMessage", "Organizations Created Successfully!");
@@ -33,12 +36,14 @@ class OrganizationController
 
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
+        $this->authorize('edit', Organization::class);
         $this->organizationInterface->updateOrganization($request, $organization);
 
         return redirect()->route('organizations.index')->with("successMessage", "Organization Updated Successfully!");
     }
     public function destroy(Organization $organization)
     {
+        $this->authorize('destroy', Organization::class);
         $organization->delete();
         return redirect()->route('organizations.index')->with("successMessage", "Organizations Deleted Successfully!");
     }

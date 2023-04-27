@@ -10,6 +10,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Src\BlendedConcept\User\Domain\Model\Role;
 
 class Organization extends Model implements HasMedia
 {
@@ -58,5 +59,13 @@ class Organization extends Model implements HasMedia
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query->where('name', 'like', '%' . $search . '%');
         });
+    }
+
+    public function hasPermission($permission)
+    {
+        $role = auth()->user()->roles[0]->id;
+        $user_role = Role::find($role);
+
+        return $user_role->permissions->where('name', $permission)->first() ? true : false;
     }
 }

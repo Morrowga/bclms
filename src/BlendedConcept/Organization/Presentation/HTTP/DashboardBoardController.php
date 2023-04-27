@@ -11,10 +11,12 @@ use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 class DashboardBoardController
 {
     private $dashboardInertface;
+    private $userRepositoryInterface;
 
-    public function __construct(DashboardRepositoryInterface $dashboardInertface)
+    public function __construct(DashboardRepositoryInterface $dashboardInertface,UserRepositoryInterface $userRepositoryInterface)
     {
         $this->dashboardInertface = $dashboardInertface;
+        $this->userRepositoryInterface = $userRepositoryInterface;
     }
     public function superAdminDashboard()
     {
@@ -31,6 +33,7 @@ class DashboardBoardController
         }
 
         $user = Auth::user();
+
 
 
 
