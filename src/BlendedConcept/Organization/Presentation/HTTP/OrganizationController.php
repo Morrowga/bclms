@@ -18,6 +18,7 @@ class OrganizationController
 
     public function index()
     {
+
         $this->authorize('view', Organization::class);
         $organizations = $this->organizationInterface->getOrganizations();
         return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Organizations/Index', [
