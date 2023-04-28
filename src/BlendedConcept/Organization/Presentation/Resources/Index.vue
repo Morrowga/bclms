@@ -3,19 +3,19 @@
     <AdminLayout :user="user" :user_role="current_user_role">
         <div v-if="current_user_role == 'BC Super Admin'">
             <!-- alert announment box -->
+
             <VAlert
-            prominent
+            v-for="item in notifications"
+            :key="item"
             variant="tonal"
-            type="error"
+            :type="item.type"
             v-model="isAlertVisible"
             closable
             close-label="Close Alert"
             >
                 <template #text>
-                   <div class="d-flex flex-column">
-                    <p>Error</p>
-                    <p>Error Message</p>
-                   </div>
+                    <p style="font-size:24px:">Success</p>
+                    <p>{{item.data.message}}</p>
                 </template>
             </VAlert>
             <!-- end announment  box-->
@@ -47,8 +47,9 @@ let props = defineProps(["current_user_role", "user", "orgainzations_users"]);
 const isAlertVisible = ref(true)
 
 let notifications = computed(() => usePage().props.notifications?.data);
+console.log(notifications.value,"noti")
 let unread_notifications_count = computed(
     () => usePage().props.unreadNotificationsCount
 );
-console.log("noti", notifications.value);
+
 </script>
