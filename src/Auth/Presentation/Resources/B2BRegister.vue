@@ -46,6 +46,7 @@ let register = () => {
             <VCol cols="12">
               <VLabel class="primary">Enter your work email</VLabel>
               <VTextField
+                variant="solo"
                 placeholder="Email"
                 v-model="form.email"
                 :error-messages="form?.errors?.email"
@@ -55,6 +56,7 @@ let register = () => {
             <VCol cols="12">
               <VLabel class="primary">Enter your work password</VLabel>
               <VTextField
+                variant="solo"
                 v-model="form.password"
                 placeholder="Enter Your Password"
                 :error-messages="form?.errors?.password"

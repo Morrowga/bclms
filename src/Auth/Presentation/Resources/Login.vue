@@ -76,6 +76,7 @@ const onSubmit = () => {
                       >Enter your work email</label-input
                     >
                     <VTextField
+                      variant="solo"
                       v-model="form.email"
                       type="email"
                       class="bg-primary"
@@ -89,6 +90,7 @@ const onSubmit = () => {
                       >Enter your password</label-input
                     >
                     <VTextField
+                      variant="solo"
                       v-model="form.password"
                       :rules="[requiredValidator]"
                       :type="isPasswordVisible ? 'text' : 'password'"
@@ -139,12 +141,14 @@ const onSubmit = () => {
   background: url("/public/images/register.png") 100% no-repeat;
   height: 100%;
   background-size: 100% 100%;
+  z-index: -1;
 }
 .primary {
   color: #001a8f !important;
 }
-.v-text-field,
-.v-text-field input {
-  background-color: white !important;
-}
+// .v-text-field,
+// .v-text-field input {
+//   background-color: white !important;
+//   z-index: 100;
+// }
 </style>
