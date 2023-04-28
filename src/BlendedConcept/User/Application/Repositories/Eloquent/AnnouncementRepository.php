@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\User\Application\Repositories\Eloquent;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Src\BlendedConcept\Organization\Domain\Model\Organization;
 use Src\BlendedConcept\User\Domain\Model\Announcement;
 use Src\BlendedConcept\User\Domain\Model\User;
 use Src\BlendedConcept\User\Domain\Repositories\AnnouncementRepositoryInterface;
@@ -22,8 +23,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     // create announcement
     public function createAnnouncement($request)
     {
-        // dd($request->all());
-        $create_by_user = User::find($request->created_by);
+        $create_by_user = Organization::find($request->created_by);
         $receive_user = User::find($request->send_to);
         $receive_user->notify(new BcNotification(['message' => $request->title, 'from' => $create_by_user->name, 'to' => $receive_user->name, 'type' => "success"]));
         Announcement::create($request->all());
@@ -32,7 +32,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     //update announcement
     public function updateAnnouncement($request, $announcement)
     {
-        $create_by_user = User::find($request->created_by);
+        $create_by_user = Organization::find($request->created_by);
         $receive_user = User::find($request->send_to);
         $receive_user->notify(new BcNotification(['message' => $request->title, 'from' => $create_by_user->name, 'to' => $receive_user->name, 'type' => "success"]));
         $announcement->update($request->only(['title', 'message']));
