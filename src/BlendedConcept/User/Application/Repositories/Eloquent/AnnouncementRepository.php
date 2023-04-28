@@ -25,7 +25,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         // dd($request->all());
         $create_by_user = User::find($request->created_by);
         $receive_user = User::find($request->send_to);
-        $receive_user->notify(new BcNotification(['message' => $request->title, 'data' => $create_by_user->name]));
+        $receive_user->notify(new BcNotification(['message' => $request->title, 'from' => $create_by_user->name, 'to' => $receive_user->name, 'type' => "success"]));
         Announcement::create($request->all());
     }
 
@@ -34,7 +34,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     {
         $create_by_user = User::find($request->created_by);
         $receive_user = User::find($request->send_to);
-        $receive_user->notify(new BcNotification(['message' => $request->title, 'data' => $create_by_user->name]));
+        $receive_user->notify(new BcNotification(['message' => $request->title, 'from' => $create_by_user->name, 'to' => $receive_user->name, 'type' => "success"]));
         $announcement->update($request->only(['title', 'message']));
     }
 }

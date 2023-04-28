@@ -41,7 +41,6 @@ class BcNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-      
     }
 
     /**
@@ -52,9 +51,12 @@ class BcNotification extends Notification implements ShouldQueue
      */
     public function toDatabase($notifiable)
     {
-        // dd($this->$data);
+        // dd($this->data);
         return [
-            'message' => $this->data['message']
+            'message' => $this->data['message'],
+            'from'  => $this->data['from'],
+            'to'    => $this->data['to'],
+            'type' => $this->data['type']
         ];
     }
 }
