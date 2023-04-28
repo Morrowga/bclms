@@ -31,7 +31,7 @@ class AuthRepository implements AuthRepositoryInterface
             }
             if (auth()->attempt($credentials)) {
 
-                $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'data' => $user]));
+                $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'from' => "", 'to' => "", 'type' => "success"]));
                 return ["errorMessage" => "Successfully", "isCheck" => true];
             } else {
                 $error = "Invalid Creditional";
