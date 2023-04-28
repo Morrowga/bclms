@@ -197,7 +197,7 @@ let truncatedText = (text) => {
             <Create
               :permissions="props.permissions"
               :flash="flash"
-              v-if="permissions.includes('create_organization')"
+              v-if="permissions.includes('create_role')"
             />
           </div>
         </VCardText>
