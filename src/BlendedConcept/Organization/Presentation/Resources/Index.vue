@@ -6,16 +6,23 @@
 
             <VAlert
             v-for="item in notifications"
-            :key="item"
+            :key="item.id"
             variant="tonal"
-            :type="item.type"
+            density="compact"
+            :type="item.data.type"
             v-model="isAlertVisible"
             closable
+            class="mb-2"
             close-label="Close Alert"
+            style="padding: 6px 16px;"
             >
                 <template #text>
-                    <p style="font-size:24px:">Success</p>
-                    <p>{{item.data.message}}</p>
+                    <span style="font-size:24px:">Success</span>
+                    <br/>
+                    <span>{{item.data.message}}</span>
+                </template>
+                <template #close>
+                  <v-btn icon="mdi-close" @click="removeNotification(item.id)"></v-btn>
                 </template>
             </VAlert>
             <!-- end announment  box-->
@@ -41,16 +48,17 @@ import SuperAdminDashboard from "@Layouts/Dashboard/SuperAdminDashboard/SuperAdm
 import StaffDashboard from "@Layouts/Dashboard/StaffDashboard.vue";
 import TeacherOrParentDashboard from "@Layouts/Dashboard/TeacherOrParentDashboard.vue";
 import { defineProps } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { usePage,useForm } from "@inertiajs/vue3";
 //## variable section
 let props = defineProps(["current_user_role", "user", "orgainzations_users"]);
 const isAlertVisible = ref(true);
 
+let form = useForm({});
 let notifications = computed(() => usePage().props.notifications?.data);
-console.log(notifications.value,"noti")
 let unread_notifications_count = computed(
   () => usePage().props.unreadNotificationsCount
 );
+
 const removeNotification = (notificationId) => {
   form.post(route("markAsRead", { id: notificationId }), {
     onSuccess: () => {
@@ -58,6 +66,7 @@ const removeNotification = (notificationId) => {
         (noti) => noti.id != notificationId
       );
     },
-  });
-};
+  })
+//   isAlertVisible.value = false
+}
 </script>
