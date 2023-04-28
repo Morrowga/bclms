@@ -11,6 +11,11 @@ use Src\BlendedConcept\User\Domain\Model\User;
 
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
+    public function getOrganizationNameId()
+    {
+        $organizations = Organization::get();
+        return $organizations;
+    }
     public function getOrganizations($filters = [])
     {
         $paginate_organizations = OrganizationResource::collection(Organization::filter($filters)->with('plan')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));

@@ -18,6 +18,14 @@ const props = defineProps({
   announcement: {
     type: Object,
   },
+  users: {
+    type: Array,
+    default: [],
+  },
+  organizations: {
+    type: Array,
+    default: [],
+  },
 });
 //## end define props for toggle drawer
 
@@ -28,6 +36,8 @@ const refForm = ref();
 const form = useForm({
   title: "",
   message: "",
+  created_by: "",
+  send_to: "",
 });
 //## end variable section
 
@@ -69,6 +79,8 @@ const handleDrawerModelValueUpdate = (val) => {
 onUpdated(() => {
   form.title = props.announcement?.title;
   form.message = props.announcement?.message;
+  form.created_by = props.announcement?.created_by;
+  form.send_to = props.announcement?.send_to;
 });
 //## end reative name and description when edit
 
@@ -99,7 +111,7 @@ const checkError = computed(() => {
           <!-- 👉 Form -->
           <VForm ref="refForm" v-model="isFormValid" @submit.prevent="onSubmit">
             <VRow>
-              <!-- 👉 Full name -->
+              <!-- 👉  title -->
               <VCol cols="12">
                 <VTextField
                   :error="checkError"
@@ -110,7 +122,25 @@ const checkError = computed(() => {
                   label="Title"
                 />
               </VCol>
-              <!-- 👉 Full name -->
+
+              <VCol cols="12">
+                <VSelect
+                  label="Announce By"
+                  item-title="name"
+                  item-value="id"
+                  v-model="form.created_by"
+                  :items="props.organizations"
+                />
+              </VCol>
+              <VCol cols="12">
+                <VSelect
+                  label="Announce To"
+                  v-model="form.send_to"
+                  :items="props.users"
+                  item-title="name"
+                  item-value="id"
+                />
+              </VCol>
 
               <VCol cols="12">
                 <VTextarea v-model="form.message" label="Message" />

@@ -7,7 +7,7 @@ namespace Src\BlendedConcept\User\Domain\Model;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Src\BlendedConcept\Organization\Domain\Model\Organization;
 
 class Announcement extends Model
 {
@@ -20,6 +20,16 @@ class Announcement extends Model
         'trigger_on',
         'send_to'
     ];
+
+    public function created_by()
+    {
+        return $this->belongsTo(Organization::class, 'created_by', 'id');
+    }
+
+    public function send_to()
+    {
+        return $this->belongsTo(User::class, 'send_to', 'id');
+    }
 
     public function scopeFilter($query, $filters)
     {

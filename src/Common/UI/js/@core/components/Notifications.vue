@@ -2,7 +2,7 @@
 import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import { avatarText } from "@core/utils/formatters";
 import { computed, ref, onMounted, defineProps } from "vue";
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link, usePage, useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia";
 import { useInfiniteScroll } from "@vueuse/core";
@@ -18,8 +18,8 @@ const items = ref([1]);
 let current_page = ref(usePage().props.notifications?.current_page);
 let last_page = ref(usePage().props.notifications?.last_page);
 let isLoading = ref(false);
-
 const scroll_el = ref("");
+const form = useForm({});
 useInfiniteScroll(
   scroll_el,
   () => {
@@ -49,10 +49,13 @@ const removeNotification = (notificationId) => {
   // notifications.value.forEach((item, index) => {
   //   if (notificationId === item.id) notifications.value.splice(index, 1);
   // });
-  router.post(route("markAsRead", { id: notificationId }));
-  allNotifications.value = notifications.value.filter(
-    (noti) => noti.id != notificationId
-  );
+  form.post(route("markAsRead", { id: notificationId }), {
+    onSuccess: () => {
+      allNotifications.value = notifications.value.filter(
+        (noti) => noti.id != notificationId
+      );
+    },
+  });
 };
 const removeAllNotification = () => {
   router.post(route("markAsReadAll"));

@@ -3,6 +3,7 @@ import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import AppDrawerHeaderSection from "@core/components/AppDrawerHeaderSection.vue";
 import { requiredValidator } from "@validators";
 import { computed } from "vue";
+import { useForm, usePage } from "@inertiajs/vue3";
 //## start define props for toggle drawer
 const props = defineProps({
   serverError: {
@@ -13,6 +14,14 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  users: {
+    type: Array,
+    default: [],
+  },
+  organizations: {
+    type: Array,
+    default: [],
+  },
 });
 //##end define props for toggle drawer
 
@@ -20,8 +29,16 @@ const props = defineProps({
 const emit = defineEmits(["update:isDrawerOpen", "data"]);
 const isFormValid = ref(false);
 const refForm = ref();
-const announcement_title = ref();
-const announcement_message = ref();
+const form = useForm({
+  title: "",
+  created_by: "",
+  send_to: "",
+  message: "",
+});
+// const announcement_title = ref();
+// const created_by = ref();
+// const send_to = ref();
+// const announcement_message = ref();
 
 //## end variable section
 
@@ -39,10 +56,7 @@ const closeNavigationDrawer = () => {
 const onSubmit = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
-      emit("data", {
-        title: announcement_title.value,
-        message: announcement_message.value,
-      });
+      emit("data", form);
       // emit("update:isDrawerOpen", false);
       nextTick(() => {
         // refForm.value?.reset();
@@ -92,14 +106,33 @@ const checkError = computed(() => {
                   :error="checkError"
                   :error-messages="serverError?.title"
                   @input="serverError.title = ''"
-                  v-model="announcement_title"
+                  v-model="form.title"
                   :rules="[requiredValidator]"
                   label="Title"
                 />
               </VCol>
+
+              <VCol cols="12">
+                <VSelect
+                  label="Announce By"
+                  item-title="name"
+                  item-value="id"
+                  v-model="form.created_by"
+                  :items="props.organizations"
+                />
+              </VCol>
+              <VCol cols="12">
+                <VSelect
+                  label="Announce To"
+                  v-model="form.send_to"
+                  :items="props.users"
+                  item-title="name"
+                  item-value="id"
+                />
+              </VCol>
               <!-- 👉  message -->
               <VCol cols="12">
-                <VTextarea v-model="announcement_message" label="Message" />
+                <VTextarea v-model="form.message" label="Message" />
               </VCol>
               <!-- 👉 Submit and Cancel -->
               <VCol cols="12">

@@ -2,7 +2,8 @@
   <!-- for superadmin dashboard check -->
   <AdminLayout :user="user" :user_role="current_user_role">
     <div v-if="current_user_role == 'BC Super Admin'">
-      <SuperAdminDashboard :orgainzations_users="props.orgainzations_users"> </SuperAdminDashboard>
+      <SuperAdminDashboard :orgainzations_users="props.orgainzations_users">
+      </SuperAdminDashboard>
     </div>
     <div v-else-if="current_user_role == 'BC Subscriber'">
       <TeacherOrParentDashboard> </TeacherOrParentDashboard>
@@ -21,7 +22,12 @@ import SuperAdminDashboard from "@Layouts/Dashboard/SuperAdminDashboard/SuperAdm
 import StaffDashboard from "@Layouts/Dashboard/StaffDashboard.vue";
 import TeacherOrParentDashboard from "@Layouts/Dashboard/TeacherOrParentDashboard.vue";
 import { defineProps } from "vue";
-
+import { usePage } from "@inertiajs/vue3";
 //## variable section
-let props = defineProps(["current_user_role",'user','orgainzations_users']);
+let props = defineProps(["current_user_role", "user", "orgainzations_users"]);
+let notifications = computed(() => usePage().props.notifications?.data);
+let unread_notifications_count = computed(
+  () => usePage().props.unreadNotificationsCount
+);
+console.log("noti", notifications.value);
 </script>
