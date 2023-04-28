@@ -9,6 +9,8 @@ use Src\BlendedConcept\User\Domain\Model\User;
 interface UserRepositoryInterface
 {
 
+    //get only user and id
+    public function getUsersNameId();
     // get user
     public function getUsers($filters = []);
 

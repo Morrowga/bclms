@@ -7,10 +7,9 @@ import avatar3 from "@images/avatars/avatar-3.png";
 import avatar4 from "@images/avatars/avatar-4.png";
 import LatestModifiedOrganizations from "./LatestModifiedOrganizations.vue";
 import TotalUsers from "./TotalUsers.vue";
+
 const avatars = [avatar1, avatar2, avatar3, avatar4];
-
-let orgainzations_users = defineProps(['orgainzations_users']);
-
+let orgainzations_users = defineProps(["orgainzations_users"]);
 </script>
 
 <template>
@@ -51,7 +50,9 @@ let orgainzations_users = defineProps(['orgainzations_users']);
       <br />
     </div>
     <br />
-    <LatestModifiedOrganizations  :organization="orgainzations_users.orgainzations_users[1]"/>
+    <LatestModifiedOrganizations
+      :organization="orgainzations_users.orgainzations_users[1]"
+    />
   </section>
   <br />
   <br />
@@ -67,6 +68,6 @@ let orgainzations_users = defineProps(['orgainzations_users']);
       <br />
     </div>
     <br />
-    <TotalUsers  :users="orgainzations_users.orgainzations_users[0]"/>
+    <TotalUsers :users="orgainzations_users.orgainzations_users[0]" />
   </section>
 </template>

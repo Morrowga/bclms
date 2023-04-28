@@ -21,6 +21,12 @@ use Src\BlendedConcept\Organization\Domain\Model\Organization;
 class UserRepository implements UserRepositoryInterface
 {
 
+    //get only user name and i
+    public function getUsersNameId()
+    {
+        $user_names = User::get();
+        return $user_names;
+    }
     // get user
     public function getUsers($filters = [])
     {
@@ -166,7 +172,7 @@ class UserRepository implements UserRepositoryInterface
     {
         $users = User::with('roles')->latest()->take(10)->get();
         $organizations = Organization::with('plan')->latest()->take(10)->get();
-        return [$users ,$organizations];
+        return [$users, $organizations];
     }
 
     public function changepassword($request)

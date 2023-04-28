@@ -69,7 +69,7 @@ const onSubmit = () => {
             </VCardText>
             <VCardText>
               <VForm @submit.prevent="onSubmit">
-                <VRow>
+                <VRow class="login-field">
                   <!-- email -->
                   <VCol cols="12">
                     <label-input class="primary"
@@ -112,7 +112,11 @@ const onSubmit = () => {
                     <div
                       class="d-flex align-center flex-wrap justify-space-between mt-1 mb-4"
                     >
-                      <VCheckbox v-model="rememberMe" label="Remember me" />
+                      <VCheckbox
+                        style="color: black !important"
+                        v-model="rememberMe"
+                        label="Remember me"
+                      />
                     </div>
                     <VBtn block class="bg-primary" type="submit"> Login </VBtn>
                   </VCol>
@@ -135,7 +139,7 @@ const onSubmit = () => {
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
+<style lang="scss">
 @use "@styles/@core/template/pages/page-auth.scss";
 .login-bg {
   background: url("/public/images/register.png") 100% no-repeat;
@@ -143,8 +147,8 @@ const onSubmit = () => {
   background-size: 100% 100%;
   z-index: -1;
 }
-.primary {
-  color: #001a8f !important;
+.v-messages__message {
+  color: red !important;
 }
 // .v-text-field,
 // .v-text-field input {

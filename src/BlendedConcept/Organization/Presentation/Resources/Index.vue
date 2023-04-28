@@ -2,19 +2,23 @@
     <!-- for superadmin dashboard check -->
     <AdminLayout :user="user" :user_role="current_user_role">
         <div v-if="current_user_role == 'BC Super Admin'">
-            <div class="card">
-                <VAlert
-                    v-model="isAlertVisible"
-                    closable
-                    prominent
-                    close-label="Close Alert"
-                    color="primary"
-                >
-                      <template #text>
-                        <h1><i class="mdi mdi-id-card mdi-48px"></i>Error</h1>
-                    </template>
-                </VAlert>
-            </div>
+            <!-- alert announment box -->
+            <VAlert
+            prominent
+            variant="tonal"
+            type="error"
+            v-model="isAlertVisible"
+            closable
+            close-label="Close Alert"
+            >
+                <template #text>
+                   <div class="d-flex flex-column">
+                    <p>Error</p>
+                    <p>Error Message</p>
+                   </div>
+                </template>
+            </VAlert>
+            <!-- end announment  box-->
             <SuperAdminDashboard
                 :orgainzations_users="props.orgainzations_users"
             >
@@ -36,8 +40,15 @@ import EcommerceSalesOverview from "@/views/dashboard/ecommerce/EcommerceSalesOv
 import SuperAdminDashboard from "@Layouts/Dashboard/SuperAdminDashboard/SuperAdminDashboard.vue";
 import StaffDashboard from "@Layouts/Dashboard/StaffDashboard.vue";
 import TeacherOrParentDashboard from "@Layouts/Dashboard/TeacherOrParentDashboard.vue";
-import { defineProps, ref } from "vue";
-const isAlertVisible = ref(true);
+import { defineProps } from "vue";
+import { usePage } from "@inertiajs/vue3";
 //## variable section
 let props = defineProps(["current_user_role", "user", "orgainzations_users"]);
+const isAlertVisible = ref(true)
+
+let notifications = computed(() => usePage().props.notifications?.data);
+let unread_notifications_count = computed(
+    () => usePage().props.unreadNotificationsCount
+);
+console.log("noti", notifications.value);
 </script>

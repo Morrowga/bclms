@@ -9,10 +9,19 @@ import Swal from "sweetalert2";
 import { toastAlert } from "@Composables/useToastAlert";
 
 //## start variable section
-let props = defineProps(["announcements", "flash", "auth"]);
+let props = defineProps([
+  "announcements",
+  "flash",
+  "auth",
+  "users",
+  "organizations",
+]);
+console.log("ann", props.users);
 const form = useForm({
   title: "",
   message: "",
+  created_by: "",
+  send_to: "",
   _method: "",
 });
 let currentAnnouncement = ref();
@@ -29,6 +38,8 @@ let serverError = ref({
 const addNewAnnouncement = (announcementData) => {
   form.title = announcementData.title;
   form.message = announcementData.message;
+  form.created_by = announcementData.created_by;
+  form.send_to = announcementData.send_to;
   form._method = "POST";
   form.post(route("announcements.store"), {
     onSuccess: (data) => {
@@ -48,6 +59,8 @@ const addNewAnnouncement = (announcementData) => {
 const updateAnnouncement = (announcementData) => {
   form.title = announcementData.title;
   form.message = announcementData.message;
+  form.created_by = announcementData.created_by;
+  form.send_to = announcementData.send_to;
   form._method = "PUT";
   form.post(
     route("announcements.update", {
@@ -106,19 +119,23 @@ let columns = [
     label: "TITLE",
     field: "title",
     sortable: false,
-    // filterOptions: {
-    //   styleClass: "class1", // class to be added to the parent th element
-    //   enabled: true, // enable filter for this column
-    //   placeholder: "Filter All", // placeholder for filter input
-    //   filterDropdownItems: ["access", "edit", "show", "create", "delete"], // dropdown (with selected values) instead of text input
-    //   trigger: "enter", //only trigger on enter not on keyup
-    // },
   },
   {
     label: "MESSAGE",
     field: "message",
     sortable: false,
   },
+  {
+    label: "ANNOUNCEMENT BY",
+    field: "created_by",
+    sortable: false,
+  },
+  {
+    label: "ANNOUNCEMENT To",
+    field: "send_to",
+    sortable: false,
+  },
+
   {
     label: "ACTION",
     field: "action",
@@ -264,6 +281,16 @@ let truncatedText = (text) => {
             <div v-if="props.column.field == 'message'" class="flex flex-wrap">
               <span>{{ truncatedText(props.row.message) }}</span>
             </div>
+            <div
+              v-if="props.column.field == 'created_by'"
+              class="flex flex-wrap"
+            >
+              <span>{{ truncatedText(props.row.created_by.name) }}</span>
+            </div>
+            <div v-if="props.column.field == 'send_to'" class="flex flex-wrap">
+              <span>{{ truncatedText(props.row.send_to.name) }}</span>
+            </div>
+
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
                 <VBtn
@@ -328,10 +355,14 @@ let truncatedText = (text) => {
       <!-- 👉 Add New Announcement -->
       <Create
         :serverError="serverError"
+        :users="props.users"
+        :organizations="props.organizations"
         v-model:isDrawerOpen="isAddNewAnnouncementDrawerVisible"
         @data="addNewAnnouncement"
       />
       <Edit
+        :users="props.users"
+        :organizations="props.organizations"
         :serverError="serverError"
         v-model:isDrawerOpen="isEditAnnouncementDrawerVisible"
         @data="updateAnnouncement"

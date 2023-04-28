@@ -3,8 +3,10 @@
 namespace Src\BlendedConcept\User\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Model\Announcement;
 use Src\BlendedConcept\User\Domain\Repositories\AnnouncementRepositoryInterface;
+use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Requests\StoreAnnouncementRequest;
 use Src\BlendedConcept\User\Domain\Requests\UpdateAnnouncementRequest;
 use Src\Common\Infrastructure\Laravel\Controller;
@@ -13,19 +15,26 @@ use Src\Common\Infrastructure\Laravel\Controller;
 class AnnouncementController extends Controller
 {
      private $announcementInterface;
-
-     public function __construct(AnnouncementRepositoryInterface $announcementInterface)
+     private $userInterface;
+     private $organizationInterface;
+     public function __construct(AnnouncementRepositoryInterface $announcementInterface, UserRepositoryInterface $userInterface, OrganizationRepositoryInterface $organizationInterface)
      {
           $this->announcementInterface = $announcementInterface;
+          $this->userInterface = $userInterface;
+          $this->organizationInterface = $organizationInterface;
      }
      //get all announcements
      public function index()
      {
           $this->authorize('view', Announcement::class);
           $filters = request()->only(['name', 'search', 'perPage']);
+          $users = $this->userInterface->getUsersNameId();
+          $organizations = $this->organizationInterface->getOrganizationNameId();
           $announcements = $this->announcementInterface->getAnnouncements($filters);
           return Inertia::render('BlendedConcept/User/Presentation/Resources/Announcements/Index', [
-               "announcements" => $announcements
+               "announcements" => $announcements,
+               "users" => $users,
+               "organizations" => $organizations
           ]);
      }
 
