@@ -46,9 +46,6 @@ useInfiniteScroll(
   { distance: 10 }
 );
 const removeNotification = (notificationId) => {
-  // notifications.value.forEach((item, index) => {
-  //   if (notificationId === item.id) notifications.value.splice(index, 1);
-  // });
   form.post(route("markAsRead", { id: notificationId }), {
     onSuccess: () => {
       allNotifications.value = notifications.value.filter(

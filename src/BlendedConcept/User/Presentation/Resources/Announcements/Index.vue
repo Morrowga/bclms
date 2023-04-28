@@ -269,7 +269,7 @@ let truncatedText = (text) => {
           mode="remote"
           @column-filter="onColumnFilter"
           :totalRows="props.announcements.meta.total"
-          styleClass="vgt-table "
+          styleClass="vgt-table"
           :pagination-options="options"
           :rows="props.announcements.data"
           :columns="columns"

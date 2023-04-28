@@ -44,12 +44,20 @@ import { defineProps } from "vue";
 import { usePage } from "@inertiajs/vue3";
 //## variable section
 let props = defineProps(["current_user_role", "user", "orgainzations_users"]);
-const isAlertVisible = ref(true)
+const isAlertVisible = ref(true);
 
 let notifications = computed(() => usePage().props.notifications?.data);
 console.log(notifications.value,"noti")
 let unread_notifications_count = computed(
-    () => usePage().props.unreadNotificationsCount
+  () => usePage().props.unreadNotificationsCount
 );
-
+const removeNotification = (notificationId) => {
+  form.post(route("markAsRead", { id: notificationId }), {
+    onSuccess: () => {
+      notifications.value = notifications.value.filter(
+        (noti) => noti.id != notificationId
+      );
+    },
+  });
+};
 </script>
