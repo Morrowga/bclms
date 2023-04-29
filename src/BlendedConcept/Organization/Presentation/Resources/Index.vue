@@ -1,29 +1,29 @@
 <template>
   <!-- for superadmin dashboard check -->
   <AdminLayout :user="user" :user_role="current_user_role">
+    <!-- alert announment box -->
+    <VAlert
+      v-for="item in notifications"
+      :key="item.id"
+      variant="tonal"
+      density="compact"
+      :type="item.data.type"
+      v-model="isAlertVisible"
+      closable
+      class="mb-2"
+      close-label="Close Alert"
+      style="padding: 6px 16px"
+    >
+      <template #text>
+        <span style="font-size:24px:">{{ item?.data?.type }}</span>
+        <br />
+        <span>{{ item.data.message }}</span>
+      </template>
+      <template #close>
+        <v-btn icon="mdi-close" @click="removeNotification(item.id)"></v-btn>
+      </template>
+    </VAlert>
     <div v-if="current_user_role == 'BC Super Admin'">
-      <!-- alert announment box -->
-      <VAlert
-        v-for="item in notifications"
-        :key="item.id"
-        variant="tonal"
-        density="compact"
-        :type="item.data.type"
-        v-model="isAlertVisible"
-        closable
-        class="mb-2"
-        close-label="Close Alert"
-        style="padding: 6px 16px"
-      >
-        <template #text>
-          <span style="font-size:24px:">Success</span>
-          <br />
-          <span>{{ item.data.message }}</span>
-        </template>
-        <template #close>
-          <v-btn icon="mdi-close" @click="removeNotification(item.id)"></v-btn>
-        </template>
-      </VAlert>
       <!-- end announment  box-->
       <SuperAdminDashboard :orgainzations_users="props.orgainzations_users">
       </SuperAdminDashboard>

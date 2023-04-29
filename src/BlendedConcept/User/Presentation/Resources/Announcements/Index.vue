@@ -22,6 +22,7 @@ const form = useForm({
   message: "",
   created_by: "",
   send_to: "",
+  type: "",
   _method: "",
 });
 let currentAnnouncement = ref();
@@ -41,6 +42,7 @@ const addNewAnnouncement = (announcementData) => {
   form.message = announcementData.message;
   form.created_by = announcementData.created_by;
   form.send_to = announcementData.send_to;
+  form.type = announcementData.type;
   form._method = "POST";
   form.post(route("announcements.store"), {
     onSuccess: (data) => {
@@ -62,6 +64,7 @@ const updateAnnouncement = (announcementData) => {
   form.message = announcementData.message;
   form.created_by = announcementData.created_by;
   form.send_to = announcementData.send_to;
+  form.type = announcementData.type;
   form._method = "PUT";
   form.post(
     route("announcements.update", {

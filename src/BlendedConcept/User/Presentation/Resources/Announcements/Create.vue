@@ -34,6 +34,7 @@ const form = useForm({
   created_by: "",
   send_to: "",
   message: "",
+  type: "",
 });
 // const announcement_title = ref();
 // const created_by = ref();
@@ -77,6 +78,7 @@ const handleDrawerModelValueUpdate = (val) => {
 const checkError = computed(() => {
   return props.serverError.title == "" ? false : true;
 });
+const message_types = ["success", "error", "warning", "info"];
 </script>
 
 <template>
@@ -112,6 +114,7 @@ const checkError = computed(() => {
                 />
               </VCol>
 
+              <!-- announce by -->
               <VCol cols="12">
                 <VSelect
                   label="Announce By"
@@ -121,11 +124,24 @@ const checkError = computed(() => {
                   :items="props.organizations"
                 />
               </VCol>
+
+              <!-- announce to -->
               <VCol cols="12">
                 <VSelect
                   label="Announce To"
                   v-model="form.send_to"
                   :items="props.users"
+                  item-title="name"
+                  item-value="id"
+                />
+              </VCol>
+
+              <!--  type -->
+              <VCol cols="12">
+                <VSelect
+                  label="Message Type"
+                  v-model="form.type"
+                  :items="message_types"
                   item-title="name"
                   item-value="id"
                 />

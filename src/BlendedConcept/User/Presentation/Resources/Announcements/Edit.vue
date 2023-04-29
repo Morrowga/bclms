@@ -38,6 +38,7 @@ const form = useForm({
   message: "",
   created_by: "",
   send_to: "",
+  type: "",
 });
 //## end variable section
 
@@ -55,10 +56,7 @@ const closeNavigationDrawer = () => {
 const onSubmit = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
-      emit("data", {
-        title: form.title,
-        message: form.message,
-      });
+      emit("data", form);
       // emit("update:isDrawerOpen", false);
       nextTick(() => {
         // refForm.value?.reset();
@@ -79,8 +77,8 @@ const handleDrawerModelValueUpdate = (val) => {
 onUpdated(() => {
   form.title = props.announcement?.title;
   form.message = props.announcement?.message;
-  form.created_by = props.announcement?.created_by;
-  form.send_to = props.announcement?.send_to;
+  form.created_by = props.announcement?.created_by?.id;
+  form.send_to = props.announcement?.send_to?.id;
 });
 //## end reative name and description when edit
 
@@ -88,6 +86,7 @@ onUpdated(() => {
 const checkError = computed(() => {
   return props.serverError.title == "" ? false : true;
 });
+const message_types = ["success", "error", "warning", "info"];
 </script>
 
 <template>
@@ -123,6 +122,7 @@ const checkError = computed(() => {
                 />
               </VCol>
 
+              <!-- announce by -->
               <VCol cols="12">
                 <VSelect
                   label="Announce By"
@@ -132,6 +132,8 @@ const checkError = computed(() => {
                   :items="props.organizations"
                 />
               </VCol>
+
+              <!-- announce to -->
               <VCol cols="12">
                 <VSelect
                   label="Announce To"
@@ -142,6 +144,16 @@ const checkError = computed(() => {
                 />
               </VCol>
 
+              <!--  type -->
+              <VCol cols="12">
+                <VSelect
+                  label="Message Type"
+                  v-model="form.type"
+                  :items="message_types"
+                  item-title="name"
+                  item-value="id"
+                />
+              </VCol>
               <VCol cols="12">
                 <VTextarea v-model="form.message" label="Message" />
               </VCol>
