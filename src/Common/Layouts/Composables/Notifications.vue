@@ -77,13 +77,13 @@
   </div>
 </template>
 <script setup>
-import { computed, ref, onMounted, defineProps } from "vue";
+import { computed, ref, onMounted, defineProps,ref } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia";
 import { useInfiniteScroll } from "@vueuse/core";
 import axios from "axios";
-let notifications = computed(() => usePage().props.notifications?.data);
+let notifications = ref(() => usePage().props.notifications?.data);
 let unread_notifications_count = computed(
   () => usePage().props.unreadNotificationsCount
 );

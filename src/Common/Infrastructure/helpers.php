@@ -1,17 +1,19 @@
 <?php
+use Illuminate\Support\Facades\Cache;
 
 //Notification Helper to Vue Component
 if (!function_exists('getNotifications')) {
     function getNotifications()
     {
-        if (auth()->check()) {
-            $notification = [
-                "notifications" => auth()->user()->unreadNotifications()->paginate(7),
-                "unread" =>  auth()->user()->unreadNotifications()->count()
-            ];
-        } else {
-            $notification = null;
-        }
+        $notification = Cache::remember('unread_notifications_' . auth()->id(), 60, function () {
+            return auth()->user()
+                ? auth()->user()->unreadNotifications()->with('notifiable')->paginate(7)
+                : null;
+        });
+
+        $notification = $notification
+            ? ["notifications" => $notification,        "unread" =>  $notification->total()]
+            : null;
 
         return $notification;
     }
