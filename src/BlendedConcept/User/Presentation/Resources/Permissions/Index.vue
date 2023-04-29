@@ -242,9 +242,9 @@ let truncatedText = (text) => {
 
           <div class="app-user-search-filter d-flex align-center justify-end">
             <!-- 👉 Add Permission button -->
-            <!-- <VBtn @click="isAddNewPermissionDrawerVisible = true">
+            <VBtn @click="isAddNewPermissionDrawerVisible = true">
               Add Permission
-            </VBtn> -->
+            </VBtn>
           </div>
         </VCardText>
 
@@ -272,14 +272,13 @@ let truncatedText = (text) => {
             </div>
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
-                <!-- <VBtn
+                 <!-- <VBtn
                 variant="text"
                   density="compact"
                   icon="mdi-pencil"
                   class="ml-2"
                   color="secondary"
-                  @click="openEditModel(props.row)"
-                >
+                  @click="openEditModel(props.row)">
                 </VBtn> -->
 
                 <!-- <VBtn

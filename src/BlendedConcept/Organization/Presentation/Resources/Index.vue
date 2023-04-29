@@ -3,7 +3,6 @@
   <AdminLayout :user="user" :user_role="current_user_role">
     <div v-if="current_user_role == 'BC Super Admin'">
       <!-- alert announment box -->
-
       <VAlert
         v-for="item in notifications"
         :key="item.id"

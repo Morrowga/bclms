@@ -12,7 +12,7 @@ if (!function_exists('getNotifications')) {
         });
 
         $notification = $notification
-            ? ["notifications" => $notification,        "unread" =>  $notification->total()]
+            ? ["notifications" => $notification,"unread" =>  $notification->total()]
             : null;
 
         return $notification;

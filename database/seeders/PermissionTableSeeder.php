@@ -162,9 +162,7 @@ class PermissionTableSeeder extends Seeder
             [
                 "name" => "delete_plan",
                 "guard_name" => "web"
-            ],
-
-
+            ]
         ];
 
         foreach ($permissions as $permission) {

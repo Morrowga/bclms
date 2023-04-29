@@ -45,7 +45,10 @@ export default [
       icon: { icon: 'mdi-file-document-multiple' },
       route_name:'libraries',
       access_module:"access_library",
-      children: []
+      children: [
+        { title:"Librarie",url:"/libraries",icon:{icon:'mdi mdi-library'},route_name:"libraries",access_module:'access_library',
+      },
+      ]
     },
     {
       title: 'System',

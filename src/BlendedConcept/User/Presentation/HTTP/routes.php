@@ -12,7 +12,7 @@ use Src\BlendedConcept\User\Presentation\HTTP\StudentController;
 use Src\BlendedConcept\User\Presentation\HTTP\TeacherController;
 use Src\BlendedConcept\User\Presentation\HTTP\UserController;
 use Src\BlendedConcept\User\Presentation\HTTP\AnnouncementController;
-
+use Src\BlendedConcept\Organization\Presentation\HTTP\LibraryController;
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
@@ -50,7 +50,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("teacherdashboard", [TeacherController::class, 'dashboard'])->name('teacherdashboard');
 
 
+
+     // library
+     Route::get("libraries", [LibraryController::class, 'index'])->name('libraries');
+
     Route::get("userprofile", [DashboardBoardController::class, 'userProfile'])->name('userprofile');
+
+
 
 
 
