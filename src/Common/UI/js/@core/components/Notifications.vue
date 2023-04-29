@@ -8,18 +8,36 @@ import { Inertia } from "@inertiajs/inertia";
 import { useInfiniteScroll } from "@vueuse/core";
 import axios from "axios";
 
-let notifications = computed(() => usePage().props.notifications?.data);
-let unread_notifications_count = computed(
-  () => usePage().props.unreadNotificationsCount
-);
+// let notifications = ref([]);
+// let unread_notifications_count = computed(
+//   () => usePage().props.unreadNotificationsCount
+// );
 let allNotifications = ref([]);
-allNotifications.value = notifications.value;
+let reactiveNoti = computed(() => usePage().props.notifications?.data);
+let watchNoti = watch(reactiveNoti, (value) => {
+  getNotifications();
+});
+// allNotifications.value = notifications.value;
 const items = ref([1]);
 let current_page = ref(usePage().props.notifications?.current_page);
 let last_page = ref(usePage().props.notifications?.last_page);
 let isLoading = ref(false);
 const scroll_el = ref("");
 const form = useForm({});
+const getNotifications = () => {
+  isLoading.value = true;
+  axios
+    .get(
+      route("notifications", {
+        page: 1,
+      })
+    )
+    .then((resp) => {
+      last_page.value = resp.data.notifications.last_page;
+      allNotifications.value = resp.data.notifications.data;
+      isLoading.value = false;
+    });
+};
 useInfiniteScroll(
   scroll_el,
   () => {
@@ -48,14 +66,14 @@ useInfiniteScroll(
 const removeNotification = (notificationId) => {
   form.post(route("markAsRead", { id: notificationId }), {
     onSuccess: () => {
-      allNotifications.value = notifications.value.filter(
+      allNotifications.value = allNotifications.value.filter(
         (noti) => noti.id != notificationId
       );
     },
   });
 };
 const removeAllNotification = () => {
-  router.post(route("markAsReadAll"));
+  form.post(route("markAsReadAll"));
   allNotifications.value = [];
 };
 // const isAllMarkRead = computed(() => {
@@ -67,6 +85,9 @@ const removeAllNotification = () => {
 //   if (isAllMarkRead.value) emit("unread", allNotificationsIds);
 //   else emit("read", allNotificationsIds);
 // };
+onMounted(() => {
+  getNotifications();
+});
 </script>
 
 <template>
