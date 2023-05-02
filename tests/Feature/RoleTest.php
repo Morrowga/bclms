@@ -13,6 +13,7 @@ use Src\BlendedConcept\User\Domain\Model\Permission;
 use Src\BlendedConcept\User\Domain\Model\Role;
 use Src\BlendedConcept\User\Domain\Model\User;
 
+
 class RoleTest extends TestCase
 {
     use RefreshDatabase, WithFaker;

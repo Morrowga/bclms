@@ -12,6 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Src\BlendedConcept\User\Domain\Model\Permission;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
+
 class PermissionTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
@@ -34,7 +35,7 @@ class PermissionTest extends TestCase
     {
         parent::setUp();
 
-        dd($this->getAdminUser());
+        // dd($this->getAdminUser());
         // Create a test user and log them in
 
         // Auth::login($user);

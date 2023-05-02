@@ -92,6 +92,7 @@ class AuthTest extends TestCase
          "password" => 'password',
          "email_verified_at" => null
       ];
+
       $response = $this->post('/b2cstore', $data);
       $response->assertStatus(302);
    }
@@ -155,10 +156,14 @@ class AuthTest extends TestCase
          "password" => "password",
       ];
       $existingUser = User::create($data);
+
+
       $response = $this->post('login', [
          "email" => $existingUser->email,
-         "password" => Hash::make('passwords')
+         "password" => Hash::make('password')
       ]);
+
+
       $response->assertStatus(200);
    }
 
@@ -190,7 +195,7 @@ class AuthTest extends TestCase
       $existingUser = User::create($data);
       $response = $this->post('login', [
          "email" => "admin@user.com",
-         "password" => Hash::make('passwords')
+         "password" => Hash::make('password')
       ]);
       $response->assertStatus(200);
    }
