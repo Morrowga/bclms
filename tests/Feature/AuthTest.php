@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Src\BlendedConcept\User\Domain\Model\User;
 use Illuminate\Database\Eloquent\Factory;
-
+use Src\BlendedConcept\User\Domain\Model\Role;
 class AuthTest extends TestCase
 {
    use RefreshDatabase, WithFaker;
@@ -84,6 +84,13 @@ class AuthTest extends TestCase
    /** @test test_before_verified_b2c_register*/
    public function test_before_verified_b2c_register()
    {
+
+      //create role
+
+      Role::insert([
+        "id" => 2,
+        "name" => "BC Subscriber",
+      ]);
       $email = $this->faker->email;
       $name = explode("@", $email);
       $data = [
@@ -100,6 +107,7 @@ class AuthTest extends TestCase
    /** @test test_after_verified_b2c_register*/
    public function test_after_verified_b2c_register()
    {
+
       $email = $this->faker->email;
       $name = explode("@", $email);
       $data = [
@@ -114,8 +122,8 @@ class AuthTest extends TestCase
       $response->assertStatus(200);
    }
 
-   /** @test test_blank_login_email*/
-   public function test_blank_login_email()
+   /** @test testBlankLoginEmail*/
+   public function testBlankLoginEmail()
    {
       $data = [
          "email" => "",
