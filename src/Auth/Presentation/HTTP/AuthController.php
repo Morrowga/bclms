@@ -77,10 +77,20 @@ class AuthController extends Controller
     // verifing email
     public function verification(Request $request)
     {
+
         $id = $request->id;
         $user = $this->authInterface->verification($id);
-        return Inertia::render('Auth/Presentation/Resources/Verify', [
-            "verified" => true
-        ])->with("successMessage", "Email verify successfully!");
+        if($user !== null)
+        {
+            return Inertia::render('Auth/Presentation/Resources/Verify', [
+                "verified" => true
+            ])->with("successMessage", "Email verify successfully!");
+        }
+        else
+        {
+           //user manually change token id
+           return abort(403, 'Unauthorized action.');
+        }
+
     }
 }

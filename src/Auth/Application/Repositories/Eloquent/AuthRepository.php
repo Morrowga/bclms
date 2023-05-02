@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
+use PhpParser\Node\Stmt\TryCatch;
 use Src\Auth\Domain\Mail\VerifyEmail;
 use Src\BlendedConcept\User\Domain\Model\User;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
@@ -63,11 +64,18 @@ class AuthRepository implements AuthRepositoryInterface
     //verification email
     public function verification($id)
     {
-        $decode_id = Crypt::decryptString($id);
-        $user = User::find($decode_id);
-        $user->update([
+
+        try {
+          $decode_id = Crypt::decryptString($id);
+          $user = User::findOrFail($decode_id);
+          $user->update([
             "email_verified_at" => Carbon::now()
         ]);
+
         return  $user;
+
+        } catch (\Throwable $th) {
+            return $user = null;
+        }
     }
 }
