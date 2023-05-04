@@ -24,7 +24,7 @@ class PermissionRoleTableSeeder extends Seeder
             $role->permissions()->sync([25, 26, 27, 28, 29]);
         }
 
-        $staffPermission = Permission::pluck('id');
+        $staffPermission = Permission::whereIn('name', ['create_announcement', 'edit_announcement', 'delete_announcement'])->pluck('id');
         $role = Role::create(["name" => "BC Staff", "guard_name" => "web"]);
         $role->permissions()->sync($staffPermission);
     }

@@ -28,6 +28,8 @@ class OrganizationController extends Controller
         ]);
     }
 
+
+
     public function store(StoreOrganizationRequest $request)
     {
         $this->authorize('create', Organization::class);
@@ -43,6 +45,8 @@ class OrganizationController extends Controller
 
         return redirect()->route('organizations.index')->with("successMessage", "Organization Updated Successfully!");
     }
+
+
     public function destroy(Organization $organization)
     {
         $this->authorize('destroy', Organization::class);

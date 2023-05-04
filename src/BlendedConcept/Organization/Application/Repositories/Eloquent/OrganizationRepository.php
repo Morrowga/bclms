@@ -55,7 +55,8 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 }
             });
         } catch (\Throwable $th) {
-            dd($th);
+            DB::rollBack();
+            return false;
         }
     }
 

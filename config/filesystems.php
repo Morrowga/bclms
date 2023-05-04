@@ -47,22 +47,27 @@ return [
         'avatars' => [
             'driver' => 'local',
             'root' => storage_path('app/avatars'),
+            'visibility' => 'public',
         ],
 
         'media_user' => [
             'driver' => 'local',
             'root' => storage_path('app/public/users'),
             'url' => env('APP_URL') . '/storage/users',
+            'visibility' => 'public',
         ],
         'media_organization' => [
             'driver' => 'local',
             'root' => storage_path('app/public/organization'),
             'url' => env('APP_URL') . '/storage/organization',
+            'visibility' => 'public',
         ],
+
         'media_student' => [
             'driver' => 'local',
             'root' => storage_path('app/public/students'),
             'url' => env('APP_URL') . '/storage/students',
+            'visibility' => 'public',
         ],
 
         's3' => [
