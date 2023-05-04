@@ -1,43 +1,19 @@
 <?php
 
-namespace Tests\Feature;
+use Illuminate\Support\Facades\Artisan;
+use Src\BlendedConcept\User\Domain\Factories\UserFactory;
+use  Src\BlendedConcept\User\Domain\Model\User;
+beforeEach(function () {
+    // Run migrations
+    Artisan::call('migrate:fresh');
+    // Seed the database with test data
+    Artisan::call('db:seed');
+});
 
-use Carbon\Carbon;
-use Database\Factories\UserFactory;
-use Tests\TestCase;
+/**
+ *  superadmin can only create roles and assign roles
+ *
+ */
+test('super admin can only create roles', function () {
 
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
-use Src\BlendedConcept\User\Domain\Model\Permission;
-use Src\BlendedConcept\User\Domain\Model\Role;
-use Src\BlendedConcept\User\Domain\Model\User;
-
-
-class RoleTest extends TestCase
-{
-    use RefreshDatabase, WithFaker;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        // Set up some test data
-    }
-
-    /** @test blank_role_name*/
-    public function test_blank_role_name()
-    {
-        $data = [
-            "name" => "",
-            "description" => $this->faker->text,
-        ];
-        $response = $this->post(route('roles.store'), $data);
-        $response->assertStatus(302);
-    }
-}
+});

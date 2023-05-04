@@ -1,5 +1,5 @@
 <script setup>
-import { useForm, usePage } from "@inertiajs/vue3";
+import { useForm, usePage,Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
@@ -72,11 +72,9 @@ const selectionChanged = (data) => {
         <VSpacer />
 
         <div class="app-user-search-filter d-flex justify-end align-center gap-6">
-          <!-- 👉 Search  -->
-          <!-- <VTextField placeholder="Search Role" density="compact" /> -->
-
-          <!-- 👉 View More button -->
+        <Link :href="route('users.index')">
           <v-btn>View More</v-btn>
+        </Link>
         </div>
       </VCardText>
 

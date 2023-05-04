@@ -19,8 +19,8 @@
             "
             class=""
           />
-          <h3 v-if="!hasImage">Upload Image</h3>
-          <p v-if="!hasImage">
+          <h3 :class="hasImage ? '' :'d-none'">Upload Image</h3>
+          <p :class="hasImage ? '' :'d-none'">
             Image size must be less than
             <span>2MB</span>
           </p>

@@ -35,7 +35,6 @@ const { layoutAttrs, injectSkinClasses } = useSkins();
 injectSkinClasses();
 
 let props = defineProps(["current_user_role",'user']);
-console.log(props)
 </script>
 <style lang="scss">
 // As we are using `layouts` plugin we need its styles to be imported

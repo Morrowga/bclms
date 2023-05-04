@@ -1,5 +1,5 @@
 <script setup>
-import { useForm, usePage } from "@inertiajs/vue3";
+import { useForm, usePage,Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
@@ -10,7 +10,6 @@ import { toastAlert } from "@Composables/useToastAlert";
 
 let props = defineProps(['organization']);
 
-console.log(props.organization)
 
 //## start datatable section
 let columns = [
@@ -77,11 +76,10 @@ const selectionChanged = (data) => {
         <VSpacer />
 
         <div class="app-user-search-filter d-flex justify-end align-center gap-6">
-          <!-- 👉 Search  -->
-          <!-- <VTextField placeholder="Search Role" density="compact" /> -->
-
+          <Link :href="route('organizations.index')">
           <!-- 👉 View More button -->
           <v-btn>View More</v-btn>
+          </Link>
         </div>
       </VCardText>
 
