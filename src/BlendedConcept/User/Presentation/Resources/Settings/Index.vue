@@ -14,11 +14,11 @@
        </VCol>
        <VCol cols="12">
          <h4 class="pb-2">Site Logo</h4>
-             <ImageUpload  v-model="form.site_logo"  :old_img="form.site_logo"/>
+             <ImageUpload  v-model="form.site_logo"  :old_img="$page?.props?.site_logo ?? ''"/>
        </VCol>
         <VCol cols="12">
          <h4 class="pb-2">Site Favicon</h4>
-             <ImageUpload  v-model="form.fav_icon" :old_img="form.fav_icon"/>
+             <ImageUpload  v-model="form.fav_icon" :old_img="$page?.props?.fav_icon ?? ''"/>
        </VCol>
        <VCol cols="12">
          <VSelect
@@ -63,7 +63,7 @@
 
 
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import { useForm,usePage } from "@inertiajs/vue3";
 import {defineProps} from "vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
@@ -209,14 +209,16 @@ const locales = [
 
 
 let props = defineProps(['setting']);
+let page  = usePage();
 
-console.log()
+
+console.log(props.setting)
 
 let form = useForm({
  site_name: props?.setting?.site_name,
  ssl:props?.setting?.ssl ?? "",
- site_logo :props?.setting?.media[0]?.original_url ?? " ",
- fav_icon:props?.setting?.media[1]?.original_url ?? " ",
+ fav_icon:"",
+ site_logo :"",
  timezone:props?.setting?.timezone,
  locale:props?.setting?.locale,
  email:props?.setting?.email,

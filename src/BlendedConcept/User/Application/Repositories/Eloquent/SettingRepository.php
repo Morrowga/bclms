@@ -22,31 +22,15 @@ class SettingRepository implements SettingRepositoryInterface
 
         if ($request->hasFile('site_logo') && $request->file('site_logo')->isValid()) {
 
+            $settings->clearMediaCollection('site_logo');
             $settings->addMediaFromRequest('site_logo')->toMediaCollection('site_logo', 'media_sitelogo');
-
-            $old_image = $settings->getFirstMedia('site_logo');
-
-            if ($old_image) {
-
-                $old_image->delete();
-
-            } else {
-
-                $settings->addMediaFromRequest('site_logo')->toMediaCollection('site_logo', 'media_sitelogo');
-            }
         }
 
         if ($request->hasFile('fav_icon') && $request->file('fav_icon')->isValid()) {
 
+            $settings->clearMediaCollection('fav_icon');
             $settings->addMediaFromRequest('fav_icon')->toMediaCollection('fav_icon', 'media_sitefavico');
 
-            $old_image = $settings->getFirstMedia('fav_icon');
-            if ($old_image) {
-                $old_image->delete();
-            } else {
-
-                $settings->addMediaFromRequest('fav_icon')->toMediaCollection('fav_icon', 'media_sitefavico');
-            }
         }
     }
 
