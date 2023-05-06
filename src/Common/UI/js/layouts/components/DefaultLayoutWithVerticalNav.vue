@@ -1,6 +1,6 @@
 <script setup>
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link,usePage } from "@inertiajs/inertia-vue3";
 import { themeConfig } from "@themeConfig";
 import Footer from "@/layouts/components/Footer.vue";
 import navItems from "@/navigation/horizontal";
@@ -12,7 +12,7 @@ import NavbarShortcuts from "@/layouts/components/NavbarShortcuts.vue";
 import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
 import NavSearchBar from "@/layouts/components/NavSearchBar.vue";
 import UserProfile from "@/layouts/components/UserProfile.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref,computed } from "vue";
 const resolveNavItemComponent = (item) => {
   if ("children" in item) return VerticalNavGroup;
 
@@ -33,15 +33,21 @@ onMounted(() => {
     : (open.value = [title]);
   // localStorage.removeItem("menu_title");
 });
+
+// get site name
+
+let page = usePage().props;
+
 </script>
 <template>
   <v-layout>
     <VNavigation-drawer v-model="drawer" style="position: fixed">
       <template v-slot:prepend>
         <Link to="/" class="d-flex align-start gap-x-2 pa-5">
-          <VNodeRenderer :nodes="themeConfig.app.logo" />
-          <h1 class="font-weight-bold leading-normal text-xl">
-            {{ themeConfig.app.title }}
+
+          <img :src="$page.props.site_settings.media[0].original_url" width="40" height="40" />
+          <h1 class="font-weight-bold leading-normal text-truncate text-xl">
+           {{$page.props.site_settings.site_name}}
           </h1>
         </Link>
       </template>

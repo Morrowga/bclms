@@ -10,6 +10,8 @@ use Src\BlendedConcept\User\Domain\Policies\PermissionPolicy;
 use Src\BlendedConcept\User\Domain\Policies\RolePolicy;
 use Src\BlendedConcept\Organization\Domain\Policies\OrganizationPolicy;
 use Gate;
+use Src\BlendedConcept\User\Domain\Policies\SettingPolicy;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -21,7 +23,8 @@ class AuthServiceProvider extends ServiceProvider
         'Src\BlendedConcept\User\Domain\Model\User::class' => 'Src\BlendedConcept\User\Domain\Policies\UserPolicy::class',
         'Src\BlendedConcept\User\Domain\Model\Permission::class' => 'Src\BlendedConcept\User\Domain\Policies\PermissionPolicy::class',
         'Src\BlendedConcept\User\Domain\Model\Role::class' => 'Src\BlendedConcept\User\Domain\Policies\RolePolicy::class',
-        'Src\BlendedConcept\Organization\Domain\Model\Organization::class' => 'Src\BlendedConcept\Organization\Domain\Policies\OrganizationPolicy::class'
+        'Src\BlendedConcept\Organization\Domain\Model\Organization::class' => 'Src\BlendedConcept\Organization\Domain\Policies\OrganizationPolicy::class',
+        'Src\BlendedConcept\User\Domain\Model\Setting::class' => 'Src\BlendedConcept\User\Domain\Policies\SettingPolicy::class'
     ];
 
     /**
@@ -32,7 +35,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        $policies = [UserPolicy::class, PermissionPolicy::class, RolePolicy::class,OrganizationPolicy::class];
+        $policies = [UserPolicy::class, PermissionPolicy::class, RolePolicy::class,OrganizationPolicy::class,SettingPolicy::class];
         foreach ($policies as $policy) {
             Gate::define('view', [$policy, 'view']);
             Gate::define('create', [$policy, 'create']);
@@ -42,6 +45,7 @@ class AuthServiceProvider extends ServiceProvider
             Gate::define('update', [$policy, 'update']);
             Gate::define('destroy', [$policy, 'destroy']);
         }
+
     }
 
     public function register()

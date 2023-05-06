@@ -49,10 +49,15 @@ const addNewAnnouncement = (announcementData) => {
       toastAlert({
         title: props.flash?.successMessage,
       });
+      serverError.value = "";
       isAddNewAnnouncementDrawerVisible.value = false;
     },
     onError: (error) => {
       serverError.value.title = error?.title;
+      serverError.value.message = error?.message;
+      serverError.value.type = error?.type;
+      serverError.value.created_by = error?.created_by;
+      serverError.value.send_to = error?.send_to;
     },
   });
 };
@@ -78,7 +83,11 @@ const updateAnnouncement = (announcementData) => {
         isEditAnnouncementDrawerVisible.value = false;
       },
       onError: (error) => {
-        serverError.value.title = error?.title;
+      serverError.value.title = error?.title;
+      serverError.value.message = error?.message;
+      serverError.value.type = error?.type;
+      serverError.value.created_by = error?.created_by;
+      serverError.value.send_to = error?.send_to;
       },
     }
   );

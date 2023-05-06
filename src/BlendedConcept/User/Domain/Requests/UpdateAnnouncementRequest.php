@@ -15,9 +15,21 @@ class UpdateAnnouncementRequest  extends FormRequest
     {
         return [
             'title' => [
-                'string',
-                'unique:permissions,name',
                 'required',
+                'string',
+            ],
+            'message' => [
+                'required',
+                'string'
+            ],
+            'created_by' => [
+                "required"
+            ],
+            'send_to' => [
+                'required'
+            ],
+            'type' => [
+                'required'
             ],
         ];
     }

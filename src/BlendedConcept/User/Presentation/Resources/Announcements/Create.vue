@@ -105,11 +105,8 @@ const message_types = ["success", "error", "warning", "info"];
               <!-- 👉  title -->
               <VCol cols="12">
                 <VTextField
-                  :error="checkError"
                   :error-messages="serverError?.title"
-                  @input="serverError.title = ''"
                   v-model="form.title"
-                  :rules="[requiredValidator]"
                   label="Title"
                 />
               </VCol>
@@ -117,6 +114,7 @@ const message_types = ["success", "error", "warning", "info"];
               <!-- announce by -->
               <VCol cols="12">
                 <VSelect
+                  :error-messages="serverError?.created_by"
                   label="Announce By"
                   item-title="name"
                   item-value="id"
@@ -128,6 +126,7 @@ const message_types = ["success", "error", "warning", "info"];
               <!-- announce to -->
               <VCol cols="12">
                 <VSelect
+                  :error-messages="serverError?.send_to"
                   label="Announce To"
                   v-model="form.send_to"
                   :items="props.users"
@@ -140,6 +139,7 @@ const message_types = ["success", "error", "warning", "info"];
               <VCol cols="12">
                 <VSelect
                   label="Message Type"
+                  :error-messages="serverError?.type"
                   v-model="form.type"
                   :items="message_types"
                   item-title="name"
@@ -148,7 +148,10 @@ const message_types = ["success", "error", "warning", "info"];
               </VCol>
               <!-- 👉  message -->
               <VCol cols="12">
-                <VTextarea v-model="form.message" label="Message" />
+                <VTextarea
+                :error-messages="serverError?.message"
+                v-model="form.message"
+                label="Message" />
               </VCol>
               <!-- 👉 Submit and Cancel -->
               <VCol cols="12">

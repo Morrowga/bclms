@@ -58,6 +58,8 @@ export default [
       access_module:"access_system",
       children: [
         { title: 'Website Manager', url: '/bc/admin',icon: { icon: 'mdi-alpha-r-circle' }, route_name:'/bc/admin', access_module : "access_pagebuilder",isNativeLink:true},
+        { title: 'Setting Configuration', url: '/settings',icon: { icon: 'mdi-cog' }, route_name:'/settings', access_module : "access_pagebuilder"}
+
       ]
     },
     {

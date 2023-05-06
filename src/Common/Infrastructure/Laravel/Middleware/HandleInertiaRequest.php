@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 use Src\BlendedConcept\User\Domain\Resources\AuthResource;
-
+use Src\BlendedConcept\User\Domain\Model\Setting;
 class HandleInertiaRequest extends Middleware
 {
     /**
@@ -51,7 +51,8 @@ class HandleInertiaRequest extends Middleware
             ],
             'notifications' => getNotifications() != null ? getNotifications()['notifications'] : null,
             'unreadNotificationsCount' => getNotifications() != null ? getNotifications()['unread'] : 0,
-            'auth' => auth()->check() ? new AuthResource(auth()->user()) : ""
+            'auth' => auth()->check() ? new AuthResource(auth()->user()) : "",
+            "site_settings" => Setting::find(1) ?? "",
         ]);
     }
 }

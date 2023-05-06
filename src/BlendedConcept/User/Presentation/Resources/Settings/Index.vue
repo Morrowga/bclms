@@ -1,73 +1,237 @@
 <template>
-  <AdminLayout>
-    <div class="grid grid-cols-12 gap-3 h-full">
-      <div class="menu-items bg-cwhite col-span-2 text-center pt-10">
-        <div class="items">
-          <ul>
-            <li
-              :class="[
-                'flex items-center justify-items-center ',
-                currentSettings == 'global'
-                  ? 'border-l-8      border-l-primary'
-                  : '',
-              ]"
-              @click="settings('global')"
-            >
-              <span class="material-symbols-outlined p-3">
-                settings_applications
-              </span>
-              Application
-            </li>
-            <li
-              :class="[
-                'flex items-center justify-items-center ',
-                currentSettings == 'date_format'
-                  ? 'border-l-8 border-l-primary'
-                  : '',
-              ]"
-              @click="settings('date_format')"
-            >
-              <span class="material-symbols-outlined p-3">
-                history_toggle_off
-              </span>
-              Date Format
-            </li>
+<AdminLayout>
 
-            <li
-              :class="[
-                'flex items-center justify-items-center ',
-                currentSettings == 'banner'
-                  ? 'border-l-8 border-l-primary'
-                  : '',
-              ]"
-              @click="settings('banner')"
-            >
-              <span class="material-symbols-outlined p-3"> vrpano </span>
-              Banner
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="container col-span-10 pt-10 pl-10">
-        <GlobleSetting v-if="currentSettings=='global'"/>
-        <DateFormat v-if="currentSettings=='date_format'"/>
-        <Banner v-if="currentSettings == 'banner'"/>
-      </div>
-    </div>
-  </AdminLayout>
+   <v-container>
+    <h1>Site Settings</h1>
+
+    <VForm @submit.prevent="handleUpdateSite">
+       <VRow>
+       <VCol cols="12">
+             <VTextField label="Site Name" v-model="form.site_name"  class="pt-5"/>
+       </VCol>
+       <VCol cols="12">
+             <VTextField label="SSL" v-model="form.ssl"  class="pt-5"/>
+       </VCol>
+       <VCol cols="12">
+         <h4 class="pb-2">Site Logo</h4>
+             <ImageUpload  v-model="form.site_logo"  :old_img="form.site_logo"/>
+       </VCol>
+        <VCol cols="12">
+         <h4 class="pb-2">Site Favicon</h4>
+             <ImageUpload  v-model="form.fav_icon" :old_img="form.fav_icon"/>
+       </VCol>
+       <VCol cols="12">
+         <VSelect
+          :items="timezone"
+           v-model="form.timezone"
+           label="Site Time Zone"
+         />
+       </VCol>
+       <VCol cols="12">
+         <VSelect
+          :items="locales"
+           label="Site Locale"
+           v-model="form.locale"
+         />
+       </VCol>
+       <VCol cols="12">
+             <VTextField
+               label="Email"
+               type="email"
+               v-model="form.email"
+               class="pt-5"/>
+       </VCol>
+       <VCol cols="12">
+             <VTextField
+               label="Contact Number"
+               type="text"
+               v-model="form.contact_number"
+               class="pt-5"/>
+       </VCol>
+       <VCol cols="4" class="ml-2">
+         <VBtn type="submit">
+           <VIcon icon="mdi-wrench-outline" />
+           Update
+         </VBtn>
+       </VCol>
+       </VRow>
+    </VForm>
+   </v-container>
+
+</AdminLayout>
 </template>
 
+
 <script setup>
-import { ref } from "vue";
-import AdminLayout from "@dashboard/AdminLayout.vue";
-import GlobleSetting from "./GlobleSetting.vue";
-import DateFormat from "./DateFormat.vue";
-import Banner from "./Banner.vue";
+import { useForm } from "@inertiajs/vue3";
+import {defineProps} from "vue";
+import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import ImageUpload from "@Composables/ImageUpload.vue";
+const timezone = [
+     'Pacific/Honolulu',
+     'Pacific/Honolulu',
+     'America/Anchorage',
+     'Pacific/Midway',
+     'Pacific/Honolulu',
+     'America/Los_Angeles',
+     'America/Denver',
+     'America/Chicago',
+     'America/New_York',
+     'America/Halifax',
+     'America/Santo_Domingo',
+     'America/Caracas',
+     'America/Manaus',
+     'America/Santiago',
+     'America/St_Johns',
+     'America/Godthab',
+     'America/Argentina/Buenos_Aires',
+     'Atlantic/South_Georgia',
+     'Atlantic/Azores',
+     'Africa/Casablanca',
+     'Europe/London',
+     'Europe/Berlin',
+     'Europe/Paris',
+     'Europe/Madrid',
+     'Africa/Lagos',
+     'Europe/Istanbul',
+     'Europe/Kiev',
+     'Asia/Jerusalem',
+     'Asia/Riyadh',
+     'Asia/Baghdad',
+     'Asia/Tehran',
+     'Asia/Muscat',
+     'Asia/Baku',
+     'Asia/Yekaterinburg',
+     'Asia/Karachi',
+     'Asia/Kolkata',
+     'Asia/Kathmandu',
+     'Asia/Dhaka',
+     'Asia/Bangkok',
+     'Asia/Hong_Kong',
+     'Asia/Shanghai',
+     'Asia/Tokyo',
+     'Australia/Brisbane',
+     'Australia/Adelaide',
+     'Australia/Sydney',
+     'Pacific/Auckland',
+];
+const locales = [
+    'af',
+    'ar',
+    'az',
+    'be',
+    'bg',
+    'bn',
+    'bs',
+    'ca',
+    'cs',
+    'cy',
+    'da',
+    'de',
+    'el',
+    'en',
+    'eo',
+    'es',
+    'et',
+    'eu',
+    'fa',
+    'fi',
+    'fr',
+    'ga',
+    'gl',
+    'gu',
+    'he',
+    'hi',
+    'hr',
+    'ht',
+    'hu',
+    'hy',
+    'id',
+    'is',
+    'it',
+    'ja',
+    'ka',
+    'kk',
+    'km',
+    'kn',
+    'ko',
+    'ku',
+    'ky',
+    'lb',
+    'lo',
+    'lt',
+    'lv',
+    'mg',
+    'mk',
+    'ml',
+    'mn',
+    'mr',
+    'ms',
+    'mt',
+    'nb',
+    'ne',
+    'nl',
+    'nn',
+    'no',
+    'oc',
+    'or',
+    'pa',
+    'pl',
+    'ps',
+    'pt',
+    'ro',
+    'ru',
+    'si',
+    'sk',
+    'sl',
+    'sq',
+    'sr',
+    'sv',
+    'sw',
+    'ta',
+    'te',
+    'tg',
+    'th',
+    'tk',
+    'tr',
+    'tt',
+    'ug',
+    'uk',
+    'ur',
+    'uz',
+    'vi',
+    'xh',
+    'yi',
+    'yo',
+    'zh',
+    'zu',
+];
 
-let currentSettings = ref("global");
-// globale setting function
 
-function settings(value) {
-  currentSettings.value = value;
+let props = defineProps(['setting']);
+
+console.log()
+
+let form = useForm({
+ site_name: props?.setting?.site_name,
+ ssl:props?.setting?.ssl ?? "",
+ site_logo :props.setting.media[0].original_url ?? " ",
+ fav_icon:props.setting.media[1].original_url ?? " ",
+ timezone:props?.setting?.timezone,
+ locale:props?.setting?.locale,
+ email:props?.setting?.email,
+ contact_number:props?.setting?.contact_number
+});
+
+function handleUpdateSite()
+{
+   form.post(route("updateSetting"), {
+    onSuccess: () => {
+     alert("success")
+    },
+    onError: (error) => {
+
+    },
+  });
 }
 </script>

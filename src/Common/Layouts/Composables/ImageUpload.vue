@@ -50,6 +50,7 @@ let hasImage = ref(false);
 function SelectImage() {
   //select image from hidden field
   file.value.click();
+
 }
 
 let emit = defineEmits("update:modelValue");
@@ -62,9 +63,17 @@ let props = defineProps({
 });
 function fileData(event) {
   let image = event.target.files[0];
-  let imgArea = document.querySelector(".img-area");
+
+   var parent = event.target.closest('.dropzone');
+
+   if(parent)
+   {
+       var imgArea = parent.querySelector(".img-area");
+   }
+
+
   // file is less than
-  if (image.size < 2000000) {
+  if (image.size < 5000000) {
     let reader = new FileReader();
     reader.onload = () => {
       let allImg = imgArea.querySelectorAll("img");

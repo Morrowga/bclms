@@ -70,6 +70,19 @@ return [
             'visibility' => 'public',
         ],
 
+        'media_sitelogo' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/sitelogo'),
+            'url' => env('APP_URL') . '/storage/sitelogo',
+            'visibility' => 'public',
+        ],
+        'media_sitefavico' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/sitefavico'),
+            'url' => env('APP_URL') . '/storage/sitefavico',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

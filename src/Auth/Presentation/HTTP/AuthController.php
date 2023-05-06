@@ -37,6 +37,7 @@ class AuthController extends Controller
     {
 
         $IsAuthnicated = $this->authInterface->login($request);
+
         $request->session()->put('phpb_logged_in', true);
         // check if your correct creditional or not
 

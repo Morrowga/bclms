@@ -12,7 +12,7 @@ import NavSearchBar from "@/layouts/components/NavSearchBar.vue";
 import UserProfile from "@/layouts/components/UserProfile.vue";
 import HorizontalNavLayout from "@layouts/components/HorizontalNavLayout.vue";
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link,usePage } from "@inertiajs/inertia-vue3";
 import MobileSidebar from "./MobileSidebar.vue";
 const { appRouteTransition } = useThemeConfig();
 import { ref } from "vue";
@@ -20,6 +20,7 @@ let drawer = ref(false);
 let toggle = () => {
   drawer.value = !drawer.value;
 };
+let page = usePage().props;
 </script>
 <template>
   <HorizontalNavLayout :nav-items="navItems" :drawer="drawer">
@@ -34,9 +35,9 @@ let toggle = () => {
         ></v-app-bar-nav-icon>
 
         <Link to="/" class="d-none d-md-flex align-start gap-x-2 ps-15">
-          <VNodeRenderer :nodes="themeConfig.app.logo" />
-          <h1 class="font-weight-bold leading-normal text-xl">
-            {{ themeConfig.app.title }}
+           <img :src="$page.props.site_settings.media[0].original_url" width="40" height="40" />
+           <h1 class="font-weight-bold leading-normal text-truncate text-xl">
+           {{$page.props.site_settings.site_name}}
           </h1>
         </Link>
 

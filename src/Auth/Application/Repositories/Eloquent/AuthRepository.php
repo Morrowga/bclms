@@ -11,7 +11,7 @@ use Src\Auth\Domain\Mail\VerifyEmail;
 use Src\BlendedConcept\User\Domain\Model\User;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
 use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
-
+use Illuminate\Support\Facades\Auth;
 class AuthRepository implements AuthRepositoryInterface
 {
     //login
@@ -22,6 +22,7 @@ class AuthRepository implements AuthRepositoryInterface
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
+
         $user = User::where('email', $request->email)->first();
 
         // check if urser exit and allow auth attempt
@@ -31,7 +32,6 @@ class AuthRepository implements AuthRepositoryInterface
                 return ["errorMessage" => $error, "isCheck" => false];
             }
             if (auth()->attempt($credentials)) {
-
                 $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'from' => "", 'to' => "", 'type' => "success"]));
                 return ["errorMessage" => "Successfully", "isCheck" => true];
             } else {
@@ -41,6 +41,7 @@ class AuthRepository implements AuthRepositoryInterface
         }
         // if not fail log in
         else {
+
             $error = "Invalid Creditional";
             return ["errorMessage" => $error, "isCheck" => false];
         }

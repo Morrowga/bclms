@@ -162,6 +162,10 @@ class PermissionTableSeeder extends Seeder
             [
                 "name" => "delete_plan",
                 "guard_name" => "web"
+            ],
+            [
+                'name' => "access_settings",
+                "guard_name" => "web"
             ]
         ];
 

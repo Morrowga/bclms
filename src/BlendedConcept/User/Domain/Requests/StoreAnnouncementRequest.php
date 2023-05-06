@@ -15,8 +15,21 @@ class StoreAnnouncementRequest  extends FormRequest
     {
         return [
             'title' => [
-                'string',
                 'required',
+                'string',
+            ],
+            'message' => [
+                'required',
+                'string'
+            ],
+            'created_by' => [
+                "required"
+            ],
+            'send_to' => [
+                'required'
+            ],
+            'type' => [
+                'required'
             ],
         ];
     }

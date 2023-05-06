@@ -14,10 +14,12 @@ use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\PlanReposi
 use Src\BlendedConcept\Organization\Domain\Repositories\PlanRepositoryInterface;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\AnnouncementRepository;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\NotificationRepository;
+use Src\BlendedConcept\User\Application\Repositories\Eloquent\SettingRepository;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\StudentRepository;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\UserRepository;
 use Src\BlendedConcept\User\Domain\Repositories\AnnouncementRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
+use Src\BlendedConcept\User\Domain\Repositories\SettingRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\StudentRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 
@@ -61,6 +63,13 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             PlanRepositoryInterface::class,
             PlanRepository::class
+        );
+
+        // setting interface
+
+        $this->app->bind(
+            SettingRepositoryInterface::class,
+            SettingRepository::class
         );
     }
 

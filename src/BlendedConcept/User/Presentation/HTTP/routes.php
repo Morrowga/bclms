@@ -23,7 +23,10 @@ Route::group(['middleware' => ['auth']], function () {
     //announcement
     Route::resource('announcements', AnnouncementController::class);
 
-    Route::get('settings', [SettingController::class, 'index']);
+    Route::get('settings', [SettingController::class, 'index'])->name('settings');
+    Route::post('settings', [SettingController::class, 'UpdateSetting'])->name('updateSetting');
+
+
 
     //mark as read with id
     Route::post('/notifications/{id}/read', [NotificationController::class, 'read'])->name("markAsRead");
