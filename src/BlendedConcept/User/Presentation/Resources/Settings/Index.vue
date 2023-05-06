@@ -215,8 +215,8 @@ console.log()
 let form = useForm({
  site_name: props?.setting?.site_name,
  ssl:props?.setting?.ssl ?? "",
- site_logo :props.setting.media[0].original_url ?? " ",
- fav_icon:props.setting.media[1].original_url ?? " ",
+ site_logo :props?.setting?.media[0]?.original_url ?? " ",
+ fav_icon:props?.setting?.media[1]?.original_url ?? " ",
  timezone:props?.setting?.timezone,
  locale:props?.setting?.locale,
  email:props?.setting?.email,

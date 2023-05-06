@@ -48,9 +48,9 @@ const resolveNavItemComponent = (item) => {
       <VNavigation-drawer v-model="open" temporary>
         <template v-slot:prepend>
           <Link to="/" class="d-flex align-start gap-x-2 pa-5">
-          <img :src="$page.props.site_settings.media[0].original_url" width="40" height="40" />
+          <img :src="$page?.props?.site_settings?.media[0]?.original_url" width="40" height="40" />
           <h1 class="font-weight-bold leading-normal text-truncate text-xl">
-           {{$page.props.site_settings.site_name}}
+           {{$page?.props?.site_settings?.site_name}}
           </h1>
           </Link>
         </template>

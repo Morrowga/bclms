@@ -35,9 +35,9 @@ let page = usePage().props;
         ></v-app-bar-nav-icon>
 
         <Link to="/" class="d-none d-md-flex align-start gap-x-2 ps-15">
-           <img :src="$page.props.site_settings.media[0].original_url" width="40" height="40" />
+           <img :src="$page?.props?.site_settings?.media[0]?.original_url" width="40" height="40" />
            <h1 class="font-weight-bold leading-normal text-truncate text-xl">
-           {{$page.props.site_settings.site_name}}
+           {{$page?.props?.site_settings?.site_name}}
           </h1>
         </Link>
 
