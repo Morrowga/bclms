@@ -11,7 +11,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Src\BlendedConcept\User\Domain\Model\Role;
-
+use Illuminate\Support\Facades\Config;
 class Organization extends Model implements HasMedia
 {
     use HasFactory, Notifiable, InteractsWithMedia;

@@ -235,7 +235,7 @@ const resolveUserRoleVariant = role => {
                 <span class="font-weight-medium">
                   Language:
                 </span>
-                <span class="text-body-2">{{ props.userData.language }}</span>
+            <span class="text-body-2">{{ props.userData.language }}</span>
               </VListItemTitle>
             </VListItem>
 

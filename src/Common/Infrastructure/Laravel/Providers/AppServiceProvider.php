@@ -11,6 +11,7 @@ use Src\Auth\Domain\Repositories\DashboardRepositoryInterface;
 use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\OrganizationRepository;
 use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\PlanRepository;
+use Src\BlendedConcept\Organization\Domain\Model\Organization;
 use Src\BlendedConcept\Organization\Domain\Repositories\PlanRepositoryInterface;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\AnnouncementRepository;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\NotificationRepository;
@@ -22,6 +23,7 @@ use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\SettingRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\StudentRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
+use Illuminate\Support\Facades\Config;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -80,5 +82,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+       //set config for organization file system
+       $organization = Organization::all();
+       foreach($organization as $item)
+       {
+        $rootPath = storage_path('app/public/organization/'.$item->name);
+        $url = env('APP_URL') . '/storage';
+        Config::set("filesystems.disks.{$item->name}", [
+            'driver' => 'local',
+            'root' => $rootPath,
+            'url' => $url,
+            'visibility' => 'public',
+        ]);
+       }
     }
 }

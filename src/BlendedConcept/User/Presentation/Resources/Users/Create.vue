@@ -62,6 +62,8 @@ let handleSubmit = () => {
                     label="User Roles"
                     v-model="form.role"
                     :items="roles"
+                    item-title="name"
+                    item-value="id"
                     :error-messages="form?.errors?.role"
                   />
                 </VCol>

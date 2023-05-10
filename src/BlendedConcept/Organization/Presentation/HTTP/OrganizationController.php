@@ -21,11 +21,16 @@ class OrganizationController extends Controller
     {
 
         $this->authorize('view', Organization::class);
-
         $organizations = $this->organizationInterface->getOrganizations();
+
         return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Organizations/Index', [
             'organizations' => $organizations['paginate_organizations']
         ]);
+    }
+
+    public function create()
+    {
+        abort(404);
     }
 
 
@@ -38,6 +43,11 @@ class OrganizationController extends Controller
         return redirect()->route('organizations.index')->with("successMessage", "Organizations Created Successfully!");
     }
 
+    public function edit()
+    {
+        abort(404);
+    }
+
     public function update(UpdateOrganizationRequest $request, Organization $organization)
     {
         $this->authorize('edit', Organization::class);
@@ -46,6 +56,10 @@ class OrganizationController extends Controller
         return redirect()->route('organizations.index')->with("successMessage", "Organization Updated Successfully!");
     }
 
+    public function show()
+    {
+        abort(404);
+    }
 
     public function destroy(Organization $organization)
     {

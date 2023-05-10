@@ -53,6 +53,8 @@ class UserController extends Controller
     $this->authorize('edit', User::class);
     $this->userInterFace->updateUser($request, $user);
 
+
+
     return redirect()->route('users.index')->with("successMessage", "User Updated Successfully!");
   }
 

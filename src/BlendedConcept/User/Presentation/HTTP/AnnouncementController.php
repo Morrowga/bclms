@@ -38,6 +38,8 @@ class AnnouncementController extends Controller
           ]);
      }
 
+
+
      //store announcement
      public function store(StoreAnnouncementRequest $request)
      {

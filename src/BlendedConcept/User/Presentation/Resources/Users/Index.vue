@@ -47,37 +47,16 @@ let columns = [
     label: "NAME",
     field: "name",
     sortable: false,
-    // filterOptions: {
-    //   styleClass: "class1", // class to be added to the parent th element
-    //   enabled: true, // enable filter for this column
-    //   placeholder: "Filter All", // placeholder for filter input
-    //   filterDropdownItems: props.users_name, // dropdown (with selected values) instead of text input
-    //   trigger: "enter", //only trigger on enter not on keyup
-    // },
   },
   {
     label: "EMAIL",
     field: "email",
     sortable: false,
-    // filterOptions: {
-    //   styleClass: "class1", // class to be added to the parent th element
-    //   enabled: true, // enable filter for this column
-    //   placeholder: "Filter All", // placeholder for filter input
-    //   filterDropdownItems: props.users_name, // dropdown (with selected values) instead of text input
-    //   trigger: "enter", //only trigger on enter not on keyup
-    // },
   },
   {
     label: "ROLES",
     field: "roles",
     sortable: false,
-    // filterOptions: {
-    //   styleClass: "class1", // class to be added to the parent th element
-    //   enabled: true, // enable filter for this column
-    //   placeholder: "Filter All", // placeholder for filter input
-    //   filterDropdownItems: props.roles_name, // dropdown (with selected values) instead of text input
-    //   trigger: "enter", //only trigger on enter not on keyup
-    // },
   },
   {
     label: "REGISTER AT",

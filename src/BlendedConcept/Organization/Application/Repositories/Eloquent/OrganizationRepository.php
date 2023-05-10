@@ -51,12 +51,12 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                     ]
                 );
                 if ($request->hasFile('image') && $request->file('image')->isValid()) {
+
                     $organization->addMediaFromRequest('image')->toMediaCollection('image', 'media_organization');
                 }
             });
         } catch (\Throwable $th) {
-            DB::rollBack();
-            return false;
+           dd($th);
         }
     }
 

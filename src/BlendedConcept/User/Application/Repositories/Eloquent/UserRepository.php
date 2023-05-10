@@ -60,8 +60,7 @@ class UserRepository implements UserRepositoryInterface
             $user->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');
         }
 
-        $roles = Role::where("name", $request->role)->pluck("id");
-        $user->roles()->sync($roles);
+        $user->roles()->sync($request->role);
     }
 
     //  update user
@@ -84,8 +83,8 @@ class UserRepository implements UserRepositoryInterface
             }
         }
 
-        $roles = Role::where("name", $request->role)->pluck("id");
-        $user->roles()->sync($roles);
+
+            $user->roles()->sync($request->role);
     }
     //user filter
     public function filter($filters = [])
@@ -149,7 +148,7 @@ class UserRepository implements UserRepositoryInterface
     //get only roles name
     public function getRolesName()
     {
-        $roles_name = Role::pluck('name')->prepend('Select');
+        $roles_name = Role::get()->prepend('Select');
         return $roles_name;
     }
 

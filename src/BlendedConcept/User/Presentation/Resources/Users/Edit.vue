@@ -14,8 +14,9 @@ const isFormValid = ref(false);
 const refForm = ref();
 // get current user and roles
 let props = defineProps(["user", "roles", "flash"]);
+console.log(props.user.roles)
 let form = useForm({
-  role: props?.user?.roles[0]?.name,
+  role: props?.user?.roles[0]?.id,
   name: props.user.name,
   password: "",
   contact_number: props.user.contact_number,
@@ -39,7 +40,7 @@ let handleUpdate = (id) => {
   });
 };
 onUpdated(() => {
-  form.role = props?.user?.roles[0]?.name;
+  form.role = props?.user?.roles[0]?.id;
   form.name = props.user.name;
   form.contact_number = props.user.contact_number;
   form.email = props.user.email;
@@ -82,6 +83,8 @@ onUpdated(() => {
                     label="User Roles"
                     v-model="form.role"
                     :items="roles"
+                    item-title="name"
+                    item-value="id"
                     :error-messages="form?.errors?.role"
                     :rules="[requiredValidator]"
                   />
