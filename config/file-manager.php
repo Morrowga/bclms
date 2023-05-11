@@ -1,7 +1,8 @@
 <?php
 
+
 use Alexusmai\LaravelFileManager\Services\ConfigService\DefaultConfigRepository;
-use Alexusmai\LaravelFileManager\Services\ACLService\ConfigACLRepository;
+use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\UserAclRulesRepository;
 
 return [
 
@@ -17,7 +18,7 @@ return [
      *
      * Default - ConfigACLRepository (see rules in - aclRules)
      */
-    'aclRepository'     => ConfigACLRepository::class,
+    'aclRepository'     => UserAclRulesRepository::class,
 
     //********* Default configuration for DefaultConfigRepository **************
 
@@ -31,7 +32,7 @@ return [
      * List of disk names that you want to use
      * (from config/filesystems)
      */
-    'diskList'          => ['public'],
+    'diskList'          => ['avatars','local','media_user','media_organization'],
 
     /**
      * Default disk for left manager
@@ -110,7 +111,7 @@ return [
      *
      * default - false(OFF)
      */
-    'acl'               => false,
+    'acl'               => true,
 
     /**
      * Hide files and folders from file-manager if user doesn't have access
@@ -126,7 +127,7 @@ return [
      *
      * whitelist - Deny anything(access - 0 - deny), that not allowed by the ACL rules list
      */
-    'aclStrategy'       => 'blacklist',
+    'aclStrategy'       => 'whitelist',
 
     /**
      * ACL Rules cache
@@ -157,13 +158,8 @@ return [
      * access: 0 - deny, 1 - read, 2 - read/write
      */
     'aclRules'          => [
-        null => [
-            //['disk' => 'public', 'path' => '/', 'access' => 2],
-        ],
-        1    => [
-            //['disk' => 'public', 'path' => 'images/arch*.jpg', 'access' => 2],
-            //['disk' => 'public', 'path' => 'files/*', 'access' => 1],
-        ],
+
+
     ],
 
     /**
