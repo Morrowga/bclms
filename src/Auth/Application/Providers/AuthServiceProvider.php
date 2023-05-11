@@ -10,7 +10,9 @@ use Src\BlendedConcept\User\Domain\Policies\PermissionPolicy;
 use Src\BlendedConcept\User\Domain\Policies\RolePolicy;
 use Src\BlendedConcept\Organization\Domain\Policies\OrganizationPolicy;
 use Gate;
+use Src\BlendedConcept\User\Domain\Policies\FileManagerPolicy;
 use Src\BlendedConcept\User\Domain\Policies\SettingPolicy;
+
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -35,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        $policies = [UserPolicy::class, PermissionPolicy::class, RolePolicy::class,OrganizationPolicy::class,SettingPolicy::class];
+        $policies = [UserPolicy::class, PermissionPolicy::class, RolePolicy::class,OrganizationPolicy::class,SettingPolicy::class,FileManagerPolicy::class];
         foreach ($policies as $policy) {
             Gate::define('view', [$policy, 'view']);
             Gate::define('create', [$policy, 'create']);

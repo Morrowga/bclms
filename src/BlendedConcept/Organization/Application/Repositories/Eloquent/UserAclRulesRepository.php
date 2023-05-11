@@ -27,6 +27,10 @@ class UserAclRulesRepository implements ACLRepository
         if (Auth::id() === 1) {
             return [
                 ['disk' => 'local', 'path' => '*', 'access' => 2],
+                ['disk' => 'avatars', 'path' => '*', 'access' => 2],
+                ['disk' => 'local', 'path' => '*', 'access' => 2],
+                ['disk' => 'media_user', 'path' => '*', 'access' => 2],
+                ['disk' => 'media_organization', 'path' => '*', 'access' => 2]
             ];
         }
 
