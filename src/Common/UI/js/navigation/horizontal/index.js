@@ -46,7 +46,7 @@ export default [
       route_name:'libraries',
       access_module:"access_library",
       children: [
-        { title:"Libraries",url:"/libraries",icon:{icon:'mdi mdi-library'},route_name:"libraries",access_module:'access_library',
+        { title:"Libraries",url:"/libraries",icon:{icon:'mdi mdi-library'},route_name:"libraries",access_module:'access_library',isNativeLink:true
       },
       ]
     },
