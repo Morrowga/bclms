@@ -16,7 +16,7 @@ import {
     onPageChange,
     onPerPageChange,
     serverPage,
-    serverPerPage
+    serverPerPage,
 } from "@Composables/useServerSideDatable.js";
 
 //## start variable section
@@ -82,7 +82,7 @@ const updatePermission = (userData) => {
 
 //## start delete permission and delete in database
 const deletePermission = (id) => {
-   deleteItem(id,"permissions");
+    deleteItem(id, "permissions");
 };
 //## end delete permission and delete in database
 
@@ -132,7 +132,6 @@ let options = ref({
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
-
 </script>
 
 <template>
@@ -198,7 +197,7 @@ watch(serverPerPage, function (value) {
                   @click="openEditModel(props.row)">
                 </VBtn> -->
 
-             <!-- <VBtn
+                                <!-- <VBtn
                 variant="text"
                   density="compact"
                   icon="mdi-trash"
@@ -220,9 +219,7 @@ watch(serverPerPage, function (value) {
                                     >Showing
                                     {{ props.permissions.meta.from }} to
                                     {{ props.permissions.meta.to }} of
-                                    {{
-                                        props.permissions.meta.total
-                                    }}
+                                    {{ props.permissions.meta.total }}
                                     entries</span
                                 >
                                 <div>

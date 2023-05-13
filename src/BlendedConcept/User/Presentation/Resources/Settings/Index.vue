@@ -5,10 +5,10 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import {
-  emailValidator,
-  requiredValidator,
-  integerValidator
-} from '@validators'
+    emailValidator,
+    requiredValidator,
+    integerValidator,
+} from "@validators";
 const timezone = [
     "Pacific/Honolulu",
     "Pacific/Honolulu",
