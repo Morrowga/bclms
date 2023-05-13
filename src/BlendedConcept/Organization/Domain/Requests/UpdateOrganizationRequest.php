@@ -16,7 +16,12 @@ class UpdateOrganizationRequest  extends FormRequest
         return [
             'name' => [
                 'string',
+                'required'
+            ],
+            'contact_email' => [
                 'required',
+                'email',
+                'unique:organizations,contact_email,' . request()->route('organization')->id
             ],
         ];
     }

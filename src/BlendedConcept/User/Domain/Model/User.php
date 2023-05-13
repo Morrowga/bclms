@@ -109,7 +109,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
             $query->where('name', 'like', '%' . $name . '%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('name', 'like', '%' . $search . '%');
+            $query->orWhere('name', 'like', '%' . $search . '%')
+                  ->orWhere('email','like','%'.$search.'%');
         });
         $query->when($filters['roles'] ?? false, function ($query, $role) {
             $query->whereHas('roles', function ($query) use ($role) {

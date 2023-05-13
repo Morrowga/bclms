@@ -14,11 +14,8 @@ class StoreOrganizationRequest  extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'string',
-                'required',
-            ],
-            'contact_email' => ['required', 'email', 'unique:users,email'],
+            'name' => ['string','required'],
+            'contact_email' => ['required', 'email', 'unique:organizations,contact_email'],
         ];
     }
 }

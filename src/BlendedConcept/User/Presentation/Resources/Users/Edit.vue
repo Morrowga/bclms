@@ -113,7 +113,7 @@ onUpdated(() => {
                     v-model="form.email"
                     class="w-100"
                     :error-messages="form?.errors?.email"
-                    :rules="[requiredValidator]"
+                    :rules="[requiredValidator,emailValidator]"
                   />
                 </VCol>
                 <VCol cols="12">

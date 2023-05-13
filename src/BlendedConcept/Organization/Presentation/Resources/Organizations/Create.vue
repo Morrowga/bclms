@@ -78,8 +78,8 @@ let handleSubmit = () => {
                     density="compact"
                     v-model="form.name"
                     class="w-100"
-                    :error-messages="form?.errors?.name"
                     :rules="[requiredValidator]"
+                    :error-messages="form?.errors?.name"
                   />
                 </VCol>
                 <VCol cols="12">
@@ -88,6 +88,7 @@ let handleSubmit = () => {
                     density="compact"
                     v-model="form.contact_person"
                     class="w-100"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.contact_person"
                   />
                 </VCol>
@@ -97,6 +98,7 @@ let handleSubmit = () => {
                     density="compact"
                     v-model="form.contact_email"
                     class="w-100"
+                    :rules="[emailValidator]"
                     :error-messages="form?.errors?.contact_email"
                   />
                 </VCol>
@@ -106,6 +108,7 @@ let handleSubmit = () => {
                     density="compact"
                     v-model="form.contact_number"
                     class="w-100"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.contact_number"
                   />
                 </VCol>
@@ -132,15 +135,18 @@ let handleSubmit = () => {
                     density="compact"
                     v-model="form.storage"
                     class="w-100"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.storage"
                   />
                 </VCol>
                 <VCol cols="6">
                   <VTextField
                     label="Price"
+                    type="number"
                     density="compact"
                     v-model="form.price"
                     class="w-100"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.price"
                   />
                 </VCol>
@@ -150,6 +156,7 @@ let handleSubmit = () => {
                     density="compact"
                     v-model="form.payment_period"
                     class="w-100"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.payment_period"
                   />
                 </VCol>

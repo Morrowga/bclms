@@ -33,9 +33,6 @@ let handleUpdate = (id) => {
       });
       isDialogVisible.value = false;
     },
-    onError: (error) => {
-      alert("something was wrong");
-    },
   });
 };
 onUpdated(() => {
@@ -47,7 +44,6 @@ onUpdated(() => {
   form.license = props.organization.plan.teacher_license;
   form.storage = props.organization.plan.allocated_storage;
   form.payment_peroid = props.organization.plan.payment_peroid;
-  // form.payment_type = props.organization.plan.payment_type;
   form.image = props?.organization?.image[0]?.original_url || "";
 });
 </script>
@@ -108,6 +104,7 @@ onUpdated(() => {
                     density="compact"
                     v-model="form.contact_person"
                     class="w-100"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.contact_person"
                   />
                 </VCol>
@@ -117,6 +114,7 @@ onUpdated(() => {
                     density="compact"
                     v-model="form.contact_email"
                     class="w-100"
+                    :rules="[emailValidator]"
                     :error-messages="form?.errors?.contact_email"
                   />
                 </VCol>
@@ -126,6 +124,7 @@ onUpdated(() => {
                     density="compact"
                     v-model="form.contact_number"
                     class="w-100"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.contact_number"
                   />
                 </VCol>
@@ -152,6 +151,7 @@ onUpdated(() => {
                     density="compact"
                     v-model="form.storage"
                     class="w-100"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.storage"
                   />
                 </VCol>
@@ -161,6 +161,7 @@ onUpdated(() => {
                     density="compact"
                     v-model="form.price"
                     class="w-100"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.price"
                   />
                 </VCol>
@@ -170,6 +171,7 @@ onUpdated(() => {
                     density="compact"
                     v-model="form.payment_peroid"
                     class="w-100"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.payment_peroid"
                   />
                 </VCol>

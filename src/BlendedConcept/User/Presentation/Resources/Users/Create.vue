@@ -5,7 +5,7 @@ import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
-import { emailValidator, requiredValidator } from "@validators";
+import { emailValidator, requiredValidator,integerValidator } from "@validators";
 
 // get roles
 let props = defineProps(["roles", "flash"]);
@@ -72,22 +72,27 @@ let handleSubmit = () => {
                     label="Name"
                     v-model="form.name"
                     class="w-100"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.name"
                   />
                 </VCol>
                 <VCol cols="12">
                   <VTextField
+                    type="number"
                     label="Contact Number"
                     v-model="form.contact_number"
                     class="w-100"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.contact_number"
                   />
                 </VCol>
                 <VCol cols="12">
                   <VTextField
+                    type="email"
                     label="Email"
                     v-model="form.email"
                     class="w-100"
+                    :rules="[emailValidator]"
                     :error-messages="form?.errors?.email"
                   />
                 </VCol>
@@ -108,7 +113,10 @@ let handleSubmit = () => {
                 </VCol>
 
                 <VCol cols="12">
-                  <AppDateTimePicker v-model="form.dob" label="Dob" />
+                  <AppDateTimePicker
+                  :rules="[requiredValidator]"
+                  v-model="form.dob"
+                  label="Dob" />
                 </VCol>
               </VRow>
             </VCol>

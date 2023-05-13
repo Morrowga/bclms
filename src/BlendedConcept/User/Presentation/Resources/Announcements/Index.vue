@@ -7,6 +7,7 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 import { toastAlert } from "@Composables/useToastAlert";
+import deleteItem from "@Composables/useDeleteItem.js";
 
 //## start variable section
 let props = defineProps([
@@ -96,25 +97,7 @@ const updateAnnouncement = (announcementData) => {
 
 //## start delete announcement and delete in database
 const deleteAnnouncement = (id) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      form.delete(`announcements/${id}`, {
-        onSuccess: () => {
-          toastAlert({
-            title: props.flash?.successMessage,
-          });
-        },
-      });
-    }
-  });
+  deleteItem(id,"announcements");
 };
 //## end delete announcement and delete in database
 

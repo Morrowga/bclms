@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
 use  Src\BlendedConcept\User\Domain\Model\User;
 
+
 beforeEach(function () {
     // Run migrations
     Artisan::call('migrate:fresh');
@@ -17,12 +18,13 @@ beforeEach(function () {
     ]);
 });
 
-test('page builde access for superadmin', function () {
+test('page builder   access for superadmin and back button to home', function () {
 
     $this->assertTrue(Auth::check());
-
-
     $this->get("/bc/admin");
+
+    $response = $this->get("/home");
+    $response->assertStatus(200);
 
 });
 
@@ -59,3 +61,4 @@ test("page builder access with other roles ",function(){
     $response->assertStatus(403);
 
 });
+
