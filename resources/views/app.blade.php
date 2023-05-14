@@ -25,6 +25,12 @@
 
 <body>
     @inertia
+
+<script>
+
+ localStorage.setItem("_token",document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+
+</script>
 </body>
 
 </html>

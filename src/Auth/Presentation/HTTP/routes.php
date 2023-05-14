@@ -1,7 +1,6 @@
 <?php
 
 use HansSchouten\LaravelPageBuilder\LaravelPageBuilder;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Src\Auth\Presentation\HTTP\AuthController;
 
