@@ -171,7 +171,6 @@ onUpdated(() => {
                     density="compact"
                     v-model="form.payment_peroid"
                     class="w-100"
-                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.payment_peroid"
                   />
                 </VCol>

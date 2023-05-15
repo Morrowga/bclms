@@ -156,7 +156,6 @@ let handleSubmit = () => {
                     density="compact"
                     v-model="form.payment_period"
                     class="w-100"
-                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.payment_period"
                   />
                 </VCol>
