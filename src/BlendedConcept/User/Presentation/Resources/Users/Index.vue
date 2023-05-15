@@ -1,23 +1,14 @@
 <script setup>
 import Create from "./Create.vue";
 import Edit from "./Edit.vue";
-import { useUserListStore } from "@/views/apps/user/useUserListStore";
-import { avatarText } from "@core/utils/formatters";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
-import { router } from "@inertiajs/core";
-import MoreBtn from "@core/components/MoreBtn.vue";
+import {  usePage } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
-import { toastAlert } from "@Composables/useToastAlert";
-import Swal from "sweetalert2";
 import deleteItem from "@Composables/useDeleteItem.js";
 import {
     serverParams,
-    updateParams,
     onColumnFilter,
     searchItems,
-    truncatedText,
-    loadItems,
     onPageChange,
     onPerPageChange,
     serverPage,

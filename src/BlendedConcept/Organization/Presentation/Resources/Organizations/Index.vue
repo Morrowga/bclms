@@ -1,15 +1,24 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
-import { router } from "@inertiajs/core";
+import { usePage } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
-import { toastAlert } from "@Composables/useToastAlert";
 import deleteItem from "@Composables/useDeleteItem.js";
 let props = defineProps(["organizations", "flash", "auth"]);
+import {
+    serverParams,
+
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
 let flash = computed(() => usePage().props.flash);
-let serverPage = ref(props.organizations.meta.current_page ?? 1);
-let serverPerPage = ref(10);
+serverPage.value = ref(props.organizations.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
 let permissions = computed(() => usePage().props.auth.data.permissions);
+
 import Create from "./Create.vue";
 import Edit from "./Edit.vue";
 
@@ -42,17 +51,7 @@ let columns = [
         sortable: false,
     },
 ];
-//initial state
-let serverParams = ref({
-    columnFilters: {},
-    search: "",
-    sort: {
-        field: "",
-        type: "",
-    },
-    page: 1,
-    perPage: 10,
-});
+
 
 // options for datatable
 let options = ref({
@@ -63,63 +62,14 @@ let options = ref({
     perPageDropdown: [10, 20, 50, 100],
     dropdownAllowAll: false,
 });
-//updateParams
-let updateParams = (newProps) => {
-    serverParams.value = Object.assign({}, serverParams.value, newProps);
-};
-//page change on pagination
-let onPageChange = () => {
-    updateParams({ page: serverPage.value });
-    loadItems();
-};
 
-// perpage change selectbox
-let onPerPageChange = (value) => {
-    serverPage.value = 1;
-    updateParams({ page: 1, perPage: value });
-    loadItems();
-};
+
+
+
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
-// filter folumn by name
-let onColumnFilter = (params) => {
-    updateParams(params);
-    serverParams.value.page = 1;
-    loadItems();
-};
 
-// query params to controller
-let getQueryParams = () => {
-    let data = {
-        page: serverParams.value.page,
-        perPage: serverParams.value.perPage,
-        search: serverParams.value.search,
-    };
-
-    for (const [key, value] of Object.entries(
-        serverParams.value.columnFilters
-    )) {
-        if (value) {
-            data[key] = value;
-        }
-    }
-    return data;
-};
-//search items
-let searchItems = () => {
-    updateParams({ page: 1 });
-    loadItems();
-};
-// load items is what brings back the rows from server
-let loadItems = () => {
-    router.get(route(route().current()), getQueryParams(), {
-        replace: false,
-        preserveState: true,
-        preserveScroll: true,
-    });
-};
-const selectionChanged = (value) => {};
 </script>
 
 <template>

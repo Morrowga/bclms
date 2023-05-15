@@ -2,14 +2,11 @@
 import Create from "./Create.vue";
 import Edit from "./Edit.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { useForm, usePage } from "@inertiajs/vue3";
-import { router } from "@inertiajs/core";
+import {  usePage } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
-import { toastAlert } from "@Composables/useToastAlert";
 import deleteItem from "@Composables/useDeleteItem.js";
 import {
     serverParams,
-    updateParams,
     onColumnFilter,
     searchItems,
     truncatedText,
@@ -23,12 +20,6 @@ import {
 let props = defineProps(["roles", "permissions", "auth", "flash"]);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 
-const form = useForm({
-    name: "",
-    description: "",
-    _method: "",
-});
-let currentPermission = ref();
 serverPage.value = ref(props.roles.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
 //## end variable section

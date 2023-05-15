@@ -1,9 +1,8 @@
 <script setup>
 // component
-import AppDateTimePicker from "@core/components/AppDateTimePicker.vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
+import { useForm} from "@inertiajs/vue3";
 import { ref, defineProps } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
 
@@ -177,23 +176,13 @@ let handleSubmit = () => {
             </VCol>
             <!--  -->
           </VRow>
-
-          <!-- Buttons -->
-          <VRow>
-            <VCol cols="7" class="d-flex justify-end gap-2">
-              <VBtn type="submit" color="primary" size="small"> Submit </VBtn>
-              <VBtn
-                color="secondary"
-                variant="outlined"
-                @click="isDialogVisible = false"
-                size="small"
-              >
-                Cancel
-              </VBtn>
-            </VCol>
-          </VRow>
-          <!--  -->
         </VCardText>
+
+        <VCardActions>
+          <VSpacer />
+          <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
+          <VBtn type="submit" color="success"> Save </VBtn>
+        </VCardActions>
       </VForm>
     </VCard>
   </VDialog>
