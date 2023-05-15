@@ -243,7 +243,7 @@ function handleUpdateSite() {
                             label="Contact Number"
                             type="number"
                             v-model="form.contact_number"
-                            :rules="[integerValidator]"
+                            :rules="[requiredValidator,requiredValidator]"
                             :error-messages="form?.errors?.contact_number"
                             class="pt-5"
                         />
