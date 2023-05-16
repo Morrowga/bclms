@@ -26,6 +26,7 @@ let props = defineProps(["organization", "flash"]);
 let handleUpdate = (id) => {
     form.post(route("organizations.update", { id: id }), {
         onSuccess: (status) => {
+            console.log(props.flash,"hello")
             toastAlert({
                 title: props.flash?.successMessage,
             });

@@ -48,9 +48,9 @@ class Http extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
+            \Src\Auth\Domain\Middleware\CustomSession::class,
             \Src\Common\Infrastructure\Laravel\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Src\Common\Infrastructure\Laravel\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
