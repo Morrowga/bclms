@@ -24,6 +24,8 @@ use Src\BlendedConcept\User\Domain\Repositories\SettingRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\StudentRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 use Illuminate\Support\Facades\Config;
+use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\PageBuilderRepository;
+use Src\BlendedConcept\Organization\Domain\Repositories\PageBuilderInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -73,7 +75,17 @@ class AppServiceProvider extends ServiceProvider
             SettingRepositoryInterface::class,
             SettingRepository::class
         );
+
+
+
+        // third party package interface and repository
+
+        $this->app->bind(
+            PageBuilderInterface::class,
+            PageBuilderRepository::class
+        );
     }
+
 
     /**
      * Bootstrap any application services.

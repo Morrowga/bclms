@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Src\BlendedConcept\Organization\Presentation\HTTP\DashboardBoardController;
+use Src\BlendedConcept\Organization\Presentation\HTTP\DashBoardController;
 use Src\BlendedConcept\User\Presentation\HTTP\NotificationController;
 use Src\BlendedConcept\User\Presentation\HTTP\PermissionController;
 use Src\BlendedConcept\User\Presentation\HTTP\PortalController;
@@ -57,7 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
      // library
      Route::get("libraries", [LibraryController::class, 'index'])->name('libraries');
 
-    Route::get("userprofile", [DashboardBoardController::class, 'userProfile'])->name('userprofile');
+    Route::get("userprofile", [DashBoardController::class, 'userProfile'])->name('userprofile');
 
 
 

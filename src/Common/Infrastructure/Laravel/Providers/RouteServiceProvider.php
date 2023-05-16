@@ -29,18 +29,17 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            // for not login route
 
-            Route::middleware('web')
-                ->group(base_path('src/Auth/Presentation/HTTP/routes.php'));
 
-            // check middleware for only authnicated user
+            // for web route
             Route::middleware(['web'])
                 ->group(function () {
+                    require base_path('src/Auth/Presentation/HTTP/routes.php');
                     require base_path('src/BlendedConcept/User/Presentation/HTTP/routes.php');
                     require base_path('src/BlendedConcept/Organization/Presentation/HTTP/routes.php');
                 });
 
+            // for api route
             Route::middleware('api')
                 ->group(base_path('routes/api.php'));
         });
