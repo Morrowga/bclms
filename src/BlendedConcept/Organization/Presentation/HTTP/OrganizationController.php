@@ -18,10 +18,11 @@ class OrganizationController extends Controller
         $this->organizationInterface = $organizationInterface;
     }
 
+
     public function index(Request $request)
     {
         $this->authorize('view', Organization::class);
-        $filters = request()->only(['page','search', 'perPage']);
+        $filters = request()->only(['page', 'search', 'perPage']);
         $organizations = $this->organizationInterface->getOrganizations($filters);
         return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Organizations/Index', [
             'organizations' => $organizations['paginate_organizations']
@@ -52,7 +53,6 @@ class OrganizationController extends Controller
     {
         $this->authorize('edit', Organization::class);
         $this->organizationInterface->updateOrganization($request, $organization);
-
         return redirect()->route('organizations.index')->with("successMessage", "Organization Updated Successfully!");
     }
 

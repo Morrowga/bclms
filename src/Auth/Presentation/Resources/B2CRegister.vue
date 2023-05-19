@@ -1,27 +1,31 @@
 <script setup>
-import { useGenerateImageVariant } from "@/@core/composable/useGenerateImageVariant";
-import AuthProvider from "@/views/pages/authentication/AuthProvider.vue";
-import authV1RegisterMaskDark from "@images/pages/auth-v1-register-mask-dark.png";
-import authV1RegisterMaskLight from "@images/pages/auth-v1-register-mask-light.png";
-import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
-import { themeConfig } from "@themeConfig";
 import { Link, useForm } from "@inertiajs/vue3";
-import { router } from "@inertiajs/core";
+import { toastAlert } from "@Composables/useToastAlert";
+
 //## start variable section
 const form = useForm({
   email: "",
   password: "",
 });
 const isPasswordVisible = ref(false);
+let ErrorMessage = defineProps(["errorMessage"]);
 //## end variable section
 
 //## start register function
 let register = () => {
   form.post(route("b2cstore"), {
     onSuccess: () => {
-      alert("success");
+
+      if (ErrorMessage) {
+          toastAlert({
+            bgColor: "red",
+            icon: "error",
+            title: "Something is wrong"
+          });
+      }
     },
     onError: (error) => {
+      console.log(error);
       form.setError("email", error?.email);
       form.setError("password", error?.password);
     },
@@ -100,7 +104,7 @@ let register = () => {
     </div>
   </div>
 </template>
-@use "@styles/@core/template/pages/page-auth.scss";
+
 
 <style lang="scss">
 </style>

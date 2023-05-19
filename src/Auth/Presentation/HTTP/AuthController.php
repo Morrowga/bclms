@@ -2,14 +2,10 @@
 
 namespace Src\Auth\Presentation\HTTP;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
-
-use Src\BlendedConcept\User\Domain\Model\User;
-
+use PhpParser\Node\Stmt\TryCatch;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Src\Auth\Domain\Requests\StoreRegisterRequest;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
@@ -23,24 +19,29 @@ class AuthController extends Controller
         $this->authInterface = $authInterface;
     }
 
-    // login page render
+    // login page view
+
     public function loginPage()
     {
+
         if (Auth::check()) {
+
             return redirect()->route('dashboard');
         }
         return Inertia::render('Auth/Presentation/Resources/Login');
     }
 
-    //login
     public function login(StoreLoginRequest $request)
     {
 
         $IsAuthnicated = $this->authInterface->login($request);
 
-        $request->session()->put('phpb_logged_in', true);
-        // check if your correct creditional or not
+        /**
+         *  this below line set session for pagebuilder access that need
+         *  phpb_logged_in session to access pagebuilder
+         */
 
+        $request->session()->put('phpb_logged_in', true);
         if ($IsAuthnicated['isCheck']) {
             return redirect()->route('dashboard');
         } else {
@@ -50,6 +51,10 @@ class AuthController extends Controller
 
     public function logout()
     {
+        /**
+         *  if you logout you must need to clear session of
+         *  phpb_logged_in thus why we set it here
+         */
         Auth::logout();
         session()->remove('phpb_logged_in');
         return redirect()->route('login');
@@ -72,7 +77,17 @@ class AuthController extends Controller
     // store b2c register user
     public function B2CStore(StoreRegisterRequest $request)
     {
-        $this->authInterface->b2cRegister($request);
+        try {
+            $this->authInterface->b2cRegister($request);
+        } catch (\Exception $errors) {
+
+
+        return Inertia::render('Auth/Presentation/Resources/Register',[
+            "ErrorMessage" => $errors->getCode()
+        ]);
+
+        }
+
         return redirect()->route('verify');
     }
     // verifing email
@@ -81,12 +96,14 @@ class AuthController extends Controller
 
         $id = $request->id;
         $user = $this->authInterface->verification($id);
+
         if($user !== null)
         {
             return Inertia::render('Auth/Presentation/Resources/Verify', [
                 "verified" => true
             ])->with("successMessage", "Email verify successfully!");
         }
+
         else
         {
            //user manually change token id

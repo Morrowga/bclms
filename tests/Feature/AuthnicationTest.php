@@ -100,7 +100,7 @@ test('before_verified_b2c_register', function () {
         "email_verified_at" => null
     ];
 
-    $response = $this->post('/b2cstore', $data);
+    $this->post('/b2cstore', $data);
 
     $checkEmailVerify = $this->post("/login", [
         "email" => $data['email'],

@@ -2,7 +2,7 @@ const pages = {
 
 
     // //organization
-    "BlendedConcept/Organization/Presentation/Resources/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/Index.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/index": import('../../src/BlendedConcept/Organization/Presentation/Resources/index.vue'),
 
     "BlendedConcept/Organization/Presentation/Resources/Organizations/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organizations/Index.vue'),
 
@@ -26,9 +26,6 @@ const pages = {
     "Auth/Presentation/Resources/Register": import("../../src/Auth/Presentation/Resources/Register.vue"),
     "Auth/Presentation/Resources/Verify": import("../../src/Auth/Presentation/Resources/Verify.vue"),
 
-
-    // library access
-    "BlendedConcept/Organization/Presentation/Resources/Libraries/Index": import("../../src/BlendedConcept/Organization/Presentation/Resources/Libraries/Index.vue"),
 
 
     //announcement

@@ -6,12 +6,10 @@ import { toastAlert } from "@Composables/useToastAlert";
 import { useForm} from "@inertiajs/vue3";
 import { ref } from "vue";
 import { emailValidator, requiredValidator,integerValidator } from "@validators";
-
-// get roles
 let props = defineProps(["roles", "flash"]);
 const isDialogVisible = ref(false);
-// check passwor visible
 const isPasswordVisible = ref(false);
+
 let form = useForm({
   role: "Select",
   name: " ",
@@ -22,7 +20,6 @@ let form = useForm({
   dob: "",
 });
 
-// submit create form
 let handleSubmit = () => {
   form.post(route("users.store"), {
     onSuccess: () => {
@@ -37,6 +34,7 @@ let handleSubmit = () => {
   });
 };
 </script>
+
 
 <template>
   <VDialog v-model="isDialogVisible" max-width="900" persistent>

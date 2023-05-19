@@ -1,11 +1,5 @@
 <script setup>
-import {
-  watch,
-  defineProps,
-  computed,
-  ref,
-  onUpdated,
-} from "vue";
+import { watch, defineProps, computed, ref, onUpdated } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { requiredValidator } from "@validators";
 import { toastAlert } from "@Composables/useToastAlert";
@@ -137,6 +131,7 @@ onUpdated(() => {
 //## end reative name and description when edit
 </script>
 
+
 <template>
   <VDialog v-model="isDialogVisible" max-width="1000">
     <!-- Dialog Activator -->
@@ -262,6 +257,8 @@ onUpdated(() => {
     </VCard>
   </VDialog>
 </template>
+
+
 <style lang="scss" scoped>
 table td,
 table td * {

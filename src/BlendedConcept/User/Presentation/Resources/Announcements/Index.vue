@@ -84,11 +84,11 @@ const updateAnnouncement = (announcementData) => {
         isEditAnnouncementDrawerVisible.value = false;
       },
       onError: (error) => {
-      serverError.value.title = error?.title;
-      serverError.value.message = error?.message;
-      serverError.value.type = error?.type;
-      serverError.value.created_by = error?.created_by;
-      serverError.value.send_to = error?.send_to;
+        serverError.value.title = error?.title;
+        serverError.value.message = error?.message;
+        serverError.value.type = error?.type;
+        serverError.value.created_by = error?.created_by;
+        serverError.value.send_to = error?.send_to;
       },
     }
   );
@@ -97,7 +97,7 @@ const updateAnnouncement = (announcementData) => {
 
 //## start delete announcement and delete in database
 const deleteAnnouncement = (id) => {
-  deleteItem(id,"announcements");
+  deleteItem(id, "announcements");
 };
 //## end delete announcement and delete in database
 
@@ -231,6 +231,7 @@ let truncatedText = (text) => {
 };
 //## end datatable section
 </script>
+
 
 <template>
   <AdminLayout>

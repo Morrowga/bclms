@@ -89,6 +89,7 @@ const checkError = computed(() => {
 const message_types = ["success", "error", "warning", "info"];
 </script>
 
+
 <template>
   <VNavigationDrawer
     temporary
@@ -156,9 +157,10 @@ const message_types = ["success", "error", "warning", "info"];
               </VCol>
               <VCol cols="12">
                 <VTextarea
-                :error-messages="serverError?.message"
-                v-model="form.message"
-                label="Message" />
+                  :error-messages="serverError?.message"
+                  v-model="form.message"
+                  label="Message"
+                />
               </VCol>
               <!-- 👉 Submit and Cancel -->
               <VCol cols="12">

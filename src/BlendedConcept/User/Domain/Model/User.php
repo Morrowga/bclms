@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\User\Domain\Model\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Carbon\Carbon;
+
 
 class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {

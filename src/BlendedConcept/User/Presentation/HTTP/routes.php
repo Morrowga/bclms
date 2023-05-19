@@ -38,33 +38,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/notifications/index', [NotificationController::class, "getAllNotifications"])->name("notifications");
 
 
-    // student add
-    Route::get("addstudent", [StudentController::class, 'create'])->name('students.store');
-    Route::get('editstudent/{student}', [StudentController::class, 'edit'])->name('students.edit');
-    Route::put('updatestudent/{student}', [StudentController::class, 'update'])->name('students.update');
-    Route::get("studentdashboard", [StudentController::class, 'dashboard'])->name('studentdashboard');
-    Route::post("students", [StudentController::class, 'store'])->name('students.store');
+
 
     // announcement
     Route::resource("announcements", AnnouncementController::class);
 
-
-    // teacher
-    Route::get("teacherdashboard", [TeacherController::class, 'dashboard'])->name('teacherdashboard');
-
-
-
      // library
      Route::get("libraries", [LibraryController::class, 'index'])->name('libraries');
 
-    Route::get("userprofile", [DashBoardController::class, 'userProfile'])->name('userprofile');
 
 
 
 
 
-});
-Route::get('/', [PortalController::class, 'index'])->name('portal');
-Route::get("testing/route", function () {
-    return Inertia::render('Index');
 });

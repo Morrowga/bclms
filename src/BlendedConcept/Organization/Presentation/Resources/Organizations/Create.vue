@@ -1,14 +1,13 @@
 <script setup>
-// component
-import ImageUpload from "@Composables/ImageUpload.vue";
-import { toastAlert } from "@Composables/useToastAlert";
 import { useForm} from "@inertiajs/vue3";
 import { ref, defineProps } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
-
+import ImageUpload from "@Composables/ImageUpload.vue";
+import { toastAlert } from "@Composables/useToastAlert";
 const isFormValid = ref(false);
-const refForm = ref();
 const isDialogVisible = ref(false);
+let props = defineProps(["flash"]);
+
 let form = useForm({
   name: "",
   contact_person: "",
@@ -21,7 +20,6 @@ let form = useForm({
   // payment_type: "card",
   image: "",
 });
-let props = defineProps(["flash"]);
 
 // submit create form
 let handleSubmit = () => {
@@ -35,13 +33,15 @@ let handleSubmit = () => {
           isDialogVisible.value = false;
         },
         onError: (error) => {
-          //   alert("something was wrong");
+
         },
       });
     }
   });
 };
+
 </script>
+
 
 <template>
   <VDialog v-model="isDialogVisible" max-width="900" persistent>
@@ -158,26 +158,13 @@ let handleSubmit = () => {
                     :error-messages="form?.errors?.payment_period"
                   />
                 </VCol>
-                <!-- <VCol cols="6">
-                  <VTextField
-                    label="Payment Type"
-                    density="compact"
-                    v-model="form.payment_type"
-                    class="w-100"
-                    :error-messages="form?.errors?.payment_type"
-                  />
-                </VCol> -->
               </VRow>
-              <!--  -->
             </VCol>
-            <!-- Image Upload -->
             <VCol cols="6">
               <ImageUpload v-model="form.image" />
             </VCol>
-            <!--  -->
           </VRow>
         </VCardText>
-
         <VCardActions>
           <VSpacer />
           <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>

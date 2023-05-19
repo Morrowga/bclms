@@ -1,7 +1,55 @@
+<script setup>
+import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import AnalyticsCongratulationsJohn from "@/views/dashboard/analytics/AnalyticsCongratulationsJohn.vue";
+import EcommerceSalesOverview from "@/views/dashboard/ecommerce/EcommerceSalesOverview.vue";
+import StaffDashboard from "./StaffDashBoard/index.vue";
+import SuperAdminDashboard from "./SuperAdminDashBoard/index.vue";
+import TeacherOrParentDashboard from "./TeacherDashBoard/index.vue";
+import { defineProps, onMounted, watch, computed } from "vue";
+import { usePage, useForm } from "@inertiajs/vue3";
+import axios from "axios";
+let props = defineProps(["current_user_role", "user", "orgainzations_users"]);
+const isAlertVisible = ref(true);
+let form = useForm({});
+let notifications = ref([]);
+let reactiveNoti = computed(() => usePage().props.notifications?.data);
+let watchNoti = watch(reactiveNoti, (value) => {
+  getNotifications();
+});
+
+const getNotifications = () => {
+  axios
+    .get(
+      route("notifications", {
+        page: 1,
+      })
+    )
+    .then((resp) => {
+      notifications.value = resp.data.notifications.data;
+    });
+};
+
+const removeNotification = (notificationId) => {
+  form.post(route("markAsRead", { id: notificationId }), {
+    onSuccess: () => {
+      notifications.value = notifications.value.filter(
+        (noti) => noti.id != notificationId
+      );
+    },
+  });
+};
+
+onMounted(() => {
+  getNotifications();
+});
+</script>
+
+
 <template>
-  <!-- for superadmin dashboard check -->
   <AdminLayout :user="user" :user_role="current_user_role">
-    <!-- alert announment box -->
+    <!--
+        VAlert is use for show annnounment pages
+     -->
     <VAlert
       v-for="item in notifications"
       :key="item.id"
@@ -23,8 +71,13 @@
         <v-btn icon="mdi-close" @click="removeNotification(item.id)"></v-btn>
       </template>
     </VAlert>
+
+    <!--
+       Check current_user_role and redirect to that
+       page according to that roles
+     -->
+
     <div v-if="current_user_role == 'BC Super Admin'">
-      <!-- end announment  box-->
       <SuperAdminDashboard :orgainzations_users="props.orgainzations_users">
       </SuperAdminDashboard>
     </div>
@@ -37,50 +90,4 @@
   </AdminLayout>
 </template>
 
-<script setup>
-import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import AnalyticsCongratulationsJohn from "@/views/dashboard/analytics/AnalyticsCongratulationsJohn.vue";
-import EcommerceSalesOverview from "@/views/dashboard/ecommerce/EcommerceSalesOverview.vue";
-import SuperAdminDashboard from "@Layouts/Dashboard/SuperAdminDashboard/SuperAdminDashboard.vue";
-import StaffDashboard from "@Layouts/Dashboard/StaffDashboard.vue";
-import TeacherOrParentDashboard from "@Layouts/Dashboard/TeacherOrParentDashboard.vue";
-import { defineProps, onMounted, watch, computed } from "vue";
-import { usePage, useForm } from "@inertiajs/vue3";
-import axios from "axios";
-//## variable section
-let props = defineProps(["current_user_role", "user", "orgainzations_users"]);
-const isAlertVisible = ref(true);
-let form = useForm({});
-let notifications = ref([]);
-let reactiveNoti = computed(() => usePage().props.notifications?.data);
-let watchNoti = watch(reactiveNoti, (value) => {
-  getNotifications();
-});
-// let unread_notifications_count = computed(
-//   () => usePage().props.unreadNotificationsCount
-// );
-const getNotifications = () => {
-  axios
-    .get(
-      route("notifications", {
-        page: 1,
-      })
-    )
-    .then((resp) => {
-      notifications.value = resp.data.notifications.data;
-    });
-};
-const removeNotification = (notificationId) => {
-  form.post(route("markAsRead", { id: notificationId }), {
-    onSuccess: () => {
-      notifications.value = notifications.value.filter(
-        (noti) => noti.id != notificationId
-      );
-    },
-  });
-  //   isAlertVisible.value = false
-};
-onMounted(() => {
-  getNotifications();
-});
-</script>
+

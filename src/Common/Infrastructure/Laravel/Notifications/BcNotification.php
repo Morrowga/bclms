@@ -30,6 +30,8 @@ class BcNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
+
+
         return ['database'];
     }
 
@@ -59,4 +61,6 @@ class BcNotification extends Notification implements ShouldQueue
             'type' => $this->data['type']
         ];
     }
+
+
 }

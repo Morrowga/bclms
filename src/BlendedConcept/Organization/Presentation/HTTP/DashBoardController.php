@@ -11,23 +11,24 @@ use Src\BlendedConcept\Organization\Domain\Repositories\PageBuilderInterface;
 
 class DashBoardController
 {
-    private $dashboardInertface;
     private $userRepositoryInterface;
     private $pageBuilderInterface;
 
     public function __construct(
-        DashboardRepositoryInterface $dashboardInertface,
         UserRepositoryInterface $userRepositoryInterface,
         PageBuilderInterface $pageBuilderInterface,
-    ) {
-        $this->dashboardInertface = $dashboardInertface;
+    ){
+
         $this->userRepositoryInterface = $userRepositoryInterface;
         $this->pageBuilderInterface = $pageBuilderInterface;
     }
+
     public function superAdminDashboard()
     {
-
-
+        /**
+         *  Assigns the current user role based on
+         *  the retrieved role from the authenticated user.
+         */
         $user_role = auth()->user()->roles()->first()->name;
         $current_user_role = "";
         if ($user_role == 'BC Super Admin') {
@@ -42,30 +43,32 @@ class DashBoardController
 
         $orgainzations_users = $this->userRepositoryInterface->getUserForDashBoard();
 
-        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Index', compact('current_user_role', 'user', 'orgainzations_users'));
+        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/index', compact('current_user_role', 'user', 'orgainzations_users'));
     }
 
 
     public function userProfile()
     {
+        dd("hello");
         return Inertia::render('Common/Layouts/Dashboard/UserProfile');
     }
 
 
-
-
+    /***
+     * this below funcitons are all related to with
+     * laravel pagebuilder package where we separate each
+     * function where we can asset each assets and methods
+     * using controller from routes
+     */
     public function getAssertUrl()
-
     {
         $this->pageBuilderInterface->generalAssetUrl();
     }
-
 
     public function websiteManagerUrl()
     {
         $this->pageBuilderInterface->useWebsiteManager();
     }
-
 
     public function UseRouter()
     {

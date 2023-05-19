@@ -2,7 +2,7 @@ import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { Ziggy } from './ziggy';
 /* eslint-disable import/order */
-// import '@/@fake-db/db'
+
 import '@/@iconify/icons-bundle'
 import ability from '@/plugins/casl/ability'
 import i18n from '@/plugins/i18n'
@@ -30,7 +30,7 @@ import 'animate.css';
 import pages from './route';
 //core
 
-// import Button from "primevue/button
+
 createInertiaApp({
     resolve: async (name) => {
         return pages[name];

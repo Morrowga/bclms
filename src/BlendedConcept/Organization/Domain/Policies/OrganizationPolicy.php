@@ -1,7 +1,6 @@
 <?php
 
 namespace Src\BlendedConcept\Organization\Domain\Policies;
-use Src\BlendedConcept\Organization\Domain\Model\Organization;
 use Src\BlendedConcept\User\Domain\Model\User;
 
 class OrganizationPolicy

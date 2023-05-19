@@ -1,17 +1,14 @@
 <script setup>
-import { useGenerateImageVariant } from "@/@core/composable/useGenerateImageVariant";
-import AuthProvider from "@/views/pages/authentication/AuthProvider.vue";
-import authV1RegisterMaskDark from "@images/pages/auth-v1-register-mask-dark.png";
-import authV1RegisterMaskLight from "@images/pages/auth-v1-register-mask-light.png";
-import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { themeConfig } from "@themeConfig";
-import { ref } from "vue";
-import { Link, useForm } from "@inertiajs/vue3";
+import { onMounted, ref } from "vue";
+import { Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
+import { toastAlert } from "@Composables/useToastAlert";
+
 import B2CRegister from "./B2CRegister.vue";
 import B2BRegister from "./B2BRegister.vue";
-
 let organization = ref(false);
+let isAlertVisible = ref(true);
 const items = [
   "California",
   "Colorado",
@@ -20,10 +17,11 @@ const items = [
   "Texas",
   "Wyoming",
 ];
-
 const isPasswordVisible = ref(false);
 let agreed = ref("");
+let props = defineProps(["ErrorMessage"]);
 </script>
+
 
 <template>
   <div class="layout-navbar">
@@ -41,6 +39,22 @@ let agreed = ref("");
   <VDivider></VDivider>
   <div class="regiser-image">
     <div style="max-width: 1024px; margin-inline: auto">
+      <VAlert
+        variant="tonal"
+        density="compact"
+        type="error"
+        v-model="isAlertVisible"
+        closable
+        class="mt-4"
+        close-label="Close Alert"
+        style="padding: 6px 16px"
+      >
+        <template #text>
+          <span style="font-size:24px:">Server Error</span>
+          <br />
+          <span>Somthing is wrong</span>
+        </template>
+      </VAlert>
       <VRow class="d-flex justify-center" style="padding-top: 100px">
         <VCol lg="6" md="6" sm="12" class="text-center">
           <div class="auth-card" max-width="448">
@@ -89,6 +103,7 @@ let agreed = ref("");
         </VCol>
         <VCol md="6" lg="6" sm="12" v-if="organization">
           <B2BRegister
+            :errorMessage="ErrorMessage"
             v-if="organization == 'on'"
             :class="
               organization == 'on'
@@ -110,6 +125,7 @@ let agreed = ref("");
   </div>
 </template>
 
+
 <style lang="scss">
 @use "@styles/@core/template/pages/page-auth.scss";
 .regiser-image {
@@ -120,4 +136,5 @@ let agreed = ref("");
 .primary {
   color: #001a8f !important;
 }
+
 </style>

@@ -23,42 +23,55 @@ class AuthRepository implements AuthRepositoryInterface
             'password' => ['required'],
         ]);
 
+
         $user = User::where('email', $request->email)->first();
 
-        // check if urser exit and allow auth attempt
+        // check if user exit and allow auth attempt
         if ($user) {
+            //this check verify email or not
             if (!$user->email_verified_at) {
                 $error = "Please Verify your email";
                 return ["errorMessage" => $error, "isCheck" => false];
             }
+
             if (auth()->attempt($credentials)) {
+                //send notification for that show in notification
+
                 $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'from' => "", 'to' => "", 'type' => "success"]));
+
                 return ["errorMessage" => "Successfully", "isCheck" => true];
+
             } else {
-                $error = "Invalid Creditional";
+                $error = "Invalid Login Credential";
                 return ["errorMessage" => $error, "isCheck" => false];
             }
         }
+
         // if not fail log in
         else {
 
-            $error = "Invalid Creditional";
+            $error = "Invalid Login Credential";
             return ["errorMessage" => $error, "isCheck" => false];
         }
     }
     //  register b2c register
     public function b2cRegister($request)
     {
+
         $name = explode("@", $request->email);
+
         $user = User::create([
+
             "name" => $name[0],
             "email" => $request->email,
             "password" => $request->password,
         ]);
         //  sync 2 mean this user is register using teacher or parent roles
+
         $user->roles()->sync([2]);
 
-        //send verify email
+        //here that code that happened run time error
+
         Mail::to($request->email)->send(new VerifyEmail($user));
     }
 

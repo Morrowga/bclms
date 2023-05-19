@@ -3,7 +3,6 @@ import { watch, defineProps, computed, ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { requiredValidator } from "@validators";
 import { toastAlert } from "@Composables/useToastAlert";
-
 //# start variable section
 const isDialogVisible = ref(false);
 let props = defineProps(["permissions", "flash"]);
@@ -117,6 +116,7 @@ let saveRole = () => {
 };
 //## end save role
 </script>
+
 
 <template>
   <VDialog v-model="isDialogVisible" max-width="1000">

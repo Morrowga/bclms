@@ -50,11 +50,6 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            StudentRepositoryInterface::class,
-            StudentRepository::class
-        );
-
-        $this->app->bind(
             AnnouncementRepositoryInterface::class,
             AnnouncementRepository::class
         );
@@ -75,7 +70,6 @@ class AppServiceProvider extends ServiceProvider
             SettingRepositoryInterface::class,
             SettingRepository::class
         );
-
 
 
         // third party package interface and repository

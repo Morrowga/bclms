@@ -2,10 +2,6 @@
 
 namespace Src\Auth\Domain\Repositories;
 
-
-
-use Src\BlendedConcept\User\Domain\Model\User;
-
 interface AuthRepositoryInterface
 {
     //login
@@ -16,9 +12,5 @@ interface AuthRepositoryInterface
 
     //verification email
     public function verification($id);
-
-
-
-
 
 }

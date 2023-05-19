@@ -9,9 +9,9 @@ use Src\BlendedConcept\User\Domain\Policies\UserPolicy;
 use Src\BlendedConcept\User\Domain\Policies\PermissionPolicy;
 use Src\BlendedConcept\User\Domain\Policies\RolePolicy;
 use Src\BlendedConcept\Organization\Domain\Policies\OrganizationPolicy;
-use Gate;
 use Src\BlendedConcept\User\Domain\Policies\FileManagerPolicy;
 use Src\BlendedConcept\User\Domain\Policies\SettingPolicy;
+use Gate;
 
 
 class AuthServiceProvider extends ServiceProvider
@@ -53,6 +53,6 @@ class AuthServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(AuthInterface::class, AuthRepository::class);
-        // $this->app->bind();
+
     }
 }

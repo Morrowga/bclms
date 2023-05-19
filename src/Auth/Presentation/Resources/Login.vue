@@ -2,22 +2,18 @@
 import { VForm } from "vuetify/components";
 import { themeConfig } from "@themeConfig";
 import { requiredValidator, emailValidator } from "@validators";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import { defineProps } from "vue";
-import { toastAlert } from "../../../Common/Layouts/Composables/useToastAlert";
-//## start variable section
+
 const isPasswordVisible = ref(false);
 const rememberMe = ref(false);
-// recevied error message
 let props = defineProps(["errorMessage"]);
 
 let form = useForm({
   email: "",
   password: "",
 });
-//## end variable section
 
-//## start onsubmit function
 const onSubmit = () => {
   form.post(route("login-post"), {
     onSuccess: () => {},
@@ -32,8 +28,10 @@ const onSubmit = () => {
     },
   });
 };
-//## end onsubmit function
+
 </script>
+
+
 <template>
   <div class="container">
     <div class="layout-navbar">
@@ -107,8 +105,9 @@ const onSubmit = () => {
                     <span
                       style="color: red; padding-top: 10px"
                       v-if="props?.errorMessage"
-                      >{{ props?.errorMessage }}</span
                     >
+                      {{ props?.errorMessage }}
+                    </span>
                     <div
                       class="d-flex align-center flex-wrap justify-space-between mt-1 mb-4"
                     >
@@ -139,6 +138,8 @@ const onSubmit = () => {
     </div>
   </div>
 </template>
+
+
 <style lang="scss">
 @use "@styles/@core/template/pages/page-auth.scss";
 .login-bg {
@@ -150,9 +151,4 @@ const onSubmit = () => {
 .v-messages__message {
   color: red !important;
 }
-// .v-text-field,
-// .v-text-field input {
-//   background-color: white !important;
-//   z-index: 100;
-// }
 </style>

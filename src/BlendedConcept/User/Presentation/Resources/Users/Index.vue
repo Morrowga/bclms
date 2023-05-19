@@ -22,7 +22,7 @@ let currentPermission = ref();
 serverPage.value = ref(props.users.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
 
-// ## delete user
+
 const deleteUser = (id) => {
     deleteItem(id, "users");
 };
@@ -68,13 +68,13 @@ watch(serverPerPage, function (value) {
 });
 </script>
 
+
 <template>
     <AdminLayout>
         <section>
             <VCard>
                 <VCardText class="d-flex flex-wrap gap-4">
                     <!-- 👉 Export button -->
-                    <!-- 👉 Search  -->
                     <VTextField
                         @keyup.enter="searchItems"
                         v-model="serverParams.search"
@@ -191,12 +191,12 @@ watch(serverPerPage, function (value) {
                         </VRow>
                     </template>
                 </vue-good-table>
-
                 <VDivider />
             </VCard>
         </section>
     </AdminLayout>
 </template>
+
 
 <style lang="scss">
 .app-user-search-filter {

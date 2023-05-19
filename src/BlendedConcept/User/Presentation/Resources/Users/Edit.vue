@@ -7,13 +7,11 @@ import { ref } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
 import { toastAlert } from "@Composables/useToastAlert";
 const isDialogVisible = ref(false);
-// check passwor visible
 const isPasswordVisible = ref(false);
 const isFormValid = ref(false);
 const refForm = ref();
-// get current user and roles
 let props = defineProps(["user", "roles", "flash"]);
-console.log(props.user.roles)
+
 let form = useForm({
   role: props?.user?.roles[0]?.id,
   name: props.user.name,
@@ -24,6 +22,7 @@ let form = useForm({
   _method: "put",
   dob: props.user.dob,
 });
+
 // Update create form
 let handleUpdate = (id) => {
   form.post(route("users.update", { id: id }), {
@@ -38,6 +37,7 @@ let handleUpdate = (id) => {
     },
   });
 };
+
 onUpdated(() => {
   form.role = props?.user?.roles[0]?.id;
   form.name = props.user.name;
@@ -47,6 +47,8 @@ onUpdated(() => {
   form.dob = props.user.dob;
 });
 </script>
+
+
 <template>
   <VDialog v-model="isDialogVisible" max-width="900" persistent>
     <!-- Dialog Activator -->

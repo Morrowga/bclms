@@ -1,21 +1,10 @@
 <script setup>
-import { useGenerateImageVariant } from "@/@core/composable/useGenerateImageVariant";
-import AuthProvider from "@/views/pages/authentication/AuthProvider.vue";
-import authV1RegisterMaskDark from "@images/pages/auth-v1-register-mask-dark.png";
-import authV1RegisterMaskLight from "@images/pages/auth-v1-register-mask-light.png";
-import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
-import { themeConfig } from "@themeConfig";
-
-// inertia
 import { Link, useForm } from "@inertiajs/vue3";
-import { router } from "@inertiajs/core";
-
 const form = useForm({
   email: "",
   password: "",
 });
 const isPasswordVisible = ref(false);
-//## start register function
 let register = () => {
   form.post(route("b2cstore"), {
     onSuccess: () => {
@@ -27,8 +16,9 @@ let register = () => {
     },
   });
 };
-//## end register function
+
 </script>
+
 
 <template>
   <div class="auth-wrapper d-flex align-center justify-center">
@@ -38,11 +28,9 @@ let register = () => {
           Enter your email address(B2B)
         </h5>
       </VCardText>
-
       <VCardText>
         <VForm @submit.prevent="register">
           <VRow>
-            <!-- Email -->
             <VCol cols="12">
               <VLabel class="primary">Enter your work email</VLabel>
               <VTextField
@@ -52,7 +40,6 @@ let register = () => {
                 :error-messages="form?.errors?.email"
               />
             </VCol>
-            <!-- password -->
             <VCol cols="12">
               <VLabel class="primary">Enter your work password</VLabel>
               <VTextField
@@ -83,8 +70,6 @@ let register = () => {
                 Agree and Sign up
               </VBtn>
             </VCol>
-
-            <!-- login instead -->
             <VCol cols="12" class="text-center text-base">
               <span class="primary">Already have an account?</span>
               <Link
@@ -100,9 +85,5 @@ let register = () => {
     </div>
   </div>
 </template>
-@use "@styles/@core/template/pages/page-auth.scss";
-
-<style lang="scss">
-</style>
 
 
