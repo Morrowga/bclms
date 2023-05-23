@@ -2,12 +2,12 @@ const pages = {
 
 
     // //organization
-    "BlendedConcept/Organization/Presentation/Resources/index": import('../../src/BlendedConcept/Organization/Presentation/Resources/index.vue'),
+    "BlendedConcept/System/Presentation/Resources/index": import('../../src/BlendedConcept/System/Presentation/Resources/index.vue'),
 
-    "BlendedConcept/Organization/Presentation/Resources/Organizations/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organizations/Index.vue'),
+    "BlendedConcept/System/Presentation/Resources/Systems/Index": import('../../src/BlendedConcept/System/Presentation/Resources/Organizations/Index.vue'),
 
     // plans
-    "BlendedConcept/Organization/Presentation/Resources/Plans/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Index.vue'),
+    "BlendedConcept/System/Presentation/Resources/Plans/Index": import('../../src/BlendedConcept/System/Presentation/Resources/Plans/Index.vue'),
 
     //user module
     "BlendedConcept/User/Presentation/Resources/Users/Index": import('../../src/BlendedConcept/User/Presentation/Resources/Users/Index.vue'),
@@ -15,7 +15,7 @@ const pages = {
     "BlendedConcept/User/Presentation/Resources/Roles/Index": import('../../src/BlendedConcept/User/Presentation/Resources/Roles/Index.vue'),
 
     // user profiles
-    "Common/Layouts/Dashboard/UserProfile": import('../../src/Common/Layouts/Dashboard/UserProfile.vue'),
+    "Auth/Presentation/Resources/UserProfile": import('../../src/Auth/Presentation/Resources/UserProfile.vue'),
 
     // //permission module
     "BlendedConcept/User/Presentation/Resources/Permissions/Index": import('../../src/BlendedConcept/User/Presentation/Resources/Permissions/Index.vue'),
@@ -29,7 +29,7 @@ const pages = {
 
 
     //announcement
-    "BlendedConcept/User/Presentation/Resources/Announcements/Index": import('../../src/BlendedConcept/User/Presentation/Resources/Announcements/Index.vue'),
+    "BlendedConcept/System/Presentation/Resources/Announcements/Index": import('../../src/BlendedConcept/System/Presentation/Resources/Announcements/Index.vue'),
 
 
     //settings

@@ -18,3 +18,15 @@ if (!function_exists('getNotifications')) {
         return $notification;
     }
 }
+
+
+if (! function_exists('authorize')) {
+
+    function authorize($ability, $policy, $arguments = []): bool
+    {
+        if ($policy::{$ability}(...$arguments)) {
+            return true;
+        }
+       return false;
+    }
+}

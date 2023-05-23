@@ -2,7 +2,7 @@
 
 
 use Alexusmai\LaravelFileManager\Services\ConfigService\DefaultConfigRepository;
-use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\UserAclRulesRepository;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\UserAclRulesRepository;
 
 return [
 

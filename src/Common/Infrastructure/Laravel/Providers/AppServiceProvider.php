@@ -8,24 +8,22 @@ use Src\Auth\Application\Repositories\Eloquent\AuthRepository;
 use Src\Auth\Application\Repositories\Eloquent\DashboardRepository;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
 use Src\Auth\Domain\Repositories\DashboardRepositoryInterface;
-use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
-use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\OrganizationRepository;
-use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\PlanRepository;
-use Src\BlendedConcept\Organization\Domain\Model\Organization;
-use Src\BlendedConcept\Organization\Domain\Repositories\PlanRepositoryInterface;
+use Src\BlendedConcept\System\Domain\Repositories\OrganizationRepositoryInterface;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\OrganizationRepository;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\PlanRepository;
+use Src\BlendedConcept\System\Domain\Model\Organization;
+use Src\BlendedConcept\System\Domain\Repositories\PlanRepositoryInterface;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\AnnouncementRepository;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\NotificationRepository;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\SettingRepository;
-use Src\BlendedConcept\User\Application\Repositories\Eloquent\StudentRepository;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\UserRepository;
 use Src\BlendedConcept\User\Domain\Repositories\AnnouncementRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\SettingRepositoryInterface;
-use Src\BlendedConcept\User\Domain\Repositories\StudentRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 use Illuminate\Support\Facades\Config;
-use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\PageBuilderRepository;
-use Src\BlendedConcept\Organization\Domain\Repositories\PageBuilderInterface;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\PageBuilderRepository;
+use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
 
 class AppServiceProvider extends ServiceProvider
 {

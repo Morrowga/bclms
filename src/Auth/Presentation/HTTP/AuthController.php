@@ -209,12 +209,12 @@ class AuthController extends Controller
     public function userProfile()
     {
         try {
-            return Inertia::render('Common/Layouts/Dashboard/UserProfile');
+            return Inertia::render('Auth/Presentation/Resources/UserProfile');
         } catch (\Exception $e) {
 
 
             // Handle the exception gracefully, such as displaying a generic error page
-            return Inertia::render('Common/Layouts/Dashboard/UserProfile')->with("sytemErrorMessage", $e->getMessage());
+            return Inertia::render('BlendedConcept/Auth/Presentation/Resources/UserProfile')->with("sytemErrorMessage", $e->getMessage());
         }
     }
 }

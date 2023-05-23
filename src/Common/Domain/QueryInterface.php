@@ -9,5 +9,5 @@ interface QueryInterface
     /**
      * @throws UnauthorizedUserException
      */
-    public function handle(): mixed;
+    public function handle();
 }

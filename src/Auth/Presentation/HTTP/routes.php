@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Src\Auth\Presentation\HTTP\AuthController;
-use Src\BlendedConcept\Organization\Presentation\HTTP\DashBoardController;
+
 
 /**
  * Authentication Routes

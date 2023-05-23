@@ -194,6 +194,8 @@ return [
          * Domain Service Providers...
          */
         \Src\BlendedConcept\User\Application\Providers\UserServiceProvider::class,
+        // \Src\BlendedConcept\System\Application\Providers\SystemServiceProvider::class,
+
 
         /*
          * Domain Routes Service Providers...
@@ -207,6 +209,8 @@ return [
         // Src\Common\Infrastructure\Laravel\Providers\BroadcastServiceProvider::class,
         \Src\Common\Infrastructure\Laravel\Providers\EventServiceProvider::class,
         \Src\Common\Infrastructure\Laravel\Providers\RouteServiceProvider::class,
+
+
 
     ],
 

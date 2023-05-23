@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Src\BlendedConcept\Organization\Presentation\HTTP\DashBoardController;
+use Src\BlendedConcept\System\Presentation\HTTP\DashBoardController;
 use Src\BlendedConcept\User\Presentation\HTTP\NotificationController;
 use Src\BlendedConcept\User\Presentation\HTTP\PermissionController;
 use Src\BlendedConcept\User\Presentation\HTTP\PortalController;
@@ -12,7 +12,7 @@ use Src\BlendedConcept\User\Presentation\HTTP\StudentController;
 use Src\BlendedConcept\User\Presentation\HTTP\TeacherController;
 use Src\BlendedConcept\User\Presentation\HTTP\UserController;
 use Src\BlendedConcept\User\Presentation\HTTP\AnnouncementController;
-use Src\BlendedConcept\Organization\Presentation\HTTP\LibraryController;
+use Src\BlendedConcept\System\Presentation\HTTP\LibraryController;
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
@@ -40,8 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-    // announcement
-    Route::resource("announcements", AnnouncementController::class);
+
 
      // library
      Route::get("libraries", [LibraryController::class, 'index'])->name('libraries');

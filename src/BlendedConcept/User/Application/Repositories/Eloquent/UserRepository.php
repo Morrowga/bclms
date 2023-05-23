@@ -16,7 +16,7 @@ use Src\BlendedConcept\User\Domain\Resources\RoleResource;
 use Src\BlendedConcept\User\Domain\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Src\BlendedConcept\Organization\Domain\Model\Organization;
+use Src\BlendedConcept\System\Domain\Model\Organization;
 
 class UserRepository implements UserRepositoryInterface
 {

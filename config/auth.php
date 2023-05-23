@@ -62,7 +62,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Src\BlendedConcept\User\Domain\Model\User::class,
+            'model' => Src\BlendedConcept\User\Infrastructure\UserEloquentModel::class,
         ],
 
         // 'users' => [

@@ -2,39 +2,35 @@
 
 namespace Src\BlendedConcept\User\Domain\Policies;
 
-use Src\BlendedConcept\User\Domain\Model\Permission;
-use Src\BlendedConcept\User\Domain\Model\User;
 
 class PermissionPolicy
 {
-    // check ur is authnicated or not
-    // public $role = auth()->Permission()->roles->first();
-    // public $permissons =  $role->permissions->pluck('name');
-    public function view(User $user)
+
+    public function view()
     {
-        return $user->hasPermission('access_permission');
+        return auth()->user()->hasPermission('access_permission');
     }
 
-    public function create(User $user)
+    public function create()
     {
-        return $user->hasPermission('create_permission');
+        return auth()->user()->hasPermission('create_permission');
     }
-    public function store(User $user)
+    public function store()
     {
-        return $user->hasPermission('create_permission');
+        return auth()->user()->hasPermission('create_permission');
     }
-    public function edit(User $user)
+    public function edit()
     {
-        return $user->hasPermission('edit_permission');
-    }
-
-    public function update(User $user)
-    {
-        return $user->hasPermission('edit_permission');
+        return auth()->user()->hasPermission('edit_permission');
     }
 
-    public function destroy(User $user)
+    public function update()
     {
-        return $user->hasPermission('delete_permission');
+        return auth()->user()->hasPermission('edit_permission');
+    }
+
+    public function destroy()
+    {
+        return auth()->user()->hasPermission('delete_permission');
     }
 }

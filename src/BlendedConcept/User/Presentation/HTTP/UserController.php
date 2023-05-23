@@ -4,15 +4,16 @@ namespace Src\BlendedConcept\User\Presentation\HTTP;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Src\BlendedConcept\User\Application\UseCases\Queries\GetUserName;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\User\Domain\Model\User;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Requests\StoreUserRequest;
 use Gate;
-use Symfony\Component\HttpFoundation\Response;
+use Src\BlendedConcept\User\Domain\Policies\UserPolicy;
 use Src\BlendedConcept\User\Domain\Requests\UpdateUserRequest;
 use Src\BlendedConcept\User\Domain\Requests\updateUserPasswordRequest;
-
+use Src\BlendedConcept\User\Application\UseCases\Queries\GetUsersWithPagination;
 class UserController extends Controller
 {
 
@@ -26,10 +27,11 @@ class UserController extends Controller
   //get all users
   public function index(Request $request)
   {
-    $this->authorize('view', User::class);
-    $filters = request()->only(['name', 'email', 'role', 'search', 'perPage', 'roles']);
-    $users = $this->userInterFace->getUsers($filters);
-    $users_name = $this->userInterFace->getUsersName();
+    $this->authorize('view',UserPolicy::class);
+
+    $filters = request()->only(['name', 'email', 'role', 'search', 'perPage', 'roles']) ?? [];
+    $users = (new GetUsersWithPagination($filters))->handle();
+    $users_name = (new GetUserName())->handle();
     $roles_name = $this->userInterFace->getRolesName();
     return Inertia::render('BlendedConcept/User/Presentation/Resources/Users/Index', [
       'users' => $users,
@@ -41,7 +43,7 @@ class UserController extends Controller
   //store user
   public function store(StoreUserRequest $request)
   {
-    $this->authorize('create', User::class);
+    authorize('create',UserPolicy::class);
     $request->validated();
     $this->userInterFace->createUser($request);
     return redirect()->route('users.index')->with("successMessage", "User Create Successfully!");
@@ -50,7 +52,7 @@ class UserController extends Controller
   //update user
   public function update(UpdateUserRequest $request, User $user)
   {
-    $this->authorize('edit', User::class);
+    authorize('edit', UserPolicy::class);
     $this->userInterFace->updateUser($request, $user);
 
 
@@ -60,7 +62,7 @@ class UserController extends Controller
 
   public function destroy(User $user)
   {
-    $this->authorize('destroy', User::class);
+    authorize('destroy', UserPolicy::class);
     $user->delete();
     return redirect()->route('users.index')->with("successMessage", "User Deleted Successfully!");
   }

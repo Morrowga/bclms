@@ -16,9 +16,6 @@ class AuthRepository implements AuthRepositoryInterface
     public function login($request)
     {
 
-
-
-
         $user = UserEloquentModel::query()->where('email', $request->email)->first();
 
         // check if user exit and allow auth attempt
@@ -33,7 +30,6 @@ class AuthRepository implements AuthRepositoryInterface
                 "email" => request('email'),
                 "password" => request("password")
             ])) {
-
                 $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'from' => "", 'to' => "", 'type' => "success"]));
 
                 return ["errorMessage" => "Successfully", "isCheck" => true];

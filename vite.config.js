@@ -25,11 +25,11 @@ export default defineConfig({
     // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
     vuetify({
       styles: {
-        configFile: './src/Common/UI/styles/variables/_vuetify.scss',
+        configFile: './src/Common/Presentation/Resources/UI/styles/variables/_vuetify.scss',
       },
     }),
     Components({
-      dirs: ['./src/Common/UI/js/@core/components', './src/Common/UI/js/views/demos'],
+      dirs: ['./src/Common/Presentation/Resources/UI/js/@core/components', './src/Common/Presentation/Resources/UI/js/views/demos'],
       dts: true,
     }),
     AutoImport({
@@ -53,19 +53,19 @@ export default defineConfig({
   resolve: {
     alias: {
       "@AppRoot":fileURLToPath(new URL("./resources/js", import.meta.url)),
-      "@Composables":fileURLToPath(new URL("./src/Common/Layouts/Composables", import.meta.url)),
-      "@Layouts": fileURLToPath(new URL("./src/Common/Layouts", import.meta.url)),
-      "@dashboard" : fileURLToPath(new URL("./src/Common/Layouts/Dashboard", import.meta.url)),
-      '@core-scss': fileURLToPath(new URL('./src/Common/UI/styles/@core', import.meta.url)),
-      '@': fileURLToPath(new URL('./src/Common/UI/js', import.meta.url)),
+      "@Composables":fileURLToPath(new URL("./src/Common/Presentation/Resources/Layouts/Composables", import.meta.url)),
+      "@Layouts": fileURLToPath(new URL("./src/Common/Presentation/Resources/Layouts", import.meta.url)),
+      "@dashboard" : fileURLToPath(new URL("./src/Common/Presentation/Resources/Layouts/Dashboard", import.meta.url)),
+      '@core-scss': fileURLToPath(new URL('./src/Common/Presentation/Resources/UI/styles/@core', import.meta.url)),
+      '@': fileURLToPath(new URL('./src/Common/Presentation/Resources/UI/js', import.meta.url)),
       '@themeConfig': fileURLToPath(new URL('./themeConfig.js', import.meta.url)),
-      '@core': fileURLToPath(new URL('./src/Common/UI/js/@core', import.meta.url)),
-      '@layouts': fileURLToPath(new URL('./src/Common/UI/js/@layouts', import.meta.url)),
-      '@images': fileURLToPath(new URL('./src/Common/UI/images/', import.meta.url)),
-      '@styles': fileURLToPath(new URL('./src/Common/UI/styles/', import.meta.url)),
-      '@configured-variables': fileURLToPath(new URL('./src/Common/UI/styles/variables/_template.scss', import.meta.url)),
-      '@axios': fileURLToPath(new URL('./src/Common/UI/js/plugins/axios', import.meta.url)),
-      '@validators': fileURLToPath(new URL('./src/Common/UI/js/@core/utils/validators', import.meta.url)),
+      '@core': fileURLToPath(new URL('./src/Common/Presentation/Resources/UI/js/@core', import.meta.url)),
+      '@layouts': fileURLToPath(new URL('./src/Common/Presentation/Resources/UI/js/@layouts', import.meta.url)),
+      '@images': fileURLToPath(new URL('./src/Common/Presentation/Resources/UI/images/', import.meta.url)),
+      '@styles': fileURLToPath(new URL('./src/Common/Presentation/Resources/UI/styles/', import.meta.url)),
+      '@configured-variables': fileURLToPath(new URL('./src/Common/Presentation/Resources/UI/styles/variables/_template.scss', import.meta.url)),
+      '@axios': fileURLToPath(new URL('./src/Common/Presentation/Resources/UI/js/plugins/axios', import.meta.url)),
+      '@validators': fileURLToPath(new URL('./src/Common/Presentation/Resources/UI/js/@core/utils/validators', import.meta.url)),
       'apexcharts': fileURLToPath(new URL('node_modules/apexcharts-clevision', import.meta.url)),
       "@mainRoot":fileURLToPath(new URL("./src/Common/Presentation/Resources/", import.meta.url)),
 

@@ -7,31 +7,31 @@ use Src\BlendedConcept\User\Domain\Model\User;
 class FileManagerPolicy
 {
 
-    public function view(User $user)
+    public function view()
     {
-        return $user->hasPermission('access_library');
+        return auth()->user()->hasPermission('access_library');
     }
 
-    public function create(User $user)
+    public function create()
     {
-        return $user->hasPermission('access_library');
+        return auth()->user()->hasPermission('access_library');
     }
-    public function store(User $user)
+    public function store()
     {
-        return $user->hasPermission('access_library');
+        return auth()->user()->hasPermission('access_library');
     }
-    public function edit(User $user)
+    public function edit()
     {
-        return $user->hasPermission('access_library');
-    }
-
-    public function update(User $user)
-    {
-        return $user->hasPermission('access_library');
+        return auth()->user()->hasPermission('access_library');
     }
 
-    public function destroy(User $user)
+    public function update()
     {
-        return $user->hasPermission('access_library');
+        return auth()->user()->hasPermission('access_library');
+    }
+
+    public function destroy()
+    {
+        return auth()->user()->hasPermission('access_library');
     }
 }

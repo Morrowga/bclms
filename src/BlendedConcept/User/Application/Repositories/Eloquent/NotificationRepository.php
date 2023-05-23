@@ -8,7 +8,7 @@ use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
 
 class NotificationRepository implements NotificationRepositoryInterface
 {
-    //mark as read with id 
+    //mark as read with id
     public function read($id)
     {
         $notification = auth()->user()->notifications()->where('id', $id)->firstOrFail();

@@ -74,7 +74,7 @@ class UserEloquentModel extends  Authenticatable implements HasMedia, MustVerify
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class,'role_user','user_id');
     }
 
 
