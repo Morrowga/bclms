@@ -16,7 +16,6 @@ class StoreLoginRequest  extends FormRequest
         return [
             'email' => [
                 'required',
-                'email',
                 'email'
             ],
             'password' => [

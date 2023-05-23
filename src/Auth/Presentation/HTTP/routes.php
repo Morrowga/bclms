@@ -2,20 +2,52 @@
 
 use Illuminate\Support\Facades\Route;
 use Src\Auth\Presentation\HTTP\AuthController;
+use Src\BlendedConcept\Organization\Presentation\HTTP\DashBoardController;
 
-/***
- * unauthnicated access
+/**
+ * Authentication Routes
  *
- ***/
-Route::group(['middleware' => ['guest']], function () {
-
+ *  23.5.23
+ */
+Route::group([
+    'middleware' => ['guest']
+], function () {
+    /**
+     * Display the login page.
+     * GET /login
+     */
     Route::get("login", [AuthController::class, 'loginPage'])->name('login');
+
+    /**
+     * Handle the login request.
+     * POST /login
+     */
     Route::post("login", [AuthController::class, 'login'])->name('login-post');
+
+    /**
+     * Display the verification page.
+     * GET /verify
+     */
     Route::get("verify", [AuthController::class, 'verify'])->name('verify');
+
+    /**
+     * Display the registration page.
+     * GET /register
+     */
     Route::get("register", [AuthController::class, 'register'])->name('register');
+
+    /**
+     * Register b2c user.
+     * POST /b2cstore
+     */
     Route::post("b2cstore", [AuthController::class, 'B2CStore'])->name('b2cstore');
+
+    /**
+     * Display the verification page.
+     * GET /verification
+     */
     Route::get("verification", [AuthController::class, 'verification'])->name("verification");
-    Route::get("userprofile", [DashBoardController::class, 'userProfile'])->name('userprofile');
+
 });
 
 
@@ -24,7 +56,17 @@ Route::group(['middleware' => ['guest']], function () {
  * */
 Route::group(['middleware' => ['auth']], function () {
 
+    /**
+     *  Logout user
+     *
+     *  POST /logout
+     */
     Route::post("logout", [AuthController::class, 'logout'])->name('logout');
+
+
+    /**
+     * Display the user profile.
+     * GET /userprofile
+     */
+    Route::get("userprofile", [AuthController::class, 'userProfile'])->name('userprofile');
 });
-
-

@@ -19,59 +19,135 @@ class AuthController extends Controller
         $this->authInterface = $authInterface;
     }
 
-    // login page view
-
+    /**
+     * Display the login page.
+     *
+     * This method is responsible for rendering the login page for users who are not authenticated.
+     * If the user is already authenticated, they will be redirected to the dashboard page.
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Inertia\Response
+     */
     public function loginPage()
     {
+        try {
+            // Check if the user is already authenticated
+            if (Auth::check()) {
+                // Redirect the authenticated user to the dashboard page
+                return redirect()->route('dashboard');
+            }
 
-        if (Auth::check()) {
-
-            return redirect()->route('dashboard');
+            // Render the login page using the Inertia.js framework
+            return Inertia::render('Auth/Presentation/Resources/Login');
+        } catch (\Exception $exception) {
+            return Inertia::render('Auth/Presentation/Resources/Login', [
+                'sytemErrorMessage' => $exception->getMessage(),
+            ]);
         }
-        return Inertia::render('Auth/Presentation/Resources/Login');
     }
 
+    /**
+     * Handle the login request.
+     *
+     * This method is responsible for processing the login request and authenticating the user.
+     * If the authentication is successful, the user will be redirected to the dashboard page.
+     * If the authentication fails, the user will be shown the login page with an error message.
+     *
+     * @param  \Src\Auth\Domain\Requests\StoreRegisterRequest  $request  The incoming login request.
+     * @return \Illuminate\Http\RedirectResponse|\Inertia\Response  A redirect response or an Inertia.js response.
+     */
     public function login(StoreLoginRequest $request)
     {
+        try {
+            // Call the login method on the auth interface to authenticate the user
+            $isAuthenticated = $this->authInterface->login($request);
 
-        $IsAuthnicated = $this->authInterface->login($request);
+            // Set the session for page builder access (requires 'phpb_logged_in' session)
+            $request->session()->put('phpb_logged_in', true);
 
-        /**
-         *  this below line set session for pagebuilder access that need
-         *  phpb_logged_in session to access pagebuilder
-         */
+            // Check if the authentication was successful
+            if ($isAuthenticated['isCheck']) {
+                // Redirect the authenticated user to the dashboard page
+                return redirect()->route('dashboard');
+            } else {
+                // Render the login page with an error message
+                return Inertia::render('Auth/Presentation/Resources/Login')->with("errorMessage", $isAuthenticated['errorMessage']);
+            }
+        } catch (\Exception $e) {
 
-        $request->session()->put('phpb_logged_in', true);
-        if ($IsAuthnicated['isCheck']) {
-            return redirect()->route('dashboard');
-        } else {
-            return Inertia::render('Auth/Presentation/Resources/Login')->with("errorMessage", $IsAuthnicated['errorMessage']);
+            // Handle the exception gracefully, such as displaying a generic error message
+            return Inertia::render('Auth/Presentation/Resources/Login')->with("sytemErrorMessage", $e->getMessage());
         }
     }
 
+    /**
+     * Log out the authenticated user.
+     *
+     * This route is responsible for logging out the currently authenticated user.
+     * It clears the session for 'phpb_logged_in' to ensure page builder access is revoked.
+     * After logging out, the user is redirected to the login page.
+     *
+     * @return \Illuminate\Http\RedirectResponse|string  A redirect response to the login page.
+     */
     public function logout()
     {
-        /**
-         *  if you logout you must need to clear session of
-         *  phpb_logged_in thus why we set it here
-         */
-        Auth::logout();
-        session()->remove('phpb_logged_in');
-        return redirect()->route('login');
+
+        try {
+            // Log out the authenticated user
+            Auth::logout();
+
+            // Remove the 'phpb_logged_in' session to revoke page builder access
+            session()->remove('phpb_logged_in');
+
+            // Redirect the user to the login page
+            return redirect()->route('login');
+        } catch (\Exception $error) {
+            return $error->getMessage();
+        }
     }
 
+
+
+    /**
+     * Render the verification page.
+     *
+     * This method is responsible for rendering the verification page.
+     *
+     * @return \Inertia\Response  An Inertia.js response containing the verification page.
+     */
     public function verify()
     {
-        return Inertia::render('Auth/Presentation/Resources/Verify');
+        try {
+            return Inertia::render('Auth/Presentation/Resources/Verify');
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, such as displaying a generic error page
+            return Inertia::render('Auth/Presentation/Resources/Verify')
+                ->with("sytemErrorMessage", $e->getMessage());
+        }
     }
 
-    //register page render
+    /**
+     * Render the registration page.
+     *
+     * This method is responsible for rendering the registration page.
+     * If the user is already authenticated, they will be redirected to the dashboard page.
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Inertia\Response  A redirect response to the dashboard or an Inertia.js response containing the registration page.
+     */
     public function register()
     {
-        if (Auth::check()) {
-            return redirect()->route('dashboard');
+        try {
+            // Check if the user is already authenticated
+            if (Auth::check()) {
+                // Redirect the authenticated user to the dashboard page
+                return redirect()->route('dashboard');
+            }
+
+            // Render the registration page using the Inertia.js framework
+            return Inertia::render('Auth/Presentation/Resources/Register');
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, such as displaying a generic error page
+            return Inertia::render('Auth/Presentation/Resources/Register')->with("sytemErrorMessage", $e->getMessage());
         }
-        return Inertia::render('Auth/Presentation/Resources/Register');
     }
 
     // store b2c register user
@@ -79,36 +155,66 @@ class AuthController extends Controller
     {
         try {
             $this->authInterface->b2cRegister($request);
+            return redirect()->route('verify');
         } catch (\Exception $errors) {
 
 
-        return Inertia::render('Auth/Presentation/Resources/Register',[
-            "ErrorMessage" => $errors->getCode()
-        ]);
-
+            return Inertia::render('Auth/Presentation/Resources/Register', [
+                "sytemErrorMessage" => $errors->getMessage()
+            ]);
         }
-
-        return redirect()->route('verify');
     }
-    // verifing email
+
+    /**
+     * Verify user email.
+     *
+     * This methods is responsible for verifying the user's email address based on the provided ID.
+     * It retrieves the user from the authentication interface using the ID and renders the verification page with a success message if the verification is successful.
+     * If the user is not found (indicating an unauthorized action, such as manually changing the token ID), it returns a 403 error.
+     *
+     * @param  \Illuminate\Http\Request  $request  The incoming request containing the verification ID.
+     * @return \Inertia\Response|\Symfony\Component\HttpFoundation\Response  An Inertia.js response containing the verification page with a success message, or a 403 error response.
+     */
     public function verification(Request $request)
     {
+        try {
+            // Get the verification ID from the request
+            $id = $request->id;
 
-        $id = $request->id;
-        $user = $this->authInterface->verification($id);
+            // Call the verification method on the auth interface to verify the user's email
+            $user = $this->authInterface->verification($id);
 
-        if($user !== null)
-        {
-            return Inertia::render('Auth/Presentation/Resources/Verify', [
-                "verified" => true
-            ])->with("successMessage", "Email verify successfully!");
+            if ($user !== null) {
+                // Render the verification page with a success message
+                return Inertia::render('Auth/Presentation/Resources/Verify', [
+                    "verified" => true
+                ])->with("successMessage", "Email verified successfully!");
+            } else {
+                // User manually changed the token ID, return a 403 error
+                return abort(403, 'Unauthorized action.');
+            }
+        } catch (\Exception $e) {
+            // Handle the exception gracefully, such as displaying a generic error page
+            return Inertia::render('Auth/Presentation/Resources/Verify')->with("sytemErrorMessage", $e->getMessage());
         }
+    }
 
-        else
-        {
-           //user manually change token id
-           return abort(403, 'Unauthorized action.');
+    /**
+     * Render the user profile page.
+     *
+     * This method is responsible for rendering the user profile page.
+     *
+     * @return \Inertia\Response  An Inertia.js response containing the user profile page.
+     */
+    public function userProfile()
+    {
+        try {
+            return Inertia::render('Common/Layouts/Dashboard/UserProfile');
+        } catch (\Exception $e) {
+
+
+            // Handle the exception gracefully, such as displaying a generic error page
+            return Inertia::render('Common/Layouts/Dashboard/UserProfile')->with("sytemErrorMessage", $e->getMessage());
         }
-
     }
 }

@@ -4,27 +4,22 @@ namespace Src\Auth\Application\Repositories\Eloquent;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
-use PhpParser\Node\Stmt\TryCatch;
 use Src\Auth\Domain\Mail\VerifyEmail;
-use Src\BlendedConcept\User\Domain\Model\User;
+use Src\BlendedConcept\User\Infrastructure\UserEloquentModel;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
 use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
-use Illuminate\Support\Facades\Auth;
+
 class AuthRepository implements AuthRepositoryInterface
 {
     //login
     public function login($request)
     {
 
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
 
 
-        $user = User::where('email', $request->email)->first();
+
+        $user = UserEloquentModel::query()->where('email', $request->email)->first();
 
         // check if user exit and allow auth attempt
         if ($user) {
@@ -34,13 +29,14 @@ class AuthRepository implements AuthRepositoryInterface
                 return ["errorMessage" => $error, "isCheck" => false];
             }
 
-            if (auth()->attempt($credentials)) {
-                //send notification for that show in notification
+            if (auth()->attempt([
+                "email" => request('email'),
+                "password" => request("password")
+            ])) {
 
                 $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'from' => "", 'to' => "", 'type' => "success"]));
 
                 return ["errorMessage" => "Successfully", "isCheck" => true];
-
             } else {
                 $error = "Invalid Login Credential";
                 return ["errorMessage" => $error, "isCheck" => false];
@@ -60,7 +56,7 @@ class AuthRepository implements AuthRepositoryInterface
 
         $name = explode("@", $request->email);
 
-        $user = User::create([
+        $user = UserEloquentModel::create([
 
             "name" => $name[0],
             "email" => $request->email,
@@ -79,17 +75,13 @@ class AuthRepository implements AuthRepositoryInterface
     public function verification($id)
     {
 
-        try {
-          $decode_id = Crypt::decryptString($id);
-          $user = User::findOrFail($decode_id);
-          $user->update([
+
+        $decode_id = Crypt::decryptString($id);
+        $user = UserEloquentModel::findOrFail($decode_id);
+        $user->update([
             "email_verified_at" => Carbon::now()
         ]);
 
         return  $user;
-
-        } catch (\Throwable $th) {
-            return $user = null;
-        }
     }
 }

@@ -67,6 +67,8 @@ export default defineConfig({
       '@axios': fileURLToPath(new URL('./src/Common/UI/js/plugins/axios', import.meta.url)),
       '@validators': fileURLToPath(new URL('./src/Common/UI/js/@core/utils/validators', import.meta.url)),
       'apexcharts': fileURLToPath(new URL('node_modules/apexcharts-clevision', import.meta.url)),
+      "@mainRoot":fileURLToPath(new URL("./src/Common/Presentation/Resources/", import.meta.url)),
+
     },
   }
 })

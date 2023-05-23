@@ -2,14 +2,15 @@
 
 namespace Src\BlendedConcept\Organization\Presentation\HTTP;
 
+
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
-use Src\Auth\Domain\Repositories\DashboardRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 use Src\BlendedConcept\Organization\Domain\Repositories\PageBuilderInterface;
+use Src\Common\Infrastructure\Laravel\Controller;
 
 
-class DashBoardController
+class DashBoardController extends Controller
 {
     private $userRepositoryInterface;
     private $pageBuilderInterface;
@@ -47,11 +48,7 @@ class DashBoardController
     }
 
 
-    public function userProfile()
-    {
-        dd("hello");
-        return Inertia::render('Common/Layouts/Dashboard/UserProfile');
-    }
+
 
 
     /***

@@ -1,5 +1,6 @@
 <script setup>
 import { useGenerateImageVariant } from "@/@core/composable/useGenerateImageVariant";
+import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue"
 import authV2LoginMaskDark from "@images/pages/auth-v2-login-mask-dark.png";
 import authV2LoginMaskLight from "@images/pages/auth-v2-login-mask-light.png";
 import authV2VerifyEmailIllustrationBorderedDark from "@images/pages/auth-v2-verify-email-illustration-bordered-dark.png";
@@ -22,7 +23,7 @@ const authV2VerifyEmailIllustration = useGenerateImageVariant(
   authV2VerifyEmailIllustrationBorderedDark,
   true
 );
-const props = defineProps(["verified"]);
+const props = defineProps(["verified","sytemErrorMessage"]);
 const goLogin = () => {
   router.get("/login");
 };
@@ -38,6 +39,9 @@ const goLogin = () => {
       {{ themeConfig.app.title }}
     </h5>
   </div>
+  <br/> <br/><br/> <br/>
+  <SystemErrorAlert :sytemErrorMessage="sytemErrorMessage" v-if="sytemErrorMessage"/>
+
   <VRow class="auth-wrapper" no-gutters>
     <VCol
       md="8"
