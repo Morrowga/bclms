@@ -7,6 +7,7 @@ import { toastAlert } from "@Composables/useToastAlert";
 const isFormValid = ref(false);
 const isDialogVisible = ref(false);
 let props = defineProps(["flash"]);
+let refForm = ref();
 
 let form = useForm({
   name: "",
@@ -97,7 +98,7 @@ let handleSubmit = () => {
                     density="compact"
                     v-model="form.contact_email"
                     class="w-100"
-                    :rules="[emailValidator]"
+                    :rules="[requiredValidator,emailValidator]"
                     :error-messages="form?.errors?.contact_email"
                   />
                 </VCol>

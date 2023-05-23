@@ -23,14 +23,18 @@ let props = defineProps(["organization", "flash"]);
 
 // Update create form
 let handleUpdate = (id) => {
-  form.post(route("organizations.update", { id: id }), {
-    onSuccess: (status) => {
-      console.log(props.flash, "hello");
-      toastAlert({
-        title: props.flash?.successMessage,
+  refForm.value.validate().then(({ valid }) => {
+    if (valid) {
+      form.post(route("organizations.update", { id: id }), {
+        onSuccess: (status) => {
+          console.log(props.flash, "hello");
+          toastAlert({
+            title: props.flash?.successMessage,
+          });
+          isDialogVisible.value = false;
+        },
       });
-      isDialogVisible.value = false;
-    },
+    }
   });
 };
 
@@ -110,7 +114,7 @@ onUpdated(() => {
                     density="compact"
                     v-model="form.contact_email"
                     class="w-100"
-                    :rules="[emailValidator]"
+                    :rules="[requiredValidator,emailValidator]"
                     :error-messages="form?.errors?.contact_email"
                   />
                 </VCol>

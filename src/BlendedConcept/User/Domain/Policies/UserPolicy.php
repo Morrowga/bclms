@@ -7,11 +7,6 @@ use Src\BlendedConcept\User\Domain\Model\User;
 class UserPolicy
 {
 
-
-    // check ur is authnicated or not
-    // public $role = auth()->user()->roles->first();
-    // public $permissons =  $role->permissions->pluck('name');
-
     public function view(User $user)
     {
         return $user->hasPermission('access_user');

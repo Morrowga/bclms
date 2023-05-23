@@ -204,7 +204,7 @@ test('mismatch_login_password', function () {
 
     $response->assertInertia(function (AssertableInertia $page) {
         $props = $page->toArray();
-        expect($props['props']['errorMessage'])->toBe('Invalid Creditional');
+        expect($props['props']['errorMessage'])->toBe('Invalid Login Credential');
     });
 });
 
