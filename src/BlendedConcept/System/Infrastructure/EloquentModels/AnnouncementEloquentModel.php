@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Src\BlendedConcept\System\Domain\EloquentModels;
+namespace Src\BlendedConcept\System\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Model;
 use Src\BlendedConcept\User\Infrastructure\UserEloquentModel;
+use Src\BlendedConcept\System\Domain\Model\Organization;
 
 class AnnouncementEloquentModel extends Model
 {
-    protected $tables = 'announcements';
+    protected $table = 'announcements';
 
     protected $fillable = [
         'title',
@@ -19,6 +20,13 @@ class AnnouncementEloquentModel extends Model
         'send_to'
     ];
 
+    public array $rules = [
+        'title' => 'required',
+        'message' => 'required',
+        'created_by' => 'required',
+        'trigger_on' => 'required',
+        'send_to' => 'required'
+    ];
     public function created_by()
     {
         return $this->belongsTo(Organization::class, 'created_by', 'id');

@@ -3,8 +3,9 @@
 namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
 
+
 use Src\BlendedConcept\System\Domain\Model\Organization;
-use Src\BlendedConcept\System\Domain\EloquentModels\AnnouncementEloquentModel;
+use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
 use Src\BlendedConcept\User\Domain\Model\User;
 use Src\BlendedConcept\System\Domain\Repositories\AnnouncementRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Resources\AnnouncementResource;
@@ -22,12 +23,12 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     // create announcement
     public function createAnnouncement($request)
     {
-        // dd($request->all());
         $create_by_user = Organization::find($request->created_by);
         $receive_user = User::find($request->send_to);
         $receive_user->notify(new BcNotification(['message' => $request->title, 'from' => $create_by_user->name, 'to' => $receive_user->name, 'type' => $request->type ?? '']));
-        AnnouncementEloquentModel::create($request->all());
+        AnnouncementEloquentModel::create($request);
     }
+
 
     //update announcement
     public function updateAnnouncement($request, $announcement)

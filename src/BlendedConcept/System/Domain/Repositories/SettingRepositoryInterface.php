@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\User\Domain\Repositories;
+namespace Src\BlendedConcept\System\Domain\Repositories;
 
 interface SettingRepositoryInterface
 {

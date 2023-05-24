@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\System\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Src\BlendedConcept\System\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\PlanRepositoryInterface;
 
 class PlanController

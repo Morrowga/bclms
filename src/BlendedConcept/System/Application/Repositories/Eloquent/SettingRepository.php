@@ -1,9 +1,9 @@
 <?php
 
-namespace Src\BlendedConcept\User\Application\Repositories\Eloquent;
+namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
 use Src\BlendedConcept\User\Domain\Model\Setting;
-use Src\BlendedConcept\User\Domain\Repositories\SettingRepositoryInterface;
+use Src\BlendedConcept\System\Domain\Repositories\SettingRepositoryInterface;
 
 class SettingRepository implements SettingRepositoryInterface
 {

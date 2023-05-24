@@ -2,37 +2,37 @@
 
 namespace Src\BlendedConcept\User\Domain\Policies;
 
-use Src\BlendedConcept\User\Domain\Model\User;
+
 
 class RolePolicy
 {
 
-    public function view(User $user)
+    public function view()
     {
-        return $user->hasPermission('access_role');
+        return auth()->user()->hasPermission('access_role');
     }
 
-    public function create(User $user)
+    public function create()
     {
-        return $user->hasPermission('create_role');
+        return auth()->user()->hasPermission('create_role');
     }
-    public function store(User $user)
+    public function store()
     {
-        return $user->hasPermission('create_role');
+        return auth()->user()->hasPermission('create_role');
     }
-    public function edit(User $user)
+    public function edit()
     {
-        return $user->hasPermission('edit_role');
-    }
-
-    public function update(User $user)
-    {
-        return $user->hasPermission('edit_role');
+        return auth()->user()->hasPermission('edit_role');
     }
 
-    public function destroy(User $user)
+    public function update()
     {
-        return $user->hasPermission('delete_role');
+        return auth()->user()->hasPermission('edit_role');
+    }
+
+    public function destroy()
+    {
+        return auth()->user()->hasPermission('delete_role');
     }
 
 }

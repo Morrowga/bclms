@@ -10,7 +10,6 @@ use Src\BlendedConcept\User\Domain\Model\User;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Requests\StoreUserRequest;
 use Gate;
-use Src\BlendedConcept\User\Domain\Policies\UserPolicy;
 use Src\BlendedConcept\User\Domain\Requests\UpdateUserRequest;
 use Src\BlendedConcept\User\Domain\Requests\updateUserPasswordRequest;
 use Src\BlendedConcept\User\Application\UseCases\Queries\GetUsersWithPagination;
@@ -27,7 +26,7 @@ class UserController extends Controller
   //get all users
   public function index(Request $request)
   {
-    $this->authorize('view',UserPolicy::class);
+    $this->authorize('view',User::class);
 
     $filters = request()->only(['name', 'email', 'role', 'search', 'perPage', 'roles']) ?? [];
     $users = (new GetUsersWithPagination($filters))->handle();
@@ -43,7 +42,7 @@ class UserController extends Controller
   //store user
   public function store(StoreUserRequest $request)
   {
-    authorize('create',UserPolicy::class);
+    $this->authorize('create',User::class);
     $request->validated();
     $this->userInterFace->createUser($request);
     return redirect()->route('users.index')->with("successMessage", "User Create Successfully!");
@@ -52,7 +51,7 @@ class UserController extends Controller
   //update user
   public function update(UpdateUserRequest $request, User $user)
   {
-    authorize('edit', UserPolicy::class);
+    $this->authorize('edit', User::class);
     $this->userInterFace->updateUser($request, $user);
 
 
@@ -62,7 +61,7 @@ class UserController extends Controller
 
   public function destroy(User $user)
   {
-    authorize('destroy', UserPolicy::class);
+    $this->authorize('destroy', User::class);
     $user->delete();
     return redirect()->route('users.index')->with("successMessage", "User Deleted Successfully!");
   }

@@ -5,25 +5,15 @@ namespace Src\Common\Infrastructure\Laravel\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Src\Auth\Application\Repositories\Eloquent\AuthRepository;
-use Src\Auth\Application\Repositories\Eloquent\DashboardRepository;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
-use Src\Auth\Domain\Repositories\DashboardRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\System\Application\Repositories\Eloquent\OrganizationRepository;
-use Src\BlendedConcept\System\Application\Repositories\Eloquent\PlanRepository;
 use Src\BlendedConcept\System\Domain\Model\Organization;
-use Src\BlendedConcept\System\Domain\Repositories\PlanRepositoryInterface;
-use Src\BlendedConcept\User\Application\Repositories\Eloquent\AnnouncementRepository;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\NotificationRepository;
-use Src\BlendedConcept\User\Application\Repositories\Eloquent\SettingRepository;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\UserRepository;
-use Src\BlendedConcept\User\Domain\Repositories\AnnouncementRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
-use Src\BlendedConcept\User\Domain\Repositories\SettingRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 use Illuminate\Support\Facades\Config;
-use Src\BlendedConcept\System\Application\Repositories\Eloquent\PageBuilderRepository;
-use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -42,40 +32,12 @@ class AppServiceProvider extends ServiceProvider
             AuthRepositoryInterface::class,
             AuthRepository::class
         );
-        $this->app->bind(
-            DashboardRepositoryInterface::class,
-            DashboardRepository::class
-        );
-
-        $this->app->bind(
-            AnnouncementRepositoryInterface::class,
-            AnnouncementRepository::class
-        );
 
         $this->app->bind(
             OrganizationRepositoryInterface::class,
             OrganizationRepository::class
         );
 
-        $this->app->bind(
-            PlanRepositoryInterface::class,
-            PlanRepository::class
-        );
-
-        // setting interface
-
-        $this->app->bind(
-            SettingRepositoryInterface::class,
-            SettingRepository::class
-        );
-
-
-        // third party package interface and repository
-
-        $this->app->bind(
-            PageBuilderInterface::class,
-            PageBuilderRepository::class
-        );
     }
 
 

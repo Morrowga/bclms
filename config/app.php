@@ -194,7 +194,7 @@ return [
          * Domain Service Providers...
          */
         \Src\BlendedConcept\User\Application\Providers\UserServiceProvider::class,
-        // \Src\BlendedConcept\System\Application\Providers\SystemServiceProvider::class,
+        \Src\BlendedConcept\System\Application\Providers\SystemServiceProvider::class,
 
 
         /*

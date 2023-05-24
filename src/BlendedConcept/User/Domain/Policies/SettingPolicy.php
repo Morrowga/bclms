@@ -1,35 +1,34 @@
 <?php
 
 namespace Src\BlendedConcept\User\Domain\Policies;
-use Src\BlendedConcept\User\Domain\Model\User;
 class SettingPolicy
 {
 
-    public function view(User $user)
+    public function view()
     {
-        return $user->hasPermission('access_settings');
+        return auth()->user()->hasPermission('access_settings');
     }
 
-    public function create(User $user)
+    public function create()
     {
-        return $user->hasPermission('create_user');
+        return auth()->user()->hasPermission('create_user');
     }
-    public function store(User $user)
+    public function store()
     {
-        return $user->hasPermission('create_user');
+        return auth()->user()->hasPermission('create_user');
     }
-    public function edit(User $user)
+    public function edit()
     {
-        return $user->hasPermission('edit_user');
-    }
-
-    public function update(User $user)
-    {
-        return $user->hasPermission('edit_user');
+        return auth()->user()->hasPermission('edit_user');
     }
 
-    public function destroy(User $user)
+    public function update()
     {
-        return $user->hasPermission('delete_user');
+        return auth()->user()->hasPermission('edit_user');
+    }
+
+    public function destroy()
+    {
+        return auth()->user()->hasPermission('delete_user');
     }
 }
