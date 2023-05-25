@@ -3,15 +3,15 @@
 namespace Src\BlendedConcept\System\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
 use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
+use Src\BlendedConcept\System\Application\UseCases\Commands\DeleteAnnounmentCommand;
 use Src\BlendedConcept\System\Application\UseCases\Commands\StoreAnnounmentCommand;
+use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateAnnounmentCommand;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetAnnounmetAllWithPagination;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganizationList;
-use Src\BlendedConcept\System\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
-use Src\BlendedConcept\System\Domain\Repositories\AnnouncementRepositoryInterface;
 use Src\BlendedConcept\User\Application\UseCases\Queries\GetUserList;
-use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Requests\StoreAnnouncementRequest;
 use Src\BlendedConcept\System\Domain\Requests\UpdateAnnouncementRequest;
 use Src\Common\Infrastructure\Laravel\Controller;
@@ -19,15 +19,8 @@ use Src\Common\Infrastructure\Laravel\Controller;
 
 class AnnouncementController extends Controller
 {
-    private $announcementInterface;
-    private $userInterface;
-    private $organizationInterface;
-    public function __construct(AnnouncementRepositoryInterface $announcementInterface, UserRepositoryInterface $userInterface, OrganizationRepositoryInterface $organizationInterface)
-    {
-        $this->announcementInterface = $announcementInterface;
-        $this->userInterface = $userInterface;
-        $this->organizationInterface = $organizationInterface;
-    }
+
+
     //get all announcements
     public function index()
     {
@@ -91,22 +84,70 @@ class AnnouncementController extends Controller
         return redirect()->route('announcements.index')->with("successMessage", "Announcement created Successfully!");
     }
 
-    //update announcement
+
+
+    /**
+     * Update an announcement.
+     *
+     * @param UpdateAnnouncementRequest $request
+     * @param AnnouncementEloquentModel $announcement
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateAnnouncementRequest $request, AnnouncementEloquentModel $announcement)
     {
+        /**
+         * @throws \Illuminate\Auth\Access\AuthorizationException
+         */
         $this->authorize('edit', Announcement::class);
-        $request->validated();
-        $this->announcementInterface->updateAnnouncement($request, $announcement);
 
-        return redirect()->route('announcements.index')->with("successMessage", "Announcement updated Successfully!");
+        /**
+         * Validate the request.
+         */
+        $request->validated();
+
+        /**
+         * Try to update the announcement.
+         */
+        try {
+            $announcement = AnnounmentData::fromRequest($request, $announcement->id);
+            $updateAnnounmentCommand = (new UpdateAnnounmentCommand($announcement));
+            $updateAnnounmentCommand->execute();
+            return redirect()->route('announcements.index')->with("successMessage", "Announcement updated Successfully!");
+        } catch (\Exception $e) {
+            /**
+             * Catch any exceptions and display an error message.
+             */
+            return redirect()->route('announcements.index')->with("SystemErrorMessage", $e->getMessage());
+        }
     }
 
-    //destroy announcement
+    /**
+     * Delete an announcement.
+     *
+     * @param AnnouncementEloquentModel $announcement The announcement to delete.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(AnnouncementEloquentModel $announcement)
     {
+        /**
+         * @throws \Illuminate\Auth\Access\AuthorizationException
+         */
         $this->authorize('destroy', Announcement::class);
-        //   delete permission
-        $announcement->delete();
-        return  redirect()->route('announcements.index')->with("successMessage", "Announcement deleted Successfully!");
+
+        /**
+         * Try to delete the announcement.
+         */
+        try {
+            (new DeleteAnnounmentCommand($announcement->id))->execute();
+
+            return redirect()->route('announcements.index')->with("successMessage", "Announcement deleted Successfully!");
+        } catch (\Exception $e) {
+            /**
+             * Catch any exceptions and display an error message.
+             */
+            return redirect()->route('announcements.index')->with("systemErrorMessage", $e->getMessage());
+        }
     }
 }

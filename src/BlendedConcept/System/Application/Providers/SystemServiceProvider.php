@@ -9,8 +9,8 @@ use Src\BlendedConcept\System\Domain\Repositories\AnnouncementRepositoryInterfac
 use Src\BlendedConcept\System\Application\Repositories\Eloquent\AnnouncementRepository;
 use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
 use Src\BlendedConcept\System\Application\Repositories\Eloquent\PageBuilderRepository;
-use Src\BlendedConcept\User\Domain\Repositories\SettingRepositoryInterface;
-use Src\BlendedConcept\User\Application\Repositories\Eloquent\SettingRepository;
+use Src\BlendedConcept\System\Domain\Repositories\SettingRepositoryInterface;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\SettingRepository;
 use Src\BlendedConcept\System\Application\Repositories\Eloquent\PlanRepository;
 use Src\BlendedConcept\System\Domain\Repositories\PlanRepositoryInterface;
 

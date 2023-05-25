@@ -2,12 +2,12 @@
 
 namespace Src\BlendedConcept\System\Domain\Repositories;
 
+use Src\BlendedConcept\System\Application\DTO\SiteSettingData;
+
 interface SettingRepositoryInterface
 {
-    // update settings
 
-
-    public function updateSetting($request);
+    public function updateSetting(SiteSettingData $siteSettingData);
 
 
     public function getSetting();

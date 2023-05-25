@@ -35,7 +35,7 @@ const pages = {
     //settings
 
     //announcement
-    "BlendedConcept/User/Presentation/Resources/Settings/Index": import('../../src/BlendedConcept/User/Presentation/Resources/Settings/Index.vue'),
+    "BlendedConcept/System/Presentation/Resources/Settings/Index": import('../../src/BlendedConcept/System/Presentation/Resources/Settings/Index.vue'),
 
 
 };

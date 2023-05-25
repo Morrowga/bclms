@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Src\BlendedConcept\User\Domain\Model;
+namespace Src\BlendedConcept\System\Infrastructure\EloquentModels;
+
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Setting extends Model implements HasMedia
+class SiteSettingEloquentModel extends Model implements HasMedia
 {
     use InteractsWithMedia;
 

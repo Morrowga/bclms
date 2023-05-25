@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\User\Domain\Requests;
+namespace Src\BlendedConcept\System\Domain\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSettingRequest  extends FormRequest

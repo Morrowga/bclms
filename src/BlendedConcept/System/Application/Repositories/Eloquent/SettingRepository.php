@@ -2,34 +2,31 @@
 
 namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
-use Src\BlendedConcept\User\Domain\Model\Setting;
+use Src\BlendedConcept\System\Application\DTO\SiteSettingData;
+use Src\BlendedConcept\System\Infrastructure\EloquentModels\SiteSettingEloquentModel;
 use Src\BlendedConcept\System\Domain\Repositories\SettingRepositoryInterface;
 
 class SettingRepository implements SettingRepositoryInterface
 {
-    public function updateSetting($request)
+    public function updateSetting(SiteSettingData $siteSettingData)
     {
 
-        Setting::where("id", 1)->update([
-            'site_name' => $request->site_name,
-            'timezone' => $request->timezone,
-            'locale' => $request->locale,
-            "email" => $request->email,
-            "contact_number" => $request->contact_number
-        ]);
+        $siteSettingArray = $siteSettingData->toArray();
+        $siteEloquent = SiteSettingEloquentModel::query()->find(1);
 
-        $settings = Setting::find(1);
+        $siteEloquent->fill($siteSettingArray);
+        $siteEloquent->save();
 
-        if ($request->hasFile('site_logo') && $request->file('site_logo')->isValid()) {
+        if (request()->hasFile('site_logo') && request()->file('site_logo')->isValid()) {
 
-            $settings->clearMediaCollection('site_logo');
-            $settings->addMediaFromRequest('site_logo')->toMediaCollection('site_logo', 'media_sitelogo');
+            $siteEloquent->clearMediaCollection('site_logo');
+            $siteEloquent->addMediaFromRequest('site_logo')->toMediaCollection('site_logo', 'media_sitelogo');
         }
 
-        if ($request->hasFile('fav_icon') && $request->file('fav_icon')->isValid()) {
+        if (request()->hasFile('fav_icon') && request()->file('fav_icon')->isValid()) {
 
-            $settings->clearMediaCollection('fav_icon');
-            $settings->addMediaFromRequest('fav_icon')->toMediaCollection('fav_icon', 'media_sitefavico');
+            $siteEloquent->clearMediaCollection('fav_icon');
+            $siteEloquent->addMediaFromRequest('fav_icon')->toMediaCollection('fav_icon', 'media_sitefavico');
 
         }
     }
@@ -37,7 +34,7 @@ class SettingRepository implements SettingRepositoryInterface
 
     public function getSetting()
     {
-        return Setting::find(1);
+        return SiteSettingEloquentModel::find(1);
     }
 
 }

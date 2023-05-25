@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 use Src\BlendedConcept\User\Domain\Resources\AuthResource;
-use Src\BlendedConcept\User\Domain\Model\Setting;
+use Src\BlendedConcept\System\Infrastructure\EloquentModels\SiteSettingEloquentModel;
 class HandleInertiaRequest extends Middleware
 {
     /**
@@ -52,9 +52,9 @@ class HandleInertiaRequest extends Middleware
             'notifications' => getNotifications() != null ? getNotifications()['notifications'] : null,
             'unreadNotificationsCount' => getNotifications() != null ? getNotifications()['unread'] : 0,
             'auth' => auth()->check() ? new AuthResource(auth()->user()) : "",
-            "site_settings" => Setting::find(1) ?? "",
-            "site_logo" => Setting::find(1)->getFirstMedia('site_logo')->original_url ?? "",
-            "fav_icon" => Setting::find(1)->getFirstMedia('fav_icon')->original_url ?? "",
+            "site_settings" => SiteSettingEloquentModel::find(1) ?? "",
+            "site_logo" => SiteSettingEloquentModel::find(1)->getFirstMedia('site_logo')->original_url ?? "",
+            "fav_icon" => SiteSettingEloquentModel::find(1)->getFirstMedia('fav_icon')->original_url ?? "",
 
         ]);
     }
