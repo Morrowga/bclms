@@ -1,0 +1,24 @@
+<?php
+
+namespace Src\BlendedConcept\Security\Application\UseCases\Commands\Permission;
+
+use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
+use Src\BlendedConcept\Organization\Domain\Model\Organization;
+use Src\Common\Domain\CommandInterface;
+
+class StoreOrganizationCommand implements CommandInterface
+{
+    private OrganizationRepositoryInterface $repository;
+
+    public function __construct(
+        private readonly Organization $organization
+    )
+    {
+        $this->repository = app()->make(OrganizationRepositoryInterface::class);
+    }
+
+    public function execute()
+    {
+        return $this->repository->createOrganization($this->organization);
+    }
+}

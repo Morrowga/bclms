@@ -23,6 +23,8 @@ class AnnounmentMapper
 
     public static function fromEloquent(): Annoument
     {
+
+
     }
 
     public static function toEloquent(Annoument $annoument): AnnouncementEloquentModel

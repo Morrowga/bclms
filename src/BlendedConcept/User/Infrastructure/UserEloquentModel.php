@@ -9,10 +9,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Src\BlendedConcept\User\Domain\Model\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
 
 class UserEloquentModel extends  Authenticatable implements HasMedia, MustVerifyEmail
 {
@@ -74,7 +74,7 @@ class UserEloquentModel extends  Authenticatable implements HasMedia, MustVerify
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class,'role_user','user_id');
+        return $this->belongsToMany(RoleEloquentModel::class,'role_user','user_id','role_id');
     }
 
 
@@ -91,13 +91,13 @@ class UserEloquentModel extends  Authenticatable implements HasMedia, MustVerify
 
     public function permissions()
     {
-        return $this->hasManyThrough(Permission::class, Role::class);
+        return $this->hasManyThrough(PermissionEloquentModel::class, RoleEloquentModel::class);
     }
 
     public function hasPermission($permission)
     {
         $role = auth()->user()->roles[0]->id;
-        $user_role = Role::find($role);
+        $user_role = RoleEloquentModel::find($role);
         return $user_role->permissions->where('name', $permission)->first() ? true : false;
     }
 

@@ -6,7 +6,8 @@ namespace Src\Common\Infrastructure\Laravel\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
-use Src\BlendedConcept\User\Domain\Resources\AuthResource;
+use Src\BlendedConcept\Security\Domain\Resources\AuthResource;
+
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\SiteSettingEloquentModel;
 class HandleInertiaRequest extends Middleware
 {

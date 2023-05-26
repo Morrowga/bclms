@@ -5,12 +5,12 @@ namespace Src\Auth\Application\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Src\Auth\Application\Repositories\AuthRepository;
 use Src\Auth\Domain\AuthInterface;
-use Src\BlendedConcept\User\Domain\Policies\UserPolicy;
-use Src\BlendedConcept\User\Domain\Policies\PermissionPolicy;
-use Src\BlendedConcept\User\Domain\Policies\RolePolicy;
 use Src\BlendedConcept\System\Domain\Policies\OrganizationPolicy;
-use Src\BlendedConcept\User\Domain\Policies\FileManagerPolicy;
-use Src\BlendedConcept\User\Domain\Policies\SettingPolicy;
+use Src\BlendedConcept\System\Domain\Policies\SettingPolicy;
+use Src\BlendedConcept\Security\Domain\Policies\UserPolicy;
+use Src\BlendedConcept\Security\Domain\Policies\PermissionPolicy;
+use Src\BlendedConcept\System\Domain\Policies\FileManagerPolicy;
+use Src\BlendedConcept\Security\Domain\Policies\RolePolicy;
 use Gate;
 
 
@@ -22,9 +22,12 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        'Src\BlendedConcept\User\Domain\Model\User::class' => 'Src\BlendedConcept\User\Domain\Policies\UserPolicy::class',
-        'Src\BlendedConcept\User\Domain\Model\Permission::class' => 'Src\BlendedConcept\User\Domain\Policies\PermissionPolicy::class',
-        'Src\BlendedConcept\User\Domain\Model\Role::class' => 'Src\BlendedConcept\User\Domain\Policies\RolePolicy::class',
+        'Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel::class' => 'Src\BlendedConcept\Security\Domain\Policies\UserPolicy::class',
+
+        'Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel' => 'Src\BlendedConcept\Security\Domain\Policies\PermissionPolicy::class',
+
+        'Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel::class' => 'Src\BlendedConcept\Security\Domain\Policies\RolePolicy::class',
+
         'Src\BlendedConceptSystem\Domain\Model\Organization::class' => 'Src\BlendedConcept\System\Domain\Policies\OrganizationPolicy::class',
         'Src\BlendedConcept\User\Domain\Model\Setting::class' => 'Src\BlendedConcept\User\Domain\Policies\SettingPolicy::class'
     ];

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Src\BlendedConcept\User\Domain\Model\Permission;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
 
 class PermissionTableSeeder extends Seeder
 {
@@ -170,7 +170,7 @@ class PermissionTableSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create($permission);
+            PermissionEloquentModel::create($permission);
         }
     }
 }

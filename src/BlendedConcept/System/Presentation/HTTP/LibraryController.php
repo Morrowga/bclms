@@ -1,11 +1,15 @@
 <?php
 
 namespace Src\BlendedConcept\System\Presentation\HTTP;
+
 use Src\Common\Infrastructure\Laravel\Controller;
+
 class LibraryController extends Controller
 {
-    /***
-     *  this method is for laravel filemanager
+    /**
+     * Display the file manager view.
+     *
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {

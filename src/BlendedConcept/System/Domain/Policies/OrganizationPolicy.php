@@ -1,35 +1,35 @@
 <?php
 
 namespace Src\BlendedConcept\System\Domain\Policies;
-use Src\BlendedConcept\User\Domain\Model\User;
+
 
 class OrganizationPolicy
 {
-    public function view(User $user)
+    public function view()
     {
-        return $user->hasPermission('access_organization');
+        return auth()->user()->hasPermission('access_organization');
     }
 
-    public function create(User $user)
+    public function create()
     {
-        return $user->hasPermission('create_organization');
+        return auth()->user()->hasPermission('create_organization');
     }
-    public function store(User $user)
+    public function store()
     {
-        return $user->hasPermission('create_organization');
+        return auth()->user()->hasPermission('create_organization');
     }
-    public function edit(User $user)
+    public function edit()
     {
-        return $user->hasPermission('edit_organization');
-    }
-
-    public function update(User $user)
-    {
-        return $user->hasPermission('edit_organization');
+        return auth()->user()->hasPermission('edit_organization');
     }
 
-    public function destroy(User $user)
+    public function update()
     {
-        return $user->hasPermission('delete_organization');
+        return auth()->user()->hasPermission('edit_organization');
+    }
+
+    public function destroy()
+    {
+        return auth()->user()->hasPermission('delete_organization');
     }
 }

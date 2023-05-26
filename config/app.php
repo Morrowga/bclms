@@ -195,6 +195,8 @@ return [
          */
         \Src\BlendedConcept\User\Application\Providers\UserServiceProvider::class,
         \Src\BlendedConcept\System\Application\Providers\SystemServiceProvider::class,
+        \Src\BlendedConcept\Security\Application\Providers\SecurityServiceProvider::class,
+        \Src\BlendedConcept\Organization\Application\Providers\OrganizationServiceProvider::class,
 
 
         /*
