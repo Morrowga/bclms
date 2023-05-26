@@ -1,5 +1,8 @@
 <?php
 
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+
+
 return [
 
     /*
@@ -62,7 +65,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Src\BlendedConcept\User\Infrastructure\UserEloquentModel::class,
+            'model' => UserEloquentModel::class,
         ],
 
         // 'users' => [

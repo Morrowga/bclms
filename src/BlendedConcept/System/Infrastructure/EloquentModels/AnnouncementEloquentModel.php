@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Src\BlendedConcept\System\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Model;
-use Src\BlendedConcept\User\Infrastructure\UserEloquentModel;
-use Src\BlendedConcept\System\Domain\Model\Organization;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+
 
 class AnnouncementEloquentModel extends Model
 {
@@ -29,7 +30,7 @@ class AnnouncementEloquentModel extends Model
     ];
     public function created_by()
     {
-        return $this->belongsTo(Organization::class, 'created_by', 'id');
+        return $this->belongsTo(OrganizationEloquentModel::class, 'created_by', 'id');
     }
 
     public function send_to()

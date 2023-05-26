@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Security\Domain\Repositories;
+namespace Src\BlendedConcept\System\Domain\Repositories;
 
 interface NotificationRepositoryInterface
 {

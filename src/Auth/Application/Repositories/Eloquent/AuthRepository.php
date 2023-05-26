@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Src\Auth\Domain\Mail\VerifyEmail;
-use Src\BlendedConcept\User\Infrastructure\UserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
 use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
 

@@ -5,6 +5,7 @@ use Src\BlendedConcept\System\Presentation\HTTP\DashBoardController;
 use Src\BlendedConcept\System\Presentation\HTTP\AnnouncementController;
 use Src\BlendedConcept\System\Presentation\HTTP\SettingController;
 use Src\BlendedConcept\System\Presentation\HTTP\LibraryController;
+use Src\BlendedConcept\System\Presentation\HTTP\NotificationController;
 
 Route::get('/', function () {
 
@@ -18,8 +19,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/home', [DashBoardController::class, 'superAdminDashboard'])->name('dashboard');
 
-
-
     // announcement
     Route::resource("announcements", AnnouncementController::class);
 
@@ -28,6 +27,29 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("libraries", [LibraryController::class, 'index'])->name('libraries');
 
     Route::post('settings', [SettingController::class, 'UpdateSetting'])->name('updateSetting');
+
+
+
+    /***
+     * This route handles system-related notifications.
+     *
+     * It is used when the admin sends actions to users, such as organizations or individuals.
+     * The purpose of this route is to retrieve notifications from the system.
+     *
+     * Notifications can be sent to inform users about various actions or updates within the system.
+     * Examples of such actions include changes to an organization's settings, updates on user accounts,
+     * or important announcements from the admin.
+     * This route provides a way for users to receive these notifications and stay informed about
+     * relevant activities happening within the system.
+     */
+    //mark as read with id
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'read'])->name("markAsRead");
+
+    //mark as read all
+    Route::post('/notifications/readall', [NotificationController::class, 'readAll'])->name("markAsReadAll");
+
+    //get all notifications
+    Route::get('/notifications/index', [NotificationController::class, "getAllNotifications"])->name("notifications");
 });
 
 

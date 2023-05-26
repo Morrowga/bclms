@@ -7,7 +7,6 @@ use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRolewithPa
 use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\Security\Domain\Requests\StoreRoleRequest;
 use Src\BlendedConcept\Security\Domain\Requests\UpdateRoleRequest;
-use Src\BlendedConcept\User\Domain\Model\Role;
 use Src\BlendedConcept\Security\Application\DTO\RoleData;
 use Src\BlendedConcept\Security\Application\Mappers\RoleMapper;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\Role\UpdateRoleCommand;
@@ -110,7 +109,7 @@ class RoleController extends Controller
 
 
     //destroy role
-    public function destroy(Role $role)
+    public function destroy(RoleEloquentModel $role)
     {
         $this->authorize('destroy', Role::class);
         $role->delete();

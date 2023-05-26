@@ -4,9 +4,9 @@ namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
 use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
 use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
-use Src\BlendedConcept\System\Domain\Model\Organization;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
-use Src\BlendedConcept\User\Domain\Model\User;
 use Src\BlendedConcept\System\Domain\Repositories\AnnouncementRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Resources\AnnouncementResource;
 use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
@@ -23,8 +23,8 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     // create announcement
     public function createAnnouncement($request)
     {
-        $create_by_user = Organization::find($request->created_by);
-        $receive_user = User::find($request->send_to);
+        $create_by_user = OrganizationEloquentModel::find($request->created_by);
+        $receive_user = UserEloquentModel::find($request->send_to);
         $receive_user->notify(new BcNotification(['message' => $request->title, 'from' => $create_by_user->name, 'to' => $receive_user->name, 'type' => $request->type ?? '']));
         $announmentEloquent = AnnounmentMapper::toEloquent($request);
         $announmentEloquent->save();
@@ -36,8 +36,8 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     {
         $announcementArray = $annountment->toArray();
         $announemtEloquent = AnnouncementEloquentModel::query()->find($annountment->id);
-        $create_by_user = Organization::find($annountment->created_by);
-        $receive_user = User::find($annountment->send_to);
+        $create_by_user = OrganizationEloquentModel::find($annountment->created_by);
+        $receive_user = UserEloquentModel::find($annountment->send_to);
         $receive_user->notify(new BcNotification(['message' => $annountment->title, 'from' => $create_by_user->name, 'to' => $receive_user->name, 'type' => $annountment->type ?? '']));
         $announemtEloquent->fill($announcementArray);
         $announemtEloquent->save();

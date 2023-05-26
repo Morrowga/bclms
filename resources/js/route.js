@@ -14,7 +14,7 @@ const pages = {
 
 
     //user module
-    "BlendedConcept/Orgainzation/Presentation/Resources/Users/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/Users/Index.vue'),
+    "BlendedConcept/Security/Presentation/Resources/Users/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/Users/Index.vue'),
 
 
 

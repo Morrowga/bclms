@@ -1,10 +1,9 @@
 <?php
 
-namespace Src\BlendedConcept\User\Application\Repositories\Eloquent;
+namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
+
+use Src\BlendedConcept\System\Domain\Repositories\NotificationRepositoryInterface;
 
 class NotificationRepository implements NotificationRepositoryInterface
 {

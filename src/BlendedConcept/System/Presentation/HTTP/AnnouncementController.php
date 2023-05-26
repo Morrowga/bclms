@@ -11,7 +11,7 @@ use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateAnnounmentComm
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetAnnounmetAllWithPagination;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganizationList;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
-use Src\BlendedConcept\User\Application\UseCases\Queries\GetUserList;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserList;
 use Src\BlendedConcept\System\Domain\Requests\StoreAnnouncementRequest;
 use Src\BlendedConcept\System\Domain\Requests\UpdateAnnouncementRequest;
 use Src\Common\Infrastructure\Laravel\Controller;
@@ -39,7 +39,6 @@ class AnnouncementController extends Controller
 
             // Get announcements with pagination
             $announcements = (new GetAnnounmetAllWithPagination($filters))->handle();
-
             // Render Inertia view
             return Inertia::render('BlendedConcept/System/Presentation/Resources/Announcements/Index', [
                 "announcements" => $announcements,

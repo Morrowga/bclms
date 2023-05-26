@@ -51,10 +51,7 @@ class UserEloquentModel extends  Authenticatable implements HasMedia, MustVerify
         'email_verified_at' => 'datetime',
     ];
 
-    protected static function newFactory()
-    {
-        return \Src\BlendedConcept\User\Domain\Factories\UserFactory::new();
-    }
+
     public function getImageAttribute()
     {
         return $this->getMedia('image');

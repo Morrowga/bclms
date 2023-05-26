@@ -1,10 +1,9 @@
 <?php
 
-namespace Src\BlendedConcept\User\Presentation\HTTP;
+namespace Src\BlendedConcept\System\Presentation\HTTP;
 
-use Inertia\Inertia;
 use Src\Common\Infrastructure\Laravel\Controller;
-use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
+use Src\BlendedConcept\System\Domain\Repositories\NotificationRepositoryInterface;
 
 class NotificationController extends Controller
 {
