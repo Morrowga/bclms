@@ -2,7 +2,7 @@
 
 namespace Src\BlendedConcept\Security\Application\UseCases\Commands\Permission;
 
-use Src\BlendedConcept\Security\Domain\Model\Permission;
+use Src\BlendedConcept\Security\Domain\Model\Entities\Permission;
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
 use Src\Common\Domain\CommandInterface;
 

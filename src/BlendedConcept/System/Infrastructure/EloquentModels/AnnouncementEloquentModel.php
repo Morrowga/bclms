@@ -21,13 +21,6 @@ class AnnouncementEloquentModel extends Model
         'send_to'
     ];
 
-    public array $rules = [
-        'title' => 'required',
-        'message' => 'required',
-        'created_by' => 'required',
-        'trigger_on' => 'required',
-        'send_to' => 'required'
-    ];
     public function created_by()
     {
         return $this->belongsTo(OrganizationEloquentModel::class, 'created_by', 'id');

@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Security\Application\UseCases\Commands\Role;
 
 
 use Src\Common\Domain\CommandInterface;
-use Src\BlendedConcept\Security\Domain\Model\Role;
+use Src\BlendedConcept\Security\Domain\Model\Entities\Role;
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
 
 class StoreRoleCommand implements CommandInterface

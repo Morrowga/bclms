@@ -11,12 +11,17 @@ use Src\BlendedConcept\Security\Application\UseCases\Commands\User\StoreUserComm
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserName;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\getRoleName;
 use Src\BlendedConcept\Security\Domain\Model\User;
-use Src\BlendedConcept\Security\Domain\Requests\StoreUserRequest;
-use Src\BlendedConcept\Security\Domain\Requests\UpdateUserRequest;
-use Src\BlendedConcept\Security\Domain\Requests\updateUserPasswordRequest;
+use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
+use Src\BlendedConcept\Security\Application\Requests\UpdateUserRequest;
+use Src\BlendedConcept\Security\Application\Requests\updateUserPasswordRequest;
+use Src\BlendedConcept\Security\Application\UseCases\Commands\User\ChangeUserPassword;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUsersWithPagination;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\User\UpdateUserCommand;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Src\BlendedConcept\Security\Application\Policies\UserPolicy;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -32,9 +37,11 @@ class UserController extends Controller
     public function index()
     {
 
+        // Check if the user is authorized to view users
+
+        abort_if(authorize('view', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
-            // Check if the user is authorized to view users
-            $this->authorize('view', UserEloquentModel::class);
 
             // Get the filters from the request, or initialize an empty array if they are not present
             $filters = request()->only(['name', 'email', 'role', 'search', 'perPage', 'roles']) ?? [];
@@ -54,7 +61,6 @@ class UserController extends Controller
                 'roles_name' => $roles_name
             ]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
             return redirect()->route('users.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
@@ -66,8 +72,9 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        abort_if(authorize('create', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
-            $this->authorize('create', User::class);
 
             $request->validated();
             $newUser = UserMapper::fromRequest($request);
@@ -78,8 +85,7 @@ class UserController extends Controller
             return redirect()->route('users.index')->with("successMessage", "User created successfully!");
         } catch (\Exception $e) {
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route('users.index')->with("sytemErrorMessage",$e->getMessage());
-
+            return redirect()->route('users.index')->with("sytemErrorMessage", $e->getMessage());
         }
     }
 
@@ -88,9 +94,10 @@ class UserController extends Controller
     //update user
     public function update(UpdateUserRequest $request, UserEloquentModel $user)
     {
-        $this->authorize('edit', User::class);
 
-        $updateUser = UserData::fromRequest($request,$user->id);
+        abort_if(authorize('edit', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $updateUser = UserData::fromRequest($request, $user->id);
         $updatedUserCommand = (new UpdateUserCommand($updateUser));
 
         $updatedUserCommand->execute();
@@ -98,16 +105,33 @@ class UserController extends Controller
     }
 
 
-    public function destroy(User $user)
+    public function destroy(UserEloquentModel $user)
     {
-        $this->authorize('destroy', User::class);
+        abort_if(authorize('destroy', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $user->delete();
         return redirect()->route('users.index')->with("successMessage", "User Deleted Successfully!");
     }
 
     public function changePassword(updateUserPasswordRequest $request)
     {
-        $this->userInterFace->changepassword($request);
-        return redirect()->route('userprofile')->with("successMessage", "Password Updated Successfully!");
+
+        try {
+
+            $user = Auth::user();
+            //  check passord same or not
+            if (Hash::check($request->currentpassword, $user->password)) {
+                UserEloquentModel::find($user->id)->update([
+                    "password" => $request->updatedpassword
+                ]);
+
+                return redirect()->route('userprofile')->with("successMessage", "Password Updated Successfully!");
+            }
+
+            return redirect()->route('userprofile')->with("errorMessage", "Password does not match!");
+        } catch (\Exception $error) {
+
+            dd("something was wrong", $error->getMessage());
+        }
     }
 }

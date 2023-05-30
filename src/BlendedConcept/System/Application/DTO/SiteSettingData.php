@@ -4,7 +4,6 @@ namespace Src\BlendedConcept\System\Application\DTO;
 
 use Illuminate\Http\Request;
 
-use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\SiteSettingEloquentModel;
 
 class SiteSettingData

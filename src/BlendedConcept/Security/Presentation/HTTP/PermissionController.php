@@ -4,20 +4,19 @@ namespace Src\BlendedConcept\Security\Presentation\HTTP;
 
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Permissions\GetPermissionwithPagination;
 use Src\Common\Infrastructure\Laravel\Controller;
-use Src\BlendedConcept\Security\Domain\Requests\StorepermissionRequest;
-use Src\BlendedConcept\Security\Domain\Requests\UpdatepermissionRequest;
+use Src\BlendedConcept\Security\Application\Requests\StorepermissionRequest;
+use Src\BlendedConcept\Security\Application\Requests\UpdatepermissionRequest;
 use Src\BlendedConcept\Security\Application\DTO\PermissionData;
 use Src\BlendedConcept\Security\Application\Mappers\PermissionMapper;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\Permission\StorePermissionCommand;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\Permission\UpdatePermissionCommand;
 use Inertia\Inertia;
+use Src\BlendedConcept\Security\Application\Policies\PermissionPolicy;
+use Symfony\Component\HttpFoundation\Response;
 
 class PermissionController extends Controller
 {
-
-
-
 
     /**
      * Display a listing of the permissions.
@@ -26,7 +25,13 @@ class PermissionController extends Controller
      */
     public function index()
     {
+
+
+        //check permission user's has permission
+        abort_if(authorize('view', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
+
             // Retrieve filters from the request
             $filters = request(['name', 'search', 'perPage']);
 
@@ -51,9 +56,11 @@ class PermissionController extends Controller
      */
     public function store(StorepermissionRequest $request)
     {
+        // Authorize the user to create a permission
+        abort_if(authorize('create', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
-            // Authorize the user to create a permission
-            $this->authorize('create', Permission::class);
+
             // Validate the request data
             $request->validated();
             $newPermission = PermissionMapper::fromRequest($request);
@@ -78,9 +85,10 @@ class PermissionController extends Controller
      */
     public function update(UpdatepermissionRequest $request, PermissionEloquentModel $permission)
     {
+        // Authorize the user to edit the permission
+
+        abort_if(authorize('edit', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
-            // Authorize the user to edit the permission
-            $this->authorize('edit', Permission::class);
 
             // Validate the request data
             $request->validated();
@@ -106,8 +114,10 @@ class PermissionController extends Controller
      */
     public function destroy(PermissionEloquentModel $permission)
     {
+
+       abort_if(authorize('destroy', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
-            $this->authorize('destroy', Permission::class);
             $permission->delete();
             return redirect()->route('permissions.index')->with("successMessage", "Permission deleted successfully!");
         } catch (\Exception $e) {

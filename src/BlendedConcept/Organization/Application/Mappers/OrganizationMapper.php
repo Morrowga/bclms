@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Security\Application\Mappers;
+namespace Src\BlendedConcept\Organization\Application\Mappers;
 
 use Illuminate\Http\Request;
 use Src\BlendedConcept\Organization\Domain\Model\Organization;

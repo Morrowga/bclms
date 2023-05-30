@@ -59,6 +59,7 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -205,6 +206,7 @@ return [
         /*
          * Application Service Providers...
          */
+        \Src\Common\Infrastructure\Laravel\Providers\AppServiceProvider::class,
         \Src\Common\Infrastructure\Laravel\Providers\AppServiceProvider::class,
         \Src\Auth\Application\Providers\AuthServiceProvider::class,
         // Src\Common\Infrastructure\Laravel\Providers\BroadcastServiceProvider::class,

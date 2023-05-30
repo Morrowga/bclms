@@ -3,7 +3,11 @@
 namespace Src\Common\Infrastructure\Laravel\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
+use Exception;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Src\BlendedConcept\System\Domain\Mail\ExceptionOccured;
+
 
 class Handler extends ExceptionHandler
 {
@@ -43,8 +47,35 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->reportable(function (Exception $e) {
+            $this->sendEmail($e);
         });
+    }
+
+
+    /**
+     * Exception handling send mail to user when
+     * error happened
+     * @return
+     */
+    public function sendEmail(Exception $exception)
+    {
+
+       try {
+
+            $content['message'] = $exception->getMessage();
+            $content['file'] = $exception->getFile();
+            $content['line'] = $exception->getLine();
+            $content['trace'] = $exception->getTrace();
+
+            $content['url'] = request()->url();
+            $content['body'] = request()->all();
+            $content['ip'] = request()->ip();
+
+            Mail::to(trans('auth.support_email'))->send(new ExceptionOccured($content));
+
+        } catch (Exception $exception) {
+            Log::error($exception);
+        }
     }
 }

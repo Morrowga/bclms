@@ -13,6 +13,7 @@ class UpdateSiteSettingCommand implements CommandInterface
 
     public function __construct(
         private readonly SiteSettingData $siteSettingData
+
     )
     {
         $this->repository = app()->make(SettingRepositoryInterface::class);

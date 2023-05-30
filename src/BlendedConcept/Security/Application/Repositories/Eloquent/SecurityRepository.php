@@ -3,7 +3,7 @@
 namespace Src\BlendedConcept\Security\Application\Repositories\Eloquent;
 
 use Carbon\Carbon;
-
+use Exception;
 use Src\BlendedConcept\Security\Domain\Resources\PermissionResource;
 use Src\BlendedConcept\Security\Domain\Resources\RoleResource;
 use Src\BlendedConcept\Security\Domain\Resources\UserResource;
@@ -16,9 +16,9 @@ use Src\BlendedConcept\Security\Application\DTO\UserData;
 use Src\BlendedConcept\Security\Application\Mappers\PermissionMapper;
 use Src\BlendedConcept\Security\Application\Mappers\RoleMapper;
 use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
-use Src\BlendedConcept\Security\Domain\Model\Role;
+use Src\BlendedConcept\Security\Domain\Model\Entities\Role;
 use Src\BlendedConcept\Security\Domain\Model\User;
-use Src\BlendedConcept\Security\Domain\Model\Permission;
+use Src\BlendedConcept\Security\Domain\Model\Entities\Permission;
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
@@ -70,6 +70,7 @@ class SecurityRepository implements SecurityRepositoryInterface
         $userArray = $user->toArray();
         $updateUserEloquent = UserEloquentModel::query()->findOrFail($user->id);
         $updateUserEloquent->fill($userArray);
+        $updateUserEloquent->save();
 
         //  delete image if reupload or insert if does not exit
         if (request()->hasFile('image') && request()->file('image')->isValid()) {
@@ -194,6 +195,9 @@ class SecurityRepository implements SecurityRepositoryInterface
             UserEloquentModel::find($user->id)->update([
                 "password" => $request->updatedpassword
             ]);
+
+            return true;
         }
+      return false;
     }
 }

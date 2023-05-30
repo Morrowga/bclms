@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Security\Application\Mappers;
 
 use Illuminate\Http\Request;
 use Src\BlendedConcept\Security\Domain\Model\User;
-use Src\BlendedConcept\User\Infrastructure\UserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class UserMapper
 {

@@ -3,7 +3,7 @@
 namespace Src\BlendedConcept\Security\Application\Mappers;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Security\Domain\Model\Permission;
+use Src\BlendedConcept\Security\Domain\Model\Entities\Permission;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
 
 class PermissionMapper

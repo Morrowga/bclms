@@ -3,7 +3,13 @@
 namespace Src\Common\Infrastructure\Laravel\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-
+use Src\BlendedConcept\System\Application\Policies\OrganizationPolicy;
+use Src\BlendedConcept\System\Application\Policies\SettingPolicy;
+use Src\BlendedConcept\Security\Application\Policies\UserPolicy;
+use Src\BlendedConcept\Security\Application\Policies\PermissionPolicy;
+use Src\BlendedConcept\System\Application\Policies\FileManagerPolicy;
+use Src\BlendedConcept\Security\Application\Policies\RolePolicy;
+use Gate;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -12,7 +18,6 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -23,6 +28,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+
     }
 
     public function register()

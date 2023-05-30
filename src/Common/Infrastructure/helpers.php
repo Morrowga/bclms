@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Cache;
 
 //Notification Helper to Vue Component
@@ -12,7 +13,7 @@ if (!function_exists('getNotifications')) {
         });
 
         $notification = $notification
-            ? ["notifications" => $notification,"unread" =>  $notification->total()]
+            ? ["notifications" => $notification, "unread" =>  $notification->total()]
             : null;
 
         return $notification;
@@ -20,13 +21,16 @@ if (!function_exists('getNotifications')) {
 }
 
 
-if (! function_exists('authorize')) {
+//this is global function that check which user has access
 
+if (!function_exists('authorize')) {
+    /* @throws UnauthorizedUserException */
     function authorize($ability, $policy, $arguments = []): bool
     {
         if ($policy::{$ability}(...$arguments)) {
-            return true;
+            return false;
         }
-       return false;
+
+        return true;
     }
 }

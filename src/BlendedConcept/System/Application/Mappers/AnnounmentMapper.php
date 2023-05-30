@@ -3,7 +3,7 @@
 namespace Src\BlendedConcept\System\Application\Mappers;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\System\Domain\Model\Annoument;
+use Src\BlendedConcept\System\Domain\Model\Entities\Annoument;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
 
 class AnnounmentMapper

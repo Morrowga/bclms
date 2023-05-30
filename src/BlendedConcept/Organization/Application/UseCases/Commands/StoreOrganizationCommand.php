@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Security\Application\UseCases\Commands\Permission;
+namespace Src\BlendedConcept\Organization\Application\UseCases\Commands;
 
 use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\Organization\Domain\Model\Organization;

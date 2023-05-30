@@ -12,9 +12,11 @@ use Src\BlendedConcept\System\Application\UseCases\Queries\GetAnnounmetAllWithPa
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganizationList;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserList;
-use Src\BlendedConcept\System\Domain\Requests\StoreAnnouncementRequest;
-use Src\BlendedConcept\System\Domain\Requests\UpdateAnnouncementRequest;
+use Src\BlendedConcept\System\Application\Policies\AnnouncementPolicy;
+use Src\BlendedConcept\System\Application\Requests\StoreAnnouncementRequest;
+use Src\BlendedConcept\System\Application\Requests\UpdateAnnouncementRequest;
 use Src\Common\Infrastructure\Laravel\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class AnnouncementController extends Controller
@@ -24,9 +26,10 @@ class AnnouncementController extends Controller
     //get all announcements
     public function index()
     {
+        // Authorize user
+        abort_if(authorize('view', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
-            // Authorize user
-            $this->authorize('view', AnnouncementEloquentModel::class);
 
             // Get filters from request
             $filters = request()->only(['name', 'search', 'perPage']);
@@ -62,8 +65,10 @@ class AnnouncementController extends Controller
     {
 
 
+        abort_if(authorize('create', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+
         try {
-            $this->authorize('create', Announcement::class);
             $request->validated();
             //Creates a new announcement object from the request data.
             $newAnnoument = AnnounmentMapper::fromRequest($request);
@@ -95,10 +100,9 @@ class AnnouncementController extends Controller
      */
     public function update(UpdateAnnouncementRequest $request, AnnouncementEloquentModel $announcement)
     {
-        /**
-         * @throws \Illuminate\Auth\Access\AuthorizationException
-         */
-        $this->authorize('edit', Announcement::class);
+
+        abort_if(authorize('edit', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
 
         /**
          * Validate the request.
@@ -130,10 +134,9 @@ class AnnouncementController extends Controller
      */
     public function destroy(AnnouncementEloquentModel $announcement)
     {
-        /**
-         * @throws \Illuminate\Auth\Access\AuthorizationException
-         */
-        $this->authorize('destroy', Announcement::class);
+
+        abort_if(authorize('destroy', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
 
         /**
          * Try to delete the announcement.

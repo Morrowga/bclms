@@ -5,10 +5,12 @@ namespace Src\BlendedConcept\System\Presentation\HTTP;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetSiteSetting;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Inertia\Inertia;
-use Src\BlendedConcept\Infrastructure\EloquentModels\SiteSettingEloquentModel;
+use Src\BlendedConcept\System\Infrastructure\EloquentModels\SiteSettingEloquentModel;
 use Src\BlendedConcept\System\Application\DTO\SiteSettingData;
+use Src\BlendedConcept\System\Application\Policies\SettingPolicy;
 use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateSiteSettingCommand;
-use Src\BlendedConcept\System\Domain\Requests\UpdateSettingRequest;
+use Src\BlendedConcept\System\Application\Requests\UpdateSettingRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class SettingController extends Controller
 {
@@ -22,9 +24,11 @@ class SettingController extends Controller
      */
     public function index()
     {
+        // Authorize the user to view the site settings
+        abort_if(authorize('view', SettingPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
-            // Authorize the user to view the site settings
-            $this->authorize('view', SiteSettingEloquentModel::class);
+
 
             // Retrieve the site setting
             $setting = (new GetSiteSetting())->handle();
@@ -46,6 +50,7 @@ class SettingController extends Controller
      */
     public function UpdateSetting(UpdateSettingRequest $request)
     {
+
         try {
             // Create a SiteSettingData instance from the request
             $site_setting = SiteSettingData::fromRequest($request);

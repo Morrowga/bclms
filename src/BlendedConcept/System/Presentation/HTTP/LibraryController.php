@@ -2,7 +2,9 @@
 
 namespace Src\BlendedConcept\System\Presentation\HTTP;
 
+use Src\BlendedConcept\System\Application\Policies\FileManagerPolicy;
 use Src\Common\Infrastructure\Laravel\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class LibraryController extends Controller
 {
@@ -13,7 +15,7 @@ class LibraryController extends Controller
      */
     public function index()
     {
-        $this->authorize('view');
+        abort_if(authorize('destroy', FileManagerPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('filemanager');
     }
 }

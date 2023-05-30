@@ -5,11 +5,10 @@ namespace Src\Auth\Presentation\HTTP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use PhpParser\Node\Stmt\TryCatch;
 use Src\Common\Infrastructure\Laravel\Controller;
-use Src\Auth\Domain\Requests\StoreRegisterRequest;
+use Src\Auth\Application\Requests\StoreRegisterRequest;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
-use Src\Auth\Domain\Requests\StoreLoginRequest;
+use Src\Auth\Application\Requests\StoreLoginRequest;
 
 class AuthController extends Controller
 {

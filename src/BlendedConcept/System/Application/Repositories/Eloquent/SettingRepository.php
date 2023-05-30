@@ -8,11 +8,20 @@ use Src\BlendedConcept\System\Domain\Repositories\SettingRepositoryInterface;
 
 class SettingRepository implements SettingRepositoryInterface
 {
+
+    /**
+     * Update the site setting using the provided SiteSettingData.
+     * where you get first value inside site settings that update it
+     * according to data change from admin etc.
+     * @param SiteSettingData $siteSettingData The data object containing the site setting values.
+     * @return void
+     */
     public function updateSetting(SiteSettingData $siteSettingData)
     {
 
+
         $siteSettingArray = $siteSettingData->toArray();
-        $siteEloquent = SiteSettingEloquentModel::query()->find(1);
+        $siteEloquent = SiteSettingEloquentModel::query()->first();
 
         $siteEloquent->fill($siteSettingArray);
         $siteEloquent->save();
@@ -27,14 +36,13 @@ class SettingRepository implements SettingRepositoryInterface
 
             $siteEloquent->clearMediaCollection('fav_icon');
             $siteEloquent->addMediaFromRequest('fav_icon')->toMediaCollection('fav_icon', 'media_sitefavico');
-
         }
     }
 
 
     public function getSetting()
     {
-        return SiteSettingEloquentModel::find(1);
-    }
 
+        return SiteSettingEloquentModel::first();
+    }
 }

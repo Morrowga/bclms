@@ -5,14 +5,16 @@ use Src\BlendedConcept\Security\Application\UseCases\Commands\Role\StoreRoleComm
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Permissions\GetPermissionwithPagination;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRolewithPagniation;
 use Src\Common\Infrastructure\Laravel\Controller;
-use Src\BlendedConcept\Security\Domain\Requests\StoreRoleRequest;
-use Src\BlendedConcept\Security\Domain\Requests\UpdateRoleRequest;
+use Src\BlendedConcept\Security\Application\Requests\StoreRoleRequest;
+use Src\BlendedConcept\Security\Application\Requests\UpdateRoleRequest;
 use Src\BlendedConcept\Security\Application\DTO\RoleData;
 use Src\BlendedConcept\Security\Application\Mappers\RoleMapper;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\Role\UpdateRoleCommand;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\getRoleName;
 use Inertia\Inertia;
+use Src\BlendedConcept\Security\Application\Policies\RolePolicy;
+use Symfony\Component\HttpFoundation\Response;
 
 class RoleController extends Controller
 {
@@ -22,9 +24,13 @@ class RoleController extends Controller
 
     public function index()
     {
+        // $this->authorize('view', RoleEloquentModel::class);
+
+       abort_if(authorize('view', RolePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+
         try {
             // Check if the user is authorized to view roles
-            $this->authorize('view', RoleEloquentModel::class);
 
             // Get the filters from the request
             $filters = request()->only(['name', 'search', 'perPage']);
@@ -60,9 +66,12 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
+        // Check if the user is authorized to create roles
+
+       abort_if(authorize('create', RolePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+
         try {
-            // Check if the user is authorized to create roles
-            $this->authorize('create', RoleEloquentModel::class);
 
             // Validate the incoming request data based on the specified rules in StoreRoleRequest
             $request->validated();
@@ -86,9 +95,10 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, RoleEloquentModel $role)
     {
+        // Check if the user is authorized to edit roles
+       abort_if(authorize('edit', RolePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
-            // Check if the user is authorized to edit roles
-            $this->authorize('edit', Role::class);
 
             // Create a RoleData object from the request data and the ID of the role to be updated
             $roleData = RoleData::fromRequest($request, $role->id);
@@ -111,7 +121,7 @@ class RoleController extends Controller
     //destroy role
     public function destroy(RoleEloquentModel $role)
     {
-        $this->authorize('destroy', Role::class);
+        abort_if(authorize('destroy', RolePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $role->delete();
         return redirect()->route('roles.index')->with("successMessage", "Role deleted Successfully!");
     }

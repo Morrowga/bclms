@@ -6,8 +6,8 @@ namespace Src\BlendedConcept\Security\Domain\Repositories;
 use Src\BlendedConcept\Security\Application\DTO\PermissionData;
 use Src\BlendedConcept\Security\Application\DTO\RoleData;
 use Src\BlendedConcept\Security\Application\DTO\UserData;
-use Src\BlendedConcept\Security\Domain\Model\Permission;
-use Src\BlendedConcept\Security\Domain\Model\Role;
+use Src\BlendedConcept\Security\Domain\Model\Entities\Permission;
+use Src\BlendedConcept\Security\Domain\Model\Entities\Role;
 use Src\BlendedConcept\Security\Domain\Model\User;
 
 interface SecurityRepositoryInterface
