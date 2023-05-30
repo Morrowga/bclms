@@ -47,7 +47,7 @@ class RoleController extends Controller
 
 
             // Render the Inertia view with the obtained data
-            return Inertia::render('BlendedConcept/Security/Presentation/Resources/Roles/Index', [
+            return Inertia::render(config('route.roles'), [
                 "roles" => $roles['paginate_roles'],
                 "roles_name" => $roles_name,
                 "permissions" => $permissions["default_permissions"]

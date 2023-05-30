@@ -43,13 +43,13 @@ class AnnouncementController extends Controller
             // Get announcements with pagination
             $announcements = (new GetAnnounmetAllWithPagination($filters))->handle();
             // Render Inertia view
-            return Inertia::render('BlendedConcept/System/Presentation/Resources/Announcements/Index', [
+            return Inertia::render(config('route.announment'), [
                 "announcements" => $announcements,
                 "users" => $users,
                 "organizations" => $organizations
             ]);
         } catch (\Exception $e) {
-            return Inertia::render('BlendedConcept/System/Presentation/Resources/Announcements/Index')->with("sytemErrorMessage", $e->getMessage());
+            return Inertia::render(config('route.announment'))->with("sytemErrorMessage", $e->getMessage());
         }
     }
 

@@ -39,11 +39,11 @@ class PermissionController extends Controller
             $permissions = (new GetPermissionwithPagination($filters))->handle();
 
             // Render the permissions index page using the Inertia.js view
-            return Inertia::render('BlendedConcept/Security/Presentation/Resources/Permissions/Index', [
+            return Inertia::render(config('route.permissions'), [
                 "permissions" => $permissions['permissions']
             ]);
         } catch (\Exception $e) {
-            return Inertia::render('BlendedConcept/Security/Presentation/Resources/Permissions/Index')->with("sytemErrorMessage", $e->getMessage());
+            return Inertia::render(config('route.permissions'))->with("sytemErrorMessage", $e->getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ class PermissionController extends Controller
             // Redirect the user to the index page with a success message
             return redirect()->route('permissions.index')->with("successMessage", "Permission created Successfully!");
         } catch (\Exception $e) {
-            return Inertia::render('BlendedConcept/Security/Presentation/Resources/Permissions/Index')->with("sytemErrorMessage", $e->getMessage());
+            return Inertia::render(config('route.permissions'))->with("sytemErrorMessage", $e->getMessage());
         }
     }
 
@@ -102,7 +102,7 @@ class PermissionController extends Controller
             // Redirect the user to the index page with a success message
             return redirect()->route('permissions.index')->with("successMessage", "Permission updated Successfully!");
         } catch (\Exception $e) {
-            return Inertia::render('BlendedConcept/Security/Presentation/Resources/Permissions/Index')->with("sytemErrorMessage", $e->getMessage());
+            return Inertia::render(config('route.permissions'))->with("sytemErrorMessage", $e->getMessage());
         }
     }
 
@@ -115,7 +115,7 @@ class PermissionController extends Controller
     public function destroy(PermissionEloquentModel $permission)
     {
 
-       abort_if(authorize('destroy', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('destroy', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $permission->delete();

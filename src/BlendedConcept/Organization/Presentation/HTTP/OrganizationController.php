@@ -28,6 +28,7 @@ class OrganizationController extends Controller
 
         abort_if(authorize('view', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+
         try {
 
             // Get filters from the request
@@ -37,12 +38,12 @@ class OrganizationController extends Controller
             $organizations = (new GetOrganizationWithPagination($filters))->handle();
 
             // Render the organization index page with the retrieved organizations
-            return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Organization/Index', [
+            return Inertia::render(config('route.organizations'),[
                 'organizations' => $organizations['paginate_organizations']
             ]);
         } catch (\Exception $e) {
 
-            return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Organization/Index', [
+            return Inertia::render(config('route.organization'), [
                 'systemErrorMessage' => $e->getMessage()
             ]);
         }

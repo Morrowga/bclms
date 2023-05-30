@@ -55,7 +55,7 @@ class UserController extends Controller
             // Retrieve role names
             $roles_name = (new getRoleName())->handle();
             // Render the Inertia view with the obtained data
-            return Inertia::render('BlendedConcept/Security/Presentation/Resources/Users/Index', [
+            return Inertia::render(config('route.users'), [
                 'users' => $users,
                 'users_name' => $users_name,
                 'roles_name' => $roles_name

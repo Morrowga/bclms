@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
-use Src\BlendedConcept\User\Domain\Model\User;
-use Src\BlendedConcept\User\Domain\Model\Role;
-use Src\BlendedConcept\User\Domain\Model\Permission;
 use Illuminate\Database\Seeder;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class SuperAdminSeeder extends Seeder
 {
@@ -33,9 +33,9 @@ class SuperAdminSeeder extends Seeder
         ];
 
 
-        $user = User::create($data);
-        $permission = Permission::whereNotIn('name', ['create_announcement', 'edit_announcement', 'delete_announcement'])->pluck('id');
-        $role = Role::find(1);
+        $user = UserEloquentModel::create($data);
+        $permission = PermissionEloquentModel::whereNotIn('name', ['create_announcement', 'edit_announcement', 'delete_announcement'])->pluck('id');
+        $role = RoleEloquentModel::find(1);
         $role->permissions()->sync($permission);
         $user->roles()->sync(['1']);
     }

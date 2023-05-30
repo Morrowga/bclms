@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Src\BlendedConcept\User\Domain\Model\Permission;
-use Src\BlendedConcept\User\Domain\Model\Role;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
+
 
 class PermissionRoleTableSeeder extends Seeder
 {
@@ -20,12 +21,12 @@ class PermissionRoleTableSeeder extends Seeder
             ['name' => "BC Subscriber", "guard_name" => "web"],
         ];
         foreach ($datas as $data) {
-            $role = Role::create($data);
+            $role = RoleEloquentModel::create($data);
             $role->permissions()->sync([25, 26, 27, 28, 29]);
         }
 
-        $staffPermission = Permission::whereIn('name', ['create_announcement', 'edit_announcement', 'delete_announcement','access_announcement','show_announcement'])->pluck('id');
-        $role = Role::create(["name" => "BC Staff", "guard_name" => "web"]);
+        $staffPermission = RoleEloquentModel::whereIn('name', ['create_announcement', 'edit_announcement', 'delete_announcement','access_announcement','show_announcement'])->pluck('id');
+        $role = RoleEloquentModel::create(["name" => "BC Staff", "guard_name" => "web"]);
         $role->permissions()->sync($staffPermission);
     }
 }

@@ -5,30 +5,30 @@ namespace Src\BlendedConcept\System\Application\Policies;
 class FileManagerPolicy
 {
 
-    public function view()
+    public static function view()
     {
         return auth()->user()->hasPermission('access_library');
     }
 
-    public function create()
+    public static function create()
     {
         return auth()->user()->hasPermission('access_library');
     }
-    public function store()
+    public static function store()
     {
         return auth()->user()->hasPermission('access_library');
     }
-    public function edit()
-    {
-        return auth()->user()->hasPermission('access_library');
-    }
-
-    public function update()
+    public static function edit()
     {
         return auth()->user()->hasPermission('access_library');
     }
 
-    public function destroy()
+    public static function update()
+    {
+        return auth()->user()->hasPermission('access_library');
+    }
+
+    public static function destroy()
     {
         return auth()->user()->hasPermission('access_library');
     }

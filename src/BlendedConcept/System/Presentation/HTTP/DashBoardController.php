@@ -5,7 +5,6 @@ namespace Src\BlendedConcept\System\Presentation\HTTP;
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
-use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
 use Src\Common\Infrastructure\Laravel\Controller;
@@ -43,9 +42,10 @@ class DashBoardController extends Controller
 
         $user = Auth::user();
 
+
         $orgainzations_users = $this->securityRepositoryInterface->getUserForDashBoard();
 
-        return Inertia::render('BlendedConcept/System/Presentation/Resources/index', compact('current_user_role', 'user', 'orgainzations_users'));
+        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users'));
     }
 
 

@@ -34,10 +34,10 @@ class SettingController extends Controller
             $setting = (new GetSiteSetting())->handle();
 
             // Render the inertia view with the site setting data
-            return Inertia::render('BlendedConcept/System/Presentation/Resources/Settings/Index', compact('setting'));
+            return Inertia::render(config('route.settings'), compact('setting'));
         } catch (\Exception $e) {
             // Handle any exceptions that occur during the execution of the code
-            return Inertia::render('BlendedConcept/System/Presentation/Resources/Settings/Index')->with('systemErrorMessage', $e->getMessage());
+            return Inertia::render(config('route.settings'))->with('systemErrorMessage', $e->getMessage());
         }
     }
 

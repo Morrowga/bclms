@@ -12,6 +12,6 @@ class PlanController
     public function index()
     {
 
-        return Inertia::render('BlendedConcept/Organization/Presentation/Resources/Plans/Index');
+        return Inertia::render(config('route.plans'));
     }
 }

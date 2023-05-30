@@ -1,0 +1,14 @@
+<?php
+
+return [
+    'dashboard' => 'BlendedConcept/System/Presentation/Resources/index',
+    'users' => 'BlendedConcept/Security/Presentation/Resources/Users/Index',
+    'permissions' => 'BlendedConcept/Security/Presentation/Resources/Permissions/Index',
+    'roles' => 'BlendedConcept/Security/Presentation/Resources/Roles/Index',
+    'organizations' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Index',
+    'plans' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Index',
+    'announment' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
+    'settings' => 'BlendedConcept/System/Presentation/Resources/Settings/Index'
+
+];
+
