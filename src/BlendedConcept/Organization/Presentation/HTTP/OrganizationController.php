@@ -28,7 +28,6 @@ class OrganizationController extends Controller
 
         abort_if(authorize('view', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
         try {
 
             // Get filters from the request

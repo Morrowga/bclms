@@ -56,8 +56,8 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                     $organization->addMediaFromRequest('image')->toMediaCollection('image', 'media_organization');
                 }
             });
-        } catch (\Throwable $th) {
-           dd($th);
+        } catch (\Exception $error) {
+           dd($error);
         }
     }
 

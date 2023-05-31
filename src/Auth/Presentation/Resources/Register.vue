@@ -36,25 +36,12 @@ let props = defineProps(["ErrorMessage"]);
       </VBtn>
     </div>
   </div>
+ <SystemErrorAlert :sytemErrorMessage="sytemErrorMessage" v-if="sytemErrorMessage"/>
+
   <VDivider></VDivider>
   <div class="regiser-image">
     <div style="max-width: 1024px; margin-inline: auto">
-      <VAlert
-        variant="tonal"
-        density="compact"
-        type="error"
-        v-model="isAlertVisible"
-        closable
-        class="mt-4"
-        close-label="Close Alert"
-        style="padding: 6px 16px"
-      >
-        <template #text>
-          <span style="font-size:24px:">Server Error</span>
-          <br />
-          <span>Somthing is wrong</span>
-        </template>
-      </VAlert>
+
       <VRow class="d-flex justify-center" style="padding-top: 100px">
         <VCol lg="6" md="6" sm="12" class="text-center">
           <div class="auth-card" max-width="448">

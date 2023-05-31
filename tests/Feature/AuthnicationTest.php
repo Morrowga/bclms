@@ -4,6 +4,8 @@ namespace Tests\Feature\Authi;
 
 use Src\BlendedConcept\User\Domain\Model\User;
 use Src\BlendedConcept\User\Domain\Model\Role;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -67,7 +69,7 @@ test('unique_b2c_register_email', function () {
         "email" => $email,
         "password" => 'password',
     ];
-    $existingUser = User::create($data);
+    $existingUser = UserEloquentModel::create($data);
     $response = $this->post('/b2cstore', [
         'name' => $existingUser->name,
         'email' => $existingUser->email,
@@ -87,7 +89,7 @@ test('unique_b2c_register_email', function () {
  */
 test('before_verified_b2c_register', function () {
 
-    Role::insert([
+    RoleEloquentModel::insert([
         "id" => 2,
         "name" => "BC Subscriber",
     ]);
@@ -131,7 +133,7 @@ test('after_verified_b2c_register', function () {
         "password" => 'password',
         "email_verified_at" => Carbon::now()
     ];
-    $registerUser = User::create($data);
+    $registerUser = UserEloquentModel::create($data);
     $id = Crypt::encryptString($registerUser->id);
     $response = $this->get(route('verification', ['id' => $id]));
 
@@ -193,7 +195,7 @@ test('mismatch_login_password', function () {
         "password" => "password",
         "email_verified_at" => Carbon::now()
     ];
-    $existingUser = User::create($data);
+    $existingUser = UserEloquentModel::create($data);
 
 
     $response = $this->post('login', [
@@ -221,7 +223,7 @@ test('match_login_password', function () {
         "email_verified_at" => Carbon::now()
 
     ];
-    $existingUser = User::create($data);
+    $existingUser = UserEloquentModel::create($data);
     $response = $this->post('login', [
         "email" => $existingUser->email,
         "password" => 'password'

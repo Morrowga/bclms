@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use  Src\BlendedConcept\User\Domain\Model\User;
 
 
@@ -42,7 +43,7 @@ test("page builder not superadmin access",function(){
 test("page builder access with other roles ",function(){
     Auth::logout();
 
-    $user = User::create([
+    $user = UserEloquentModel::create([
         "name" => "testing",
         "email" => "testing@gmail.com",
         "password" => "password"

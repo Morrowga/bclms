@@ -5,6 +5,8 @@ use  Src\BlendedConcept\User\Domain\Model\User;
 use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\User\Domain\Model\Permission;
 use Carbon\Carbon;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
     // Run migrations
@@ -27,7 +29,7 @@ test('super admin can only create roles', function () {
     //auth check
     $this->assertTrue(Auth::check());
 
-    $selectIds = Permission::pluck('id');
+    $selectIds = PermissionEloquentModel::pluck('id');
 
     $response = $this->post("/roles", [
         "name" => "testing role",
@@ -47,7 +49,7 @@ test('super admin with empty name', function () {
     $this->assertTrue(Auth::check());
 
 
-    $selectIds = Permission::pluck('id');
+    $selectIds = PermissionEloquentModel::pluck('id');
 
     $response = $this->post("/roles", [
         "name" => "",
@@ -63,7 +65,7 @@ test("create role without login", function () {
     //without login
     $this->assertFalse(Auth::check());
 
-    $selectIds = Permission::pluck('id');
+    $selectIds = PermissionEloquentModel::pluck('id');
 
     $response = $this->post("/roles", [
         "name" => "",
@@ -80,7 +82,7 @@ test("create role with other roles", function () {
     Auth::logout();
 
 
-    $user = User::create([
+    $user = UserEloquentModel::create([
         "name" => "testing",
         "email" => "testinguser@gmail.com",
         "password" => "password",
@@ -90,7 +92,7 @@ test("create role with other roles", function () {
     $user->roles()->sync(2);
 
     if (Auth::attempt(["email" => "testinguser@gmail.com", "password" => "password",])) {
-        $selectIds = Permission::pluck('id');
+        $selectIds = PermissionEloquentModel::pluck('id');
 
         $rolesAccess = $this->get("/roles");
 

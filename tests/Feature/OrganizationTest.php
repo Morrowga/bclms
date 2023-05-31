@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
 use Carbon\Carbon;
-use Src\BlendedConcept\User\Domain\Model\User;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
     // Run migrations
@@ -46,7 +46,7 @@ test('without login not access organization', function () {
 test('without other role not access organization  ', function () {
 
     Auth::logout();
-    $user = User::create([
+    $user = UserEloquentModel::create([
         "name" => "testing",
         "email" => "testinguser@gmail.com",
         "password" => "password",
@@ -79,6 +79,7 @@ test("form submit as organization with superadmin role", function () {
         "allocated_storage" => "100GB",
         "teacher_license" => "mm"
     ]);
+
 
     $postData->assertStatus(302);
 

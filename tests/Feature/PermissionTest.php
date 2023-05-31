@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Artisan;
 use Src\BlendedConcept\User\Domain\Model\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
     // Run migrations
@@ -90,7 +91,7 @@ test("create permission without not superadmin roles", function () {
 
     Auth::logout();
 
-    $user = User::create([
+    $user = UserEloquentModel::create([
         "name" => "testing",
         "email" => "testinguser@gmail.com",
         "password" => "password",

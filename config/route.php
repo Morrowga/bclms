@@ -8,7 +8,11 @@ return [
     'organizations' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Index',
     'plans' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Index',
     'announment' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
-    'settings' => 'BlendedConcept/System/Presentation/Resources/Settings/Index'
+    'settings' => 'BlendedConcept/System/Presentation/Resources/Settings/Index',
+    'login'   => 'Auth/Presentation/Resources/Login',
+    'verify' => 'Auth/Presentation/Resources/Verify',
+    'register' => 'Auth/Presentation/Resources/Register',
+    'userprofile' => 'Auth/Presentation/Resources/UserProfile'
 
 ];
 

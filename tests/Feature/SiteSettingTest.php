@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
 use Src\BlendedConcept\User\Domain\Model\User;
 use Carbon\Carbon;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+
 beforeEach(function () {
     // Run migrations
     Artisan::call('migrate:fresh');
@@ -45,7 +47,7 @@ test("without login access site setting and other role",function(){
     $response = $this->get("/settings");
     $response->assertRedirect("/login");
 
-    $user = User::create([
+    $user = UserEloquentModel::create([
         "name" => "testing",
         "email" => "testinguser@gmail.com",
         "password" => "password",

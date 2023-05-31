@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\User\Domain\Model\User;
 
 beforeEach(function () {
@@ -70,7 +71,7 @@ test("create user  with missing filed superadmin roles",function(){
 test("other roles can't access  user module",function(){
    Auth::logout();
 
-   $user = User::create([
+   $user = UserEloquentModel::create([
     "name" => "testing",
     "email" => "testinguser@gmail.com",
     "password" => "password",

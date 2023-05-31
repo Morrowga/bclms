@@ -4,10 +4,10 @@ import { themeConfig } from "@themeConfig";
 import { requiredValidator, emailValidator } from "@validators";
 import { Link, useForm } from "@inertiajs/vue3";
 import { defineProps } from "vue";
-import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue"
+import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue";
 const isPasswordVisible = ref(false);
 const rememberMe = ref(false);
-let props = defineProps(["errorMessage",'sytemErrorMessage']);
+let props = defineProps(["errorMessage", "sytemErrorMessage"]);
 
 let form = useForm({
   email: "",
@@ -28,7 +28,6 @@ const onSubmit = () => {
     },
   });
 };
-
 </script>
 
 
@@ -46,7 +45,10 @@ const onSubmit = () => {
         </VBtn>
       </div>
     </div>
-    <SystemErrorAlert :sytemErrorMessage="sytemErrorMessage" v-if="sytemErrorMessage"/>
+    <SystemErrorAlert
+      :sytemErrorMessage="sytemErrorMessage"
+      v-if="sytemErrorMessage"
+    />
     <VDivider></VDivider>
     <div class="login-bg">
       <VRow
