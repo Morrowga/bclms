@@ -6,18 +6,21 @@ use Src\BlendedConcept\Security\Application\UseCases\Queries\Permissions\GetPerm
 use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\Security\Application\Requests\StorepermissionRequest;
 use Src\BlendedConcept\Security\Application\Requests\UpdatepermissionRequest;
-use Src\BlendedConcept\Security\Application\DTO\PermissionData;
-use Src\BlendedConcept\Security\Application\Mappers\PermissionMapper;
-use Src\BlendedConcept\Security\Application\UseCases\Commands\Permission\StorePermissionCommand;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
-use Src\BlendedConcept\Security\Application\UseCases\Commands\Permission\UpdatePermissionCommand;
 use Inertia\Inertia;
 use Src\BlendedConcept\Security\Application\Policies\PermissionPolicy;
+use Src\BlendedConcept\Security\Domain\Services\PermissionService;
 use Symfony\Component\HttpFoundation\Response;
 
 class PermissionController extends Controller
 {
 
+    protected $permissionServices;
+
+    public function __construct()
+    {
+        $this->permissionServices = app()->make(PermissionService::class);
+    }
     /**
      * Display a listing of the permissions.
      *
@@ -61,12 +64,8 @@ class PermissionController extends Controller
 
         try {
 
-            // Validate the request data
-            $request->validated();
-            $newPermission = PermissionMapper::fromRequest($request);
-            $createNewPermission = (new StorePermissionCommand($newPermission));
-            $createNewPermission->execute();
-
+            //this is service is used to createPermission Services
+            $this->permissionServices->createPermission($request);
             // Redirect the user to the index page with a success message
             return redirect()->route('permissions.index')->with("successMessage", "Permission created Successfully!");
         } catch (\Exception $e) {
@@ -90,15 +89,10 @@ class PermissionController extends Controller
         abort_if(authorize('edit', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
-            // Validate the request data
-            $request->validated();
 
-            // Call the userInterFace to update the permission
+            // this service to use to handle service
+            $this->permissionServices->updatePermission($request, $permission->id);
 
-            $updatePermission = PermissionData::fromRequest($request, $permission->id);
-
-            $updatePermission = (new UpdatePermissionCommand($updatePermission));
-            $updatePermission->execute();
             // Redirect the user to the index page with a success message
             return redirect()->route('permissions.index')->with("successMessage", "Permission updated Successfully!");
         } catch (\Exception $e) {
@@ -118,7 +112,9 @@ class PermissionController extends Controller
         abort_if(authorize('destroy', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
-            $permission->delete();
+            //delete permission
+            $this->permissionServices->deletePermission($permission);
+
             return redirect()->route('permissions.index')->with("successMessage", "Permission deleted successfully!");
         } catch (\Exception $e) {
             // Handle any exceptions that occur during the deletion process

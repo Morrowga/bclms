@@ -7,28 +7,28 @@ use Src\BlendedConcept\System\Domain\Repositories\NotificationRepositoryInterfac
 
 class NotificationController extends Controller
 {
-     private $notificationInterface;
+    private $notificationInterface;
 
-     public function __construct(NotificationRepositoryInterface $notificationRepository)
-     {
-          $this->notificationInterface = $notificationRepository;
-     }
+    public function __construct(NotificationRepositoryInterface $notificationRepository)
+    {
+        $this->notificationInterface = $notificationRepository;
+    }
 
-     public function read($id)
-     {
-          $this->notificationInterface->read($id);
-          return redirect()->back();
-     }
+    public function read($id)
+    {
+        $this->notificationInterface->read($id);
+        return redirect()->back();
+    }
 
-     public function readAll()
-     {
-          $this->notificationInterface->readAll();
-          return redirect()->back();
-     }
+    public function readAll()
+    {
+        $this->notificationInterface->readAll();
+        return redirect()->back();
+    }
 
-     public function getAllNotifications()
-     {
-          $notifications = $this->notificationInterface->notifications();
-          return $notifications;
-     }
+    public function getAllNotifications()
+    {
+        $notifications = $this->notificationInterface->notifications();
+        return $notifications;
+    }
 }

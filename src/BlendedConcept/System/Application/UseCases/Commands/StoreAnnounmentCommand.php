@@ -5,7 +5,7 @@ namespace Src\BlendedConcept\System\Application\UseCases\Commands;
 
 use Src\Common\Domain\CommandInterface;
 use Src\BlendedConcept\System\Domain\Repositories\AnnouncementRepositoryInterface;
-use Src\BlendedConcept\System\Domain\Model\Annoument;
+use Src\BlendedConcept\System\Domain\Model\Entities\Annoument;
 class StoreAnnounmentCommand implements CommandInterface
 {
     private AnnouncementRepositoryInterface $repository;

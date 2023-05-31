@@ -21,12 +21,18 @@ use Src\BlendedConcept\Security\Application\UseCases\Commands\User\UpdateUserCom
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Src\BlendedConcept\Security\Application\Policies\UserPolicy;
+use Src\BlendedConcept\Security\Domain\Services\UserService;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
 
+    protected $userService;
 
+    public function __construct()
+    {
+        $this->userService = app()->make(UserService::class);
+    }
 
     /***
      *  @params null
@@ -76,11 +82,7 @@ class UserController extends Controller
 
         try {
 
-            $request->validated();
-            $newUser = UserMapper::fromRequest($request);
-
-            $createNewUser = new StoreUserCommand($newUser);
-            $createNewUser->execute();
+            $this->userService->createUser($request);
 
             return redirect()->route('users.index')->with("successMessage", "User created successfully!");
         } catch (\Exception $e) {
@@ -94,13 +96,8 @@ class UserController extends Controller
     //update user
     public function update(UpdateUserRequest $request, UserEloquentModel $user)
     {
-
         abort_if(authorize('edit', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $updateUser = UserData::fromRequest($request, $user->id);
-        $updatedUserCommand = (new UpdateUserCommand($updateUser));
-
-        $updatedUserCommand->execute();
+        $this->userService->updateUser($request, $user->id);
         return redirect()->route('users.index')->with("successMessage", "User Updated Successfully!");
     }
 
@@ -108,8 +105,7 @@ class UserController extends Controller
     public function destroy(UserEloquentModel $user)
     {
         abort_if(authorize('destroy', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $user->delete();
+        $this->userService->deleteUser($user);
         return redirect()->route('users.index')->with("successMessage", "User Deleted Successfully!");
     }
 
@@ -117,17 +113,10 @@ class UserController extends Controller
     {
 
         try {
-
-            $user = Auth::user();
-            //  check passord same or not
-            if (Hash::check($request->currentpassword, $user->password)) {
-                UserEloquentModel::find($user->id)->update([
-                    "password" => $request->updatedpassword
-                ]);
-
+            $isPasswordMatch = $this->userService->changePassword($request);
+            if ($isPasswordMatch) {
                 return redirect()->route('userprofile')->with("successMessage", "Password Updated Successfully!");
             }
-
             return redirect()->route('userprofile')->with("errorMessage", "Password does not match!");
         } catch (\Exception $error) {
 

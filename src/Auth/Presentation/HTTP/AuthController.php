@@ -9,18 +9,16 @@ use Src\Common\Infrastructure\Laravel\Controller;
 use Src\Auth\Application\Requests\StoreRegisterRequest;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
 use Src\Auth\Application\Requests\StoreLoginRequest;
-use Src\BlendedConcept\Security\Domain\Services\SecurityServices;
-use Src\Auth\Application\UseCases\AuthService;
+use Src\Auth\Application\UseCases\Commands\AuthService;
+
 class AuthController extends Controller
 {
     protected $authInterface;
-    protected $securityService;
     protected $authservices;
 
     public function __construct(AuthRepositoryInterface $authInterface)
     {
         $this->authInterface = $authInterface;
-        $this->securityService = app()->make(SecurityServices::class);
         $this->authservices  = app()->make(AuthService::class);
     }
 
@@ -108,11 +106,8 @@ class AuthController extends Controller
     {
 
         try {
-            // Log out the authenticated user
-            Auth::logout();
 
-            // Remove the 'phpb_logged_in' session to revoke page builder access
-            session()->remove('phpb_logged_in');
+            $this->authservices->Logout();
 
             // Redirect the user to the login page
             return redirect()->route('login');
@@ -231,7 +226,6 @@ class AuthController extends Controller
         try {
             return Inertia::render(route('route.userprofile'));
         } catch (\Exception $e) {
-
 
             // Handle the exception gracefully, such as displaying a generic error page
             return Inertia::render(route('route.userprofile'))->with("sytemErrorMessage", $e->getMessage());

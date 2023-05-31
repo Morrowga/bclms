@@ -66,7 +66,6 @@ class SecurityRepository implements SecurityRepositoryInterface
     public function updateUser(UserData $user)
     {
 
-
         $userArray = $user->toArray();
         $updateUserEloquent = UserEloquentModel::query()->findOrFail($user->id);
         $updateUserEloquent->fill($userArray);
@@ -198,6 +197,6 @@ class SecurityRepository implements SecurityRepositoryInterface
 
             return true;
         }
-      return false;
+        return false;
     }
 }

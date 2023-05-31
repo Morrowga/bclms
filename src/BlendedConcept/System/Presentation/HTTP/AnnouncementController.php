@@ -15,6 +15,7 @@ use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserList;
 use Src\BlendedConcept\System\Application\Policies\AnnouncementPolicy;
 use Src\BlendedConcept\System\Application\Requests\StoreAnnouncementRequest;
 use Src\BlendedConcept\System\Application\Requests\UpdateAnnouncementRequest;
+use Src\BlendedConcept\System\Domain\Services\AnnounmnetService;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +23,11 @@ use Symfony\Component\HttpFoundation\Response;
 class AnnouncementController extends Controller
 {
 
-
+    protected $announmentService;
+    public function __construct()
+    {
+        $this->announmentService = app()->make(AnnounmnetService::class);
+    }
     //get all announcements
     public function index()
     {
@@ -69,12 +74,8 @@ class AnnouncementController extends Controller
 
 
         try {
-            $request->validated();
-            //Creates a new announcement object from the request data.
-            $newAnnoument = AnnounmentMapper::fromRequest($request);
-            // Creates a new StoreAnnounmentCommand object and executes it.
-            $storeAnnounmentCommand = new StoreAnnounmentCommand($newAnnoument);
-            $storeAnnounmentCommand->execute();
+
+            $this->announmentService->createAnnoument($request);
         } catch (\Exception $e) {
 
             // Handle the exception here
@@ -113,9 +114,7 @@ class AnnouncementController extends Controller
          * Try to update the announcement.
          */
         try {
-            $announcement = AnnounmentData::fromRequest($request, $announcement->id);
-            $updateAnnounmentCommand = (new UpdateAnnounmentCommand($announcement));
-            $updateAnnounmentCommand->execute();
+            $this->announmentService->updateAnnounment($request, $announcement->id);
             return redirect()->route('announcements.index')->with("successMessage", "Announcement updated Successfully!");
         } catch (\Exception $e) {
             /**
@@ -142,8 +141,8 @@ class AnnouncementController extends Controller
          * Try to delete the announcement.
          */
         try {
-            (new DeleteAnnounmentCommand($announcement->id))->execute();
 
+            $this->announmentService->deleteAnnounment($announcement->id);
             return redirect()->route('announcements.index')->with("successMessage", "Announcement deleted Successfully!");
         } catch (\Exception $e) {
             /**
