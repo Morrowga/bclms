@@ -6,7 +6,7 @@ use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
 
 use Src\Common\Domain\QueryInterface;
 
-class getRoleName implements QueryInterface
+class GetRoleName implements QueryInterface
 {
     private SecurityRepositoryInterface $repository;
 

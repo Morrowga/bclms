@@ -8,7 +8,7 @@ use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\Security\Application\Requests\StoreRoleRequest;
 use Src\BlendedConcept\Security\Application\Requests\UpdateRoleRequest;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\getRoleName;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRoleName;
 use Inertia\Inertia;
 use Src\BlendedConcept\Security\Application\Policies\RolePolicy;
 use Symfony\Component\HttpFoundation\Response;
