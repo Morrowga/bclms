@@ -3,23 +3,16 @@
 namespace Src\BlendedConcept\Security\Presentation\HTTP;
 
 use Src\Common\Infrastructure\Laravel\Controller;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Src\BlendedConcept\Security\Application\DTO\UserData;
-use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
-use Src\BlendedConcept\Security\Application\UseCases\Commands\User\StoreUserCommand;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserName;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\getRoleName;
-use Src\BlendedConcept\Security\Domain\Model\User;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRoleName;
+
 use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
 use Src\BlendedConcept\Security\Application\Requests\UpdateUserRequest;
 use Src\BlendedConcept\Security\Application\Requests\updateUserPasswordRequest;
-use Src\BlendedConcept\Security\Application\UseCases\Commands\User\ChangeUserPassword;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUsersWithPagination;
-use Src\BlendedConcept\Security\Application\UseCases\Commands\User\UpdateUserCommand;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+
 use Src\BlendedConcept\Security\Application\Policies\UserPolicy;
 use Src\BlendedConcept\Security\Domain\Services\UserService;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,7 +52,7 @@ class UserController extends Controller
             $users_name = (new GetUserName())->handle();
 
             // Retrieve role names
-            $roles_name = (new getRoleName())->handle();
+            $roles_name = (new GetRoleName())->handle();
             // Render the Inertia view with the obtained data
             return Inertia::render(config('route.users'), [
                 'users' => $users,
