@@ -11,7 +11,7 @@ class StoreOrganizationCommand implements CommandInterface
     private OrganizationRepositoryInterface $repository;
 
     public function __construct(
-        private readonly Organization $organization
+        private readonly Organization $organization,
     )
     {
         $this->repository = app()->make(OrganizationRepositoryInterface::class);

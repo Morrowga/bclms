@@ -15,8 +15,8 @@ let form = useForm({
   contact_email: "",
   contact_number: "",
   price: "00",
-  license: "user102",
-  storage: "30GB",
+  teacher_license: "user102",
+  allocated_storage: "30GB",
   payment_period: "mm",
   // payment_type: "card",
   image: "",
@@ -123,9 +123,9 @@ let handleSubmit = () => {
                   <VTextField
                     label="User License"
                     density="compact"
-                    v-model="form.license"
+                    v-model="form.teacher_license"
                     class="w-100"
-                    :error-messages="form?.errors?.license"
+                    :error-messages="form?.errors?.teacher_license"
                     :rules="[requiredValidator]"
                   />
                 </VCol>
@@ -133,10 +133,10 @@ let handleSubmit = () => {
                   <VTextField
                     label="Storage"
                     density="compact"
-                    v-model="form.storage"
+                    v-model="form.allocated_storage"
                     class="w-100"
                     :rules="[requiredValidator]"
-                    :error-messages="form?.errors?.storage"
+                    :error-messages="form?.errors?.allocated_storage"
                   />
                 </VCol>
                 <VCol cols="6">

@@ -12,7 +12,10 @@ return [
     'login'   => 'Auth/Presentation/Resources/Login',
     'verify' => 'Auth/Presentation/Resources/Verify',
     'register' => 'Auth/Presentation/Resources/Register',
-    'userprofile' => 'Auth/Presentation/Resources/UserProfile'
+    'userprofile' => 'Auth/Presentation/Resources/UserProfile',
+    'students' => "BlendedConcept/Student/Presentation/Resources/Student/Index",
+    'teachers' => "BlendedConcept/Teacher/Presentation/Resources/Teacher/Index",
+    "classrooms" => "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index"
 
 ];
 

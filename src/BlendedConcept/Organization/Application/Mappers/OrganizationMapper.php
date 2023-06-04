@@ -3,6 +3,7 @@
 namespace Src\BlendedConcept\Organization\Application\Mappers;
 
 use Illuminate\Http\Request;
+use Src\BlendedConcept\Organization\Domain\Model\Entities\Plan;
 use Src\BlendedConcept\Organization\Domain\Model\Organization;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 
@@ -10,6 +11,20 @@ class OrganizationMapper
 {
     public static function fromRequest(Request $request, $organizaton_id = null): Organization
     {
+        $planitems = $request->only(
+            [
+                'stripe_id',
+                'name',
+                'description',
+                'price',
+                'payment_period',
+                'allocated_storage',
+                'teacher_license',
+                'student_license',
+                'is_hidden',
+            ]
+        );
+
         return new Organization(
             id: $organizaton_id,
             plan_id: $request->plan_id,
@@ -18,7 +33,8 @@ class OrganizationMapper
             type: $request->type,
             contact_person: $request->contact_person,
             contact_email: $request->contact_email,
-            contact_number: $request->contact_number
+            contact_number: $request->contact_number,
+            plan: PlanMapper::fromArray($planitems)
         );
     }
 
@@ -39,9 +55,6 @@ class OrganizationMapper
         $organizatonEloquent->contact_person = $organization->contact_person;
         $organizatonEloquent->contact_email = $organization->contact_email;
         $organizatonEloquent->contact_number = $organization->contact_number;
-
         return $organizatonEloquent;
-
-
     }
 }

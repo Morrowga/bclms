@@ -63,7 +63,12 @@ return [
             'visibility' => 'public',
         ],
 
-
+        'media_students' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/students'),
+            'url' => env('APP_URL') . '/storage/students',
+            'visibility' => 'public',
+        ],
 
         'media_sitelogo' => [
             'driver' => 'local',

@@ -2,14 +2,13 @@ const pages = {
 
 
     // admin dashboard
-    "BlendedConcept/System/Presentation/Resources/index": import('../../src/BlendedConcept/System/Presentation/Resources/index.vue'),
+    "BlendedConcept/Student/Presentation/Resources/index": import('../../src/BlendedConcept/System/Presentation/Resources/index.vue'),
 
     //organization
     "BlendedConcept/Organization/Presentation/Resources/Organization/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/Index.vue'),
 
-    // // plans
+    // plans
     "BlendedConcept/Organization/Presentation/Resources/Plans/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Index.vue'),
-
 
 
 
@@ -35,6 +34,20 @@ const pages = {
 
     //settings
     "BlendedConcept/System/Presentation/Resources/Settings/Index": import('../../src/BlendedConcept/System/Presentation/Resources/Settings/Index.vue'),
+
+
+    //students crud
+
+    "BlendedConcept/Student/Presentation/Resources/Student/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Student/Index.vue'),
+
+    // teacher crud
+
+    "BlendedConcept/Teacher/Presentation/Resources/Teacher/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/Teacher/Index.vue'),
+
+
+    //class crud
+    "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index.vue'),
+
 
 
 };

@@ -1,10 +1,10 @@
 <?php
 
-namespace Src\BlendedConcept\Security\Application\DTO;
+namespace Src\BlendedConcept\Organization\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-
+use Src\BlendedConcept\Organization\Application\Mappers\PlanMapper;
+use Src\BlendedConcept\Organization\Domain\Model\Entities\Plan;
 class OrganizationData
 {
 
@@ -17,35 +17,35 @@ class OrganizationData
         public readonly ?string $contact_person,
         public readonly ?string $contact_email,
         public readonly ?string $contact_number,
+        public readonly Plan $plan,
     ) {
     }
 
-    public static function fromRequest(Request $request, $organizaton_id = null): OrganizationData
+    public static function fromRequest(Request $request, $organizaton): OrganizationData
     {
 
+        $planitems = $request->only([
+            'stripe_id',
+            'name',
+            'description',
+            'price',
+            'payment_period',
+            'allocated_storage',
+            'teacher_license',
+            'student_license',
+            'is_hidden',
+        ]
+        );
         return new self(
-            id: $organizaton_id,
-            plan_id: $request->plan_id,
+            id: $organizaton->id,
+            plan_id: $organizaton->plan_id,
             name: $request->name,
             description: $request->description,
             type: $request->type,
             contact_person: $request->contact_person,
             contact_email: $request->contact_email,
-            contact_number: $request->contact_number
-        );
-    }
-
-    public static function fromEloquent(OrganizationEloquentModel $organization): self
-    {
-        return new self(
-            id: $organization->id,
-            plan_id: $organization->plan_id,
-            name: $organization->name,
-            description: $organization->description,
-            type: $organization->type,
-            contact_person: $organization->contact_person,
-            contact_email: $organization->contact_email,
-            contact_number: $organization->contact_number
+            contact_number: $request->contact_number,
+            plan :PlanMapper::fromArray($planitems)
         );
     }
 
@@ -59,7 +59,8 @@ class OrganizationData
             "type" => $this->type,
             "contact_person" => $this->contact_person,
             "contact_email" => $this->contact_email,
-            "contact_number" => $this->contact_number
+            "contact_number" => $this->contact_number,
+            "plan" => $this->plan
         ];
     }
 }

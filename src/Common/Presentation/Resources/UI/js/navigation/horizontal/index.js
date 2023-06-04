@@ -16,6 +16,9 @@ export default [
       access_module : "access_organization",
       children: [
         { title: 'Organizations', url: '/organizations',icon: { icon: 'mdi-account-group-outline ' }, route_name:'organizations', access_module : "access_organization",},
+        { title: 'Students', url: '/students',icon: { icon: 'mdi-account-group-outline ' }, route_name:'students', access_module : "access_student",},
+        { title: 'Teachers', url: '/teachers',icon: { icon: 'mdi-account-group-outline ' }, route_name:'teachers', access_module : "access_teacher",},
+        { title: 'ClassRoom', url: '/classrooms',icon: { icon: 'mdi-account-group-outline ' }, route_name:'classrooms', access_module : "access_classroom",},
       ]
     },
     {

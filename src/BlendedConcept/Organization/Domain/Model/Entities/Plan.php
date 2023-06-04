@@ -7,7 +7,7 @@ use Src\Common\Domain\Entity;
 class Plan extends Entity
 {
     public function __construct(
-        public readonly int $id,
+        public readonly ?int $id,
         public readonly ?int $stripe_id,
         public readonly string $name,
         public readonly ?string $description,
@@ -16,17 +16,16 @@ class Plan extends Entity
         public readonly ?string $allocated_storage,
         public readonly ?string $teacher_license,
         public readonly ?string $student_license,
-        public readonly ?string $is_hidden,
+        public readonly ?bool $is_hidden,
     ) {
     }
 
     public function toArray(): array
     {
         return [
-
             'id' => $this->id,
             'stripe_id' => $this->stripe_id,
-            'name' => $this->name,
+            'name' => "Default Plan",
             'description' => $this->description,
             'price' => $this->price,
             'payment_period' => $this->payment_period,

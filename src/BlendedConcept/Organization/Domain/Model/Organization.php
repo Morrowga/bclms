@@ -2,6 +2,7 @@
 
 namespace Src\BlendedConcept\Organization\Domain\Model;
 
+use Src\BlendedConcept\Organization\Domain\Model\Entities\Plan;
 use Src\Common\Domain\AggregateRoot;
 
 class Organization extends AggregateRoot implements \JsonSerializable
@@ -15,8 +16,10 @@ class Organization extends AggregateRoot implements \JsonSerializable
         public readonly ?string $contact_person,
         public readonly ?string $contact_email,
         public readonly ?string $contact_number,
+        public readonly Plan $plan,
     ) {
     }
+
 
     public function toArray(): array
     {
@@ -28,7 +31,8 @@ class Organization extends AggregateRoot implements \JsonSerializable
             'type' => $this->type,
             'contact_person' => $this->contact_person,
             'contact_email' => $this->contact_email,
-            'contact_number' => $this->contact_number
+            'contact_number' => $this->contact_number,
+            'plan' => $this->plan
         ];
     }
 }

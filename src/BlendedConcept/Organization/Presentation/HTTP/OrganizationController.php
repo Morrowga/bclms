@@ -4,21 +4,20 @@ namespace Src\BlendedConcept\Organization\Presentation\HTTP;
 
 use Inertia\Inertia;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\GetOrganizationWithPagination;
-use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\Organization\Application\Mappers\OrganizationMapper;
-use Src\BlendedConcept\Organization\Application\UseCases\Commands\StoreOrganizationCommand;
+use Src\BlendedConcept\Organization\Domain\Services\OrganizationService;
 use Src\BlendedConcept\System\Application\Policies\OrganizationPolicy;
 use Src\BlendedConcept\System\Application\Requests\StoreOrganizationRequest;
 use Src\BlendedConcept\System\Application\Requests\UpdateOrganizationRequest;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
+
 class OrganizationController extends Controller
 {
-    private $organizationInterface;
-    public function __construct(OrganizationRepositoryInterface $organizationInterface)
+    private $organizationServices;
+    public function __construct()
     {
-        $this->organizationInterface = $organizationInterface;
+        $this->organizationServices = app()->make(OrganizationService::class);
     }
 
 
@@ -37,47 +36,52 @@ class OrganizationController extends Controller
             $organizations = (new GetOrganizationWithPagination($filters))->handle();
 
             // Render the organization index page with the retrieved organizations
-            return Inertia::render(config('route.organizations'),[
+            return Inertia::render(config('route.organizations'), [
                 'organizations' => $organizations['paginate_organizations']
             ]);
         } catch (\Exception $e) {
 
-            return Inertia::render(config('route.organization'), [
-                'systemErrorMessage' => $e->getMessage()
-            ]);
+            return redirect()
+                ->route('organizations.index')
+                ->with([
+                    'systemErrorMessage' => $e->getMessage()
+                ]);
         }
     }
 
-
-    public function create()
-    {
-        abort(404);
-    }
-
-
-
+    /**
+     * Store a newly created organization based on the provided request.
+     *
+     * @param StoreOrganizationRequest $request The request object containing the organization data.
+     * @return \Illuminate\Http\RedirectResponse The redirect response after creating the organization.
+     */
     public function store(StoreOrganizationRequest $request)
     {
+        try {
+            // Abort if the user is not authorized to create organizations
+            abort_if(authorize('create', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        abort_if(authorize('create', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            // Validate the request data
+            $request->validated();
 
-        $request->validated();
+            // Create the organization using the provided request
+            $this->organizationServices->createOrganization($request);
 
-        $newOrganizaton = OrganizationMapper::fromRequest($request);
-        $saveOrganizaton = (new StoreOrganizationCommand($newOrganizaton));
-        $saveOrganizaton->execute();
-        return redirect()->route('organizations.index')->with("successMessage", "Organizations Created Successfully!");
-    }
-
-    public function edit()
-    {
-        abort(404);
+            return redirect()->route('organizations.index')->with("successMessage", "Organizations Created Successfully!");
+        } catch (\Exception $error) {
+            return redirect()
+                ->route('organizations.index')
+                ->with([
+                    'systemErrorMessage' => $error->getCode()
+                ]);
+        }
     }
 
     public function update(UpdateOrganizationRequest $request, OrganizationEloquentModel $organization)
     {
         abort_if(authorize('edit', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->organizationInterface->updateOrganization($request, $organization);
+        $this->organizationServices->updateOrganization($request,$organization);
+
         return redirect()->route('organizations.index')->with("successMessage", "Organization Updated Successfully!");
     }
 
@@ -89,7 +93,8 @@ class OrganizationController extends Controller
     public function destroy(OrganizationEloquentModel $organization)
     {
         abort_if(authorize('destroy', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $organization->delete();
+       //delete organization frm service class
+        $this->organizationServices->deleteOrganization($organization);
         return redirect()->route('organizations.index')->with("successMessage", "Organizations Deleted Successfully!");
     }
 }

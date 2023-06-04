@@ -38,6 +38,9 @@ class RouteServiceProvider extends ServiceProvider
                     require base_path('src/BlendedConcept/System/Presentation/HTTP/routes.php');
                     require base_path('src/BlendedConcept/Security/Presentation/HTTP/routes.php');
                     require base_path('src/BlendedConcept/Organization/Presentation/HTTP/routes.php');
+                    require base_path('src/BlendedConcept/Student/Presentation/HTTP/routes.php');
+                    require base_path('src/BlendedConcept/ClassRoom/Presentation/HTTP/routes.php');
+                    require base_path('src/BlendedConcept/Teacher/Presentation/HTTP/routes.php');
                 });
 
             // for api route

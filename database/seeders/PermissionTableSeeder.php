@@ -112,26 +112,6 @@ class PermissionTableSeeder extends Seeder
                 "guard_name" => "web"
             ],
             [
-                "name" => "access_student",
-                "guard_name" => "web"
-            ],
-            [
-                "name" => "create_student",
-                "guard_name" => "web"
-            ],
-            [
-                "name" => "show_student",
-                "guard_name" => "web"
-            ],
-            [
-                "name" => "edit_student",
-                "guard_name" => "web"
-            ],
-            [
-                "name" => "delete_student",
-                "guard_name" => "web"
-            ],
-            [
                 "name" => "access_library",
                 "guard_name" => "web"
             ],
@@ -166,7 +146,56 @@ class PermissionTableSeeder extends Seeder
             [
                 'name' => "access_settings",
                 "guard_name" => "web"
-            ]
+            ],
+            [
+                "name" => "access_student",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "create_student",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "edit_student",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "delete_student",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "access_teacher",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "create_teacher",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "edit_teacher",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "delete_teacher",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "access_classroom",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "create_classroom",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "edit_classroom",
+                "guard_name" => "web"
+            ],
+            [
+                "name" => "delete_classroom",
+                "guard_name" => "web"
+            ],
+
         ];
 
         foreach ($permissions as $permission) {

@@ -41,7 +41,16 @@ class SecurityRepository implements SecurityRepositoryInterface
             ->with('roles')
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
-        return $users;
+
+        $teacherRoles = UserResource::collection(UserEloquentModel::filter($filters)
+        ->whereHas("roles",function($query){
+           return $query->where("id",2);
+        })
+        ->with('roles')
+        ->orderBy('id', 'desc')
+        ->paginate($filters['perPage'] ?? 10));
+
+        return [$users,$teacherRoles];
     }
     //get only user name
     public function getUsersName()

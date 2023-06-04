@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\System\Domain\Resources;
+namespace Src\BlendedConcept\Organization\Domain\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 

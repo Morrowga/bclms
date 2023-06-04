@@ -3,12 +3,14 @@
 namespace Src\BlendedConcept\Organization\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
+use Src\BlendedConcept\Organization\Application\Mappers\OrganizationMapper;
+use Src\BlendedConcept\Organization\Application\Mappers\PlanMapper;
 use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
+use Src\BlendedConcept\Organization\Domain\Resources\OrganizationResource;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\PlanEloquentModel;
-use Src\BlendedConcept\System\Domain\Model\Plan;
-use Src\BlendedConcept\System\Domain\Resources\OrganizationResource;
-
+use Src\BlendedConcept\Organization\Domain\Model\Organization;
+use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
 
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
@@ -27,75 +29,77 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         ];
     }
 
-    // store organization
-    public function createOrganization($request)
+    /**
+     * Create a new organization with the provided organization object.
+     *
+     * @param Organization $organization The organization object containing the necessary information.
+     * @return void
+     */
+    public function createOrganization(Organization $organization)
     {
+        DB::beginTransaction();
+
         try {
-            DB::transaction(function () use ($request) {
-                //create a plan
-                $plan = PlanEloquentModel::create([
-                    "name" => "Enterprise Solution",
-                    "price" => $request->price,
-                    "payment_period" => $request->payment_period,
-                    "allocated_storage" => $request->storage,
-                    "teacher_license" => $request->license
-                ]);
 
-                //create a organization
-                $organization = OrganizationEloquentModel::create(
-                    [
-                        "plan_id" => $plan->id,
-                        "name"  => $request->name,
-                        "contact_person" => $request->contact_person,
-                        "contact_email" => $request->contact_email,
-                        "contact_number" => $request->contact_number,
-                    ]
-                );
-                if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            //insert data to plan tables
+            $planEloquent = PlanMapper::toEloquent($organization->plan);
+            $planEloquent->save();
 
-                    $organization->addMediaFromRequest('image')->toMediaCollection('image', 'media_organization');
-                }
-            });
+            //insert data into organization
+
+            $organizationEloquent = OrganizationMapper::toEloquent($organization);
+            $organizationEloquent->plan_id = $planEloquent->id;
+            $organizationEloquent->save();
+
+            // Upload the organization's image if provided
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+                $organizationEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_organization');
+            }
         } catch (\Exception $error) {
-           dd($error);
+            DB::rollBack();
+            dd($error->getMessage());
         }
+
+        DB::commit();
     }
 
     //  update organization
-    public function updateOrganization($request, $organization)
+    public function updateOrganization(OrganizationData $organizationData)
     {
+
+        DB::beginTransaction();
+
         try {
-            DB::transaction(function () use ($request, $organization) {
-                $organization->update([
-                    "name"  => $request->name,
-                    "contact_person" => $request->contact_person,
-                    "contact_email" => $request->contact_email,
-                    "contact_number" => $request->contact_number,
-                ]);
-                $plan = PlanEloquentModel::find($organization->plan_id);
-                $plan->update([
-                    "name" => "Enterprise Solution",
-                    "price" => $request->price,
-                    "payment_period" => $request->payment_period,
-                    "allocated_storage" => $request->storage,
-                    "teacher_license" => $request->license
-                ]);
-                //  delete image if reupload or insert if does not exit
-                if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $organizationDataArray = $organizationData->toArray();
 
-                    $old_image = $organization->getFirstMedia('image');
-                    if ($old_image != null) {
-                        $old_image->delete();
+            $planArray =  $organizationData->plan->toArray();
 
-                        $organization->addMediaFromRequest('image')->toMediaCollection('image', 'media_organization');
-                    } else {
+            $planEloquent = PlanEloquentModel::query()->findOrFail($organizationData->plan_id);
+            $planEloquent->fill($planArray);
+            $planEloquent->id  = $organizationData->plan_id;
+            $planEloquent->save();
+            $organizationEloquent = OrganizationEloquentModel::query()->findOrFail($organizationData->id);
+            $organizationEloquent->fill($organizationDataArray);
+            $organizationEloquent->save();
 
-                        $organization->addMediaFromRequest('image')->toMediaCollection('image', 'media_organization');
-                    }
+            //  delete image if reupload or insert if does not exit
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+
+                $old_image = $organizationEloquent->getFirstMedia('image');
+                if ($old_image != null) {
+                    $old_image->delete();
+
+                    $organizationEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_organization');
+                } else {
+
+                    $organizationEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_organization');
                 }
-            });
-        } catch (\Throwable $th) {
-            dd($th);
+            }
+        } catch (\Exception $error) {
+            DB::rollBack();
+            dd($error);
         }
+
+        DB::commit();
     }
 }
