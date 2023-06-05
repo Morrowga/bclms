@@ -15,7 +15,8 @@ class ClassRoomMapper
             organization_id: $request->organization_id,
             name: $request->name,
             teacher_id: $request->teacher_id,
-            venue: $request->venue
+            venue: $request->venue,
+            students: $request->students
         );
     }
 

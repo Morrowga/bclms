@@ -1,26 +1,19 @@
 <?php
 
-namespace Src\BlendedConcept\Organization\Application\Providers;
+namespace Src\BlendedConcept\ClassRoom\Application\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\OrganizationRepository;
-use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
-use Src\BlendedConcept\Organization\Domain\Repositories\PlanRepositoryInterface;
-use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\PlanRepository;
-
+use Src\BlendedConcept\ClassRoom\Application\Repositories\Eloquent\ClassRoomRepository;
+use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 
 class ClassRoomServiceProvider extends ServiceProvider
 {
     public function register()
     {
         $this->app->bind(
-            OrganizationRepositoryInterface::class,
-            OrganizationRepository::class
+            ClassRoomRepositoryInterface::class,
+            ClassRoomRepository::class
         );
 
-        $this->app->bind(
-            PlanRepositoryInterface::class,
-            PlanRepository::class
-        );
     }
 }

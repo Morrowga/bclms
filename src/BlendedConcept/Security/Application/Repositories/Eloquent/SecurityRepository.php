@@ -42,16 +42,11 @@ class SecurityRepository implements SecurityRepositoryInterface
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
 
-        $teacherRoles = UserResource::collection(UserEloquentModel::filter($filters)
-        ->whereHas("roles",function($query){
-           return $query->where("id",2);
-        })
-        ->with('roles')
-        ->orderBy('id', 'desc')
-        ->paginate($filters['perPage'] ?? 10));
 
-        return [$users,$teacherRoles];
+        return $users;
     }
+
+
     //get only user name
     public function getUsersName()
     {

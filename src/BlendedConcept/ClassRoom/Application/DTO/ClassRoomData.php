@@ -13,17 +13,21 @@ class ClassRoomData
         public readonly ?int $teacher_id,
         public readonly ?string $name,
         public readonly ?string $venue,
+        public readonly ?array $students,
+
+
     ) {
     }
 
-    public static function fromRequest(Request $request, $classRoom): ClassRoomData
+    public static function fromRequest(Request $request, $classroom_id): ClassRoomData
     {
         return new self(
-            id: $classRoom->id,
+            id: $classroom_id,
             organization_id: $request->organization_id,
             name: $request->name,
             teacher_id: $request->teacher_id,
-            venue: $request->venue
+            venue: $request->venue,
+            students :$request->students
         );
     }
 
@@ -34,7 +38,8 @@ class ClassRoomData
             "organization_id" => $this->organization_id,
             "teacher_id" => $this->teacher_id,
             "name" => $this->name,
-            "venue" => $this->venue
+            "venue" => $this->venue,
+            "students" => $this->students
         ];
     }
 }

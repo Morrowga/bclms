@@ -12,4 +12,6 @@ interface ClassRoomRepositoryInterface
     public function getClassRooms($filers);
     public function createClassRoom(ClassRoom $classRoom);
     public function updateClassRoom(ClassRoomData $classRoomData);
+    public function getTeachers();
+    public function getStudents();
 }

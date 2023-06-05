@@ -46,7 +46,7 @@ class UserController extends Controller
             $filters = request()->only(['name', 'email', 'role', 'search', 'perPage', 'roles']) ?? [];
 
             // Retrieve users with pagination using the provided filters
-            $users = (new GetUsersWithPagination($filters))->handle()[0];
+            $users = (new GetUsersWithPagination($filters))->handle();
 
 
             // Retrieve user names

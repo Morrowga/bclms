@@ -24,6 +24,8 @@ interface SecurityRepositoryInterface
     // store user
     public function createUser(User $user);
 
+    public function getTeachers();
+
     //  update user
     public function updateUser(UserData $user);
 

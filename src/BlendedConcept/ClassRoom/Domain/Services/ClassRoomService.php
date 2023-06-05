@@ -17,6 +17,7 @@ class ClassRoomService
         $request->validated();
         $newUser = ClassRoomMapper::fromRequest($request);
 
+
         $createNewUser = new StoreClassRoomCommand($newUser);
         $createNewUser->execute();
     }

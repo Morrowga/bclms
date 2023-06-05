@@ -11,8 +11,7 @@ use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
 use Src\BlendedConcept\Security\Application\Requests\UpdateUserRequest;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUsersWithPagination;
-
-use Src\BlendedConcept\Security\Application\Policies\UserPolicy;
+use Src\BlendedConcept\Teacher\Domain\Policies\TeacherPolicy;
 use Src\BlendedConcept\Teacher\Domain\Services\TeacherService;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,7 +36,7 @@ class TeacherController extends Controller
 
         // Check if the user is authorized to view users
 
-        abort_if(authorize('view', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('view', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -45,7 +44,7 @@ class TeacherController extends Controller
             $filters = request()->only(['name', 'email', 'role', 'search', 'perPage', 'roles']) ?? [];
 
             // Retrieve users with pagination using the provided filters with teacher roles
-            $users = (new GetUsersWithPagination($filters))->handle()[1];
+            $users = (new GetUsersWithPagination($filters))->handle();
 
             // Retrieve user names
             $users_name = (new GetUserName())->handle();
@@ -71,7 +70,7 @@ class TeacherController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        abort_if(authorize('create', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('create', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -89,7 +88,7 @@ class TeacherController extends Controller
     //update user
     public function update(UpdateUserRequest $request, UserEloquentModel $user)
     {
-        abort_if(authorize('edit', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('edit', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->teacherService->updateUser($request, $user->id);
         return redirect()->route('users.index')->with("successMessage", "User Updated Successfully!");
     }
@@ -97,7 +96,7 @@ class TeacherController extends Controller
 
     public function destroy(UserEloquentModel $user)
     {
-        abort_if(authorize('destroy', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('destroy', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->teacherService->deleteUser($user);
         return redirect()->route('users.index')->with("successMessage", "User Deleted Successfully!");
     }

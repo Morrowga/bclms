@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\ClassRoom\Application\Policies;
+namespace Src\BlendedConcept\ClassRoom\Domain\Policies;
 
 
 class ClassRoomPolicy
