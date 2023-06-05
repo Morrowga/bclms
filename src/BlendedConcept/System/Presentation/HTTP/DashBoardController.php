@@ -26,6 +26,8 @@ class DashBoardController extends Controller
 
     public function superAdminDashboard()
     {
+
+
         /**
          *  Assigns the current user role based on
          *  the retrieved role from the authenticated user.
@@ -44,7 +46,6 @@ class DashBoardController extends Controller
 
 
         $orgainzations_users = $this->securityRepositoryInterface->getUserForDashBoard();
-
         return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users'));
     }
 
