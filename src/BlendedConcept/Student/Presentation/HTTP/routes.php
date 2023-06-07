@@ -7,3 +7,5 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('students', StudentController::class);
 });
+
+

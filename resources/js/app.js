@@ -17,6 +17,9 @@ import { VueGoodTable } from "vue-good-table-next";
 import moment from 'moment'; //monentjs
 
 
+//system Error Alert
+import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue";
+
 //scss group
 import '@core-scss/template/index.scss'
 import '@styles/styles.scss'
@@ -49,7 +52,8 @@ createInertiaApp({
       .mixin({
         methods:{route,moment},
       components:{
-        VueGoodTable
+        VueGoodTable,
+        SystemErrorAlert
       }
       })
       .mount(el);

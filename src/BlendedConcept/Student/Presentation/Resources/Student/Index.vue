@@ -3,7 +3,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
-let props = defineProps(["students", "flash", "auth"]);
+let props = defineProps(["students", "flash", "auth",'sytemErrorMessage']);
 import {
   serverParams,
   onColumnFilter,
@@ -65,6 +65,7 @@ watch(serverPerPage, function (value) {
 
 <template>
   <AdminLayout>
+        <SystemErrorAlert :sytemErrorMessage="sytemErrorMessage" v-if="sytemErrorMessage"/>
     <section>
       <VCard>
         <VCardText class="d-flex flex-wrap gap-4">

@@ -9,6 +9,8 @@ use Src\Common\Presentation\CLI\CreateControllerCmd;
 use Src\Common\Presentation\CLI\CreateDomainCmd;
 use Src\Common\Presentation\CLI\CreateQueryCmd;
 use Src\Common\Presentation\CLI\CreateRoutesCmd;
+use Src\Common\Presentation\CLI\CreateLaravelSetupCmd;
+
 
 class Console extends ConsoleKernel
 {
@@ -22,7 +24,8 @@ class Console extends ConsoleKernel
         CreateCommandCmd::class,
         CreateQueryCmd::class,
         CreateControllerCmd::class,
-        CreateRoutesCmd::class
+        CreateRoutesCmd::class,
+        CreateLaravelSetupCmd::class,
     ];
 
     /**

@@ -35,7 +35,6 @@ class StudentRepository implements StudentRepositoryInterface
             }
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error->getMessage());
         }
 
         DB::commit();

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('payment_period')->nullable();
             $table->string('allocated_storage')->nullable();
             $table->string('teacher_license')->nullable();
-            $table->enum('is_hidden', [0, 1])->default(0);
+            $table->enum('is_hidden', [0, 1])->default(0)->nullable();
             $table->string('student_license')->nullable();
             $table->timestamps();
         });

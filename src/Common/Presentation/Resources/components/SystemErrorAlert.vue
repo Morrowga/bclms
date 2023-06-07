@@ -1,7 +1,10 @@
 <script setup>
-import { defineProps } from "vue";
+import { defineProps,ref } from "vue";
 
 let props = defineProps(["sytemErrorMessage"]);
+
+
+
 </script>
 
   <template>
@@ -10,7 +13,7 @@ let props = defineProps(["sytemErrorMessage"]);
     density="compact"
     type="error"
     closable
-    class="mt-4"
+    class="mt-4 mb-4"
     close-label="Close Alert"
     style="padding: 6px 16px"
   >

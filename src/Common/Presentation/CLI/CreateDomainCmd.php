@@ -55,7 +55,7 @@ class CreateDomainCmd extends Command
             'Model',
             'Policies',
             'Repositories',
-            'ShipmentServices'
+            'Services'
         ];
         foreach ($domainStructure as $domainDirectory) {
             $path = $basePath . '/Domain/' . $domainDirectory;
