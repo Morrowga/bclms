@@ -26,6 +26,7 @@ const onSubmit = () => {
       localStorage.setItem("tenant", props?.tenant ? "c" : "");
     },
     onError: (error) => {
+      alert("okay");
       toastAlert({
         title: "Invalid Creditional",
         icon: "error",
@@ -113,6 +114,7 @@ const onSubmit = () => {
                         isPasswordVisible = !isPasswordVisible
                       "
                     />
+
                     <span
                       style="color: red; padding-top: 10px"
                       v-if="props?.errorMessage"

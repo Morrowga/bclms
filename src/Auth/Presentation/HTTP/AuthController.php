@@ -97,10 +97,11 @@ class AuthController extends Controller
                 return redirect()->route('dashboard');
             } else {
                 // Render the login page with an error message
-                return redirect()->route('login')->with("errorMessage", $isAuthenticated['errorMessage']);
+                return Inertia::render(config('route.login'),[
+                    "errorMessage" => $isAuthenticated['errorMessage']
+                ]);
             }
         } catch (\Exception $e) {
-            dd($e->getMessage());
             // Handle the exception gracefully, such as displaying a generic error message
             return redirect()->route('login')->with("sytemErrorMessage", $e->getMessage());
         }
@@ -172,7 +173,6 @@ class AuthController extends Controller
             // Render the registration page using the Inertia.js framework
             return Inertia::render(config('route.register'));
         } catch (\Exception $e) {
-            dd($e->getMessage());
             // Handle the exception gracefully, such as displaying a generic error page
             return Inertia::render(config('route.register'))->with("sytemErrorMessage", $e->getMessage());
         }
