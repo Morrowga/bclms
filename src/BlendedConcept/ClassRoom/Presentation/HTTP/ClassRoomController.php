@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ClassRoomController extends Controller
 {
-
     protected $classRoomService;
 
     public function __construct()
@@ -51,7 +50,7 @@ class ClassRoomController extends Controller
             return Inertia::render(config('route.classrooms'), compact('classrooms',"teachers",'students'));
         } catch (\Exception $e) {
             dd($e->getMessage());
-            return redirect()->route('classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route('c.classrooms.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
     /**
@@ -69,11 +68,11 @@ class ClassRoomController extends Controller
 
             $this->classRoomService->createClassRoom($request);
 
-            return redirect()->route('classrooms.index')->with("successMessage", "ClassRoom created successfully!");
+            return redirect()->route('c.classrooms.index')->with("successMessage", "ClassRoom created successfully!");
         } catch (\Exception $e) {
             dd($e->getMessage());
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route('students.index')->with("sytemErrorMessage", $e->getMessage());
+            return redirect()->route('c.classrooms.index')->with("sytemErrorMessage", $e->getMessage());
         }
     }
 
@@ -84,7 +83,7 @@ class ClassRoomController extends Controller
     {
         abort_if(authorize('edit', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->classRoomService->updateClassRoom($request, $classroom->id);
-        return redirect()->route('classrooms.index')->with("successMessage", "ClassRoom Updated Successfully!");
+        return redirect()->route('c.classrooms.index')->with("successMessage", "ClassRoom Updated Successfully!");
     }
 
 
@@ -92,6 +91,6 @@ class ClassRoomController extends Controller
     {
         abort_if(authorize('destroy', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->classRoomService->deleteClassRoom($classroom);
-        return redirect()->route('classrooms.index')->with("successMessage", "Student Deleted Successfully!");
+        return redirect()->route('c.classrooms.index')->with("successMessage", "Student Deleted Successfully!");
     }
 }

@@ -13,7 +13,7 @@ const refForm = ref();
 let props = defineProps(["user", "roles", "flash"]);
 
 let form = useForm({
-  role: props?.user?.roles[0]?.id,
+  role: 4,
   name: props.user.name,
   password: "",
   contact_number: props.user.contact_number,
@@ -27,7 +27,7 @@ console.log(props.user,"form data ");
 
 // Update create form
 let handleUpdate = (id) => {
-  form.post(route("users.update", { id: id }), {
+  form.post(route("c.teachers.update", { id: id }), {
     onSuccess: (status) => {
       toastAlert({
         title: props.flash?.successMessage,
@@ -41,7 +41,7 @@ let handleUpdate = (id) => {
 };
 
 onUpdated(() => {
-  form.role = props?.user?.roles[0]?.id;
+  form.role = 4;
   form.name = props.user.name;
   form.contact_number = props.user.contact_number;
   form.email = props.user.email;
@@ -66,7 +66,7 @@ onUpdated(() => {
       </VBtn>
     </template>
     <!-- Dialog Content -->
-    <VCard title="User Particulars">
+    <VCard title="Teacher Particulars">
       <VForm
         @submit.prevent="handleUpdate(props.user.id)"
         ref="refForm"
@@ -81,7 +81,7 @@ onUpdated(() => {
           <VRow>
             <VCol cols="6">
               <VRow>
-                <VCol cols="12">
+                <!-- <VCol cols="12">
                   <VSelect
                     label="User Roles"
                     v-model="form.role"
@@ -91,7 +91,7 @@ onUpdated(() => {
                     :error-messages="form?.errors?.role"
                     :rules="[requiredValidator]"
                   />
-                </VCol>
+                </VCol> -->
                 <VCol cols="12">
                   <VTextField
                     label="Name"

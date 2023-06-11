@@ -19,6 +19,76 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/home';
 
+    // public const HOME = ""
+
+    /***************************************************************
+     *
+     *  Maps the web routes for that does not belong to tenant.
+     *  This method is responsible for mapping the web routes for the with tenant on the central domains.
+     *  It iterates through the central domains and sets up the necessary middleware, domain, and namespace
+     *  for each domain. Then it groups the routes and requires the route files for different modules
+     *  within the does not belong to tenant.
+     *  @return void
+     *
+     *******/
+    protected function mapWebRoutes()
+    {
+        foreach ($this->centralDomains() as $domain) {
+            Route::middleware(
+                ['web']
+            )
+                ->domain($domain)
+                ->namespace($this->namespace)
+                ->group(function () {
+                    require base_path('src/Auth/Presentation/HTTP/routes.php');
+                    require base_path('src/BlendedConcept/System/Presentation/HTTP/routes.php');
+                    require base_path('src/BlendedConcept/Security/Presentation/HTTP/routes.php');
+                    require base_path('src/BlendedConcept/Organization/Presentation/HTTP/routes.php');
+                    require base_path('src/BlendedConcept/Student/Presentation/HTTP/routes.php');
+                    require base_path('src/BlendedConcept/ClassRoom/Presentation/HTTP/routes.php');
+                    require base_path('src/BlendedConcept/Teacher/Presentation/HTTP/routes.php');
+                });
+        }
+    }
+
+
+
+    /**
+     * Maps all API routes to the specified domains.
+     *
+     * @param array $domains An array of domains to map the API routes to.
+     */
+    protected function mapApiRoutes()
+    {
+        foreach ($this->centralDomains() as $domain) {
+            // Create a new route group with the following settings:
+            // - Prefix: `api`
+            // - Domain: $domain
+            // - Middleware: `api`
+            // - Namespace: $this->namespace
+            // - Group: `base_path('routes/api.php')`
+            Route::prefix('api')
+                ->domain($domain)
+                ->middleware('api')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/api.php'));
+        }
+    }
+
+
+    /**
+     * Returns an array of central domains.
+     *
+     * @return array
+     */
+    protected function centralDomains(): array
+    {
+        // Get the central domains from the configuration file.
+        return config('tenancy.central_domains');
+    }
+
+
+
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      *
@@ -29,23 +99,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-
-
-            // for web route
-            Route::middleware(['web'])
-                ->group(function () {
-                    require base_path('src/Auth/Presentation/HTTP/routes.php');
-                    require base_path('src/BlendedConcept/System/Presentation/HTTP/routes.php');
-                    require base_path('src/BlendedConcept/Security/Presentation/HTTP/routes.php');
-                    require base_path('src/BlendedConcept/Organization/Presentation/HTTP/routes.php');
-                    require base_path('src/BlendedConcept/Student/Presentation/HTTP/routes.php');
-                    require base_path('src/BlendedConcept/ClassRoom/Presentation/HTTP/routes.php');
-                    // require base_path('src/BlendedConcept/Teacher/Presentation/HTTP/routes.php');
-                });
-
-            // for api route
-            Route::middleware('api')
-                ->group(base_path('routes/api.php'));
+            $this->mapApiRoutes();
+            $this->mapWebRoutes();
         });
     }
 

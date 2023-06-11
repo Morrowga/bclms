@@ -23,6 +23,16 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+
+                dd("helllo");
+
+                if(auth()->user()->organization_id)
+                {
+
+                    $organization = auth()->user()->load("organization");
+                    return redirect('http://' . $organization->organization->name . '.' . request()->getHost() . '/c/organizationaadmin');
+
+                }
                 return redirect(RouteServiceProvider::HOME);
             }
 

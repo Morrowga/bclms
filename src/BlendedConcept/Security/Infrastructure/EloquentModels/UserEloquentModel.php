@@ -11,8 +11,10 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
+
 
 class UserEloquentModel extends  Authenticatable implements HasMedia, MustVerifyEmail
 {
@@ -112,5 +114,10 @@ class UserEloquentModel extends  Authenticatable implements HasMedia, MustVerify
                 $query->where('name', 'like', '%' . $role . '%');
             });
         });
+    }
+
+    public function organization()
+    {
+        return $this->belongsTo(OrganizationEloquentModel::class,'organization_id');
     }
 }

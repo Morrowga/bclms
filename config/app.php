@@ -190,6 +190,7 @@ return [
          * Package Service Providers...
          */
         Barryvdh\Debugbar\ServiceProvider::class,
+        Src\Common\Infrastructure\Laravel\Providers\TenancyServiceProvider::class, //multi tetant
 
         /*
          * Domain Service Providers...
@@ -199,7 +200,7 @@ return [
         \Src\BlendedConcept\Organization\Application\Providers\OrganizationServiceProvider::class,
         \Src\BlendedConcept\Student\Application\Providers\StudentServiceProvider::class,
         \Src\BlendedConcept\ClassRoom\Application\Providers\ClassRoomServiceProvider::class,
-
+        \Src\BlendedConcept\Teacher\Application\Providers\TeacherServiceProvider::class,
 
         /*
          * Domain Routes Service Providers...

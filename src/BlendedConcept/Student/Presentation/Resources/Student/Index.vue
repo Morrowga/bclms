@@ -3,7 +3,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
-let props = defineProps(["students", "flash", "auth",'sytemErrorMessage']);
+let props = defineProps(["students", "flash", "auth",'sytemErrorMessage','tenant']);
 import {
   serverParams,
   onColumnFilter,
@@ -85,7 +85,8 @@ watch(serverPerPage, function (value) {
             <!-- 👉 Add User button -->
             <Create
               :flash="flash"
-              v-if="permissions.includes('create_organization')"
+              :tenant="tenant"
+              v-if="permissions.includes('create_student')"
             />
           </div>
         </VCardText>
@@ -112,6 +113,7 @@ watch(serverPerPage, function (value) {
                 <Edit
                   :student="props.row"
                   :flash="flash"
+                  :tenant="tenant"
                   v-if="permissions.includes('edit_student')"
                 />
                 <VBtn

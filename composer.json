@@ -19,6 +19,7 @@
         "nunomaduro/collision": "^6.0",
         "spatie/ignition": "^1.4",
         "spatie/laravel-medialibrary": "^10.7",
+        "stancl/tenancy": "^3.7",
         "tightenco/ziggy": "^1.5"
     },
     "require-dev": {

@@ -23,7 +23,7 @@ let form = useForm({
 });
 
 let handleSubmit = () => {
-  form.post(route("classrooms.store"), {
+  form.post(route("c.classrooms.store"), {
     onSuccess: () => {
       toastAlert({
         title: props.flash?.successMessage,

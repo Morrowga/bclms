@@ -21,7 +21,7 @@ let props = defineProps(["classroom", "flash",'students','teachers']);
 let handleUpdate = (id) => {
     refForm.value.validate().then(({ valid }) => {
         if (valid) {
-            form.post(route("classrooms.update", { id: id }), {
+            form.post(route("c.classrooms.update", { id: id }), {
                 onSuccess: (status) => {
                     toastAlert({
                         title: props.flash?.successMessage,

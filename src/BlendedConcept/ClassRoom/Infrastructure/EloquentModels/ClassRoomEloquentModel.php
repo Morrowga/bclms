@@ -9,9 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Organization\Domain\Traits\HasOrganizationTenant;
+
 
 class ClassRoomEloquentModel extends Model
 {
+
+
+    use HasOrganizationTenant;
     protected $table = 'classrooms';
 
 

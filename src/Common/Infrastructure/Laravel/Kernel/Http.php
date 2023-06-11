@@ -38,7 +38,8 @@ class Http extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'isSuperAdmin' => \Src\Auth\Domain\Middleware\CheckIsSuperAdmin::class
+        'isSuperAdmin' => \Src\Auth\Domain\Middleware\CheckIsSuperAdmin::class,
+        'CheckSubDomain' => \Src\Auth\Domain\Middleware\CheckSubDomain::class
     ];
 
     /**

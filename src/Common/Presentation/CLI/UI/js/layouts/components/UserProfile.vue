@@ -9,7 +9,9 @@ const userData = computed(() => usePage().props.auth);
 
 const logout = () => {
   localStorage.removeItem("menu_title");
-  router.post("/logout");
+ const PREFIX = localStorage.getItem("tenant") !="" ? `/${localStorage.getItem("tenant") }` : "";
+
+  router.post("${PREFIX}/logout");
 };
 </script>
 

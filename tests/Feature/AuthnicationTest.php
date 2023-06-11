@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Authi;
 
-use Src\BlendedConcept\User\Domain\Model\User;
-use Src\BlendedConcept\User\Domain\Model\Role;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
 use Carbon\Carbon;

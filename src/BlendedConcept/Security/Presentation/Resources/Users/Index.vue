@@ -14,7 +14,7 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
-let props = defineProps(["users", "roles_name", "flash", "auth"]);
+let props = defineProps(["users", "roles_name", "flash", "auth","organizations"]);
 let flash = computed(() => usePage().props.flash);
 let users = computed(() => usePage().props.auth.data.users);
 let permissions = computed(() => usePage().props.auth.data.permissions);
@@ -88,6 +88,7 @@ watch(serverPerPage, function (value) {
                     >
                         <!-- 👉 Add User button -->
                         <Create
+                            :organizations="organizations"
                             :roles="roles_name"
                             :flash="flash"
                             v-if="permissions.includes('create_user')"

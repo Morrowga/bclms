@@ -3,13 +3,8 @@
 namespace Src\Common\Infrastructure\Laravel\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Src\BlendedConcept\System\Application\Policies\OrganizationPolicy;
-use Src\BlendedConcept\System\Application\Policies\SettingPolicy;
-use Src\BlendedConcept\Security\Application\Policies\UserPolicy;
-use Src\BlendedConcept\Security\Application\Policies\PermissionPolicy;
-use Src\BlendedConcept\System\Application\Policies\FileManagerPolicy;
-use Src\BlendedConcept\Security\Application\Policies\RolePolicy;
-use Gate;
+use Laravel\Sanctum\Sanctum;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -34,5 +29,6 @@ class AuthServiceProvider extends ServiceProvider
 
     public function register()
     {
+        // Sanctum::ignoreMigrations();
     }
 }

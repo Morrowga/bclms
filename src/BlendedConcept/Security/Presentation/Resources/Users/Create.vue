@@ -6,7 +6,7 @@ import { toastAlert } from "@Composables/useToastAlert";
 import { useForm} from "@inertiajs/vue3";
 import { ref } from "vue";
 import { emailValidator, requiredValidator,integerValidator } from "@validators";
-let props = defineProps(["roles", "flash"]);
+let props = defineProps(["roles", "flash","organizations"]);
 const isDialogVisible = ref(false);
 const isPasswordVisible = ref(false);
 
@@ -15,6 +15,7 @@ let form = useForm({
   name: " ",
   password: "",
   contact_number: "",
+  organization_id:"",
   email: "",
   image: "",
   dob: "",
@@ -63,6 +64,17 @@ let handleSubmit = () => {
                     item-title="name"
                     item-value="id"
                     :error-messages="form?.errors?.role"
+                  />
+                </VCol>
+                <!-- appear when organization role is teacher and organiztion admin -->
+                <VCol cols="12" v-if="form.role == 4 || 5">
+                  <VSelect
+                    label="Select Organization"
+                    v-model="form.organization_id"
+                    :items="organizations"
+                    item-title="name"
+                    item-value="id"
+                    :error-messages="form?.errors?.organization_id"
                   />
                 </VCol>
                 <VCol cols="12">

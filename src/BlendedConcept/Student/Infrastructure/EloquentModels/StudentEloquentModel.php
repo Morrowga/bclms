@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Student\Infrastructure\EloquentModels;
 
-use Illuminate\Notifications\Notifiable;
+
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Src\BlendedConcept\Organization\Domain\Traits\HasOrganizationTenant;
+
 
 class StudentEloquentModel extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use InteractsWithMedia,HasOrganizationTenant;
 
     protected $table = 'students';
 

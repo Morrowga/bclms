@@ -5,91 +5,96 @@ import EcommerceSalesOverview from "@/views/dashboard/ecommerce/EcommerceSalesOv
 import StaffDashboard from "./StaffDashBoard/index.vue";
 import SuperAdminDashboard from "./SuperAdminDashBoard/index.vue";
 import TeacherOrParentDashboard from "./TeacherDashBoard/index.vue";
+import OrganizatinDashBoard from "./OrganizationDashboard/Index.vue";
 import { defineProps, onMounted, watch, computed } from "vue";
 import { usePage, useForm } from "@inertiajs/vue3";
 import axios from "axios";
-let props = defineProps(["current_user_role", "user", "orgainzations_users"]);
+let props = defineProps(["current_user_role", "user", "orgainzations_users",'tenant']);
 const isAlertVisible = ref(true);
 let form = useForm({});
 let notifications = ref([]);
 let reactiveNoti = computed(() => usePage().props.notifications?.data);
 let watchNoti = watch(reactiveNoti, (value) => {
-  getNotifications();
+    getNotifications();
 });
 
 const getNotifications = () => {
-  axios
-    .get(
-      route("notifications", {
-        page: 1,
-      })
-    )
-    .then((resp) => {
-      console.log(resp)
-      notifications.value = resp.data.notifications.data;
-
-    });
+    axios
+        .get(
+            route("notifications", {
+                page: 1,
+            })
+        )
+        .then((resp) => {
+            console.log(resp);
+            notifications.value = resp.data.notifications.data;
+        });
 };
 
 const removeNotification = (notificationId) => {
-  form.post(route("markAsRead", { id: notificationId }), {
-    onSuccess: () => {
-      notifications.value = notifications.value.filter(
-        (noti) => noti.id != notificationId
-      );
-    },
-  });
+    form.post(route("markAsRead", { id: notificationId }), {
+        onSuccess: () => {
+            notifications.value = notifications.value.filter(
+                (noti) => noti.id != notificationId
+            );
+        },
+    });
 };
 
 onMounted(() => {
-  getNotifications();
+    getNotifications();
 });
 </script>
 
-
 <template>
-  <AdminLayout :user="user" :user_role="current_user_role">
-    <!--
-        VAlert is use for show annnounment pages
-     -->
-    <VAlert
-      v-for="item in notifications"
-      :key="item.id"
-      variant="tonal"
-      density="compact"
-      :type="item.data.type"
-      v-model="isAlertVisible"
-      closable
-      class="mb-2"
-      close-label="Close Alert"
-      style="padding: 6px 16px"
-    >
-      <template #text>
-        <span style="font-size:24px:">{{ item?.data?.type }}</span>
-        <br />
-        <span>{{ item.data.message }}</span>
-      </template>
-      <template #close>
-        <v-btn icon="mdi-close" @click="removeNotification(item.id)"></v-btn>
-      </template>
-    </VAlert>
+    <AdminLayout :user="user" :user_role="current_user_role" :tenant="tenant">
+        <!--
+            VAlert is use for show annnounment pages
+        -->
+        <VAlert
+            v-for="item in notifications"
+            :key="item.id"
+            variant="tonal"
+            density="compact"
+            :type="item.data.type"
+            v-model="isAlertVisible"
+            closable
+            class="mb-2"
+            close-label="Close Alert"
+            style="padding: 6px 16px"
+        >
+            <template #text>
+                <span style="font-size:24px:">{{ item?.data?.type }}</span>
+                <br />
+                <span>{{ item.data.message }}</span>
+            </template>
+            <template #close>
+                <v-btn
+                    icon="mdi-close"
+                    @click="removeNotification(item.id)"
+                ></v-btn>
+            </template>
+        </VAlert>
 
     <!--
-       Check current_user_role and redirect to that
-       page according to that roles
-     -->
+            Check current_user_role and redirect to that
+            page according to that roles
+    -->
 
-    <div v-if="current_user_role == 'BC Super Admin'">
-      <SuperAdminDashboard :orgainzations_users="props.orgainzations_users">
-      </SuperAdminDashboard>
-    </div>
-    <div v-else-if="current_user_role == 'BC Subscriber'">
-      <TeacherOrParentDashboard> </TeacherOrParentDashboard>
-    </div>
-    <div v-else>
-      <StaffDashboard></StaffDashboard>
-    </div>
-  </AdminLayout>
+        <div v-if="current_user_role == 'BC Super Admin'">
+            <SuperAdminDashboard
+                :orgainzations_users="props.orgainzations_users"
+            >
+            </SuperAdminDashboard>
+        </div>
+        <div v-else-if="current_user_role == 'BC Subscriber'">
+            <TeacherOrParentDashboard> </TeacherOrParentDashboard>
+        </div>
+        <div v-else-if="current_user_role == 'Organization Admin'">
+            <OrganizatinDashBoard></OrganizatinDashBoard>
+        </div>
+        <div v-else>
+            <StaffDashboard></StaffDashboard>
+        </div>
+    </AdminLayout>
 </template>
-
-

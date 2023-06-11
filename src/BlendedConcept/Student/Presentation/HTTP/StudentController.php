@@ -56,16 +56,16 @@ class StudentController extends Controller
      */
     public function store(storeStudentRequest $request)
     {
+
         abort_if(authorize('create', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $this->studentService->createStudent($request);
 
-            return redirect()->route('students.index')->with("successMessage", "Student created successfully!");
+            return redirect()->route('c.students.index')->with("successMessage", "Student created successfully!");
         } catch (\Exception $e) {
-            dd("hello");
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route('students.index')->with("sytemErrorMessage", $e->getMessage());
+            return redirect()->route('c.students.index')->with("sytemErrorMessage", $e->getMessage());
         }
     }
 
@@ -76,7 +76,7 @@ class StudentController extends Controller
     {
         abort_if(authorize('edit', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->studentService->updateStudent($request, $student->id);
-        return redirect()->route('students.index')->with("successMessage", "Student Updated Successfully!");
+        return redirect()->route('c.students.index')->with("successMessage", "Student Updated Successfully!");
     }
 
 
@@ -84,6 +84,6 @@ class StudentController extends Controller
     {
         abort_if(authorize('destroy', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->studentService->deleteStudent($student);
-        return redirect()->route('students.index')->with("successMessage", "Student Deleted Successfully!");
+        return redirect()->route('c.students.index')->with("successMessage", "Student Deleted Successfully!");
     }
 }

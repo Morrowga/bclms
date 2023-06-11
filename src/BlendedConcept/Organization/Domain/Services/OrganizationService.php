@@ -8,6 +8,8 @@ use Src\BlendedConcept\Organization\Application\UseCases\Commands\StoreOrganizat
 use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
 use Src\BlendedConcept\System\Application\Requests\UpdateOrganizationRequest;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\UpdateOrganizationCommand;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
+use Stancl\Tenancy\Database\Models\Domain;
 use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
 
 class OrganizationService
@@ -32,6 +34,10 @@ class OrganizationService
 
     public function deleteOrganization($organization)
     {
-       $organization->delete();
+        $tenant = Tenant::get();
+        dd($tenant->id);
+        Domain::where("tenant_id", $tenant->id)->delete();
+        $tenant->delete();
+        $organization->delete();
     }
 }

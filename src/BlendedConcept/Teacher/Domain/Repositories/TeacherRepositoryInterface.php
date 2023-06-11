@@ -2,13 +2,12 @@
 
 namespace Src\BlendedConcept\Teacher\Domain\Repositories;
 
-use Src\BlendedConcept\Teacher\Application\DTO\StudentData;
-use Src\BlendedConcept\Teacher\Domain\Model\Student;
+use Src\BlendedConcept\Security\Domain\Model\User;
+use Src\BlendedConcept\Security\Application\DTO\UserData;
 
 interface TeacherRepositoryInterface
 {
-
-    public function getStudent($filers);
-    public function createStudent(Student $student);
-    public function updateStudent(StudentData $studentData);
+    public function getUsers($filters = []);
+    public function createUser(User $user);
+    public function updateUser(UserData $user);
 }

@@ -24,7 +24,7 @@ serverPerPage.value = ref(10);
 
 
 const deleteUser = (id) => {
-    deleteItem(id, "users");
+    deleteItem(id, "c.teachers");
 };
 
 let columns = [
@@ -88,9 +88,8 @@ watch(serverPerPage, function (value) {
                     >
                         <!-- 👉 Add User button -->
                         <Create
-                            :roles="roles_name"
                             :flash="flash"
-                            v-if="permissions.includes('create_user')"
+                            v-if="permissions.includes('create_teacher')"
                         />
                     </div>
                 </VCardText>
@@ -135,11 +134,10 @@ watch(serverPerPage, function (value) {
                             <div class="d-flex">
                                 <Edit
                                     :user="props.row"
-                                    :roles="roles_name"
                                     :flash="flash"
-                                    v-if="permissions.includes('edit_user')"
+                                    v-if="permissions.includes('edit_teacher')"
                                 />
-                                <div v-if="permissions.includes('delete_user')">
+                                <div v-if="permissions.includes('delete_teacher')">
                                     <VBtn
                                         density="compact"
                                         icon="mdi-trash"

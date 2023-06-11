@@ -10,7 +10,7 @@ emailValidator,
 requiredValidator,
 integerValidator,
 } from "@validators";
-let props = defineProps(["flash"]);
+let props = defineProps(["flash",'tenant']);
 const isDialogVisible = ref(false);
 const isPasswordVisible = ref(false);
 
@@ -25,7 +25,8 @@ image: "",
 });
 
 let handleSubmit = () => {
-form.post(route("students.store"), {
+
+form.post(route(`${props?.tenant}students.store`), {
     onSuccess: () => {
         toastAlert({
             title: props.flash?.successMessage,

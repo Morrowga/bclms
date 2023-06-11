@@ -11,6 +11,7 @@ use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEl
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\PlanEloquentModel;
 use Src\BlendedConcept\Organization\Domain\Model\Organization;
 use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
 
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
@@ -51,10 +52,21 @@ class OrganizationRepository implements OrganizationRepositoryInterface
             $organizationEloquent->plan_id = $planEloquent->id;
             $organizationEloquent->save();
 
+
+
             // Upload the organization's image if provided
             if (request()->hasFile('image') && request()->file('image')->isValid()) {
                 $organizationEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_organization');
             }
+
+            //this will create subdomain
+            $subdomain = Tenant::create([
+                'id' => $organizationEloquent->name,
+                'organization_id' => $organizationEloquent->id
+            ]);
+
+            $subdomain->domains()->create(['domain' => $subdomain->id . "." . env('CENTERAL_DOMAIN')]);
+
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());

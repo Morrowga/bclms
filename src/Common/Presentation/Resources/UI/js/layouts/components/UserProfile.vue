@@ -8,8 +8,9 @@ const ability = useAppAbility();
 const userData = computed(() => usePage().props.auth);
 
 const logout = () => {
+  const PREFIX = localStorage.getItem("tenant") !="" ? `/${localStorage.getItem("tenant") }` : "";
   localStorage.removeItem("menu_title");
-  router.post("/logout");
+  router.post(`${PREFIX}/logout`);
 };
 </script>
 

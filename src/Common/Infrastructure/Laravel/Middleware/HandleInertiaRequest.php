@@ -46,6 +46,7 @@ class HandleInertiaRequest extends Middleware
                 'successMessage' => fn () => $request->session()->get('successMessage'),
                 'errorMessage'  => fn () => $request->session()->get('errorMessage')
             ],
+            "tenant" => tenant("id") ? "c." : "",
             'user_info' => [
                 'user_detail' => Auth::check() == true ? Auth::user() : " ",
                 'user_role' => Auth::check() == true ? Auth::user()->roles()->first() : " ",

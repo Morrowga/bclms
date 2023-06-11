@@ -16,7 +16,6 @@ class AuthRepository implements AuthRepositoryInterface
     {
 
         $user = UserEloquentModel::query()->where('email', $request->email)->first();
-
         return $user;
     }
     //  register b2c register

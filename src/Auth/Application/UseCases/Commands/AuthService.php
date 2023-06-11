@@ -39,7 +39,6 @@ class AuthService
                 "password" => request("password")
             ])) {
                 $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'from' => "", 'to' => "", 'type' => "success"]));
-
                 return ["errorMessage" => "Successfully", "isCheck" => true];
             } else {
                 $error = "Invalid Login Credential";
@@ -68,5 +67,11 @@ class AuthService
 
         // Remove the 'phpb_logged_in' session to revoke page builder access
         session()->remove('phpb_logged_in');
+    }
+
+
+    function registerB2CUser($register)
+    {
+       $this->repository->b2cRegister($register);
     }
 }

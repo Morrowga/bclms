@@ -11,7 +11,7 @@ const isDialogVisible = ref(false);
 const isPasswordVisible = ref(false);
 
 let form = useForm({
-  role: "Select",
+  role: 4, //teacher roles
   name: " ",
   password: "",
   contact_number: "",
@@ -21,7 +21,7 @@ let form = useForm({
 });
 
 let handleSubmit = () => {
-  form.post(route("users.store"), {
+  form.post(route("c.teachers.store"), {
     onSuccess: () => {
       toastAlert({
         title: props.flash?.successMessage,
@@ -40,11 +40,11 @@ let handleSubmit = () => {
   <VDialog v-model="isDialogVisible" max-width="900" persistent>
     <!-- Dialog Activator -->
     <template #activator="{ props }">
-      <VBtn v-bind="props"> Add Users </VBtn>
+      <VBtn v-bind="props"> Add Teachers </VBtn>
     </template>
 
     <!-- Dialog Content -->
-    <VCard title="User Particulars">
+    <VCard title="Teacher Particulars">
       <form @submit.prevent="handleSubmit">
         <DialogCloseBtn
           variant="text"
@@ -55,7 +55,7 @@ let handleSubmit = () => {
           <VRow>
             <VCol cols="6">
               <VRow>
-                <VCol cols="12">
+                <!-- <VCol cols="12">
                   <VSelect
                     label="User Roles"
                     v-model="form.role"
@@ -64,7 +64,7 @@ let handleSubmit = () => {
                     item-value="id"
                     :error-messages="form?.errors?.role"
                   />
-                </VCol>
+                </VCol> -->
                 <VCol cols="12">
                   <VTextField
                     label="Name"

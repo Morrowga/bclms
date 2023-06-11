@@ -32,18 +32,24 @@ class AuthController extends Controller
      */
     public function loginPage()
     {
+        // dd("hello");testingorg@gmail.com
         try {
+            $tenant = tenant("id") ? "c." : "";
             // Check if the user is already authenticated
             if (Auth::check()) {
                 // Redirect the authenticated user to the dashboard page
+                if (tenant("id")) {
+                    return redirect()->route("c.organizationaadmin");
+                }
                 return redirect()->route('dashboard');
             }
 
+
             // Render the login page using the Inertia.js framework
-            return Inertia::render(config('route.login'));
+            return Inertia::render(config('route.login'), compact("tenant"));
         } catch (\Exception $exception) {
-            return Inertia::render(config('route.login'), [
-                'sytemErrorMessage' => $exception->getMessage(),
+            return redirect()->route('login')->with([
+                'sytemErrorMessage' => $exception->getMessage()
             ]);
         }
     }
@@ -68,6 +74,8 @@ class AuthController extends Controller
              *  inside this method
              *
              *  */
+
+            // dd($request->all());
             $isAuthenticated = $this->authservices->login($request);
 
             /***
@@ -76,20 +84,25 @@ class AuthController extends Controller
              * Replace 'phpb_logged_in' with the appropriate session variable for your page builder
              *
              */
-            $request->session()->put('phpb_logged_in', true);
+
+            // $request->session()->put('phpb_logged_in', true);
+
 
             // Check if the authentication was successful
             if ($isAuthenticated['isCheck']) {
                 // Redirect the authenticated user to the dashboard page
+                if (tenant("id")) {
+                    return redirect()->route('c.organizationaadmin');
+                }
                 return redirect()->route('dashboard');
             } else {
                 // Render the login page with an error message
-                return Inertia::render(config('route.login'))->with("errorMessage", $isAuthenticated['errorMessage']);
+                return redirect()->route('login')->with("errorMessage", $isAuthenticated['errorMessage']);
             }
         } catch (\Exception $e) {
-
+            dd($e->getMessage());
             // Handle the exception gracefully, such as displaying a generic error message
-            return Inertia::render(config('route.login'))->with("sytemErrorMessage", $e->getMessage());
+            return redirect()->route('login')->with("sytemErrorMessage", $e->getMessage());
         }
     }
 
@@ -110,6 +123,9 @@ class AuthController extends Controller
             $this->authservices->Logout();
 
             // Redirect the user to the login page
+            if (tenant("id")) {
+                return redirect()->route('c.login');
+            }
             return redirect()->route('login');
         } catch (\Exception $error) {
             return $error->getMessage();
@@ -168,7 +184,7 @@ class AuthController extends Controller
         try {
 
             // service that handle registraction
-            $this->securityService->registerB2CUser($request);
+            $this->authservices->registerB2CUser($request);
 
             return redirect()->route('verify');
         } catch (\Exception $errors) {

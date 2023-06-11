@@ -7,16 +7,24 @@ import { defineProps } from "vue";
 import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue";
 const isPasswordVisible = ref(false);
 const rememberMe = ref(false);
-let props = defineProps(["errorMessage", "sytemErrorMessage"]);
+let props = defineProps(["errorMessage", "sytemErrorMessage", "tenant"]);
 
 let form = useForm({
   email: "",
   password: "",
 });
 
+/***
+ *  `${props?.tenant}login-post
+ *   this will get tenant route name that extends @route c.login-post  if it has
+ *   organiztion or just simple @route login-post
+ */
+
 const onSubmit = () => {
-  form.post(route("login-post"), {
-    onSuccess: () => {},
+  form.post(route(`${props?.tenant}login-post`), {
+    onSuccess: () => {
+      localStorage.setItem("tenant", props?.tenant ? "c" : "");
+    },
     onError: (error) => {
       toastAlert({
         title: "Invalid Creditional",

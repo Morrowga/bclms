@@ -12,7 +12,7 @@ use Src\BlendedConcept\Security\Application\Requests\UpdateUserRequest;
 use Src\BlendedConcept\Security\Application\Requests\updateUserPasswordRequest;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUsersWithPagination;
-
+use Src\BlendedConcept\Organization\Application\UseCases\Queries\GetOrganizatonName;
 use Src\BlendedConcept\Security\Application\Policies\UserPolicy;
 use Src\BlendedConcept\Security\Domain\Services\UserService;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,6 +36,7 @@ class UserController extends Controller
     public function index()
     {
 
+        // return auth()->user()->load('organization');
         // Check if the user is authorized to view users
 
         abort_if(authorize('view', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -54,11 +55,15 @@ class UserController extends Controller
 
             // Retrieve role names
             $roles_name = (new GetRoleName())->handle();
+
+            $oragnization_name  = (new GetOrganizatonName())->handle();
+
             // Render the Inertia view with the obtained data
             return Inertia::render(config('route.users'), [
                 'users' => $users,
                 'users_name' => $users_name,
-                'roles_name' => $roles_name
+                'roles_name' => $roles_name,
+                "organizations" => $oragnization_name
             ]);
         } catch (\Exception $e) {
             return redirect()->route('users.index')->with('sytemErrorMessage', $e->getMessage());
