@@ -185,8 +185,8 @@ class SecurityRepository implements SecurityRepositoryInterface
 
     public function getUserForDashBoard()
     {
-        $users = UserEloquentModel::with('roles')->latest()->take(10)->get();
-        $organizations = OrganizationEloquentModel::with('plan')->latest()->take(10)->get();
+        $users = UserEloquentModel::with('roles')->latest()->take(5)->get();
+        $organizations = OrganizationEloquentModel::with('plan')->latest()->take(5)->get();
         return [$users, $organizations];
     }
 

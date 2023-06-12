@@ -13,7 +13,7 @@ import {
 let props = defineProps(["flash","students",'teachers']);
 const isDialogVisible = ref(false);
 const isPasswordVisible = ref(false);
-
+const vref = ref();
 let form = useForm({
   name: " ",
   start_date:"",
@@ -31,7 +31,7 @@ let handleSubmit = () => {
       isDialogVisible.value = false;
     },
     onError: (error) => {
-        alert("something was wrong");
+        console.log("Something is missing");
     },
   });
 };
@@ -46,7 +46,9 @@ let handleSubmit = () => {
 
     <!-- Dialog Content -->
     <VCard title="Classes Particulars">
-      <form @submit.prevent="handleSubmit">
+      <VForm
+      ref="vref"
+      @submit.prevent="handleSubmit">
         <DialogCloseBtn
           variant="text"
           size="small"
@@ -73,6 +75,7 @@ let handleSubmit = () => {
                     :items="props.teachers"
                     item-title="name"
                     item-value="id"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.teacher"
                   />
                 </VCol>
@@ -92,6 +95,7 @@ let handleSubmit = () => {
                     v-model="form.students"
                     :items="props.students"
                     item-title="name"
+                    :rules="[requiredValidator]"
                     item-value="id"
                     chips
                     multiple
@@ -107,7 +111,7 @@ let handleSubmit = () => {
           <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
           <VBtn type="submit" color="success"> Save </VBtn>
         </VCardActions>
-      </form>
+      </VForm>
     </VCard>
   </VDialog>
 </template>

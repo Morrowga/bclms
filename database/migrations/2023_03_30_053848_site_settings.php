@@ -24,14 +24,6 @@ return new class extends Migration
             $table->string("contact_number");
             $table->timestamps();
         });
-
-        DB::table('site_settings')->insert([
-            'site_name' => 'BC LMS',
-            'timezone' => 'UTC',
-            'locale' => 'locale',
-            "email" => "hareom284@gmail.com",
-            "contact_number" => "+959951613400"
-        ]);
     }
 
     /**

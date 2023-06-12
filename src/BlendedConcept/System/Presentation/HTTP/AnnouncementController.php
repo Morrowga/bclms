@@ -79,6 +79,7 @@ class AnnouncementController extends Controller
         } catch (\Exception $e) {
 
             // Handle the exception here
+            dd($e->getMessage());
             return redirect()->route('announcements.index')->with("systemErrorMessage", $e->getMessage());
         }
 

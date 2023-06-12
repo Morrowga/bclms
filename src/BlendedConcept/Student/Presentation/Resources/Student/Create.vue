@@ -13,7 +13,7 @@ integerValidator,
 let props = defineProps(["flash",'tenant']);
 const isDialogVisible = ref(false);
 const isPasswordVisible = ref(false);
-
+const vref = ref();
 let form = useForm({
 name: " ",
 nickname: "",
@@ -49,7 +49,9 @@ form.post(route(`${props?.tenant}students.store`), {
 
     <!-- Dialog Content -->
     <VCard title="Student Particulars">
-        <form @submit.prevent="handleSubmit">
+        <VForm
+        ref="vref"
+        @submit.prevent="handleSubmit">
             <DialogCloseBtn
                 variant="text"
                 size="small"
@@ -133,7 +135,7 @@ form.post(route(`${props?.tenant}students.store`), {
                 </VBtn>
                 <VBtn type="submit" color="success"> Save </VBtn>
             </VCardActions>
-        </form>
+        </VForm>
     </VCard>
 </VDialog>
 </template>

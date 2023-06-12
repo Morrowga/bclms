@@ -10,20 +10,21 @@ const isDialogVisible = ref(false);
 const isPasswordVisible = ref(false);
 const isFormValid = ref(false);
 const refForm = ref();
-let props = defineProps(["user", "roles", "flash"]);
+let props = defineProps(["user", "roles", "flash","organizations"]);
+
+
 
 let form = useForm({
   role: props?.user?.roles[0]?.id,
   name: props.user.name,
   password: "",
+  organization_id:props.user.organization_id,
   contact_number: props.user.contact_number,
   email: props.user.email,
   image: props?.user?.image[0]?.original_url || "",
   _method: "put",
   dob: props.user.dob,
 });
-
-console.log(props.user,"form data ");
 
 // Update create form
 let handleUpdate = (id) => {
@@ -35,7 +36,7 @@ let handleUpdate = (id) => {
       isDialogVisible.value = false;
     },
     onError: (error) => {
-      alert("something was wrong");
+       console.log("Something unexcepted");
     },
   });
 };
@@ -45,6 +46,7 @@ onUpdated(() => {
   form.name = props.user.name;
   form.contact_number = props.user.contact_number;
   form.email = props.user.email;
+  form.organization_id = props.user.organization_id,
   form.image = props?.user?.image[0]?.original_url || "";
   form.dob = props.user.dob;
 });
@@ -90,6 +92,17 @@ onUpdated(() => {
                     item-value="id"
                     :error-messages="form?.errors?.role"
                     :rules="[requiredValidator]"
+                  />
+                </VCol>
+                 <VCol cols="12" v-if="form.role === 4 || form.role === 5">
+                  <VSelect
+                    label="Select Organization"
+                    v-model="form.organization_id"
+                    :items="organizations"
+                    item-title="name"
+                    item-value="id"
+                    :rules="[requiredValidator]"
+                    :error-messages="form?.errors?.organization_id"
                   />
                 </VCol>
                 <VCol cols="12">

@@ -31,6 +31,7 @@ class AuthRepository implements AuthRepositoryInterface
 
         $user->roles()->sync([2]);
 
+       return $user;
     }
 
     //verification email

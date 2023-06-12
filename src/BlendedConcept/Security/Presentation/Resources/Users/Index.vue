@@ -135,6 +135,7 @@ watch(serverPerPage, function (value) {
                         <div v-if="props.column.field == 'action'">
                             <div class="d-flex">
                                 <Edit
+                                    :organizations="organizations"
                                     :user="props.row"
                                     :roles="roles_name"
                                     :flash="flash"

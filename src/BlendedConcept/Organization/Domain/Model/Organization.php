@@ -5,7 +5,7 @@ namespace Src\BlendedConcept\Organization\Domain\Model;
 use Src\BlendedConcept\Organization\Domain\Model\Entities\Plan;
 use Src\Common\Domain\AggregateRoot;
 
-class Organization extends AggregateRoot implements \JsonSerializable
+class Organization extends AggregateRoot 
 {
     public function __construct(
         public readonly ?int $id,

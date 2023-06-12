@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             PermissionTableSeeder::class,
             PermissionRoleTableSeeder::class,
             SuperAdminSeeder::class,
-            PageBuilderSeeder::class
+            PageBuilderSeeder::class,
+            SiteSettingSeeder::class
         ]);
     }
 }

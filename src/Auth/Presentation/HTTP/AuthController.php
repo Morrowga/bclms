@@ -187,12 +187,11 @@ class AuthController extends Controller
             $this->authservices->registerB2CUser($request);
 
             return redirect()->route('verify');
+
+
         } catch (\Exception $errors) {
 
-            dd($errors->getMessage());
-            return Inertia::render(config('route.register'), [
-                "sytemErrorMessage" => $errors->getMessage()
-            ]);
+            return redirect()->route('register')->with("sytemErrorMessage" , "Mail configuration is wrong");
         }
     }
 
@@ -239,10 +238,10 @@ class AuthController extends Controller
      */
     public function userProfile()
     {
-        try {
-            return Inertia::render(route('route.userprofile'));
-        } catch (\Exception $e) {
 
+        try {
+            return Inertia::render(config('route.userprofile'));
+        } catch (\Exception $e) {
             // Handle the exception gracefully, such as displaying a generic error page
             return Inertia::render(route('route.userprofile'))->with("sytemErrorMessage", $e->getMessage());
         }

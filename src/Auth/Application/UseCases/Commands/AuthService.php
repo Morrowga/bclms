@@ -6,6 +6,8 @@ use Src\Auth\Application\Requests\StoreLoginRequest;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
 use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Src\Auth\Domain\Mail\VerifyEmail;
 
 class AuthService
 {
@@ -72,6 +74,7 @@ class AuthService
 
     function registerB2CUser($register)
     {
-       $this->repository->b2cRegister($register);
+        $user =  $this->repository->b2cRegister($register);
+        Mail::to(request('email'))->send(new VerifyEmail($user));
     }
 }

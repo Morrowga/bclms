@@ -48,8 +48,6 @@ class UserController extends Controller
 
             // Retrieve users with pagination using the provided filters
             $users = (new GetUsersWithPagination($filters))->handle();
-
-
             // Retrieve user names
             $users_name = (new GetUserName())->handle();
 
@@ -57,6 +55,9 @@ class UserController extends Controller
             $roles_name = (new GetRoleName())->handle();
 
             $oragnization_name  = (new GetOrganizatonName())->handle();
+
+
+
 
             // Render the Inertia view with the obtained data
             return Inertia::render(config('route.users'), [

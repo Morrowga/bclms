@@ -20,7 +20,7 @@ let register = () => {
           toastAlert({
             bgColor: "red",
             icon: "error",
-            title: "Something is wrong"
+            title: "Fail to send email"
           });
       }
     },

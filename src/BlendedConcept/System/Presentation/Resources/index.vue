@@ -82,7 +82,7 @@ onMounted(() => {
     -->
 
         <div v-if="current_user_role == 'BC Super Admin'">
-            <SuperAdminDashboard
+        <SuperAdminDashboard
                 :orgainzations_users="props.orgainzations_users"
             >
             </SuperAdminDashboard>

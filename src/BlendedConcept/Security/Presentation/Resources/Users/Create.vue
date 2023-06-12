@@ -9,7 +9,7 @@ import { emailValidator, requiredValidator,integerValidator } from "@validators"
 let props = defineProps(["roles", "flash","organizations"]);
 const isDialogVisible = ref(false);
 const isPasswordVisible = ref(false);
-
+const refForm = ref()
 let form = useForm({
   role: "Select",
   name: " ",
@@ -46,7 +46,9 @@ let handleSubmit = () => {
 
     <!-- Dialog Content -->
     <VCard title="User Particulars">
-      <form @submit.prevent="handleSubmit">
+      <VForm
+      ref="refForm"
+      @submit.prevent="handleSubmit">
         <DialogCloseBtn
           variant="text"
           size="small"
@@ -66,14 +68,16 @@ let handleSubmit = () => {
                     :error-messages="form?.errors?.role"
                   />
                 </VCol>
-                <!-- appear when organization role is teacher and organiztion admin -->
-                <VCol cols="12" v-if="form.role == 4 || 5">
+                <!--
+                    appear when organization role 4 and 5 is teacher and organiztion admin -->
+                <VCol cols="12" v-if="form.role === 4 || form.role === 5">
                   <VSelect
                     label="Select Organization"
                     v-model="form.organization_id"
                     :items="organizations"
                     item-title="name"
                     item-value="id"
+                    :rules="[requiredValidator]"
                     :error-messages="form?.errors?.organization_id"
                   />
                 </VCol>
@@ -140,7 +144,7 @@ let handleSubmit = () => {
           <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
           <VBtn type="submit" color="success"> Save </VBtn>
         </VCardActions>
-      </form>
+      </VForm>
     </VCard>
   </VDialog>
 </template>

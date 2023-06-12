@@ -83,7 +83,9 @@ test("form submit as organization with superadmin role", function () {
 
     $postData->assertStatus(302);
 
-    $this->assertDatabaseHas("organizations",[
+    $this->assertDatabaseHas(
+        "organizations",
+        [
             "name"  => "oranization name",
             "contact_person" => "Zaw Zaw Win",
             "contact_email" => "zawzawwin@gmail.com",
@@ -91,17 +93,18 @@ test("form submit as organization with superadmin role", function () {
         ]
     );
 
-    $this->assertDatabaseHas("plans",[
-            "name" => "Enterprise Solution",
+    $this->assertDatabaseHas(
+        "plans",
+        [
+            "name" => "oranization name",
             "price" => "100.00",
-            "payment_period" => 10,
-            "allocated_storage" => null,
-            "teacher_license" => null
+            "payment_period" => "10",
+            "allocated_storage" => "100GB",
+            "teacher_license" => "mm"
         ]
     );
 
 
-    $postData = $this->post("/organizations", [
-    ]);
-    $postData->assertSessionHasErrors(['name','contact_email']);
+    $postData = $this->post("/organizations", []);
+    $postData->assertSessionHasErrors(['name', 'contact_email']);
 });

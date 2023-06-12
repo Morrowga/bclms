@@ -5,6 +5,7 @@ import { requiredValidator, emailValidator } from "@validators";
 import { Link, useForm } from "@inertiajs/vue3";
 import { defineProps } from "vue";
 import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue";
+import { toastAlert } from "@Composables/useToastAlert";
 const isPasswordVisible = ref(false);
 const rememberMe = ref(false);
 let props = defineProps(["errorMessage", "sytemErrorMessage", "tenant"]);
@@ -54,10 +55,10 @@ const onSubmit = () => {
         </VBtn>
       </div>
     </div>
-    <SystemErrorAlert
-      :sytemErrorMessage="sytemErrorMessage"
-      v-if="sytemErrorMessage"
-    />
+    <!-- <SystemErrorAlert
+      sytemErrorMessage="Something is wrong"
+      v-if="form.errors"
+    /> -->
     <VDivider></VDivider>
     <div class="login-bg">
       <VRow

@@ -55,8 +55,8 @@ class HandleInertiaRequest extends Middleware
             'unreadNotificationsCount' => getNotifications() != null ? getNotifications()['unread'] : 0,
             'auth' => auth()->check() ? new AuthResource(auth()->user()) : "",
             "site_settings" => SiteSettingEloquentModel::find(1) ?? "",
-            "site_logo" => SiteSettingEloquentModel::find(1)->getFirstMedia('site_logo')->original_url ?? "",
-            "fav_icon" => SiteSettingEloquentModel::find(1)->getFirstMedia('fav_icon')->original_url ?? "",
+            // "site_logo" => SiteSettingEloquentModel::find(1)->getFirstMedia('site_logo')->original_url ?? "",
+            // "fav_icon" => SiteSettingEloquentModel::find(1)->getFirstMedia('fav_icon')->original_url ?? "",
 
         ]);
     }
