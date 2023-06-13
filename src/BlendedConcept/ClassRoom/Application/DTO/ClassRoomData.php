@@ -35,7 +35,7 @@ class ClassRoomData
     {
         return [
             "id" => $this->id,
-            "organization_id" => $this->organization_id,
+            "organization_id" => auth()->user()->organization_id,
             "teacher_id" => $this->teacher_id,
             "name" => $this->name,
             "venue" => $this->venue,

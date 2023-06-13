@@ -3,9 +3,12 @@
 namespace Src\BlendedConcept\Organization\Domain\Model;
 
 use Src\BlendedConcept\Organization\Domain\Model\Entities\Plan;
+use Src\BlendedConcept\Teacher\Domain\Model\Teacher;
+use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
+use Src\BlendedConcept\Student\Domain\Model\Student;
 use Src\Common\Domain\AggregateRoot;
 
-class Organization extends AggregateRoot 
+class Organization extends AggregateRoot
 {
     public function __construct(
         public readonly ?int $id,
@@ -17,6 +20,10 @@ class Organization extends AggregateRoot
         public readonly ?string $contact_email,
         public readonly ?string $contact_number,
         public readonly Plan $plan,
+        // public readonly ?Teacher $teacher,
+        // public readonly ?ClassRoom $classRoom,
+        // public readonly ?Student $student,
+
     ) {
     }
 
@@ -32,7 +39,10 @@ class Organization extends AggregateRoot
             'contact_person' => $this->contact_person,
             'contact_email' => $this->contact_email,
             'contact_number' => $this->contact_number,
-            'plan' => $this->plan
+            'plan' => $this->plan,
+            // 'teacher' => $this->teacher ?? null,
+            // 'classRoom' => $this->classRoom ?? null,
+            // 'student' => $this->student ?? null
         ];
     }
 }

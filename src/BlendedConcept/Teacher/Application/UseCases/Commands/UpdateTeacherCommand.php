@@ -1,25 +1,25 @@
 <?php
 
-namespace Src\BlendedConcept\Security\Application\UseCases\Commands\User;
+namespace Src\BlendedConcept\Teacher\Application\UseCases\Commands;
 
 
 use Src\Common\Domain\CommandInterface;
-use Src\BlendedConcept\Security\Application\DTO\UserData;
-use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
+use Src\BlendedConcept\Teacher\Application\DTO\TeacherData;
+use Src\BlendedConcept\Teacher\Domain\Repositories\TeacherRepositoryInterface;
 
-class UpdateUserCommand implements CommandInterface
+class UpdateTeacherCommand implements CommandInterface
 {
-    private SecurityRepositoryInterface $repository;
+    private TeacherRepositoryInterface $repository;
 
     public function __construct(
-        private readonly UserData $userData
+        private readonly TeacherData $teacherData
     )
     {
-        $this->repository = app()->make(SecurityRepositoryInterface::class);
+        $this->repository = app()->make(TeacherRepositoryInterface::class);
     }
 
     public function execute()
     {
-        return $this->repository->updateUser($this->userData);
+        return $this->repository->updateTeacher($this->teacherData);
     }
 }

@@ -12,9 +12,23 @@ use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentMode
 
 class StudentRepository implements StudentRepositoryInterface
 {
+    /***
+     *  @param $filters
+     *
+     *  this queries gets students list according to organizaiton_id
+     *  with paginated data default is 10
+     *  if organization exits
+     */
     public function getStudent($filters)
     {
-        $paginate_students = StudentResources::collection(StudentEloquentModel::with('media')->filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $paginate_students = StudentResources
+            ::collection(
+                StudentEloquentModel::with('media')
+                    ->filter($filters)
+                    ->orderBy('id', 'desc')
+                    ->where("organization_id", auth()->user()->organization_id)
+                    ->paginate($filters['perPage'] ?? 10)
+            );
         $default_students = StudentEloquentModel::get();
         return [
             "paginate_students" => $paginate_students,
@@ -62,8 +76,8 @@ class StudentRepository implements StudentRepositoryInterface
                 }
             }
         } catch (\Exception $error) {
-           DB::rollBack();
-           dd($error->getMessage());
+            DB::rollBack();
+            dd($error->getMessage());
         }
 
         DB::commit();

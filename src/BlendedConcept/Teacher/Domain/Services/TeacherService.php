@@ -3,35 +3,34 @@
 namespace Src\BlendedConcept\Teacher\Domain\Services;
 
 use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
-use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
-use Src\BlendedConcept\Security\Application\Requests\UpdateUserRequest;
-use Src\BlendedConcept\Security\Application\UseCases\Commands\User\StoreUserCommand;
-use Src\BlendedConcept\Security\Application\DTO\UserData;
-use Src\BlendedConcept\Security\Application\UseCases\Commands\User\UpdateUserCommand;
-
+use Src\BlendedConcept\Teacher\Application\DTO\TeacherData;
+use Src\BlendedConcept\Teacher\Application\Mappers\TeacherMapper;
+use Src\BlendedConcept\Teacher\Application\Requests\UpdateTeacherRequest;
+use Src\BlendedConcept\Teacher\Application\UseCases\Commands\StoreTeacherCommand;
+use Src\BlendedConcept\Teacher\Application\UseCases\Commands\UpdateTeacherCommand;
 
 class TeacherService
 {
-    public function createUser(StoreUserRequest $request)
+    public function createTeacher(StoreUserRequest $request)
     {
         $request->validated();
-        $newUser = UserMapper::fromRequest($request);
+        $newUser = TeacherMapper::fromRequest($request);
 
-        $createNewUser = new StoreUserCommand($newUser);
+        $createNewUser = new StoreTeacherCommand($newUser);
         $createNewUser->execute();
     }
 
-    public function updateUser(UpdateUserRequest $request, $user_id)
+    public function updateTeacher(UpdateTeacherRequest $request, $user_id)
     {
-        $updateUser = UserData::fromRequest($request, $user_id);
-        $updatedUserCommand = (new UpdateUserCommand($updateUser));
+        $updateUser = TeacherData::fromRequest($request, $user_id);
+        $updatedUserCommand = (new UpdateTeacherCommand($updateUser));
 
         $updatedUserCommand->execute();
     }
 
-    public function deleteUser($user)
+    public function deleteTeacher($teacher)
     {
-        $user->delete();
+        $teacher->delete();
     }
 
 }

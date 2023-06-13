@@ -5,11 +5,9 @@ namespace Src\BlendedConcept\Teacher\Presentation\HTTP;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Inertia\Inertia;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserName;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRoleName;
-
 use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
-use Src\BlendedConcept\Security\Application\Requests\UpdateUserRequest;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Teacher\Application\Requests\UpdateTeacherRequest;
 use Src\BlendedConcept\Teacher\Application\UseCases\Queries\GetTeachersWithPagination;
 use Src\BlendedConcept\Teacher\Domain\Policies\TeacherPolicy;
 use Src\BlendedConcept\Teacher\Domain\Services\TeacherService;
@@ -71,10 +69,11 @@ class TeacherController extends Controller
 
         try {
 
-            $this->teacherService->createUser($request);
+            $this->teacherService->createTeacher($request);
 
             return redirect()->route('c.teachers.index')->with("successMessage", "User created successfully!");
         } catch (\Exception $e) {
+            dd($e->getMessage());
             // Handle the exception, log the error, or display a user-friendly error message.
             return redirect()->route('c.teachers.index')->with("sytemErrorMessage", $e->getMessage());
         }
@@ -83,10 +82,11 @@ class TeacherController extends Controller
 
 
     //update user
-    public function update(UpdateUserRequest $request, UserEloquentModel $user)
+    public function update(UpdateTeacherRequest $request, UserEloquentModel $teacher)
     {
         abort_if(authorize('edit', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->teacherService->updateUser($request, $user->id);
+        $this->teacherService->updateTeacher($request, $teacher->id);
+
         return redirect()->route('c.teachers.index')->with("successMessage", "User Updated Successfully!");
     }
 
@@ -94,7 +94,7 @@ class TeacherController extends Controller
     public function destroy(UserEloquentModel $user)
     {
         abort_if(authorize('destroy', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->teacherService->deleteUser($user);
+        $this->teacherService->deleteTeacher($user);
         return redirect()->route('c.teachers.index')->with("successMessage", "User Deleted Successfully!");
     }
 

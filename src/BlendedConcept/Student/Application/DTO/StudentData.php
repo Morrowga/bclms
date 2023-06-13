@@ -44,7 +44,7 @@ class StudentData
     {
         return [
             'id' => $this->id,
-            'organization_id' => $this->organization_id,
+            'organization_id' => auth()->user()->organization_id ,
             'device_id' => $this->device_id,
             'student_code' => $this->student_code,
             'name' => $this->name,

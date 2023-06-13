@@ -3,9 +3,12 @@
 namespace Src\BlendedConcept\Organization\Application\Mappers;
 
 use Illuminate\Http\Request;
+use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
 use Src\BlendedConcept\Organization\Domain\Model\Entities\Plan;
 use Src\BlendedConcept\Organization\Domain\Model\Organization;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
+use Src\BlendedConcept\Teacher\Application\Mappers\TeacherMapper;
 
 class OrganizationMapper
 {
@@ -25,6 +28,7 @@ class OrganizationMapper
             ]
         );
 
+
         return new Organization(
             id: $organizaton_id,
             plan_id: $request->plan_id,
@@ -34,7 +38,10 @@ class OrganizationMapper
             contact_person: $request->contact_person,
             contact_email: $request->contact_email,
             contact_number: $request->contact_number,
-            plan: PlanMapper::fromArray($planitems)
+            plan: PlanMapper::fromArray($planitems),
+            // teacher: TeacherMapper::fromRequest($request),
+            // classRoom: ClassRoomMapper::fromRequest($request),
+            // student: StudentMapper::fromRequest($request)
         );
     }
 

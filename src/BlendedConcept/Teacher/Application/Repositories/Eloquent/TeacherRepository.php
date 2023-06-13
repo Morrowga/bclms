@@ -3,34 +3,41 @@
 namespace Src\BlendedConcept\Teacher\Application\Repositories\Eloquent;
 
 use Src\BlendedConcept\Teacher\Domain\Repositories\TeacherRepositoryInterface;
-use Src\BlendedConcept\Security\Domain\Model\User;
-use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
-use Src\BlendedConcept\Security\Application\DTO\UserData;
+
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Security\Domain\Resources\UserResource;
+use Src\BlendedConcept\Teacher\Application\DTO\TeacherData;
+use Src\BlendedConcept\Teacher\Application\Mappers\TeacherMapper;
+use Src\BlendedConcept\Teacher\Domain\Model\Teacher;
 
 class TeacherRepository implements TeacherRepositoryInterface
 {
 
-    public function getUsers($filters = [])
+    /***
+     *
+     *
+     *
+     */
+    public function getTeachers($filters = [])
     {
         //set roles
-        $users = UserResource::collection(UserEloquentModel::filter($filters)
-            ->with('roles')
-            ->whereHas('roles', function($q)
-            {
-              return $q->where("name",'Teacher');
-            })
-            ->orderBy('id', 'desc')
-            ->paginate($filters['perPage'] ?? 10));
+        $users = UserResource
+            ::collection(UserEloquentModel::filter($filters)
+                ->where("organization_id",auth()->user()->organization_id)
+                ->with('roles')
+                ->whereHas('roles', function ($query) {
+                    return $query->where("name", "Teacher");
+                })
+                ->orderBy('id', 'desc')
+                ->paginate($filters['perPage'] ?? 10));
 
 
         return $users;
     }
-    public function createUser(User $user)
+    public function CreateTeacher(Teacher $teacher)
     {
 
-        $userEloquent = UserMapper::toEloquent($user);
+        $userEloquent = TeacherMapper::toEloquent($teacher);
         $userEloquent->save();
         if (request()->hasFile('image') && request()->file('image')->isValid()) {
             $userEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');
@@ -40,12 +47,12 @@ class TeacherRepository implements TeacherRepositoryInterface
     }
 
     //  update user
-    public function updateUser(UserData $user)
+    public function updateTeacher(TeacherData $teacherData)
     {
 
-        $userArray = $user->toArray();
-        $updateUserEloquent = UserEloquentModel::query()->findOrFail($user->id);
-        $updateUserEloquent->fill($userArray);
+        $teacherArray = $teacherData->toArray();
+        $updateUserEloquent = UserEloquentModel::query()->findOrFail($teacherData->id);
+        $updateUserEloquent->fill($teacherArray);
         $updateUserEloquent->save();
 
         //  delete image if reupload or insert if does not exit

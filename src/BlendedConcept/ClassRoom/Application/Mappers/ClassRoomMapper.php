@@ -29,7 +29,7 @@ class ClassRoomMapper
             $classRoomEloquent = ClassRoomEloquentModel::query()->findOrFail($classRoom->id);
         }
         $classRoomEloquent->id = $classRoom->id;
-        $classRoomEloquent->organization_id = $classRoom->organization_id;
+        $classRoomEloquent->organization_id = auth()->user()->organization_id;
         $classRoomEloquent->name = $classRoom->name;
         $classRoomEloquent->teacher_id = $classRoom->teacher_id;
         $classRoomEloquent->venue = $classRoom->venue;

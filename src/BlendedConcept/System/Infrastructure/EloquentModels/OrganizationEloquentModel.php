@@ -15,7 +15,7 @@ use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
 
-class Organization extends Model implements HasMedia
+class OrganizationEloquentModel extends Model implements HasMedia
 {
 
     // extends BaseTenant implements TenantWithDatabase

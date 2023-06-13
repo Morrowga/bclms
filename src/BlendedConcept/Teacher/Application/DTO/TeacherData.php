@@ -3,7 +3,7 @@
 namespace Src\BlendedConcept\Teacher\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Teacher\Domain\Model\Teacher;
 
 class TeacherData
 {
@@ -47,23 +47,23 @@ class TeacherData
         );
     }
 
-    public static function fromEloquent(UserEloquentModel $user): self
+    public static function fromEloquent(Teacher $teacher): self
     {
         return new self(
-            id: $user->id,
-            name: $user->name,
-            email: $user->email,
-            organization_id: $user->organization_id,
-            email_verified_at: $user->email_verified_at,
-            dob: $user->dob,
-            contact_number: $user->contact_number,
-            storage_limit: $user->storage_limit,
-            password: $user->password,
-            is_active: $user->is_active,
-            stripe_id: $user->stripe_id,
-            pm_brand: $user->pm_brand,
-            pm_last_four: $user->pm_last_four,
-            trial_end_at: $user->trial_end_at,
+            id: $teacher->id,
+            name: $teacher->name,
+            email: $teacher->email,
+            organization_id: auth()->user()->organization_id,
+            email_verified_at: $teacher->email_verified_at,
+            dob: $teacher->dob,
+            contact_number: $teacher->contact_number,
+            storage_limit: $teacher->storage_limit,
+            password: $teacher->password,
+            is_active: $teacher->is_active,
+            stripe_id: $teacher->stripe_id,
+            pm_brand: $teacher->pm_brand,
+            pm_last_four: $teacher->pm_last_four,
+            trial_end_at: $teacher->trial_end_at,
         );
     }
 
@@ -73,7 +73,7 @@ class TeacherData
             'id' => $this->id,
             'name' => $this->name,
             "email" => $this->email,
-            "organization_id"  => $this->organization_id,
+            "organization_id"  => auth()->user()->organization_id,
             "email_verified_at" => $this->email_verified_at,
             "dob" => $this->dob,
             "contact_number"  => $this->contact_number,

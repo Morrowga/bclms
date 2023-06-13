@@ -14,10 +14,10 @@ class UpdateTeacherRequest  extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'string',
-                'required',
-            ],
+            'role' => ['required','not_in:Select'],
+            'name' => ['required','string','max:255'],
+            'contact_number' => ['required'],
+            'email' => ['required','email',  'unique:users,email,' .request()->route('teacher')->id],
         ];
     }
 }
