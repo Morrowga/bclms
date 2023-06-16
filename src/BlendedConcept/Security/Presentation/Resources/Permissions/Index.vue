@@ -1,6 +1,5 @@
 <script setup>
 import Create from "./Create.vue";
-import Edit from "./Edit.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
@@ -22,76 +21,22 @@ import {
 //## start variable section
 let props = defineProps(["permissions", "flash", "auth"]);
 let permissions = computed(() => usePage().props.auth.data.permissions);
-const form = useForm({
-  name: "",
-  description: "",
-  _method: "",
-});
+
 let currentPermission = ref();
-const isAddNewPermissionDrawerVisible = ref(false);
 const isEditPermissionDrawerVisible = ref(false);
 serverPage.value = ref(props.permissions.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
 let serverError = ref({
   name: "",
 });
-//## start add permission and save in database
 
-const addNewPermission = (userData) => {
-  form.name = userData.name;
-  form.description = userData.description;
-  form._method = "POST";
-  form.post(route("permissions.store"), {
-    onSuccess: () => {
-      toastAlert({
-        title: props.flash?.successMessage,
-      });
-      isAddNewPermissionDrawerVisible.value = false;
-    },
-    onError: (error) => {
-      serverError.value.name = error?.name;
-    },
-  });
-};
 //## end permission and save in database
-
-//## start update permission and update in database
-const updatePermission = (userData) => {
-  form.name = userData.name;
-  form.description = userData.description;
-  form._method = "PUT";
-  form.post(
-    route("permissions.update", {
-      id: currentPermission.value.id,
-    }),
-    {
-      onSuccess: () => {
-        toastAlert({
-          title: props.flash?.successMessage,
-        });
-        isEditPermissionDrawerVisible.value = false;
-      },
-      onError: (error) => {
-        serverError.value.name = error?.name;
-      },
-    }
-  );
-};
-//## end update permission and update in database
 
 //## start delete permission and delete in database
 const deletePermission = (id) => {
   deleteItem(id, "permissions");
 };
 //## end delete permission and delete in database
-
-//## start open model for edit
-const openEditModel = (permission) => {
-  serverError.value.name = "";
-  currentPermission.value = permission;
-  isEditPermissionDrawerVisible.value = true;
-};
-//## end open model for edit
 
 //start datatable section
 let columns = [
@@ -151,9 +96,7 @@ watch(serverPerPage, function (value) {
 
           <div class="app-user-search-filter d-flex align-center justify-end">
             <!-- 👉 Add Permission button -->
-            <VBtn @click="isAddNewPermissionDrawerVisible = true">
-              Add Permission
-            </VBtn>
+            <Create v-if="permissions.includes('create_permission')" />
           </div>
         </VCardText>
 
@@ -182,16 +125,7 @@ watch(serverPerPage, function (value) {
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
                 <VBtn
-                variant="text"
-                  density="compact"
-                  icon="mdi-pencil"
-                  class="ml-2"
-                  color="secondary"
-                  @click="openEditModel(props.row)">
-                </VBtn>
-
-                <VBtn
-                variant="text"
+                  variant="text"
                   density="compact"
                   icon="mdi-trash"
                   class="ml-2"
@@ -237,19 +171,6 @@ watch(serverPerPage, function (value) {
 
         <VDivider />
       </VCard>
-
-      <!-- 👉 Add New Permission -->
-      <Create
-        :serverError="serverError"
-        v-model:isDrawerOpen="isAddNewPermissionDrawerVisible"
-        @data="addNewPermission"
-      />
-      <Edit
-        :serverError="serverError"
-        v-model:isDrawerOpen="isEditPermissionDrawerVisible"
-        @data="updatePermission"
-        :permission="currentPermission"
-      />
     </section>
   </AdminLayout>
 </template>

@@ -81,17 +81,6 @@ onUpdated(() => {
           <VRow>
             <VCol cols="6">
               <VRow>
-                <!-- <VCol cols="12">
-                  <VSelect
-                    label="User Roles"
-                    v-model="form.role"
-                    :items="roles"
-                    item-title="name"
-                    item-value="id"
-                    :error-messages="form?.errors?.role"
-                    :rules="[requiredValidator]"
-                  />
-                </VCol> -->
                 <VCol cols="12">
                   <VTextField
                     label="Name"
@@ -141,13 +130,19 @@ onUpdated(() => {
             <VCol cols="6">
               <ImageUpload v-model="form.image" :old_img="form.image" />
             </VCol>
+            <VCol cols="12" class="d-flex justify-center">
+              <VBtn type="submit" class="me-3"> Submit </VBtn>
+              <VBtn
+                type="reset"
+                variant="outlined"
+                color="secondary"
+                @click="isDialogVisible = false"
+              >
+                Cancel
+              </VBtn>
+            </VCol>
           </VRow>
         </VCardText>
-        <VCardActions>
-          <VSpacer />
-          <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
-          <VBtn type="submit" color="success"> Save </VBtn>
-        </VCardActions>
       </VForm>
     </VCard>
   </VDialog>

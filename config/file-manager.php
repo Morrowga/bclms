@@ -32,7 +32,11 @@ return [
      * List of disk names that you want to use
      * (from config/filesystems)
      */
-    'diskList'          => ['local','avatars','media_user','media_organization'],
+
+
+     //get diskspace according to user_roles
+
+    'diskList'          => getFileSystemWithRole("BC Super Admin"),
 
     /**
      * Default disk for left manager

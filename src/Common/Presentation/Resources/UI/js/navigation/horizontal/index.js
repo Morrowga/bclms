@@ -6,7 +6,7 @@
  */
 const PREFIX = localStorage.getItem("tenant") !="" ? `/${localStorage.getItem("tenant") }` : "";
 
-const DASHBOARD_URL = PREFIX != "" ? "/c/organizationaadmin" : "/home";
+const DASHBOARD_URL = PREFIX != "" ? "/c" : "/home";
 const DASHBOARD_ROUTE = PREFIX != "" ? "c.organizationaadmin" : "dashboard";
 
 
@@ -80,7 +80,7 @@ export default [
         access_module: "access_library",
         children: [
             {
-                title: "Libraries", url: "/libraries", icon: { icon: 'mdi mdi-library' }, route_name: "libraries", access_module: 'access_library', isNativeLink: true
+                title: "Libraries", url: `${PREFIX}/libraries`, icon: { icon: 'mdi mdi-library' }, route_name: "c.libraries", access_module: 'access_library', isNativeLink: true
             },
         ]
     },

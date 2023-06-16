@@ -8,6 +8,7 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 // use Src\BlendedConcept\Organization\Presentation\HTTP\PlanController;
 use Src\BlendedConcept\Organization\Presentation\HTTP\OrganizationController;
+use Inertia\Inertia;
 use Src\BlendedConcept\System\Presentation\HTTP\DashBoardController;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
@@ -16,7 +17,7 @@ use Src\BlendedConcept\Student\Presentation\HTTP\StudentController;
 use Src\Auth\Presentation\HTTP\AuthController;
 use Src\BlendedConcept\ClassRoom\Presentation\HTTP\ClassRoomController;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\TeacherController;
-
+use Src\BlendedConcept\System\Presentation\HTTP\LibraryController;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -41,27 +42,30 @@ Route::middleware([
     // })->name('testingtwo');
 
     Route::get("login", [AuthController::class, 'loginPage'])->name('login');
-    Route::post("login", function(StoreLoginRequest $request) {
+    Route::post("login", function (StoreLoginRequest $request) {
         $user = UserEloquentModel::query()->where('email', $request->email)->first();
         if ($user) {
             //this check verify email or not
             if (!$user->email_verified_at) {
                 $error = "Please Verify your email";
-                return ["errorMessage" => $error, "isCheck" => false];
             }
 
-            if (auth()->attempt([
-                "email" => request('email'),
-                "password" => request("password")
-            ])) {
+            if (
+                $user->email_verified_at &&
+                auth()->attempt([
+                    "email" => request('email'),
+                    "password" => request("password")
+                ])
+            ) {
+
+
                 $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'from' => "", 'to' => "", 'type' => "success"]));
 
-            return redirect()->route('c.organizationaadmin');
-
-
+                return redirect()->route('c.organizationaadmin');
+            } else if (!$user->email_verified_at) {
+                $error = "Please Verify your email";
             } else {
                 $error = "Invalid Login Credential";
-                return ["errorMessage" => $error, "isCheck" => false];
             }
         }
 
@@ -69,23 +73,29 @@ Route::middleware([
         else {
 
             $error = "Invalid Login Credential";
-            return ["errorMessage" => $error, "isCheck" => false];
         }
 
+
+        return Inertia::render(config('route.login'), [
+            "errorMessage" => $error
+        ]);
     })->name('login-post');
 
 
     // Route::resource('organizations', OrganizationController::class);
 
-    Route::get('/organizationaadmin', [DashBoardController::class, 'superAdminDashboard'])->name('organizationaadmin')->middleware("auth");
+    Route::get('/', [DashBoardController::class, 'superAdminDashboard'])->name('organizationaadmin')->middleware("auth");
 
     Route::resource('teachers', TeacherController::class)->middleware('auth');
     Route::resource('students', StudentController::class)->middleware('auth');
 
     Route::resource('classrooms', ClassRoomController::class)->middleware('auth');
 
+    // library for teacher roles
+
+
     Route::post("logout", [AuthController::class, 'logout'])->name('logout');
 
 
-
+    Route::get("libraries", [LibraryController::class, 'index'])->middleware('auth');
 });

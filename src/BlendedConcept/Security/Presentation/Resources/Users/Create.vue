@@ -3,19 +3,23 @@
 import AppDateTimePicker from "@core/components/AppDateTimePicker.vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
-import { useForm} from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
-import { emailValidator, requiredValidator,integerValidator } from "@validators";
-let props = defineProps(["roles", "flash","organizations"]);
+import {
+  emailValidator,
+  requiredValidator,
+  integerValidator,
+} from "@validators";
+let props = defineProps(["roles", "flash", "organizations"]);
 const isDialogVisible = ref(false);
 const isPasswordVisible = ref(false);
-const refForm = ref()
+const refForm = ref();
 let form = useForm({
   role: "Select",
   name: " ",
   password: "",
   contact_number: "",
-  organization_id:"",
+  organization_id: "",
   email: "",
   image: "",
   dob: "",
@@ -46,9 +50,7 @@ let handleSubmit = () => {
 
     <!-- Dialog Content -->
     <VCard title="User Particulars">
-      <VForm
-      ref="refForm"
-      @submit.prevent="handleSubmit">
+      <VForm ref="refForm" @submit.prevent="handleSubmit">
         <DialogCloseBtn
           variant="text"
           size="small"
@@ -128,22 +130,29 @@ let handleSubmit = () => {
 
                 <VCol cols="12">
                   <AppDateTimePicker
-                  :rules="[requiredValidator]"
-                  v-model="form.dob"
-                  label="Dob" />
+                    :rules="[requiredValidator]"
+                    v-model="form.dob"
+                    label="Dob"
+                  />
                 </VCol>
               </VRow>
             </VCol>
             <VCol cols="6">
               <ImageUpload v-model="form.image" />
             </VCol>
+            <VCol cols="12" class="d-flex justify-center">
+              <VBtn type="submit" class="me-3"> Submit </VBtn>
+              <VBtn
+                type="reset"
+                variant="outlined"
+                color="secondary"
+                @click="isDialogVisible = false"
+              >
+                Cancel
+              </VBtn>
+            </VCol>
           </VRow>
         </VCardText>
-        <VCardActions>
-          <VSpacer />
-          <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
-          <VBtn type="submit" color="success"> Save </VBtn>
-        </VCardActions>
       </VForm>
     </VCard>
   </VDialog>

@@ -2,7 +2,7 @@
 // component
 import AppDateTimePicker from "@core/components/AppDateTimePicker.vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
-import { useForm} from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
 import { toastAlert } from "@Composables/useToastAlert";
@@ -10,15 +10,13 @@ const isDialogVisible = ref(false);
 const isPasswordVisible = ref(false);
 const isFormValid = ref(false);
 const refForm = ref();
-let props = defineProps(["user", "roles", "flash","organizations"]);
-
-
+let props = defineProps(["user", "roles", "flash", "organizations"]);
 
 let form = useForm({
   role: props?.user?.roles[0]?.id,
   name: props.user.name,
   password: "",
-  organization_id:props.user.organization_id,
+  organization_id: props.user.organization_id,
   contact_number: props.user.contact_number,
   email: props.user.email,
   image: props?.user?.image[0]?.original_url || "",
@@ -36,7 +34,7 @@ let handleUpdate = (id) => {
       isDialogVisible.value = false;
     },
     onError: (error) => {
-       console.log("Something unexcepted");
+      console.log("Something unexcepted");
     },
   });
 };
@@ -46,8 +44,8 @@ onUpdated(() => {
   form.name = props.user.name;
   form.contact_number = props.user.contact_number;
   form.email = props.user.email;
-  form.organization_id = props.user.organization_id,
-  form.image = props?.user?.image[0]?.original_url || "";
+  (form.organization_id = props.user.organization_id),
+    (form.image = props?.user?.image[0]?.original_url || "");
   form.dob = props.user.dob;
 });
 </script>
@@ -94,7 +92,7 @@ onUpdated(() => {
                     :rules="[requiredValidator]"
                   />
                 </VCol>
-                 <VCol cols="12" v-if="form.role === 4 || form.role === 5">
+                <VCol cols="12" v-if="form.role === 4 || form.role === 5">
                   <VSelect
                     label="Select Organization"
                     v-model="form.organization_id"
@@ -129,7 +127,7 @@ onUpdated(() => {
                     v-model="form.email"
                     class="w-100"
                     :error-messages="form?.errors?.email"
-                    :rules="[requiredValidator,emailValidator]"
+                    :rules="[requiredValidator, emailValidator]"
                   />
                 </VCol>
                 <VCol cols="12">
@@ -154,13 +152,19 @@ onUpdated(() => {
             <VCol cols="6">
               <ImageUpload v-model="form.image" :old_img="form.image" />
             </VCol>
+            <VCol cols="12" class="d-flex justify-center">
+              <VBtn type="submit" class="me-3"> Submit </VBtn>
+              <VBtn
+                type="reset"
+                variant="outlined"
+                color="secondary"
+                @click="isDialogVisible = false"
+              >
+                Cancel
+              </VBtn>
+            </VCol>
           </VRow>
         </VCardText>
-        <VCardActions>
-          <VSpacer />
-          <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
-          <VBtn type="submit" color="success"> Save </VBtn>
-        </VCardActions>
       </VForm>
     </VCard>
   </VDialog>

@@ -32,19 +32,10 @@ class DashBoardController extends Controller
          *  Assigns the current user role based on
          *  the retrieved role from the authenticated user.
          */
-        $user_role = auth()->user()->roles()->first()->name;
-        $current_user_role = "";
-        if ($user_role == 'BC Super Admin') {
-            $current_user_role = $user_role;
-        } elseif ($user_role == 'BC Staff') {
-            $current_user_role = $user_role;
-        } else {
-            $current_user_role = $user_role;
-        }
-
+        $current_user_role = auth()->user()->roles()->first()->name;
         $user = Auth::user();
-
         $orgainzations_users = $this->securityRepositoryInterface->getUserForDashBoard();
+
         return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users'));
     }
 

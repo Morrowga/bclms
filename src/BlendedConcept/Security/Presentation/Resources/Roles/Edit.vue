@@ -131,7 +131,6 @@ onUpdated(() => {
 //## end reative name and description when edit
 </script>
 
-
 <template>
   <VDialog v-model="isDialogVisible" max-width="1000">
     <!-- Dialog Activator -->
@@ -245,19 +244,23 @@ onUpdated(() => {
                 </div>
               </div>
             </VCol>
+            <VCol cols="12" class="d-flex justify-center">
+              <VBtn type="submit" class="me-3"> Submit </VBtn>
+              <VBtn
+                type="reset"
+                variant="outlined"
+                color="secondary"
+                @click="isDialogVisible = false"
+              >
+                Cancel
+              </VBtn>
+            </VCol>
           </VRow>
         </VCardText>
-
-        <VCardActions>
-          <VSpacer />
-          <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
-          <VBtn type="submit" color="success"> Save </VBtn>
-        </VCardActions>
       </VForm>
     </VCard>
   </VDialog>
 </template>
-
 
 <style lang="scss" scoped>
 table td,

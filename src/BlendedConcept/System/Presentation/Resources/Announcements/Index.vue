@@ -3,12 +3,19 @@ import Create from "./Create.vue";
 import Edit from "./Edit.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
-import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-import Swal from "sweetalert2";
-import { toastAlert } from "@Composables/useToastAlert";
-import deleteItem from "@Composables/useDeleteItem.js";
 
+import deleteItem from "@Composables/useDeleteItem.js";
+import {
+  serverParams,
+  onColumnFilter,
+  searchItems,
+  onPageChange,
+  onPerPageChange,
+  serverPage,
+  serverPerPage,
+  truncatedText,
+} from "@Composables/useServerSideDatable.js";
 //## start variable section
 let props = defineProps([
   "announcements",
@@ -17,7 +24,6 @@ let props = defineProps([
   "users",
   "organizations",
 ]);
-console.log("ann", props.users);
 const form = useForm({
   title: "",
   message: "",
@@ -29,70 +35,10 @@ const form = useForm({
 let currentAnnouncement = ref();
 const isAddNewAnnouncementDrawerVisible = ref(false);
 const isEditAnnouncementDrawerVisible = ref(false);
-let serverPage = ref(props.announcements.meta.current_page ?? 1);
+serverPage.value = ref(props.announcements.meta.current_page ?? 1);
 let permissions = computed(() => usePage().props.auth.data.permissions);
-let serverPerPage = ref(10);
-//## end variable section
-let serverError = ref({
-  title: "",
-});
+serverPerPage.value = ref(10);
 
-//## start add announcement and save in database
-const addNewAnnouncement = (announcementData) => {
-  form.title = announcementData.title;
-  form.message = announcementData.message;
-  form.created_by = announcementData.created_by;
-  form.send_to = announcementData.send_to;
-  form.type = announcementData.type;
-  form._method = "POST";
-  form.post(route("announcements.store"), {
-    onSuccess: (data) => {
-      toastAlert({
-        title: props.flash?.successMessage,
-      });
-      serverError.value = "";
-      isAddNewAnnouncementDrawerVisible.value = false;
-    },
-    onError: (error) => {
-      serverError.value.title = error?.title;
-      serverError.value.message = error?.message;
-      serverError.value.type = error?.type;
-      serverError.value.created_by = error?.created_by;
-      serverError.value.send_to = error?.send_to;
-    },
-  });
-};
-//## end Announcement and save in database
-
-//## start update announcement and update in database
-const updateAnnouncement = (announcementData) => {
-  form.title = announcementData.title;
-  form.message = announcementData.message;
-  form.created_by = announcementData.created_by;
-  form.send_to = announcementData.send_to;
-  form.type = announcementData.type;
-  form._method = "PUT";
-  form.post(
-    route("announcements.update", {
-      id: currentAnnouncement.value.id,
-    }),
-    {
-      onSuccess: () => {
-        toastAlert({
-          title: props.flash?.successMessage,
-        });
-        isEditAnnouncementDrawerVisible.value = false;
-      },
-      onError: (error) => {
-        serverError.value.title = error?.title;
-        serverError.value.message = error?.message;
-        serverError.value.type = error?.type;
-        serverError.value.created_by = error?.created_by;
-        serverError.value.send_to = error?.send_to;
-      },
-    }
-  );
-};
 //## end update announcement and update in database
 
 //## start delete announcement and delete in database
@@ -100,14 +46,6 @@ const deleteAnnouncement = (id) => {
   deleteItem(id, "announcements");
 };
 //## end delete announcement and delete in database
-
-//## start open model for edit
-const openEditModel = (announcement) => {
-  serverError.value.name = "";
-  currentAnnouncement.value = announcement;
-  isEditAnnouncementDrawerVisible.value = true;
-};
-//## end open model for edit
 
 //start datatable section
 let columns = [
@@ -138,17 +76,6 @@ let columns = [
     sortable: false,
   },
 ];
-//## initial state
-let serverParams = ref({
-  columnFilters: {},
-  search: "",
-  sort: {
-    field: "",
-    type: "",
-  },
-  page: 1,
-  perPage: 10,
-});
 
 //## options for datatable
 let options = ref({
@@ -160,76 +87,10 @@ let options = ref({
   dropdownAllowAll: false,
 });
 
-//## updateParams
-let updateParams = (newProps) => {
-  serverParams.value = Object.assign({}, serverParams.value, newProps);
-};
-
-//## page change on pagination
-let onPageChange = () => {
-  updateParams({ page: serverPage.value });
-  loadItems();
-};
-
-//## perpage change selectbox
-let onPerPageChange = (value) => {
-  serverPage.value = 1;
-  updateParams({ page: 1, perPage: value });
-  loadItems();
-};
-
 //## watch per page change in datatable
 watch(serverPerPage, function (value) {
   onPerPageChange(value);
 });
-
-//## filter folumn by name
-let onColumnFilter = (params) => {
-  updateParams(params);
-  serverParams.value.page = 1;
-  loadItems();
-};
-
-//## query params to controller
-let getQueryParams = () => {
-  let data = {
-    page: serverParams.value.page,
-    perPage: serverParams.value.perPage,
-    search: serverParams.value.search,
-  };
-
-  for (const [key, value] of Object.entries(serverParams.value.columnFilters)) {
-    if (value) {
-      data[key] = value;
-    }
-  }
-  return data;
-};
-
-//## search items
-let searchItems = () => {
-  updateParams({ page: 1 });
-  loadItems();
-};
-//## load items is what brings back the rows from server
-let loadItems = () => {
-  router.get(route(route().current()), getQueryParams(), {
-    replace: false,
-    preserveState: true,
-    preserveScroll: true,
-  });
-};
-//## truncatedText
-let truncatedText = (text) => {
-  if (text) {
-    if (text?.length <= 30) {
-      return text;
-    } else {
-      return text?.substring(0, 30) + "...";
-    }
-  }
-};
-//## end datatable section
 </script>
 
 
@@ -250,12 +111,7 @@ let truncatedText = (text) => {
 
           <div class="app-user-search-filter d-flex justify-end align-center">
             <!-- 👉 Add Announcement button -->
-            <VBtn
-              @click="isAddNewAnnouncementDrawerVisible = true"
-              v-if="permissions.includes('create_announcement')"
-            >
-              Add Announcement
-            </VBtn>
+            <Create :users="props.users" :organizations="props.organizations" />
           </div>
         </VCardText>
 
@@ -290,16 +146,11 @@ let truncatedText = (text) => {
 
             <div v-if="props.column.field == 'action'">
               <div class="d-flex">
-                <VBtn
-                  density="compact"
-                  icon="mdi-pencil"
-                  class="ml-2"
-                  color="secondary"
-                  variant="text"
-                  v-if="permissions.includes('edit_announcement')"
-                  @click="openEditModel(props.row)"
-                >
-                </VBtn>
+                <Edit
+                  :users="users"
+                  :organizations="organizations"
+                  :announcement="props.row"
+                />
 
                 <VBtn
                   density="compact"
@@ -348,23 +199,6 @@ let truncatedText = (text) => {
 
         <VDivider />
       </VCard>
-
-      <!-- 👉 Add New Announcement -->
-      <Create
-        :serverError="serverError"
-        :users="props.users"
-        :organizations="props.organizations"
-        v-model:isDrawerOpen="isAddNewAnnouncementDrawerVisible"
-        @data="addNewAnnouncement"
-      />
-      <Edit
-        :users="props.users"
-        :organizations="props.organizations"
-        :serverError="serverError"
-        v-model:isDrawerOpen="isEditAnnouncementDrawerVisible"
-        @data="updateAnnouncement"
-        :announcement="currentAnnouncement"
-      />
     </section>
   </AdminLayout>
 </template>
