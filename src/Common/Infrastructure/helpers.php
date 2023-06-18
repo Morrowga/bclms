@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Cache;
-
+use Illuminate\Support\Facades\Auth;
 //Notification Helper to Vue Component
 if (!function_exists('getNotifications')) {
     function getNotifications()
@@ -32,5 +32,30 @@ if (!function_exists('authorize')) {
         }
 
         return true;
+    }
+}
+
+
+/****
+ *  get disk space according to disk array
+ */
+
+if (!function_exists('getFileSystemWithRole')) {
+    function getFileSystemWithRole($userrole)
+    {
+        try {
+            if ($userrole == config('userrole.bcsuperadmin')) {
+                return ['local', 'avatars', 'media_user', 'media_organization'];
+            } else if ($userrole == config('userrole.organization_admin')) {
+                return ['media_students', 'media_teachers'];
+            } else if ($userrole == config('userrole.teacher')) {
+                return ['media_teachers'];
+            } else {
+                return ['local', 'avatars', 'media_user', 'media_organization'];
+            }
+        } catch (\Exception $error) {
+
+            return ['local'];
+        }
     }
 }

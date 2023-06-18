@@ -13,7 +13,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <link href="{{ asset('vendor/file-manager/css/file-manager.css') }}" rel="stylesheet">
+    <link href="/vendor/file-manager/css/file-manager.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 </head>
 
@@ -28,13 +28,17 @@
     </div>
 
     <!-- File manager -->
-    <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
+    <script src="/vendor/file-manager/js/file-manager.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
             var element = document.querySelector(".col-auto");
             var button = element.insertBefore(document.createElement("a"), element.firstChild);
             button.href = "/home";
+            if(localStorage.getItem("tenant") == "c")
+            {
+                button.href = "/c";
+            }
             button.className = "btn btn-primary me-2";
             button.innerHTML = '<i class="bi bi-house-door-fill"></i>Back';
             document.getElementsByClassName('fm-body').setAttribute('style', 'height:' + window.innerHeight + 'px');

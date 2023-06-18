@@ -24,7 +24,7 @@ class UserAclRulesRepository implements ACLRepository
      */
     public function getRules(): array
     {
-        if (Auth::id() === 1) {
+        if (auth()->user()->roles()->first()->name == config("userrole.bcsuperadmin")) {
             return [
                 ['disk' => 'local', 'path' => '*', 'access' => 2],
                 ['disk' => 'avatars', 'path' => '*', 'access' => 2],
@@ -35,12 +35,7 @@ class UserAclRulesRepository implements ACLRepository
         }
 
         return [
-            ['disk' => 'avatars', 'path' => '*', 'access' => 0],
-            ['disk' => 'local', 'path' => '*', 'access' => 0],
-            ['disk' => 'media_userrs', 'path' => '*', 'access' => 0],
             ['disk' => 'media_organization', 'path' => '*', 'access' => 2]
         ];
     }
 }
-
-

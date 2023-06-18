@@ -70,6 +70,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'media_teachers' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/teachers'),
+            'url' => env('APP_URL') . '/storage/teachers',
+            'visibility' => 'public',
+        ],
+
         'media_sitelogo' => [
             'driver' => 'local',
             'root' => storage_path('app/public/sitelogo'),

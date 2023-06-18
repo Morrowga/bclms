@@ -11,6 +11,7 @@ Route::get('/', function () {
 
     return redirect('/bc/index');
 });
+
 Route::get('/admin', function () {
 
     return redirect('/home');

@@ -3,8 +3,7 @@ import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 import AppDrawerHeaderSection from "@core/components/AppDrawerHeaderSection.vue";
 import { requiredValidator } from "@validators";
 import { computed } from "vue";
-import { useForm } from "@inertiajs/vue3";
-
+import { useForm, usePage } from "@inertiajs/vue3";
 //## start define props for toggle drawer
 const props = defineProps({
   serverError: {
@@ -15,23 +14,29 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-  permission: {
-    type: Object,
+  users: {
+    type: Array,
+    default: [],
+  },
+  organizations: {
+    type: Array,
+    default: [],
   },
 });
-//## end define props for toggle drawer
+//##end define props for toggle drawer
 
 //## start variable section
 const emit = defineEmits(["update:isDrawerOpen", "data"]);
 const isFormValid = ref(false);
 const refForm = ref();
 const form = useForm({
-  name: "",
-  description: "",
+  title: "",
+  created_by: "",
+  send_to: "",
+  message: "",
+  type: "",
 });
-//## end variable section
 
-//## start drawer close
 const closeNavigationDrawer = () => {
   emit("update:isDrawerOpen", false);
   nextTick(() => {
@@ -45,10 +50,7 @@ const closeNavigationDrawer = () => {
 const onSubmit = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
-      emit("data", {
-        name: form.name,
-        description: form.description,
-      });
+      emit("data", form);
       // emit("update:isDrawerOpen", false);
       nextTick(() => {
         // refForm.value?.reset();
@@ -65,17 +67,11 @@ const handleDrawerModelValueUpdate = (val) => {
 };
 //## end toggle drawer
 
-//## start reative name and description when edit
-onUpdated(() => {
-  form.name = props.permission?.name;
-  form.description = props.permission?.description;
-});
-//## end reative name and description when edit
-
 //## check error
 const checkError = computed(() => {
-  return props.serverError.name == "" ? false : true;
+  return props.serverError.title == "" ? false : true;
 });
+const message_types = ["success", "error", "warning", "info"];
 </script>
 
 
@@ -90,7 +86,7 @@ const checkError = computed(() => {
   >
     <!-- 👉 Title -->
     <AppDrawerHeaderSection
-      title="Edit Permission"
+      title="Add Announcement"
       @cancel="closeNavigationDrawer"
     />
 
@@ -100,21 +96,57 @@ const checkError = computed(() => {
           <!-- 👉 Form -->
           <VForm ref="refForm" v-model="isFormValid" @submit.prevent="onSubmit">
             <VRow>
-              <!-- 👉 Full name -->
+              <!-- 👉  title -->
               <VCol cols="12">
                 <VTextField
-                  :error="checkError"
-                  :error-messages="serverError?.name"
-                  @input="serverError.name = ''"
-                  v-model="form.name"
-                  :rules="[requiredValidator]"
-                  label="Permission Name"
+                  :error-messages="serverError?.title"
+                  v-model="form.title"
+                  label="Title"
                 />
               </VCol>
-              <!-- 👉 Full name -->
 
+              <!-- announce by -->
               <VCol cols="12">
-                <VTextarea v-model="form.description" label="Description" />
+                <VSelect
+                  :error-messages="serverError?.created_by"
+                  label="Announce By"
+                  item-title="name"
+                  item-value="id"
+                  v-model="form.created_by"
+                  :items="props.organizations"
+                />
+              </VCol>
+
+              <!-- announce to -->
+              <VCol cols="12">
+                <VSelect
+                  :error-messages="serverError?.send_to"
+                  label="Announce To"
+                  v-model="form.send_to"
+                  :items="props.users"
+                  item-title="name"
+                  item-value="id"
+                />
+              </VCol>
+
+              <!--  type -->
+              <VCol cols="12">
+                <VSelect
+                  label="Message Type"
+                  :error-messages="serverError?.type"
+                  v-model="form.type"
+                  :items="message_types"
+                  item-title="name"
+                  item-value="id"
+                />
+              </VCol>
+              <!-- 👉  message -->
+              <VCol cols="12">
+                <VTextarea
+                  :error-messages="serverError?.message"
+                  v-model="form.message"
+                  label="Message"
+                />
               </VCol>
               <!-- 👉 Submit and Cancel -->
               <VCol cols="12">
@@ -135,5 +167,3 @@ const checkError = computed(() => {
     </PerfectScrollbar>
   </VNavigationDrawer>
 </template>
-
-

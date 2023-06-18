@@ -6,6 +6,8 @@ import StaffDashboard from "./StaffDashBoard/index.vue";
 import SuperAdminDashboard from "./SuperAdminDashBoard/index.vue";
 import TeacherOrParentDashboard from "./TeacherDashBoard/index.vue";
 import OrganizatinDashBoard from "./OrganizationDashboard/Index.vue";
+import B2BTeacherDashboard from "./B2BTeacher/Index.vue";
+
 import { defineProps, onMounted, watch, computed } from "vue";
 import { usePage, useForm } from "@inertiajs/vue3";
 import axios from "axios";
@@ -92,6 +94,9 @@ onMounted(() => {
         </div>
         <div v-else-if="current_user_role == 'Organization Admin'">
             <OrganizatinDashBoard></OrganizatinDashBoard>
+        </div>
+         <div v-else-if="current_user_role == 'Teacher'">
+            <B2BTeacherDashboard></B2BTeacherDashboard>
         </div>
         <div v-else>
             <StaffDashboard></StaffDashboard>

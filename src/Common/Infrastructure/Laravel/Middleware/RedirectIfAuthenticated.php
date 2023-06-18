@@ -28,7 +28,7 @@ class RedirectIfAuthenticated
                 {
 
                     $organization = auth()->user()->load("organization");
-                    return redirect('http://' . $organization->organization->name . '.' . request()->getHost() . '/c/organizationaadmin');
+                    return redirect('http://' . $organization->organization->name . '.' . request()->getHost() . '/c/');
 
                 }
                 return redirect(RouteServiceProvider::HOME);

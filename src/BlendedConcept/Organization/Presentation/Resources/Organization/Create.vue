@@ -1,5 +1,5 @@
 <script setup>
-import { useForm} from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import { ref, defineProps } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
 import ImageUpload from "@Composables/ImageUpload.vue";
@@ -33,14 +33,11 @@ let handleSubmit = () => {
           });
           isDialogVisible.value = false;
         },
-        onError: (error) => {
-
-        },
+        onError: (error) => {},
       });
     }
   });
 };
-
 </script>
 
 
@@ -98,7 +95,7 @@ let handleSubmit = () => {
                     density="compact"
                     v-model="form.contact_email"
                     class="w-100"
-                    :rules="[requiredValidator,emailValidator]"
+                    :rules="[requiredValidator, emailValidator]"
                     :error-messages="form?.errors?.contact_email"
                   />
                 </VCol>
@@ -164,13 +161,19 @@ let handleSubmit = () => {
             <VCol cols="6">
               <ImageUpload v-model="form.image" />
             </VCol>
+            <VCol cols="12" class="d-flex justify-center">
+              <VBtn type="submit" class="me-3"> Submit </VBtn>
+              <VBtn
+                type="reset"
+                variant="outlined"
+                color="secondary"
+                @click="isDialogVisible = false"
+              >
+                Cancel
+              </VBtn>
+            </VCol>
           </VRow>
         </VCardText>
-        <VCardActions>
-          <VSpacer />
-          <VBtn color="error" @click="isDialogVisible = false"> Close </VBtn>
-          <VBtn type="submit" color="success"> Save </VBtn>
-        </VCardActions>
       </VForm>
     </VCard>
   </VDialog>

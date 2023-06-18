@@ -5,7 +5,7 @@ namespace Src\BlendedConcept\Teacher\Application\Repositories\Eloquent;
 use Src\BlendedConcept\Teacher\Domain\Repositories\TeacherRepositoryInterface;
 
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\Security\Domain\Resources\UserResource;
+use Src\BlendedConcept\Teacher\Domain\Resources\TeacherResource;
 use Src\BlendedConcept\Teacher\Application\DTO\TeacherData;
 use Src\BlendedConcept\Teacher\Application\Mappers\TeacherMapper;
 use Src\BlendedConcept\Teacher\Domain\Model\Teacher;
@@ -21,7 +21,7 @@ class TeacherRepository implements TeacherRepositoryInterface
     public function getTeachers($filters = [])
     {
         //set roles
-        $users = UserResource
+        $users = TeacherResource
             ::collection(UserEloquentModel::filter($filters)
                 ->where("organization_id",auth()->user()->organization_id)
                 ->with('roles')
@@ -40,7 +40,7 @@ class TeacherRepository implements TeacherRepositoryInterface
         $userEloquent = TeacherMapper::toEloquent($teacher);
         $userEloquent->save();
         if (request()->hasFile('image') && request()->file('image')->isValid()) {
-            $userEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');
+            $userEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_teachers');
         }
 
         $userEloquent->roles()->sync(request('role'));
@@ -62,10 +62,10 @@ class TeacherRepository implements TeacherRepositoryInterface
             if ($old_image != null) {
                 $old_image->delete();
 
-                $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');
+                $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_teachers');
             } else {
 
-                $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');
+                $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_teachers');
             }
         }
 
