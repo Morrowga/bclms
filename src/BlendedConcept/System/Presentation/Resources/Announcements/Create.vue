@@ -38,7 +38,7 @@ function handleSubmit() {
   <VDialog v-model="isDialogVisible" max-width="900" persistent>
     <!-- Dialog Activator -->
     <template #activator="{ props }">
-      <VBtn v-bind="props"> Create Announcement </VBtn>
+      <VBtn v-bind="props"> Add Announcement </VBtn>
     </template>
 
     <!-- Dialog Content -->
