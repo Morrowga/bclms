@@ -42,13 +42,23 @@ Route::middleware([
     Route::get("login", [AuthController::class, 'loginPage'])->name('login');
     Route::post("login", function (StoreLoginRequest $request) {
         $user = UserEloquentModel::query()->where('email', $request->email)->first();
+
         if ($user) {
             //this check verify email or not
             if (!$user->email_verified_at) {
                 $error = "Please Verify your email";
             }
+            /*****
+             *  check the current user
+             *  is include in this organization
+             *
+             */
 
-            if (
+            else if ($user->organization_id  !== tenant()->organization_id) {
+                $error = "Invalid Login Credential";
+            }
+
+            elseif (
                 $user->email_verified_at &&
                 auth()->attempt([
                     "email" => request('email'),
@@ -60,8 +70,6 @@ Route::middleware([
                 $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'from' => "", 'to' => "", 'type' => "success"]));
 
                 return redirect()->route('c.organizationaadmin');
-            } else if (!$user->email_verified_at) {
-                $error = "Please Verify your email";
             } else {
                 $error = "Invalid Login Credential";
             }
