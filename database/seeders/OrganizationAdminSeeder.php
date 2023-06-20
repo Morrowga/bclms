@@ -45,6 +45,8 @@ class OrganizationAdminSeeder extends Seeder
         foreach ($users as $user) {
             $userModel  = UserEloquentModel::create($user);
             $userModel->roles()->sync([5]);
+
+
         }
     }
 }
