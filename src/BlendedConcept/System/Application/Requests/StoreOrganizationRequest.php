@@ -14,8 +14,15 @@ class StoreOrganizationRequest  extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['string','required'],
+            'name' => ['string','required','unique:organizations,name'],
             'contact_email' => ['required', 'email', 'unique:organizations,contact_email'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name' => 'This organization name already exist'
         ];
     }
 }

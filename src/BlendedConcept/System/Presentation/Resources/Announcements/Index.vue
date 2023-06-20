@@ -2,7 +2,7 @@
 import Create from "./Create.vue";
 import Edit from "./Edit.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { useForm, usePage } from "@inertiajs/vue3";
+import {  usePage } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
 
 import deleteItem from "@Composables/useDeleteItem.js";
@@ -24,14 +24,6 @@ let props = defineProps([
   "users",
   "organizations",
 ]);
-const form = useForm({
-  title: "",
-  message: "",
-  created_by: "",
-  send_to: "",
-  type: "",
-  _method: "",
-});
 let currentAnnouncement = ref();
 const isAddNewAnnouncementDrawerVisible = ref(false);
 const isEditAnnouncementDrawerVisible = ref(false);
@@ -39,7 +31,6 @@ serverPage.value = ref(props.announcements.meta.current_page ?? 1);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 serverPerPage.value = ref(10);
 
-//## end update announcement and update in database
 
 //## start delete announcement and delete in database
 const deleteAnnouncement = (id) => {
@@ -111,7 +102,10 @@ watch(serverPerPage, function (value) {
 
           <div class="app-user-search-filter d-flex justify-end align-center">
             <!-- 👉 Add Announcement button -->
-            <Create :users="props.users" :organizations="props.organizations" />
+            <Create
+            :flash="flash"
+            :users="props.users"
+            :organizations="props.organizations" />
           </div>
         </VCardText>
 
@@ -148,6 +142,7 @@ watch(serverPerPage, function (value) {
               <div class="d-flex">
                 <Edit
                   :users="users"
+                  :flash="flash"
                   :organizations="organizations"
                   :announcement="props.row"
                 />

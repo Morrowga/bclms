@@ -85,7 +85,7 @@ class AuthController extends Controller
              *
              */
 
-            // $request->session()->put('phpb_logged_in', true);
+            $request->session()->put('phpb_logged_in', true);
 
 
             // Check if the authentication was successful
@@ -147,6 +147,7 @@ class AuthController extends Controller
         try {
             return Inertia::render(config('route.verify'));
         } catch (\Exception $e) {
+
             // Handle the exception gracefully, such as displaying a generic error page
             return Inertia::render(config('route.verify'))
                 ->with("sytemErrorMessage", $e->getMessage());
@@ -189,8 +190,8 @@ class AuthController extends Controller
             return redirect()->route('verify');
 
 
-        } catch (\Exception $errors) {
-
+        } catch (\Exception $e) {
+            dd($e->getMessage(),$e->getFile());
             return redirect()->route('register')->with("sytemErrorMessage" , "Mail configuration is wrong");
         }
     }
