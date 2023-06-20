@@ -57,8 +57,6 @@ class UserController extends Controller
             $oragnization_name  = (new GetOrganizatonName())->handle();
 
 
-
-
             // Render the Inertia view with the obtained data
             return Inertia::render(config('route.users'), [
                 'users' => $users,

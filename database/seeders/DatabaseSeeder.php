@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Src\BlendedConcept\User\Domain\Model\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +19,11 @@ class DatabaseSeeder extends Seeder
             PermissionRoleTableSeeder::class,
             SuperAdminSeeder::class,
             PageBuilderSeeder::class,
-            SiteSettingSeeder::class
+            SiteSettingSeeder::class,
+            OrganizationSeeder::class,
+            B2CTeacherRoleSeeder::class,
+            OrganizationAdminSeeder::class,
+
         ]);
     }
 }
