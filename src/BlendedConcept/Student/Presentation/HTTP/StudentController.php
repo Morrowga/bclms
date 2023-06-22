@@ -17,6 +17,8 @@ class StudentController extends Controller
 
     protected $studentService;
 
+    protected $route_url;
+
     public function __construct()
     {
         $this->studentService = app()->make(StudentService::class);
@@ -30,6 +32,15 @@ class StudentController extends Controller
      */
     public function index()
     {
+
+
+        /****
+         *  this will change route url
+         *   `c.` if tenanct exist and default `` if not exits
+         ****/
+        $this->route_url = tenant() ? "c." : "";
+
+
 
         // Check if the user is authorized to view users
 
@@ -62,10 +73,10 @@ class StudentController extends Controller
         try {
             $this->studentService->createStudent($request);
 
-            return redirect()->route('c.students.index')->with("successMessage", "Student created successfully!");
+            return redirect()->route($this->route_url . 'students.index')->with("successMessage", "Student created successfully!");
         } catch (\Exception $e) {
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route('c.students.index')->with("sytemErrorMessage", $e->getMessage());
+            return redirect()->route($this->route_url . 'students.index')->with("sytemErrorMessage", $e->getMessage());
         }
     }
 
@@ -75,8 +86,15 @@ class StudentController extends Controller
     public function update(updateStudentRequest $request, StudentEloquentModel $student)
     {
         abort_if(authorize('edit', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->studentService->updateStudent($request, $student->id);
-        return redirect()->route('c.students.index')->with("successMessage", "Student Updated Successfully!");
+        try {
+
+            $this->studentService->updateStudent($request, $student->id);
+            return redirect()->route($this->route_url . 'students.index')->with("successMessage", "Student Updated Successfully!");
+
+        } catch (\Exception $e) {
+
+            return redirect()->route($this->route_url . 'students.index')->with("sytemErrorMessage", $e->getMessage());
+        }
     }
 
 
@@ -84,6 +102,6 @@ class StudentController extends Controller
     {
         abort_if(authorize('destroy', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->studentService->deleteStudent($student);
-        return redirect()->route('c.students.index')->with("successMessage", "Student Deleted Successfully!");
+        return redirect()->route($this->route_url . 'students.index')->with("successMessage", "Student Deleted Successfully!");
     }
 }

@@ -17,13 +17,13 @@ let form = useForm({
   image: "",
   _method: "PUT",
 });
-let props = defineProps(["student", "flash"]);
+let props = defineProps(["student", "flash","tenant"]);
 
 // Update create form
 let handleUpdate = (id) => {
   refForm.value.validate().then(({ valid }) => {
     if (valid) {
-      form.post(route("c.students.update", { id: id }), {
+      form.post(route(`${props?.tenant}students.update`, { id: id }), {
         onSuccess: (status) => {
           toastAlert({
             title: props.flash?.successMessage,

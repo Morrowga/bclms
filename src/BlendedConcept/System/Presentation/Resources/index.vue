@@ -11,7 +11,7 @@ import B2BTeacherDashboard from "./B2BTeacher/Index.vue";
 import { defineProps, onMounted, watch, computed } from "vue";
 import { usePage, useForm } from "@inertiajs/vue3";
 import axios from "axios";
-let props = defineProps(["current_user_role", "user", "orgainzations_users",'tenant']);
+let props = defineProps(["current_user_role", "user", "orgainzations_users",'tenant','students']);
 const isAlertVisible = ref(true);
 let form = useForm({});
 let notifications = ref([]);
@@ -49,7 +49,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <AdminLayout :user="user" :user_role="current_user_role" :tenant="tenant">
+    <AdminLayout
+    :user="user"
+    :user_role="current_user_role"
+    :tenant="tenant"
+    >
         <!--
             VAlert is use for show annnounment pages
         -->
@@ -90,7 +94,7 @@ onMounted(() => {
             </SuperAdminDashboard>
         </div>
         <div v-else-if="current_user_role == 'BC Subscriber'">
-            <TeacherOrParentDashboard> </TeacherOrParentDashboard>
+            <TeacherOrParentDashboard  :students="students"> </TeacherOrParentDashboard>
         </div>
         <div v-else-if="current_user_role == 'Organization Admin'">
             <OrganizatinDashBoard></OrganizatinDashBoard>

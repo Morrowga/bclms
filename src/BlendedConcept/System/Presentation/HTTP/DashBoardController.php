@@ -6,6 +6,7 @@ namespace Src\BlendedConcept\System\Presentation\HTTP;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
+use Src\BlendedConcept\Student\Domain\Repositories\StudentRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
 use Src\Common\Infrastructure\Laravel\Controller;
 
@@ -14,14 +15,17 @@ class DashBoardController extends Controller
 {
     private $securityRepositoryInterface;
     private $pageBuilderInterface;
+    private $studentRepositoryInterface;
 
     public function __construct(
         SecurityRepositoryInterface $securityRepositoryInterface,
         PageBuilderInterface $pageBuilderInterface,
+        StudentRepositoryInterface $studentRepositoryInterface,
     ) {
 
         $this->securityRepositoryInterface = $securityRepositoryInterface;
         $this->pageBuilderInterface = $pageBuilderInterface;
+        $this->studentRepositoryInterface = $studentRepositoryInterface;
     }
 
     public function superAdminDashboard()
@@ -36,7 +40,9 @@ class DashBoardController extends Controller
         $user = Auth::user();
         $orgainzations_users = $this->securityRepositoryInterface->getUserForDashBoard();
 
-        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users'));
+        $students = $this->studentRepositoryInterface->getStudent([])['default_students'];
+
+        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users','students'));
     }
 
 

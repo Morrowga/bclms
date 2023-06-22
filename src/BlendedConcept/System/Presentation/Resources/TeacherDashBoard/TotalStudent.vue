@@ -1,39 +1,33 @@
 <script setup>
-import { useForm, usePage, Link } from "@inertiajs/vue3";
-import { router } from "@inertiajs/core";
-import { computed, defineProps } from "vue";
-import Swal from "sweetalert2";
+import { defineProps } from "vue";
+import {  Link } from "@inertiajs/vue3";
 import avatar4 from "@images/avatars/avatar-4.png";
-import { toastAlert } from "@Composables/useToastAlert";
 
-let props = defineProps(["users"]);
+
+let props = defineProps(["students"]);
+console.log(props.students,"hello")
 //## start datatable section
 let columns = [
     {
-        label: "USER",
+        label: "Student",
         field: "name",
         sortable: false,
     },
     {
-        label: "EMAIL",
+        label: "PARENT EMAIL",
         field: "email",
         sortable: false,
     },
     {
-        label: "ROLE",
-        field: "role",
+        label: "PARTENT CONTACT",
+        field: "phone",
         sortable: false,
     },
-    {
-        label: "PLAN",
-        field: "plan",
-        sortable: false,
-    },
-    {
-        label: "STATUS",
-        field: "status",
-        sortable: false,
-    },
+    // {
+    //     label: "Parent Contact",
+    //     field: "contact",
+    //     sortable: false,
+    // },
     {
         label: "ACTION",
         field: "action",
@@ -54,9 +48,7 @@ let truncatedText = (text) => {
     }
 };
 
-const selectionChanged = (data) => {
-    console.log(data.selectedRows);
-};
+
 </script>
 <template>
     <section>
@@ -69,7 +61,7 @@ const selectionChanged = (data) => {
                         variant="outlined"
                         color="secondary"
                         >Export</v-btn
-                    >a
+                    >
                 </div>
 
                 <VSpacer />
@@ -77,7 +69,7 @@ const selectionChanged = (data) => {
                 <div
                     class="app-user-search-filter d-flex justify-end align-center gap-6"
                 >
-                    <Link :href="route('users.index')">
+                    <Link :href="route('students.index')">
                         <v-btn>View More</v-btn>
                     </Link>
                 </div>
@@ -90,7 +82,7 @@ const selectionChanged = (data) => {
                 styleClass="vgt-table"
                 v-on:selected-rows-change="selectionChanged"
                 :columns="columns"
-                :rows="rows"
+                :rows="props.students"
                 :select-options="{
                     enabled: true,
                 }"
@@ -115,12 +107,6 @@ const selectionChanged = (data) => {
                             </template>
 
                             <!-- 👉 Title and Subtitle -->
-                            <VListItemTitle
-                                class="text-sm font-weight-semibold mb-1"
-                            >
-                                {{ dataProps.row.user }}
-                            </VListItemTitle>
-
                             <VListItemSubtitle
                                 class="text-xs text-no-wrap d-flex align-center"
                             >
@@ -128,38 +114,18 @@ const selectionChanged = (data) => {
                             </VListItemSubtitle>
                         </VListItem>
                     </div>
+
                     <div
-                        v-if="dataProps.column.field == 'role'"
+                        v-if="dataProps.column.field == 'email'"
                         class="flex flex-nowrap"
                     >
-                        <VChip size="small" color="primary">
-                            {{ dataProps.row?.roles[0]?.name }}
-                        </VChip>
+                    <span> test@email.com</span>
                     </div>
                     <div
-                        v-if="dataProps.column.field == 'plan'"
+                        v-if="dataProps.column.field == 'phone'"
                         class="flex flex-nowrap"
                     >
-                        &minus;
-                    </div>
-                    <div
-                        v-if="dataProps.column.field == 'status'"
-                        class="flex flex-nowrap"
-                    >
-                        <VChip
-                            size="small"
-                            color="success"
-                            v-if="dataProps.row.email_verified_at"
-                        >
-                            verify
-                        </VChip>
-                         <VChip
-                            size="small"
-                            color="warning"
-                            v-if="!dataProps.row.email_verified_at"
-                        >
-                            pending
-                        </VChip>
+                    <span> 0995123456</span>
                     </div>
                     <div
                         v-if="dataProps.column.field == 'action'"

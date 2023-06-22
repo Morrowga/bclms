@@ -29,7 +29,7 @@ class StudentRepository implements StudentRepositoryInterface
                     ->where("organization_id", auth()->user()->organization_id)
                     ->paginate($filters['perPage'] ?? 10)
             );
-        $default_students = StudentEloquentModel::get();
+        $default_students = StudentEloquentModel::latest()->take(5)->get();
         return [
             "paginate_students" => $paginate_students,
             "default_students" => $default_students
