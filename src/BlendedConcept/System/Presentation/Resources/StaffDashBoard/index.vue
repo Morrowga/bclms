@@ -101,7 +101,6 @@ const statisticsWithImages = [
             >Find all of your company’s administrator accounts and their
             associate roles.</span
           >
-
             <TotalUsers :users="orgainzations_users.orgainzations_users[0]" />
 
           <br />
