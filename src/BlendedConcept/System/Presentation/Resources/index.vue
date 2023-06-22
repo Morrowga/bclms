@@ -103,7 +103,9 @@ onMounted(() => {
             <B2BTeacherDashboard></B2BTeacherDashboard>
         </div>
         <div v-else>
-            <StaffDashboard></StaffDashboard>
+            <StaffDashboard
+            :orgainzations_users="props.orgainzations_users"
+            ></StaffDashboard>
         </div>
     </AdminLayout>
 </template>
