@@ -40,6 +40,7 @@ class DashBoardController extends Controller
         $user = Auth::user();
         $orgainzations_users = $this->securityRepositoryInterface->getUserForDashBoard();
 
+
         $students = $this->studentRepositoryInterface->getStudent([])['default_students'];
 
         return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users','students'));

@@ -21,6 +21,7 @@ class StudentController extends Controller
 
     public function __construct()
     {
+
         $this->studentService = app()->make(StudentService::class);
     }
 
@@ -56,7 +57,7 @@ class StudentController extends Controller
 
             return Inertia::render(config('route.students'), compact('students'));
         } catch (\Exception $e) {
-            return redirect()->route('students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
     /**
@@ -74,6 +75,7 @@ class StudentController extends Controller
             $this->studentService->createStudent($request);
 
             return redirect()->route($this->route_url . 'students.index')->with("successMessage", "Student created successfully!");
+
         } catch (\Exception $e) {
             // Handle the exception, log the error, or display a user-friendly error message.
             return redirect()->route($this->route_url . 'students.index')->with("sytemErrorMessage", $e->getMessage());
