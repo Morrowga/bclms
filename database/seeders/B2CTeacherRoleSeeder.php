@@ -18,7 +18,7 @@ class B2CTeacherRoleSeeder extends Seeder
         $users = [
             [
                 'name' => "Teacher One",
-                'organization_id' => 1,
+                'organization_id' => null,
                 'email_verified_at' => now(),
                 'dob' => now(),
                 'contact_number' => "1234567890",
@@ -29,7 +29,7 @@ class B2CTeacherRoleSeeder extends Seeder
             ],
             [
                 'name' => "Teacher Two",
-                'organization_id' => 2,
+                'organization_id' => null,
                 'email_verified_at' => now(),
                 'dob' => now(),
                 'contact_number' => "1234567890",

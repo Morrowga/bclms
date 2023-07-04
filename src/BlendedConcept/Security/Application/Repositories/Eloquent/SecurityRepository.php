@@ -58,6 +58,8 @@ class SecurityRepository implements SecurityRepositoryInterface
     {
 
         $userEloquent = UserMapper::toEloquent($user);
+        //verify email now()
+        $userEloquent->email_verified_at = now();
         $userEloquent->save();
         if (request()->hasFile('image') && request()->file('image')->isValid()) {
             $userEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');

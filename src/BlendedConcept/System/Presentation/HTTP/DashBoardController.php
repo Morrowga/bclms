@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
 use Src\BlendedConcept\Student\Domain\Repositories\StudentRepositoryInterface;
+use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
 use Src\Common\Infrastructure\Laravel\Controller;
 
@@ -17,15 +18,19 @@ class DashBoardController extends Controller
     private $pageBuilderInterface;
     private $studentRepositoryInterface;
 
+    private $ClassRoomRepositoryInterface;
+
     public function __construct(
         SecurityRepositoryInterface $securityRepositoryInterface,
         PageBuilderInterface $pageBuilderInterface,
         StudentRepositoryInterface $studentRepositoryInterface,
+        ClassRoomRepositoryInterface $ClassRoomRepositoryInterface
     ) {
 
         $this->securityRepositoryInterface = $securityRepositoryInterface;
         $this->pageBuilderInterface = $pageBuilderInterface;
         $this->studentRepositoryInterface = $studentRepositoryInterface;
+        $this->ClassRoomRepositoryInterface = $ClassRoomRepositoryInterface;
     }
 
     public function superAdminDashboard()
@@ -40,6 +45,7 @@ class DashBoardController extends Controller
         $user = Auth::user();
         $orgainzations_users = $this->securityRepositoryInterface->getUserForDashBoard();
 
+        // $classrooms = $this->ClassRoomRepositoryInterface->getClassRooms([]);
 
         $students = $this->studentRepositoryInterface->getStudent([])['default_students'];
 
