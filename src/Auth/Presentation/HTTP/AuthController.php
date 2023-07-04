@@ -32,7 +32,6 @@ class AuthController extends Controller
      */
     public function loginPage()
     {
-        // dd("hello");testingorg@gmail.com
         try {
             $tenant = tenant("id") ? "c." : "";
             // Check if the user is already authenticated
@@ -43,6 +42,8 @@ class AuthController extends Controller
                 }
                 return redirect()->route('dashboard');
             }
+
+
 
 
             // Render the login page using the Inertia.js framework
@@ -87,9 +88,9 @@ class AuthController extends Controller
 
             $request->session()->put('phpb_logged_in', true);
 
-
             // Check if the authentication was successful
             if ($isAuthenticated['isCheck']) {
+
                 // Redirect the authenticated user to the dashboard page
                 if (tenant("id")) {
                     return redirect()->route('c.organizationaadmin');
@@ -101,6 +102,7 @@ class AuthController extends Controller
                     "errorMessage" => $isAuthenticated['errorMessage']
                 ]);
             }
+
         } catch (\Exception $e) {
             // Handle the exception gracefully, such as displaying a generic error message
             return redirect()->route('login')->with("sytemErrorMessage", $e->getMessage());
