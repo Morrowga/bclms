@@ -14,6 +14,7 @@ use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 use Illuminate\Support\Facades\Config;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,7 +38,6 @@ class AppServiceProvider extends ServiceProvider
             OrganizationRepositoryInterface::class,
             OrganizationRepository::class
         );
-
     }
 
 
@@ -48,18 +48,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       //set config for organization file system
-       $organization = OrganizationEloquentModel::all();
-       foreach($organization as $item)
-       {
-        $rootPath = storage_path('app/public/organization/'.$item->name);
-        $url = env('APP_URL') . '/storage';
-        Config::set("filesystems.disks.{$item->name}", [
-            'driver' => 'local',
-            'root' => $rootPath,
-            'url' => $url,
-            'visibility' => 'public',
-        ]);
-       }
+
+        Paginator::useBootstrapFour();
+        //set config for organization file system
+        $organization = OrganizationEloquentModel::all();
+        foreach ($organization as $item) {
+            $rootPath = storage_path('app/public/organization/' . $item->name);
+            $url = env('APP_URL') . '/storage';
+            Config::set("filesystems.disks.{$item->name}", [
+                'driver' => 'local',
+                'root' => $rootPath,
+                'url' => $url,
+                'visibility' => 'public',
+            ]);
+        }
     }
 }
