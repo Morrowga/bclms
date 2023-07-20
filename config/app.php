@@ -191,7 +191,7 @@ return [
          */
         Barryvdh\Debugbar\ServiceProvider::class,
         Src\Common\Infrastructure\Laravel\Providers\TenancyServiceProvider::class, //multi tetant
-        Hareom284\LaravelH5p\LaravelH5pServiceProvider::class,
+        // Hareom284\LaravelH5p\LaravelH5pServiceProvider::class,
 
         /*
          * Domain Service Providers...
