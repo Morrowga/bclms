@@ -19,7 +19,7 @@ return [
     'views' => 'h5p', // h5p view path
     'layout' => 'h5p.layouts.h5p', // layoute path
     'use_router' => 'ALL', // ALL,EXPORT,EDITOR
-    'preload_all_libraries' => false, // enable this if your server is slow when adding a new content, due to lots of SQL connections on content parameter filter, it'll reduce several load libraries connections to only 2 connections with everything and use collection filter
+    'preload_all_libraries' => true, // enable this if your server is slow when adding a new content, due to lots of SQL connections on content parameter filter, it'll reduce several load libraries connections to only 2 connections with everything and use collection filter
 
     'H5P_DISABLE_AGGREGATION' => false,
 
@@ -28,7 +28,7 @@ return [
     'h5p_frame' => true,
     'h5p_export' => true,
     'h5p_embed' => true,
-    'h5p_copyright' => false,
+    'h5p_copyright' => true,
     'h5p_icon' => true,
     'h5p_track_user' => false,
     'h5p_ext_communication' => true,
@@ -38,7 +38,7 @@ return [
         'h5p_h5p_site_uuid' => false,
     ],
     'h5p_content_type_cache_updated_at' => 0,
-    'h5p_check_h5p_requirements' => false,
+    'h5p_check_h5p_requirements' => true,
     'h5p_hub_is_enabled' => false,
     'h5p_version' => '1.24.0',
 ];

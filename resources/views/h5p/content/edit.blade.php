@@ -21,7 +21,7 @@
                             <div id="laravel-h5p-editor">{{ trans('laravel-h5p.content.loading_content') }}</div>
                         </div>
 
-                        @if ($errors->has('parameters'))                 
+                        @if ($errors->has('parameters'))
                         <span class="help-block">
                             {{ $errors->first('parameters') }}
                         </span>
@@ -61,7 +61,7 @@
                             <input type="radio" name="action" value="create" class="laravel-h5p-type" checked="checked"/>{{ trans('laravel-h5p.content.action_create') }}
                         </label>
 
-{{-- 
+{{--
                         @if ($errors->has('action'))
                         <span class="help-block">
                             {{ $errors->first('action') }}
@@ -215,7 +215,7 @@ H5P.jQuery(document).ready(function () {
                     'X-CSRF-TOKEN': H5P.jQuery('meta[name="csrf-token"]').attr('content'),
                 },
                 success: function (data) {
-                    window.location.href = '/h5p';
+                    window.location.href = '/admin/h5p/h5p';
                 },
                 error: function () {
                     $obj.removeAttr('disabled');

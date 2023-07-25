@@ -1,12 +1,14 @@
-/* 
+/*
  *
- * @Project        
+ * @Project
  * @Copyright      Djoudi
  * @Created        2018-02-20
  * @Filename       laravel-h5p.js
- * @Description    
+ * @Description
  *
  */
+
+
 
 (function ($) {
     ns.init = function () {
@@ -69,6 +71,7 @@
                     }
                 }
 
+
                 $(this).find('.btn').button('loading');
             });
 
@@ -107,7 +110,7 @@
             }
           }
         }
-    
+
         return url;
     };
 

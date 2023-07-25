@@ -27,7 +27,6 @@ const onSubmit = () => {
       localStorage.setItem("tenant", props?.tenant ? "c" : "");
     },
     onError: (error) => {
-      alert("okay");
       toastAlert({
         title: "Invalid Creditional",
         icon: "error",
