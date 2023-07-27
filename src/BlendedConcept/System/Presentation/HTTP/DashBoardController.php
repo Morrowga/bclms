@@ -9,47 +9,43 @@ use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
 use Src\BlendedConcept\Student\Domain\Repositories\StudentRepositoryInterface;
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetStudentForAdminDashBoard;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetUserForAdminDashBoard;
+
 use Src\Common\Infrastructure\Laravel\Controller;
 
 
 class DashBoardController extends Controller
 {
-    private $securityRepositoryInterface;
+
     private $pageBuilderInterface;
-    private $studentRepositoryInterface;
+
 
     private $ClassRoomRepositoryInterface;
 
     public function __construct(
-        SecurityRepositoryInterface $securityRepositoryInterface,
         PageBuilderInterface $pageBuilderInterface,
-        StudentRepositoryInterface $studentRepositoryInterface,
         ClassRoomRepositoryInterface $ClassRoomRepositoryInterface
     ) {
-
-        $this->securityRepositoryInterface = $securityRepositoryInterface;
         $this->pageBuilderInterface = $pageBuilderInterface;
-        $this->studentRepositoryInterface = $studentRepositoryInterface;
         $this->ClassRoomRepositoryInterface = $ClassRoomRepositoryInterface;
     }
 
     public function superAdminDashboard()
     {
-
-
         /**
          *  Assigns the current user role based on
          *  the retrieved role from the authenticated user.
          */
         $current_user_role = auth()->user()->roles()->first()->name;
         $user = Auth::user();
-        $orgainzations_users = $this->securityRepositoryInterface->getUserForDashBoard();
 
-        // $classrooms = $this->ClassRoomRepositoryInterface->getClassRooms([]);
+        $orgainzations_users = (new GetUserForAdminDashBoard())->handle();
 
-        $students = $this->studentRepositoryInterface->getStudent([])['default_students'];
+        $students = (new GetStudentForAdminDashBoard())->handle();
 
-        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users','students'));
+        //here I render it inside
+        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students'));
     }
 
 

@@ -34,6 +34,7 @@ let page = usePage().props;
           class="d-flex d-md-none"
         ></v-app-bar-nav-icon>
 
+
         <Link to="/" class="d-none d-md-flex align-start gap-x-2 ps-15">
            <img :src="$page?.props?.site_logo" width="40" height="40" />
            <h1 class="font-weight-bold leading-normal text-truncate text-xl">
@@ -42,10 +43,14 @@ let page = usePage().props;
         </Link>
 
         <VSpacer />
+
         <NavbarThemeSwitcher class="me-1" />
         <!-- <NavbarShortcuts class="me-1" /> -->
+
         <NavBarNotifications class="me-3" />
         <UserProfile class="d-none d-md-flex pe-15" />
+
+
         <UserProfile class="d-flex d-md-none pe-3" />
       </v-app-bar>
     </template>
