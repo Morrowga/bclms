@@ -29,6 +29,8 @@
   --danger: #e3342f;
   --light: #f8f9fa;
   --dark: #343a40;
+
+  -- :#4066E4;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -50,6 +52,7 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
 
 article,
 aside,

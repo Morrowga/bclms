@@ -68,6 +68,7 @@ class PermissionController extends Controller
             $this->permissionServices->createPermission($request);
             // Redirect the user to the index page with a success message
             return redirect()->route('permissions.index')->with("successMessage", "Permission created Successfully!");
+
         } catch (\Exception $e) {
             return Inertia::render(config('route.permissions'))->with("sytemErrorMessage", $e->getMessage());
         }

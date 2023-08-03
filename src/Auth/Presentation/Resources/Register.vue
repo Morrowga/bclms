@@ -120,8 +120,8 @@ let props = defineProps(["ErrorMessage"]);
   height: 100vh;
   background-size: cover;
 }
-.primary {
-  color: #001a8f !important;
-}
+// .primary {
+//   color: #001a8f !important;
+// }
 
 </style>

@@ -79,49 +79,26 @@ watch(serverPerPage, function (value) {
             <VCard>
                 <VCardText class="d-flex flex-wrap gap-4">
                     <!-- 👉 Export button -->
-                    <VBtn
-                        prepend-icon="mdi-export"
-                        variant="outlined"
-                        color="secondary"
-                        >Export</VBtn
-                    >
+                    <VBtn prepend-icon="mdi-export" variant="outlined" color="secondary">Export</VBtn>
                     <VSpacer />
-                    <div
-                        class="app-user-search-filter d-flex align-center gap-6"
-                    >
+                    <div class="app-user-search-filter d-flex align-center gap-6">
                         <!-- 👉 Search  -->
-                        <VTextField
-                            @keyup.enter="searchItems"
-                            v-model="serverParams.search"
-                            placeholder="Search Student"
-                            density="compact"
-                        />
+                        <VTextField @keyup.enter="searchItems" v-model="serverParams.search" placeholder="Search Student"
+                            density="compact" />
                         <!-- 👉 Add User button -->
-                        <Create
-                            :flash="flash"
-                            :students="students"
-                            :teachers="teachers"
-                            v-if="permissions.includes('create_classroom')"
-                        />
+                        <Create :flash="flash" :students="students" :teachers="teachers"
+                            v-if="permissions.includes('create_classroom')" />
                     </div>
                 </VCardText>
                 <VDivider />
 
-                <vue-good-table
-                    class="user-data-table"
-                    mode="remote"
-                    @column-filter="onColumnFilter"
-                    :totalRows="props.classrooms.meta.total"
-                    :selected-rows-change="selectionChanged"
-                    styleClass="vgt-table "
-                    :pagination-options="options"
-                    :rows="props.classrooms.data"
-                    :columns="columns"
+                <vue-good-table class="user-data-table" mode="remote" @column-filter="onColumnFilter"
+                    :totalRows="props.classrooms.meta.total" :selected-rows-change="selectionChanged"
+                    styleClass="vgt-table " :pagination-options="options" :rows="props.classrooms.data" :columns="columns"
                     :select-options="{
                         enabled: true,
                         selectOnCheckboxOnly: true,
-                    }"
-                >
+                    }">
                     <template #table-row="props">
                         <div v-if="props.column.field == 'teacher'">
                             <VChip color="primary">
@@ -133,43 +110,25 @@ watch(serverPerPage, function (value) {
                                 {{ props.row.teacher.contact_number }}
                             </span>
                         </div>
-                         <div v-if="props.column.field == 'nofstudent'">
+                        <div v-if="props.column.field == 'nofstudent'">
                             <span>
                                 {{ props.row.students.length }}
                             </span>
                         </div>
                         <div v-if="props.column.field == 'action'">
                             <div class="d-flex">
-                                <Edit
-                                    :students="students"
-                                    :teachers="teachers"
-                                    :classroom="props.row"
-                                    :flash="flash"
-                                    v-if="
-                                        permissions.includes('edit_classroom')
-                                    "
-                                />
-                                <VBtn
-                                    v-if="
-                                        permissions.includes('delete_classroom')
-                                    "
-                                    density="compact"
-                                    icon="mdi-trash"
-                                    class="ml-2"
-                                    color="secondary"
-                                    variant="text"
-                                    @click="deleteClassRoom(props.row.id)"
-                                >
+                                <Edit :students="students" :teachers="teachers" :classroom="props.row" :flash="flash" v-if="permissions.includes('edit_classroom')
+                                    " />
+                                <VBtn v-if="permissions.includes('delete_classroom')
+                                    " density="compact" icon="mdi-trash" class="ml-2" color="secondary" variant="text"
+                                    @click="deleteClassRoom(props.row.id)">
                                 </VBtn>
                             </div>
                         </div>
                     </template>
                     <template #pagination-bottom>
                         <VRow class="pa-4">
-                            <VCol
-                                cols="12"
-                                class="d-flex justify-space-between"
-                            >
+                            <VCol cols="12" class="d-flex justify-space-between">
                                 <span>
                                     Showing
                                     {{ props.classrooms.meta.from }} to
@@ -180,23 +139,11 @@ watch(serverPerPage, function (value) {
                                 <div class="d-flex">
                                     <div class="d-flex align-center">
                                         <span class="me-2">Show</span>
-                                        <VSelect
-                                            v-model="serverPerPage"
-                                            density="compact"
-                                            :items="options.perPageDropdown"
-                                        ></VSelect>
+                                        <VSelect v-model="serverPerPage" density="compact" :items="options.perPageDropdown">
+                                        </VSelect>
                                     </div>
-                                    <VPagination
-                                        v-model="serverPage"
-                                        size="small"
-                                        :total-visible="5"
-                                        :length="
-                                            props.classrooms.meta.last_page
-                                        "
-                                        @next="onPageChange"
-                                        @prev="onPageChange"
-                                        @click="onPageChange"
-                                    />
+                                    <VPagination v-model="serverPage" size="small" :total-visible="5" :length="props.classrooms.meta.last_page
+                                        " @next="onPageChange" @prev="onPageChange" @click="onPageChange" />
                                 </div>
                             </VCol>
                         </VRow>
@@ -216,17 +163,21 @@ watch(serverPerPage, function (value) {
 .text-capitalize {
     text-transform: capitalize;
 }
+
 .user-data-table table.vgt-table {
     background-color: rgb(var(--v-theme-surface));
     border-color: rgb(var(--v-theme-surface));
 }
+
 .user-data-table table.vgt-table td {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
+
 .user-data-table table.vgt-table thead th {
     background: rgb(var(--v-theme-surface)) !important;
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
+
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }

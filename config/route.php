@@ -5,7 +5,11 @@ return [
     'users' => 'BlendedConcept/Security/Presentation/Resources/Users/Index',
     'permissions' => 'BlendedConcept/Security/Presentation/Resources/Permissions/Index',
     'roles' => 'BlendedConcept/Security/Presentation/Resources/Roles/Index',
-    'organizations' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Index',
+    'organizations' => [
+       'index' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Index',
+       'create' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Create',
+       'edit' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Edit',
+    ],
     'plans' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Index',
     'announment' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
     'settings' => 'BlendedConcept/System/Presentation/Resources/Settings/Index',
@@ -16,6 +20,5 @@ return [
     'students' => "BlendedConcept/Student/Presentation/Resources/Student/Index",
     'teachers' => "BlendedConcept/Teacher/Presentation/Resources/Teacher/Index",
     "classrooms" => "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index"
-
 ];
 

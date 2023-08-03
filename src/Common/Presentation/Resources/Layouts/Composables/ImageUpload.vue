@@ -1,8 +1,12 @@
 <script setup>
+
 import { ref } from "vue";
+
+
 let file = ref(null);
 // for check image exisit  or not
 let hasImage = ref(false);
+
 function SelectImage() {
     //select image from hidden field
     file.value.click();
@@ -13,7 +17,7 @@ let props = defineProps({
     old_img: {
         type: String,
         default:
-            "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg",
+            "/images/defaults/upload_image.png",
     },
 });
 function fileData(event) {
@@ -56,7 +60,7 @@ function handleRemoveImage() {
     imgArea.dataset.img = "";
     let img = document.createElement("img");
     img.src =
-        "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg";
+        "/images/defaults/upload_image.png";
     imgArea.appendChild(img);
     hasImage.value = false;
 }
@@ -79,7 +83,7 @@ function handleRemoveImage() {
                         :src="
                             old_img
                                 ? old_img
-                                : 'https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg'
+                                : '/images/defaults/upload_image.png'
                         "
                         class=""
                     />
@@ -110,7 +114,7 @@ function handleRemoveImage() {
 .dropzone {
     max-width: 400px;
     width: 100%;
-    background: #fff;
+    /* background: #fff; */
     padding: 30px;
     border-radius: 30px;
 }
@@ -142,14 +146,9 @@ function handleRemoveImage() {
     font-weight: 600;
 }
 .img-area img {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    z-index: 100;
+    border-radius: 10px;
+    background: no-repeat,lightgray 50% / cover no-repeat;
 }
 .img-area::before {
     content: attr(data-img);
@@ -188,10 +187,5 @@ function handleRemoveImage() {
 }
 .select-image:hover {
     background: rgb(205, 11, 11) !important;
-}
-.img-area img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
 }
 </style>

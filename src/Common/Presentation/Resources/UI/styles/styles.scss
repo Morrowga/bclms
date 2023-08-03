@@ -1,1 +1,65 @@
 // Write your overrides
+:root {
+    --tiggie-blue: #4066E4;
+    --gray:#BFC0C1;
+    --black: #000;
+    --success:#48BC65;
+    --light-success-main:#72E128;
+}
+
+.tiggie-title {
+    color: var(--tiggie-blue);
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 42px;
+    text-transform: capitalize;
+}
+
+.tiggie-btn {
+    border-radius: 8px !important;
+    box-shadow: 0px 4px 8px -4px rgba(76, 78, 100, 0.42) !important;
+}
+
+
+
+.cancel-btn {
+    padding-top:5px;
+    border-radius: 5px;
+    border-radius: 5px;
+    color: var(--black)  !important ;
+    border: 1px solid var(--gray) !important;
+    background: var(--gray) !important;
+    width: 250px;
+}
+
+.finish-btn
+{
+    width: 250px;
+    color: #fff  !important;
+    border-radius: 5px;
+    border: 1px solid var(--tiggie-blue, #4066E4) !important;
+    background: var(--tiggie-blue, #4066E4) !important;
+}
+
+
+
+.text-green
+{
+    color: var(--sucess, #48BC65);
+}
+
+
+.v-chip
+{
+color: var(--light-success-main, #72E128);
+font-feature-settings: 'clig' off, 'liga' off;
+/* Light/Components/Chip */
+font-family: Inter;
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+line-height: 18px; /* 138.462% */
+letter-spacing: 0.16px;
+
+}

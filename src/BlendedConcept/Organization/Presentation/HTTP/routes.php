@@ -10,6 +10,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('organizations', OrganizationController::class);
 
-    Route::resource('plans', PlanController::class)->only(['store', 'index', 'show', 'destroy']);
+    Route::resource('plans', PlanController::class);
 
 });
