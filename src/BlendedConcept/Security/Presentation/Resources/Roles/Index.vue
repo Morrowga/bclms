@@ -34,23 +34,13 @@ let options = ref({
 //## start datatable section
 let columns = [
   {
-    label: "NAME",
+    label: "Role",
     field: "name",
     sortable: false,
   },
   {
-    label: "PERMISSION",
+    label: "Permissions",
     field: "permission",
-    sortable: false,
-  },
-  {
-    label: "DESCRIPTION",
-    field: "description",
-    sortable: false,
-  },
-  {
-    label: "GUARD NAME",
-    field: "guard_name",
     sortable: false,
   },
   {
@@ -110,6 +100,21 @@ watch(serverPerPage, function (value) {
           :columns="columns"
         >
           <template #table-row="dataProps">
+            <div v-if="dataProps.column.field == 'name'">
+                <div class="d-flex flex-row gap-2 ">
+
+                    <img src="/images/icons/bcicons.svg"
+                     v-if="['Organization Admin', 'BC Super Admin'].includes(dataProps.row.name)" />
+
+                     <img src="/images/icons/bcstaff.svg"
+                     v-else-if="['BC Staff'].includes(dataProps.row.name)" />
+
+                     <img src="/images/icons/bcicon.svg"
+                     v-else />
+
+                        <span>{{ dataProps.row.name }}</span>
+                </div>
+            </div>
             <div
               v-if="dataProps.column.field == 'permission'"
               class="flex flex-wrap"

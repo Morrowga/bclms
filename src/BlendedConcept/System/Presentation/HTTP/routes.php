@@ -51,6 +51,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     //get all notifications
     Route::get('/notifications/index', [NotificationController::class, "getAllNotifications"])->name("notifications");
+
+
 });
 
 

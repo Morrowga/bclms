@@ -12,7 +12,7 @@ const DASHBOARD_ROUTE = PREFIX != "" ? "c.organizationaadmin" : "dashboard";
 
 export default [
     {
-        title: 'Dashboard',
+        title: 'Home',
         url: '#',
         icon: { icon: 'mdi-home' },
         access_module: "access_dashboard",
@@ -52,17 +52,6 @@ export default [
         access_module: "access_classroom",
     },
     {
-        title: 'User Managements',
-        url: "#",
-        icon: { icon: 'mdi-account' },
-        access_module: "access_user",
-        children: [
-            { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
-            { title: 'Roles', url: '/roles', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'roles', access_module: "access_role" },
-            { title: 'Users', url: '/users', icon: { icon: 'mdi-account-group' }, route_name: 'users', access_module: "access_user" },
-        ],
-    },
-    {
         title: 'Subscribers',
         url: "/",
         icon: { icon: 'mdi-youtube-subscription' },
@@ -71,6 +60,17 @@ export default [
         children: [
             { title: 'Plans', url: '/plans', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'plans', access_module: "access_plan", },
         ]
+    },
+    {
+        title: 'Manage Users',
+        url: "#",
+        icon: { icon: 'mdi-account' },
+        access_module: "access_user",
+        children: [
+            { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
+            { title: 'Roles', url: '/roles', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'roles', access_module: "access_role" },
+            { title: 'Users', url: '/users', icon: { icon: 'mdi-account-group' }, route_name: 'users', access_module: "access_user" },
+        ],
     },
     {
         title: 'Libraries',
@@ -88,7 +88,7 @@ export default [
         ]
     },
     {
-        title: 'System',
+        title: 'Settings',
         url: "/",
         icon: { icon: 'mdi-cog' },
         route_name: 'system',

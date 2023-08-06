@@ -2,17 +2,29 @@
 import { avatarText, kFormatter } from "@core/utils/formatters";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { computed } from "vue";
-import { usePage, useForm } from "@inertiajs/vue3";
+import { usePage, useForm, Link } from "@inertiajs/vue3";
 import { toastAlert } from "@Composables/useToastAlert";
+import ChangePasswordDialog from "@mainRoot/components/Profiles/ChangePasswordDialog.vue";
+import ProfileEditDialog from "@mainRoot/components/Profiles/ProfileEditDialog.vue";
 const page = usePage();
 const user = computed(() => page.props.user_info);
+
 const flash = "Password Updated Successfully";
 
-const isUserInfoEditDialogVisible = ref(false);
+const isUserPasswordChange = ref(false);
+const isUserProfileEdit = ref(false);
 let form = useForm({
     currentpassword: "",
     updatedpassword: "",
 });
+
+let profileEdit = useForm({
+    name: "superadmin",
+    email: "superadmin@mail.com",
+    contact_number: "+959951613400"
+});
+
+
 const hanleSubmit = (data) => {
     form.currentpassword = data.currentpassword;
     form.updatedpassword = data.updatedpassword;
@@ -22,138 +34,77 @@ const hanleSubmit = (data) => {
             toastAlert({
                 title: flash,
             });
-            isUserInfoEditDialogVisible.value = false;
+            isUserPasswordChange.value = false;
             console.log(flash.value);
         },
         onError: (error) => {
-            isUserInfoEditDialogVisible.value = true;
+            isUserPasswordChange.value = true;
         },
     });
 };
+
+
+const ProfileEdit = (data) => {
+    alert("data");
+}
 </script>
 
 <template>
     <AdminLayout>
-        <VCard>
-            <VRow class="d-flex w-auto">
-                <Vcol cols="6">
-                    <VCardText class="text-center pt-5">
-                        <VAvatar
-                            rounded
-                            :size="120"
-                            color="primary"
-                            variant="tonal"
-                        >
-                            <VImg
-                                v-if="user?.user_detail?.image[0]?.original_url"
-                                :src="user?.user_detail?.image[0]?.original_url"
-                            />
-                            <span v-else class="text-5xl font-weight-semibold">
-                                {{ avatarText(user?.user_detail?.name) }}
-                            </span>
-                        </VAvatar>
-
-                        <!-- 👉 User fullName -->
-                        <h6 class="text-h6 mt-4">
-                            {{ user?.user_detail?.name }}
-                        </h6>
-
-                        <!-- 👉 Role chip -->
-                        <VChip
-                            label
-                            size="small"
-                            class="text-capitalize bg-info p-3 border-2 mt-4"
-                        >
-                            {{ user?.user_role?.name }}
-                        </VChip>
-                    </VCardText>
-                    <!-- 👉 Edit and Suspend button -->
-                    <VCardText class="d-flex justify-center">
-                        <VBtn
-                            variant="elevated"
-                            @click="isUserInfoEditDialogVisible = true"
-                        >
-                            Change Password
-                        </VBtn>
-                    </VCardText>
-                </Vcol>
-                <VCol cols="6">
-                    <VCardText class="text">
-                        <h6 class="text-h4 mt-3 fw-bold px-3">Details</h6>
-
-                        <!-- 👉 User Details list -->
-                        <VList class="card-list mt-5">
-                            <VListItem class="py-3">
-                                <VListItemTitle class="text-sm">
-                                    <span class="font-weight-medium px-3"
-                                        >Username:</span
-                                    >
-                                    <span class="text-body-2">
-                                        {{ user?.user_detail?.name }}
-                                    </span>
-                                </VListItemTitle>
-                            </VListItem>
-
-                            <VListItem class="pt-3">
-                                <VListItemTitle class="text-sm">
-                                    <span class="font-weight-medium px-3">
-                                        Email:
-                                    </span>
-                                    <span class="text-body-2">{{
-                                        user?.user_detail?.email
-                                    }}</span>
-                                </VListItemTitle>
-                            </VListItem>
-
-                            <VListItem>
-                                <VListItemTitle class="text-sm">
-                                    <span class="font-weight-medium px-3">
-                                        Status:
-                                    </span>
-                                    <VChip
-                                        label
-                                        size="small"
-                                        class="text-capitalize"
-                                    >
-                                        active
-                                    </VChip>
-                                </VListItemTitle>
-                            </VListItem>
-
-                            <VListItem>
-                                <VListItemTitle class="text-sm">
-                                    <span class="font-weight-medium px-3"
-                                        >Role:
-                                    </span>
-                                    <span class="text-capitalize text-body-2">{{
-                                        user?.user_role?.name
-                                    }}</span>
-                                </VListItemTitle>
-                            </VListItem>
-                            <VListItem>
-                                <VListItemTitle class="text-sm">
-                                    <span class="font-weight-medium px-3">
-                                        Contact:
-                                    </span>
-                                    <span class="text-body-2">{{
-                                        user?.user_detail?.contact_number
-                                    }}</span>
-                                </VListItemTitle>
-                            </VListItem>
-                        </VList>
-                    </VCardText>
-                </VCol>
-            </VRow>
-        </VCard>
+        <VRow justify="center">
+            <VCol cols="6" class="text-center">
+                <span class="tiggie-title ">Profile</span>
+            </VCol>
+            <VCol cols="6"></VCol>
+            <VCol cols="6">
+                <img src="/images/defaults/avator.png" />
+            </VCol>
+        </VRow>
+        <VRow justify="" class="text-center" no-gutters>
+            <VCol cols="6">
+                <span class="tiggie-label pb-5 pl-4">Name</span>
+                <p class="tiggie-p pl-16 padding-top-8px">Super Admin</p>
+            </VCol>
+            <VCol cols="6" class="padding-right-30">
+                <span class="tiggie-label pb-5 pl-4">User Role</span>
+                <p class="tiggie-p pl-16 padding-top-8px">Super Admin</p>
+            </VCol>
+            <VCol cols="6">
+                <span class="tiggie-label pb-5 pl-4">User Email</span>
+                <p class="tiggie-p padding-left-10 padding-top-8px">superadmin@mail.com</p>
+            </VCol>
+            <VCol cols="6" class="padding-right-30">
+                <span class="tiggie-label pb-5 pl-4">Login Email</span>
+                <p class="tiggie-p pl-16 padding-top-8px">superadmin@mail.com</p>
+            </VCol>
+            <VCol cols="6" class="text-center">
+                <span class="tiggie-label pb-5 pl-16">User Contact Number</span>
+                <p class="tiggie-p pl-16 padding-top-8px ">95159746</p>
+            </VCol>
+            <VCol cols="6" class="padding-right-30">
+                <span class="tiggie-label pb-5 pl-4">Login Password</span>
+                <p class="tiggie-p pl-16 padding-top-8px">*********</p>
+            </VCol>
+        </VRow>
+        <VRow justify="center" no-gutters>
+            <VCol cols="4" class="text-center">
+                <VBtn color="secondary" text-color="white" variant="tonal" class="pl-16 pr-16" @click="isUserProfileEdit = true">
+                    Edit Profile
+                </VBtn>
+            </VCol>
+            <VCol cols="4">
+                <VBtn color="secondary" variant="tonal" class="pl-16 pr-16 text-dark" @click="isUserPasswordChange = true">
+                    Change Password
+                </VBtn>
+            </VCol>
+        </VRow>
     </AdminLayout>
 
     <!-- 👉 Edit user info dialog -->
-    <UserInfoEditDialog
-        v-model:isDialogVisible="isUserInfoEditDialogVisible"
-        :user-data="user"
-        :form="form"
-        @submit="hanleSubmit"
-    />
+    <ChangePasswordDialog v-model:isDialogVisible="isUserPasswordChange" :user-data="user" :form="form"
+        @submit="hanleSubmit" />
+
+    <ProfileEditDialog v-model:isDialogVisible="isUserProfileEdit" :user-data="user" :form="profileEdit" @submit="hanleSubmit" />
 </template>
 
 <style>
@@ -167,5 +118,14 @@ const hanleSubmit = (data) => {
 
 .text-capitalize {
     text-transform: capitalize !important;
+}
+
+.v-btn__content {
+    color: black !important;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+    text-transform: capitalize;
 }
 </style>

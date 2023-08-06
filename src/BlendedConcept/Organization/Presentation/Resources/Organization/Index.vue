@@ -97,10 +97,6 @@ watch(serverPerPage, function (value) {
                         <VTextField @keyup.enter="searchItems" v-model="serverParams.search"
                             placeholder="Search Organizations" density="compact" />
                         <!-- 👉 Add User button -->
-                        <!-- <Create
-              :flash="flash"
-
-            /> -->
                         <VBtn v-if="permissions.includes('create_organization')" class="tiggie-btn">
                             <Link :href="route('organizations.create')" class="text-white"> Add New </Link>
                         </VBtn>

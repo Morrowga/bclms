@@ -37,6 +37,8 @@ const theme = {
         'grey-700': '#616161',
         'grey-800': '#424242',
         'grey-900': '#212121',
+        'gray':'#BFC0C1',
+        'white':'#ffffff'
       },
       variables: {
         'code-color': '#d400ff',

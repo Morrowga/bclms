@@ -12,6 +12,21 @@ class PlanController
     public function index()
     {
 
-        return Inertia::render(config('route.plans'));
+        return Inertia::render(config('route.plans.index'));
+    }
+
+    public function create()
+    {
+        return Inertia::render(config('route.plans.show'));
+    }
+
+    public function show()
+    {
+        return Inertia::render(config('route.plans.show'));
+    }
+
+    public function edit()
+    {
+        return Inertia::render(config('route.plan.edit'));
     }
 }

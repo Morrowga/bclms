@@ -1,20 +1,76 @@
 // Write your overrides
 :root {
     --tiggie-blue: #4066E4;
-    --gray:#BFC0C1;
+    --gray: #BFC0C1;
     --black: #000;
-    --success:#48BC65;
-    --light-success-main:#72E128;
+    --success: #48BC65;
+    --light-success-main: #72E128;
+    --graphite: #282828;
+    --white: #FFF;
 }
 
-.tiggie-title {
-    color: var(--tiggie-blue);
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 42px;
-    text-transform: capitalize;
+* {
+    font-size: 16px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 26px !important;
 }
+
+
+.tiggie-title {
+    // font-family: PP Pangram Sans;
+    color: var(--tiggie-blue);
+    font-size: 30px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 42px !important;
+    text-transform: capitalize !important;
+}
+
+.tiggie-label {
+    color: var(--graphite) !important;
+    // font-family: PP Pangram Sans;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 26px !important;
+    // text-align: left;
+}
+
+.tiggie-subtitle {
+    color: var(--black, #000);
+    /* Body Style Large */
+    // font-family: PP Pangram Sans;
+    font-size: 24px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 38px !important;
+    /* 158.333% */
+}
+
+.tiggie-p {
+    color: rgba(40, 40, 40, 0.50) !important;
+    /* Body Style Standard */
+    // font-family: PP Pangram Sans;
+    font-size: 20px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 32px !important;
+    /* 160% */
+
+}
+
+.tiggie-show-title {
+color: var(--tiggie-blue, #4066E4)  !important;
+// font-family: PP Pangram Sans;
+font-size: 30px !important;
+font-style: normal  !important;
+font-weight: 700 !important;
+line-height: 42px !important; /* 140% */
+text-transform: capitalize !important;
+
+}
+
 
 .tiggie-btn {
     border-radius: 8px !important;
@@ -22,44 +78,132 @@
 }
 
 
-
 .cancel-btn {
-    padding-top:5px;
-    border-radius: 5px;
-    border-radius: 5px;
-    color: var(--black)  !important ;
+    padding-top: 5px !important;
+    border-radius: 5px !important;
+    border-radius: 5px !important;
+    color: var(--black) !important;
     border: 1px solid var(--gray) !important;
     background: var(--gray) !important;
     width: 250px;
 }
 
-.finish-btn
-{
-    width: 250px;
-    color: #fff  !important;
-    border-radius: 5px;
+.finish-btn {
+
+    width: 250px !important;
+    color: #fff !important;
+    border-radius: 5px !important;
     border: 1px solid var(--tiggie-blue, #4066E4) !important;
     background: var(--tiggie-blue, #4066E4) !important;
 }
 
-
-
-.text-green
-{
-    color: var(--sucess, #48BC65);
+.back-btn {
+    border-radius: 5px !important;
+    border: 1px solid var(--gray, #BFC0C1) !important;
+    background: var(--gray, #BFC0C1) !important;
 }
 
 
-.v-chip
-{
-color: var(--light-success-main, #72E128);
-font-feature-settings: 'clig' off, 'liga' off;
-/* Light/Components/Chip */
-font-family: Inter;
-font-size: 13px;
-font-style: normal;
-font-weight: 400;
-line-height: 18px; /* 138.462% */
-letter-spacing: 0.16px;
 
+
+
+.text-green {
+    color: var(--sucess, #48BC65) !important;
+}
+
+
+.v-chip {
+    color: var(--light-success-main, #72E128) !important;
+    font-feature-settings: 'clig' off, 'liga' off !important;
+    /* Light/Components/Chip */
+    font-family: Inter !important;
+    font-size: 13px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 18px !important;
+    /* 138.462% */
+    letter-spacing: 0.16px !important;
+
+}
+
+
+.text-dark {
+    color: #000 !important;
+}
+
+
+// globle spacing and pading
+
+.padding-left-30 {
+    padding-left: 30% !important;
+}
+
+.padding-right-30 {
+    padding-right: 30% !important;
+}
+
+.padding-right-20 {
+    padding-right: 20% !important;
+}
+
+.padding-left-10 {
+    padding-left: 18% !important;
+}
+
+.padding-left-36 {
+    padding-left: 36% !important;
+}
+
+.padding-top-8px {
+    padding-top: 8px !important;
+}
+
+.padding-right-16 {
+    padding-right: 16% !important;
+}
+
+.margin-buttom-18
+{
+    margin-bottom: 18px !important;
+}
+
+span {
+    color: var(--light-text-primary, rgba(76, 78, 100, 0.87));
+    /* Body Style Small */
+    // font-family: PP Pangram Sans;
+    font-size: 16px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 26px !important;
+    /* 162.5% */
+}
+
+
+
+//custome vuetify
+
+.v-btn__content {
+    color: var(--white) !important;
+    font-size: 16px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 26px !important;
+    text-transform: capitalize !important;
+}
+
+.rounded-select .v-input__control {
+    border-radius: 20px;
+}
+
+
+
+.user-profile-image {
+    border-radius: 64px;
+    display: flex;
+    width: 34px;
+    height: 34px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
 }

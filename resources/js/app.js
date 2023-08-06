@@ -1,5 +1,6 @@
 import { createApp, h } from 'vue'
-import { createInertiaApp } from '@inertiajs/vue3'
+import { createInertiaApp,Link } from '@inertiajs/vue3'
+
 import { Ziggy } from './ziggy';
 /* eslint-disable import/order */
 
@@ -53,7 +54,8 @@ createInertiaApp({
         methods:{route,moment},
       components:{
         VueGoodTable,
-        SystemErrorAlert
+        SystemErrorAlert,
+        Link
       }
       })
       .mount(el);

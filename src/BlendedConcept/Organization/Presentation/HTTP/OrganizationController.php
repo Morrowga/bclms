@@ -57,6 +57,11 @@ class OrganizationController extends Controller
         return Inertia::render(config('route.organizations.create'));
     }
 
+    public function edit()
+    {
+        return Inertia::render(config('route.organizations.edit'));
+    }
+
     /**
      * Store a newly created organization based on the provided request.
      *
@@ -95,7 +100,7 @@ class OrganizationController extends Controller
 
     public function show()
     {
-        abort(404);
+        return Inertia::render(config('route.organizations.show'));
     }
 
     public function destroy(OrganizationEloquentModel $organization)

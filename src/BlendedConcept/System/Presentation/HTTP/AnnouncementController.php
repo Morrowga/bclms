@@ -48,16 +48,21 @@ class AnnouncementController extends Controller
             // Get announcements with pagination
             $announcements = (new GetAnnounmetAllWithPagination($filters))->handle();
             // Render Inertia view
-            return Inertia::render(config('route.announment'), [
+            return Inertia::render(config('route.announment.index'), [
                 "announcements" => $announcements,
                 "users" => $users,
                 "organizations" => $organizations
             ]);
         } catch (\Exception $e) {
-            return Inertia::render(config('route.announment'))->with("sytemErrorMessage", $e->getMessage());
+            return Inertia::render(config('route.announment.index'))->with("sytemErrorMessage", $e->getMessage());
         }
     }
 
+
+    public function create()
+    {
+        return Inertia::render(config('route.announment.create'));
+    }
 
 
     /**

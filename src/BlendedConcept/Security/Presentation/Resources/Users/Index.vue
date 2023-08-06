@@ -2,7 +2,7 @@
 import Create from "./Create.vue";
 import Edit from "./Edit.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import {  usePage } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import {
@@ -14,42 +14,58 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
-let props = defineProps(["users", "roles_name", "flash", "auth","organizations"]);
+let props = defineProps(["users", "roles_name", "flash", "auth", "organizations"]);
 let flash = computed(() => usePage().props.flash);
 let users = computed(() => usePage().props.auth.data.users);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 let currentPermission = ref();
 serverPage.value = ref(props.users.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
-console.log(props.users,"hello testing")
+console.log(props.users, "hello testing")
 
 const deleteUser = (id) => {
     deleteItem(id, "users");
 };
 
+const items = ref([
+    {
+        title: 'Edit',
+        value: 'edit',
+    },
+    {
+        title: 'Delete',
+        value: 'delete',
+    }
+])
+
 let columns = [
     {
-        label: "NAME",
+        label: "Name",
         field: "name",
         sortable: false,
     },
     {
-        label: "EMAIL",
+        label: "Email",
         field: "email",
         sortable: false,
     },
     {
-        label: "ROLES",
+        label: "Organizations",
+        field: "orgainzations",
+        sortable: false,
+    },
+    {
+        label: "Roles",
         field: "roles",
         sortable: false,
     },
     {
-        label: "REGISTER AT",
-        field: "created_at",
+        label: "Status",
+        field: "status",
         sortable: false,
     },
     {
-        label: "ACTION",
+        label: "",
         field: "action",
         sortable: false,
     },
@@ -75,118 +91,73 @@ watch(serverPerPage, function (value) {
             <VCard>
                 <VCardText class="d-flex flex-wrap gap-4">
                     <!-- 👉 Export button -->
-                    <VTextField
-                        @keyup.enter="searchItems"
-                        v-model="serverParams.search"
-                        placeholder="Search Users"
-                        density="compact"
-                    />
+                    <VTextField @keyup.enter="searchItems" v-model="serverParams.search" placeholder="Search Users"
+                        density="compact" />
                     <VSpacer />
 
-                    <div
-                        class="app-user-search-filter d-flex align-center justify-end"
-                    >
+                    <div class="app-user-search-filter d-flex align-center justify-end">
                         <!-- 👉 Add User button -->
-                        <Create
-                            :organizations="organizations"
-                            :roles="roles_name"
-                            :flash="flash"
-                            v-if="permissions.includes('create_user')"
-                        />
+                        <Create :organizations="organizations" :roles="roles_name" :flash="flash"
+                            v-if="permissions.includes('create_user')" />
                     </div>
                 </VCardText>
 
                 <VDivider />
 
-                <vue-good-table
-                    class="user-data-table"
-                    mode="remote"
-                    @column-filter="onColumnFilter"
-                    :totalRows="props.users.meta.total"
-                    styleClass="vgt-table "
-                    :pagination-options="options"
-                    :rows="props.users.data"
-                    :columns="columns"
-                >
+                <vue-good-table class="user-data-table" mode="remote" @column-filter="onColumnFilter"
+                    :totalRows="props.users.meta.total" styleClass="vgt-table " :pagination-options="options"
+                    :rows="props.users.data" :columns="columns">
                     <template #table-row="props">
-                        <!-- <span>{{props.row}}</span> -->
-                        <div
-                            v-if="props.column.field == 'roles'"
-                            class="flex flex-wrap"
-                        >
-                            <VChip
-                                color="primary"
-                                v-for="role in props?.row?.roles"
-                                :key="role?.id"
-                            >
+                        <div v-if="props.column.field == 'name'">
+                            <div class="d-flex flex-row gap-2 ">
+                                <img src="/images/defaults/avator.png" class="user-profile-image" />
+                                <span>Jordan Stevenson</span>
+                            </div>
+                        </div>
+
+                        <div v-if="props.column.field == 'orgainzations'">
+                            <p class="">-</p>
+                        </div>
+
+                        <div v-if="props.column.field == 'roles'" class="d-flex flex-row gap-2 align-center">
+                            <img src="/images/icons/bcicons.svg" />
+                            <span v-for="role in props?.row?.roles" :key="role?.id">
                                 {{ role?.name }}
+                            </span>
+                        </div>
+                        <div v-if="props.column.field == 'status'" class="flex flex-wrap">
+                            <VChip color="success">
+                                Active
+                            </VChip>
+
+                            <VChip color="warning" v-if="true == false">
+                                Active
                             </VChip>
                         </div>
-                        <div
-                            v-if="props.column.field == 'created_at'"
-                            class="flex flex-wrap"
-                        >
-                            {{
-                                moment(props.row.created_at).format(
-                                    "DD-MM-YYYY h:mm A"
-                                )
-                            }}
-                        </div>
                         <div v-if="props.column.field == 'action'">
-                            <div class="d-flex">
-                                <Edit
-                                    :organizations="organizations"
-                                    :user="props.row"
-                                    :roles="roles_name"
-                                    :flash="flash"
-                                    v-if="permissions.includes('edit_user')"
-                                />
-                                <div v-if="permissions.includes('delete_user')">
-                                    <VBtn
-                                        density="compact"
-                                        icon="mdi-trash"
-                                        class="ml-2"
-                                        color="secondary"
-                                        variant="text"
-                                        v-if="
-                                            props.row.roles[0].name !==
-                                            'BC Super Admin'
-                                        "
-                                        @click="deleteUser(props.row.id)"
-                                    >
-                                    </VBtn>
-                                </div>
-                            </div>
+                            <VMenu location="end">
+                                <template #activator="{ props }">
+                                    <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black"
+                                        class="mt-n4" />
+                                </template>
+                                <VList :items="items" />
+                            </VMenu>
                         </div>
                     </template>
                     <template #pagination-bottom>
                         <VRow class="pa-4">
-                            <VCol
-                                cols="12"
-                                class="d-flex justify-space-between"
-                            >
-                                <span
-                                    >Showing {{ props.users.meta.from }} to
+                            <VCol cols="12" class="d-flex justify-space-between">
+                                <span>Showing {{ props.users.meta.from }} to
                                     {{ props.users.meta.to }} of
-                                    {{ props.users.meta.total }} entries</span
-                                >
+                                    {{ props.users.meta.total }} entries</span>
                                 <div>
                                     <div class="d-flex align-center">
                                         <span class="me-2">Show</span>
-                                        <VSelect
-                                            v-model="serverPerPage"
-                                            density="compact"
-                                            :items="options.perPageDropdown"
-                                        ></VSelect>
-                                        <VPagination
-                                            v-model="serverPage"
-                                            size="small"
-                                            :total-visible="5"
-                                            :length="props.users.meta.last_page"
-                                            @next="onPageChange"
-                                            @prev="onPageChange"
-                                            @click="onPageChange"
-                                        />
+                                        <VSelect v-model="serverPerPage" density="compact" :items="options.perPageDropdown">
+                                        </VSelect>
+                                        <VPagination v-model="serverPage" size="small" :total-visible="5"
+                                            :length="props.users.meta.last_page" @next="onPageChange" @prev="onPageChange"
+                                            @click="onPageChange" />
                                     </div>
                                 </div>
                             </VCol>
@@ -208,17 +179,21 @@ watch(serverPerPage, function (value) {
 .text-capitalize {
     text-transform: capitalize;
 }
+
 .user-data-table table.vgt-table {
     background-color: rgb(var(--v-theme-surface));
     border-color: rgb(var(--v-theme-surface));
 }
+
 .user-data-table table.vgt-table td {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
+
 .user-data-table table.vgt-table thead th {
     background: rgb(var(--v-theme-surface)) !important;
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
+
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }

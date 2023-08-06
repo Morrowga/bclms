@@ -58,7 +58,7 @@ class UserController extends Controller
 
 
             // Render the Inertia view with the obtained data
-            return Inertia::render(config('route.users'), [
+            return Inertia::render(config('route.users.index'), [
                 'users' => $users,
                 'users_name' => $users_name,
                 'roles_name' => $roles_name,
@@ -105,6 +105,11 @@ class UserController extends Controller
         abort_if(authorize('destroy', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->userService->deleteUser($user);
         return redirect()->route('users.index')->with("successMessage", "User Deleted Successfully!");
+    }
+
+    public function show()
+    {
+        return Inertia::render(config('route.users.show'));
     }
 
     public function changePassword(updateUserPasswordRequest $request)

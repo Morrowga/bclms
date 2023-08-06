@@ -102,10 +102,9 @@ watch(serverPerPage, function (value) {
 
           <div class="app-user-search-filter d-flex justify-end align-center">
             <!-- 👉 Add Announcement button -->
-            <Create
-            :flash="flash"
-            :users="props.users"
-            :organizations="props.organizations" />
+            <VBtn v-if="permissions.includes('create_organization')" class="tiggie-btn">
+                            <Link :href="route('announcements.create')" class="text-white"> Add New </Link>
+            </VBtn>
           </div>
         </VCardText>
 

@@ -4,27 +4,48 @@ const pages = {
     // admin dashboard
     "BlendedConcept/System/Presentation/Resources/index": import('../../src/BlendedConcept/System/Presentation/Resources/index.vue'),
 
-    //organization
-
-    // show organization
+    /***
+     * this below contains  Orgainzations lists that will used for superadmin
+     *
+     *  Index,Create,Edit,Show Organizations
+     *
+     */
     "BlendedConcept/Organization/Presentation/Resources/Organization/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/Index.vue'),
-
-    //create Organization
 
     "BlendedConcept/Organization/Presentation/Resources/Organization/Create": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/Create.vue'),
 
-    //Edit Organization
     "BlendedConcept/Organization/Presentation/Resources/Organization/Edit": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/Edit.vue'),
 
+    "BlendedConcept/Organization/Presentation/Resources/Organization/Show": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/Show.vue'),
 
-    // plans
+
+    /***
+     * this below contains plans lists that will used for superadmin
+     *
+     *  Index,Create,Edit,Show Plans
+     *
+     */
     "BlendedConcept/Organization/Presentation/Resources/Plans/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Index.vue'),
 
+    "BlendedConcept/Organization/Presentation/Resources/Plans/Create": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Create.vue'),
+
+    "BlendedConcept/Organization/Presentation/Resources/Plans/Edit": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Edit.vue'),
+
+    "BlendedConcept/Organization/Presentation/Resources/Plans/Show": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Show.vue'),
 
 
 
-    //user module
+    /***
+     * this below contains users  lists that will used for superadmin
+     *
+     *  Index,Show announcement
+     *
+     *  @hareom284
+     *
+     */
     "BlendedConcept/Security/Presentation/Resources/Users/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/Users/Index.vue'),
+
+    "BlendedConcept/Security/Presentation/Resources/Users/Show": import('../../src/BlendedConcept/Security/Presentation/Resources/Users/Show.vue'),
 
 
 
@@ -40,8 +61,22 @@ const pages = {
     "Auth/Presentation/Resources/UserProfile": import('../../src/Auth/Presentation/Resources/UserProfile.vue'),
 
 
-    //announcement
+
+
+
+    /***
+     * this below contains announcement  lists that will used for superadmin
+     *
+     *  Index,Create,Edit,Show announcement
+     *
+     */
     "BlendedConcept/System/Presentation/Resources/Announcements/Index": import('../../src/BlendedConcept/System/Presentation/Resources/Announcements/Index.vue'),
+
+    "BlendedConcept/System/Presentation/Resources/Announcements/Create": import('../../src/BlendedConcept/System/Presentation/Resources/Announcements/Create.vue'),
+
+    "BlendedConcept/System/Presentation/Resources/Announcements/Edit": import('../../src/BlendedConcept/System/Presentation/Resources/Announcements/Edit.vue'),
+
+    "BlendedConcept/System/Presentation/Resources/Announcements/Show": import('../../src/BlendedConcept/System/Presentation/Resources/Announcements/Show.vue'),
 
     //settings
     "BlendedConcept/System/Presentation/Resources/Settings/Index": import('../../src/BlendedConcept/System/Presentation/Resources/Settings/Index.vue'),
