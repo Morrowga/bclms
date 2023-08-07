@@ -41,31 +41,25 @@ const deleteAnnouncement = (id) => {
 //start datatable section
 let columns = [
   {
-    label: "TITLE",
+    label: "Title",
     field: "title",
     sortable: false,
   },
   {
-    label: "MESSAGE",
+    label: "Message",
     field: "message",
     sortable: false,
   },
   {
-    label: "ANNOUNCEMENT BY",
+    label: "Announcement by",
     field: "created_by",
     sortable: false,
   },
   {
-    label: "ANNOUNCEMENT To",
+    label: "Announment to",
     field: "send_to",
     sortable: false,
-  },
-
-  {
-    label: "ACTION",
-    field: "action",
-    sortable: false,
-  },
+  }
 ];
 
 //## options for datatable
@@ -135,28 +129,6 @@ watch(serverPerPage, function (value) {
             </div>
             <div v-if="props.column.field == 'send_to'" class="flex flex-wrap">
               <span>{{ truncatedText(props.row.send_to.name) }}</span>
-            </div>
-
-            <div v-if="props.column.field == 'action'">
-              <div class="d-flex">
-                <Edit
-                  :users="users"
-                  :flash="flash"
-                  :organizations="organizations"
-                  :announcement="props.row"
-                />
-
-                <VBtn
-                  density="compact"
-                  icon="mdi-trash"
-                  class="ml-2"
-                  color="secondary"
-                  variant="text"
-                  v-if="permissions.includes('delete_announcement')"
-                  @click="deleteAnnouncement(props.row.id)"
-                >
-                </VBtn>
-              </div>
             </div>
           </template>
           <template #pagination-bottom>

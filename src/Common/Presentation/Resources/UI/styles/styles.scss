@@ -48,6 +48,13 @@
     /* 158.333% */
 }
 
+.tiggie-resize-input-text
+{
+    height: 45px !important;
+    // padding: 12px !important;
+
+}
+
 .tiggie-p {
     color: rgba(40, 40, 40, 0.50) !important;
     /* Body Style Standard */
@@ -85,7 +92,6 @@ text-transform: capitalize !important;
     color: var(--black) !important;
     border: 1px solid var(--gray) !important;
     background: var(--gray) !important;
-    width: 250px;
 }
 
 .finish-btn {

@@ -115,11 +115,12 @@ const selectionChanged = (data) => {
                 <!-- 👉 Export button -->
                     <VTextField
                     v-model="searchItem"
+                     density="compact"
                      placeholder="Search Subscription Plans" />
                 <VSpacer />
 
                 <div class="app-user-search-filter d-flex justify-end align-center gap-6">
-                    <VBtn class="tiggie-btn">
+                    <VBtn class="tiggie-btn" height="40">
                         <Link :href="route('plans.create')" class="text-white"> Add Subscription Plan </Link>
                     </VBtn>
                 </div>

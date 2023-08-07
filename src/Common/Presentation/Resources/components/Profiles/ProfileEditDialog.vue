@@ -62,32 +62,44 @@ const dialogVisibleUpdate = val => {
             <VCardText>
                 <!-- 👉 Form -->
                 <VForm class="mt-6" @submit.prevent="onFormSubmit">
-                    <VRow justify="center">
+                    <VRow >
                         <!-- 👉 Contact -->
-                        <VCol cols="10" md="10">
-                            <VTextField type="text" v-model="userData.name" :error-messages="props?.form?.errors?.name"
-                                label="User Name" />
+                        <VCol cols="11" md="11">
+                            <VLabel class="tiggie-label">User Name</VLabel>
+                            <VTextField
+                            type="text"
+                            class="tiggie-resize-input-text"
+                            v-model="userData.name"
+                            :error-messages="props?.form?.errors?.name"/>
                         </VCol>
 
 
                         <!-- 👉 Contact -->
-                        <VCol cols="10" md="10">
-                            <VTextField type="email" v-model="userData.email" :error-messages="props?.form?.errors?.email"
-                                label="User Email" />
+                        <VCol cols="11" md="11">
+                            <VLabel class="tiggie-label">User Email</VLabel>
+                            <VTextField
+                            type="email"
+                            v-model="userData.email"
+                            class="tiggie-resize-input-text"
+                            :error-messages="props?.form?.errors?.email"/>
                         </VCol>
-                        <VCol cols="10" md="10">
-                            <VTextField type="text" v-model="userData.contact_number"
-                                :error-messages="props?.form?.errors?.contact_number" label="User Contact Number" />
+                        <VCol cols="11" md="11">
+                            <VLabel class="tiggie-label">User Contact Number</VLabel>
+                            <VTextField
+                            type="text"
+                            v-model="userData.contact_number"
+                            class="tiggie-resize-input-text"
+                            :error-messages="props?.form?.errors?.contact_number"/>
                         </VCol>
 
                         <!-- 👉 Submit and Cancel -->
-                        <VCol cols="10" class="d-flex flex-wrap justify-space-between gap-10">
-                            <VBtn color="gray" text-color="white" @click="onFormReset">
+                        <VCol cols="11" class="d-flex flex-wrap justify-space-between gap-10">
+                            <VBtn color="gray" text-color="white" height="58" @click="onFormReset">
                                 <Link :href="route('userprofile')" class="pl-5 pr-5">
                                     Cancel
                                 </Link>
                             </VBtn>
-                            <VBtn type="submit" color="primary" class="">
+                            <VBtn type="submit" color="primary" height="58" class="">
                                 <span class="pl-5 pr-5 text-white">
                                     Submit
                                 </span>

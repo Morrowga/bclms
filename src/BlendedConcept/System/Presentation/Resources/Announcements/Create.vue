@@ -37,23 +37,22 @@ let description = ref("")
                         </VCol>
                         <VCol cols="4">
                             <VLabel class="tiggie-label">Announcement by</VLabel>
-                            <VSelect :items="items"/>
+                            <VSelect :items="items" />
                         </VCol>
                         <VCol cols="4">
                             <VLabel class="tiggie-label">Announcement to</VLabel>
-                            <VSelect :items="items"/>
+                            <VSelect :items="items" />
                         </VCol>
                     </VRow>
 
                 </VCol>
-
-
-                <VCol cols="12" class="d-flex justify-center gap-10">
-                    <Link :href="route('plans.index')" class="cancel-btn text-center">
-                    Cancel
-                    </Link>
-                    <VBtn type="submit" class="finish-btn"> Post </VBtn>
-
+                <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
+                    <VBtn color="gray" text-color="white" height="50" class="pl-16 pr-16">
+                        <Link :href="route('plans.index')" class="cancel-btn text-center">
+                        Cancel
+                        </Link>
+                    </VBtn>
+                    <VBtn type="submit" class="finish-btn pl-5 pr-5" height="50"> Post </VBtn>
                 </VCol>
             </VRow>
         </VContainer>

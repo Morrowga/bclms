@@ -6,7 +6,7 @@ use Src\BlendedConcept\System\Presentation\HTTP\AnnouncementController;
 use Src\BlendedConcept\System\Presentation\HTTP\SettingController;
 use Src\BlendedConcept\System\Presentation\HTTP\LibraryController;
 use Src\BlendedConcept\System\Presentation\HTTP\NotificationController;
-
+use Src\BlendedConcept\System\Presentation\HTTP\TechnicalSupportController;
 Route::get('/', function () {
 
     return redirect('/bc/index');
@@ -28,6 +28,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("libraries", [LibraryController::class, 'index'])->name('libraries');
 
     Route::post('settings', [SettingController::class, 'UpdateSetting'])->name('updateSetting');
+
+    Route::get('updateSiteTheme', [SettingController::class, 'updateSiteTheme'])->name('updateSiteTheme');
+
+
+    Route::get('supports',[TechnicalSupportController::class,'index']);
+
 
 
 

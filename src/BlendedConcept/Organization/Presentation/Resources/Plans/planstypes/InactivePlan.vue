@@ -99,6 +99,7 @@ const selectionChanged = (data) => {
                 <!-- 👉 Export button -->
                 <VTextField
                     v-model="searchItem"
+                    density="compact"
                      placeholder="Search Subscription Plans" />
                 <VSpacer />
             </VCardText>

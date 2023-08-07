@@ -51,42 +51,43 @@ const ProfileEdit = (data) => {
 
 <template>
     <AdminLayout>
-        <VRow justify="center">
-            <VCol cols="6" class="text-center">
-                <span class="tiggie-title ">Profile</span>
+        <VContainer>
+            <VRow>
+            <VCol cols="6">
+                <span class="tiggie-title">Profile</span>
             </VCol>
             <VCol cols="6"></VCol>
             <VCol cols="6">
                 <img src="/images/defaults/avator.png" />
             </VCol>
         </VRow>
-        <VRow justify="" class="text-center" no-gutters>
-            <VCol cols="6">
-                <span class="tiggie-label pb-5 pl-4">Name</span>
-                <p class="tiggie-p pl-16 padding-top-8px">Super Admin</p>
-            </VCol>
-            <VCol cols="6" class="padding-right-30">
-                <span class="tiggie-label pb-5 pl-4">User Role</span>
-                <p class="tiggie-p pl-16 padding-top-8px">Super Admin</p>
+        <VRow justify="center">
+            <VCol cols="6" class="">
+                <span class="tiggie-label">Name</span>
+                <p class="tiggie-p">Super Admin</p>
             </VCol>
             <VCol cols="6">
-                <span class="tiggie-label pb-5 pl-4">User Email</span>
-                <p class="tiggie-p padding-left-10 padding-top-8px">superadmin@mail.com</p>
+                <span class="tiggie-label">User Role</span>
+                <p class="tiggie-p">Super Admin</p>
             </VCol>
-            <VCol cols="6" class="padding-right-30">
-                <span class="tiggie-label pb-5 pl-4">Login Email</span>
-                <p class="tiggie-p pl-16 padding-top-8px">superadmin@mail.com</p>
+            <VCol cols="6">
+                <span class="tiggie-label">User Email</span>
+                <p class="tiggie-p">superadmin@mail.com</p>
             </VCol>
-            <VCol cols="6" class="text-center">
-                <span class="tiggie-label pb-5 pl-16">User Contact Number</span>
-                <p class="tiggie-p pl-16 padding-top-8px ">95159746</p>
+            <VCol cols="6">
+                <span class="tiggie-label ">Login Email</span>
+                <p class="tiggie-p">superadmin@mail.com</p>
             </VCol>
-            <VCol cols="6" class="padding-right-30">
-                <span class="tiggie-label pb-5 pl-4">Login Password</span>
-                <p class="tiggie-p pl-16 padding-top-8px">*********</p>
+            <VCol cols="6">
+                <span class="tiggie-label">User Contact Number</span>
+                <p class="tiggie-p">95159746</p>
+            </VCol>
+            <VCol cols="6">
+                <span class="tiggie-label">Login Password</span>
+                <p class="tiggie-p">*********</p>
             </VCol>
         </VRow>
-        <VRow justify="center" no-gutters>
+        <VRow  no-gutters>
             <VCol cols="4" class="text-center">
                 <VBtn color="secondary" text-color="white" variant="tonal" class="pl-16 pr-16" @click="isUserProfileEdit = true">
                     Edit Profile
@@ -98,6 +99,8 @@ const ProfileEdit = (data) => {
                 </VBtn>
             </VCol>
         </VRow>
+        </VContainer>
+
     </AdminLayout>
 
     <!-- 👉 Edit user info dialog -->

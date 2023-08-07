@@ -17,7 +17,7 @@ class PlanController
 
     public function create()
     {
-        return Inertia::render(config('route.plans.show'));
+        return Inertia::render(config('route.plans.create'));
     }
 
     public function show()

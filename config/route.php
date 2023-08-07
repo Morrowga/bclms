@@ -9,8 +9,11 @@ return [
      ],
     'permissions' => 'BlendedConcept/Security/Presentation/Resources/Permissions/Index',
     'roles' => 'BlendedConcept/Security/Presentation/Resources/Roles/Index',
+
     'organizations' => [
        'index' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Index',
+       'create' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Create',
+       'edit' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Edit',
        'show' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Show',
     ],
 
@@ -29,6 +32,12 @@ return [
      ],
 
     'settings' => 'BlendedConcept/System/Presentation/Resources/Settings/Index',
+    'site_theme' => 'BlendedConcept/System/Presentation/Resources/Settings/SiteTheme',
+
+    'support' => [
+        'index' => 'BlendedConcept/System/Presentation/Resources/Supports/Index'
+    ],
+
     'login'   => 'Auth/Presentation/Resources/Login',
     'verify' => 'Auth/Presentation/Resources/Verify',
     'register' => 'Auth/Presentation/Resources/Register',

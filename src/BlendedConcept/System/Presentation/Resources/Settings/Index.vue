@@ -231,7 +231,6 @@ function handleUpdateSite() {
                 <VRow justify="center">
                     <VCol cols="4" justify="center" class="ml-2">
                         <VBtn type="submit" class="finish-btn">
-                            <VIcon icon="mdi-wrench-outline" />
                             Update
                         </VBtn>
                     </VCol>

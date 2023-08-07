@@ -38,10 +38,10 @@ import { usePage } from "@inertiajs/vue3";
 const auth = computed(() => usePage().props.auth);
 defineProps(["item"]);
 let isLinkActive = (currentRoute) => {
-  return route().current().includes(currentRoute);
+  return route()?.current()?.includes(currentRoute);
 };
 let isParentActive = (routeList) => {
-  return routeList.find((item) => route().current().includes(item.route_name));
+  return routeList?.find((item) => route()?.current()?.includes(item.route_name));
 };
 let goLink = (item) => {
   if (item?.isNativeLink) {

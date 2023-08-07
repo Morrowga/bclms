@@ -13,10 +13,8 @@ const props = defineProps({
 </script>
 
 <template>
-  <VDivider v-if="props.divider" />
-
   <div class="customizer-section">
-    <p class="text-caption">
+    <p class="tiggie-text fw-700" style="text-transform: capitalize !important;">
       {{ props.title }}
     </p>
 

@@ -22,7 +22,7 @@ const props = defineProps({
 const auth = computed(() => usePage().props.auth);
 // const { dynamicI18nProps } = useLayouts();
 let isLinkActive = (currentRoute) => {
-  return route().current().includes(currentRoute);
+  return route()?.current()?.includes(currentRoute);
 };
 let goLink = (url) => {
   router.get(url);

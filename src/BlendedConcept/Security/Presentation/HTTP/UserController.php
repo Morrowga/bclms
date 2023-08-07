@@ -68,6 +68,11 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
+
+    public function create()
+    {
+        abort(404);
+    }
     /**
      * Store a new user.
      *

@@ -65,4 +65,10 @@ class SettingController extends Controller
             dd($e->getMessage());
         }
     }
+
+
+    public function updateSiteTheme()
+    {
+        return Inertia::render(config('route.site_theme'));
+    }
 }

@@ -92,17 +92,19 @@ watch(serverPerPage, function (value) {
                     <!-- 👉 Export button -->
                     <VBtn prepend-icon="mdi-export" variant="outlined" color="secondary">Export</VBtn>
                     <VSpacer />
-                    <div class="app-user-search-filter d-flex align-center gap-6">
-                        <!-- 👉 Search  -->
-                        <VTextField @keyup.enter="searchItems" v-model="serverParams.search"
-                            placeholder="Search Organizations" density="compact" />
-                        <!-- 👉 Add User button -->
-                        <VBtn v-if="permissions.includes('create_organization')" class="tiggie-btn">
-                            <Link :href="route('organizations.create')" class="text-white"> Add New </Link>
-                        </VBtn>
+                    <div class="app-user-search-filter">
+                        <div class="d-flex flex-row gap-2">
+                            <!-- 👉 Search  -->
+                            <VTextField @keyup.enter="searchItems" v-model="serverParams.search"
+                                placeholder="Search Organizations..." density="compact" />
 
+                            <VSelect :items="items" rounded="50%" density="compact" />
 
-
+                            <!-- 👉 Add User button -->
+                            <VBtn v-if="permissions.includes('create_organization')" class="tiggie-btn">
+                                <Link :href="route('organizations.create')" class="text-white"> Add New </Link>
+                            </VBtn>
+                        </div>
                     </div>
                 </VCardText>
                 <VDivider />
