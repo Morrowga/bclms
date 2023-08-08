@@ -230,12 +230,19 @@ function handleUpdateSite() {
                 </VRow>
                 <VRow justify="center">
                     <VCol cols="4" justify="center" class="ml-2">
-                        <VBtn type="submit" class="finish-btn">
+                        <VBtn type="submit" class="tiggie-btn text-white" height="50">
                             Update
                         </VBtn>
+                        <v-btn>Custom Button</v-btn>
                     </VCol>
                 </VRow>
             </VForm>
         </VContainer>
     </AdminLayout>
 </template>
+
+<style>
+.v-btn__content {
+    color: var(--v-theme-white) !important;
+}
+</style>

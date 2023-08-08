@@ -23,7 +23,7 @@ export default [
     {
         title: 'Organizations',
         url: "/organizations",
-        icon: { icon: 'mdi-home-city' },
+        icon: { icon: 'mdi-briefcase-variant' },
         route_name: 'organizations',
         access_module: "access_organization",
         children: [
@@ -54,7 +54,7 @@ export default [
     {
         title: 'Subscribers',
         url: "/",
-        icon: { icon: 'mdi-youtube-subscription' },
+        icon: { icon: 'mdi-play-circle-outline' },
         route_name: 'subscribers',
         access_module: "access_subscriber",
         children: [

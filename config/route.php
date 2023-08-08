@@ -27,8 +27,6 @@ return [
      'announment' => [
         'index' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
         'create' => 'BlendedConcept/System/Presentation/Resources/Announcements/Create',
-        'edit' => 'BlendedConcept/System/Presentation/Resources/Announcements/Edit',
-        'show' => 'BlendedConcept/System/Presentation/Resources/Announcements/Show',
      ],
 
     'settings' => 'BlendedConcept/System/Presentation/Resources/Settings/Index',

@@ -5,8 +5,9 @@
         v-bind="props"
         :prepend-icon="item.icon.icon"
         :title="item.title"
-        :class="isParentActive(item.children) ? 'bg-primary' : ''"
-        :color="isParentActive(item.children) ? '#fff' : ''"
+        class="mx-2 text-none"
+        :class="isParentActive(item.children) ? '' : ''"
+        :color="isParentActive(item.children) ? '#4066E4' : '#282828'"
         :hidden="
           !auth?.data?.permissions?.includes(item?.access_module) &&
           item?.access_module != 'access_dashboard'

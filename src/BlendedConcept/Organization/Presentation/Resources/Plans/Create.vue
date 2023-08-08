@@ -85,8 +85,8 @@ let form = useForm({
                     </VRow>
                 </VCol>
                 <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
-                    <VBtn color="gray" text-color="white" height="50" class="pl-16 pr-16">
-                        <Link :href="route('userprofile')">
+                    <VBtn color="gray" height="50" class="pl-16 pr-16">
+                        <Link :href="route('userprofile')" class="text-gray">
                         Cancel
                         </Link>
                     </VBtn>

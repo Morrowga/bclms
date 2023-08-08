@@ -74,9 +74,9 @@ const pages = {
 
     "BlendedConcept/System/Presentation/Resources/Announcements/Create": import('../../src/BlendedConcept/System/Presentation/Resources/Announcements/Create.vue'),
 
-    "BlendedConcept/System/Presentation/Resources/Announcements/Edit": import('../../src/BlendedConcept/System/Presentation/Resources/Announcements/Edit.vue'),
 
-    "BlendedConcept/System/Presentation/Resources/Announcements/Show": import('../../src/BlendedConcept/System/Presentation/Resources/Announcements/Show.vue'),
+
+
 
     //settings
     "BlendedConcept/System/Presentation/Resources/Settings/Index": import('../../src/BlendedConcept/System/Presentation/Resources/Settings/Index.vue'),

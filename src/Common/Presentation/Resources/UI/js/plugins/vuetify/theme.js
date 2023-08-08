@@ -38,6 +38,7 @@ const theme = {
         'grey-800': '#424242',
         'grey-900': '#212121',
         'gray':'#BFC0C1',
+        'light': "#F4F4F4",
         'white':'#ffffff'
       },
       variables: {

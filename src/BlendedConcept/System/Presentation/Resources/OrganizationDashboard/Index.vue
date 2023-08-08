@@ -1,4 +1,5 @@
 <script setup>
+import UserListCard from "@mainRoot/components/UserListCard.vue";
 import { defineProps } from "vue";
 
 import TotalClassRooms from "./TotalClassRooms.vue";
@@ -34,34 +35,7 @@ const statisticsWithImages = [
         sm="12"
         md="6"
       >
-        <VCard>
-          <VCardText>
-            <VRow justify="space-between">
-              <VCol cols="12" sm="6" md="6">
-                <h6 class="text-base font-weight-semibold mb-2 text-primary">
-                  {{ statistics.title }}
-                </h6>
-                <VChip
-                  v-if="statistics.subtitle"
-                  size="x-small"
-                  color="statistics.color"
-                  class="mb-5 text-primary"
-                >
-                  {{ statistics.subtitle }}
-                </VChip>
-
-                <div class="d-flex align-center flex-wrap">
-                  <h5 class="text-h3 font-weight-bold me-2 text-primary">
-                    {{ statistics.stats }}
-                  </h5>
-                </div>
-              </VCol>
-              <VCol cols="12" sm="6" md="6">
-                <VIcon :icon="statistics.icon" color="primary" size="100" />
-              </VCol>
-            </VRow>
-          </VCardText>
-        </VCard>
+      <UserListCard :statistics="statistics"/>
       </VCol>
     </VRow>
     <VRow>

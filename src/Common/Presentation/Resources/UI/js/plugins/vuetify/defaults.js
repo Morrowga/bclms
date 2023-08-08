@@ -2,7 +2,7 @@ export default {
   IconBtn: {
     icon: true,
     size: 'small',
-    color: 'default',
+    color: 'white',
     variant: 'text',
     VIcon: {
       size: 24,

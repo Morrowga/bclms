@@ -48,6 +48,7 @@ let handleSubmit = () => {
     <AdminLayout>
         <div class="d-flex justify-end" style="width: 100vw !important;">
             <VForm ref="refForm" v-model="isFormValid" @submit.prevent="handleSubmit">
+              <VContainer>
                 <VRow justify="center">
                     <VCol cols="6">
                         <span class="text-xl tiggie-title">Organization Details</span>
@@ -118,6 +119,7 @@ let handleSubmit = () => {
                         <VBtn type="submit" class="finish-btn pl-5 pr-5" height="50"> Finish </VBtn>
                     </VCol>
                 </VRow>
+                </VContainer>
             </VForm>
         </div>
     </AdminLayout>

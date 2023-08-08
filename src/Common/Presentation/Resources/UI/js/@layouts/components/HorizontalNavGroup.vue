@@ -56,14 +56,14 @@ let goLink = (item) => {
   <div class="text-center">
     <v-menu open-on-hover>
       <template v-slot:activator="{ props }">
-        <v-btn
-          variant="text"
+        <v-list-item
+          v-bind="props"
           :prepend-icon="item.icon.icon"
           append-icon="mdi-chevron-down"
+          :title="item.title"
           class="mx-2 text-none"
-          :class="isParentActive(item.children) ? 'bg-primary' : ''"
-          :color="isParentActive(item.children) ? '#fff' : ''"
-          v-bind="props"
+          :class="isParentActive(item.children) ? '' : ''"
+          :color="isParentActive(item.children) ? '#4066E4' : '#282828'"
           :hidden="
             !auth?.data?.permissions?.includes(item?.access_module) &&
             item?.access_module != 'access_dashboard'
@@ -71,8 +71,7 @@ let goLink = (item) => {
               : false
           "
         >
-          {{ item.title }}
-        </v-btn>
+        </v-list-item>
       </template>
 
       <v-list density="compact">
@@ -100,9 +99,14 @@ let goLink = (item) => {
 </template>
 
 <style lang="scss">
+
 .active-list {
   background-color: #ededff !important;
   color: #666cff !important;
+}
+
+.v-list-group--prepend {
+  --parent-padding: var(--indent-padding) !important;
 }
 .layout-horizontal-nav {
   .nav-group {
@@ -121,5 +125,9 @@ let goLink = (item) => {
       }
     }
   }
+}
+.bg-primary
+{
+    background-color: red !important;
 }
 </style>

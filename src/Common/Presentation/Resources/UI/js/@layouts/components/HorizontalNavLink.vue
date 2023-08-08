@@ -34,8 +34,8 @@ let goLink = (url) => {
     variant="text"
     :prepend-icon="item.icon.icon"
     class="mx-2 text-none"
-    :class="isLinkActive(item.route_name) ? 'bg-primary' : ''"
-    :color="isLinkActive(item.route_name) ? '#fff' : ''"
+    :class="isLinkActive(item.route_name) ? '' : ''"
+    :color="isLinkActive(item.route_name) ? '' : ''"
     @click="goLink(item.url)"
     :hidden="
       !auth?.data?.permissions?.includes(item?.access_module) &&
@@ -44,7 +44,7 @@ let goLink = (url) => {
         : false
     "
   >
-    <span :style="isLinkActive(item.route_name) ? 'color: #fff' : ''">
+    <span :style="isLinkActive(item.route_name) ? 'color: #4066E4' : 'color:#282828'">
       {{ item.title }}
     </span>
   </v-btn>

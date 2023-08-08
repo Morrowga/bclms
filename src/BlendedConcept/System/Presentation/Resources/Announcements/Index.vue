@@ -1,6 +1,6 @@
 <script setup>
 import Create from "./Create.vue";
-import Edit from "./Edit.vue";
+// import Edit from "./Edit.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import {  usePage } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";

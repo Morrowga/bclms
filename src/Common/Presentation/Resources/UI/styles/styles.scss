@@ -4,12 +4,29 @@
     --gray: #BFC0C1;
     --black: #000;
     --success: #48BC65;
-    --light-success-main: #72E128;
+    --candy-red: #ff6262;
+    --sun-yellow: #ffcc00;
+    --teal: #17cab6;
     --graphite: #282828;
+    --light-success-main: #72E128;
     --white: #FFF;
+    --organge: #ff8015;
+    --peach: #fbe0cc;
+    --pale-blue: #d7ddf2;
+    --blush: #f7bfc1;
+    --sea-form: #d7f2f0;
+    --cream: #fff2ce;
+    --gray: #bfc0c1;
+    --ligth-gray: #f4f4f4;
+}
+
+@font-face {
+    font-family: 'tiggiefont';
+    src: url('/fonts/tiggiekidsfont/PPPangramSans-Medium.otf');
 }
 
 * {
+    font-family: 'tiggiefont';
     font-size: 16px !important;
     font-style: normal !important;
     font-weight: 500 !important;
@@ -48,8 +65,7 @@
     /* 158.333% */
 }
 
-.tiggie-resize-input-text
-{
+.tiggie-resize-input-text {
     height: 45px !important;
     // padding: 12px !important;
 
@@ -68,13 +84,14 @@
 }
 
 .tiggie-show-title {
-color: var(--tiggie-blue, #4066E4)  !important;
-// font-family: PP Pangram Sans;
-font-size: 30px !important;
-font-style: normal  !important;
-font-weight: 700 !important;
-line-height: 42px !important; /* 140% */
-text-transform: capitalize !important;
+    color: var(--tiggie-blue, #4066E4) !important;
+    // font-family: PP Pangram Sans;
+    font-size: 30px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 42px !important;
+    /* 140% */
+    text-transform: capitalize !important;
 
 }
 
@@ -137,6 +154,11 @@ text-transform: capitalize !important;
     color: #000 !important;
 }
 
+.text-gray
+{
+    color: var(--light-gray, #F4F4F4) !important;
+}
+
 
 // globle spacing and pading
 
@@ -168,10 +190,13 @@ text-transform: capitalize !important;
     padding-right: 16% !important;
 }
 
-.margin-buttom-18
-{
+.margin-buttom-18 {
     margin-bottom: 18px !important;
 }
+
+
+
+
 
 span {
     color: var(--light-text-primary, rgba(76, 78, 100, 0.87));
@@ -189,7 +214,7 @@ span {
 //custome vuetify
 
 .v-btn__content {
-    color: var(--white) !important;
+    color: var(--graphite) !important;
     font-size: 16px !important;
     font-style: normal !important;
     font-weight: 500 !important;
@@ -213,3 +238,96 @@ span {
     align-items: center;
     flex-shrink: 0;
 }
+
+
+
+//sweet alert customization
+
+.swal2-title {
+
+    color: var(--bg-1-c-1-d-21, #1C1D21) !important;
+    text-align: center !important;
+    // font-family: PP Pangram Sans;
+    font-size: 30px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 42px !important;
+    /* 140% */
+    text-transform: uppercase !important;
+}
+
+.swal2-html-container {
+    color: #1C1D21 !important;
+    /* Body Style Standard */
+    font-family: PP Pangram Sans;
+    font-size: 20px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 32px !important;
+    /* 160% */
+
+}
+
+.swal2-actions .swal2-confirm {
+    background-color: var(--success) !important;
+    border: none;
+    width: 340px;
+}
+
+
+.swal2-icon.swal2-success .swal2-success-ring {
+    border: 8px solid var(--success) !important;
+}
+
+.swal2-icon.swal2-success [class^=swal2-success-line] {
+    background-color: var(--success) !important;
+}
+
+// set inactive button
+.swal2-deny.swal2-styled {
+    width: 170.045px !important;
+    border-radius: 8px !important;
+    background: var(--blush, #F7BFC1) !important;
+    color: var(--candy-red, #FF6262) !important;
+    text-align: center;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 14px !important;
+    padding: 17px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: normal !important;
+}
+
+
+.swal2-cancel.swal2-styled {
+    width: 170.045px !important;
+    border-radius: 8px !important;
+    background: var(--gray, #BFC0C1);
+    color: var(--light-gray, #F4F4F4);
+    text-align: center;
+    font-feature-settings: 'clig' off, 'liga' off;
+    /* Buttons/Label 14px */
+    padding: 14px !important;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+
+}
+
+
+.swal2-icon.swal2-warning.swal2-icon-show
+{
+    border: 10px solid var(--candy-red) !important;
+
+
+}
+
+
+.swal2-icon.swal2-warning.swal2-icon-show .swal2-icon-content
+    {
+       color: var(--candy-red) !important;
+       font-size: 60px !important;
+       border: 10px solid var(--candy-red) !important;
+    }
