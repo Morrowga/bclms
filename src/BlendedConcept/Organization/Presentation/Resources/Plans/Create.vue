@@ -16,7 +16,7 @@ let form = useForm({
 })
 
 let onFormSubmit = () => {
-SuccessDialog({title:"Subscription plan has been sets to active"})
+SuccessDialog({title:"Subscription plan added"})
 }
 
 </script>

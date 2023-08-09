@@ -102,11 +102,11 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 
             <VRow justify="center">
                 <VCol cols="4" class="text-center">
-                    <VBtn color="secondary" variant="tonal" class="pl-16 pr-16">
                         <Link :href="route('organizations.index')" class="text-dark">
+                    <VBtn color="secondary" variant="tonal" class="pl-16 pr-16">
                         Cancel
-                        </Link>
                     </VBtn>
+                        </Link>
                 </VCol>
                 <VCol cols="4" class="text-center">
                     <VBtn color="error" class="pl-16 pr-16">Delete</VBtn>

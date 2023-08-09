@@ -83,12 +83,13 @@ let form = useForm({
                     </VRow>
                 </VCol>
 
-                <VCol cols="12" class="d-flex justify-center gap-10">
-                    <Link :href="route('plans.index')" class="cancel-btn text-center">
-                    Back
-                    </Link>
-                    <VBtn type="submit" class="finish-btn"> Edit </VBtn>
-
+                 <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
+                        <Link :href="route('plans.index')" class="text-black">
+                           <VBtn color="gray" height="50" class="" width="200">
+                            Cancel
+                          </VBtn>
+                        </Link>
+                    <VBtn type="submit" class="" height="50" width="200"> Edit </VBtn>
                 </VCol>
             </VRow>
         </VContainer>

@@ -2,6 +2,7 @@
 import { ref } from "vue"
 import { useForm } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import {SuccessDialog} from '@actions/useSuccess';
 
 const items = ref([
     'icon1',
@@ -13,10 +14,16 @@ const items = ref([
 const selectedItem = ref("");
 let description = ref("")
 
+let onFormSubmit = () => {
+SuccessDialog({title:"You've successfully posted announcement"})
+}
+
 </script>
 <template>
     <AdminLayout>
         <VContainer>
+             <VForm class="mt-6" @submit.prevent="onFormSubmit">
+
             <VRow justify="space-around" :gutter="10">
                 <VCol cols="8">
                     <span class="tiggie-title margin-buttom-18">Add Announcement</span>
@@ -43,18 +50,19 @@ let description = ref("")
                             <VLabel class="tiggie-label">Announcement to</VLabel>
                             <VSelect :items="items" />
                         </VCol>
-                    </VRow>
+                    </VRow> 
 
                 </VCol>
-                <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
-                    <VBtn color="gray" text-color="white" height="50" class="pl-16 pr-16">
-                        <Link :href="route('plans.index')" class="cancel-btn text-center">
-                        Cancel
+                 <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
+                        <Link :href="route('announcements.index')" class="text-black">
+                           <VBtn color="gray" height="50" class="" width="200">
+                            Cancel
+                          </VBtn>
                         </Link>
-                    </VBtn>
-                    <VBtn type="submit" class="finish-btn pl-5 pr-5" height="50"> Post </VBtn>
+                    <VBtn type="submit" class="" height="50" width="200"> Post </VBtn>
                 </VCol>
             </VRow>
+            </VForm>
         </VContainer>
     </AdminLayout>
 </template>

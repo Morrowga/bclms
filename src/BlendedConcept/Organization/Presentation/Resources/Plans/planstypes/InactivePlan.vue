@@ -5,6 +5,8 @@ import { ref, defineProps } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
+import {SuccessDialog} from '@actions/useSuccess';
+
 // import avatar4 from "@images/avatars/avatar-4.png";
 // let permissions = computed(() => usePage().props.auth.data.permissions);
 
@@ -91,6 +93,15 @@ let truncatedText = (text) => {
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
+
+const deletePlan = () => {
+SuccessDialog({title:"Subscription plan deleted"})
+
+}
+const setActive = () => {
+SuccessDialog({title:"Subscription plan has been set activated"})
+
+}
 </script>
 <template>
     <section>
@@ -124,7 +135,20 @@ const selectionChanged = (data) => {
                             <template #activator="{ props }">
                                 <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black" class="mt-n4" />
                             </template>
-                            <VList :items="actions" />
+                             <VList>
+                                <VListItem @click="() => router.get(route('plans.show'))">
+                                     <VListItemTitle>View</VListItemTitle>
+                                </VListItem>
+                                <VListItem @click="() => router.get(route('plans.edit'))">
+                                     <VListItemTitle>Edit</VListItemTitle>
+                                </VListItem>
+                                 <VListItem @click="setActive">
+                                     <VListItemTitle>Set Active</VListItemTitle>
+                                </VListItem>
+                                <VListItem @click="deletePlan">
+                                     <VListItemTitle>Delete</VListItemTitle>
+                                </VListItem>
+                            </VList>
                         </VMenu>
                     </div>
                 </template>

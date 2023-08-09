@@ -3,6 +3,9 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage, Link } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
+import { router } from "@inertiajs/core";
+import {SuccessDialog} from '@actions/useSuccess';
+
 let props = defineProps(["organizations", "flash", "auth"]);
 import {
     serverParams,
@@ -80,6 +83,11 @@ let options = ref({
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
+
+// const deleteOrganization = () => {
+// SuccessDialog({title:"Organization has been deleted"})
+
+// }
 </script>
 
 
@@ -143,7 +151,17 @@ watch(serverPerPage, function (value) {
                                     <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black"
                                         class="mt-n4" />
                                 </template>
-                                <VList :items="items" />
+                                 <VList>
+                                 <VListItem @click="() => router.get(route('organizations.show',{id:props.row.id}))">
+                                     <VListItemTitle>View</VListItemTitle>
+                                </VListItem>
+                                <VListItem @click="() => router.get(route('organizations.test.edit'))">
+                                     <VListItemTitle>Edit</VListItemTitle>
+                                </VListItem>
+                                <VListItem @click="deleteOrganization(props.row.id)">
+                                     <VListItemTitle>Delete</VListItemTitle>
+                                </VListItem>
+                            </VList>
                             </VMenu>
                         </div>
                     </template>
