@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps } from "vue";
-import RoleCard from "@Composables/RoleCard.vue";
+import RoleCard from "@mainRoot/components/RoleCard.vue";
 import avatar1 from "@images/avatars/avatar-1.png";
 import avatar2 from "@images/avatars/avatar-2.png";
 import avatar3 from "@images/avatars/avatar-3.png";
@@ -18,13 +18,11 @@ let orgainzations_users = defineProps(["orgainzations_users"]);
     <VRow>
       <RoleCard
         title="Organizations"
-        :avatars="avatars"
         btnText="Manage"
         totalText="Total 4 Organizations"
       />
       <RoleCard
         title="Users"
-        :avatars="avatars"
         btnText="Manage"
         totalText="Total 300 Users"
       />
@@ -41,12 +39,7 @@ let orgainzations_users = defineProps(["orgainzations_users"]);
   <!-- latest modified organization section -->
   <section class="latest-modified">
     <div class="header">
-      <span class="text-xl">Latest Modified Organization</span>
-      <br />
-      <span class="text-xs"
-        >Find all of your company's administrator accounts and their associate
-        roles.</span
-      >
+      <span class="tiggie-title">Recent Organizations</span>
       <br />
     </div>
     <br />
@@ -59,12 +52,8 @@ let orgainzations_users = defineProps(["orgainzations_users"]);
   <!--Total Users With Their Role Section -->
   <section class="total-users">
     <div class="header">
-      <span class="text-xl">Total users with their roles</span>
-      <br />
-      <span class="text-xs"
-        >Find all of your company’s administrator accounts and their associate
-        roles.</span
-      >
+      <span class="tiggie-title">Recent Users</span>
+
       <br />
     </div>
     <br />

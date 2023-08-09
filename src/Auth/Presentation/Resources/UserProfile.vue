@@ -64,7 +64,7 @@ const hanleSubmit = (data) => {
                     <img src="/images/defaults/avator.png" />
                 </VCol>
             </VRow>
-            <VRow justify="center">
+            <VRow justify="center" align-content="right">
                 <VCol cols="6" class="">
                     <span class="tiggie-label">Name</span>
                     <p class="tiggie-p">Super Admin</p>
@@ -91,16 +91,16 @@ const hanleSubmit = (data) => {
                 </VCol>
             </VRow>
             <VRow no-gutters>
-                <VCol cols="4" class="text-center">
+                <VCol cols="6" class="">
                     <VBtn color="secondary" text-color="white" variant="tonal" class="pl-16 pr-16"
-                        @click="isUserProfileEdit = true">
-                        Edit Profile
+                        @click="isUserProfileEdit = true" height="50">
+                        <span class="text-dark">Edit Profile</span>
                     </VBtn>
                 </VCol>
-                <VCol cols="4">
-                    <VBtn color="secondary" variant="tonal" class="pl-16 pr-16 text-dark"
+                <VCol cols="6">
+                    <VBtn color="secondary" variant="tonal" height="50" class="pl-16 pr-16"
                         @click="isUserPasswordChange = true">
-                        Change Password
+                        <span class="text-dark">Change Password</span>
                     </VBtn>
                 </VCol>
             </VRow>

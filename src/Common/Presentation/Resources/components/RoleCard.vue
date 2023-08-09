@@ -30,7 +30,7 @@ const props = defineProps({
         <VCard>
             <VCardText class="position-relative">
                 <!--  Mutual Friends -->
-                <div class="d-flex justify-space-between align-center mb-3">
+                <div class="d-flex justify-space-between align-center mb-3 tiggie-label">
                     <span class="font-weight-medium text-xs">{{
                         totalText
                     }}</span>
@@ -42,12 +42,15 @@ const props = defineProps({
                             :image="avatar"
                             size="45"
                         />
+                        <!-- custom width and height for UI -->
+                        <div v-if="avatars.length==0" style="height: 45px;width: 45px;">
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex justify-space-between align-center">
                     <div>
-                        <p class="text-xl mb-1">{{ title }}</p>
-                        <Link :href="url">{{ btnText }}</Link>
+                        <p class="tiggie-subtitle">{{ title }}</p>
+                        <Link  :href="url">{{ btnText }}</Link>
                     </div>
                     <div>
                         <v-btn

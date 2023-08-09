@@ -101,7 +101,7 @@ const dialogVisibleUpdate = val => {
                             </VBtn>
                             <VBtn type="submit" color="primary" height="58" class="">
                                 <span class="pl-5 pr-5 text-white">
-                                    Submit
+                                    Save
                                 </span>
                             </VBtn> -->
                             <VBtn color="gray" text-color="white" height="58" class="pl-16 pr-16" @click="onFormReset">
