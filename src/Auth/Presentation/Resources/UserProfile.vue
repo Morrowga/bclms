@@ -3,7 +3,7 @@ import { avatarText, kFormatter } from "@core/utils/formatters";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { computed } from "vue";
 import { usePage, useForm, Link } from "@inertiajs/vue3";
-import { toastAlert } from "@Composables/useToastAlert";
+import { toastAlert,successAlert } from "@Composables/useToastAlert";
 import ChangePasswordDialog from "./Profiles/ChangePasswordDialog.vue";
 import ProfileEditDialog from "./Profiles/ProfileEditDialog.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
@@ -28,28 +28,33 @@ let profileEdit = useForm({
 
 
 const hanleSubmit = (data) => {
-    form.currentpassword = data.currentpassword;
-    form.updatedpassword = data.updatedpassword;
-
-    form.post(route("changepassword"), {
-        onSuccess: (data) => {
-            toastAlert({
+    isUserPasswordChange.value = false;
+    isUserProfileEdit.value = false;
+     successAlert({
                 title: flash,
             });
-            isUserPasswordChange.value = false;
-            console.log(flash.value);
-        },
-        onError: (error) => {
-            isUserPasswordChange.value = true;
-        },
-    });
+    // form.currentpassword = data.currentpassword;
+    // form.updatedpassword = data.updatedpassword;
+
+    // form.post(route("changepassword"), {
+    //     onSuccess: (data) => {
+    //         toastAlert({
+    //             title: flash,
+    //         });
+    //         isUserPasswordChange.value = false;
+    //         console.log(flash.value);
+    //     },
+    //     onError: (error) => {
+    //         isUserPasswordChange.value = true;
+    //     },
+    // });
 };
 
 </script>
 
 <template>
     <AdminLayout>
-        <VContainer>
+        <VContainer class="m-padding">
             <VRow>
                 <VCol cols="6">
                     <span class="tiggie-title">Profile</span>
@@ -121,5 +126,9 @@ const hanleSubmit = (data) => {
 
 .text-capitalize {
     text-transform: capitalize !important;
+}
+
+.m-padding{
+    padding: 0 60px;
 }
 </style>
