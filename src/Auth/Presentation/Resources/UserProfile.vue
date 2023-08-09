@@ -3,7 +3,8 @@ import { avatarText, kFormatter } from "@core/utils/formatters";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { computed } from "vue";
 import { usePage, useForm, Link } from "@inertiajs/vue3";
-import { toastAlert,successAlert } from "@Composables/useToastAlert";
+import { toastAlert } from "@Composables/useToastAlert";
+import {SuccessDialog} from '@actions/useSuccess'
 import ChangePasswordDialog from "./Profiles/ChangePasswordDialog.vue";
 import ProfileEditDialog from "./Profiles/ProfileEditDialog.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
@@ -30,8 +31,8 @@ let profileEdit = useForm({
 const hanleSubmit = (data) => {
     isUserPasswordChange.value = false;
     isUserProfileEdit.value = false;
-     successAlert({
-                title: flash,
+     SuccessDialog({
+                title: data.title,
             });
     // form.currentpassword = data.currentpassword;
     // form.updatedpassword = data.updatedpassword;

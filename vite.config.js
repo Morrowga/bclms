@@ -70,7 +70,7 @@ export default defineConfig({
             '@validators': fileURLToPath(new URL('./src/Common/Presentation/Resources/UI/js/@core/utils/validators', import.meta.url)),
             'apexcharts': fileURLToPath(new URL('node_modules/apexcharts-clevision', import.meta.url)),
             "@mainRoot": fileURLToPath(new URL("./src/Common/Presentation/Resources/", import.meta.url)),
-
+            "@actions" : fileURLToPath(new URL("./src/Common/Presentation/Resources/components/Actions", import.meta.url)),
         },
     }
 })

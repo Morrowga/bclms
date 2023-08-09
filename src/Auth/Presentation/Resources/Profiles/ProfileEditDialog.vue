@@ -33,7 +33,8 @@ watch(props, () => {
 })
 
 const onFormSubmit = () => {
-    emit('submit', userData.value)
+    // emit('submit', userData.value)
+    emit('submit',{title:"You have succesfully edited your profiled"});
 }
 
 const onFormReset = () => {

@@ -32,7 +32,8 @@ watch(props, () => {
 })
 
 const onFormSubmit = () => {
-    emit('submit', userData.value)
+    // emit('submit', userData.value)
+    emit('submit',{title:"Password Changed Successfully"})
 }
 
 const onFormReset = () => {
