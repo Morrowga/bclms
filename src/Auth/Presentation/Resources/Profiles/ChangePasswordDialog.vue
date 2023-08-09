@@ -86,13 +86,13 @@ const dialogVisibleUpdate = val => {
                             </VCol>
 
                             <!-- 👉 Submit and Cancel -->
-                            <VCol cols="11" class="d-flex flex-wrap justify-center gap-10">
+                            <VCol cols="11" class="d-flex flex-wrap justify-space-between gap-10">
                                 <VBtn color="gray" text-color="white" height="58" class="pl-16 pr-16" @click="onFormReset">
-                                    Cancel
+                                    <span class="text-white">Cancel</span>
                                 </VBtn>
 
                                 <VBtn type="submit" height="58" class="pl-16 pr-16">
-                                    Submit
+                                    Save
                                 </VBtn>
                             </VCol>
                         </VRow>

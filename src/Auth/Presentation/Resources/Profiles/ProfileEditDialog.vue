@@ -95,13 +95,13 @@ const dialogVisibleUpdate = val => {
                         <!-- 👉 Submit and Cancel -->
                         <VCol cols="11" class="d-flex flex-wrap justify-space-between gap-10">
                             <VBtn color="gray" text-color="white" height="58" @click="onFormReset">
-                                <Link :href="route('userprofile')" class="pl-5 pr-5">
+                                <Link :href="route('userprofile')" class="pl-5 pr-5 text-white">
                                     Cancel
                                 </Link>
                             </VBtn>
                             <VBtn type="submit" color="primary" height="58" class="">
                                 <span class="pl-5 pr-5 text-white">
-                                    Submit
+                                    Save
                                 </span>
                             </VBtn>
 
