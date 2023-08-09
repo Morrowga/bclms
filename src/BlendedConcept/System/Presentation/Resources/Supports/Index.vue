@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 // import avatar4 from "@images/avatars/avatar-4.png";
+import AnswerSupport from "./components/AnswerSupport.vue";
 
 let props = defineProps();
 
@@ -72,6 +73,7 @@ const items = [
     'Bar',
 ]
 
+const isAnswerTechnicalSupport = ref(false);
 
 
 //## truncatedText
@@ -99,26 +101,18 @@ const selectionChanged = (data) => {
                 <section>
                     <VCard>
                         <VCardText class="d-flex flex-wrap gap-4">
-
                             <VSpacer />
-
                             <div class="app-user-search-filter d-flex justify-end align-center gap-6">
-                                <VTextField
-                            placeholder="Search Organizations" density="compact" />
-                                <VBtn class="tiggie-btn">
-                                    <Link :href="route('plans.create')" class="text-white"> Delete </Link>
+                                <VTextField placeholder="Search Organizations" density="compact" />
+                                <VBtn class="tiggie-btn" @click="isAnswerTechnicalSupport = true">
+                                    Delete
                                 </VBtn>
                             </div>
                         </VCardText>
-
                         <VDivider />
-
                         <vue-good-table class="role-data-table" styleClass="vgt-table"
-                            v-on:selected-rows-change="selectionChanged" :columns="columns" :rows="rows" :select-options="{
-                                enabled: true,
-                            }" :pagination-options="{
-    enabled: true,
-}">
+                            v-on:selected-rows-change="selectionChanged" :columns="columns" :rows="rows"
+                            :select-options="{ enabled: true, }" :pagination-options="{ enabled: true, }">
                             <template #table-row="dataProps">
                                 <div v-if="dataProps.column.field === 'user'">
                                     <div class="d-flex flex-row gap-2 ">
@@ -136,7 +130,8 @@ const selectionChanged = (data) => {
                                 </div>
                             </template>
                         </vue-good-table>
-
+                        <AnswerSupport v-model:isDialogVisible="isAnswerTechnicalSupport" :user-data="user" :form="form"
+                            @submit="hanleSubmit" />
                         <VDivider />
                     </VCard>
                 </section>
