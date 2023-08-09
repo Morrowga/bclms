@@ -4,7 +4,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { computed } from "vue";
 import { usePage, useForm, Link } from "@inertiajs/vue3";
 import { toastAlert } from "@Composables/useToastAlert";
-import {SuccessDialog} from '@actions/useSuccess'
+import {SuccessDialog} from '@actions/useSuccess';
 import ChangePasswordDialog from "./Profiles/ChangePasswordDialog.vue";
 import ProfileEditDialog from "./Profiles/ProfileEditDialog.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
