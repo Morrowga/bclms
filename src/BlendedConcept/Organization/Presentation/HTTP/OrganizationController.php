@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\Organization\Presentation\HTTP;
 
 use Inertia\Inertia;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\GetOrganizationWithPagination;
+use Src\BlendedConcept\Organization\Domain\Model\Organization;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\Organization\Domain\Services\OrganizationService;
 use Src\BlendedConcept\System\Application\Policies\OrganizationPolicy;
@@ -57,7 +58,14 @@ class OrganizationController extends Controller
         return Inertia::render(config('route.organizations.create'));
     }
 
-    public function edit()
+    public function edit($id)
+    {
+        $organization = OrganizationEloquentModel::find($id);
+        return Inertia::render(config('route.organizations.edit'), [
+            "organization" => $organization
+        ]);
+    }
+    public function testEdit()
     {
         return Inertia::render(config('route.organizations.edit'));
     }
@@ -93,7 +101,7 @@ class OrganizationController extends Controller
     public function update(UpdateOrganizationRequest $request, OrganizationEloquentModel $organization)
     {
         abort_if(authorize('edit', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->organizationServices->updateOrganization($request,$organization);
+        $this->organizationServices->updateOrganization($request, $organization);
 
         return redirect()->route('organizations.index')->with("successMessage", "Organization Updated Successfully!");
     }
@@ -106,7 +114,7 @@ class OrganizationController extends Controller
     public function destroy(OrganizationEloquentModel $organization)
     {
         abort_if(authorize('destroy', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-       //delete organization frm service class
+        //delete organization frm service class
         $this->organizationServices->deleteOrganization($organization);
         return redirect()->route('organizations.index')->with("successMessage", "Organizations Deleted Successfully!");
     }

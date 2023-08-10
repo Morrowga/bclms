@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue"
 import { useForm } from "@inertiajs/vue3";
+import {SuccessDialog} from '@actions/useSuccess';
 
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 
@@ -14,12 +15,15 @@ let form = useForm({
 
 })
 
-
+let onFormSubmit = () => {
+SuccessDialog({title:"Subscription plan added"})
+}
 
 </script>
 <template>
     <AdminLayout>
         <VContainer>
+             <VForm class="mt-6" @submit.prevent="onFormSubmit">
             <VRow justify="space-around" :gutter="10">
                 <VCol cols="6">
                     <span class="tiggie-title margin-buttom-18"> Add Subscription Plan</span>
@@ -85,14 +89,15 @@ let form = useForm({
                     </VRow>
                 </VCol>
                 <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
-                    <VBtn color="gray" height="50" class="pl-16 pr-16">
-                        <Link :href="route('userprofile')" class="text-gray">
-                        Cancel
+                        <Link :href="route('plans.index')" class="text-black">
+                           <VBtn color="gray" height="50" class="" width="200">
+                            Cancel
+                          </VBtn>
                         </Link>
-                    </VBtn>
-                    <VBtn type="submit" class="finish-btn pl-5 pr-5" height="50"> Finish </VBtn>
+                    <VBtn type="submit" class="" height="50" width="200"> Finish </VBtn>
                 </VCol>
             </VRow>
+            </VForm>
         </VContainer>
     </AdminLayout>
 </template>

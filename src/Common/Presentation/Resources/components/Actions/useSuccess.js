@@ -5,8 +5,8 @@ let SuccessDialog = ({title,icon = "success"}) => {
     Swal.fire({
         position: 'center',
         icon: icon,
-        title: title,
-        text: "Form updated Successfully",
+        title: "Success!",
+        text: title,
         showConfirmButton: true
     })
 

@@ -27,9 +27,9 @@ let handleUpdate = (id) => {
     if (valid) {
       form.post(route("organizations.update", { id: id }), {
         onSuccess: (status) => {
-          console.log(props.flash, "hello");
+          console.log(props?.flash, "hello");
           toastAlert({
-            title: props.flash?.successMessage,
+            title: props?.flash?.successMessage,
           });
           isDialogVisible.value = false;
         },
@@ -39,14 +39,14 @@ let handleUpdate = (id) => {
 };
 
 onUpdated(() => {
-  form.name = props.organization.name;
-  form.contact_person = props.organization.contact_person;
-  form.contact_email = props.organization.contact_email;
-  form.contact_number = props.organization.contact_number;
-  form.price = props.organization.plan.price;
-  form.teacher_license = props.organization.plan.teacher_license;
-  form.allocated_storage = props.organization.plan.allocated_storage;
-  form.payment_peroid = props.organization.plan.payment_peroid;
+  form.name = props?.organization?.name;
+  form.contact_person = props?.organization?.contact_person;
+  form.contact_email = props?.organization?.contact_email;
+  form.contact_number = props?.organization?.contact_number;
+  form.price = props?.organization?.plan?.price;
+  form.teacher_license = props?.organization?.plan?.teacher_license;
+  form.allocated_storage = props?.organization?.plan?.allocated_storage;
+  form.payment_peroid = props?.organization?.plan?.payment_peroid;
   form.image = props?.organization?.image[0]?.original_url || "";
 });
 </script>
@@ -76,7 +76,7 @@ onUpdated(() => {
       <VForm
         ref="refForm"
         v-model="isFormValid"
-        @submit.prevent="handleUpdate(props.organization.id)"
+        @submit.prevent="handleUpdate(props?.organization?.id)"
       >
         <DialogCloseBtn
           variant="text"

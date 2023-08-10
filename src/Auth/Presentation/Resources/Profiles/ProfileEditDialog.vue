@@ -33,7 +33,8 @@ watch(props, () => {
 })
 
 const onFormSubmit = () => {
-    emit('submit', userData.value)
+    // emit('submit', userData.value)
+    emit('submit',{title:"You have succesfully edited your profiled"});
 }
 
 const onFormReset = () => {
@@ -47,7 +48,7 @@ const dialogVisibleUpdate = val => {
 </script>
 
 <template>
-    <VDialog :width="$vuetify.display.smAndDown ? 'auto' : 800" :model-value="props.isDialogVisible"
+    <VDialog :width="$vuetify.display.smAndDown ? 'auto' : 600" :model-value="props.isDialogVisible"
         @update:model-value="dialogVisibleUpdate">
         <VCard class="pa-sm-9 pa-5">
             <!-- 👉 dialog close btn -->
@@ -64,7 +65,7 @@ const dialogVisibleUpdate = val => {
                 <VForm class="mt-6" @submit.prevent="onFormSubmit">
                     <VRow >
                         <!-- 👉 Contact -->
-                        <VCol cols="11" md="11">
+                        <VCol cols="12" md="12">
                             <VLabel class="tiggie-label">User Name</VLabel>
                             <VTextField
                             type="text"
@@ -75,7 +76,7 @@ const dialogVisibleUpdate = val => {
 
 
                         <!-- 👉 Contact -->
-                        <VCol cols="11" md="11">
+                        <VCol cols="12" md="12">
                             <VLabel class="tiggie-label">User Email</VLabel>
                             <VTextField
                             type="email"
@@ -83,7 +84,7 @@ const dialogVisibleUpdate = val => {
                             class="tiggie-resize-input-text"
                             :error-messages="props?.form?.errors?.email"/>
                         </VCol>
-                        <VCol cols="11" md="11">
+                        <VCol cols="12" md="12">
                             <VLabel class="tiggie-label">User Contact Number</VLabel>
                             <VTextField
                             type="text"
@@ -93,9 +94,9 @@ const dialogVisibleUpdate = val => {
                         </VCol>
 
                         <!-- 👉 Submit and Cancel -->
-                        <VCol cols="11" class="d-flex flex-wrap justify-space-between gap-10">
-                            <VBtn color="gray" text-color="white" height="58" @click="onFormReset">
-                                <Link :href="route('userprofile')" class="pl-5 pr-5 text-white">
+                        <VCol cols="12" class="d-flex flex-wrap justify-center gap-10 pt-8">
+                            <!-- <VBtn color="gray" text-color="white" height="58" @click="onFormReset">
+                                <Link :href="route('userprofile')" class="pl-5 pr-5">
                                     Cancel
                                 </Link>
                             </VBtn>
@@ -103,8 +104,14 @@ const dialogVisibleUpdate = val => {
                                 <span class="pl-5 pr-5 text-white">
                                     Save
                                 </span>
+                            </VBtn> -->
+                            <VBtn color="gray" text-color="white" height="58" class="pl-16 pr-16" @click="onFormReset">
+                                Cancel
                             </VBtn>
 
+                            <VBtn type="submit" height="58" class="pl-16 pr-16">
+                                Submit
+                             </VBtn>
                         </VCol>
                     </VRow>
                 </VForm>

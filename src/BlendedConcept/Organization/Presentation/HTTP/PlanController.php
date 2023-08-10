@@ -27,6 +27,7 @@ class PlanController
 
     public function edit()
     {
-        return Inertia::render(config('route.plan.edit'));
+        // dd('hello');
+        return Inertia::render(config('route.plans.edit'));
     }
 }

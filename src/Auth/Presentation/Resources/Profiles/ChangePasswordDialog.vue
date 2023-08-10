@@ -8,7 +8,8 @@ const props = defineProps({
         required: false,
         default: () => ({
             currentpassword: "",
-            updatedpassword: ""
+            updatedpassword: "",
+            passwordConfirmation:""
 
         }),
     },
@@ -31,7 +32,8 @@ watch(props, () => {
 })
 
 const onFormSubmit = () => {
-    emit('submit', userData.value)
+    // emit('submit', userData.value)
+    emit('submit',{title:"Password Changed Successfully"})
 }
 
 const onFormReset = () => {
@@ -45,7 +47,7 @@ const dialogVisibleUpdate = val => {
 </script>
 
 <template>
-    <VDialog :width="$vuetify.display.smAndDown ? 'auto' : 800" :model-value="props.isDialogVisible"
+    <VDialog :width="$vuetify.display.smAndDown ? 'auto' : 600" :model-value="props.isDialogVisible"
         @update:model-value="dialogVisibleUpdate">
         <VCard class="">
             <!-- 👉 dialog close btn -->
@@ -63,7 +65,7 @@ const dialogVisibleUpdate = val => {
                     <VContainer>
                         <VRow justify="center">
                             <!-- 👉 Contact -->
-                            <VCol cols="11" md="11">
+                            <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label">Old Password</VLabel>
                                 <VTextField type="password" v-model="userData.currentpassword"
                                     placeholder="Enter Current Password" class="tiggie-resize-input-text"
@@ -72,21 +74,21 @@ const dialogVisibleUpdate = val => {
 
 
                             <!-- 👉 Contact -->
-                            <VCol cols="11" md="11">
+                            <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label">Password</VLabel>
                                 <VTextField type="password" placeholder="Enter new password"
                                     v-model="userData.updatedpassword" class="tiggie-resize-input-text"
                                     :error-messages="props?.form?.errors?.updatedpassword" />
                             </VCol>
-                            <VCol cols="11" md="11">
+                            <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label">Confirm Password</VLabel>
                                 <VTextField type="password" placeholder="Enter new password again"
-                                    v-model="userData.updatedpassword" class="tiggie-resize-input-text"
-                                    :error-messages="props?.form?.errors?.updatedpassword" />
+                                    v-model="userData.passwordConfirmation" class="tiggie-resize-input-text"
+                                    :error-messages="props?.form?.errors?.passwordConfirmation" />
                             </VCol>
 
                             <!-- 👉 Submit and Cancel -->
-                            <VCol cols="11" class="d-flex flex-wrap justify-space-between gap-10">
+                            <VCol cols="12" class="d-flex flex-wrap justify-center gap-10 pt-8">
                                 <VBtn color="gray" text-color="white" height="58" class="pl-16 pr-16" @click="onFormReset">
                                     <span class="text-white">Cancel</span>
                                 </VBtn>

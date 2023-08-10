@@ -5,6 +5,7 @@ import { emailValidator, requiredValidator } from "@validators";
 import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import {SuccessDialog} from '@actions/useSuccess';
 
 const isFormValid = ref(false);
 const isDialogVisible = ref(false);
@@ -27,19 +28,19 @@ let form = useForm({
 
 // submit create form
 let handleSubmit = () => {
-    refForm.value?.validate().then(({ valid }) => {
-        if (valid) {
-            form.post(route("organizations.store"), {
-                onSuccess: () => {
-                    toastAlert({
-                        title: flash?.successMessage,
-                    });
-                    isDialogVisible.value = false;
-                },
-                onError: (error) => { },
-            });
-        }
-    });
+SuccessDialog({title:"You've successfully created organization"})
+
+    // refForm.value?.validate().then(({ valid }) => {
+    //     if (valid) {
+    //         form.post(route("organizations.store"), {
+    //             onSuccess: () => {
+    //                 SuccessDialog({title:flash?.successMessage})
+    //                 isDialogVisible.value = false;
+    //             },
+    //             onError: (error) => { },
+    //         });
+    //     }
+    // });
 };
 </script>
 
@@ -95,7 +96,7 @@ let handleSubmit = () => {
                             <VCol cols="8">
                                 <VLabel class="tiggie-label">Login Email</VLabel>
 
-                                <VTextField type="number" density="compact" v-model="form.price" class="w-100"
+                                <VTextField type="email" density="compact" v-model="form.price" class="w-100"
                                     :rules="[requiredValidator]" :error-messages="form?.errors?.price" />
                             </VCol>
                             <VCol cols="8">
@@ -110,14 +111,14 @@ let handleSubmit = () => {
                         <br />
                         <ImageUpload v-model="form.image" />
                     </VCol>
-                    <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
-                        <VBtn color="gray" text-color="white" height="50" class="pl-16 pr-16">
-                            <Link :href="route('organizations.index')" class="cancel-btn text-center">
+                   <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
+                        <Link :href="route('organizations.index')" class="text-black">
+                           <VBtn color="gray" height="50" class="" width="200">
                             Cancel
-                            </Link>
-                        </VBtn>
-                        <VBtn type="submit" class="finish-btn pl-5 pr-5" height="50"> Finish </VBtn>
-                    </VCol>
+                          </VBtn>
+                        </Link>
+                    <VBtn type="submit" class="" height="50" width="200"> Finish </VBtn>
+                </VCol>
                 </VRow>
                 </VContainer>
             </VForm>
