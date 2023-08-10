@@ -3,112 +3,123 @@ import { defineProps } from "vue";
 
 let orgainzations_users = defineProps(["orgainzations_users"]);
 import LatestModifiedOrganizations from "./LatestModifiedOrganizations.vue";
-import TotalUsers from "./TotalUsers.vue";
+import TotalUserSurveys from "./TotalUserSurveys.vue";
+import RoleCard from "@mainRoot/components/RoleCard.vue";
+import Slider from "./components/Slider.vue";
 
+const bookResources = [
+    {
+        id: 1,
+        image: "/images/image1.png",
+    },
+    {
+        id: 2,
+        image: "/images/image2.png",
+    },
+    {
+        id: 3,
+        image: "/images/image3.png",
+    },
+    {
+        id: 4,
+        image: "/images/image4.png",
+    },
+    {
+        id: 5,
+        image: "/images/image5.png",
+    },
+];
 
-const statisticsWithImages = [
-  {
-    title: "Users",
-    subtitle: "Total Number Of Users",
-    stats: 100,
-    icon: "mdi-account-multiple",
-    imgWidth: 99,
-    color: "primary",
-  },
-  {
-    title: "Organizations",
-    subtitle: "Total Number Of Organization",
-    stats: "10",
-    icon: "mdi-domain",
-    imgWidth: 85,
-    color: "success",
-  },
-  {
-    title: "Revenue",
-    subtitle: "Total Revenue",
-    stats: "70,000",
-    icon: "mdi-currency-usd",
-    imgWidth: 85,
-    color: "success",
-  },
+const gameResources = [
+    {
+        image: "/images/image6.png",
+    },
+    {
+        image: "/images/image7.png",
+    },
+    {
+        image: "/images/image8.png",
+    },
+    {
+        image: "/images/image9.png",
+    },
+    {
+        image: "/images/image10.png",
+    },
 ];
 </script>
 
 <template>
-  <section>
-    <VRow class="match-height mb-5">
-      <VCol
-        v-for="statistics in statisticsWithImages"
-        :key="statistics.title"
-        cols="12"
-        sm="6"
-        md="4"
-      >
-        <VCard>
-          <VCardText>
-            <VRow justify="space-between">
-              <VCol cols="12" sm="6" md="6">
-                <h6 class="text-base font-weight-semibold mb-2 text-primary">
-                  {{ statistics.title }}
-                </h6>
-                <VChip
-                  v-if="statistics.subtitle"
-                  size="x-small"
-                  color="statistics.color"
-                  class="mb-5 text-primary"
-                >
-                  {{ statistics.subtitle }}
-                </VChip>
-
-                <div class="d-flex align-center flex-wrap">
-                  <h5 class="text-h3 font-weight-bold me-2 text-primary">
-                    {{ statistics.stats }}
-                  </h5>
+    <section>
+        <VRow class="match-height mb-5">
+            <RoleCard
+                title="Organizations"
+                btnText="Manage"
+                totalText="Total 19 Organizations"
+            />
+            <RoleCard
+                title="Subscriptions"
+                btnText="Manage"
+                totalText="Total 87 Users"
+            />
+            <RoleCard
+                title="Users"
+                :avatars="avatars"
+                btnText="Manage"
+                totalText="Total 253 Students"
+                :url="route('users.index')"
+            />
+        </VRow>
+        <div class="slider-stction">
+            <Slider
+                title="Books"
+                subtitle="Show 8 of 18 books"
+                :datas="bookResources"
+            /><br />
+            <Slider
+                title="Games"
+                subtitle="Show 8 of 18 games"
+                :datas="gameResources"
+            /><br />
+        </div>
+        <VRow>
+            <VCol>
+                <div class="header">
+                    <div class="head-section">
+                        <div class="title-section">
+                            <p class="heading">User Surveys</p>
+                        </div>
+                    </div>
+                    <TotalUserSurveys
+                        :organization="
+                            orgainzations_users.orgainzations_users[1]
+                        "
+                    />
+                    <br />
                 </div>
-              </VCol>
-              <VCol cols="12" sm="6" md="6">
-                <VIcon :icon="statistics.icon" color="primary" size="100" />
-              </VCol>
-            </VRow>
-          </VCardText>
-        </VCard>
-      </VCol>
-    </VRow>
-    <VRow>
-      <VCol>
-        <div class="header">
-          <span class="text-xl">Latest Modified Organization</span>
-          <br />
-          <span class="text-xs"
-            >Find all of your company's administrator accounts and their
-            associate roles.</span
-          >
-
-          <LatestModifiedOrganizations
-            :organization="orgainzations_users.orgainzations_users[1]"
-          />
-          <br />
-        </div>
-        <br />
-      </VCol>
-    </VRow>
-    <VRow>
-      <VCol>
-        <div class="header">
-          <span class="text-xl">Total users with their roles</span>
-          <br />
-          <span class="text-xs"
-            >Find all of your company’s administrator accounts and their
-            associate roles.</span
-          >
-            <TotalUsers :users="orgainzations_users.orgainzations_users[0]" />
-
-          <br />
-        </div>
-        <br />
-      </VCol>
-    </VRow>
-  </section>
+                <br />
+            </VCol>
+        </VRow>
+    </section>
 </template>
 
-<style></style>
+<style>
+.head-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.heading {
+    margin: 0;
+    font-size: 40px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 52px !important; /* 130% */
+    text-transform: capitalize !important;
+    color: var(--tiggie-blue, #4066e4);
+}
+
+.head-button {
+    align-self: flex-end;
+}
+</style>
