@@ -32,6 +32,8 @@ const pages = {
     "BlendedConcept/Organization/Presentation/Resources/Plans/Edit": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Edit.vue'),
 
     "BlendedConcept/Organization/Presentation/Resources/Plans/Show": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Show.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/PlanForOrg/CreatePlan": import('../../src/BlendedConcept/Organization/Presentation/Resources/PlanForOrg/CreatePlan.vue'),
+
 
 
 
@@ -59,8 +61,13 @@ const pages = {
     //user experience survey
 
     "BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Index.vue'),
+
     "BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Create": import('../../src/BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Create.vue'),
+
     "BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Show": import('../../src/BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Show.vue'),
+
+
+    "BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Edit": import('../../src/BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Edit.vue'),
 
 
 

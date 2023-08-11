@@ -11,7 +11,8 @@ return [
     'userexperiencesurvey' => [
         'index' => 'BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Index',
         'create' => 'BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Create',
-        'show' => 'BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/show',
+        'edit' => 'BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Edit',
+        'show' => 'BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Show',
     ],
 
     'permissions' => 'BlendedConcept/Security/Presentation/Resources/Permissions/Index',
@@ -29,6 +30,8 @@ return [
         'create' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Create',
         'edit' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Edit',
         'show' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Show',
+        'planorg' => 'BlendedConcept/Organization/Presentation/Resources/PlanForOrg/CreatePlan',
+
     ],
 
     'disability_device' => [

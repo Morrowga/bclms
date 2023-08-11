@@ -1,195 +1,139 @@
 <script setup>
-import ImageUpload from "@Composables/ImageUpload.vue";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { useForm, Link } from "@inertiajs/vue3";
+import { ref, defineProps, computed } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
+import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
+import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import {SuccessDialog} from '@actions/useSuccess';
+
 const isFormValid = ref(false);
-const refForm = ref();
 const isDialogVisible = ref(false);
+let refForm = ref();
+
+let flash = computed(() => usePage().props.flash);
+
 let form = useForm({
-  name: "",
-  contact_person: "",
-  contact_email: "",
-  contact_number: "",
-  price: "00",
-  teacher_license: "user102",
-  allocated_storage: "30GB",
-  payment_peroid: "mm",
-  image: "",
-  _method: "PUT",
+    name: "",
+    contact_person: "",
+    contact_email: "",
+    contact_number: "",
+    price: "",
+    teacher_license: "",
+    allocated_storage: "",
+    payment_period: "",
+    // payment_type: "card",
+    image: "",
 });
-let props = defineProps(["organization", "flash"]);
 
-// Update create form
-let handleUpdate = (id) => {
-  refForm.value.validate().then(({ valid }) => {
-    if (valid) {
-      form.post(route("organizations.update", { id: id }), {
-        onSuccess: (status) => {
-          console.log(props?.flash, "hello");
-          toastAlert({
-            title: props?.flash?.successMessage,
-          });
-          isDialogVisible.value = false;
-        },
-      });
-    }
-  });
+// submit create form
+let handleSubmit = () => {
+SuccessDialog({title:"You've successfully created organization"})
+
+    // refForm.value?.validate().then(({ valid }) => {
+    //     if (valid) {
+    //         form.post(route("organizations.store"), {
+    //             onSuccess: () => {
+    //                 SuccessDialog({title:flash?.successMessage})
+    //                 isDialogVisible.value = false;
+    //             },
+    //             onError: (error) => { },
+    //         });
+    //     }
+    // });
 };
-
-onUpdated(() => {
-  form.name = props?.organization?.name;
-  form.contact_person = props?.organization?.contact_person;
-  form.contact_email = props?.organization?.contact_email;
-  form.contact_number = props?.organization?.contact_number;
-  form.price = props?.organization?.plan?.price;
-  form.teacher_license = props?.organization?.plan?.teacher_license;
-  form.allocated_storage = props?.organization?.plan?.allocated_storage;
-  form.payment_peroid = props?.organization?.plan?.payment_peroid;
-  form.image = props?.organization?.image[0]?.original_url || "";
-});
 </script>
 
+
 <template>
-  <VDialog v-model="isDialogVisible" max-width="900" persistent>
-    <template #activator="{ props }">
-      <VBtn
-        v-bind="props"
-        density="compact"
-        icon="mdi-pencil"
-        class="ml-2"
-        color="secondary"
-        variant="text"
-      >
-      </VBtn>
-    </template>
-    <VCard>
-      <VCardTitle>
-        <span class="text-xl">Organization Details</span>
-      </VCardTitle>
-      <VCardSubtitle>
-        <span class="text-xs">
-          Updating user details will receive a privacy audit.
-        </span>
-      </VCardSubtitle>
-      <VForm
-        ref="refForm"
-        v-model="isFormValid"
-        @submit.prevent="handleUpdate(props?.organization?.id)"
-      >
-        <DialogCloseBtn
-          variant="text"
-          size="small"
-          @click="isDialogVisible = false"
-        />
-        <VCardText>
-          <VRow>
-            <VCol cols="6">
-              <VRow>
-                <VCol cols="12">
-                  <VTextField
-                    label="Organization Name"
-                    density="compact"
-                    v-model="form.name"
-                    class="w-100"
-                    :error-messages="form?.errors?.name"
-                    :rules="[requiredValidator]"
-                  />
+    <AdminLayout>
+        <div class="d-flex justify-end" style="width: 100vw !important;">
+            <VForm ref="refForm" v-model="isFormValid" @submit.prevent="handleSubmit">
+              <VContainer>
+                <VRow justify="center">
+                    <VCol cols="6">
+                        <span class="text-xl tiggie-title">Organization Details</span>
+                        <VRow class="pt-5">
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Organization Name</VLabel>
+                                <VTextField density="compact" v-model="form.name" class="w-100" :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.name" />
+                            </VCol>
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Contact Person</VLabel>
+                                <VTextField density="compact" v-model="form.contact_person" class="w-100"
+                                    :rules="[requiredValidator]" :error-messages="form?.errors?.contact_person" />
+                            </VCol>
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Contact Email</VLabel>
+                                <VTextField density="compact" v-model="form.contact_email" class="w-100"
+                                    :rules="[requiredValidator, emailValidator]"
+                                    :error-messages="form?.errors?.contact_email" />
+                            </VCol>
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Contact Number</VLabel>
+                                <VTextField density="compact" v-model="form.contact_number" class="w-100"
+                                    :rules="[requiredValidator]" :error-messages="form?.errors?.contact_number" />
+                            </VCol>
+                        </VRow>
+                        <!--  -->
+                        <!-- Organization Plan -->
+                        <VRow>
+                            <VCol cols="12">
+                                <span class="text-xl tiggie-title">Organization Admin</span>
+                            </VCol>
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Organization Admin Name</VLabel>
+                                <VTextField density="compact" v-model="form.teacher_license" class="w-100"
+                                    :error-messages="form?.errors?.teacher_license" :rules="[requiredValidator]" />
+                            </VCol>
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Organization Admin Contact Number</VLabel>
+
+                                <VTextField density="compact" v-model="form.allocated_storage" class="w-100"
+                                    :rules="[requiredValidator]" :error-messages="form?.errors?.allocated_storage" />
+                            </VCol>
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Login Email</VLabel>
+
+                                <VTextField type="email" density="compact" v-model="form.price" class="w-100"
+                                    :rules="[requiredValidator]" :error-messages="form?.errors?.price" />
+                            </VCol>
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Login Password</VLabel>
+                                <VTextField density="compact" v-model="form.payment_period" class="w-100"
+                                    :error-messages="form?.errors?.payment_period" />
+                            </VCol>
+                        </VRow>
+                    </VCol>
+                    <VCol cols="6" class="pt-5">
+                        <span class="tiggie-title">Logo</span>
+                        <br />
+                        <ImageUpload v-model="form.image" />
+                    </VCol>
+                   <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
+                        <Link :href="route('organizations.index')" class="text-black">
+                           <VBtn color="gray" height="50" class="" width="200">
+                            Cancel
+                          </VBtn>
+                        </Link>
+                    <VBtn type="submit" class="" height="50" width="200"> Finish </VBtn>
                 </VCol>
-                <VCol cols="12">
-                  <VTextField
-                    label="Contact Person"
-                    density="compact"
-                    v-model="form.contact_person"
-                    class="w-100"
-                    :rules="[requiredValidator]"
-                    :error-messages="form?.errors?.contact_person"
-                  />
-                </VCol>
-                <VCol cols="12">
-                  <VTextField
-                    label="Contact Email"
-                    density="compact"
-                    v-model="form.contact_email"
-                    class="w-100"
-                    :rules="[requiredValidator, emailValidator]"
-                    :error-messages="form?.errors?.contact_email"
-                  />
-                </VCol>
-                <VCol cols="12">
-                  <VTextField
-                    label="Contact Number"
-                    density="compact"
-                    v-model="form.contact_number"
-                    class="w-100"
-                    :rules="[requiredValidator]"
-                    :error-messages="form?.errors?.contact_number"
-                  />
-                </VCol>
-              </VRow>
-              <VRow>
-                <VCol cols="12">
-                  <span class="text-xl">Organization Plan</span>
-                </VCol>
-                <VCol cols="6">
-                  <VTextField
-                    label="User License"
-                    density="compact"
-                    v-model="form.teacher_license"
-                    class="w-100"
-                    :error-messages="form?.errors?.teacher_license"
-                    :rules="[requiredValidator]"
-                  />
-                </VCol>
-                <VCol cols="6">
-                  <VTextField
-                    label="Storage"
-                    density="compact"
-                    v-model="form.allocated_storage"
-                    class="w-100"
-                    :rules="[requiredValidator]"
-                    :error-messages="form?.errors?.allocated_storage"
-                  />
-                </VCol>
-                <VCol cols="6">
-                  <VTextField
-                    label="Price"
-                    density="compact"
-                    v-model="form.price"
-                    class="w-100"
-                    :rules="[requiredValidator]"
-                    :error-messages="form?.errors?.price"
-                  />
-                </VCol>
-                <VCol cols="6">
-                  <VTextField
-                    label="Payment Period"
-                    density="compact"
-                    v-model="form.payment_peroid"
-                    class="w-100"
-                    :error-messages="form?.errors?.payment_peroid"
-                  />
-                </VCol>
-              </VRow>
-            </VCol>
-            <VCol cols="6">
-              <ImageUpload v-model="form.image" :old_img="form.image" />
-            </VCol>
-            <VCol cols="12" class="d-flex justify-center">
-              <VBtn type="submit" class="me-3"> Submit </VBtn>
-              <VBtn
-                type="reset"
-                variant="outlined"
-                color="secondary"
-                @click="isDialogVisible = false"
-              >
-                Cancel
-              </VBtn>
-            </VCol>
-          </VRow>
-        </VCardText>
-      </VForm>
-    </VCard>
-  </VDialog>
+                </VRow>
+                </VContainer>
+            </VForm>
+        </div>
+    </AdminLayout>
 </template>
+
+
+<style scoped>
+.logo-position {
+    /* position: absolute;
+    top: 180px; */
+}
+
+.padding-left-40px {
+    padding-left: 40px;
+}
+</style>

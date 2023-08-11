@@ -14,17 +14,18 @@ class UserExperienceSurveyController
 
     public function create()
     {
-        return Inertia::render(config('route.userexperiencesurvey.create'));
+        // return Inertia::render(config('route.userexperiencesurvey.create'));
+        return Inertia::render(config('route.userexperiencesurvey.edit'));
     }
 
     public function show()
     {
-        return Inertia::render(config('route.plans.show'));
+        return Inertia::render(config('route.userexperiencesurvey.show'));
     }
 
     public function edit()
     {
         // dd('hello');
-        return Inertia::render(config('route.plans.edit'));
+        return Inertia::render(config('route.userexperiencesurvey.edit'));
     }
 }

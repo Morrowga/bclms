@@ -15,6 +15,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/plans/edit', [PlanController::class, 'edit'])->name('plans.edit');
     Route::get('/plans/create', [PlanController::class, 'create'])->name('plans.create');
     Route::get('/plans/show', [PlanController::class, 'show'])->name('plans.show');
+    Route::get('/plans/orgcreate', [PlanController::class, 'planfororg'])->name('planfororg.show');
 
     // Route::get('/organizations', [OrganizationController::class, 'index'])->name('organizations.index');
     // Route::get('/organizations/edit', [OrganizationController::class, 'edit'])->name('organizations.edit');

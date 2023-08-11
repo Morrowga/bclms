@@ -118,6 +118,16 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                         </Link>
                     </VBtn>
                 </VCol>
+
+                <VCol cols="4" class="text-center">
+                    <VBtn class="back-btn pl-16 pr-16">
+                        <Link :href="route('organizations.edit',1)" class="text-white">
+                            Add Subscription
+                        </Link>
+                    </VBtn>
+                </VCol>
+
+
             </VRow>
         </VContainer>
     </AdminLayout>
