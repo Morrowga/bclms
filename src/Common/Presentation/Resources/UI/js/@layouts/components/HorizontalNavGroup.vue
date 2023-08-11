@@ -9,20 +9,20 @@ import { usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
 
 const props = defineProps({
-  item: {
-    type: null,
-    required: true,
-  },
-  childrenAtEnd: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-  isSubItem: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
+    item: {
+        type: null,
+        required: true,
+    },
+    childrenAtEnd: {
+        type: Boolean,
+        required: false,
+        default: false,
+    },
+    isSubItem: {
+        type: Boolean,
+        required: false,
+        default: false,
+    },
 });
 
 defineOptions({ name: "HorizontalNavGroup" });
@@ -31,103 +31,102 @@ const auth = computed(() => usePage().props.auth);
 
 const { dynamicI18nProps, isAppRtl } = useLayouts();
 const isGroupActive = ref(false);
-let items = [
-  { title: "Click Me" },
-  { title: "Click Me" },
-  { title: "Click Me" },
-  { title: "Click Me 2" },
-];
 let isLinkActive = (currentRoute) => {
-  return route()?.current()?.includes(currentRoute);
+    return route()?.current()?.includes(currentRoute);
 };
 let isParentActive = (routeList) => {
-  return routeList?.find((item) => route()?.current()?.includes(item.route_name));
+    return routeList?.find((item) =>
+        route()?.current()?.includes(item.route_name)
+    );
 };
 let goLink = (item) => {
-  if (item?.isNativeLink) {
-    window.location.href = item.url;
-  } else {
-    router.get(item.url);
-  }
+    if (item?.isNativeLink) {
+        window.location.href = item.url;
+    } else {
+        router.get(item.url);
+    }
+};
+
+let hiddenByPermission = (item) => {
+    return !auth?.value?.data?.permissions?.includes(item?.access_module) &&
+        item?.access_module != "access_dashboard"
+        ? true
+        : false;
+};
+let hiddenSubByPermission = (sitem, item) => {
+    return !auth?.value?.data?.permissions?.includes(sitem?.access_module) &&
+        item?.access_module != "access_dashboard"
+        ? true
+        : false;
 };
 </script>
 
 <template>
-  <div class="text-center">
-    <v-menu open-on-hover>
-      <template v-slot:activator="{ props }">
-        <v-list-item
-          v-bind="props"
-          :prepend-icon="item.icon.icon"
-          append-icon="mdi-chevron-down"
-          :title="item.title"
-          class="mx-2 text-none"
-          :class="isParentActive(item.children) ? '' : ''"
-          :color="isParentActive(item.children) ? '#4066E4' : '#282828'"
-          :hidden="
-            !auth?.data?.permissions?.includes(item?.access_module) &&
-            item?.access_module != 'access_dashboard'
-              ? true
-              : false
-          "
-        >
-        </v-list-item>
-      </template>
+    <div class="text-center">
+        <v-menu open-on-hover>
+            <template v-slot:activator="{ props }">
+                <v-list-item
+                    v-bind="props"
+                    :prepend-icon="item.icon.icon"
+                    append-icon="mdi-chevron-down"
+                    :title="item.title"
+                    class="mx-2 text-none"
+                    :class="isParentActive(item.children) ? '' : ''"
+                    :color="
+                        isParentActive(item.children) ? '#4066E4' : '#282828'
+                    "
+                    :hidden="hiddenByPermission(item)"
+                >
+                </v-list-item>
+            </template>
 
-      <v-list density="compact">
-        <v-list-item
-          v-for="(sitem, sindex) in item.children"
-          :key="sindex"
-          :value="sitem"
-          @click="goLink(sitem)"
-          :variant="isLinkActive(sitem.route_name) ? 'tonal' : 'text'"
-          :hidden="
-            !auth?.data?.permissions?.includes(sitem?.access_module) &&
-            item?.access_module != 'access_dashboard'
-              ? true
-              : false
-          "
-        >
-          <template v-slot:prepend>
-            <v-icon icon="mdi-circle-small"></v-icon>
-          </template>
-          <v-list-item-title>{{ sitem.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-  </div>
+            <v-list density="compact">
+                <v-list-item
+                    v-for="(sitem, sindex) in item.children"
+                    :key="sindex"
+                    :value="sitem"
+                    @click="goLink(sitem)"
+                    :variant="isLinkActive(sitem.route_name) ? 'tonal' : 'text'"
+                    :hidden="hiddenSubByPermission(sitem, item)"
+                >
+                    <template v-slot:prepend>
+                        <v-icon icon="mdi-circle-small"></v-icon>
+                    </template>
+                    <v-list-item-title>{{ sitem.title }}</v-list-item-title>
+                </v-list-item>
+            </v-list>
+        </v-menu>
+    </div>
 </template>
 
 <style lang="scss">
-
 .active-list {
-  background-color: #ededff !important;
-  color: #666cff !important;
+    background-color: #ededff !important;
+    color: #666cff !important;
 }
 
 .v-list-group--prepend {
-  --parent-padding: var(--indent-padding) !important;
+    --parent-padding: var(--indent-padding) !important;
 }
 .layout-horizontal-nav {
-  .nav-group {
-    .nav-group-label {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
+    .nav-group {
+        .nav-group-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
 
-    .popper-content {
-      z-index: 1;
+        .popper-content {
+            z-index: 1;
 
-      > div {
-        overflow-x: hidden;
-        overflow-y: auto;
-      }
+            > div {
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+        }
     }
-  }
 }
-.bg-primary
-{
+.bg-primary {
     background-color: red !important;
 }
 </style>

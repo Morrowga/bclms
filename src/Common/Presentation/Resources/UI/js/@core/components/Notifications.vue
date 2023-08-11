@@ -15,7 +15,7 @@ import axios from "axios";
 let allNotifications = ref([]);
 let reactiveNoti = computed(() => usePage().props.notifications?.data);
 let watchNoti = watch(reactiveNoti, (value) => {
-  getNotifications();
+    getNotifications();
 });
 // allNotifications.value = notifications.value;
 const items = ref([1]);
@@ -25,56 +25,56 @@ let isLoading = ref(false);
 const scroll_el = ref("");
 const form = useForm({});
 const getNotifications = () => {
-  isLoading.value = true;
-  axios
-    .get(
-      route("notifications", {
-        page: 1,
-      })
-    )
-    .then((resp) => {
-      last_page.value = resp.data.notifications.last_page;
-      allNotifications.value = resp.data.notifications.data;
-      isLoading.value = false;
-    });
-};
-useInfiniteScroll(
-  scroll_el,
-  () => {
-    current_page.value = current_page.value + 1;
-    if (current_page.value > last_page.value) {
-      return;
-    }
     isLoading.value = true;
     axios
-      .get(
-        route("notifications", {
-          page: current_page.value,
-        })
-      )
-      .then((resp) => {
-        last_page.value = resp.data.notifications.last_page;
-        allNotifications.value = [
-          ...allNotifications.value,
-          ...resp.data.notifications.data,
-        ];
-        isLoading.value = false;
-      });
-  },
-  { distance: 10 }
+        .get(
+            route("notifications", {
+                page: 1,
+            })
+        )
+        .then((resp) => {
+            last_page.value = resp.data.notifications.last_page;
+            allNotifications.value = resp.data.notifications.data;
+            isLoading.value = false;
+        });
+};
+useInfiniteScroll(
+    scroll_el,
+    () => {
+        current_page.value = current_page.value + 1;
+        if (current_page.value > last_page.value) {
+            return;
+        }
+        isLoading.value = true;
+        axios
+            .get(
+                route("notifications", {
+                    page: current_page.value,
+                })
+            )
+            .then((resp) => {
+                last_page.value = resp.data.notifications.last_page;
+                allNotifications.value = [
+                    ...allNotifications.value,
+                    ...resp.data.notifications.data,
+                ];
+                isLoading.value = false;
+            });
+    },
+    { distance: 10 }
 );
 const removeNotification = (notificationId) => {
-  form.post(route("markAsRead", { id: notificationId }), {
-    onSuccess: () => {
-      allNotifications.value = allNotifications.value.filter(
-        (noti) => noti.id != notificationId
-      );
-    },
-  });
+    form.post(route("markAsRead", { id: notificationId }), {
+        onSuccess: () => {
+            allNotifications.value = allNotifications.value.filter(
+                (noti) => noti.id != notificationId
+            );
+        },
+    });
 };
 const removeAllNotification = () => {
-  form.post(route("markAsReadAll"));
-  allNotifications.value = [];
+    form.post(route("markAsReadAll"));
+    allNotifications.value = [];
 };
 // const isAllMarkRead = computed(() => {
 //   return props.notifications.some((item) => item.isRead === true);
@@ -86,85 +86,92 @@ const removeAllNotification = () => {
 //   else emit("read", allNotificationsIds);
 // };
 onMounted(() => {
-  getNotifications();
+    getNotifications();
 });
 </script>
 
 <template>
-  <IconBtn>
-    <VBadge
-      dot
-      :model-value="!!allNotifications.length"
-      color="error"
-      bordered
-      offset-x="1"
-      offset-y="1"
-    >
-      <VIcon icon="mdi-bell-outline" />
-    </VBadge>
+    <IconBtn variant="tonal">
+        <VBadge
+            dot
+            :model-value="!!allNotifications.length"
+            color="error"
+            bordered
+            offset-x="1"
+            offset-y="1"
+        >
+            <VIcon icon="mdi-announcement" class="icon-color" />
+        </VBadge>
 
-    <VMenu
-      activator="parent"
-      width="380px"
-      offset="14px"
-      :close-on-content-click="false"
-    >
-      <VCard class="d-flex flex-column">
-        <!-- 👉 Header -->
-        <VCardItem class="notification-section">
-          <VCardTitle class="text-lg"> Notifications </VCardTitle>
+        <VMenu
+            activator="parent"
+            width="380px"
+            offset="14px"
+            :close-on-content-click="false"
+        >
+            <VCard class="d-flex flex-column">
+                <!-- 👉 Header -->
+                <VCardItem class="notification-section">
+                    <VCardTitle class="text-lg anno-title">
+                        Announcements
+                    </VCardTitle>
 
-          <template #append>
-            <IconBtn v-show="allNotifications.length">
-              <VIcon :icon="'mdi-email-outline'" />
+                    <template #append>
+                        <IconBtn v-show="allNotifications.length">
+                            <VIcon :icon="'mdi-email-outline'" />
 
-              <!-- <VTooltip activator="parent" location="start">
+                            <!-- <VTooltip activator="parent" location="start">
                   {{
                     isAllMarkRead ? "Mark all as read" : "Mark all as unread"
                   }}
                 </VTooltip> -->
-            </IconBtn>
-          </template>
-        </VCardItem>
+                        </IconBtn>
+                    </template>
+                </VCardItem>
 
-        <VDivider />
+                <VDivider />
 
-        <!-- 👉 Notifications list -->
-        <PerfectScrollbar
-          :options="{ wheelPropagation: false }"
-          ref="scroll_el"
-        >
-          <VList class="py-0">
-            <template
-              v-for="notification in allNotifications"
-              :key="notification.id"
-            >
-              <VListItem
-                link
-                lines="one"
-                min-height="66px"
-                class="list-item-hover-class"
-              >
-                <!-- Slot: Prepend -->
-                <!-- Handles Avatar: Image, Icon, Text -->
-                <template #prepend>
-                  <VListItemAction start>
-                    <VAvatar size="40" variant="tonal"> </VAvatar>
-                  </VListItemAction>
-                </template>
+                <!-- 👉 Notifications list -->
+                <PerfectScrollbar
+                    :options="{ wheelPropagation: false }"
+                    ref="scroll_el"
+                >
+                    <VList class="py-0">
+                        <template
+                            v-for="notification in allNotifications"
+                            :key="notification.id"
+                        >
+                            <VListItem
+                                link
+                                lines="one"
+                                min-height="66px"
+                                class="list-item-hover-class"
+                            >
+                                <!-- Slot: Prepend -->
+                                <!-- Handles Avatar: Image, Icon, Text -->
+                                <template #prepend>
+                                    <VListItemAction start>
+                                        <VAvatar size="40" variant="tonal">
+                                        </VAvatar>
+                                    </VListItemAction>
+                                </template>
 
-                <VListItemTitle>{{ notification.data.message }}</VListItemTitle>
-                <!-- <VListItemSubtitle>{{
+                                <VListItemTitle>{{
+                                    notification.data.message
+                                }}</VListItemTitle>
+                                <!-- <VListItemSubtitle>{{
                     notification.subtitle
                   }}</VListItemSubtitle> -->
-                <!-- <span class="text-xs text-disabled">{{
+                                <!-- <span class="text-xs text-disabled">{{
                     notification.time
                   }}</span> -->
 
-                <!-- Slot: Append -->
-                <template #append>
-                  <div class="d-flex flex-column align-center gap-4">
-                    <!-- <VBadge
+                                <!-- Slot: Append -->
+                                <template #append>
+                                    <div
+                                        class="d-flex flex-column align-center gap-4"
+                                    >
+                                        <!-- <VBadge
                         dot
                         :color="notification.isRead ? 'primary' : '#a8aaae'"
                         :class="`${
@@ -177,62 +184,83 @@ onMounted(() => {
                         "
                       /> -->
 
-                    <div style="width: 28px; height: 28px">
-                      <IconBtn
-                        size="x-small"
-                        class="visible-in-hover"
-                        @click="removeNotification(notification.id)"
-                      >
-                        <VIcon size="20" icon="mdi-close" />
-                      </IconBtn>
-                    </div>
-                  </div>
-                </template>
-              </VListItem>
-              <VDivider />
-            </template>
+                                        <div style="width: 28px; height: 28px">
+                                            <IconBtn
+                                                size="x-small"
+                                                class="visible-in-hover"
+                                                @click="
+                                                    removeNotification(
+                                                        notification.id
+                                                    )
+                                                "
+                                            >
+                                                <VIcon
+                                                    size="20"
+                                                    icon="mdi-close"
+                                                />
+                                            </IconBtn>
+                                        </div>
+                                    </div>
+                                </template>
+                            </VListItem>
+                            <VDivider />
+                        </template>
 
-            <VListItem
-              v-show="!allNotifications.length"
-              class="text-center text-medium-emphasis"
-            >
-              <VListItemTitle>No Notification Found!</VListItemTitle>
-            </VListItem>
-          </VList>
-        </PerfectScrollbar>
+                        <VListItem
+                            v-show="!allNotifications.length"
+                            class="text-center text-medium-emphasis"
+                        >
+                            <VListItemTitle
+                                >No Notification Found!</VListItemTitle
+                            >
+                        </VListItem>
+                    </VList>
+                </PerfectScrollbar>
 
-        <!-- 👉 Footer -->
-        <VCardActions
-          v-show="allNotifications.length"
-          class="notification-footer"
-        >
-          <VBtn block @click="removeAllNotification">
-            CLEAR ALL NOTIFICATIONS
-          </VBtn>
-        </VCardActions>
-      </VCard>
-    </VMenu>
-  </IconBtn>
+                <!-- 👉 Footer -->
+                <VCardActions
+                    v-show="allNotifications.length"
+                    class="notification-footer"
+                >
+                    <VBtn block @click="removeAllNotification">
+                        CLEAR ALL NOTIFICATIONS
+                    </VBtn>
+                </VCardActions>
+            </VCard>
+        </VMenu>
+    </IconBtn>
 </template>
 
 <style lang="scss">
 .notification-section {
-  padding: 14px !important;
+    padding: 14px !important;
 }
 
 .notification-footer {
-  padding: 6px !important;
+    padding: 6px !important;
 }
 
 .list-item-hover-class {
-  .visible-in-hover {
-    display: none;
-  }
-
-  &:hover {
     .visible-in-hover {
-      display: block;
+        display: none;
     }
-  }
+
+    &:hover {
+        .visible-in-hover {
+            display: block;
+        }
+    }
+}
+
+.icon-color {
+    color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
+
+.anno-title {
+    color: var(--graphite, #282828) !important;
+    font-size: 24px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 38px !important; /* 158.333% */
 }
 </style>
