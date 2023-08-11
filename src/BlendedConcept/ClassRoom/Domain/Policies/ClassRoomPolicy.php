@@ -2,7 +2,6 @@
 
 namespace Src\BlendedConcept\ClassRoom\Domain\Policies;
 
-
 class ClassRoomPolicy
 {
     public static function view()
@@ -14,10 +13,12 @@ class ClassRoomPolicy
     {
         return auth()->user()->hasPermission('create_classroom');
     }
+
     public static function store()
     {
         return auth()->user()->hasPermission('create_classroom');
     }
+
     public static function edit()
     {
         return auth()->user()->hasPermission('edit_classroom');

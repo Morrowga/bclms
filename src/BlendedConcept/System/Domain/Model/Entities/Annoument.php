@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Src\BlendedConcept\System\Domain\Model\Entities;
+
 use Src\Common\Domain\Entity;
 
 class Annoument extends Entity
@@ -14,9 +15,8 @@ class Annoument extends Entity
         public readonly ?int $created_by,
         public readonly ?int $trigger_on,
         public readonly ?int $send_to,
-    ) {}
-
-
+    ) {
+    }
 
     public function toArray(): array
     {
@@ -27,7 +27,7 @@ class Annoument extends Entity
             'message' => $this->message,
             'created_by' => $this->created_by,
             'trigger_on' => $this->trigger_on,
-            'send_to' => $this->send_to
+            'send_to' => $this->send_to,
         ];
     }
 }

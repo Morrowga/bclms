@@ -10,9 +10,8 @@ class Permission extends Entity
         public readonly ?int $id,
         public readonly string $name,
         public readonly ?string $description,
-    ) {}
-
-
+    ) {
+    }
 
     public function toArray(): array
     {

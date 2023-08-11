@@ -2,13 +2,13 @@
 
 namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
-use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
-use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
+use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
+use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
 use Src\BlendedConcept\System\Domain\Repositories\AnnouncementRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Resources\AnnouncementResource;
+use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
 use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
 
 class AnnouncementRepository implements AnnouncementRepositoryInterface
@@ -17,6 +17,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     public function getAnnouncements($filters = [])
     {
         $announcements = AnnouncementResource::collection(AnnouncementEloquentModel::filter($filters)->with(['created_by', 'send_to'])->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+
         return $announcements;
     }
 
@@ -30,7 +31,6 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $announmentEloquent->save();
     }
 
-
     //update announcement
     public function updateAnnouncement(AnnounmentData $annountment)
     {
@@ -43,11 +43,9 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $announemtEloquent->save();
     }
 
-
-    public function delete(int $annountment_id) : void
+    public function delete(int $annountment_id): void
     {
         $annount = AnnouncementEloquentModel::query()->findOrFail($annountment_id);
         $annount->delete();
     }
-
 }

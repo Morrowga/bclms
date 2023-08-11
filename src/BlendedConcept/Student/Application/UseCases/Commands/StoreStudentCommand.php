@@ -12,8 +12,7 @@ class StoreStudentCommand implements CommandInterface
 
     public function __construct(
         private readonly Student $student
-    )
-    {
+    ) {
         $this->repository = app()->make(StudentRepositoryInterface::class);
     }
 

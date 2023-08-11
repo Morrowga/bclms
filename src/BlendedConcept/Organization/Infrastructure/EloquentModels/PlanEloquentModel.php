@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Organization\Infrastructure\EloquentModels;
 
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 class PlanEloquentModel extends Model implements HasMedia
 {
     use HasFactory, Notifiable, InteractsWithMedia;
 
-
-    protected $table = "plans";
+    protected $table = 'plans';
 
     // for images
     protected $appends = [
@@ -32,7 +31,7 @@ class PlanEloquentModel extends Model implements HasMedia
         'allocated_storage',
         'teacher_license',
         'student_license',
-        'is_hidden'
+        'is_hidden',
     ];
 
     public function getImageAttribute()
@@ -43,10 +42,10 @@ class PlanEloquentModel extends Model implements HasMedia
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('name', 'like', '%' . $search . '%');
+            $query->where('name', 'like', '%'.$search.'%');
         });
     }
 }

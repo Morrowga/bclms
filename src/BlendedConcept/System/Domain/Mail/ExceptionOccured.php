@@ -58,7 +58,7 @@ class ExceptionOccured extends Mailable
         return [];
     }
 
-     /**
+    /**
      * Build the message.
      *
      * @return $this
@@ -66,6 +66,6 @@ class ExceptionOccured extends Mailable
     public function build()
     {
         return $this->view('systemerror.sytemerror')
-                    ->with('content', $this->content);
+            ->with('content', $this->content);
     }
 }

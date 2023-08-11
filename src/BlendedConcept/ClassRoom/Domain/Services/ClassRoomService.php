@@ -9,14 +9,12 @@ use Src\BlendedConcept\ClassRoom\Application\Requests\updateClassRoomRequest;
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Commands\StoreClassRoomCommand;
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Commands\UpdateClassRoomCommand;
 
-
 class ClassRoomService
 {
     public function createClassRoom(storeClassRoomRequest $request)
     {
         $request->validated();
         $newUser = ClassRoomMapper::fromRequest($request);
-
 
         $createNewUser = new StoreClassRoomCommand($newUser);
         $createNewUser->execute();
@@ -33,5 +31,4 @@ class ClassRoomService
     {
         $classroom->delete();
     }
-
 }

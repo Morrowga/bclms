@@ -2,10 +2,9 @@
 
 namespace Src\BlendedConcept\System\Application\UseCases\Commands;
 
-
-use Src\Common\Domain\CommandInterface;
 use Src\BlendedConcept\System\Application\DTO\SiteSettingData;
 use Src\BlendedConcept\System\Domain\Repositories\SettingRepositoryInterface;
+use Src\Common\Domain\CommandInterface;
 
 class UpdateSiteSettingCommand implements CommandInterface
 {
@@ -14,8 +13,7 @@ class UpdateSiteSettingCommand implements CommandInterface
     public function __construct(
         private readonly SiteSettingData $siteSettingData
 
-    )
-    {
+    ) {
         $this->repository = app()->make(SettingRepositoryInterface::class);
     }
 

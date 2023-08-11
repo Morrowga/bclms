@@ -2,19 +2,18 @@
 
 namespace Src\BlendedConcept\Student\Presentation\HTTP;
 
-use Src\Common\Infrastructure\Laravel\Controller;
 use Inertia\Inertia;
 use Src\BlendedConcept\Student\Application\Requests\storeStudentRequest;
 use Src\BlendedConcept\Student\Application\Requests\updateStudentRequest;
-use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
+use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
 use Src\BlendedConcept\Student\Domain\Services\StudentService;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class StudentController extends Controller
 {
-
     protected $studentService;
 
     protected $route_url;
@@ -34,14 +33,11 @@ class StudentController extends Controller
     public function index()
     {
 
-
         /****
          *  this will change route url
          *   `c.` if tenanct exist and default `` if not exits
          ****/
-        $this->route_url = tenant() ? "c." : "";
-
-
+        $this->route_url = tenant() ? 'c.' : '';
 
         // Check if the user is authorized to view users
 
@@ -60,10 +56,11 @@ class StudentController extends Controller
             return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
+
     /**
      * Store a new user.
      *
-     * @param storeStudentRequest $request The incoming request.
+     * @param  storeStudentRequest  $request The incoming request.
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(storeStudentRequest $request)
@@ -74,15 +71,13 @@ class StudentController extends Controller
         try {
             $this->studentService->createStudent($request);
 
-            return redirect()->route($this->route_url . 'students.index')->with("successMessage", "Student created successfully!");
+            return redirect()->route($this->route_url.'students.index')->with('successMessage', 'Student created successfully!');
 
         } catch (\Exception $e) {
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route($this->route_url . 'students.index')->with("sytemErrorMessage", $e->getMessage());
+            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
-
-
 
     //update user
     public function update(updateStudentRequest $request, StudentEloquentModel $student)
@@ -91,19 +86,20 @@ class StudentController extends Controller
         try {
 
             $this->studentService->updateStudent($request, $student->id);
-            return redirect()->route($this->route_url . 'students.index')->with("successMessage", "Student Updated Successfully!");
+
+            return redirect()->route($this->route_url.'students.index')->with('successMessage', 'Student Updated Successfully!');
 
         } catch (\Exception $e) {
 
-            return redirect()->route($this->route_url . 'students.index')->with("sytemErrorMessage", $e->getMessage());
+            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
-
 
     public function destroy(StudentEloquentModel $student)
     {
         abort_if(authorize('destroy', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->studentService->deleteStudent($student);
-        return redirect()->route($this->route_url . 'students.index')->with("successMessage", "Student Deleted Successfully!");
+
+        return redirect()->route($this->route_url.'students.index')->with('successMessage', 'Student Deleted Successfully!');
     }
 }

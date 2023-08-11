@@ -2,12 +2,11 @@
 
 namespace Src\Common\Infrastructure\Laravel\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Exception;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Src\BlendedConcept\System\Domain\Mail\ExceptionOccured;
-
 
 class Handler extends ExceptionHandler
 {
@@ -52,16 +51,14 @@ class Handler extends ExceptionHandler
         });
     }
 
-
     /**
      * Exception handling send mail to user when
      * error happened
-     * @return
      */
     public function sendEmail(Exception $exception)
     {
 
-       try {
+        try {
 
             $content['message'] = $exception->getMessage();
             $content['file'] = $exception->getFile();

@@ -2,16 +2,15 @@
 
 namespace Src\BlendedConcept\Security\Domain\Services;
 
-use Src\BlendedConcept\Security\Application\Requests\StoreRoleRequest;
+use Src\BlendedConcept\Security\Application\DTO\RoleData;
 use Src\BlendedConcept\Security\Application\Mappers\RoleMapper;
+use Src\BlendedConcept\Security\Application\Requests\StoreRoleRequest;
 use Src\BlendedConcept\Security\Application\Requests\UpdateRoleRequest;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\Role\StoreRoleCommand;
-use Src\BlendedConcept\Security\Application\DTO\RoleData;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\Role\UpdateRoleCommand;
 
 class RoleService
 {
-
     /***
      *
      *  @return void
@@ -24,13 +23,12 @@ class RoleService
 
         // Create a new role using the
         $newRole = RoleMapper::fromRequest($request);
-        $createNewRole = (new  StoreRoleCommand($newRole));
+        $createNewRole = (new StoreRoleCommand($newRole));
         $createNewRole->execute();
     }
 
     /**
      *  updateRole
-     *
      */
     public function updateRole(UpdateRoleRequest $request, $role_id)
     {

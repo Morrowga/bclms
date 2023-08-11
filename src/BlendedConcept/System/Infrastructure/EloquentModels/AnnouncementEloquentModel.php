@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
-
 class AnnouncementEloquentModel extends Model
 {
     protected $table = 'announcements';
@@ -18,7 +17,7 @@ class AnnouncementEloquentModel extends Model
         'message',
         'created_by',
         'trigger_on',
-        'send_to'
+        'send_to',
     ];
 
     public function created_by()
@@ -34,10 +33,10 @@ class AnnouncementEloquentModel extends Model
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('title', 'like', '%' . $name . '%');
+            $query->where('title', 'like', '%'.$name.'%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('title', 'like', '%' . $search . '%');
+            $query->where('title', 'like', '%'.$search.'%');
         });
     }
 }

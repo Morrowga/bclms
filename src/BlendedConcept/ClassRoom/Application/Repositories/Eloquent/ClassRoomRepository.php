@@ -3,37 +3,35 @@
 namespace Src\BlendedConcept\ClassRoom\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
-
-use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
-use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
-use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
 use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomData;
+use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
+use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
+use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\ClassRoom\Domain\Resources\ClassRoomResource;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
+
 class ClassRoomRepository implements ClassRoomRepositoryInterface
 {
     public function getClassRooms($filters)
     {
         $paginate_classrooms
-                = ClassRoomResource
-                    ::collection(ClassRoomEloquentModel::filter($filters)
-                    ->where("organization_id",auth()->user()->organization_id)
-                    ->with('teacher','students')
-                    ->orderBy('id', 'desc')
-                    ->paginate($filters['perPage'] ?? 10));
+                = ClassRoomResource::collection(ClassRoomEloquentModel::filter($filters)
+                        ->where('organization_id', auth()->user()->organization_id)
+                        ->with('teacher', 'students')
+                        ->orderBy('id', 'desc')
+                        ->paginate($filters['perPage'] ?? 10));
         $default_classrooms = ClassRoomEloquentModel::get();
+
         return [
-            "paginate_classrooms" => $paginate_classrooms,
-            "default_classrooms" => $default_classrooms
+            'paginate_classrooms' => $paginate_classrooms,
+            'default_classrooms' => $default_classrooms,
         ];
     }
+
     public function createClassRoom(ClassRoom $classRoom)
     {
-
-
-
 
         DB::beginTransaction();
 
@@ -49,6 +47,7 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
 
         DB::commit();
     }
+
     public function updateClassRoom(ClassRoomData $classRoomData)
     {
         DB::beginTransaction();
@@ -67,14 +66,13 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
         DB::commit();
     }
 
-
     public function getTeachers()
     {
-        return UserEloquentModel::whereHas("roles",function($query)
-        {
-            $query->where("roles.name","Teacher");
+        return UserEloquentModel::whereHas('roles', function ($query) {
+            $query->where('roles.name', 'Teacher');
         })->get();
     }
+
     public function getStudents()
     {
         return StudentEloquentModel::get();

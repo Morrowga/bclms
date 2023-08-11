@@ -5,21 +5,22 @@ namespace Src\Auth\Presentation\HTTP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use Src\Common\Infrastructure\Laravel\Controller;
-use Src\Auth\Application\Requests\StoreRegisterRequest;
-use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
 use Src\Auth\Application\Requests\StoreLoginRequest;
+use Src\Auth\Application\Requests\StoreRegisterRequest;
 use Src\Auth\Application\UseCases\Commands\AuthService;
+use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
+use Src\Common\Infrastructure\Laravel\Controller;
 
 class AuthController extends Controller
 {
     protected $authInterface;
+
     protected $authservices;
 
     public function __construct(AuthRepositoryInterface $authInterface)
     {
         $this->authInterface = $authInterface;
-        $this->authservices  = app()->make(AuthService::class);
+        $this->authservices = app()->make(AuthService::class);
     }
 
     /**
@@ -33,24 +34,22 @@ class AuthController extends Controller
     public function loginPage()
     {
         try {
-            $tenant = tenant("id") ? "c." : "";
+            $tenant = tenant('id') ? 'c.' : '';
             // Check if the user is already authenticated
             if (Auth::check()) {
                 // Redirect the authenticated user to the dashboard page
-                if (tenant("id")) {
-                    return redirect()->route("c.organizationaadmin");
+                if (tenant('id')) {
+                    return redirect()->route('c.organizationaadmin');
                 }
+
                 return redirect()->route('dashboard');
             }
 
-
-
-
             // Render the login page using the Inertia.js framework
-            return Inertia::render(config('route.login'), compact("tenant"));
+            return Inertia::render(config('route.login'), compact('tenant'));
         } catch (\Exception $exception) {
             return redirect()->route('login')->with([
-                'sytemErrorMessage' => $exception->getMessage()
+                'sytemErrorMessage' => $exception->getMessage(),
             ]);
         }
     }
@@ -92,20 +91,21 @@ class AuthController extends Controller
             if ($isAuthenticated['isCheck']) {
 
                 // Redirect the authenticated user to the dashboard page
-                if (tenant("id")) {
+                if (tenant('id')) {
                     return redirect()->route('c.organizationaadmin');
                 }
+
                 return redirect()->route('dashboard');
             } else {
                 // Render the login page with an error message
-                return Inertia::render(config('route.login'),[
-                    "errorMessage" => $isAuthenticated['errorMessage']
+                return Inertia::render(config('route.login'), [
+                    'errorMessage' => $isAuthenticated['errorMessage'],
                 ]);
             }
 
         } catch (\Exception $e) {
             // Handle the exception gracefully, such as displaying a generic error message
-            return redirect()->route('login')->with("sytemErrorMessage", $e->getMessage());
+            return redirect()->route('login')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
@@ -126,16 +126,15 @@ class AuthController extends Controller
             $this->authservices->Logout();
 
             // Redirect the user to the login page
-            if (tenant("id")) {
+            if (tenant('id')) {
                 return redirect()->route('c.login');
             }
+
             return redirect()->route('login');
         } catch (\Exception $error) {
             return $error->getMessage();
         }
     }
-
-
 
     /**
      * Render the verification page.
@@ -152,7 +151,7 @@ class AuthController extends Controller
 
             // Handle the exception gracefully, such as displaying a generic error page
             return Inertia::render(config('route.verify'))
-                ->with("sytemErrorMessage", $e->getMessage());
+                ->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
@@ -177,7 +176,7 @@ class AuthController extends Controller
             return Inertia::render(config('route.register'));
         } catch (\Exception $e) {
             // Handle the exception gracefully, such as displaying a generic error page
-            return Inertia::render(config('route.register'))->with("sytemErrorMessage", $e->getMessage());
+            return Inertia::render(config('route.register'))->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
@@ -191,10 +190,10 @@ class AuthController extends Controller
 
             return redirect()->route('verify');
 
-
         } catch (\Exception $e) {
-            dd($e->getMessage(),$e->getFile());
-            return redirect()->route('register')->with("sytemErrorMessage" , "Mail configuration is wrong");
+            dd($e->getMessage(), $e->getFile());
+
+            return redirect()->route('register')->with('sytemErrorMessage', 'Mail configuration is wrong');
         }
     }
 
@@ -220,15 +219,15 @@ class AuthController extends Controller
             if ($user !== null) {
                 // Render the verification page with a success message
                 return Inertia::render(config('route.verify'), [
-                    "verified" => true
-                ])->with("successMessage", "Email verified successfully!");
+                    'verified' => true,
+                ])->with('successMessage', 'Email verified successfully!');
             } else {
                 // User manually changed the token ID, return a 403 error
                 return abort(403, 'Unauthorized action.');
             }
         } catch (\Exception $e) {
             // Handle the exception gracefully, such as displaying a generic error page
-            return Inertia::render(config('route.verify'))->with("sytemErrorMessage", $e->getMessage());
+            return Inertia::render(config('route.verify'))->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
@@ -246,7 +245,7 @@ class AuthController extends Controller
             return Inertia::render(config('route.userprofile'));
         } catch (\Exception $e) {
             // Handle the exception gracefully, such as displaying a generic error page
-            return Inertia::render(route('route.userprofile'))->with("sytemErrorMessage", $e->getMessage());
+            return Inertia::render(route('route.userprofile'))->with('sytemErrorMessage', $e->getMessage());
         }
     }
 }

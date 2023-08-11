@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\Organization\Application\UseCases\Queries;
 
 use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\Common\Domain\QueryInterface;
+
 class GetOrganizatonName implements QueryInterface
 {
     private OrganizationRepositoryInterface $repository;

@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Artisan;
-use Src\BlendedConcept\User\Domain\Model\User;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
@@ -29,16 +28,14 @@ beforeEach(function () {
  *  then create permissions
  */
 
-test("superadmin only create permission", function () {
-
+test('superadmin only create permission', function () {
 
     //auth check
     $this->assertTrue(Auth::check());
 
-
     $response = $this->post('/permissions', [
         'name' => 'new permission',
-        'description' => "new description"
+        'description' => 'new description',
     ]);
 
     // Then the new role should be created successfully
@@ -51,64 +48,55 @@ test("superadmin only create permission", function () {
  * superadmin but mission permission checking validation
  *
  */
-test("create permission mission permission name", function () {
-
+test('create permission mission permission name', function () {
 
     //auth check
     $this->assertTrue(Auth::check());
 
     $response = $this->post('/permissions', [
         'name' => '',
-        'description' => "new description"
+        'description' => 'new description',
     ]);
-
 
     $response->assertSessionHasErrors(['name']);
 });
 
-
 /**
  * create permission without login
  */
-
-test("create permission without login", function () {
+test('create permission without login', function () {
 
     Auth::logout();
 
     $response = $this->post('/permissions', [
         'name' => 'new permission',
-        'description' => "new description"
+        'description' => 'new description',
     ]);
 
     // access denied not superadmin role
     $response->assertRedirect('/login');
 });
 
-
-
-
-test("create permission without not superadmin roles", function () {
+test('create permission without not superadmin roles', function () {
 
     Auth::logout();
 
     $user = UserEloquentModel::create([
-        "name" => "testing",
-        "email" => "testinguser@gmail.com",
-        "password" => "password",
-        "email_verified_at" => Carbon::now()
+        'name' => 'testing',
+        'email' => 'testinguser@gmail.com',
+        'password' => 'password',
+        'email_verified_at' => Carbon::now(),
     ]);
 
     $user->roles()->sync(2);
 
-    if (Auth::attempt(["email" => "testinguser@gmail.com","password" => "password",]))
-    {
+    if (Auth::attempt(['email' => 'testinguser@gmail.com', 'password' => 'password'])) {
         $response = $this->post('/permissions', [
             'name' => 'new permission',
-            'description' => "new description"
+            'description' => 'new description',
         ]);
 
         $response->assertStatus(403);
     }
-
 
 });

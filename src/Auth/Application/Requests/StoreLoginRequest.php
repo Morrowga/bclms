@@ -4,7 +4,7 @@ namespace Src\Auth\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreLoginRequest  extends FormRequest
+class StoreLoginRequest extends FormRequest
 {
     public function authorize()
     {
@@ -16,11 +16,11 @@ class StoreLoginRequest  extends FormRequest
         return [
             'email' => [
                 'required',
-                'email'
+                'email',
             ],
             'password' => [
-                'required'
-            ]
+                'required',
+            ],
         ];
     }
 }

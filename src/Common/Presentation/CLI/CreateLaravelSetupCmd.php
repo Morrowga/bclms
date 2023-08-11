@@ -22,23 +22,21 @@ class CreateLaravelSetupCmd extends Command
 
         if (File::exists($envFilePath)) {
             File::put($envFilePath, str_replace(
-                'DB_DATABASE=' . env('DB_DATABASE'),
-                'DB_DATABASE=' . $rootFolderName,
+                'DB_DATABASE='.env('DB_DATABASE'),
+                'DB_DATABASE='.$rootFolderName,
                 File::get($envFilePath)
             ));
 
-            $this->info('.env file updated with DB_DATABASE value: ' . $rootFolderName);
+            $this->info('.env file updated with DB_DATABASE value: '.$rootFolderName);
         } else {
             $this->error('.env file not found.');
         }
 
-
         //setup custom code
 
-        $pagebuilderfilepath = "vendor/hansschouten/phpagebuilder/src/Modules/GrapesJS/resources/views/layout.php";
-        if(File::exists($pagebuilderfilepath))
-        {
-            File::put($pagebuilderfilepath,"<!doctype html>
+        $pagebuilderfilepath = 'vendor/hansschouten/phpagebuilder/src/Modules/GrapesJS/resources/views/layout.php';
+        if (File::exists($pagebuilderfilepath)) {
+            File::put($pagebuilderfilepath, "<!doctype html>
             <html lang='en'>
             <head>
                 <meta charset='utf-8'>
@@ -92,12 +90,9 @@ class CreateLaravelSetupCmd extends Command
             </html>
             ");
             $this->info('CSRF Configure  successfully.');
+        } else {
+            $this->error('CSRF configure unsccessful');
         }
-        else
-        {
-            $this->error("CSRF configure unsccessful");
-        }
-
 
         // Migrate fresh database with seed data
         $this->info('Migrating and seeding the database...');

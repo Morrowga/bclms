@@ -3,12 +3,10 @@
 namespace Src\BlendedConcept\System\Application\DTO;
 
 use Illuminate\Http\Request;
-
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\SiteSettingEloquentModel;
 
 class SiteSettingData
 {
-
     public function __construct(
         public readonly ?int $id,
         public readonly string $site_name,
@@ -53,13 +51,13 @@ class SiteSettingData
     {
         return [
 
-            "id" => $this->id,
-            "site_name" => $this->site_name,
-            "ssl" => $this->ssl,
-            "timezone" => $this->timezone,
-            "locale" => $this->locale,
-            "email" => $this->email,
-            "contact_number" => $this->contact_number,
+            'id' => $this->id,
+            'site_name' => $this->site_name,
+            'ssl' => $this->ssl,
+            'timezone' => $this->timezone,
+            'locale' => $this->locale,
+            'email' => $this->email,
+            'contact_number' => $this->contact_number,
         ];
     }
 }

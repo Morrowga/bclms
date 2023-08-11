@@ -16,8 +16,8 @@ class LibraryController extends Controller
     public function index()
     {
 
-
         abort_if(authorize('destroy', FileManagerPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('filemanager');
     }
 }

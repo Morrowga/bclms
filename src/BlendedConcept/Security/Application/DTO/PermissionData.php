@@ -7,7 +7,6 @@ use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquent
 
 class PermissionData
 {
-
     public function __construct(
         public readonly ?int $id,
         public readonly string $name,
@@ -37,9 +36,9 @@ class PermissionData
     public function toArray(): array
     {
         return [
-            "id" =>  $this->id,
-            "name" =>  $this->name,
-            "description" =>  $this->description
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
         ];
     }
 }

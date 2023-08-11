@@ -1,10 +1,11 @@
 <?php
 
 namespace Src\BlendedConcept\Student\Domain\Services;
+
+use Src\BlendedConcept\Student\Application\DTO\StudentData;
+use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
 use Src\BlendedConcept\Student\Application\Requests\storeStudentRequest;
 use Src\BlendedConcept\Student\Application\Requests\updateStudentRequest;
-use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
-use Src\BlendedConcept\Student\Application\DTO\StudentData;
 use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreStudentCommand;
 use Src\BlendedConcept\Student\Application\UseCases\Commands\UpdateStudentCommand;
 
@@ -30,5 +31,4 @@ class StudentService
     {
         $student->delete();
     }
-
 }

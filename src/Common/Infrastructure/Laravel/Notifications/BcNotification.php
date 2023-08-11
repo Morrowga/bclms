@@ -3,15 +3,15 @@
 namespace Src\Common\Infrastructure\Laravel\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
+use Illuminate\Notifications\Notification;
 
 class BcNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     private $data;
+
     /**
      * Create a new notification instance.
      *
@@ -30,7 +30,6 @@ class BcNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-
 
         return ['database'];
     }
@@ -56,11 +55,9 @@ class BcNotification extends Notification implements ShouldQueue
         // dd($this->data);
         return [
             'message' => $this->data['message'],
-            'from'  => $this->data['from'],
-            'to'    => $this->data['to'],
-            'type' => $this->data['type']
+            'from' => $this->data['from'],
+            'to' => $this->data['to'],
+            'type' => $this->data['type'],
         ];
     }
-
-
 }

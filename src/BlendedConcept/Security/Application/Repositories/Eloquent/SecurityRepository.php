@@ -2,11 +2,6 @@
 
 namespace Src\BlendedConcept\Security\Application\Repositories\Eloquent;
 
-use Carbon\Carbon;
-use Exception;
-use Src\BlendedConcept\Security\Domain\Resources\PermissionResource;
-use Src\BlendedConcept\Security\Domain\Resources\RoleResource;
-use Src\BlendedConcept\Security\Domain\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
@@ -16,23 +11,27 @@ use Src\BlendedConcept\Security\Application\DTO\UserData;
 use Src\BlendedConcept\Security\Application\Mappers\PermissionMapper;
 use Src\BlendedConcept\Security\Application\Mappers\RoleMapper;
 use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
+use Src\BlendedConcept\Security\Domain\Model\Entities\Permission;
 use Src\BlendedConcept\Security\Domain\Model\Entities\Role;
 use Src\BlendedConcept\Security\Domain\Model\User;
-use Src\BlendedConcept\Security\Domain\Model\Entities\Permission;
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
+use Src\BlendedConcept\Security\Domain\Resources\PermissionResource;
+use Src\BlendedConcept\Security\Domain\Resources\RoleResource;
+use Src\BlendedConcept\Security\Domain\Resources\UserResource;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class SecurityRepository implements SecurityRepositoryInterface
 {
-
     //get only user name and i
     public function getUsersNameId()
     {
         $user_names = UserEloquentModel::get();
+
         return $user_names;
     }
+
     // get user
     public function getUsers($filters = [])
     {
@@ -42,17 +41,17 @@ class SecurityRepository implements SecurityRepositoryInterface
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
 
-
         return $users;
     }
-
 
     //get only user name
     public function getUsersName()
     {
         $user_names = UserEloquentModel::pluck('name');
+
         return $user_names;
     }
+
     // store user
     public function createUser(User $user)
     {
@@ -91,9 +90,9 @@ class SecurityRepository implements SecurityRepositoryInterface
             }
         }
 
-
         $updateUserEloquent->roles()->sync(request('role'));
     }
+
     //user filter
     public function filter($filters = [])
     {
@@ -101,11 +100,11 @@ class SecurityRepository implements SecurityRepositoryInterface
 
         // Add filters to the query
         if (isset($filters['name'])) {
-            $query->where('name', 'like', '%' . $filters['name'] . '%');
+            $query->where('name', 'like', '%'.$filters['name'].'%');
         }
 
         if (isset($filters['email'])) {
-            $query->where('email', 'like', '%' . $filters['email'] . '%');
+            $query->where('email', 'like', '%'.$filters['email'].'%');
         }
 
         if (isset($filters['role'])) {
@@ -123,9 +122,10 @@ class SecurityRepository implements SecurityRepositoryInterface
         $permissions = PermissionResource::collection(PermissionEloquentModel::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
 
         $default_permissions = PermissionEloquentModel::orderBy('id', 'desc')->get();
+
         return [
-            "permissions" => $permissions,
-            "default_permissions" => $default_permissions
+            'permissions' => $permissions,
+            'default_permissions' => $default_permissions,
         ];
     }
 
@@ -151,9 +151,10 @@ class SecurityRepository implements SecurityRepositoryInterface
     {
         $paginate_roles = RoleResource::collection(RoleEloquentModel::filter($filters)->with('permissions')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
         $default_roles = RoleEloquentModel::with('permissions')->get();
+
         return [
-            "paginate_roles" => $paginate_roles,
-            "default_roles" => $default_roles
+            'paginate_roles' => $paginate_roles,
+            'default_roles' => $default_roles,
         ];
     }
 
@@ -161,9 +162,9 @@ class SecurityRepository implements SecurityRepositoryInterface
     public function getRolesName()
     {
         $roles_name = RoleEloquentModel::get()->prepend('Select');
+
         return $roles_name;
     }
-
 
     // store role
     public function createRole(Role $role)
@@ -189,6 +190,7 @@ class SecurityRepository implements SecurityRepositoryInterface
     {
         $users = UserEloquentModel::with('roles')->latest()->take(5)->get();
         $organizations = OrganizationEloquentModel::with('plan')->latest()->take(5)->get();
+
         return [$users, $organizations];
     }
 
@@ -198,11 +200,12 @@ class SecurityRepository implements SecurityRepositoryInterface
         //  check passord same or not
         if (Hash::check($request->currentpassword, $user->password)) {
             UserEloquentModel::find($user->id)->update([
-                "password" => $request->updatedpassword
+                'password' => $request->updatedpassword,
             ]);
 
             return true;
         }
+
         return false;
     }
 }

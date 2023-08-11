@@ -2,10 +2,9 @@
 
 namespace Src\BlendedConcept\Security\Application\Requests;
 
-
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatepermissionRequest  extends FormRequest
+class UpdatepermissionRequest extends FormRequest
 {
     public function authorize()
     {

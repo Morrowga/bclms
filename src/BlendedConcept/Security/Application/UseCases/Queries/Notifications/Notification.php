@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\Security\Application\UseCases\Queries\Notifications;
 
 use Src\BlendedConcept\System\Domain\Repositories\NotificationRepositoryInterface;
-
 use Src\Common\Domain\QueryInterface;
 
 class Notification implements QueryInterface

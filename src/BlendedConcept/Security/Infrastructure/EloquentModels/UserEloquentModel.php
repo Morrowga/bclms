@@ -6,17 +6,14 @@ namespace Src\BlendedConcept\Security\Infrastructure\EloquentModels;
 
 use Hash;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
 
-
-class UserEloquentModel extends  Authenticatable implements HasMedia, MustVerifyEmail
+class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyEmail
 {
     use HasFactory, Notifiable, InteractsWithMedia;
 
@@ -48,23 +45,19 @@ class UserEloquentModel extends  Authenticatable implements HasMedia, MustVerify
         'remember_token',
     ];
 
-
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
 
     public function getImageAttribute()
     {
         return $this->getMedia('image');
     }
 
-
-
     public function getRemainingStorageSpace()
     {
         //fetch user's medialibary total uploads size
-        $usedSpace = "User Space code is here";
+        $usedSpace = 'User Space code is here';
 
         $remainingSpace = $this->storage_limit - $usedSpace;
 
@@ -73,9 +66,8 @@ class UserEloquentModel extends  Authenticatable implements HasMedia, MustVerify
 
     public function roles()
     {
-        return $this->belongsToMany(RoleEloquentModel::class,'role_user','user_id','role_id');
+        return $this->belongsToMany(RoleEloquentModel::class, 'role_user', 'user_id', 'role_id');
     }
-
 
     // hased password
 
@@ -86,8 +78,6 @@ class UserEloquentModel extends  Authenticatable implements HasMedia, MustVerify
         }
     }
 
-
-
     public function permissions()
     {
         return $this->hasManyThrough(PermissionEloquentModel::class, RoleEloquentModel::class);
@@ -97,27 +87,28 @@ class UserEloquentModel extends  Authenticatable implements HasMedia, MustVerify
     {
         $role = auth()->user()->roles[0]->id;
         $user_role = RoleEloquentModel::find($role);
+
         return $user_role->permissions->where('name', $permission)->first() ? true : false;
     }
 
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->orWhere('name', 'like', '%' . $search . '%')
-                  ->orWhere('email','like','%'.$search.'%');
+            $query->orWhere('name', 'like', '%'.$search.'%')
+                ->orWhere('email', 'like', '%'.$search.'%');
         });
         $query->when($filters['roles'] ?? false, function ($query, $role) {
             $query->whereHas('roles', function ($query) use ($role) {
-                $query->where('name', 'like', '%' . $role . '%');
+                $query->where('name', 'like', '%'.$role.'%');
             });
         });
     }
 
     public function organization()
     {
-        return $this->belongsTo(OrganizationEloquentModel::class,'organization_id');
+        return $this->belongsTo(OrganizationEloquentModel::class, 'organization_id');
     }
 }

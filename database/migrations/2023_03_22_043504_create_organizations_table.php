@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('plan_id')->nullable()->references('id')->on('plans')->cascadeOnDelete();
-            $table->string("name")->nullable();
-            $table->longText("description")->nullable();
-            $table->string("type")->nullable();
-            $table->string("contact_person")->nullable();
-            $table->string("contact_email")->nullable();
-            $table->string("contact_number")->nullable();
+            $table->string('name')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('type')->nullable();
+            $table->string('contact_person')->nullable();
+            $table->string('contact_email')->nullable();
+            $table->string('contact_number')->nullable();
             $table->unsignedBigInteger('tenant_id')->nullable();
             $table->timestamps();
             $table->softDeletes();

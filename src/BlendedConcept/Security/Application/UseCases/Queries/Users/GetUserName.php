@@ -2,9 +2,7 @@
 
 namespace Src\BlendedConcept\Security\Application\UseCases\Queries\Users;
 
-
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
-
 use Src\Common\Domain\QueryInterface;
 
 class GetUserName implements QueryInterface

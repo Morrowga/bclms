@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Teacher\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTeacherRequest  extends FormRequest
+class UpdateTeacherRequest extends FormRequest
 {
     public function authorize()
     {
@@ -14,10 +14,10 @@ class UpdateTeacherRequest  extends FormRequest
     public function rules()
     {
         return [
-            'role' => ['required','not_in:Select'],
-            'name' => ['required','string','max:255'],
+            'role' => ['required', 'not_in:Select'],
+            'name' => ['required', 'string', 'max:255'],
             'contact_number' => ['required'],
-            'email' => ['required','email',  'unique:users,email,' .request()->route('teacher')->id],
+            'email' => ['required', 'email',  'unique:users,email,'.request()->route('teacher')->id],
         ];
     }
 }

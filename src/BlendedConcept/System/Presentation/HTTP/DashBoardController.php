@@ -2,24 +2,17 @@
 
 namespace Src\BlendedConcept\System\Presentation\HTTP;
 
-
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
-use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
-use Src\BlendedConcept\Student\Domain\Repositories\StudentRepositoryInterface;
+use Inertia\Inertia;
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
-use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetStudentForAdminDashBoard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetUserForAdminDashBoard;
-
+use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
 use Src\Common\Infrastructure\Laravel\Controller;
-
 
 class DashBoardController extends Controller
 {
-
     private $pageBuilderInterface;
-
 
     private $ClassRoomRepositoryInterface;
 
@@ -47,10 +40,6 @@ class DashBoardController extends Controller
         //here I render it inside
         return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students'));
     }
-
-
-
-
 
     /***
      * this below funcitons are all related to with

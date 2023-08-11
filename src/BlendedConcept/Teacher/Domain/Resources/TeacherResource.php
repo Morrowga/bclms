@@ -2,7 +2,6 @@
 
 namespace Src\BlendedConcept\Teacher\Domain\Resources;
 
-
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TeacherResource extends JsonResource

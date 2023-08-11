@@ -4,7 +4,6 @@ namespace Src\BlendedConcept\Security\Application\Policies;
 
 class RolePolicy
 {
-
     public static function view()
     {
         return auth()->user()->hasPermission('access_role');
@@ -14,10 +13,12 @@ class RolePolicy
     {
         return auth()->user()->hasPermission('create_role');
     }
+
     public static function store()
     {
         return auth()->user()->hasPermission('create_role');
     }
+
     public static function edit()
     {
         return auth()->user()->hasPermission('edit_role');
@@ -32,5 +33,4 @@ class RolePolicy
     {
         return auth()->user()->hasPermission('delete_role');
     }
-
 }

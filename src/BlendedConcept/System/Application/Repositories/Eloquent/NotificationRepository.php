@@ -2,7 +2,6 @@
 
 namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
-
 use Src\BlendedConcept\System\Domain\Repositories\NotificationRepositoryInterface;
 
 class NotificationRepository implements NotificationRepositoryInterface
@@ -26,12 +25,13 @@ class NotificationRepository implements NotificationRepositoryInterface
     {
         if (auth()->check()) {
             $notification = [
-                "notifications" => auth()->user()->unreadNotifications()->paginate(7),
-                "unread" =>  auth()->user()->unreadNotifications()->count()
+                'notifications' => auth()->user()->unreadNotifications()->paginate(7),
+                'unread' => auth()->user()->unreadNotifications()->count(),
             ];
         } else {
             $notification = null;
         }
+
         return $notification;
     }
 }

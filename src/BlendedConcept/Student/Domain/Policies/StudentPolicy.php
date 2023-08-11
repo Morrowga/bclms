@@ -2,11 +2,9 @@
 
 namespace Src\BlendedConcept\Student\Domain\Policies;
 
-
 class StudentPolicy
 {
-
-    public  static function view()
+    public static function view()
     {
         return auth()->user()->hasPermission('access_student');
     }
@@ -15,10 +13,12 @@ class StudentPolicy
     {
         return auth()->user()->hasPermission('create_student');
     }
+
     public static function store()
     {
         return auth()->user()->hasPermission('create_student');
     }
+
     public static function edit()
     {
         return auth()->user()->hasPermission('edit_student');

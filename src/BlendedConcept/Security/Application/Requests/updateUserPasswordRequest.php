@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Security\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class updateUserPasswordRequest  extends FormRequest
+class updateUserPasswordRequest extends FormRequest
 {
     public function authorize()
     {
@@ -20,8 +20,8 @@ class updateUserPasswordRequest  extends FormRequest
             ],
             'updatedpassword' => [
                 'required',
-                'min:8'
-            ]
+                'min:8',
+            ],
         ];
     }
 }

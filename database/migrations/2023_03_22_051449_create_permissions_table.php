@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();       // For MySQL 8.0 use string('name', 125);
-            $table->string('guard_name')->default("web");
+            $table->string('guard_name')->default('web');
             $table->longText('description')->nullable();
             $table->timestamps();
         });

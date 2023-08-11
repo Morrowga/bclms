@@ -20,7 +20,6 @@ class ClassRoomMapper
         );
     }
 
-
     public static function toEloquent(ClassRoom $classRoom): ClassRoomEloquentModel
     {
         $classRoomEloquent = new ClassRoomEloquentModel();
@@ -33,6 +32,7 @@ class ClassRoomMapper
         $classRoomEloquent->name = $classRoom->name;
         $classRoomEloquent->teacher_id = $classRoom->teacher_id;
         $classRoomEloquent->venue = $classRoom->venue;
+
         return $classRoomEloquent;
     }
 }

@@ -13,7 +13,7 @@ return [
         'base_url' => env('APP_URL'),
         'language' => 'en',
         'assets_url' => '/assets',
-        'uploads_url' => '/uploads'
+        'uploads_url' => '/uploads',
     ],
 
     /*
@@ -27,16 +27,16 @@ return [
     'storage' => [
         'use_database' => true,
         'database' => [
-            'driver'    => 'mysql',
-            'host'      => env('DB_HOST') . ':' . env('DB_PORT', 3306),
-            'database'  => env('DB_DATABASE'),
-            'username'  => env('DB_USERNAME'),
-            'password'  => env('DB_PASSWORD'),
-            'charset'   => 'utf8',
+            'driver' => 'mysql',
+            'host' => env('DB_HOST').':'.env('DB_PORT', 3306),
+            'database' => env('DB_DATABASE'),
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
+            'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
+            'prefix' => '',
         ],
-        'uploads_folder' => storage_path('app/pagebuilder/uploads')
+        'uploads_folder' => storage_path('app/pagebuilder/uploads'),
     ],
 
     /*
@@ -53,7 +53,7 @@ return [
         'class' => PHPageBuilder\Modules\Auth\Auth::class,
         'url' => '/bc/admin/auth',
         'username' => 'admin',
-        'password' => 'admin'
+        'password' => 'admin',
     ],
 
     /*
@@ -67,7 +67,7 @@ return [
     'website_manager' => [
         'use_website_manager' => true,
         'class' => PHPageBuilder\Modules\WebsiteManager\WebsiteManager::class,
-        'url' => '/bc/admin'
+        'url' => '/bc/admin',
     ],
 
     /*
@@ -79,7 +79,7 @@ return [
      |
      */
     'setting' => [
-        'class' => PHPageBuilder\Setting::class
+        'class' => PHPageBuilder\Setting::class,
     ],
 
     /*
@@ -94,8 +94,8 @@ return [
         'class' => PHPageBuilder\Modules\GrapesJS\PageBuilder::class,
         'url' => '/bc/admin/pagebuilder',
         'actions' => [
-            'back' => '/bc/admin'
-        ]
+            'back' => '/bc/admin',
+        ],
     ],
 
     /*
@@ -113,7 +113,7 @@ return [
             'class' => PHPageBuilder\PageTranslation::class,
             'table' => 'page_translations',
             'foreign_key' => 'page_id',
-        ]
+        ],
     ],
 
     /*
@@ -129,8 +129,8 @@ return [
      */
     'cache' => [
         'enabled' => false,
-        'folder' => __DIR__ . '/cache',
-        'class' => PHPageBuilder\Cache::class
+        'folder' => __DIR__.'/cache',
+        'class' => PHPageBuilder\Cache::class,
     ],
 
     /*
@@ -147,7 +147,7 @@ return [
         'class' => PHPageBuilder\Theme::class,
         'folder' => base_path('themes'),
         'folder_url' => '/themes',
-        'active_theme' => 'demo'
+        'active_theme' => 'demo',
     ],
 
     /*
@@ -160,7 +160,7 @@ return [
      */
     'router' => [
         'class' => PHPageBuilder\Modules\Router\DatabasePageRouter::class,
-        'use_router' => true
+        'use_router' => true,
     ],
 
     /*

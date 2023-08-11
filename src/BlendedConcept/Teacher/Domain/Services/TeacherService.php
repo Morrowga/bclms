@@ -32,5 +32,4 @@ class TeacherService
     {
         $teacher->delete();
     }
-
 }

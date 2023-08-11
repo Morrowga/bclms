@@ -4,7 +4,6 @@ namespace Src\BlendedConcept\Security\Application\Policies;
 
 class PermissionPolicy
 {
-
     public static function view()
     {
 
@@ -15,10 +14,12 @@ class PermissionPolicy
     {
         return auth()->user()->hasPermission('create_permission');
     }
+
     public static function store()
     {
         return auth()->user()->hasPermission('create_permission');
     }
+
     public static function edit()
     {
         return auth()->user()->hasPermission('edit_permission');

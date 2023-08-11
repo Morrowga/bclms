@@ -2,10 +2,10 @@
 
 namespace Src\BlendedConcept\Organization\Domain\Model;
 
-use Src\BlendedConcept\Organization\Domain\Model\Entities\Plan;
-use Src\BlendedConcept\Teacher\Domain\Model\Teacher;
 use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
+use Src\BlendedConcept\Organization\Domain\Model\Entities\Plan;
 use Src\BlendedConcept\Student\Domain\Model\Student;
+use Src\BlendedConcept\Teacher\Domain\Model\Teacher;
 use Src\Common\Domain\AggregateRoot;
 
 class Organization extends AggregateRoot
@@ -26,7 +26,6 @@ class Organization extends AggregateRoot
 
     ) {
     }
-
 
     public function toArray(): array
     {

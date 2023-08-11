@@ -36,19 +36,19 @@ class UserMapper
         if ($user->id) {
             $UserEloquent = UserEloquentModel::query()->findOrFail($user->id);
         }
-        $UserEloquent->name  =  $user->name;
-        $UserEloquent->email  =  $user->email;
-        $UserEloquent->organization_id   =  $user->organization_id;
-        $UserEloquent->email_verified_at  =  $user->email_verified_at;
-        $UserEloquent->dob  =  $user->dob;
-        $UserEloquent->contact_number   =  $user->contact_number;
-        $UserEloquent->storage_limit  =  $user->storage_limit;
-        $UserEloquent->password   =  $user->password;
-        $UserEloquent->is_active  =  $user->is_active;
-        $UserEloquent->stripe_id  =  $user->stripe_id;
-        $UserEloquent->pm_brand  =  $user->pm_brand;
-        $UserEloquent->pm_last_four  =  $user->pm_last_four;
-        $UserEloquent->trial_end_at  =  $user->trial_end_at;
+        $UserEloquent->name = $user->name;
+        $UserEloquent->email = $user->email;
+        $UserEloquent->organization_id = $user->organization_id;
+        $UserEloquent->email_verified_at = $user->email_verified_at;
+        $UserEloquent->dob = $user->dob;
+        $UserEloquent->contact_number = $user->contact_number;
+        $UserEloquent->storage_limit = $user->storage_limit;
+        $UserEloquent->password = $user->password;
+        $UserEloquent->is_active = $user->is_active;
+        $UserEloquent->stripe_id = $user->stripe_id;
+        $UserEloquent->pm_brand = $user->pm_brand;
+        $UserEloquent->pm_last_four = $user->pm_last_four;
+        $UserEloquent->trial_end_at = $user->trial_end_at;
 
         return $UserEloquent;
     }

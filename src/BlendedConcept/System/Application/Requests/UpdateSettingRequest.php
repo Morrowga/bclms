@@ -1,9 +1,10 @@
 <?php
 
 namespace Src\BlendedConcept\System\Application\Requests;
+
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSettingRequest  extends FormRequest
+class UpdateSettingRequest extends FormRequest
 {
     public function authorize()
     {
@@ -13,22 +14,22 @@ class UpdateSettingRequest  extends FormRequest
     public function rules()
     {
         return [
-            "site_name" => [
-                'required'
+            'site_name' => [
+                'required',
             ],
-            "timezone" => [
-                'required'
+            'timezone' => [
+                'required',
             ],
             'locale' => [
-                'required'
-            ],
-            "email" => [
                 'required',
-                'email'
             ],
-            "contact_number" => [
-                'required'
-            ]
+            'email' => [
+                'required',
+                'email',
+            ],
+            'contact_number' => [
+                'required',
+            ],
         ];
     }
 }

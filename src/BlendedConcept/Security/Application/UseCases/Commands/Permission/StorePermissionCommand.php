@@ -12,8 +12,7 @@ class StorePermissionCommand implements CommandInterface
 
     public function __construct(
         private readonly Permission $permission
-    )
-    {
+    ) {
         $this->repository = app()->make(SecurityRepositoryInterface::class);
     }
 

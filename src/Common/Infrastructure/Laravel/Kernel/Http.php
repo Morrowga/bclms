@@ -4,7 +4,6 @@ namespace Src\Common\Infrastructure\Laravel\Kernel;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
-
 //use Bugsnag\BugsnagLaravel\OomBootstrapper;
 
 class Http extends HttpKernel
@@ -26,7 +25,6 @@ class Http extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
-
     protected $routeMiddleware = [
         'auth' => \Src\Common\Infrastructure\Laravel\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
@@ -39,7 +37,7 @@ class Http extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'isSuperAdmin' => \Src\Auth\Domain\Middleware\CheckIsSuperAdmin::class,
-        'CheckSubDomain' => \Src\Auth\Domain\Middleware\CheckSubDomain::class
+        'CheckSubDomain' => \Src\Auth\Domain\Middleware\CheckSubDomain::class,
     ];
 
     /**
@@ -55,7 +53,7 @@ class Http extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Src\Common\Infrastructure\Laravel\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \Src\Common\Infrastructure\Laravel\Middleware\HandleInertiaRequest::class
+            \Src\Common\Infrastructure\Laravel\Middleware\HandleInertiaRequest::class,
         ],
 
         'api' => [
@@ -63,7 +61,6 @@ class Http extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
-
 
     ];
 

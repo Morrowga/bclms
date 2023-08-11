@@ -24,25 +24,23 @@ class User extends AggregateRoot
     ) {
     }
 
-
-
     public function toArray(): array
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            "email" => $this->email,
-            "organization_id"  => $this->organization_id,
-            "email_verified_at" => $this->email_verified_at,
-            "dob" => $this->dob,
-            "contact_number"  => $this->contact_number,
-            "storage_limit" => $this->storage_limit,
-            "password"  => $this->password,
-            "is_active" => $this->is_active,
-            "stripe_id" => $this->stripe_id,
-            "pm_brand" => $this->pm_brand,
-            "pm_last_four" => $this->pm_last_four,
-            "trial_end_at" => $this->trial_end_at,
+            'email' => $this->email,
+            'organization_id' => $this->organization_id,
+            'email_verified_at' => $this->email_verified_at,
+            'dob' => $this->dob,
+            'contact_number' => $this->contact_number,
+            'storage_limit' => $this->storage_limit,
+            'password' => $this->password,
+            'is_active' => $this->is_active,
+            'stripe_id' => $this->stripe_id,
+            'pm_brand' => $this->pm_brand,
+            'pm_last_four' => $this->pm_last_four,
+            'trial_end_at' => $this->trial_end_at,
         ];
     }
 }

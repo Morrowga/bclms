@@ -2,17 +2,14 @@
 
 namespace Src\BlendedConcept\Security\Application\Providers;
 
-
 use Illuminate\Support\ServiceProvider;
 use Src\BlendedConcept\Security\Application\Repositories\Eloquent\NotificationRepository;
-use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
 use Src\BlendedConcept\Security\Application\Repositories\Eloquent\SecurityRepository;
 use Src\BlendedConcept\Security\Domain\Repositories\NotificationRepositoryInterface;
+use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
+
 class SecurityServiceProvider extends ServiceProvider
 {
-
-
-
     public function register()
     {
         $this->app->bind(
@@ -21,11 +18,10 @@ class SecurityServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-           NotificationRepositoryInterface::class,
-           NotificationRepository::class
+            NotificationRepositoryInterface::class,
+            NotificationRepository::class
         );
     }
-
 
     /**
      * Bootstrap any application services.

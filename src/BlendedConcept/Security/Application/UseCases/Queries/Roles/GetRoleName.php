@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\Security\Application\UseCases\Queries\Roles;
 
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
-
 use Src\Common\Domain\QueryInterface;
 
 class GetRoleName implements QueryInterface

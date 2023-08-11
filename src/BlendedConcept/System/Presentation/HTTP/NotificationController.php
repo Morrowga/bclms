@@ -2,12 +2,11 @@
 
 namespace Src\BlendedConcept\System\Presentation\HTTP;
 
-use Src\Common\Infrastructure\Laravel\Controller;
-use Src\BlendedConcept\System\Domain\Repositories\NotificationRepositoryInterface;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Notifications\Notification;
-use Src\BlendedConcept\Security\Application\UseCases\Commands\Notifications\ReadCommand;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\Notifications\ReadAllCommand;
-
+use Src\BlendedConcept\Security\Application\UseCases\Commands\Notifications\ReadCommand;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Notifications\Notification;
+use Src\BlendedConcept\System\Domain\Repositories\NotificationRepositoryInterface;
+use Src\Common\Infrastructure\Laravel\Controller;
 
 class NotificationController extends Controller
 {
@@ -31,12 +30,14 @@ class NotificationController extends Controller
 
         $notificationReadAll = (new ReadAllCommand());
         $notificationReadAll->execute();
+
         return redirect()->back();
     }
 
     public function getAllNotifications()
     {
         $notifications = (new Notification())->handle();
+
         return $notifications;
     }
 }

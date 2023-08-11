@@ -13,7 +13,7 @@ const theme = {
         'on-primary': '#fff',
         'secondary': '#6D788D',
         'on-secondary': '#fff',
-        'success': '#72E128',
+        'success': '#48BC65',
         'on-success': '#fff',
         'info': '#26C6F9',
         'on-info': '#fff',

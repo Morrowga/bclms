@@ -7,10 +7,9 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Src\Common\Presentation\CLI\CreateCommandCmd;
 use Src\Common\Presentation\CLI\CreateControllerCmd;
 use Src\Common\Presentation\CLI\CreateDomainCmd;
+use Src\Common\Presentation\CLI\CreateLaravelSetupCmd;
 use Src\Common\Presentation\CLI\CreateQueryCmd;
 use Src\Common\Presentation\CLI\CreateRoutesCmd;
-use Src\Common\Presentation\CLI\CreateLaravelSetupCmd;
-
 
 class Console extends ConsoleKernel
 {
@@ -31,7 +30,6 @@ class Console extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)

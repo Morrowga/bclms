@@ -4,11 +4,8 @@ namespace Src\BlendedConcept\Organization\Presentation\HTTP;
 
 use Inertia\Inertia;
 
-
 class PlanController
 {
-
-
     public function index()
     {
 

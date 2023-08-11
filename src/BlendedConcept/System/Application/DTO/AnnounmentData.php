@@ -7,7 +7,6 @@ use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquent
 
 class AnnounmentData
 {
-
     public function __construct(
         public readonly ?int $id,
         public readonly string $title,
@@ -33,11 +32,11 @@ class AnnounmentData
         );
     }
 
-    public static function fromEloquent(AnnouncementEloquentModel $announment) : self
+    public static function fromEloquent(AnnouncementEloquentModel $announment): self
     {
         return new self(
             id: $announment->id,
-            type:null,
+            type: null,
             title: $announment->title,
             message: $announment->message,
             created_by: $announment->created_by,
@@ -51,7 +50,7 @@ class AnnounmentData
         return [
             'id' => $this->id,
             'title' => $this->title,
-            "type" => $this->type,
+            'type' => $this->type,
             'message' => $this->message,
             'created_by' => $this->created_by,
             'trigger_on' => $this->trigger_on,

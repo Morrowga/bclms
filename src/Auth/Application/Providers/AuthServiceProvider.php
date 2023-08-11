@@ -5,8 +5,6 @@ namespace Src\Auth\Application\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Src\Auth\Application\Repositories\AuthRepository;
 use Src\Auth\Domain\AuthInterface;
-use Gate;
-
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,7 +14,6 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-
 
     ];
 

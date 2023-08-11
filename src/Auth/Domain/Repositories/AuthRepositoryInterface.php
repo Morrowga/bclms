@@ -12,5 +12,4 @@ interface AuthRepositoryInterface
 
     //verification email
     public function verification($id);
-
 }

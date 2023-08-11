@@ -1,9 +1,8 @@
 <?php
+
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Carbon\Carbon;
-
 
 beforeEach(function () {
 
@@ -21,15 +20,15 @@ beforeEach(function () {
 
     //add organizaion admin and assign as organizaiton admin role
 
-    $this->post("/users",[
-        'name' => "Hare Om",
-        'contact_number' => "09951613400",
-        "email" => "organizationone@gmail.com",
-        "role"  => "5",
-        "password" => "password",
-        "dob" => Carbon::now(),
-        "is_active" => 1,
-        "email_verified_at" => Carbon::now()
+    $this->post('/users', [
+        'name' => 'Hare Om',
+        'contact_number' => '09951613400',
+        'email' => 'organizationone@gmail.com',
+        'role' => '5',
+        'password' => 'password',
+        'dob' => Carbon::now(),
+        'is_active' => 1,
+        'email_verified_at' => Carbon::now(),
     ]);
 
 });
@@ -38,9 +37,9 @@ test('test organization admin create account and access dashboard and can access
 
     $this->get('/login');
 
-    $SuperAdminLogin = $this->post('/login',[
-        "email" => "organizationone@gmail.com",
-        "password" => "password"
+    $SuperAdminLogin = $this->post('/login', [
+        'email' => 'organizationone@gmail.com',
+        'password' => 'password',
     ]);
 
     $SuperAdminLogin->assertStatus(302);
@@ -55,104 +54,95 @@ test('test organization admin create account and access dashboard and can access
 
     $this->assertFalse(Auth::check());
 
-
 });
 
-
-test("create students as organization admin",function(){
+test('create students as organization admin', function () {
 
     $this->get('/login');
 
-    $this->post('/login',[
-        "email" => "organizationone@gmail.com",
-        "password" => "password"
+    $this->post('/login', [
+        'email' => 'organizationone@gmail.com',
+        'password' => 'password',
     ]);
 
-    $this->post('/students',[
-        "name" => "Zaw Zaw Win",
-        "nickname" => "zawzawwin328",
-        "student_code" => "12344434",
-        "description" => "this is defualt",
-        "dob" => now(),
-        "grade" => "Grade 10",
+    $this->post('/students', [
+        'name' => 'Zaw Zaw Win',
+        'nickname' => 'zawzawwin328',
+        'student_code' => '12344434',
+        'description' => 'this is defualt',
+        'dob' => now(),
+        'grade' => 'Grade 10',
     ]);
 
-    $this->assertDatabaseHas('students',[
-        'name' => "Zaw Zaw Win",
-        "nickname" => "zawzawwin328"
-    ]);
-
-});
-
-
-test("create teachers as organization admin",function(){
-
-    $this->get('/login');
-
-    $this->post('/login',[
-        "email" => "organizationone@gmail.com",
-        "password" => "password"
-    ]);
-
-
-    $this->post('/teachers',[
-        "role" => 4, //teacher roles
-        "name" => "Teacher One",
-        "password" => "password",
-        "contact_number" => "09951613400",
-        "email" => "teacherone@gmail.com",
-        "dob" => now(),
-    ]);
-
-    $this->assertDatabaseHas('users',[
-        "name" => "Teacher One",
-        "email" => "teacherone@gmail.com"
+    $this->assertDatabaseHas('students', [
+        'name' => 'Zaw Zaw Win',
+        'nickname' => 'zawzawwin328',
     ]);
 
 });
 
-
-test("create classrooms as organization admin",function(){
+test('create teachers as organization admin', function () {
 
     $this->get('/login');
 
-    $this->post('/login',[
-        "email" => "organizationone@gmail.com",
-        "password" => "password"
+    $this->post('/login', [
+        'email' => 'organizationone@gmail.com',
+        'password' => 'password',
     ]);
 
-
-    $this->post('/teachers',[
-        "role" => 4, //teacher roles
-        "name" => "Teacher One",
-        "password" => "password",
-        "contact_number" => "09951613400",
-        "email" => "teacherone@gmail.com",
-        "dob" => now(),
+    $this->post('/teachers', [
+        'role' => 4, //teacher roles
+        'name' => 'Teacher One',
+        'password' => 'password',
+        'contact_number' => '09951613400',
+        'email' => 'teacherone@gmail.com',
+        'dob' => now(),
     ]);
 
-    $this->post('/students',[
-        "name" => "Zaw Zaw Win",
-        "nickname" => "zawzawwin328",
-        "student_code" => "12344434",
-        "description" => "this is defualt",
-        "dob" => now(),
-        "grade" => "Grade 10",
+    $this->assertDatabaseHas('users', [
+        'name' => 'Teacher One',
+        'email' => 'teacherone@gmail.com',
     ]);
 
-    $this->post('/classrooms',[
-        'name' => "Class A",
+});
+
+test('create classrooms as organization admin', function () {
+
+    $this->get('/login');
+
+    $this->post('/login', [
+        'email' => 'organizationone@gmail.com',
+        'password' => 'password',
+    ]);
+
+    $this->post('/teachers', [
+        'role' => 4, //teacher roles
+        'name' => 'Teacher One',
+        'password' => 'password',
+        'contact_number' => '09951613400',
+        'email' => 'teacherone@gmail.com',
+        'dob' => now(),
+    ]);
+
+    $this->post('/students', [
+        'name' => 'Zaw Zaw Win',
+        'nickname' => 'zawzawwin328',
+        'student_code' => '12344434',
+        'description' => 'this is defualt',
+        'dob' => now(),
+        'grade' => 'Grade 10',
+    ]);
+
+    $this->post('/classrooms', [
+        'name' => 'Class A',
         'start_date' => now(),
         'teacher_id' => 1,
-        'description'=> "this is description",
-        'students' => [1]
+        'description' => 'this is description',
+        'students' => [1],
     ]);
 
-    $this->assertDatabaseHas('classrooms',[
-        "name" => "Class A",
+    $this->assertDatabaseHas('classrooms', [
+        'name' => 'Class A',
     ]);
 
 });
-
-
-

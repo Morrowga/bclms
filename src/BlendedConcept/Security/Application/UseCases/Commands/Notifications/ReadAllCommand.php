@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\Security\Application\UseCases\Commands\Notifications;
 
 use Src\BlendedConcept\System\Domain\Repositories\NotificationRepositoryInterface;
-
 use Src\Common\Domain\CommandInterface;
 
 class ReadAllCommand implements CommandInterface
@@ -20,6 +19,3 @@ class ReadAllCommand implements CommandInterface
         return $this->repository->readAll();
     }
 }
-
-
-

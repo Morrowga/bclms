@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Src\BlendedConcept\System\Domain\Model;
+
 use Src\Common\Domain\AggregateRoot;
 
 class SiteSetting extends AggregateRoot
@@ -15,9 +16,8 @@ class SiteSetting extends AggregateRoot
         public readonly ?int $locale,
         public readonly ?int $email,
         public readonly ?int $contact_number,
-    ) {}
-
-
+    ) {
+    }
 
     public function toArray(): array
     {

@@ -51,12 +51,10 @@ class RouteServiceProvider extends ServiceProvider
         }
     }
 
-
-
     /**
      * Maps all API routes to the specified domains.
      *
-     * @param array $domains An array of domains to map the API routes to.
+     * @param  array  $domains An array of domains to map the API routes to.
      */
     protected function mapApiRoutes()
     {
@@ -75,19 +73,14 @@ class RouteServiceProvider extends ServiceProvider
         }
     }
 
-
     /**
      * Returns an array of central domains.
-     *
-     * @return array
      */
     protected function centralDomains(): array
     {
         // Get the central domains from the configuration file.
         return config('tenancy.central_domains');
     }
-
-
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

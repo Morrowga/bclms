@@ -19,8 +19,8 @@ class Student extends AggregateRoot implements \JsonSerializable
         public readonly ?string $star_earn,
         public readonly ?string $coin_earn,
 
-    )
-    {}
+    ) {
+    }
 
     public function toArray(): array
     {

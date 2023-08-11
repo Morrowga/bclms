@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 class ClassRoomData
 {
-
     public function __construct(
         public readonly ?int $id,
         public readonly ?int $organization_id,
@@ -14,7 +13,6 @@ class ClassRoomData
         public readonly ?string $name,
         public readonly ?string $venue,
         public readonly ?array $students,
-
 
     ) {
     }
@@ -27,19 +25,19 @@ class ClassRoomData
             name: $request->name,
             teacher_id: $request->teacher_id,
             venue: $request->venue,
-            students :$request->students
+            students : $request->students
         );
     }
 
     public function toArray(): array
     {
         return [
-            "id" => $this->id,
-            "organization_id" => auth()->user()->organization_id,
-            "teacher_id" => $this->teacher_id,
-            "name" => $this->name,
-            "venue" => $this->venue,
-            "students" => $this->students
+            'id' => $this->id,
+            'organization_id' => auth()->user()->organization_id,
+            'teacher_id' => $this->teacher_id,
+            'name' => $this->name,
+            'venue' => $this->venue,
+            'students' => $this->students,
         ];
     }
 }

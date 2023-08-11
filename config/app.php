@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Facade;
 
-
 return [
 
     /*
@@ -59,7 +58,6 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
-
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -72,8 +70,6 @@ return [
     */
 
     'timezone' => 'UTC',
-
-
 
     /*
     |--------------------------------------------------------------------------
@@ -216,8 +212,6 @@ return [
         // Src\Common\Infrastructure\Laravel\Providers\BroadcastServiceProvider::class,
         \Src\Common\Infrastructure\Laravel\Providers\EventServiceProvider::class,
         \Src\Common\Infrastructure\Laravel\Providers\RouteServiceProvider::class,
-
-
 
     ],
 

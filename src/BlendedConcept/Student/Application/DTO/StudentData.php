@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 class StudentData
 {
-
     public function __construct(
         public readonly ?int $id,
         public readonly ?int $organization_id,
@@ -44,7 +43,7 @@ class StudentData
     {
         return [
             'id' => $this->id,
-            'organization_id' => auth()->user()->organization_id ,
+            'organization_id' => auth()->user()->organization_id,
             'device_id' => $this->device_id,
             'student_code' => $this->student_code,
             'name' => $this->name,

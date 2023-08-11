@@ -25,7 +25,6 @@ class StudentMapper
         );
     }
 
-
     public static function toEloquent(Student $student): StudentEloquentModel
     {
         $StudentEloquent = new StudentEloquentModel();

@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\Organization\Application\Mappers;
 
 use Illuminate\Http\Request;
-
 use Src\BlendedConcept\Organization\Domain\Model\Entities\Plan;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\PlanEloquentModel;
 
@@ -14,7 +13,7 @@ class PlanMapper
         return new Plan(
             id: $plan_id,
             stripe_id: $request->stripe_id,
-            name: "Default Plan",
+            name: 'Default Plan',
             description: $request->description,
             price: $request->price,
             payment_period: $request->payment_period,
@@ -25,11 +24,11 @@ class PlanMapper
         );
     }
 
-
     public static function fromArray(array $plan): Plan
     {
         $planEloquent = new PlanEloquentModel($plan);
         $planEloquent->id = $plan['id'] ?? null;
+
         return self::fromEloquent($planEloquent);
     }
 
@@ -48,6 +47,7 @@ class PlanMapper
             is_hidden: $plan->is_hidden
         );
     }
+
     public static function toEloquent(Plan $plan): PlanEloquentModel
     {
         $planEloquent = new PlanEloquentModel();

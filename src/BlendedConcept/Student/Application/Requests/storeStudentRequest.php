@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Student\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class storeStudentRequest  extends FormRequest
+class storeStudentRequest extends FormRequest
 {
     public function authorize()
     {

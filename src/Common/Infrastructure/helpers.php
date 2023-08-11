@@ -1,29 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Auth;
+
 //Notification Helper to Vue Component
-if (!function_exists('getNotifications')) {
+if (! function_exists('getNotifications')) {
     function getNotifications()
     {
-        $notification = Cache::remember('unread_notifications_' . auth()->id(), 60, function () {
+        $notification = Cache::remember('unread_notifications_'.auth()->id(), 60, function () {
             return auth()->user()
                 ? auth()->user()->unreadNotifications()->with('notifiable')->paginate(7)
                 : null;
         });
 
         $notification = $notification
-            ? ["notifications" => $notification, "unread" =>  $notification->total()]
+            ? ['notifications' => $notification, 'unread' => $notification->total()]
             : null;
 
         return $notification;
     }
 }
 
-
 //this is global function that check which user has access
 
-if (!function_exists('authorize')) {
+if (! function_exists('authorize')) {
     /* @throws UnauthorizedUserException */
     function authorize($ability, $policy, $arguments = []): bool
     {
@@ -35,20 +34,19 @@ if (!function_exists('authorize')) {
     }
 }
 
-
 /****
  *  get disk space according to disk array
  */
 
-if (!function_exists('getFileSystemWithRole')) {
+if (! function_exists('getFileSystemWithRole')) {
     function getFileSystemWithRole($userrole)
     {
         try {
             if ($userrole == config('userrole.bcsuperadmin')) {
                 return ['local', 'avatars', 'media_user', 'media_organization'];
-            } else if ($userrole == config('userrole.organization_admin')) {
+            } elseif ($userrole == config('userrole.organization_admin')) {
                 return ['media_students', 'media_teachers'];
-            } else if ($userrole == config('userrole.teacher')) {
+            } elseif ($userrole == config('userrole.teacher')) {
                 return ['media_teachers'];
             } else {
                 return ['local', 'avatars', 'media_user', 'media_organization'];

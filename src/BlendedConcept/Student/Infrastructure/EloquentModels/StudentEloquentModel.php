@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Student\Infrastructure\EloquentModels;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-
-
 
 class StudentEloquentModel extends Model implements HasMedia
 {
@@ -35,7 +32,6 @@ class StudentEloquentModel extends Model implements HasMedia
         'coin_earn',
     ];
 
-
     public function getImageAttribute()
     {
         return $this->getMedia('image');
@@ -44,10 +40,10 @@ class StudentEloquentModel extends Model implements HasMedia
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->orWhere('name', 'like', '%' . $search . '%');
+            $query->orWhere('name', 'like', '%'.$search.'%');
         });
     }
 }

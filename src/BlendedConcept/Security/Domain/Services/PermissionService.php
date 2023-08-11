@@ -2,19 +2,17 @@
 
 namespace Src\BlendedConcept\Security\Domain\Services;
 
+use Src\BlendedConcept\Security\Application\DTO\PermissionData;
 use Src\BlendedConcept\Security\Application\Mappers\PermissionMapper;
 use Src\BlendedConcept\Security\Application\Requests\StorepermissionRequest;
-use Src\BlendedConcept\Security\Application\UseCases\Commands\Permission\StorePermissionCommand;
-use Src\BlendedConcept\Security\Application\DTO\PermissionData;
 use Src\BlendedConcept\Security\Application\Requests\UpdatepermissionRequest;
+use Src\BlendedConcept\Security\Application\UseCases\Commands\Permission\StorePermissionCommand;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\Permission\UpdatePermissionCommand;
 
 class PermissionService
 {
-
     /**
      *  create Permission
-     * @param
      *
      * @return void
      */
@@ -28,11 +26,9 @@ class PermissionService
     /**
      * update Permission
      *
-     *  @param
      *
      *  @return void
      */
-
     public function updatePermission(UpdatepermissionRequest $request, $permission_id)
     {
         // Validate the request data

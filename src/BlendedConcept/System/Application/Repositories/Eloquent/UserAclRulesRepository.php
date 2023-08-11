@@ -19,23 +19,21 @@ class UserAclRulesRepository implements ACLRepository
 
     /**
      * Get ACL rules list for user
-     *
-     * @return array
      */
     public function getRules(): array
     {
-        if (auth()->user()->roles()->first()->name == config("userrole.bcsuperadmin")) {
+        if (auth()->user()->roles()->first()->name == config('userrole.bcsuperadmin')) {
             return [
                 ['disk' => 'local', 'path' => '*', 'access' => 2],
                 ['disk' => 'avatars', 'path' => '*', 'access' => 2],
                 ['disk' => 'local', 'path' => '*', 'access' => 2],
                 ['disk' => 'media_user', 'path' => '*', 'access' => 2],
-                ['disk' => 'media_organization', 'path' => '*', 'access' => 2]
+                ['disk' => 'media_organization', 'path' => '*', 'access' => 2],
             ];
         }
 
         return [
-            ['disk' => 'media_organization', 'path' => '*', 'access' => 2]
+            ['disk' => 'media_organization', 'path' => '*', 'access' => 2],
         ];
     }
 }

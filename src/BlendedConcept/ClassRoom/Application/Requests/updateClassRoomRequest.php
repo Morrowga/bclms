@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\ClassRoom\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class updateClassRoomRequest  extends FormRequest
+class updateClassRoomRequest extends FormRequest
 {
     public function authorize()
     {

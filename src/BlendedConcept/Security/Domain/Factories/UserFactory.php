@@ -40,7 +40,7 @@ class UserFactory
             email : $attributes['email'],
             organization_id : $attributes['organization_id'],
             email_verified_at : $attributes['email_verified_at'],
-            dob  : $attributes['dob' ],
+            dob  : $attributes['dob'],
             contact_number : $attributes['contact_number'],
             storage_limit : $attributes['storage_limit'],
             password : $attributes['password'],

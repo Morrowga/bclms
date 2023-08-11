@@ -2,11 +2,9 @@
 
 namespace Src\BlendedConcept\Security\Application\Policies;
 
-
 class UserPolicy
 {
-
-    public  static function view()
+    public static function view()
     {
         return auth()->user()->hasPermission('access_user');
     }
@@ -15,10 +13,12 @@ class UserPolicy
     {
         return auth()->user()->hasPermission('create_user');
     }
+
     public static function store()
     {
         return auth()->user()->hasPermission('create_user');
     }
+
     public static function edit()
     {
         return auth()->user()->hasPermission('edit_user');

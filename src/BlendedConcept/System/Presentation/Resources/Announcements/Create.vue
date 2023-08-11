@@ -33,24 +33,24 @@ SuccessDialog({title:"You've successfully posted announcement"})
                     <VRow justify="space-around">
                         <VCol cols="6">
                             <VLabel class="tiggie-label">Title</VLabel>
-                            <VTextField placeholder="Type here..." />
+                            <VTextField placeholder="Type here..." density="compact" />
                         </VCol>
                         <VCol cols="2">
                             <VLabel class="tiggie-label"></VLabel>
-                            <VCombobox v-model="selectedItem" :items="items" />
+                            <VCombobox v-model="selectedItem" :items="items" density="compact" />
                         </VCol>
                         <VCol cols="10">
                             <VTextarea placeholder="Type here ...." v-model="description" auto-grow rows="5" />
                         </VCol>
                         <VCol cols="4">
                             <VLabel class="tiggie-label">Announcement by</VLabel>
-                            <VSelect :items="items" />
+                            <VSelect :items="items" density="compact" />
                         </VCol>
                         <VCol cols="4">
                             <VLabel class="tiggie-label">Announcement to</VLabel>
-                            <VSelect :items="items" />
+                            <VSelect :items="items" density="compact" />
                         </VCol>
-                    </VRow> 
+                    </VRow>
 
                 </VCol>
                  <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">

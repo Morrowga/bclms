@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Security\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorepermissionRequest  extends FormRequest
+class StorepermissionRequest extends FormRequest
 {
     public function authorize()
     {

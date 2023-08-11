@@ -2,7 +2,6 @@
 
 namespace Src\BlendedConcept\Security\Domain\Resources;
 
-
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AuthPermissionResource extends JsonResource
@@ -15,6 +14,6 @@ class AuthPermissionResource extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->permissions->pluck("name");
+        return $this->permissions->pluck('name');
     }
 }

@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\ClassRoom\Application\UseCases\Queries;
 
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\Common\Domain\QueryInterface;
+
 class GetTeachers implements QueryInterface
 {
     private ClassRoomRepositoryInterface $repository;

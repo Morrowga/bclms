@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\Security\Application\UseCases\Queries\Roles;
 
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
-
 use Src\Common\Domain\QueryInterface;
 
 class GetRolewithPagniation implements QueryInterface
@@ -12,8 +11,7 @@ class GetRolewithPagniation implements QueryInterface
 
     public function __construct(
         private readonly array $filters
-    )
-    {
+    ) {
         $this->repository = app()->make(SecurityRepositoryInterface::class);
     }
 

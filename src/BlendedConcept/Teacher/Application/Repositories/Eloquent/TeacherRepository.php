@@ -2,17 +2,15 @@
 
 namespace Src\BlendedConcept\Teacher\Application\Repositories\Eloquent;
 
-use Src\BlendedConcept\Teacher\Domain\Repositories\TeacherRepositoryInterface;
-
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\Teacher\Domain\Resources\TeacherResource;
 use Src\BlendedConcept\Teacher\Application\DTO\TeacherData;
 use Src\BlendedConcept\Teacher\Application\Mappers\TeacherMapper;
 use Src\BlendedConcept\Teacher\Domain\Model\Teacher;
+use Src\BlendedConcept\Teacher\Domain\Repositories\TeacherRepositoryInterface;
+use Src\BlendedConcept\Teacher\Domain\Resources\TeacherResource;
 
 class TeacherRepository implements TeacherRepositoryInterface
 {
-
     /***
      *
      *
@@ -21,19 +19,18 @@ class TeacherRepository implements TeacherRepositoryInterface
     public function getTeachers($filters = [])
     {
         //set roles
-        $users = TeacherResource
-            ::collection(UserEloquentModel::filter($filters)
-                ->where("organization_id",auth()->user()->organization_id)
+        $users = TeacherResource::collection(UserEloquentModel::filter($filters)
+                ->where('organization_id', auth()->user()->organization_id)
                 ->with('roles')
                 ->whereHas('roles', function ($query) {
-                    return $query->where("name", "Teacher");
+                    return $query->where('name', 'Teacher');
                 })
                 ->orderBy('id', 'desc')
                 ->paginate($filters['perPage'] ?? 10));
 
-
         return $users;
     }
+
     public function CreateTeacher(Teacher $teacher)
     {
 
@@ -70,7 +67,6 @@ class TeacherRepository implements TeacherRepositoryInterface
                 $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_teachers');
             }
         }
-
 
         $updateUserEloquent->roles()->sync(request('role'));
     }

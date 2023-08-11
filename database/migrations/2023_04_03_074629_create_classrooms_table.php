@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('organization_id')->nullable()->references('id')->on('organizations')->cascadeOnDelete();
             $table->foreignId('teacher_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
             $table->string('name')->nullable();
-            $table->string("venue")->nullable();
+            $table->string('venue')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

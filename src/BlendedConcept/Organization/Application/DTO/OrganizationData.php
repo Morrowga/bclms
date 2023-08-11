@@ -5,9 +5,9 @@ namespace Src\BlendedConcept\Organization\Application\DTO;
 use Illuminate\Http\Request;
 use Src\BlendedConcept\Organization\Application\Mappers\PlanMapper;
 use Src\BlendedConcept\Organization\Domain\Model\Entities\Plan;
+
 class OrganizationData
 {
-
     public function __construct(
         public readonly ?int $id,
         public readonly ?int $plan_id,
@@ -36,6 +36,7 @@ class OrganizationData
             'is_hidden',
         ]
         );
+
         return new self(
             id: $organizaton->id,
             plan_id: $organizaton->plan_id,
@@ -45,22 +46,22 @@ class OrganizationData
             contact_person: $request->contact_person,
             contact_email: $request->contact_email,
             contact_number: $request->contact_number,
-            plan :PlanMapper::fromArray($planitems)
+            plan : PlanMapper::fromArray($planitems)
         );
     }
 
     public function toArray(): array
     {
         return [
-            "id" => $this->id,
-            "plan_id" => $this->plan_id,
-            "name" => $this->name,
-            "description" => $this->description,
-            "type" => $this->type,
-            "contact_person" => $this->contact_person,
-            "contact_email" => $this->contact_email,
-            "contact_number" => $this->contact_number,
-            "plan" => $this->plan
+            'id' => $this->id,
+            'plan_id' => $this->plan_id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'type' => $this->type,
+            'contact_person' => $this->contact_person,
+            'contact_email' => $this->contact_email,
+            'contact_number' => $this->contact_number,
+            'plan' => $this->plan,
         ];
     }
 }

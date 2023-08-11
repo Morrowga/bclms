@@ -35,19 +35,19 @@ class TeacherMapper
         if ($teacher->id) {
             $UserEloquent = UserEloquentModel::query()->findOrFail($teacher->id);
         }
-        $UserEloquent->name  =  $teacher->name;
-        $UserEloquent->email  =  $teacher->email;
-        $UserEloquent->organization_id   = auth()->user()->organization_id;
-        $UserEloquent->email_verified_at  =  $teacher->email_verified_at;
-        $UserEloquent->dob  =  $teacher->dob;
-        $UserEloquent->contact_number   =  $teacher->contact_number;
-        $UserEloquent->storage_limit  =  $teacher->storage_limit;
-        $UserEloquent->password   =  $teacher->password;
-        $UserEloquent->is_active  =  $teacher->is_active;
-        $UserEloquent->stripe_id  =  $teacher->stripe_id;
-        $UserEloquent->pm_brand  =  $teacher->pm_brand;
-        $UserEloquent->pm_last_four  =  $teacher->pm_last_four;
-        $UserEloquent->trial_end_at  =  $teacher->trial_end_at;
+        $UserEloquent->name = $teacher->name;
+        $UserEloquent->email = $teacher->email;
+        $UserEloquent->organization_id = auth()->user()->organization_id;
+        $UserEloquent->email_verified_at = $teacher->email_verified_at;
+        $UserEloquent->dob = $teacher->dob;
+        $UserEloquent->contact_number = $teacher->contact_number;
+        $UserEloquent->storage_limit = $teacher->storage_limit;
+        $UserEloquent->password = $teacher->password;
+        $UserEloquent->is_active = $teacher->is_active;
+        $UserEloquent->stripe_id = $teacher->stripe_id;
+        $UserEloquent->pm_brand = $teacher->pm_brand;
+        $UserEloquent->pm_last_four = $teacher->pm_last_four;
+        $UserEloquent->trial_end_at = $teacher->trial_end_at;
 
         return $UserEloquent;
     }

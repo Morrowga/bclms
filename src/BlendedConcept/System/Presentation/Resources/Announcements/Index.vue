@@ -81,6 +81,7 @@ watch(serverPerPage, function (value) {
 
 <template>
   <AdminLayout>
+    <h1 class="tiggie-title mb-4">Announcements</h1>
     <section>
       <VCard>
         <VCardText class="d-flex flex-wrap gap-4">
@@ -97,7 +98,9 @@ watch(serverPerPage, function (value) {
           <div class="app-user-search-filter d-flex justify-end align-center">
             <!-- 👉 Add Announcement button -->
             <VBtn v-if="permissions.includes('create_organization')" class="tiggie-btn">
-                            <Link :href="route('announcements.create')" class="text-white"> Add New </Link>
+                    <Link :href="route('announcements.create')" class="text-white">
+                         Add Announcement
+                    </Link>
             </VBtn>
           </div>
         </VCardText>
@@ -116,7 +119,10 @@ watch(serverPerPage, function (value) {
         >
           <template #table-row="props">
             <div v-if="props.column.field == 'title'" class="flex flex-wrap">
-              <span class="">{{ props.row.title }}</span>
+                <div class="d-flex flex-row gap-2">
+                     <img src="/images/icons/award-02.svg" class="user-profile-image"/>
+                    <span class="pt-1">{{ props.row.title }}</span>
+                </div>
             </div>
             <div v-if="props.column.field == 'message'" class="flex flex-wrap">
               <span>{{ truncatedText(props.row.message) }}</span>

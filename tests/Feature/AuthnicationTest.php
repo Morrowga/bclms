@@ -2,13 +2,12 @@
 
 namespace Tests\Feature\Authi;
 
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia;
-
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 /**
  *  require
@@ -18,18 +17,17 @@ use Inertia\Testing\AssertableInertia;
 test('validation b2c register', function () {
 
     $data = [
-        'email' => "",
-        "password" => 'password',
+        'email' => '',
+        'password' => 'password',
     ];
     $response = $this->post('/b2cstore', $data);
     // $response->assertSessionHasErrors('email');
 
     $response->assertSessionHasErrors(['email']);
 
-
     $data = [
-        'email' =>  "admin@com",
-        'password' => ""
+        'email' => 'admin@com',
+        'password' => '',
     ];
     $response = $this->post('/b2cstore', $data);
 
@@ -41,53 +39,45 @@ test('validation b2c register', function () {
  *  invalid email
  *
  *  @return bool True
- *
  */
-
 test('invalid_b2c_register_email', function () {
     $data = [
-        'email' => "testing.com",
-        "password" => 'password',
+        'email' => 'testing.com',
+        'password' => 'password',
 
     ];
     $response = $this->post('/b2cstore', $data);
-    $response->assertSessionHasErrors("email");
+    $response->assertSessionHasErrors('email');
 });
-
-
-
 
 /**
  *  check unique user for register
  *
  *  @return bool True
  */
-
 test('unique_b2c_register_email', function () {
-    $email = "superadmin@mail.com";
-    $name = explode("@", $email);
+    $email = 'superadmin@mail.com';
+    $name = explode('@', $email);
     $data = [
         'name' => $name[0],
-        "email" => $email,
-        "password" => 'password',
+        'email' => $email,
+        'password' => 'password',
     ];
     $existingUser = UserEloquentModel::create($data);
     $response = $this->post('/b2cstore', [
         'name' => $existingUser->name,
         'email' => $existingUser->email,
-        "password" => 'password',
+        'password' => 'password',
     ]);
 
     $response->assertSessionHasErrors('email');
 });
-
 
 /**
  * check unverify email not to pass
  *
  *
  * @return bool True
- *
  */
 // test('before_verified_b2c_register', function () {
 
@@ -111,18 +101,14 @@ test('unique_b2c_register_email', function () {
 //         "password" => $data['password']
 //     ]);
 
-
-
 //     $checkEmailVerify->assertSessionHasErrors(['errorMessage' => 'Please Verify your email']);
 
 // });
 
 /**
- *
  *  check after verify email
  *
  *  @return bool True
- *
  */
 
 // test('after_verified_b2c_register', function () {
@@ -141,10 +127,6 @@ test('unique_b2c_register_email', function () {
 //     $response->assertStatus(200);
 // });
 
-
-
-
-
 /**
  *  check empty email on login
  *
@@ -152,58 +134,52 @@ test('unique_b2c_register_email', function () {
  */
 test('bland login email or password', function () {
     $data = [
-        "email" => "",
-        "password" => 'password',
+        'email' => '',
+        'password' => 'password',
     ];
     $response = $this->post('login', $data);
-    $response->assertSessionHasErrors("email");
-
+    $response->assertSessionHasErrors('email');
 
     $data = [
-        "email" => "testing@testing.com",
-        "password" => "",
+        'email' => 'testing@testing.com',
+        'password' => '',
     ];
     $response = $this->post('login', $data);
     $response->assertSessionHasErrors('password');
 });
 
-
-
 /**
  *  check invalid email address
- *  @return bool True
  *
+ *  @return bool True
  */
 test('invalid_login_email', function () {
     $data = [
-        'email' => "testing.com",
-        "password" => Hash::make('password'),
+        'email' => 'testing.com',
+        'password' => Hash::make('password'),
     ];
     $response = $this->post('login', $data);
-    $response->assertSessionHasErrors("email");
+    $response->assertSessionHasErrors('email');
 });
 
 /**
  *  check email and password mismatch
  *
  *   @return  bool True
- *
  */
 test('mismatch_login_password', function () {
     $data = [
-        'name' => "Admin",
-        'email' => "admin@admin.com",
-        "password" => "password",
-        "email_verified_at" => Carbon::now()
+        'name' => 'Admin',
+        'email' => 'admin@admin.com',
+        'password' => 'password',
+        'email_verified_at' => Carbon::now(),
     ];
     $existingUser = UserEloquentModel::create($data);
 
-
     $response = $this->post('login', [
-        "email" => $existingUser->email,
-        "password" => Hash::make('passwords')
+        'email' => $existingUser->email,
+        'password' => Hash::make('passwords'),
     ]);
-
 
     $response->assertInertia(function (AssertableInertia $page) {
         $props = $page->toArray();
@@ -218,16 +194,16 @@ test('mismatch_login_password', function () {
  */
 test('match_login_password', function () {
     $data = [
-        'name' => "Admin",
-        'email' => "admin@testing.com",
-        "password" => "password",
-        "email_verified_at" => Carbon::now()
+        'name' => 'Admin',
+        'email' => 'admin@testing.com',
+        'password' => 'password',
+        'email_verified_at' => Carbon::now(),
 
     ];
     $existingUser = UserEloquentModel::create($data);
     $response = $this->post('login', [
-        "email" => $existingUser->email,
-        "password" => 'password'
+        'email' => $existingUser->email,
+        'password' => 'password',
     ]);
     $response->assertRedirect('/home');
 });

@@ -1,10 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use  Src\BlendedConcept\User\Domain\Model\User;
-
 
 beforeEach(function () {
     // Run migrations
@@ -22,44 +20,40 @@ beforeEach(function () {
 test('page builder   access for superadmin and back button to home', function () {
 
     $this->assertTrue(Auth::check());
-    $this->get("/bc/admin");
+    $this->get('/bc/admin');
 
-    $response = $this->get("/home");
+    $response = $this->get('/home');
     $response->assertStatus(200);
 
 });
 
-
-test("page builder not superadmin access",function(){
+test('page builder not superadmin access', function () {
 
     Auth::logout();
-    $response = $this->get("/bc/admin");
+    $response = $this->get('/bc/admin');
 
-    $response->assertRedirect("/login");
+    $response->assertRedirect('/login');
 
 });
 
-
-test("page builder access with other roles ",function(){
+test('page builder access with other roles ', function () {
     Auth::logout();
 
     $user = UserEloquentModel::create([
-        "name" => "testing",
-        "email" => "testing@gmail.com",
-        "password" => "password"
+        'name' => 'testing',
+        'email' => 'testing@gmail.com',
+        'password' => 'password',
     ]);
 
     $user->roles()->sync(2);
 
-    if (Auth::attempt(["email" => "testing@gmail.com", "password" => "password",])) {
+    if (Auth::attempt(['email' => 'testing@gmail.com', 'password' => 'password'])) {
 
-        $response = $this->get("/bc/admin");
+        $response = $this->get('/bc/admin');
         $response->assertStatus(403);
     }
 
-
-    $response = $this->get("/bc/admin");
+    $response = $this->get('/bc/admin');
     $response->assertStatus(403);
 
 });
-

@@ -17,7 +17,6 @@ class PermissionMapper
         );
     }
 
-
     public static function toEloquent(Permission $permission): PermissionEloquentModel
     {
         $PermissionElquent = new PermissionEloquentModel();
@@ -28,6 +27,7 @@ class PermissionMapper
 
         $PermissionElquent->name = $permission->name;
         $PermissionElquent->description = $permission->description;
+
         return $PermissionElquent;
     }
 }

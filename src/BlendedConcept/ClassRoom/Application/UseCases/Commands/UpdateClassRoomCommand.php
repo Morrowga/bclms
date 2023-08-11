@@ -2,10 +2,9 @@
 
 namespace Src\BlendedConcept\ClassRoom\Application\UseCases\Commands;
 
-
-use Src\Common\Domain\CommandInterface;
 use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomData;
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
+use Src\Common\Domain\CommandInterface;
 
 class UpdateClassRoomCommand implements CommandInterface
 {
@@ -13,8 +12,7 @@ class UpdateClassRoomCommand implements CommandInterface
 
     public function __construct(
         private readonly ClassRoomData $classRoomData
-    )
-    {
+    ) {
         $this->repository = app()->make(ClassRoomRepositoryInterface::class);
     }
 

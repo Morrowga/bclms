@@ -48,11 +48,24 @@ const pages = {
     "BlendedConcept/Security/Presentation/Resources/Users/Show": import('../../src/BlendedConcept/Security/Presentation/Resources/Users/Show.vue'),
 
 
+    //manage disabilty device
+    "BlendedConcept/Student/Presentation/Resources/Disability/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Disability/Index.vue'),
 
 
     // Security Domain
     "BlendedConcept/Security/Presentation/Resources/Permissions/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/Permissions/Index.vue'),
     "BlendedConcept/Security/Presentation/Resources/Roles/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/Roles/Index.vue'),
+
+    //user experience survey
+
+    "BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Index.vue'),
+    "BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Create": import('../../src/BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Create.vue'),
+    "BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Show": import('../../src/BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Show.vue'),
+
+
+
+
+
 
     //authnication route :🧑
     "Auth/Presentation/Resources/Login": import("../../src/Auth/Presentation/Resources/Login.vue"),

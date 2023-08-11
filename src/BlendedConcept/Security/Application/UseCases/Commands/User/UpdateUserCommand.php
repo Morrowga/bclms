@@ -2,10 +2,9 @@
 
 namespace Src\BlendedConcept\Security\Application\UseCases\Commands\User;
 
-
-use Src\Common\Domain\CommandInterface;
 use Src\BlendedConcept\Security\Application\DTO\UserData;
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
+use Src\Common\Domain\CommandInterface;
 
 class UpdateUserCommand implements CommandInterface
 {
@@ -13,8 +12,7 @@ class UpdateUserCommand implements CommandInterface
 
     public function __construct(
         private readonly UserData $userData
-    )
-    {
+    ) {
         $this->repository = app()->make(SecurityRepositoryInterface::class);
     }
 

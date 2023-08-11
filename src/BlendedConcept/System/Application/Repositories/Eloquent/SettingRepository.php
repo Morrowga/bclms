@@ -3,22 +3,21 @@
 namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
 use Src\BlendedConcept\System\Application\DTO\SiteSettingData;
-use Src\BlendedConcept\System\Infrastructure\EloquentModels\SiteSettingEloquentModel;
 use Src\BlendedConcept\System\Domain\Repositories\SettingRepositoryInterface;
+use Src\BlendedConcept\System\Infrastructure\EloquentModels\SiteSettingEloquentModel;
 
 class SettingRepository implements SettingRepositoryInterface
 {
-
     /**
      * Update the site setting using the provided SiteSettingData.
      * where you get first value inside site settings that update it
      * according to data change from admin etc.
-     * @param SiteSettingData $siteSettingData The data object containing the site setting values.
+     *
+     * @param  SiteSettingData  $siteSettingData The data object containing the site setting values.
      * @return void
      */
     public function updateSetting(SiteSettingData $siteSettingData)
     {
-
 
         $siteSettingArray = $siteSettingData->toArray();
         $siteEloquent = SiteSettingEloquentModel::query()->first();
@@ -38,7 +37,6 @@ class SettingRepository implements SettingRepositoryInterface
             $siteEloquent->addMediaFromRequest('fav_icon')->toMediaCollection('fav_icon', 'media_sitefavico');
         }
     }
-
 
     public function getSetting()
     {

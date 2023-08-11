@@ -2,7 +2,6 @@
 
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
-
 return [
 
     /*

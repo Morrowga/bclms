@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\System\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateOrganizationRequest  extends FormRequest
+class UpdateOrganizationRequest extends FormRequest
 {
     public function authorize()
     {
@@ -16,12 +16,12 @@ class UpdateOrganizationRequest  extends FormRequest
         return [
             'name' => [
                 'string',
-                'required'
+                'required',
             ],
             'contact_email' => [
                 'required',
                 'email',
-                'unique:organizations,contact_email,' . request()->route('organization')->id
+                'unique:organizations,contact_email,'.request()->route('organization')->id,
             ],
         ];
     }

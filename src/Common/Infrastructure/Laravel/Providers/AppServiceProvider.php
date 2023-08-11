@@ -2,23 +2,21 @@
 
 namespace Src\Common\Infrastructure\Laravel\Providers;
 
-
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Src\Auth\Application\Repositories\Eloquent\AuthRepository;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
-use Src\BlendedConcept\System\Domain\Repositories\OrganizationRepositoryInterface;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\System\Application\Repositories\Eloquent\OrganizationRepository;
+use Src\BlendedConcept\System\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\NotificationRepository;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\UserRepository;
 use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
 use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
-use Illuminate\Support\Facades\Config;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
-
     public function register()
     {
         $this->app->bind(
@@ -40,7 +38,6 @@ class AppServiceProvider extends ServiceProvider
         );
     }
 
-
     /**
      * Bootstrap any application services.
      *
@@ -53,8 +50,8 @@ class AppServiceProvider extends ServiceProvider
         //set config for organization file system
         $organization = OrganizationEloquentModel::all();
         foreach ($organization as $item) {
-            $rootPath = storage_path('app/public/organization/' . $item->name);
-            $url = env('APP_URL') . '/storage';
+            $rootPath = storage_path('app/public/organization/'.$item->name);
+            $url = env('APP_URL').'/storage';
             Config::set("filesystems.disks.{$item->name}", [
                 'driver' => 'local',
                 'root' => $rootPath,

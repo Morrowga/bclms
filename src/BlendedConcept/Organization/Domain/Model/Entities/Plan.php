@@ -25,14 +25,14 @@ class Plan extends Entity
         return [
             'id' => $this->id,
             'stripe_id' => $this->stripe_id,
-            'name' => "Default Plan",
+            'name' => 'Default Plan',
             'description' => $this->description,
             'price' => $this->price,
             'payment_period' => $this->payment_period,
             'allocated_storage' => $this->allocated_storage,
             'teacher_license' => $this->teacher_license,
             'student_license' => $this->student_license,
-            'is_hidden' => $this->is_hidden
+            'is_hidden' => $this->is_hidden,
 
         ];
     }

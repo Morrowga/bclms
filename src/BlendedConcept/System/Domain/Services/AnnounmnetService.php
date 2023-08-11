@@ -2,13 +2,14 @@
 
 namespace Src\BlendedConcept\System\Domain\Services;
 
+use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
+use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
 use Src\BlendedConcept\System\Application\Requests\StoreAnnouncementRequest;
 use Src\BlendedConcept\System\Application\Requests\UpdateAnnouncementRequest;
-use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
-use Src\BlendedConcept\System\Application\UseCases\Commands\StoreAnnounmentCommand;
-use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
-use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateAnnounmentCommand;
 use Src\BlendedConcept\System\Application\UseCases\Commands\DeleteAnnounmentCommand;
+use Src\BlendedConcept\System\Application\UseCases\Commands\StoreAnnounmentCommand;
+use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateAnnounmentCommand;
+
 class AnnounmnetService
 {
     public function createAnnoument(StoreAnnouncementRequest $request)
@@ -21,7 +22,7 @@ class AnnounmnetService
         $storeAnnounmentCommand->execute();
     }
 
-    public function updateAnnounment(UpdateAnnouncementRequest $request,$announcement_id)
+    public function updateAnnounment(UpdateAnnouncementRequest $request, $announcement_id)
     {
         $announcement = AnnounmentData::fromRequest($request, $announcement_id);
         $updateAnnounmentCommand = (new UpdateAnnounmentCommand($announcement));
@@ -33,5 +34,4 @@ class AnnounmnetService
         $announment = new DeleteAnnounmentCommand($announcement_id);
         $announment->execute();
     }
-
 }

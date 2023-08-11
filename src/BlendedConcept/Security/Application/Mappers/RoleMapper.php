@@ -3,7 +3,7 @@
 namespace Src\BlendedConcept\Security\Application\Mappers;
 
 use Illuminate\Http\Request;
-use  Src\BlendedConcept\Security\Domain\Model\Entities\Role;
+use Src\BlendedConcept\Security\Domain\Model\Entities\Role;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
 
 class RoleMapper
@@ -27,6 +27,7 @@ class RoleMapper
 
         $RoleEloquent->name = $role->name;
         $RoleEloquent->description = $role->description;
+
         return $RoleEloquent;
     }
 }

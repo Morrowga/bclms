@@ -1,12 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Src\BlendedConcept\System\Presentation\HTTP\DashBoardController;
 use Src\BlendedConcept\System\Presentation\HTTP\AnnouncementController;
-use Src\BlendedConcept\System\Presentation\HTTP\SettingController;
+use Src\BlendedConcept\System\Presentation\HTTP\DashBoardController;
 use Src\BlendedConcept\System\Presentation\HTTP\LibraryController;
 use Src\BlendedConcept\System\Presentation\HTTP\NotificationController;
+use Src\BlendedConcept\System\Presentation\HTTP\SettingController;
 use Src\BlendedConcept\System\Presentation\HTTP\TechnicalSupportController;
+
 Route::get('/', function () {
 
     return redirect('/bc/index');
@@ -21,21 +22,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [DashBoardController::class, 'superAdminDashboard'])->name('dashboard');
 
     // announcement
-    Route::resource("announcements", AnnouncementController::class);
+    Route::resource('announcements', AnnouncementController::class);
 
     Route::get('settings', [SettingController::class, 'index'])->name('settings');
 
-    Route::get("libraries", [LibraryController::class, 'index'])->name('libraries');
+    Route::get('libraries', [LibraryController::class, 'index'])->name('libraries');
 
     Route::post('settings', [SettingController::class, 'UpdateSetting'])->name('updateSetting');
 
     Route::get('updateSiteTheme', [SettingController::class, 'updateSiteTheme'])->name('updateSiteTheme');
 
-
-    Route::get('supports',[TechnicalSupportController::class,'index']);
-
-
-
+    Route::get('supports', [TechnicalSupportController::class, 'index']);
 
     /***
      * This route handles system-related notifications.
@@ -50,29 +47,26 @@ Route::group(['middleware' => ['auth']], function () {
      * relevant activities happening within the system.
      */
     //mark as read with id
-    Route::post('/notifications/{id}/read', [NotificationController::class, 'read'])->name("markAsRead");
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'read'])->name('markAsRead');
 
     //mark as read all
-    Route::post('/notifications/readall', [NotificationController::class, 'readAll'])->name("markAsReadAll");
+    Route::post('/notifications/readall', [NotificationController::class, 'readAll'])->name('markAsReadAll');
 
     //get all notifications
-    Route::get('/notifications/index', [NotificationController::class, "getAllNotifications"])->name("notifications");
-
+    Route::get('/notifications/index', [NotificationController::class, 'getAllNotifications'])->name('notifications');
 
 });
-
-
 
 Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
 
     // handle pagebuilder asset requests
-    Route::any(config('pagebuilder.general.assets_url') . '{any}', [DashBoardController::class, 'getAssertUrl'])
+    Route::any(config('pagebuilder.general.assets_url').'{any}', [DashBoardController::class, 'getAssertUrl'])
         ->where('any', '.*');
 
     // handle all website manager requests
     if (config('pagebuilder.website_manager.use_website_manager')) {
 
-        Route::any(config('pagebuilder.website_manager.url') . '{any}', [DashBoardController::class, 'websiteManagerUrl'])->where('any', '.*');
+        Route::any(config('pagebuilder.website_manager.url').'{any}', [DashBoardController::class, 'websiteManagerUrl'])->where('any', '.*');
     }
 
     // pass all remaining requests to the LaravelPageBuilder router
@@ -85,5 +79,5 @@ Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
 });
 
 // handle requests to retrieve uploaded file
-Route::any(config('pagebuilder.general.uploads_url') . '{any}', [DashBoardController::class, 'uploadsUrl'])
+Route::any(config('pagebuilder.general.uploads_url').'{any}', [DashBoardController::class, 'uploadsUrl'])
     ->where('any', '.*');

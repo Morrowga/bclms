@@ -2,21 +2,17 @@
 
 namespace Src\BlendedConcept\System\Presentation\HTTP;
 
-use Src\BlendedConcept\System\Application\UseCases\Queries\GetSiteSetting;
-use Src\Common\Infrastructure\Laravel\Controller;
 use Inertia\Inertia;
-use Src\BlendedConcept\System\Infrastructure\EloquentModels\SiteSettingEloquentModel;
 use Src\BlendedConcept\System\Application\DTO\SiteSettingData;
 use Src\BlendedConcept\System\Application\Policies\SettingPolicy;
-use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateSiteSettingCommand;
 use Src\BlendedConcept\System\Application\Requests\UpdateSettingRequest;
+use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateSiteSettingCommand;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetSiteSetting;
+use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class SettingController extends Controller
 {
-
-
-
     /**
      * Display the site settings index page.
      *
@@ -29,7 +25,6 @@ class SettingController extends Controller
 
         try {
 
-
             // Retrieve the site setting
             $setting = (new GetSiteSetting())->handle();
 
@@ -41,12 +36,8 @@ class SettingController extends Controller
         }
     }
 
-
     /**
      * Update the site setting.
-     *
-     * @param UpdateSettingRequest $request
-     * @return
      */
     public function UpdateSetting(UpdateSettingRequest $request)
     {
@@ -65,7 +56,6 @@ class SettingController extends Controller
             dd($e->getMessage());
         }
     }
-
 
     public function updateSiteTheme()
     {

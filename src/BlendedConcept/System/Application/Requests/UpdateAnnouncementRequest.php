@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\System\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAnnouncementRequest  extends FormRequest
+class UpdateAnnouncementRequest extends FormRequest
 {
     public function authorize()
     {
@@ -20,16 +20,16 @@ class UpdateAnnouncementRequest  extends FormRequest
             ],
             'message' => [
                 'required',
-                'string'
+                'string',
             ],
             'created_by' => [
-                "required"
+                'required',
             ],
             'send_to' => [
-                'required'
+                'required',
             ],
             'type' => [
-                'required'
+                'required',
             ],
         ];
     }
