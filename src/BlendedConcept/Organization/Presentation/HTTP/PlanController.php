@@ -17,6 +17,11 @@ class PlanController
         return Inertia::render(config('route.plans.create'));
     }
 
+    public function planfororg()
+    {
+        return Inertia::render(config('route.plans.planorg'));
+    }
+
     public function show()
     {
         return Inertia::render(config('route.plans.show'));

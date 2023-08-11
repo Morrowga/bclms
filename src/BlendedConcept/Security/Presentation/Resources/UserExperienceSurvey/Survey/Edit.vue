@@ -3,10 +3,11 @@ import { ref } from "vue"
 import { useForm } from "@inertiajs/vue3";
 import { SuccessDialog } from '@actions/useSuccess';
 import SurveyAdd from "../components/SurveyAdd.vue"
+import EditSurveyAdd from "../components/EditSurveyAdd.vue"
+
 import SurveySetting from "../components/SurveySetting.vue"
-
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-
+import SurveyListQuestionComponent from "../components/SurveyListQuestionComponent.vue";
 
 let form = useForm({
     isCustomization: false,
@@ -63,6 +64,7 @@ const items = [
 
 const isSurveryAdd = ref(false);
 const isSurveySetting = ref(false);
+const isSurveyEdit = ref(false);
 
 
 </script>
@@ -72,7 +74,7 @@ const isSurveySetting = ref(false);
             <VRow justify="space-between" no-gutters>
                 <VCol cols="6">
                     <div class="tiggie-title mb-4 d-flex align-center">
-                        <VTextField label="Search User Experience Surveys" height="50" density="compact" />
+                        Happiness Survey
                         <V-icon icon="mdi-information-variant-circle" size="30" />
                     </div>
                 </VCol>
@@ -83,63 +85,48 @@ const isSurveySetting = ref(false);
                                 height="50" class="mr-4">
                                 <span class="text-dark">Back</span>
                             </VBtn>
-                            <VBtn color="success" height="50" class="" @click="isSurveySetting = true">
-                                <span class="text-white">Save</span>
+                            <VBtn color="primary" height="50" class="" @click="isSurveySetting = true">
+                                <span class="text-white">Settings</span>
                             </VBtn>
                         </VCol>
                     </VRow>
                 </VCol>
-                <VCol cols="12">
-                    <VTextarea placeholder="Add survey description..." v-model="description" auto-grow rows="5" />
-                </VCol>
                 <Vcol cols="12">
-                    <VCard style="width:81vw" class="mt-4">
-                        <VCardTitle class="tiggie-subtitle">
-                            Question 1 . Multiple Response
-                        </VCardTitle>
-                        <VCardSubTitle class="pl-4 tiggie-p">
-                            Which of the following features do you find most valuable in the application? (Please select all
-                            that apply)
-                        </VCardSubTitle>
-                        <VDivider />
-                        <VCardText>
-                            <VRow no-gutters justify="start">
-                                <VCol cols="1">
-                                    <h4 class="tiggie-subtitle">Options</h4>
-                                </VCol>
-                                <VCol cols="4" style="text-align: left;" class="mb-10">
-                                    <VList>
-                                        <VListItem v-for="(item, i) in items" :key="i" :value="item.text">
-                                            <template #prepend>
-                                                <VIcon :icon="item.icon" />
-                                            </template>
-                                            <VListItemTitle class="tiggie-p" v-text="item.text" />
-                                        </VListItem>
-                                    </VList>
 
-                                </VCol>
-                            </VRow>
-                        </VCardText>
-                    </VCard>
+                    <SurveyListQuestionComponent
+                     title="Question 1 . Multiple Response"
+                     subtitle=" Which of the following features do you find most valuable in the application? (Please select all that apply)"
+                     :item="items" />
 
+
+                     <SurveyListQuestionComponent
+                     title="Question 2   •   Single Choice"
+                     subtitle="Which areas of the application do you think could be improved to enhance your overall happiness? (Please select all that apply.)"
+                     :item="items" />
+
+                     <SurveyListQuestionComponent
+                     title="Question 3   •   Multiple Response"
+                     subtitle="Which areas of the application do you think could be improved to enhance your overall happiness? (Please select all that apply.)"
+                     :item="items" />
+
+                     <SurveyListQuestionComponent
+                     title="Question 4   •   Single Choice"
+                     subtitle="How would you rate the application's performance compared to similar apps you have used? (Choose one option)"
+                     :item="items" />
                 </Vcol>
             </VRow>
             <VRow justify="center">
                 <VCol cols="4" class="text-center">
-                    <VBtn
-                    color="primary" icon="mdi-plus-thick"
-                    @click="isSurveryAdd = true"
-                    />
+                    <VBtn color="primary" icon="mdi-plus-thick" @click="isSurveryAdd = true" />
                 </VCol>
             </VRow>
 
         </VContainer>
     </AdminLayout>
 
-    <SurveyAdd v-model:isDialogVisible="isSurveryAdd" :user-data="user" :form="profileEdit"
-        @submit="hanleSubmit" />
-    <SurveySetting v-model:isDialogVisible="isSurveySetting" :user-data="user" :form="profileEdit"
-        @submit="hanleSubmit" />
+    <SurveyAdd v-model:isDialogVisible="isSurveryAdd" :user-data="user" :form="profileEdit" @submit="hanleSubmit" />
+    <EditSurveyAdd v-model:isDialogVisible="isSurveyEdit" :user-data="user" :form="profileEdit" @submit="hanleSubmit" />
+    <SurveySetting v-model:isDialogVisible="isSurveySetting" :user-data="user" :form="profileEdit" @submit="hanleSubmit" />
 </template>
 
 <style>
