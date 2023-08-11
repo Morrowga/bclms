@@ -35,8 +35,8 @@ const logout = () => {
 
             <!-- SECTION Menu -->
 
-            <VMenu activator="parent" width="230" offset="14px" class="my-menu">
-                <VList>
+            <VMenu activator="parent" width="230" offset="14px">
+                <VList class="my-menu">
                     <!-- 👉 User Avatar & Name -->
                     <VListItem>
                         <template #prepend>
@@ -152,8 +152,8 @@ const logout = () => {
 </template>
 
 <style scoped>
-/* .my-menu {
-    margin-top: 40px;
+.my-menu {
+    margin-top: 0;
     contain: initial;
     overflow: visible;
 }
@@ -168,7 +168,7 @@ const logout = () => {
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 13px solid rgb(var(--v-theme-surface));
-} */
+}
 .menu-profile {
     position: relative;
 }

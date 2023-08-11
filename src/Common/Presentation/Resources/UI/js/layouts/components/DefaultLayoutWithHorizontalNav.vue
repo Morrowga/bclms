@@ -15,6 +15,7 @@ import { Link, usePage } from "@inertiajs/inertia-vue3";
 import MobileSidebar from "./MobileSidebar.vue";
 import Header from "@mainRoot/components/Header/Header.vue";
 import Footer from "@mainRoot/components/Footer/Footer.vue";
+import ExportBtn from "@mainRoot/components/Buttons/ExportBtn.vue";
 
 const { appRouteTransition } = useThemeConfig();
 import { ref } from "vue";
@@ -30,10 +31,12 @@ const resolveNavItemComponent = () => {};
         <!-- :point_right: navbar -->
         <template #navbar>
             <Header :site_data="$page.props" />
+            <ExportBtn title="Export" type="outlined" />
         </template>
         <!-- :point_right: Pages -->
         <Transition :name="appRouteTransition" mode="out-in">
             <main class="" style="min-height: 485px">
+                <ExportBtn title="Export" color="primary" />
                 <slot> </slot>
             </main>
         </Transition>
