@@ -69,14 +69,28 @@ const pages = {
 
     //user experience survey
 
-    "BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Index.vue'),
+    "BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Index": import('../../src/BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Index.vue'),
 
-    "BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Create": import('../../src/BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Create.vue'),
+    "BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Create": import('../../src/BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Create.vue'),
 
-    "BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Show": import('../../src/BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Show.vue'),
+    "BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Show": import('../../src/BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Show.vue'),
 
 
-    "BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Edit": import('../../src/BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Edit.vue'),
+    "BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Edit": import('../../src/BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Edit.vue'),
+
+
+
+    //rewards
+
+
+    "BlendedConcept/StoryBook/Presentation/Resources/Rewards/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Rewards/Index.vue'),
+
+    "BlendedConcept/StoryBook/Presentation/Resources/Rewards/Create": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Rewards/Create.vue'),
+
+    "BlendedConcept/StoryBook/Presentation/Resources/Rewards/Show": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Rewards/Show.vue'),
+
+
+    "BlendedConcept/StoryBook/Presentation/Resources/Rewards/Edit": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Rewards/Edit.vue'),
 
 
 
