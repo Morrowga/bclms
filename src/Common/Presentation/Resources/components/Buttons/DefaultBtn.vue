@@ -23,6 +23,6 @@ let clicked = () => {
 
 <template>
     <v-btn variant="elevated" :color="color" @click="clicked">
-        <span class="text-white pl-4">{{ title }}</span>
+        <span class="text-white text-uppercase">{{ title }}</span>
     </v-btn>
 </template>

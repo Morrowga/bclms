@@ -8,14 +8,15 @@ import NavBarNotifications from "@/layouts/components/NavBarNotifications.vue";
 import NavbarShortcuts from "@/layouts/components/NavbarShortcuts.vue";
 import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
 import NavSearchBar from "@/layouts/components/NavSearchBar.vue";
-import UserProfile from "@/layouts/components/UserProfile.vue";
 import HorizontalNavLayout from "@layouts/components/HorizontalNavLayout.vue";
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { Link, usePage } from "@inertiajs/inertia-vue3";
 import MobileSidebar from "./MobileSidebar.vue";
 import Header from "@mainRoot/components/Header/Header.vue";
 import Footer from "@mainRoot/components/Footer/Footer.vue";
+import UserProfile from "@mainRoot/components/UserProfile/UserProfile.vue";
 import DefaultBtn from "@mainRoot/components/Buttons/DefaultBtn.vue";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 const { appRouteTransition } = useThemeConfig();
 import { ref } from "vue";
@@ -24,13 +25,14 @@ let toggle = () => {
     drawer.value = !drawer.value;
 };
 let page = usePage().props;
+let text = ref("");
 const resolveNavItemComponent = () => {};
 </script>
 <template>
     <HorizontalNavLayout :nav-items="navItems" :drawer="drawer">
         <!-- :point_right: navbar -->
         <template #navbar>
-            <Header :site_data="$page.props" />
+            <Header :site_data="$page.props" style="position: fixed" />
         </template>
         <!-- :point_right: Pages -->
         <Transition :name="appRouteTransition" mode="out-in">
