@@ -6,10 +6,7 @@ import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 
-
-
-let props = defineProps(['organization']);
-
+let props = defineProps(["organization"]);
 
 //## start datatable section
 let columns = [
@@ -45,7 +42,7 @@ let columns = [
     },
 ];
 
-let rows = props.organization
+let rows = props.organization;
 
 //## truncatedText
 let truncatedText = (text) => {
@@ -69,65 +66,107 @@ const selectionChanged = (data) => {
                 <!-- 👉 Export button -->
                 <div class="d-flex align-center">
                     <VBtn variant="outlined" color="secondary">
-                        <VIcon color="primary" icon="mdi-export" size="20" style="transform: rotate(270deg);"></VIcon>
+                        <VIcon
+                            color="primary"
+                            icon="mdi-export"
+                            size="20"
+                            style="transform: rotate(270deg)"
+                        ></VIcon>
                         <span class="text-primary pl-4">Export</span>
                     </VBtn>
                 </div>
 
                 <VSpacer />
 
-                <div class="app-user-search-filter d-flex justify-end align-center gap-6">
+                <div
+                    class="app-user-search-filter d-flex justify-end align-center gap-6"
+                >
                     <Link :href="route('organizations.index')">
-                    <!-- 👉 View More button -->
-                    <v-btn>
-                        <span class="text-uppercase text-white">
-                            View More
-                        </span>
-                    </v-btn>
+                        <!-- 👉 View More button -->
+                        <v-btn>
+                            <span class="text-uppercase text-white">
+                                View More
+                            </span>
+                        </v-btn>
                     </Link>
                 </div>
             </VCardText>
 
             <VDivider />
 
-            <vue-good-table class="role-data-table" styleClass="vgt-table" v-on:selected-rows-change="selectionChanged"
-                :columns="columns" :rows="rows" :select-options="{
+            <vue-good-table
+                class="role-data-table"
+                styleClass="vgt-table"
+                v-on:selected-rows-change="selectionChanged"
+                :columns="columns"
+                :rows="rows"
+                :select-options="{
                     enabled: true,
-                }" :pagination-options="{
-    enabled: true,
-}">
+                }"
+                :pagination-options="{
+                    enabled: true,
+                }"
+            >
                 <template #table-row="dataProps">
-                    <div v-if="dataProps.column.field == 'user'" class="flex flex-nowrap">
+                    <div
+                        v-if="dataProps.column.field == 'user'"
+                        class="flex flex-nowrap"
+                    >
                         <VListItem class="pa-0">
                             <!-- 👉 Avatar  -->
                             <template #prepend>
-                                <VAvatar rounded :size="38" class="me-3" :image="avatar4" />
+                                <VAvatar
+                                    rounded
+                                    :size="38"
+                                    class="me-3"
+                                    :image="avatar4"
+                                />
                             </template>
 
                             <!-- 👉 Title and Subtitle -->
-                            <VListItemTitle class="text-sm font-weight-semibold mb-1">
+                            <VListItemTitle
+                                class="text-sm font-weight-semibold mb-1"
+                            >
                                 {{ dataProps.row.user }}
                             </VListItemTitle>
 
-                            <VListItemSubtitle class="text-xs text-no-wrap d-flex align-center">
+                            <VListItemSubtitle
+                                class="text-xs text-no-wrap d-flex align-center"
+                            >
                                 <span> {{ dataProps.row.email }}</span>
                             </VListItemSubtitle>
                         </VListItem>
                     </div>
-                    <div v-if="dataProps.column.field == 'plan'" class="flex flex-nowrap">
+                    <div
+                        v-if="dataProps.column.field == 'plan'"
+                        class="flex flex-nowrap"
+                    >
                         {{ dataProps.row.plan.name }}
                     </div>
-                    <div v-if="dataProps.column.field == 'role'" class="flex flex-nowrap">
+                    <div
+                        v-if="dataProps.column.field == 'role'"
+                        class="flex flex-nowrap"
+                    >
                         <VChip size="small" color="primary">organization</VChip>
                     </div>
-                    <div v-if="dataProps.column.field == 'status'" class="flex flex-nowrap">
-                        <VChip size="small" color="danger">
-                            pending
-                        </VChip>
+                    <div
+                        v-if="dataProps.column.field == 'status'"
+                        class="flex flex-nowrap"
+                    >
+                        <VChip size="small" color="danger"> pending </VChip>
                     </div>
-                    <div v-if="dataProps.column.field == 'action'" class="flex flex-nowrap">
+                    <div
+                        v-if="dataProps.column.field == 'action'"
+                        class="flex flex-nowrap"
+                    >
                         <div class="d-flex">
-                            <VBtn variant="text" color="secondary" density="compact" icon="mdi-eye-outline" class="ml-2">
+                            <VBtn
+                                variant="text"
+                                color="secondary"
+                                density="compact"
+                                icon="mdi-eye-outline"
+                                class="ml-2"
+                            >
                             </VBtn>
                         </div>
                     </div>
@@ -139,7 +178,7 @@ const selectionChanged = (data) => {
     </section>
 </template>
 
-<style lang="scss" >
+<style lang="scss">
 .vgt-table th {
     font-size: 10pt !important;
 }
