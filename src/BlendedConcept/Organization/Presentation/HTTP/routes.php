@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Src\BlendedConcept\Organization\Presentation\HTTP\OrganizationController;
 use Src\BlendedConcept\Organization\Presentation\HTTP\PlanController;
-
+use Src\BlendedConcept\Organization\Presentation\HTTP\SubscribtionInvoiceController;
 Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('organizations', OrganizationController::class);
@@ -16,6 +16,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/plans/create', [PlanController::class, 'create'])->name('plans.create');
     Route::get('/plans/show', [PlanController::class, 'show'])->name('plans.show');
     Route::get('/plans/orgcreate', [PlanController::class, 'planfororg'])->name('planfororg.show');
+
+    Route::get("subscribptioninvoice",[SubscribtionInvoiceController::class,'index']);
 
     // Route::get('/organizations', [OrganizationController::class, 'index'])->name('organizations.index');
     // Route::get('/organizations/edit', [OrganizationController::class, 'edit'])->name('organizations.edit');

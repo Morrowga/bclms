@@ -129,12 +129,12 @@ const isSurveyEdit = ref(false);
     <SurveySetting v-model:isDialogVisible="isSurveySetting" :user-data="user" :form="profileEdit" @submit="hanleSubmit" />
 </template>
 
-<style>
-.v-label.v-field-label {
+<style scoped>
+/* .v-label.v-field-label {
     color: #4066E4 !important;
     font-size: 20px !important;
     font-style: normal !important;
     font-weight: 700 !important;
     text-transform: capitalize !important;
-}
+} */
 </style>
