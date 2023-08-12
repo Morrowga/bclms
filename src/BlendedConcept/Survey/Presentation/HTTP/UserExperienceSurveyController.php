@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Security\Presentation\HTTP;
+namespace Src\BlendedConcept\Survey\Presentation\HTTP;
 
 use Inertia\Inertia;
 

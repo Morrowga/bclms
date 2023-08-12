@@ -9,10 +9,17 @@ return [
     ],
 
     'userexperiencesurvey' => [
-        'index' => 'BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Index',
-        'create' => 'BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Create',
-        'edit' => 'BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Edit',
-        'show' => 'BlendedConcept/Security/Presentation/Resources/UserExperienceSurvey/Survey/Show',
+        'index' => 'BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Index',
+        'create' => 'BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Create',
+        'edit' => 'BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Edit',
+        'show' => 'BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Show',
+    ],
+
+    'reward' => [
+        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Rewards/Index',
+        'create' => 'BlendedConcept/StoryBook/Presentation/Resources/Rewards/Survey/Create',
+        'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/Rewards/Survey/Edit',
+        'show' => 'BlendedConcept/StoryBook/Presentation/Resources/Rewards/Survey/Show',
     ],
 
     'permissions' => 'BlendedConcept/Security/Presentation/Resources/Permissions/Index',
