@@ -34,6 +34,10 @@ return [
 
     ],
 
+    'subscriptioninvoice' => [
+        'index' => 'BlendedConcept/Organization/Presentation/Resources/SubScriptionInvoice/Index'
+    ],
+
     'disability_device' => [
         'index' => 'BlendedConcept/Student/Presentation/Resources/Disability/Index',
     ],

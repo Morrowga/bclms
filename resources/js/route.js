@@ -32,7 +32,11 @@ const pages = {
     "BlendedConcept/Organization/Presentation/Resources/Plans/Edit": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Edit.vue'),
 
     "BlendedConcept/Organization/Presentation/Resources/Plans/Show": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Show.vue'),
+
     "BlendedConcept/Organization/Presentation/Resources/PlanForOrg/CreatePlan": import('../../src/BlendedConcept/Organization/Presentation/Resources/PlanForOrg/CreatePlan.vue'),
+
+
+    "BlendedConcept/Organization/Presentation/Resources/SubScriptionInvoice/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/SubScriptionInvoice/Index.vue'),
 
 
 
