@@ -16,7 +16,7 @@ let form = useForm({
 });
 
 let onFormSubmit = () => {
-    SuccessDialog({ title: "Successfully Device added" });
+    SuccessDialog({ title: "Successfully Device updated" });
 };
 </script>
 <template>
@@ -26,7 +26,7 @@ let onFormSubmit = () => {
                 <VRow justify="space-around" :gutter="10">
                     <VCol cols="12" class="accessibility">
                         <span class="tiggie-title margin-buttom-18">
-                            Add Accessibility Device</span
+                            Edit Accessibility Device</span
                         >
                     </VCol>
                     <VCol cols="6">
@@ -88,7 +88,7 @@ let onFormSubmit = () => {
                                     height="50"
                                     width="200"
                                 >
-                                    Add
+                                    Update
                                 </VBtn>
                             </div>
                         </div>

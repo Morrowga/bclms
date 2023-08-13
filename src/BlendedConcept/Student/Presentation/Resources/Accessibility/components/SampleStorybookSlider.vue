@@ -47,7 +47,7 @@ const toggleDialog = (id) => {
     <div class="control-position">
         <div class="head-section">
             <div class="title-section">
-                <p class="heading">{{ title }}</p>
+                <p class="heading-title">{{ title }}</p>
                 <span class="subheading">{{ subtitle }}</span>
             </div>
         </div>
@@ -60,8 +60,8 @@ const toggleDialog = (id) => {
                 <div>
                     <v-card
                         class="ma-4"
-                        height="150"
-                        width="250"
+                        height="250"
+                        width="400"
                         @click="toggle"
                         style="position: relative"
                         :color="isSelected ? 'primary' : 'grey-lighten-3'"
@@ -69,7 +69,7 @@ const toggleDialog = (id) => {
                         <div
                             class="d-flex fill-height align-center justify-center"
                         >
-                            <img class="bg-white fit-img" :src="data.image" />
+                            <img class="bg-white fit-img-2" :src="data.image" />
                         </div>
                         <v-scale-transition class="full-icon">
                             <v-icon
@@ -86,7 +86,7 @@ const toggleDialog = (id) => {
     </div>
 </template>
 
-<style>
+<style scoped>
 .control-position {
     position: relative;
 }
@@ -105,10 +105,10 @@ const toggleDialog = (id) => {
     height: 100%;
     z-index: 1;
 }
-.fit-img {
+.fit-img-2 {
     object-fit: cover;
-    width: 300px;
-    height: auto;
+    width: 120%;
+    height: 120%;
     /* height: 100%; */
 }
 
@@ -117,7 +117,7 @@ const toggleDialog = (id) => {
     justify-content: space-between;
     align-items: center;
 }
-.heading {
+.heading-title {
     margin: 0;
     font-size: 20px !important;
     font-style: normal !important;

@@ -181,12 +181,21 @@ const goRoute = (route) => {
                                             />
                                         </template>
                                         <VList>
-                                            <VListItem>
+                                            <VListItem
+                                                @click="
+                                                    () =>
+                                                        router.get(
+                                                            route(
+                                                                'accessibility_device.edit'
+                                                            )
+                                                        )
+                                                "
+                                            >
                                                 <VListItemTitle
                                                     >Edit</VListItemTitle
                                                 >
                                             </VListItem>
-                                            <VListItem>
+                                            <VListItem @click="() => {}">
                                                 <VListItemTitle
                                                     >Delete</VListItemTitle
                                                 >
