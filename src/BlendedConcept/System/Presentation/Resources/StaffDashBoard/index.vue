@@ -74,11 +74,15 @@ const gameResources = [
             <Slider
                 title="Books"
                 subtitle="Show 8 of 18 books"
+                btnText="Manage Books"
+                :url="route('books.index')"
                 :datas="bookResources"
             /><br />
             <Slider
                 title="Games"
                 subtitle="Show 8 of 18 games"
+                btnText="Manage Games"
+                :url="route('games.index')"
                 :datas="gameResources"
             /><br />
         </div>

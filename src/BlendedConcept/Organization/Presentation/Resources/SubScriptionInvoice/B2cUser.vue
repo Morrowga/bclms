@@ -47,40 +47,34 @@ let rows = [
     {
         user: "Jordan Stevenson",
         start_date: "02/07/23",
-        end_date: '02/08/23',
+        end_date: "02/08/23",
         plan: 1,
-        status: 1
+        status: 1,
     },
     {
         user: "Jordan Stevenson",
         start_date: "02/07/23",
-        end_date: '02/08/23',
+        end_date: "02/08/23",
         plan: 0,
-        status: 0
+        status: 0,
     },
     {
         user: "Jordan Stevenson",
         start_date: "02/07/23",
-        end_date: '02/08/23',
+        end_date: "02/08/23",
         plan: 1,
-        status: 1
+        status: 1,
     },
     {
         user: "Jordan Stevenson",
         start_date: "02/07/23",
-        end_date: '02/08/23',
+        end_date: "02/08/23",
         plan: 0,
-        status: 1
-    }
+        status: 1,
+    },
 ];
 
-
-const items = [
-    'Foo',
-    'Bar',
-]
-
-
+const items = ["Foo", "Bar"];
 
 //## truncatedText
 let truncatedText = (text) => {
@@ -103,19 +97,31 @@ const selectionChanged = (data) => {
             <VCardText class="d-flex flex-wrap gap-4">
                 <!-- 👉 Export button -->
                 <div class="d-flex align-center">
-                    <v-btn prepend-icon="mdi-export" variant="outlined" color="secondary">Export</v-btn>
+                    <v-btn
+                        prepend-icon="mdi-export"
+                        variant="outlined"
+                        color="secondary"
+                        >Export</v-btn
+                    >
                 </div>
                 <VSpacer />
 
-                <div class="app-user-search-filter d-flex justify-end align-center gap-6">
-
+                <div
+                    class="app-user-search-filter d-flex justify-end align-center gap-6"
+                >
                     <VRow align="center">
                         <VCol cols="6">
                             <VTextField label="Search User" single-line />
                         </VCol>
                         <VCol cols="6">
-                            <VSelect :items="items" :menu-props="{ transition: 'scroll-y-transition' }" label="Sort By"
-                                class="rounded-select" />
+                            <VSelect
+                                :items="items"
+                                :menu-props="{
+                                    transition: 'scroll-y-transition',
+                                }"
+                                label="Sort By"
+                                class="rounded-select"
+                            />
                         </VCol>
                     </VRow>
                 </div>
@@ -123,26 +129,42 @@ const selectionChanged = (data) => {
 
             <VDivider />
 
-            <vue-good-table class="role-data-table" styleClass="vgt-table" v-on:selected-rows-change="selectionChanged"
-                :columns="columns" :rows="rows" :select-options="{
+            <vue-good-table
+                class="role-data-table"
+                styleClass="vgt-table"
+                v-on:selected-rows-change="selectionChanged"
+                :columns="columns"
+                :rows="rows"
+                :select-options="{
                     enabled: true,
-                }" :pagination-options="{
-    enabled: true,
-}">
+                }"
+                :pagination-options="{
+                    enabled: true,
+                }"
+            >
                 <template #table-row="dataProps">
                     <div v-if="dataProps.column.field === 'user'">
-                        <div class="d-flex flex-row gap-2 ">
-                            <img src="/images/defaults/avator.png" class="user-profile-image" />
+                        <div class="d-flex flex-row gap-2">
+                            <img
+                                src="/images/defaults/avator.png"
+                                class="user-profile-image"
+                            />
                             <span>Jordan Stevenson</span>
                         </div>
                     </div>
                     <div v-if="dataProps.column.field == 'plan'">
-                        <div class="d-flex flex-row  align-center gap-2">
-                            <span v-if="dataProps.row.plan" class="d-flex flex-row justify-center align-center gap-2">
+                        <div class="d-flex flex-row align-center gap-2">
+                            <span
+                                v-if="dataProps.row.plan"
+                                class="d-flex flex-row justify-center align-center gap-2"
+                            >
                                 <img src="/images/icons/freeplan.svg" />
                                 <span>free plan</span>
                             </span>
-                            <span v-else class="d-flex flex-row align-center gap-2">
+                            <span
+                                v-else
+                                class="d-flex flex-row align-center gap-2"
+                            >
                                 <img src="/images/icons/proplan.svg" />
                                 <span>pro plan</span>
                             </span>
@@ -151,16 +173,10 @@ const selectionChanged = (data) => {
                     </div>
                     <div v-if="dataProps.column.field == 'status'">
                         <div v-if="dataProps.row.status">
-                            <VChip color="secondary">
-                                Active
-                            </VChip>
-
+                            <VChip color="secondary"> Active </VChip>
                         </div>
                         <div v-else>
-                            <VChip color="success">
-                                Inactive
-                            </VChip>
-
+                            <VChip color="success"> Inactive </VChip>
                         </div>
                     </div>
                 </template>
@@ -171,7 +187,7 @@ const selectionChanged = (data) => {
     </section>
 </template>
 
-<style lang="scss" >
+<style lang="scss">
 .vgt-table th {
     font-size: 10pt !important;
 }
@@ -183,12 +199,12 @@ const selectionChanged = (data) => {
     border-bottom: 1px solid #dcdfe6;
 }
 
-.v-input__control {
+.app-user-search-filter .v-input__control {
     height: 50px !important;
     top: 10px !important;
 }
 
-.v-input__control .v-label.v-field-label {
+.app-user-search-filter .v-input__control .v-label.v-field-label {
     top: 10px !important;
 }
 </style>

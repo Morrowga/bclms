@@ -5,6 +5,9 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
+import IconOutlineBtn from "@mainRoot/components/Buttons/IconOutlineBtn.vue";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+
 import {
     serverParams,
     onColumnFilter,
@@ -14,14 +17,20 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
-let props = defineProps(["users", "roles_name", "flash", "auth", "organizations"]);
+let props = defineProps([
+    "users",
+    "roles_name",
+    "flash",
+    "auth",
+    "organizations",
+]);
 let flash = computed(() => usePage().props.flash);
 let users = computed(() => usePage().props.auth.data.users);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 let currentPermission = ref();
 serverPage.value = ref(props.users.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
-console.log(props.users, "hello testing")
+console.log(props.users, "hello testing");
 
 const deleteUser = (id) => {
     deleteItem(id, "users");
@@ -29,14 +38,14 @@ const deleteUser = (id) => {
 
 const items = ref([
     {
-        title: 'Edit',
-        value: 'edit',
+        title: "Edit",
+        value: "edit",
     },
     {
-        title: 'Delete',
-        value: 'delete',
-    }
-])
+        title: "Delete",
+        value: "delete",
+    },
+]);
 
 let columns = [
     {
@@ -84,33 +93,62 @@ watch(serverPerPage, function (value) {
 });
 </script>
 
-
 <template>
     <AdminLayout>
         <section>
             <VCard>
                 <VCardText class="d-flex flex-wrap gap-4">
                     <!-- 👉 Export button -->
-                    <VTextField @keyup.enter="searchItems" v-model="serverParams.search" placeholder="Search Users"
-                        density="compact" />
+                    <IconOutlineBtn icon="mdi-export-variant" title="Export" />
                     <VSpacer />
+                    <VTextField
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
+                        placeholder="Search Users"
+                        density="compact"
+                        style="width: 10%"
+                    />
 
-                    <div class="app-user-search-filter d-flex align-center justify-end">
-                        <!-- 👉 Add User button -->
-                        <Create :organizations="organizations" :roles="roles_name" :flash="flash"
-                            v-if="permissions.includes('create_user')" />
+                    <div class="d-flex">
+                        <div
+                            class="app-user-search-filter d-flex align-center justify-end gap-3"
+                        >
+                            <selectBox
+                                :datas="[]"
+                                placeholder="Sort By"
+                                density="compact"
+                                variant="solo"
+                            />
+                            <!-- 👉 Add User button -->
+                            <Create
+                                :organizations="organizations"
+                                :roles="roles_name"
+                                :flash="flash"
+                                v-if="permissions.includes('create_user')"
+                            />
+                        </div>
                     </div>
                 </VCardText>
 
                 <VDivider />
 
-                <vue-good-table class="user-data-table" mode="remote" @column-filter="onColumnFilter"
-                    :totalRows="props.users.meta.total" styleClass="vgt-table " :pagination-options="options"
-                    :rows="props.users.data" :columns="columns">
+                <vue-good-table
+                    class="user-data-table"
+                    mode="remote"
+                    @column-filter="onColumnFilter"
+                    :totalRows="props.users.meta.total"
+                    styleClass="vgt-table "
+                    :pagination-options="options"
+                    :rows="props.users.data"
+                    :columns="columns"
+                >
                     <template #table-row="props">
                         <div v-if="props.column.field == 'name'">
-                            <div class="d-flex flex-row gap-2 ">
-                                <img src="/images/defaults/avator.png" class="user-profile-image" />
+                            <div class="d-flex flex-row gap-2">
+                                <img
+                                    src="/images/defaults/avator.png"
+                                    class="user-profile-image"
+                                />
                                 <span>Jordan Stevenson</span>
                             </div>
                         </div>
@@ -119,16 +157,23 @@ watch(serverPerPage, function (value) {
                             <p class="">-</p>
                         </div>
 
-                        <div v-if="props.column.field == 'roles'" class="d-flex flex-row gap-2 align-center">
+                        <div
+                            v-if="props.column.field == 'roles'"
+                            class="d-flex flex-row gap-2 align-center"
+                        >
                             <img src="/images/icons/bcicons.svg" />
-                            <span v-for="role in props?.row?.roles" :key="role?.id">
+                            <span
+                                v-for="role in props?.row?.roles"
+                                :key="role?.id"
+                            >
                                 {{ role?.name }}
                             </span>
                         </div>
-                        <div v-if="props.column.field == 'status'" class="flex flex-wrap">
-                            <VChip color="success">
-                                Active
-                            </VChip>
+                        <div
+                            v-if="props.column.field == 'status'"
+                            class="flex flex-wrap"
+                        >
+                            <VChip color="success"> Active </VChip>
 
                             <VChip color="warning" v-if="true == false">
                                 Active
@@ -137,8 +182,13 @@ watch(serverPerPage, function (value) {
                         <div v-if="props.column.field == 'action'">
                             <VMenu location="end">
                                 <template #activator="{ props }">
-                                    <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black"
-                                        class="mt-n4" />
+                                    <VIcon
+                                        v-bind="props"
+                                        size="24"
+                                        icon="mdi-dots-horizontal"
+                                        color="black"
+                                        class="mt-n4"
+                                    />
                                 </template>
                                 <VList :items="items" />
                             </VMenu>
@@ -146,18 +196,33 @@ watch(serverPerPage, function (value) {
                     </template>
                     <template #pagination-bottom>
                         <VRow class="pa-4">
-                            <VCol cols="12" class="d-flex justify-space-between">
-                                <span>Showing {{ props.users.meta.from }} to
+                            <VCol
+                                cols="12"
+                                class="d-flex justify-space-between"
+                            >
+                                <span
+                                    >Showing {{ props.users.meta.from }} to
                                     {{ props.users.meta.to }} of
-                                    {{ props.users.meta.total }} entries</span>
+                                    {{ props.users.meta.total }} entries</span
+                                >
                                 <div>
                                     <div class="d-flex align-center">
                                         <span class="me-2">Show</span>
-                                        <VSelect v-model="serverPerPage" density="compact" :items="options.perPageDropdown">
+                                        <VSelect
+                                            v-model="serverPerPage"
+                                            density="compact"
+                                            :items="options.perPageDropdown"
+                                        >
                                         </VSelect>
-                                        <VPagination v-model="serverPage" size="small" :total-visible="5"
-                                            :length="props.users.meta.last_page" @next="onPageChange" @prev="onPageChange"
-                                            @click="onPageChange" />
+                                        <VPagination
+                                            v-model="serverPage"
+                                            size="small"
+                                            :total-visible="5"
+                                            :length="props.users.meta.last_page"
+                                            @next="onPageChange"
+                                            @prev="onPageChange"
+                                            @click="onPageChange"
+                                        />
                                     </div>
                                 </div>
                             </VCol>
@@ -169,7 +234,6 @@ watch(serverPerPage, function (value) {
         </section>
     </AdminLayout>
 </template>
-
 
 <style lang="scss">
 .app-user-search-filter {

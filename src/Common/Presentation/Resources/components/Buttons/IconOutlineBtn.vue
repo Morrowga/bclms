@@ -14,6 +14,10 @@ let props = defineProps({
         type: String,
         default: "primary",
     },
+    icon: {
+        type: String,
+        default: "mdi-export-variant",
+    },
 });
 let emit = defineEmits(["click:runFunction"]);
 let clicked = () => {
@@ -23,11 +27,7 @@ let clicked = () => {
 
 <template>
     <v-btn variant="outlined" :color="color" @click="clicked">
-        <VIcon
-            icon="mdi-export"
-            size="20"
-            style="transform: rotate(270deg)"
-        ></VIcon>
-        <span class="text-white pl-4">{{ title }}</span>
+        <VIcon :icon="icon" size="20" style="transform: rotate(270deg)"></VIcon>
+        <span class="pl-4 text-primary">{{ title }}</span>
     </v-btn>
 </template>

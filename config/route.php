@@ -49,6 +49,18 @@ return [
         'index' => 'BlendedConcept/Student/Presentation/Resources/Disability/Index',
     ],
 
+    'accessibility_device' => [
+        'index' => 'BlendedConcept/Student/Presentation/Resources/Accessibility/Index',
+        'create' => 'BlendedConcept/Student/Presentation/Resources/Accessibility/Create',
+        'edit' => 'BlendedConcept/Student/Presentation/Resources/Accessibility/Edit',
+    ],
+    'games' => [
+        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Games/Index'
+    ],
+    'books' => [
+        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/Index'
+    ],
+
     'announment' => [
         'index' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
         'create' => 'BlendedConcept/System/Presentation/Resources/Announcements/Create',

@@ -57,6 +57,18 @@ const pages = {
     //manage disabilty device
     "BlendedConcept/Student/Presentation/Resources/Disability/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Disability/Index.vue'),
 
+    //manage accessibility device
+    "BlendedConcept/Student/Presentation/Resources/Accessibility/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Accessibility/Index.vue'),
+    "BlendedConcept/Student/Presentation/Resources/Accessibility/Create": import('../../src/BlendedConcept/Student/Presentation/Resources/Accessibility/Create.vue'),
+    "BlendedConcept/Student/Presentation/Resources/Accessibility/Edit": import('../../src/BlendedConcept/Student/Presentation/Resources/Accessibility/Edit.vue'),
+
+    //manage games
+    "BlendedConcept/StoryBook/Presentation/Resources/Games/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Games/Index.vue'),
+
+    //manage books
+    "BlendedConcept/StoryBook/Presentation/Resources/Books/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Books/Index.vue'),
+
+
 
     // Security Domain
     "BlendedConcept/Security/Presentation/Resources/Permissions/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/Permissions/Index.vue'),
