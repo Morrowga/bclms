@@ -1,109 +1,114 @@
 <script setup>
-import {ref} from "vue"
-import { useForm } from "@inertiajs/vue3";
-
+import { useForm, Link } from "@inertiajs/vue3";
+import { ref, defineProps, computed } from "vue";
+import { emailValidator, requiredValidator } from "@validators";
+import ImageUpload from "@Composables/ImageUpload.vue";
+import { toastAlert } from "@Composables/useToastAlert";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import {SuccessDialog} from '@actions/useSuccess';
 
+const isFormValid = ref(false);
+const isDialogVisible = ref(false);
+let refForm = ref();
+
+let flash = computed(() => usePage().props.flash);
+
 let form = useForm({
-    plan_type: "Basic Plan",
-    description: "Allow access to basic features",
-    price: "$4.99",
-    nofstudent: 1,
-    storage_space : "1GB",
-    isCustomization : false,
-    isPresentation : false,
-    isFullAccess : false,
-    isConcurrentAccess : false,
-    isWeeklyLearningReport : false,
-    isDedicatedStudentReport : false,
+    name: "",
+    contact_person: "",
+    contact_email: "",
+    contact_number: "",
+    price: "",
+    teacher_license: "",
+    allocated_storage: "",
+    payment_period: "",
+    // payment_type: "card",
+    image: "",
+});
 
-})
+// submit create form
+let handleSubmit = () => {
+SuccessDialog({title:"You've successfully created organization"})
 
-let onFormSubmit = () => {
-SuccessDialog({title:"Subscription plan edited"})
-}
-
+    // refForm.value?.validate().then(({ valid }) => {
+    //     if (valid) {
+    //         form.post(route("organizations.store"), {
+    //             onSuccess: () => {
+    //                 SuccessDialog({title:flash?.successMessage})
+    //                 isDialogVisible.value = false;
+    //             },
+    //             onError: (error) => { },
+    //         });
+    //     }
+    // });
+};
 </script>
+
+
 <template>
     <AdminLayout>
-        <VContainer>
-            <VForm class="mt-6" @submit.prevent="onFormSubmit">
-            <VRow justify="space-around" :gutter="10">
-                <VCol cols="6">
-                    <span class="tiggie-title margin-buttom-18"> Edit Subscription Plan</span>
-                </VCol>
-                <VCol cols="6"></VCol>
-                <VCol cols="6">
-                    <span class="tiggie-subtitle ">Basic Details</span>
-                    <VRow gutters="5">
-                        <VCol cols="8">
-                            <VLabel class="tiggie-label">Plan Name</VLabel>
-                            <VTextField placeholder="Type here.." v-model="form.plan_type" />
-                        </VCol>
-                        <VCol cols="8">
-                            <VLabel class="tiggie-label">Description</VLabel>
-                            <VTextField placeholder="Type here..." v-model="form.description"/>
-                        </VCol>
-                        <VCol cols="8">
-                            <VLabel class="tiggie-label">Price</VLabel>
-                            <VTextField placeholder="Type here..." v-model="form.price" />
-                        </VCol>
-                    </VRow>
-                </VCol>
-                <VCol cols="6">
-                    <span class="tiggie-subtitle">Usage Allowance</span>
-                    <VRow>
-                        <VCol cols="8">
-                            <VLabel class="tiggie-label">Number of Student Profile</VLabel>
-                            <VTextField placeholder="Type here.." v-model="form.nofstudent"/>
-                        </VCol>
-                        <VCol cols="8">
-                            <VLabel class="tiggie-label">Storage space</VLabel>
-                            <VTextField placeholder="Type here..." v-model="form.storage_space" />
-                        </VCol>
-                        <VCol cols="8">
-                            <VRow no-gutters>
-                                <VCol cols="6">
-                                    <VLabel class="tiggie-label">Customization </VLabel>
-                                    <VSwitch v-model="form.isCustomization" inset/>
-                                </VCol>
-                                <VCol cols="6">
-                                    <VLabel class="tiggie-label">Personalization</VLabel>
-                                    <VSwitch v-model="form.isPresentation" inset/>
-                                </VCol>
-                                <VCol cols="6">
-                                    <VLabel class="tiggie-label">Full Library Access </VLabel>
-                                    <VSwitch v-model="form.isFullAccess" inset/>
-                                </VCol>
-                                <VCol cols="6">
-                                    <VLabel class="tiggie-label">Concurrent Access</VLabel>
-                                    <VSwitch v-model="form.isConcurrentAccess" inset/>
-                                </VCol>
-                                <VCol cols="6">
-                                    <VLabel class="tiggie-label">Weekly Learning Report </VLabel>
-                                    <VSwitch v-model="form.isWeeklyLearningReport" inset/>
-                                </VCol>
-                                <VCol cols="6">
-                                    <VLabel class="tiggie-label">Dedicated Student Report</VLabel>
-                                    <VSwitch v-model="form.isDedicatedStudentReport" inset/>
-                                </VCol>
-                            </VRow>
-
-                        </VCol>
-                    </VRow>
-                </VCol>
-
-                 <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
-                        <Link :href="route('plans.index')" class="text-black">
-                           <VBtn color="gray" height="50" class="" width="200">
+        <div class="d-flex justify-end" style="width: 100vw !important;">
+            <VForm ref="refForm" v-model="isFormValid" @submit.prevent="handleSubmit">
+              <VContainer>
+                <VRow justify="center">
+                    <VCol cols="6">
+                        <span class="text-xl tiggie-title">Reward Particulars</span>
+                        <VRow class="pt-5">
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Name</VLabel>
+                                <VTextField density="compact"
+                                placeholder="Type here ..."
+                                v-model="form.name" class="w-100" :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.name" />
+                            </VCol>
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Stars Required</VLabel>
+                                <VTextField density="compact"
+                                placeholder="Type here ..."
+                                v-model="form.name" class="w-100" :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.name" />
+                            </VCol>
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Rarity</VLabel>
+                                <VSelect :items="items" rounded="50%" density="compact" />
+                            </VCol>
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Description</VLabel>
+                                <VTextField density="compact"
+                                placeholder="Type here ..."
+                                v-model="form.name" class="w-100" :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.name" />
+                            </VCol>
+                        </VRow>
+                    </VCol>
+                    <VCol cols="6" class="pt-5">
+                        <span class="tiggie-title">Sticker</span>
+                        <br />
+                        <ImageUpload v-model="form.image" />
+                    </VCol>
+                   <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
+                        <Link :href="route('organizations.index')" class="text-black">
+                           <VBtn color="gray" height="50" class="" width="300">
                             Cancel
                           </VBtn>
                         </Link>
-                    <VBtn type="submit" class="" height="50" width="200"> Update </VBtn>
+                    <VBtn type="submit" class="" height="50" width="300"> Finish </VBtn>
                 </VCol>
-            </VRow>
+                </VRow>
+                </VContainer>
             </VForm>
-        </VContainer>
+        </div>
     </AdminLayout>
 </template>
+
+
+<style scoped>
+.logo-position {
+    /* position: absolute;
+    top: 180px; */
+}
+
+.padding-left-40px {
+    padding-left: 40px;
+}
+</style>

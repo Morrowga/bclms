@@ -9,6 +9,10 @@ http://bc-lms.test/plans/orgcreate
 http://bc-lms.test/subscribptioninvoice
 
 
+rewards
+
+
+
 
 
 

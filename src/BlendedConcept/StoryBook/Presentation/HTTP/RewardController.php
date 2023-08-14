@@ -15,7 +15,7 @@ class RewardController
     public function create()
     {
         // return Inertia::render(config('route.userexperiencesurvey.create'));
-        return Inertia::render(config('route.userexperiencesurvey.edit'));
+        return Inertia::render(config('route.reward.show'));
     }
 
     public function show()

@@ -17,9 +17,9 @@ return [
 
     'reward' => [
         'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Rewards/Index',
-        'create' => 'BlendedConcept/StoryBook/Presentation/Resources/Rewards/Survey/Create',
-        'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/Rewards/Survey/Edit',
-        'show' => 'BlendedConcept/StoryBook/Presentation/Resources/Rewards/Survey/Show',
+        'create' => 'BlendedConcept/StoryBook/Presentation/Resources/Rewards/Create',
+        'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/Rewards/Edit',
+        'show' => 'BlendedConcept/StoryBook/Presentation/Resources/Rewards/Show',
     ],
 
     'permissions' => 'BlendedConcept/Security/Presentation/Resources/Permissions/Index',
