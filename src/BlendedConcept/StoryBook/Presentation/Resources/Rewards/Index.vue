@@ -13,23 +13,33 @@ let props = defineProps();
 //## start datatable section
 let columns = [
     {
+        label: "Sticker",
+        field: "sticker",
+        sortable: false,
+    },
+    {
         label: "Name",
         field: "name",
         sortable: false,
     },
     {
-        label: "User Types",
-        field: "user_types",
-        sortable: false,
-    },
-    {
-        label: "Completion Status",
-        field: "completion_status",
-        sortable: false,
-    },
-    {
         label: "Date Created",
         field: "date_created",
+        sortable: false,
+    },
+    {
+        label: "Storybooks Assigned",
+        field: "storybooks_assigned",
+        sortable: false,
+    },
+    {
+        label: "Rewards Issued",
+        field: "rewards_issued",
+        sortable: false,
+    },
+    {
+        label: "Status",
+        field: "status",
         sortable: false,
     },
     {
@@ -41,72 +51,48 @@ let columns = [
 
 let rows = [
     {
-        name: "Happines Survey",
-        user_types: [
+        name: "Tiggy OMG",
+        date_created: "20/8/2023",
+        storybooks_assigned: [
             {
-                name: "Organization Teachers"
+                name: "Toy Story 2"
             },
             {
-                name: "B2C Users"
+                name: "A Walk On Tundra"
             }
         ],
-        completion_status: "testing",
-        date_created: "20/8/2023",
+        rewards_issued: ''
 
     },
     {
         name: "Toy Story Feedback Survey",
-        user_types: [
+        date_created: "20/8/2023",
+        storybooks_assigned: [
             {
-                name: "Students"
+                name: "Toy Story 2"
+            },
+            {
+                name: "A Walk On Tundra"
             }
         ],
-        completion_status: "testing",
-        date_created: "20/8/2023",
+        rewards_issued: ''
 
     },
     {
         name: "Website Experience Survey",
-        user_types: [
+        date_created: "20/8/2023",
+        storybooks_assigned: [
             {
-                name: "Organization Teachers"
+                name: "Toy Story 2"
             },
             {
-                name: "B2C Users"
+                name: "A Walk On Tundra"
             }
         ],
-        completion_status: "testing",
-        date_created: "20/8/2023",
+        rewards_issued: ''
 
-    },
-    {
-        name: "Teacher Experience Survey",
-        user_types: [
-            {
-                name: "Organization Teacher"
-            },
-            {
-                name: "B2C Users"
-            }
-        ],
-        completion_status: "testing",
-        date_created: "20/8/2023",
 
-    },
-    {
-        name: "Food Survey",
-        user_types: [
-            {
-                name: "Organization Teacher"
-            },
-            {
-                name: "B2C Users"
-            }
-        ],
-        completion_status: "testing",
-        date_created: "20/8/2023",
-
-    },
+    }
 ];
 
 
@@ -135,36 +121,33 @@ let truncatedText = (text) => {
     }
 };
 
-const selectionChanged = (data) => {
-    console.log(data.selectedRows);
-};
+
 </script>
 <template>
     <AdminLayout>
-        <h1 class="tiggie-title mb-4">User Surveys</h1>
+        <h1 class="tiggie-title mb-4">Rewards</h1>
         <VRow>
             <VCol cols="12" sm="12" lg="12">
                 <section>
                     <VCard>
-                            <VContainer class="">
-                                <VRow justify="end" align="center">
-                                    <VCol cols="4">
-                                        <VTextField label="Search User Experience Surveys" density="compact" width="100"/>
-                                    </VCol>
-                                    <Vcol cols="4">
-                                        <VSelect :items="items"
-                                        rounded="100%"
-                                        density="compact"/>
-                                    </VCol>
-                                    <VCol cols="4" class="">
-                                        <VBtn >
-                                            <span class=" text-white pl-4 pr-4">
-                                                Add Survey
-                                            </span>
-                                        </VBtn>
-                                    </VCol>
-                                </VRow>
-                            </VContainer>
+
+                        <VContainer class="">
+                            <VRow justify="end" align="center">
+                                <VCol cols="4">
+                                    <VTextField label="Search Rewards" density="compact" width="100" />
+                                </VCol>
+                                <Vcol cols="4">
+                                    <VSelect :items="items" rounded="100%" density="compact" />
+                                </VCol>
+                                <VCol cols="4" class="">
+                                    <VBtn>
+                                        <span class=" text-white">
+                                            Add Rewards
+                                        </span>
+                                    </VBtn>
+                                </VCol>
+                            </VRow>
+                        </VContainer>
                         <VDivider />
 
                         <vue-good-table class="role-data-table" styleClass="vgt-table"
@@ -172,21 +155,29 @@ const selectionChanged = (data) => {
                                 enabled: false,
                             }" :pagination-options="{ enabled: true, }">
                             <template #table-row="dataProps">
+                                <div v-if="dataProps.column.field == 'sticker'">
+                                    <div class="d-flex flex-row gap-2 ">
+                                        <img src="/images/defaults/reward2.png" />
+                                    </div>
+                                </div>
 
-                                <div v-if="dataProps.column.field == 'user_types'">
-                                    <v-chip v-for="user_type in dataProps.row.user_types" :key="user_type.name" class="ma-2"
-                                        color="primary" size="small">{{ user_type.name }}
+                                <div v-if="dataProps.column.field == 'storybooks_assigned'">
+                                    <v-chip v-for="storybook in dataProps.row.storybooks_assigned" :key="storybook.name"
+                                        class="ma-2" color="primary" size="small">{{ storybook.name }}
                                     </v-chip>
                                 </div>
-                                <div v-if="dataProps.column.field == 'completion_status'">
-                                    <VProgressLinear
-                                    color="yellow-darken-2"
-                                    class="custom-progress"
-                                    model-value="80" :height="8">
-                                </VProgressLinear>
+                                <div v-if="dataProps.column.field == 'rewards_issued'">
+                                    <VProgressLinear color="yellow-darken-2" class="custom-progress" model-value="80"
+                                        :height="8">
+                                    </VProgressLinear>
                                     <span><span class="text-warning">8 </span>/10</span> Users
                                 </div>
 
+                                <div v-if="dataProps.column.field == 'status'">
+                                    <VChip color="secondary">
+                                        Active
+                                    </VChip>
+                                </div>
                                 <div v-if="dataProps.column.field == 'action'">
                                     <VMenu location="end">
                                         <template #activator="{ props }">
@@ -217,6 +208,6 @@ const selectionChanged = (data) => {
 
 <style scoped>
 .custom-progress {
-  width: 70%;
+    width: 70%;
 }
 </style>
