@@ -15,6 +15,14 @@ const props = defineProps({
         type: Array,
         default: [],
     },
+    btnText: {
+        type: String,
+        default: "",
+    },
+    url: {
+        type: String,
+        default: "#",
+    },
 });
 let dialog = ref(false);
 const toggleDialog = (id) => {
@@ -30,7 +38,9 @@ const toggleDialog = (id) => {
                 <span class="subheading">{{ subtitle }}</span>
             </div>
             <div class="head-button">
-                <VBtn>Manage Books</VBtn>
+                <Link :href="url">
+                    <VBtn>{{ btnText }}</VBtn>
+                </Link>
             </div>
         </div>
         <v-slide-group v-model="model" center-active show-arrows mandatory>
