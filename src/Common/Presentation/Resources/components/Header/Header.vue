@@ -58,5 +58,7 @@ let toggle = () => {
 <style scoped>
 .character-img img {
     object-fit: contain;
+    height: 62px;
+    margin-top: 11px;
 }
 </style>
