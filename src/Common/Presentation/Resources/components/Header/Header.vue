@@ -35,10 +35,11 @@ let toggle = () => {
             to="/"
             class="d-none d-md-flex align-center gap-x-2 ps-15"
         >
-            <img :src="site_data.site_logo" width="40" height="40" />
-            <h1 class="font-weight-bold leading-normal text-truncate text-xl">
+            <!-- <img :src="site_data.site_logo" width="100" height="100" /> -->
+            <img src="/images/sitelogotext.svg" width="200" height="200" />
+            <!-- <h1 class="font-weight-bold leading-normal text-truncate text-xl">
                 {{ site_data.site_settings?.site_name }}
-            </h1>
+            </h1> -->
         </Link>
 
         <VSpacer />
