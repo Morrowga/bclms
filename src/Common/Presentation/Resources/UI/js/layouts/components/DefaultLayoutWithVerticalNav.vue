@@ -40,6 +40,11 @@ let page = usePage().props;
             <template v-slot:prepend>
                 <Link to="/" class="d-flex align-center gap-x-2 pa-5">
                     <img
+                        src="/images/sitelogotext.svg"
+                        width="200"
+                        height="200"
+                    />
+                    <!-- <img
                         :src="$page?.props?.site_logo"
                         width="40"
                         height="40"
@@ -48,7 +53,7 @@ let page = usePage().props;
                         class="font-weight-bold leading-normal text-truncate text-xl"
                     >
                         {{ $page?.props?.site_settings?.site_name }}
-                    </h1>
+                    </h1> -->
                 </Link>
             </template>
 
