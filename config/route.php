@@ -61,6 +61,12 @@ return [
         'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/Index'
     ],
 
+    'assign_rewards' => [
+        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Index',
+        'create' => 'BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Create',
+        'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Edit',
+    ],
+
     'announment' => [
         'index' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
         'create' => 'BlendedConcept/System/Presentation/Resources/Announcements/Create',

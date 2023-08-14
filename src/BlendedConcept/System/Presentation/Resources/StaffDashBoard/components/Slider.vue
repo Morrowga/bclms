@@ -51,7 +51,7 @@ const toggleDialog = (id) => {
     </div>
 </template>
 
-<style>
+<style scoped>
 .control-position {
     position: relative;
 }

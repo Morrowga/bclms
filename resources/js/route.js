@@ -68,6 +68,11 @@ const pages = {
     //manage books
     "BlendedConcept/StoryBook/Presentation/Resources/Books/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Books/Index.vue'),
 
+    //assign rewards
+    "BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Index.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Create": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Create.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Edit": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Edit.vue'),
+
 
 
     // Security Domain
