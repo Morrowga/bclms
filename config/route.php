@@ -67,6 +67,10 @@ return [
         'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Edit',
     ],
 
+    'survey_results' => [
+        'index' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResults/Index',
+        'show' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResults/Show',
+    ],
     'announment' => [
         'index' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
         'create' => 'BlendedConcept/System/Presentation/Resources/Announcements/Create',

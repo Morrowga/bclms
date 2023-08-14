@@ -81,6 +81,8 @@ const toggleDialog = (id) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-left: 65px;
+    padding-right: 65px;
 }
 .heading {
     margin: 0;

@@ -212,17 +212,4 @@ const goRoute = (route) => {
             </VCol>
         </VRow>
     </AdminLayout>
-    <!-- <Create
-        v-model:isDialogVisible="isDiability"
-        :user-data="user"
-        :form="form"
-        @submit="hanleSubmit"
-    />
-
-    <Edit
-        v-model:isDialogVisible="isEditDiability"
-        :user-data="user"
-        :form="form"
-        @submit="hanleSubmit"
-    /> -->
 </template>
