@@ -110,6 +110,19 @@ const pages = {
 
 
 
+    //pathways
+
+    "BlendedConcept/StoryBook/Presentation/Resources/Pathways/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Pathways/Index.vue'),
+
+    "BlendedConcept/StoryBook/Presentation/Resources/Pathways/Create": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Pathways/Create.vue'),
+
+    "BlendedConcept/StoryBook/Presentation/Resources/Pathways/Show": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Pathways/Show.vue'),
+
+
+    //bookreview
+
+    "BlendedConcept/StoryBook/Presentation/Resources/BookReviews/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/BookReviews/Index.vue'),
+
 
 
 

@@ -22,6 +22,16 @@ return [
         'show' => 'BlendedConcept/StoryBook/Presentation/Resources/Rewards/Show',
     ],
 
+    'pathways' => [
+        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Pathways/Index',
+        'create' => 'BlendedConcept/StoryBook/Presentation/Resources/Pathways/Create',
+        'show' => 'BlendedConcept/StoryBook/Presentation/Resources/Pathways/Show'
+    ],
+
+    'bookreviews' => [
+        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/BookReviews/Index'
+    ],
+
     'permissions' => 'BlendedConcept/Security/Presentation/Resources/Permissions/Index',
     'roles' => 'BlendedConcept/Security/Presentation/Resources/Roles/Index',
 

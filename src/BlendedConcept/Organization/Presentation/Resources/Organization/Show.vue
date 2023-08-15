@@ -10,12 +10,12 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
             <VRow justify="center">
                 <VCol cols="6" align="center">
                     <VRow no-gutters>
-                        <VCol cols="12">
-                            <span class="tiggie-title">Organization Particulars</span>
+                        <VCol cols="8" class="text-center">
+                            <span class="tiggie-title text-center">Organization Particulars</span>
                         </VCol>
-                        <VCol cols="12" class="padding-right-30">
-                            <span class="tiggie-label pb-5 pl-4">Organization Name</span>
-                            <p class="tiggie-p padding-left-10 padding-top-8px">Blended Concepted</p>
+                        <VCol cols="8">
+                            <span class="tiggie-label ">Organization Name</span>
+                            <p class="tiggie-p">Blended Concepted</p>
                         </VCol>
                         <VCol cols="12" class="padding-right-30">
                             <span class="tiggie-label pb-5">Contact Name</span>
@@ -34,7 +34,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                 <VCol cols="6" align="start" justify="start">
                     <VRow>
                         <VCol cols="12">
-                            <span class="tiggie-title">Logo</span>
+                            <span class="tiggie-title"> Sticker </span>
                         </VCol>
                         <VCol cols="12"></VCol>
                         <VCol cols="12"></VCol>
