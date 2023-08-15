@@ -10,7 +10,9 @@ http://bc-lms.test/subscribptioninvoice
 
 
 rewards
-
+http://bc-lms.test/pathways/create
+http://bc-lms.test/pathways
+http://bc-lms.test/pathways/show
 
 
 
