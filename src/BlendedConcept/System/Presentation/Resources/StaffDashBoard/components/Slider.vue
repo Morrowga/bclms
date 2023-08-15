@@ -51,18 +51,18 @@ const toggleDialog = (id) => {
     </div>
 </template>
 
-<style scoped>
+<style>
 .control-position {
     position: relative;
 }
-.v-slide-group__next {
+.control-position .v-slide-group__next {
     cursor: pointer;
     position: absolute;
     top: 40px;
     right: -38px;
     height: 100%;
 }
-.v-slide-group__prev {
+.control-position .v-slide-group__prev {
     cursor: pointer;
     position: absolute;
     top: 40px;
@@ -81,8 +81,6 @@ const toggleDialog = (id) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 65px;
-    padding-right: 65px;
 }
 .heading {
     margin: 0;
