@@ -70,7 +70,7 @@ onMounted(() => {
             closable
             class="mb-2"
             close-label="Close Alert"
-            style="padding: 6px 16px;margin::0 65px;"
+            style="padding: 6px 16px; margin: 0 65px"
         >
             <template #text>
                 <span style="font-size:24px:">{{ item?.data?.type }}</span>
