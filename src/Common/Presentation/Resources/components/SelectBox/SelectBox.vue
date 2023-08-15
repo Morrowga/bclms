@@ -70,7 +70,7 @@ let updateValue = (event) => {
     emit("update:modelValue", event.target.value);
 };
 </script>
-<style>
+<style scoped>
 .custom-select {
     width: 100%;
 }

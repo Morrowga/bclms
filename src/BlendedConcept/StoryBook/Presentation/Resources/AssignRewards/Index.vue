@@ -1,36 +1,33 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { useForm, usePage, Link } from "@inertiajs/vue3";
-import { router } from "@inertiajs/core";
-import { computed, defineProps } from "vue";
-import Swal from "sweetalert2";
-import avatar4 from "@images/avatars/avatar-4.png";
-import { toastAlert } from "@Composables/useToastAlert";
-import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+// import Show from "./Show.vue";
+// import Create from "./Create.vue";
 import DefaultBtn from "@mainRoot/components/Buttons/DefaultBtn.vue";
-// import Edit from "./Edit.vue";
-let props = defineProps();
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+import { router } from "@inertiajs/core";
+
+import { toastAlert } from "@Composables/useToastAlert";
 
 //## start datatable section
 let columns = [
+    {
+        label: "Sticker",
+        field: "sticker",
+        sortable: false,
+    },
     {
         label: "Name",
         field: "name",
         sortable: false,
     },
     {
-        label: "Description",
-        field: "description",
+        label: "Date Created",
+        field: "date_created",
         sortable: false,
     },
     {
-        label: "Disability",
-        field: "disability",
-        sortable: false,
-    },
-    {
-        label: "Status",
-        field: "status",
+        label: "Issued On",
+        field: "issued_on",
         sortable: false,
     },
     {
@@ -42,47 +39,22 @@ let columns = [
 
 let rows = [
     {
-        name: "Eye-Gaze",
-        disability: "Dyslexia",
-        description:
-            "Specific learning disabilities  that affect reading and language-based skills",
-        status: true,
+        sticker: "/images/sticker1.png",
+        name: "Top Price",
+        date_created: "17/11/23",
+        issued_on: "Perfect Score",
     },
     {
-        name: "Eye-Gaze",
-        disability: "Attention Deficit/Hyperactivity Disorder",
-        description:
-            "Trouble paying attention, controlling impulsive behaviors and overly-active",
-        status: true,
-    },
-    {
-        name: "Eye-Gaze",
-        disability: "Dyscalculia",
-        description: "Affects the ability to understand and learn math facts",
-        status: false,
-    },
-    {
-        name: "Eye-Gaze",
-        disability: "Dyspraxia",
-        description: "Problem with movement, coordination, language and speech",
-        status: true,
+        sticker: "/images/sticker2.png",
+        name: "Basic",
+        date_created: "02/07/23",
+        issued_on: "Completion",
     },
 ];
 
-const items = ref([
-    {
-        title: "Edit",
-        value: "edit",
-    },
-    {
-        title: "Delete",
-        value: "delete",
-    },
-]);
-
-const isDiability = ref(false);
-const isEditDiability = ref(false);
-
+const alertNow = () => {
+    alert("hello world");
+};
 //## truncatedText
 let truncatedText = (text) => {
     if (text) {
@@ -104,7 +76,12 @@ const goRoute = (route) => {
 </script>
 <template>
     <AdminLayout>
-        <h1 class="tiggie-title mb-4">Accessibility Devices</h1>
+        <div class="head-section">
+            <div class="title-section">
+                <p class="heading">Toy Story 2 Rewards</p>
+            </div>
+        </div>
+        <br />
         <VRow>
             <VCol cols="12" sm="12" lg="12">
                 <section>
@@ -136,9 +113,7 @@ const goRoute = (route) => {
                                         title="Add Device"
                                         @click="
                                             goRoute(
-                                                route(
-                                                    'accessibility_device.create'
-                                                )
+                                                route('assign_rewards.create')
                                             )
                                         "
                                     />
@@ -159,15 +134,11 @@ const goRoute = (route) => {
                             :pagination-options="{ enabled: true }"
                         >
                             <template #table-row="dataProps">
-                                <div
-                                    v-if="dataProps.column.field == 'status'"
-                                    class="flex flex-wrap"
-                                >
-                                    <VChip color="success"> Active </VChip>
-
-                                    <VChip color="warning" v-if="true == false">
-                                        Active
-                                    </VChip>
+                                <div v-if="dataProps.column.field == 'sticker'">
+                                    <v-img
+                                        :src="dataProps.row.sticker"
+                                        max-height="125"
+                                    />
                                 </div>
                                 <div v-if="dataProps.column.field == 'action'">
                                     <VMenu location="end">
@@ -186,7 +157,7 @@ const goRoute = (route) => {
                                                     () =>
                                                         router.get(
                                                             route(
-                                                                'accessibility_device.edit'
+                                                                'assign_rewards.edit'
                                                             )
                                                         )
                                                 "
@@ -213,3 +184,39 @@ const goRoute = (route) => {
         </VRow>
     </AdminLayout>
 </template>
+<style scoped>
+.head-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.heading {
+    margin: 0;
+    font-size: 40px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 52px !important; /* 130% */
+    text-transform: capitalize !important;
+    color: var(--tiggie-blue, #4066e4);
+}
+
+.head-button {
+    align-self: flex-end;
+}
+.fit-img {
+    width: 100%;
+    height: 100%;
+    max-height: 217px;
+}
+.item-frame {
+    position: relative;
+}
+.v-card {
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0.8;
+}
+
+.v-card:not(.on-hover) {
+    opacity: 1;
+}
+</style>

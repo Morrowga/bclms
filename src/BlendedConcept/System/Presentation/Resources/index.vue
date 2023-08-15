@@ -11,8 +11,13 @@ import B2BTeacherDashboard from "./B2BTeacher/Index.vue";
 import { defineProps, onMounted, watch, computed } from "vue";
 import { usePage, useForm } from "@inertiajs/vue3";
 import axios from "axios";
-let props = defineProps(["current_user_role", "user", "orgainzations_users",'tenant','students']);
-
+let props = defineProps([
+    "current_user_role",
+    "user",
+    "orgainzations_users",
+    "tenant",
+    "students",
+]);
 
 const isAlertVisible = ref(true);
 let form = useForm({});
@@ -51,11 +56,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <AdminLayout
-    :user="user"
-    :user_role="current_user_role"
-    :tenant="tenant"
-    >
+    <AdminLayout :user="user" :user_role="current_user_role" :tenant="tenant">
         <!--
             VAlert is use for show annnounment pages
         -->
@@ -69,7 +70,7 @@ onMounted(() => {
             closable
             class="mb-2"
             close-label="Close Alert"
-            style="padding: 6px 16px"
+            style="padding: 6px 16px; margin: 0 65px"
         >
             <template #text>
                 <span style="font-size:24px:">{{ item?.data?.type }}</span>
@@ -84,29 +85,30 @@ onMounted(() => {
             </template>
         </VAlert>
 
-    <!--
+        <!--
             Check current_user_role and redirect to that
             page according to that roles
     -->
 
         <div v-if="current_user_role == 'BC Super Admin'">
-        <SuperAdminDashboard
+            <SuperAdminDashboard
                 :orgainzations_users="props.orgainzations_users"
             >
-        </SuperAdminDashboard>
+            </SuperAdminDashboard>
         </div>
         <div v-else-if="current_user_role == 'BC Subscriber'">
-            <TeacherOrParentDashboard  :students="students"> </TeacherOrParentDashboard>
+            <TeacherOrParentDashboard :students="students">
+            </TeacherOrParentDashboard>
         </div>
         <div v-else-if="current_user_role == 'Organization Admin'">
             <OrganizatinDashBoard></OrganizatinDashBoard>
         </div>
-         <div v-else-if="current_user_role == 'Teacher'">
+        <div v-else-if="current_user_role == 'Teacher'">
             <B2BTeacherDashboard></B2BTeacherDashboard>
         </div>
         <div v-else>
             <StaffDashboard
-            :orgainzations_users="props.orgainzations_users"
+                :orgainzations_users="props.orgainzations_users"
             ></StaffDashboard>
         </div>
     </AdminLayout>

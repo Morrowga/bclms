@@ -71,6 +71,16 @@ return [
         'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/Index'
     ],
 
+    'assign_rewards' => [
+        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Index',
+        'create' => 'BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Create',
+        'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Edit',
+    ],
+
+    'survey_results' => [
+        'index' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResults/Index',
+        'show' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResults/Show',
+    ],
     'announment' => [
         'index' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
         'create' => 'BlendedConcept/System/Presentation/Resources/Announcements/Create',

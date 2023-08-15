@@ -51,7 +51,10 @@ const gameResources = [
 
 <template>
     <section>
-        <VRow class="match-height mb-5">
+        <VRow
+            class="match-height mb-5"
+            style="padding-left: 65px; padding-right: 65px"
+        >
             <RoleCard
                 title="Organizations"
                 btnText="Manage"
@@ -86,7 +89,7 @@ const gameResources = [
                 :datas="gameResources"
             /><br />
         </div>
-        <VRow>
+        <VRow style="padding-left: 65px; padding-right: 65px">
             <VCol>
                 <div class="header">
                     <div class="head-section">
