@@ -67,11 +67,11 @@
 }
 
 .tiggie-sub-subtitle {
-color: var(--graphite)  !important;
-font-size: 32px !important;
-font-style: normal !important;
-font-weight: 700 !important;
-line-height: 42px !important;
+    color: var(--graphite) !important;
+    font-size: 32px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 42px !important;
 }
 
 .tiggie-resize-input-text {
@@ -98,6 +98,13 @@ line-height: 42px !important;
     line-height: 42px !important;
     /* 140% */
     text-transform: capitalize !important;
+
+}
+
+textarea {
+    border-radius: 8px;
+    border: 1px solid var(--line, #E5E5E5);
+    background: var(--light-gray, #F4F4F4);
 
 }
 
@@ -160,8 +167,7 @@ line-height: 42px !important;
     color: #000 !important;
 }
 
-.text-gray
-{
+.text-gray {
     color: var(--light-gray, #F4F4F4) !important;
 }
 
@@ -323,20 +329,18 @@ span {
 }
 
 
-.swal2-icon.swal2-warning.swal2-icon-show
-{
+.swal2-icon.swal2-warning.swal2-icon-show {
     border: 10px solid var(--candy-red) !important;
 
 
 }
 
 
-.swal2-icon.swal2-warning.swal2-icon-show .swal2-icon-content
-    {
-       color: var(--candy-red) !important;
-       font-size: 60px !important;
-       border: 10px solid var(--candy-red) !important;
-    }
+.swal2-icon.swal2-warning.swal2-icon-show .swal2-icon-content {
+    color: var(--candy-red) !important;
+    font-size: 60px !important;
+    border: 10px solid var(--candy-red) !important;
+}
 
 
 
@@ -346,14 +350,13 @@ span {
     // color:  #4066E4 !important;
     font-size: 16px !important;
     font-style: normal !important;
-    font-weight: 500  !important;
+    font-weight: 500 !important;
     line-height: 26px !important;
     /* 162.5% */
 }
 
 
-fw-500
-{
+fw-500 {
     font-weight: 500 !important;
 }
 
@@ -361,9 +364,18 @@ fw-500
 // datable background color
 
 
-thead
-{
+thead {
     // background-color: red !important;
     background: var(--light-background-page-header-background, #F5F5F7) !important;
 }
 
+
+
+// student img
+
+.tggie-student-img {
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
+    border-radius: 180px;
+}

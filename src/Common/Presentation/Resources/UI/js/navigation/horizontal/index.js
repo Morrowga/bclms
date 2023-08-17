@@ -62,21 +62,21 @@ export default [
             { title: 'Student', url: `${PREFIX}/students`, icon: { icon: 'mdi-account-group-outline' }, route_name: 'students', access_module: "access_student" },
         ],
     },
-    {
-        title: 'Libraries',
-        url: "/",
-        icon: { icon: 'mdi-file-document-multiple' },
-        route_name: 'libraries',
-        access_module: "access_library",
-        children: [
-            {
-                title: "Libraries", url: `${PREFIX}/libraries`, icon: { icon: 'mdi mdi-library' }, route_name: "c.libraries", access_module: 'access_library', isNativeLink: true
-            },
-            {
-                title: "H5p", url: '/admin/h5p/h5p', icon: { icon: 'mdi mdi-video' }, route_name: "/admin/h5p/h5p", access_module: 'access_library', isNativeLink: true
-            }
-        ]
-    },
+    // {
+    //     title: 'Libraries',
+    //     url: "/",
+    //     icon: { icon: 'mdi-file-document-multiple' },
+    //     route_name: 'libraries',
+    //     access_module: "access_library",
+    //     children: [
+    //         {
+    //             title: "Libraries", url: `${PREFIX}/libraries`, icon: { icon: 'mdi mdi-library' }, route_name: "c.libraries", access_module: 'access_library', isNativeLink: true
+    //         },
+    //         {
+    //             title: "H5p", url: '/admin/h5p/h5p', icon: { icon: 'mdi mdi-video' }, route_name: "/admin/h5p/h5p", access_module: 'access_library', isNativeLink: true
+    //         }
+    //     ]
+    // },
     {
         title: 'Settings',
         url: "/",
