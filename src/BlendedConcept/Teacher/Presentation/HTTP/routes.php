@@ -9,4 +9,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('teachers', TeacherController::class);
 
     Route::get('/conduct_lessons', [ConductLessonController::class, 'index'])->name('conduct_lessons.index');
+    Route::get('/conduct_lessons/show', [ConductLessonController::class, 'show'])->name('conduct_lessons.show');
 });

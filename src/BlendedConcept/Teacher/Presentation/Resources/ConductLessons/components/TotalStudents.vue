@@ -91,35 +91,6 @@ const selectionChanged = (data) => {
 <template>
     <section>
         <VCard>
-            <VCardText class="d-flex flex-wrap gap-4">
-                <!-- 👉 Export button -->
-                <div class="d-flex align-center">
-                    <v-btn
-                        prepend-icon="mdi-export"
-                        variant="outlined"
-                        color="secondary"
-                        >Export</v-btn
-                    >
-                </div>
-
-                <VSpacer />
-                <div class="d-flex">
-                    <v-select
-                        label="Sort By"
-                        class="w-100"
-                        density="compact"
-                        :items="[]"
-                    ></v-select>
-                    <div
-                        class="app-user-search-filter d-flex justify-end align-center gap-6"
-                    >
-                        <Link :href="route('users.index')">
-                            <v-btn>Manage Surveys</v-btn>
-                        </Link>
-                    </div>
-                </div>
-            </VCardText>
-
             <VDivider />
 
             <vue-good-table
@@ -140,14 +111,13 @@ const selectionChanged = (data) => {
                         v-if="dataProps.column.field == 'disability_types'"
                         class="flex flex-nowrap"
                     >
-                        <VChip
+                        <div
                             v-for="data in dataProps.row.disability_types"
                             :key="data.title"
-                            size="small"
-                            class="info"
-                            color="info"
-                            >{{ data.title }}</VChip
+                            class="chip mr-2"
                         >
+                            <div class="chip-content">{{ data.title }}</div>
+                        </div>
                     </div>
 
                     <div v-if="dataProps.column.field == 'action'">
@@ -182,7 +152,7 @@ const selectionChanged = (data) => {
     </section>
 </template>
 
-<style lang="scss">
+<style scoped>
 .vgt-table th {
     font-size: 10pt !important;
 }
@@ -196,5 +166,34 @@ const selectionChanged = (data) => {
     background: rgb(var(--v-theme-surface)) !important;
     border: none;
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
+.chip {
+    display: inline-flex;
+    flex-direction: row;
+    background-color: #e5e5e5;
+    border: none;
+    cursor: default;
+    height: 36px;
+    outline: none;
+    padding: 0;
+    font-size: 14px;
+    color: #333333;
+    font-family: "Open Sans", sans-serif;
+    white-space: nowrap;
+    align-items: center;
+    border-radius: 16px;
+    vertical-align: middle;
+    text-decoration: none;
+    justify-content: center;
+}
+
+.chip-content {
+    cursor: inherit;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    white-space: nowrap;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 </style>

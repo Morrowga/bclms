@@ -10,4 +10,8 @@ class ConductLessonController
     {
         return Inertia::render(config('route.conduct_lessons.index'));
     }
+    public function show()
+    {
+        return Inertia::render(config('route.conduct_lessons.show'));
+    }
 }

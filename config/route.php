@@ -85,6 +85,7 @@ return [
 
     'conduct_lessons' => [
         'index' => 'BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Index',
+        'show' => 'BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Show',
     ],
 
     'announment' => [

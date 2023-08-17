@@ -6,6 +6,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 
 import ChooseStorybook from "./components/ChooseStorybook.vue";
 import SelectStudent from "./components/SelectStudent.vue";
+import { router } from "@inertiajs/core";
 </script>
 <template>
     <AdminLayout>
@@ -32,6 +33,23 @@ import SelectStudent from "./components/SelectStudent.vue";
                 <v-expansion-panels>
                     <SelectStudent />
                 </v-expansion-panels>
+            </div>
+            <div class="d-flex justify-center aligns-center w-100 pt-4">
+                <div>
+                    <VBtn color="gray" height="50" class="" width="200">
+                        Cancel
+                    </VBtn>
+
+                    <VBtn
+                        type="submit"
+                        class="ml-10"
+                        height="50"
+                        width="200"
+                        @click="() => router.get(route('conduct_lessons.show'))"
+                    >
+                        Start Lesson
+                    </VBtn>
+                </div>
             </div>
         </VContainer>
     </AdminLayout>
