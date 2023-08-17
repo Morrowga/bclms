@@ -143,11 +143,11 @@ const isSurveySetting = ref(false);
 </template>
 
 <style>
-.v-label.v-field-label {
+/* .v-label.v-field-label {
     color: #4066E4 !important;
     font-size: 20px !important;
     font-style: normal !important;
     font-weight: 700 !important;
     text-transform: capitalize !important;
-}
+} */
 </style>

@@ -8,15 +8,25 @@ let props = defineProps(["sytemErrorMessage"]);
 </script>
 
 <template>
-    <VAlert variant="tonal" density="compact" type="error" closable class="mt-4 mb-4" close-label="Close Alert"
-        style="padding: 6px 16px;width: 80%;margin:0 auto;">
-        <template #text>
-            <span style="font-size:24px:"> System Error </span>
-            <br />
-            <span>
-                {{ props.sytemErrorMessage }}
-            </span>
-        </template>
-    </VAlert>
+   <VAlert type="error">
+      I'm a alert with a <strong>type</strong> of error
+   </VAlert>
 </template>
+
+<style scoped>
+.bg-success {
+    background-color: #72E128 !important;
+    color: #72E128  !important;
+}
+
+.bg-font {
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0.15px;
+
+}
+</style>
 

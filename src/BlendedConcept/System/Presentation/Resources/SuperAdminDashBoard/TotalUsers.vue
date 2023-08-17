@@ -126,10 +126,22 @@ const selectionChanged = (data) => {
                         </VChip>
                     </div>
                     <div v-if="dataProps.column.field == 'action'" class="flex flex-nowrap">
-                        <div class="d-flex">
-                            <VBtn variant="text" color="secondary" density="compact" icon="mdi-eye-outline" class="ml-2">
-                            </VBtn>
-                        </div>
+                        <VMenu location="end">
+                            <template #activator="{ props }">
+                                <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black" class="mt-n4" />
+                            </template>
+                            <VList>
+                                <VListItem @click="() => router.get(route('organizations.show', { id: props.row.id }))">
+                                    <VListItemTitle>View</VListItemTitle>
+                                </VListItem>
+                                <VListItem @click="() => router.get(route('organizations.test.edit'))">
+                                    <VListItemTitle>Edit</VListItemTitle>
+                                </VListItem>
+                                <VListItem @click="deleteOrganization(props.row.id)">
+                                    <VListItemTitle>Delete</VListItemTitle>
+                                </VListItem>
+                            </VList>
+                        </VMenu>
                     </div>
                 </template>
             </vue-good-table>

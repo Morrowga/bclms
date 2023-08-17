@@ -230,10 +230,9 @@ function handleUpdateSite() {
                 </VRow>
                 <VRow justify="center">
                     <VCol cols="4" justify="center" class="ml-2">
-                        <VBtn type="submit" class="tiggie-btn text-white" height="50">
+                        <VBtn type="submit" class="tiggie-btn text-white" height="50" width="200">
                             Update
                         </VBtn>
-                        <v-btn>Custom Button</v-btn>
                     </VCol>
                 </VRow>
             </VForm>

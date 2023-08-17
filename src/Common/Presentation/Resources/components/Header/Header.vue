@@ -33,7 +33,7 @@ let toggle = () => {
         <Link
             v-if="!is_drawer"
             to="/"
-            class="d-none d-md-flex align-center gap-x-2 ps-15"
+            class="d-none d-md-flex align-center ps-15"
         >
             <!-- <img :src="site_data.site_logo" width="100" height="100" /> -->
             <img src="/images/sitelogotext.svg" width="200" height="200" />

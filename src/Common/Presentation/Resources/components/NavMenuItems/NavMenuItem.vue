@@ -31,22 +31,13 @@ let hiddenByPermission = (item) => {
 </script>
 
 <template>
-    <v-btn
-        variant="text"
-        :prepend-icon="item.icon.icon"
-        class="mx-2 text-none"
-        :class="isLinkActive(item.route_name) ? '' : ''"
-        :color="isLinkActive(item.route_name) ? '' : ''"
-        @click="goLink(item.url)"
-        :hidden="hiddenByPermission(item)"
-    >
-        <span
-            :style="
-                isLinkActive(item.route_name)
-                    ? 'color: #4066E4'
-                    : 'color:#282828'
-            "
-        >
+    <v-btn variant="text" :prepend-icon="item.icon.icon" class="mx-2 text-none tiggie-menu-item-font-size"
+        :class="isLinkActive(item.route_name) ? '' : ''" :color="isLinkActive(item.route_name) ? '' : ''"
+        @click="goLink(item.url)" :hidden="hiddenByPermission(item)">
+        <span :style="isLinkActive(item.route_name)
+                ? 'color: #4066E4'
+                : 'color:#282828'
+            ">
             {{ item.title }}
         </span>
     </v-btn>
@@ -59,4 +50,5 @@ let hiddenByPermission = (item) => {
         align-items: center;
     }
 }
+
 </style>

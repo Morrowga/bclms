@@ -69,12 +69,12 @@ const headerValues = computed(() => {
             <VRow justify="center">
                 <VCol cols="12">
                     <h1 class="tiggie-title fs-46 mb-5">Theme Customizer</h1>
-                    <p class="subheader-theme">Customize the theme for users</p>
+                    <p class="tiggie-sub-subtitle">Customize the theme for users</p>
                 </VCol>
                 <VCol cols="6">
                     <CustomizerSection title="Theming" :divider="false">
                         <!-- 👉 Skin -->
-                        <h6 class="tiggie-text">Skins</h6>
+                        <h6 class="tiggie-text fw-500">Skins</h6>
                         <VRadioGroup v-model="skin" inline>
                             <VRadio v-for="[key, val] in Object.entries(Skins)" :key="key" :label="key" :value="val" />
                         </VRadioGroup>
@@ -182,6 +182,13 @@ const headerValues = computed(() => {
                         </div>
                     </CustomizerSection>
                 </VCol>
+            </VRow>
+            <VRow justify="center">
+                    <VCol cols="4" justify="center" class="ml-2">
+                        <VBtn type="submit" class="tiggie-btn text-white" height="50" width="200">
+                            Set Theme
+                        </VBtn>
+                    </VCol>
             </VRow>
         </VContainer>
     </AdminLayout>
