@@ -92,15 +92,13 @@ const form = useForm({
                         <div class="d-flex">
                             <v-chip-group>
                                 <div style="position: relative">
-                                    <v-chip class="chip-1" size="small">
-                                        Dyspraxia
-                                    </v-chip>
+                                    <v-chip size="small"> Dyspraxia </v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>
                                 </div>
                                 <div style="position: relative">
-                                    <v-chip class="chip-2" size="small">
+                                    <v-chip size="small">
                                         Hyperactive Disorder
                                     </v-chip>
                                     <div class="delete-chip">
@@ -124,25 +122,19 @@ const form = useForm({
                         <div class="d-flex">
                             <v-chip-group>
                                 <div style="position: relative">
-                                    <v-chip class="chip-1" size="small"
-                                        >Mouse/Keyboard</v-chip
-                                    >
+                                    <v-chip size="small">Mouse/Keyboard</v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>
                                 </div>
                                 <div style="position: relative">
-                                    <v-chip class="chip-2" size="small"
-                                        >Switch-Single</v-chip
-                                    >
+                                    <v-chip size="small">Switch-Single</v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>
                                 </div>
                                 <div style="position: relative">
-                                    <v-chip class="chip-3" size="small"
-                                        >Switch-Double</v-chip
-                                    >
+                                    <v-chip size="small">Switch-Double</v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>

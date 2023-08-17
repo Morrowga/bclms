@@ -16,8 +16,6 @@ $app = new Illuminate\Foundation\Application(
 );
 
 
-// dd($app);
-
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces

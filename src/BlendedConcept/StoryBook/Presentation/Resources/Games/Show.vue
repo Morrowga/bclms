@@ -71,13 +71,9 @@ const toggleDialog = () => {
                             >Disability Types</span
                         ><br />
                         <v-chip-group>
-                            <v-chip class="chip-1" size="small"
-                                >Dyspraxia</v-chip
-                            >
+                            <v-chip size="small">Dyspraxia</v-chip>
 
-                            <v-chip class="chip-2" size="small"
-                                >Hyperactive Disorder</v-chip
-                            >
+                            <v-chip size="small">Hyperactive Disorder</v-chip>
                         </v-chip-group>
                     </div>
                     <br />
@@ -86,17 +82,11 @@ const toggleDialog = () => {
                             >Supported Accessibility Devices</span
                         ><br />
                         <v-chip-group>
-                            <v-chip class="chip-1" size="small"
-                                >Mouse/Keyboard</v-chip
-                            >
+                            <v-chip size="small">Mouse/Keyboard</v-chip>
 
-                            <v-chip class="chip-2" size="small"
-                                >Switch-Single</v-chip
-                            >
+                            <v-chip size="small">Switch-Single</v-chip>
 
-                            <v-chip class="chip-3" size="small"
-                                >Switch-Double</v-chip
-                            >
+                            <v-chip size="small">Switch-Double</v-chip>
                         </v-chip-group>
                     </div>
                 </v-card-text>
