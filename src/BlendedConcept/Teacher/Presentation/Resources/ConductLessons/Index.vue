@@ -3,11 +3,14 @@ import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+
+import ChooseStorybook from "./components/ChooseStorybook.vue";
+import SelectStudent from "./components/SelectStudent.vue";
 </script>
 <template>
     <AdminLayout>
         <VContainer>
-            <div class="d-flex">
+            <div class="d-flex mb-4">
                 <h1 class="tiggie-title mb-4">Happiness Survey</h1>
                 <v-spacer></v-spacer>
                 <div>
@@ -20,17 +23,25 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                     </VBtn>
                 </div>
             </div>
-
-            <CircleChart />
-
-            <BarChart />
-
-            <Suggestion />
+            <div class="book-panels">
+                <v-expansion-panels>
+                    <ChooseStorybook />
+                </v-expansion-panels>
+                <br />
+                <br />
+                <v-expansion-panels>
+                    <SelectStudent />
+                </v-expansion-panels>
+            </div>
         </VContainer>
     </AdminLayout>
 </template>
 <style scoped>
-.survey_name {
-    font-size: 26px !important;
+.v-label.v-field-label {
+    color: unset !important;
+    font-size: unset !important;
+    font-style: unset !important;
+    font-weight: unset !important;
+    text-transform: unset !important;
 }
 </style>
