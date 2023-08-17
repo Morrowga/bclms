@@ -80,7 +80,13 @@ return [
     'survey_results' => [
         'index' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResults/Index',
         'show' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResults/Show',
+        'view' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResults/View',
     ],
+
+    'conduct_lessons' => [
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Index',
+    ],
+
     'announment' => [
         'index' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
         'create' => 'BlendedConcept/System/Presentation/Resources/Announcements/Create',

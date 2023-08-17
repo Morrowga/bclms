@@ -77,6 +77,7 @@ const gameResources = [
                 btnText="Manage Books"
                 :url="route('books.index')"
                 :datas="bookResources"
+                type="books"
             /><br />
             <Slider
                 title="Games"
@@ -84,6 +85,7 @@ const gameResources = [
                 btnText="Manage Games"
                 :url="route('games.index')"
                 :datas="gameResources"
+                type="games"
             /><br />
         </div>
         <VRow>

@@ -69,7 +69,7 @@ const toggleDialog = () => {
                     <div class="disability">
                         <span class="font-weight-black text-black"
                             >Disability Types</span
-                        ><bri />
+                        ><br />
                         <v-chip-group>
                             <v-chip class="chip-1" size="small"
                                 >Dyspraxia</v-chip
@@ -84,7 +84,7 @@ const toggleDialog = () => {
                     <div class="supported">
                         <span class="font-weight-black text-black"
                             >Supported Accessibility Devices</span
-                        ><bri />
+                        ><br />
                         <v-chip-group>
                             <v-chip class="chip-1" size="small"
                                 >Mouse/Keyboard</v-chip

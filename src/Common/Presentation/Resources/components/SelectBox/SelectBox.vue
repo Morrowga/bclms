@@ -14,7 +14,7 @@
             @change="updateValue"
             :variant="variant"
             :placeholder="placeholder"
-            style="width: 100%"
+            rounded
         ></VAutocomplete>
     </div>
 </template>
@@ -78,5 +78,14 @@ let updateValue = (event) => {
 .custom-select .v-input--density-comfortable .v-field--variant-filled {
     border-radius: 100px;
     height: 100%;
+}
+
+.custom-select .v-input__control {
+    height: auto !important;
+    top: 0 !important;
+}
+
+.custom-select .v-input__control .v-label.v-field-label {
+    top: 0 !important;
 }
 </style>

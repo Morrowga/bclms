@@ -1,6 +1,7 @@
 <script setup>
 import { ref, defineProps } from "vue";
 import ShowDetail from "./ShowDetail.vue";
+import ShowBookDetail from "./ShowBookDetail.vue";
 let model = ref(false);
 const props = defineProps({
     title: {
@@ -23,11 +24,20 @@ const props = defineProps({
         type: String,
         default: "#",
     },
+    type: {
+        type: String,
+        required: true,
+    },
 });
 let dialog = ref(false);
 const toggleDialog = (id) => {
     console.log("id", id);
     // dialog.value = !dialog.value;
+};
+const resolveNavItemComponent = (item) => {
+    if (props.type == "games") return ShowDetail;
+
+    return ShowBookDetail;
 };
 </script>
 <template>
@@ -45,7 +55,8 @@ const toggleDialog = (id) => {
         </div>
         <v-slide-group v-model="model" center-active show-arrows mandatory>
             <v-slide-group-item v-for="data in datas" :key="data.image">
-                <ShowDetail :data="data" />
+                <!-- <ShowDetail :data="data" /> -->
+                <Component :is="resolveNavItemComponent(item)" :data="data" />
             </v-slide-group-item>
         </v-slide-group>
     </div>

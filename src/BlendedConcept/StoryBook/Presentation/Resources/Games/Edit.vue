@@ -88,7 +88,7 @@ const form = useForm({
                     <div class="disability">
                         <span class="font-weight-black text-black"
                             >Disability Types</span
-                        ><bri />
+                        ><br />
                         <div class="d-flex">
                             <v-chip-group>
                                 <div style="position: relative">
@@ -120,7 +120,7 @@ const form = useForm({
                     <div class="supported">
                         <span class="font-weight-black text-black"
                             >Supported Accessibility Devices</span
-                        ><bri />
+                        ><br />
                         <div class="d-flex">
                             <v-chip-group>
                                 <div style="position: relative">

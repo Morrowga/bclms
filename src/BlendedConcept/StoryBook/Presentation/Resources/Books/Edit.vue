@@ -5,7 +5,7 @@ import Upload from "./components/Upload.vue";
 const props = defineProps({
     data: {
         type: Object,
-        required: true,
+        default: null,
     },
 });
 let emit = defineEmits();
@@ -86,23 +86,92 @@ const form = useForm({
                         adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua. -->
                     </div>
-                    <br />
-                    <div class="disability">
+                    <div class="learning pt-2">
                         <span class="font-weight-black text-black"
-                            >Disability Types</span
-                        ><bri />
+                            >Learning Needs</span
+                        ><br />
                         <div class="d-flex">
                             <v-chip-group>
                                 <div style="position: relative">
-                                    <v-chip class="chip-1" size="small">
-                                        Dyspraxia
+                                    <v-chip size="small"
+                                        >Social Awareness</v-chip
+                                    >
+                                    <div class="delete-chip">
+                                        <span>-</span>
+                                    </div>
+                                </div>
+                                <div style="position: relative">
+                                    <v-chip size="small">Self Awareness</v-chip>
+                                    <div class="delete-chip">
+                                        <span>-</span>
+                                    </div>
+                                </div>
+                                <div style="position: relative">
+                                    <v-chip size="small"
+                                        >Responsible Decision Making</v-chip
+                                    >
+                                    <div class="delete-chip">
+                                        <span>-</span>
+                                    </div>
+                                </div>
+                                <div style="position: relative">
+                                    <v-chip size="small">Mobility</v-chip>
+                                    <div class="delete-chip">
+                                        <span>-</span>
+                                    </div>
+                                </div>
+                            </v-chip-group>
+                            <v-btn
+                                class="ml-10"
+                                size="x-small"
+                                icon="mdi-plus"
+                                color="secondary"
+                            ></v-btn>
+                        </div>
+                    </div>
+                    <div class="themes pt-2">
+                        <span class="font-weight-black text-black">Themes</span
+                        ><br />
+                        <div class="d-flex">
+                            <v-chip-group>
+                                <div style="position: relative">
+                                    <v-chip size="small">
+                                        Social Skills
                                     </v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>
                                 </div>
                                 <div style="position: relative">
-                                    <v-chip class="chip-2" size="small">
+                                    <v-chip size="small"> Life Skills </v-chip>
+                                    <div class="delete-chip">
+                                        <span>-</span>
+                                    </div>
+                                </div>
+                            </v-chip-group>
+                            <v-btn
+                                class="ml-10"
+                                size="x-small"
+                                icon="mdi-plus"
+                                color="secondary"
+                            ></v-btn>
+                        </div>
+                    </div>
+
+                    <div class="disability pt-2">
+                        <span class="font-weight-black text-black"
+                            >Disability Types</span
+                        ><br />
+                        <div class="d-flex">
+                            <v-chip-group>
+                                <div style="position: relative">
+                                    <v-chip size="small"> Dyspraxia </v-chip>
+                                    <div class="delete-chip">
+                                        <span>-</span>
+                                    </div>
+                                </div>
+                                <div style="position: relative">
+                                    <v-chip size="small">
                                         Hyperactive Disorder
                                     </v-chip>
                                     <div class="delete-chip">
@@ -118,33 +187,27 @@ const form = useForm({
                             ></v-btn>
                         </div>
                     </div>
-                    <br />
-                    <div class="supported">
+
+                    <div class="supported pt-2">
                         <span class="font-weight-black text-black"
                             >Supported Accessibility Devices</span
-                        ><bri />
+                        ><br />
                         <div class="d-flex">
                             <v-chip-group>
                                 <div style="position: relative">
-                                    <v-chip class="chip-1" size="small"
-                                        >Mouse/Keyboard</v-chip
-                                    >
+                                    <v-chip size="small">Mouse/Keyboard</v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>
                                 </div>
                                 <div style="position: relative">
-                                    <v-chip class="chip-2" size="small"
-                                        >Switch-Single</v-chip
-                                    >
+                                    <v-chip size="small">Switch-Single</v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>
                                 </div>
                                 <div style="position: relative">
-                                    <v-chip class="chip-3" size="small"
-                                        >Switch-Double</v-chip
-                                    >
+                                    <v-chip size="small">Switch-Double</v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>

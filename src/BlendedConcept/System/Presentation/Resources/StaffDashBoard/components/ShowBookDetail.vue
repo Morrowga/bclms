@@ -1,6 +1,5 @@
 <script setup>
 import { defineProps, ref } from "vue";
-import Edit from "./Edit.vue";
 const props = defineProps({
     data: {
         type: Object,
@@ -14,21 +13,11 @@ const toggleDialog = () => {
 </script>
 <template>
     <div>
-        <v-hover v-slot="{ isHovering, props }" open-delay="200">
-            <v-card
-                class="item-frame"
-                v-bind="props"
-                :class="{ 'on-hover': isHovering }"
-            >
-                <v-img
-                    @click="toggleDialog"
-                    :src="data.image"
-                    alt="Your Image"
-                    max-height="200"
-                    cover
-                ></v-img>
-            </v-card>
-        </v-hover>
+        <v-card class="ma-4" height="150" width="250" @click="toggleDialog">
+            <div class="d-flex fill-height align-center justify-center">
+                <img class="bg-white fit-img" :src="data.image" />
+            </div>
+        </v-card>
         <v-dialog v-model="dialog" width="auto" max-width="800">
             <v-card>
                 <v-card-title class="pa-0">
@@ -41,22 +30,6 @@ const toggleDialog = () => {
                         <div class="faded-overlay"></div>
                         <div class="book-title">
                             <span>Boj Giggly Park Adventure</span>
-                        </div>
-                        <!-- <div class="edit-icon">
-                            <Edit :datas="data" />
-                        </div> -->
-                        <div class="edit-icon">
-                            <v-btn
-                                icon="mdi-gift"
-                                size="x-small"
-                                color="secondary"
-                            ></v-btn>
-                            <Edit :datas="data" />
-                            <v-btn
-                                icon="mdi-upload"
-                                size="x-small"
-                                color="secondary"
-                            ></v-btn>
                         </div>
                         <div class="close-btn">
                             <v-btn
@@ -78,7 +51,6 @@ const toggleDialog = () => {
                         adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua.
                     </div>
-
                     <div class="learning pt-2">
                         <span class="font-weight-black text-black"
                             >Learning Needs</span
@@ -87,15 +59,12 @@ const toggleDialog = () => {
                             <v-chip size="small">Social Awareness</v-chip>
 
                             <v-chip size="small">Self Awareness</v-chip>
-
                             <v-chip size="small"
                                 >Responsible Decision Making</v-chip
                             >
-
                             <v-chip size="small">Mobility</v-chip>
                         </v-chip-group>
                     </div>
-
                     <div class="themes pt-2">
                         <span class="font-weight-black text-black">Themes</span>
                         <v-chip-group>
@@ -104,7 +73,6 @@ const toggleDialog = () => {
                             <v-chip size="small">Life Skills</v-chip>
                         </v-chip-group>
                     </div>
-
                     <div class="disability pt-2">
                         <span class="font-weight-black text-black"
                             >Disability Types</span
@@ -126,6 +94,8 @@ const toggleDialog = () => {
                             <v-chip size="small">Switch-Single</v-chip>
 
                             <v-chip size="small">Switch-Double</v-chip>
+
+                            <v-chip size="small">Touch</v-chip>
                         </v-chip-group>
                     </div>
                 </v-card-text>
@@ -191,7 +161,7 @@ const toggleDialog = () => {
 
     right: 0;
 }
-.close-btn .v-btn--icon {
+.v-btn--icon {
     border-radius: 10px;
     scale: 0.7;
 }
@@ -206,22 +176,5 @@ const toggleDialog = () => {
 .chip-3 {
     background: rgba(72, 255, 0, 0.464);
     color: #fff !important;
-}
-.v-card {
-    transition: opacity 0.4s ease-in-out;
-    opacity: 0.8;
-}
-
-.v-card:not(.on-hover) {
-    opacity: 1;
-}
-
-.edit-icon {
-    position: absolute;
-    bottom: -5px;
-    right: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
 </style>

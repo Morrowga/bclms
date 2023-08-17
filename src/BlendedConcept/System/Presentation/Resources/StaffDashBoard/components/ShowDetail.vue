@@ -51,30 +51,30 @@ const toggleDialog = () => {
                         adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua.
                     </div>
-                    <br />
-                    <div class="disability">
+
+                    <div class="disability pt-2">
                         <span class="font-weight-black text-black"
                             >Disability Types</span
-                        ><bri />
+                        >
                         <v-chip-group>
-                            <v-chip class="chip-1" size="small">Chip 1</v-chip>
+                            <v-chip size="small">Dyspraxia</v-chip>
 
-                            <v-chip class="chip-2" size="small">Chip 2</v-chip>
-
-                            <v-chip class="chip-3" size="small">Chip 3</v-chip>
+                            <v-chip size="small">Hyperactive Disorder</v-chip>
                         </v-chip-group>
                     </div>
-                    <br />
-                    <div class="supported">
+
+                    <div class="supported pt-2">
                         <span class="font-weight-black text-black"
                             >Supported Accessibility Devices</span
-                        ><bri />
+                        >
                         <v-chip-group>
-                            <v-chip class="chip-1" size="small">Chip 1</v-chip>
+                            <v-chip size="small">Mouse/Keyboard</v-chip>
 
-                            <v-chip class="chip-2" size="small">Chip 2</v-chip>
+                            <v-chip size="small">Switch-Single</v-chip>
 
-                            <v-chip class="chip-3" size="small">Chip 3</v-chip>
+                            <v-chip size="small">Switch-Double</v-chip>
+
+                            <v-chip size="small">Touch</v-chip>
                         </v-chip-group>
                     </div>
                 </v-card-text>
