@@ -48,7 +48,6 @@ let hiddenByPermission = (item) => {
         : false;
 };
 </script>
-
 <template>
     <div class="text-center">
         <v-menu open-on-hover content-class="my-menu">
