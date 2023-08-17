@@ -209,10 +209,16 @@ watch(serverPerPage, function (value) {
 .role-data-table table.vgt-table td {
   color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
-.role-data-table table.vgt-table thead th {
-  background: rgb(var(--v-theme-surface)) !important;
-  color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+.role-data-table table.vgt-table thead  {
+    color : var(--light-background-page-header-background, #F5F5F7) !important;
 }
+
+.vgt-table thead th.vgt-checkbox-col
+{
+    background : var(--light-background-page-header-background, #F5F5F7) !important;
+
+}
+
 .text-capitalize {
   text-transform: capitalize;
 }

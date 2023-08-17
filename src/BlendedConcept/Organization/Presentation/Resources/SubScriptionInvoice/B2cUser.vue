@@ -200,7 +200,7 @@ const selectionChanged = (data) => {
 }
 
 .app-user-search-filter .v-input__control {
-    height: 50px !important;
+    // height: 50px !important;
     top: 10px !important;
 }
 

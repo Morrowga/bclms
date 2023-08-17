@@ -57,7 +57,7 @@ let hiddenByPermission = (item) => {
                     :prepend-icon="item.icon.icon"
                     append-icon="mdi-chevron-down"
                     :title="item.title"
-                    class="mx-2 text-none"
+                    class="mx-1 text-none tiggie-menu-item-font-size"
                     :class="isParentActive(item.children) ? '' : ''"
                     :color="
                         isParentActive(item.children) ? '#4066E4' : '#282828'
@@ -85,6 +85,11 @@ let hiddenByPermission = (item) => {
 </template>
 
 <style lang="scss">
+
+.v-list-item__content
+{
+    overflow:inherit !important;
+}
 .active-list {
     background-color: #ededff !important;
     color: #666cff !important;

@@ -13,12 +13,10 @@ const DASHBOARD_ROUTE = PREFIX != "" ? "c.organizationaadmin" : "dashboard";
 export default [
     {
         title: 'Home',
-        url: '#',
+        url: DASHBOARD_URL,
         icon: { icon: 'mdi-home' },
         access_module: "access_dashboard",
-        children: [
-            { title: 'Home', url: DASHBOARD_URL, icon: { icon: 'mdi-home' }, route_name: DASHBOARD_ROUTE, },
-        ],
+        route_name: DASHBOARD_ROUTE,
     },
     {
         title: 'Organizations',
@@ -26,9 +24,6 @@ export default [
         icon: { icon: 'mdi-briefcase-variant' },
         route_name: 'organizations',
         access_module: "access_organization",
-        children: [
-            { title: 'Organizations', url: '/organizations', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'organizations', access_module: "access_organization", },
-        ]
     },
     {
         title: 'Teachers',
@@ -38,13 +33,6 @@ export default [
         access_module: "access_teacher",
     },
     {
-        title: 'Students',
-        url: `${PREFIX}/students`,
-        icon: { icon: 'mdi-account-group-outline' },
-        route_name: 'students',
-        access_module: "access_student",
-    },
-    {
         title: 'ClassRoom',
         url: `${PREFIX}/classrooms`,
         icon: { icon: ' mdi-google-classroom' },
@@ -52,12 +40,13 @@ export default [
         access_module: "access_classroom",
     },
     {
-        title: 'Subscribers',
+        title: 'Subscriptions',
         url: "/",
         icon: { icon: 'mdi-play-circle-outline' },
         route_name: 'subscribers',
         access_module: "access_subscriber",
         children: [
+            { title: 'Subscriptions', url: '/plans', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'plans', access_module: "access_plan", },
             { title: 'Plans', url: '/plans', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'plans', access_module: "access_plan", },
         ]
     },
@@ -70,6 +59,7 @@ export default [
             { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
             { title: 'Roles', url: '/roles', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'roles', access_module: "access_role" },
             { title: 'Users', url: '/users', icon: { icon: 'mdi-account-group' }, route_name: 'users', access_module: "access_user" },
+            { title: 'Student', url: `${PREFIX}/students`, icon: { icon: 'mdi-account-group-outline' }, route_name: 'students', access_module: "access_student" },
         ],
     },
     {

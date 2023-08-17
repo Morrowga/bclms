@@ -4,7 +4,7 @@ import { usePage, Link } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import { router } from "@inertiajs/core";
-import {SuccessDialog} from '@actions/useSuccess';
+import { SuccessDialog } from '@actions/useSuccess';
 
 let props = defineProps(["organizations", "flash", "auth"]);
 import {
@@ -94,25 +94,27 @@ watch(serverPerPage, function (value) {
 <template>
     <AdminLayout>
         <section>
-            <h1 class="secondary ">Organizations</h1>
+            <h1 class="tiggie-title">Organizations</h1>
             <VCard>
-                <VCardText class="d-flex flex-wrap gap-4">
+                <VCardText class="d-flex align-center flex-wrap gap-4">
                     <!-- 👉 Export button -->
-                    <VBtn prepend-icon="mdi-export" variant="outlined" color="secondary">Export</VBtn>
+                    <VBtn variant="tonal" color="secondary" prepend-icon="mdi-tray-arrow-up">
+                        Export
+                    </VBtn>
+
                     <VSpacer />
-                    <div class="app-user-search-filter">
-                        <div class="d-flex flex-row gap-2">
-                            <!-- 👉 Search  -->
-                            <VTextField @keyup.enter="searchItems" v-model="serverParams.search"
-                                placeholder="Search Organizations..." density="compact" />
 
-                            <VSelect :items="items" rounded="50%" density="compact" />
+                    <VTextField placeholder="Search User ..." density="compact" />
 
-                            <!-- 👉 Add User button -->
-                            <VBtn v-if="permissions.includes('create_organization')" class="tiggie-btn">
-                                <Link :href="route('organizations.create')" class="text-white"> Add New </Link>
-                            </VBtn>
-                        </div>
+                    <div class="app-user-search-filter d-flex align-center gap-6">
+                        <!-- 👉 Search  -->
+                        <VSelect v-model="selectedRole" label="Sort By" :items="roles" density="compact" />
+                        <!-- 👉 Add user button -->
+                        <VBtn height="40" density="compact">
+                            <span class="text-capatlize text-white">
+                                Add New
+                            </span>
+                        </VBtn>
                     </div>
                 </VCardText>
                 <VDivider />
@@ -151,17 +153,17 @@ watch(serverPerPage, function (value) {
                                     <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black"
                                         class="mt-n4" />
                                 </template>
-                                 <VList>
-                                 <VListItem @click="() => router.get(route('organizations.show',{id:props.row.id}))">
-                                     <VListItemTitle>View</VListItemTitle>
-                                </VListItem>
-                                <VListItem @click="() => router.get(route('organizations.test.edit'))">
-                                     <VListItemTitle>Edit</VListItemTitle>
-                                </VListItem>
-                                <VListItem @click="deleteOrganization(props.row.id)">
-                                     <VListItemTitle>Delete</VListItemTitle>
-                                </VListItem>
-                            </VList>
+                                <VList>
+                                    <VListItem @click="() => router.get(route('organizations.show', { id: props.row.id }))">
+                                        <VListItemTitle>View</VListItemTitle>
+                                    </VListItem>
+                                    <VListItem @click="() => router.get(route('organizations.test.edit'))">
+                                        <VListItemTitle>Edit</VListItemTitle>
+                                    </VListItem>
+                                    <VListItem @click="deleteOrganization(props.row.id)">
+                                        <VListItemTitle>Delete</VListItemTitle>
+                                    </VListItem>
+                                </VList>
                             </VMenu>
                         </div>
                     </template>
@@ -214,10 +216,10 @@ watch(serverPerPage, function (value) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
 
-.user-data-table table.vgt-table thead th {
-    background: rgb(var(--v-theme-surface)) !important;
-    color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
-}
+// .user-data-table table.vgt-table thead  {
+//     background: rgb(var(--v-theme-surface)) !important;
+//     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+// }
 
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));

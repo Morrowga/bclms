@@ -211,10 +211,10 @@ watch(serverPerPage, function (value) {
 .user-data-table table.vgt-table td {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
-.user-data-table table.vgt-table thead th {
-    background: rgb(var(--v-theme-surface)) !important;
-    color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
-}
+// .user-data-table table.vgt-table thead th {
+//     background: rgb(var(--v-theme-surface)) !important;
+//     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+// }
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
