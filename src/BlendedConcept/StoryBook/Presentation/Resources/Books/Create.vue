@@ -39,6 +39,17 @@ let onFormSubmit = () => {
                                     />
                                 </v-col>
                             </v-col>
+                            <v-col cols="12" md="6" class="pb-0">
+                                <v-col cols="12" md="12">
+                                    <VLabel class="tiggie-label">Tags</VLabel>
+                                    <VTextField
+                                        type="text"
+                                        class="tiggie-resize-input-text"
+                                        placeholder="Type to add tag"
+                                        density="compact"
+                                    />
+                                </v-col>
+                            </v-col>
                             <v-col cols="12" md="12" class="py-0">
                                 <v-col cols="12" md="12">
                                     <VLabel class="tiggie-label"
@@ -47,6 +58,30 @@ let onFormSubmit = () => {
                                     <v-textarea
                                         type="text"
                                         rows="5"
+                                        density="compact"
+                                    />
+                                </v-col>
+                            </v-col>
+                            <v-col cols="12" md="6" class="pb-0">
+                                <v-col cols="12" md="12">
+                                    <VLabel class="tiggie-label"
+                                        >Learning Needs</VLabel
+                                    >
+                                    <VTextField
+                                        type="text"
+                                        class="tiggie-resize-input-text"
+                                        placeholder="Select Learning need"
+                                        density="compact"
+                                    />
+                                </v-col>
+                            </v-col>
+                            <v-col cols="12" md="6" class="pb-0">
+                                <v-col cols="12" md="12">
+                                    <VLabel class="tiggie-label">Themes</VLabel>
+                                    <VTextField
+                                        type="text"
+                                        class="tiggie-resize-input-text"
+                                        placeholder="Select Themes"
                                         density="compact"
                                     />
                                 </v-col>
@@ -93,6 +128,16 @@ let onFormSubmit = () => {
                                 <v-col cols="12" md="12">
                                     <VLabel class="tiggie-label"
                                         >Thumbnail Picture</VLabel
+                                    >
+                                    <div class="coming-soon">
+                                        <p>Drop And Drop</p>
+                                    </div>
+                                </v-col>
+                            </v-col>
+                            <v-col cols="12" md="12" class="py-0">
+                                <v-col cols="12" md="6">
+                                    <VLabel class="tiggie-label"
+                                        >Physical Resources</VLabel
                                     >
                                     <div class="coming-soon">
                                         <p>Drop And Drop</p>
