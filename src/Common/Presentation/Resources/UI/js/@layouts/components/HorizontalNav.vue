@@ -1,4 +1,5 @@
 <script setup>
+
 import BcDropDownMenu from "@mainRoot/components/BCDropDownMenu/BCDropDownMenu.vue";
 import NavMenuItem from "@mainRoot/components/NavMenuItems/NavMenuItem.vue";
 
