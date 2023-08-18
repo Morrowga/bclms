@@ -78,8 +78,15 @@ const pages = {
     "BlendedConcept/Survey/Presentation/Resources/SurveyResults/Show": import('../../src/BlendedConcept/Survey/Presentation/Resources/SurveyResults/Show.vue'),
     "BlendedConcept/Survey/Presentation/Resources/SurveyResults/View": import('../../src/BlendedConcept/Survey/Presentation/Resources/SurveyResults/View.vue'),
 
-    //survey results
+    //conduct lesson
     "BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Index.vue'),
+
+
+     "BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher.vue'),
+
+     "BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher.vue'),
+
+
 
     // Security Domain
     "BlendedConcept/Security/Presentation/Resources/Permissions/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/Permissions/Index.vue'),

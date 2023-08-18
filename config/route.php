@@ -87,6 +87,13 @@ return [
         'index' => 'BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Index',
     ],
 
+    //teacher profile view
+
+    'viewteacher' => [
+        'viewteacher' => 'BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher',
+        'editteacher' => 'BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher'
+    ],
+
     'announment' => [
         'index' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
         'create' => 'BlendedConcept/System/Presentation/Resources/Announcements/Create',
