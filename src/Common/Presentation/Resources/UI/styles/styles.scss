@@ -19,6 +19,7 @@
     --gray: #bfc0c1;
     --ligth-gray: #f4f4f4;
     --light-background-page-header-background: #F5F5F7;
+    --text:#161616;
 }
 
 @font-face {
@@ -107,6 +108,19 @@ textarea {
     background: var(--light-gray, #F4F4F4);
 
 }
+
+.tiggie-small-label
+{
+
+color: var(--gray, #BFC0C1) !important;
+font-size: 16px !important;
+font-style: normal !important;
+font-weight: 500 !important;
+line-height: 26px !important; /* 162.5% */
+
+}
+
+
 
 
 .tiggie-btn {

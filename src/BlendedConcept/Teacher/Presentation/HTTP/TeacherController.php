@@ -95,4 +95,15 @@ class TeacherController extends Controller
 
         return redirect()->route('c.teachers.index')->with('successMessage', 'User Deleted Successfully!');
     }
+
+
+    public function viewteacher()
+    {
+          return Inertia::render(config('route.viewteacher.viewteacher'));
+    }
+
+    public function editteacher()
+    {
+        return Inertia::render(config('route.viewteacher.editteacher'));
+    }
 }

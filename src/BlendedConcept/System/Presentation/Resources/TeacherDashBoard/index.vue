@@ -16,7 +16,7 @@ import UserExperiencSurvey from "./components/UserExperiencSurvey.vue"
                    <h1 class="tiggie-sub-subtitle" style="font-size: 40px !important;">Students</h1>
                 </VCol>
                 <VCol cols="3">
-                    <VTextField placeholder="Search User ..." density="compact" />
+                    <VTextField variant="flat" rounded placeholder="Search User ..." density="compact" />
                 </VCol>
                 <VCol cols="3">
                     <VSelect v-model="selectedRole" label="Sort By" :items="roles" density="compact" />

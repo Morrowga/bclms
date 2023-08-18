@@ -88,6 +88,13 @@ const pages = {
     "BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Edit": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Edit.vue'),
     "BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Show": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Show.vue'),
 
+
+     "BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher.vue'),
+
+     "BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher.vue'),
+
+
+
     // Security Domain
     "BlendedConcept/Security/Presentation/Resources/Permissions/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/Permissions/Index.vue'),
     "BlendedConcept/Security/Presentation/Resources/Roles/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/Roles/Index.vue'),
