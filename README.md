@@ -121,6 +121,31 @@ php artisan make:domain BlendedConcept DomainName
 ```
 
 
+##  Login credential 
+
+
+`SuperAdmin Role`
+
+email : superadmin@mail.com
+password : password
+
+`BC Staff Role`
+
+email : bcstaff@mail.com
+password : password
+
+`Teacher Role`
+
+email : teachertwo@mail.com
+password : password
+
+`Organization Admin Role`
+
+email : hmm@gmail.com
+password : password
+
+
+
 
 
 
