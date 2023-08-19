@@ -8,6 +8,9 @@ import { AppContentLayoutNav } from "@layouts/enums";
 
 import DefaultLayoutWithHorizontalNav from "@/layouts/components/DefaultLayoutWithHorizontalNav.vue";
 import DefaultLayoutWithVerticalNav from "@/layouts/components/DefaultLayoutWithVerticalNav.vue";
+import { Link, usePage } from "@inertiajs/vue3";
+import axios from "axios";
+
 const { width: windowWidth } = useWindowSize();
 const { appContentLayoutNav, switchToVerticalNavOnLtOverlayNavBreakpoint } =
     useThemeConfig();
@@ -19,17 +22,25 @@ const { layoutAttrs, injectSkinClasses } = useSkins();
 
 injectSkinClasses();
 
-let props = defineProps(["current_user_role", "user"]);
+let props = defineProps(["user"]);
+let page = usePage();
+let user_role = computed(() => page.props.user_info.user_role.name);
 </script>
 <template>
     <AppLayout>
         <template v-if="appContentLayoutNav === AppContentLayoutNav.Vertical">
-            <DefaultLayoutWithVerticalNav v-bind="layoutAttrs">
+            <DefaultLayoutWithVerticalNav
+                v-bind="layoutAttrs"
+                :user_role="user_role"
+            >
                 <slot />
             </DefaultLayoutWithVerticalNav>
         </template>
         <template v-else>
-            <DefaultLayoutWithHorizontalNav v-bind="layoutAttrs">
+            <DefaultLayoutWithHorizontalNav
+                v-bind="layoutAttrs"
+                :user_role="user_role"
+            >
                 <slot />
             </DefaultLayoutWithHorizontalNav>
         </template>

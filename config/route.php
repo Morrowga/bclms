@@ -85,6 +85,18 @@ return [
 
     'conduct_lessons' => [
         'index' => 'BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Index',
+        'show' => 'BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Show',
+    ],
+
+    'view_students' => [
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Index',
+        'create' => 'BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Create',
+        'edit' => 'BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Edit',
+        'show' => 'BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Show',
+    ],
+
+    'learning_activities' => [
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/LearningActivities/Index'
     ],
 
     //teacher profile view

@@ -11,7 +11,7 @@ let props = defineProps({
         default: null,
     },
     is_drawer: {
-        type: Boolean,
+        type: Object,
         default: false,
     },
 });
