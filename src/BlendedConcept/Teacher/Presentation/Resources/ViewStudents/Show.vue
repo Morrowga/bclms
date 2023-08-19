@@ -3,6 +3,8 @@ import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import StoryBookSlider from "./components/StoryBookSlider.vue";
 import PlaylistSlider from "./components/PlaylistSlider.vue";
+import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
+
 import { ref } from "vue";
 let tab = ref(null);
 </script>
@@ -118,35 +120,25 @@ let tab = ref(null);
                                 >
                             </v-tabs>
 
-                            <v-card-text>
+                            <div>
                                 <v-window v-model="tab">
                                     <v-window-item value="learning">
-                                        <div
-                                            class="chip my-2 mr-2"
+                                        <ChipWithBlueDot
                                             v-for="item in 5"
                                             :key="item"
-                                        >
-                                            <div class="chip-head"></div>
-                                            <div class="chip-content">
-                                                Dyslexia
-                                            </div>
-                                        </div>
+                                            title="Dyslexia"
+                                        />
                                     </v-window-item>
 
                                     <v-window-item value="disability">
-                                        <div
-                                            class="chip my-2 mr-2"
+                                        <ChipWithBlueDot
                                             v-for="item in 5"
                                             :key="item"
-                                        >
-                                            <div class="chip-head"></div>
-                                            <div class="chip-content">
-                                                Disability
-                                            </div>
-                                        </div>
+                                            title="Disability"
+                                        />
                                     </v-window-item>
                                 </v-window>
-                            </v-card-text>
+                            </div>
                         </v-col>
 
                         <v-col cols="12">
@@ -219,50 +211,4 @@ let tab = ref(null);
         </div>
     </AdminLayout>
 </template>
-<style scoped>
-.chip {
-    display: inline-flex;
-    flex-direction: row;
-    background-color: #e5e5e5;
-    border: none;
-    cursor: default;
-    height: 36px;
-    outline: none;
-    padding: 0;
-    font-size: 14px;
-    color: #333333;
-    font-family: "Open Sans", sans-serif;
-    white-space: nowrap;
-    align-items: center;
-    border-radius: 16px;
-    vertical-align: middle;
-    text-decoration: none;
-    justify-content: center;
-}
-.chip-head {
-    display: flex;
-    position: relative;
-    overflow: hidden;
-    background-color: #32c5d2;
-    font-size: 1.25rem;
-    flex-shrink: 0;
-    align-items: center;
-    user-select: none;
-    border-radius: 50%;
-    justify-content: center;
-    width: 10px;
-    color: #fff;
-    height: 10px;
-    margin-right: -4px;
-    margin-left: 10px;
-}
-.chip-content {
-    cursor: inherit;
-    display: flex;
-    align-items: center;
-    user-select: none;
-    white-space: nowrap;
-    padding-left: 12px;
-    padding-right: 12px;
-}
-</style>
+<style scoped></style>

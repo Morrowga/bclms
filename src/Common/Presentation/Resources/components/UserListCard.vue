@@ -1,18 +1,24 @@
 <script setup>
 import { defineProps } from "vue";
 
-const statistics = defineProps(['statistics']);
-
+const statistics = defineProps(["statistics"]);
 </script>
 <template>
     <VCard>
         <VCardText>
             <VRow justify="space-between">
                 <VCol cols="12" sm="6" md="6">
-                    <h6 class="text-base font-weight-semibold mb-2 text-primary">
+                    <h6
+                        class="text-base font-weight-semibold mb-2 text-primary"
+                    >
                         {{ statistics.title }}
                     </h6>
-                    <VChip v-if="statistics.subtitle" size="x-small" color="statistics.color" class="mb-5 text-primary">
+                    <VChip
+                        v-if="statistics.subtitle"
+                        size="x-small"
+                        color="statistics.color"
+                        class="mb-5 text-primary"
+                    >
                         {{ statistics.subtitle }}
                     </VChip>
 
@@ -23,7 +29,7 @@ const statistics = defineProps(['statistics']);
                     </div>
                 </VCol>
                 <VCol cols="12" sm="6" md="6">
-                    <VIcon :icon="statistics.icon" color="primary" size="100" />
+                    <!-- <VIcon :icon="statistics.icon" color="primary" size="100" /> -->
                 </VCol>
             </VRow>
         </VCardText>

@@ -95,6 +95,10 @@ return [
         'show' => 'BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Show',
     ],
 
+    'learning_activities' => [
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/LearningActivities/Index'
+    ],
+
     //teacher profile view
 
     'viewteacher' => [

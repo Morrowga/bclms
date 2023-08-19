@@ -88,6 +88,9 @@ const pages = {
     "BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Edit": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Edit.vue'),
     "BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Show": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Show.vue'),
 
+    //learning activities
+    "BlendedConcept/Teacher/Presentation/Resources/LearningActivities/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/LearningActivities/Index.vue'),
+
 
      "BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher.vue'),
 
