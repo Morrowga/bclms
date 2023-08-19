@@ -31,17 +31,12 @@ import MobileGroupNavLink from "@mainRoot/components/MobileGroupNavLink/MobileGr
 const { appRouteTransition } = useThemeConfig();
 import { ref, defineProps, computed } from "vue";
 
-let props = defineProps({
-    user_role: {
-        type: String,
-        required: true,
-    },
-});
 let drawer = ref(false);
 let toggle = () => {
     drawer.value = !drawer.value;
 };
-let page = usePage().props;
+let props = defineProps(["user_role"]);
+let page = usePage();
 let showMenubar = ref(true);
 let text = ref("");
 const resolveHeaderComponent = () => {
@@ -49,7 +44,7 @@ const resolveHeaderComponent = () => {
         case "BC Super Admin":
             return Header;
         case "BC Subscriber":
-            showMenubar.value = true;
+            showMenubar.value = false;
             return BCTeacherHeader;
         case "Teacher":
             showMenubar.value = false;
@@ -63,10 +58,8 @@ const resolveNavItemComponent = (item) => {
 
     return MobileNavLink;
 };
-const siteImage = computed(
-    () => page?.props?.site_settings?.media[0]?.original_url
-);
-const siteName = computed(() => page?.props?.site_settings?.site_name);
+const siteImage = computed(() => page?.site_settings?.media[0]?.original_url);
+const siteName = computed(() => page?.site_settings?.site_name);
 </script>
 <template>
     <HorizontalNavLayout>
@@ -103,6 +96,7 @@ const siteName = computed(() => page?.props?.site_settings?.site_name);
                 :site_data="$page.props"
                 style="position: fixed"
                 :is="resolveHeaderComponent()"
+                :is_drawer="drawer"
             />
         </template>
         <template #menubar v-if="showMenubar">

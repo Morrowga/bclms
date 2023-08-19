@@ -4,6 +4,8 @@ import { Link, usePage } from "@inertiajs/inertia-vue3";
 import NavBarNotifications from "@/layouts/components/NavBarNotifications.vue";
 import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
 import UserProfile from "@/layouts/components/UserProfile.vue";
+import { HorizontalNav } from "@layouts/components";
+import navItems from "@/navigation/horizontal";
 
 let props = defineProps({
     site_data: {
@@ -22,7 +24,7 @@ let toggle = () => {
 };
 </script>
 <template>
-    <v-app-bar elevation="0" class="w-100">
+    <v-app-bar elevation="0" style="padding: 0 171px">
         <!-- mobile side navigation -->
         <v-app-bar-nav-icon
             variant="text"
@@ -30,17 +32,12 @@ let toggle = () => {
             class="d-flex d-md-none"
         ></v-app-bar-nav-icon>
 
-        <Link
-            v-if="!is_drawer"
-            to="/"
-            class="d-none d-md-flex align-center ps-15"
-        >
-            <!-- <img :src="site_data.site_logo" width="100" height="100" /> -->
+        <Link v-if="!is_drawer" to="/" class="d-none d-md-flex align-center">
             <img src="/images/sitelogotext.svg" width="200" height="200" />
-            <!-- <h1 class="font-weight-bold leading-normal text-truncate text-xl">
-                {{ site_data.site_settings?.site_name }}
-            </h1> -->
         </Link>
+        <VSpacer />
+
+        <HorizontalNav :nav-items="navItems" />
 
         <VSpacer />
         <NavBarNotifications class="me-3" />
@@ -50,10 +47,6 @@ let toggle = () => {
         <UserProfile v-if="!is_drawer" class="d-flex d-md-none pe-3" />
 
         <UserProfile v-if="is_drawer" class="d-flex pe-3" />
-
-        <div class="character-img">
-            <img src="/images/tiggie.png" />
-        </div>
     </v-app-bar>
 </template>
 <style scoped>
