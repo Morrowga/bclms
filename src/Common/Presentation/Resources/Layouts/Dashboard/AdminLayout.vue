@@ -19,17 +19,23 @@ const { layoutAttrs, injectSkinClasses } = useSkins();
 
 injectSkinClasses();
 
-let props = defineProps(["current_user_role", "user"]);
+let props = defineProps(["user_role", "user"]);
 </script>
 <template>
     <AppLayout>
         <template v-if="appContentLayoutNav === AppContentLayoutNav.Vertical">
-            <DefaultLayoutWithVerticalNav v-bind="layoutAttrs">
+            <DefaultLayoutWithVerticalNav
+                v-bind="layoutAttrs"
+                :user_role="user_role"
+            >
                 <slot />
             </DefaultLayoutWithVerticalNav>
         </template>
         <template v-else>
-            <DefaultLayoutWithHorizontalNav v-bind="layoutAttrs">
+            <DefaultLayoutWithHorizontalNav
+                v-bind="layoutAttrs"
+                :user_role="user_role"
+            >
                 <slot />
             </DefaultLayoutWithHorizontalNav>
         </template>

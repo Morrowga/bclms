@@ -1,7 +1,7 @@
 <script setup>
 import { router } from "@inertiajs/core";
 import { usePage } from "@inertiajs/vue3";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 const props = defineProps({
     item: {
@@ -41,12 +41,18 @@ let goLink = (item) => {
     }
 };
 
-let hiddenByPermission = (item) => {
-    !auth?.value?.data?.permissions?.includes(item?.access_module) &&
-    item?.access_module != "access_dashboard"
-        ? true
-        : false;
-};
+// let hiddenByPermission = (sitem, item) => {
+//     !auth?.value?.data?.permissions?.includes(sitem?.access_module) &&
+//     item?.access_module != "access_dashboard"
+//         ? true
+//         : false;
+// };
+// let hiddenByPermissionOne = (item) => {
+//     !auth?.value?.data?.permissions?.includes(item?.access_module) &&
+//     item?.access_module != "access_dashboard"
+//         ? true
+//         : false;
+// };
 </script>
 
 <template>
@@ -63,7 +69,13 @@ let hiddenByPermission = (item) => {
                     :color="
                         isParentActive(item.children) ? '#4066E4' : '#282828'
                     "
-                    :hidden="hiddenByPermission(item)"
+                    :hidden="
+                        !auth?.data?.permissions?.includes(
+                            item?.access_module
+                        ) && item?.access_module != 'access_dashboard'
+                            ? true
+                            : false
+                    "
                 >
                 </v-list-item>
             </template>
@@ -75,7 +87,13 @@ let hiddenByPermission = (item) => {
                     :value="sitem"
                     @click="goLink(sitem)"
                     :variant="isLinkActive(sitem.route_name) ? 'tonal' : 'text'"
-                    :hidden="hiddenByPermission(sitem)"
+                    :hidden="
+                        !auth?.data?.permissions?.includes(
+                            sitem?.access_module
+                        ) && item?.access_module != 'access_dashboard'
+                            ? true
+                            : false
+                    "
                 >
                     <template v-slot:prepend>
                         <v-icon icon="mdi-circle-small"></v-icon>

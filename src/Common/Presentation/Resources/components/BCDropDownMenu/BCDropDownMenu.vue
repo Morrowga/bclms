@@ -41,12 +41,19 @@ let goLink = (item) => {
     }
 };
 
-let hiddenByPermission = (item) => {
-    !auth?.value?.data?.permissions?.includes(item?.access_module) &&
-    item?.access_module != "access_dashboard"
-        ? true
-        : false;
-};
+// let hiddenByPermissionOne = (item) => {
+//     console.log(auth?.value?.data?.permissions);
+//     !auth?.value?.data?.permissions?.includes(item?.access_module) &&
+//     item?.access_module != "access_dashboard"
+//         ? true
+//         : false;
+// };
+// let hiddenByPermission = (sitem, item) => {
+//     !auth?.value?.data?.permissions?.includes(sitem?.access_module) &&
+//     item?.access_module != "access_dashboard"
+//         ? true
+//         : false;
+// };
 </script>
 <template>
     <div class="text-center">
@@ -62,7 +69,13 @@ let hiddenByPermission = (item) => {
                     :color="
                         isParentActive(item.children) ? '#4066E4' : '#282828'
                     "
-                    :hidden="hiddenByPermission(item)"
+                    :hidden="
+                        !auth?.data?.permissions?.includes(
+                            item?.access_module
+                        ) && item?.access_module != 'access_dashboard'
+                            ? true
+                            : false
+                    "
                 >
                 </v-list-item>
             </template>
@@ -75,7 +88,13 @@ let hiddenByPermission = (item) => {
                     @click="goLink(sitem)"
                     :title="sitem.title"
                     :variant="isLinkActive(sitem.route_name) ? 'tonal' : 'text'"
-                    :hidden="hiddenByPermission(sitem)"
+                    :hidden="
+                        !auth?.data?.permissions?.includes(
+                            sitem?.access_module
+                        ) && item?.access_module != 'access_dashboard'
+                            ? true
+                            : false
+                    "
                 >
                     <!-- <v-list-item-title>{{ sitem.title }}</v-list-item-title> -->
                 </v-list-item>
@@ -85,10 +104,8 @@ let hiddenByPermission = (item) => {
 </template>
 
 <style lang="scss">
-
-.v-list-item__content
-{
-    overflow:inherit !important;
+.v-list-item__content {
+    overflow: inherit !important;
 }
 .active-list {
     background-color: #ededff !important;

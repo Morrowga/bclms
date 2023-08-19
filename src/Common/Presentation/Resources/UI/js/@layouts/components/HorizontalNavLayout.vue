@@ -1,26 +1,11 @@
 <script setup>
-import { HorizontalNav } from "@layouts/components";
-
 // import { useLayouts } from '@layouts'
 import { useLayouts } from "@layouts/composable/useLayouts";
 import { ref, watch } from "vue";
-import HorizontalMobileNav from "./HorizontalMobileNav.vue";
-import HorizontalMobileNavLink from "./HorizontalMobileNavLink.vue";
-import HorizontalMobileNavGroup from "./HorizontalMobileNavGroup.vue";
+
 import { themeConfig } from "@themeConfig";
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { Link } from "@inertiajs/inertia-vue3";
-
-const props = defineProps({
-    navItems: {
-        type: null,
-        required: true,
-    },
-    drawer: {
-        type: Boolean,
-        default: false,
-    },
-});
 
 const { y: windowScrollY } = useWindowScroll();
 const { width: windowWidth } = useWindowSize();
@@ -28,39 +13,18 @@ const shallShowPageLoading = ref(false);
 
 const { _layoutClasses: layoutClasses, isNavbarBlurEnabled } = useLayouts();
 let open = ref(false);
-
-watch(props, (value) => {
-    open.value = !open.value;
-});
-const resolveNavItemComponent = (item) => {
-    if ("children" in item) return HorizontalMobileNavGroup;
-
-    return HorizontalMobileNavLink;
-};
 </script>
 
 <template>
-    <div class="layout-wrapper" :class="layoutClasses(windowWidth, windowScrollY)">
-        <HorizontalMobileNav>
-            <VNavigation-drawer v-model="open" temporary>
-                <template v-slot:prepend>
-                    <Link to="/" class="d-flex align-start gap-x-2 pa-5">
-                    <img :src="$page?.props?.site_settings?.media[0]?.original_url" width="40" height="40" />
-                    <h1 class="font-weight-bold leading-normal text-truncate text-xl">
-                        {{ $page?.props?.site_settings?.site_name }}
-                    </h1>
-                    </Link>
-                </template>
-
-                <v-divider></v-divider>
-
-                <v-list density="compact" nav>
-                    <Component :is="resolveNavItemComponent(item)" v-for="(item, index) in navItems" :key="index"
-                        :item="item" />
-                </v-list>
-            </VNavigation-drawer>
-        </HorizontalMobileNav>
-        <div class="layout-navbar-and-nav-container" :class="isNavbarBlurEnabled && 'header-blur'">
+    <div
+        class="layout-wrapper"
+        :class="layoutClasses(windowWidth, windowScrollY)"
+    >
+        <slot name="mobilenav" />
+        <div
+            class="layout-navbar-and-nav-container"
+            :class="isNavbarBlurEnabled && 'header-blur'"
+        >
             <!-- 👉 Navbar -->
             <div class="layout-navbar">
                 <div class="navbar-content-container">
@@ -68,15 +32,12 @@ const resolveNavItemComponent = (item) => {
                 </div>
             </div>
             <!-- 👉 Navigation -->
-            <div class="layout-horizontal-nav d-none d-md-flex toolbar-fixed">
-                <v-toolbar class="w-100 tb px-13 bg-navImage"
-                    style="background-image: url('/images/defaults/tiggie_horizonal.png') !important;" elevation="1">
 
-                    <HorizontalNav :nav-items="navItems" />
-                </v-toolbar>
+            <div class="layout-horizontal-nav d-none d-md-flex toolbar-fixed">
+                <slot name="menubar" />
             </div>
         </div>
-        <div class="d-none d-md-flex" style="padding-top:5% !important"></div>
+        <slot name="padding"></slot>
         <main class="layout-page-content">
             <template v-if="$slots['content-loading']">
                 <template v-if="shallShowPageLoading">
@@ -187,7 +148,6 @@ const resolveNavItemComponent = (item) => {
     }
 }
 
-
 // 👉 Horizontal nav nav
 .layout-horizontal-nav {
     border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
@@ -209,4 +169,3 @@ const resolveNavItemComponent = (item) => {
     }
 }
 </style>
-

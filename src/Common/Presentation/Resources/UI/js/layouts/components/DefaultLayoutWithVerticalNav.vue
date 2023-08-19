@@ -7,9 +7,11 @@ import TheCustomizer from "@core/components/TheCustomizer.vue";
 import VerticalNavLink from "@layouts/components/VerticalNavLink.vue";
 import VerticalNavGroup from "@layouts/components/VerticalNavGroup.vue";
 import Header from "@mainRoot/components/Header/Header.vue";
+import BCTeacherHeader from "@mainRoot/components/BCTeacherHeader/BCTeacherHeader.vue";
+import B2BTeacherHeader from "@mainRoot/components/B2BTeacherHeader/B2BTeacherHeader.vue";
 import Footer from "@mainRoot/components/Footer/Footer.vue";
 import UserProfile from "@mainRoot/components/UserProfile/UserProfile.vue";
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, defineProps } from "vue";
 const resolveNavItemComponent = (item) => {
     if ("children" in item) return VerticalNavGroup;
 
@@ -32,7 +34,25 @@ let drawer = ref(false);
 let toggle = () => {
     drawer.value = !drawer.value;
 };
+let props = defineProps({
+    user_role: {
+        type: String,
+        required: true,
+    },
+});
 let page = usePage().props;
+const resolveHeaderComponent = () => {
+    switch (props.user_role) {
+        case "BC Super Admin":
+            return Header;
+        case "BC Subscriber":
+            return BCTeacherHeader;
+        case "Teacher":
+            return B2BTeacherHeader;
+        default:
+            return Header;
+    }
+};
 </script>
 <template>
     <v-layout>

@@ -34,7 +34,7 @@ const toggleDialog = (id) => {
     console.log("id", id);
     // dialog.value = !dialog.value;
 };
-const resolveNavItemComponent = (item) => {
+const resolveComponent = (item) => {
     if (props.type == "games") return ShowDetail;
 
     return ShowBookDetail;
@@ -56,7 +56,7 @@ const resolveNavItemComponent = (item) => {
         <v-slide-group v-model="model" center-active show-arrows mandatory>
             <v-slide-group-item v-for="data in datas" :key="data.image">
                 <!-- <ShowDetail :data="data" /> -->
-                <Component :is="resolveNavItemComponent(item)" :data="data" />
+                <Component :is="resolveComponent(item)" :data="data" />
             </v-slide-group-item>
         </v-slide-group>
     </div>
