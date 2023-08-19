@@ -19,7 +19,7 @@
     --gray: #bfc0c1;
     --ligth-gray: #f4f4f4;
     --light-background-page-header-background: #F5F5F7;
-    --text:#161616;
+    --text: #161616;
 }
 
 @font-face {
@@ -102,6 +102,7 @@
 
 }
 
+
 textarea {
     border-radius: 8px;
     border: 1px solid var(--line, #E5E5E5);
@@ -109,17 +110,29 @@ textarea {
 
 }
 
-.tiggie-small-label
-{
+.tiggie-small-label {
 
-color: var(--gray, #BFC0C1) !important;
-font-size: 16px !important;
-font-style: normal !important;
-font-weight: 500 !important;
-line-height: 26px !important; /* 162.5% */
+    color: var(--gray, #BFC0C1) !important;
+    font-size: 16px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 26px !important;
+    /* 162.5% */
 
 }
 
+.tiggie-teacher-title {
+    color: var(--text)  !important;
+    /* H3 Ruddy */
+    // font-family: Ruddy;
+    font-size: 40px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 52px !important;
+    /* 130% */
+    text-transform: capitalize !important;
+
+}
 
 
 

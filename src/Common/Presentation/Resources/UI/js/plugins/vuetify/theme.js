@@ -29,6 +29,8 @@ const theme = {
         'dark' : '#282828',
         'orange' : '#FF8015',
         'on-surface': '#4c4e64',
+        'surface' : '#F6F6F6',
+        'line' : "#E5E5E5",
         'perfect-scrollbar-thumb': '#DBDADE',
         'snackbar-background': '#212121',
         'tooltip-background': '#262732',

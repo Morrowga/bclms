@@ -86,6 +86,9 @@ const pages = {
 
      "BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher.vue'),
 
+     //playlists
+
+     'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index' : import('../../src/BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index.vue'),
 
 
     // Security Domain

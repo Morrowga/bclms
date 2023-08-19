@@ -94,6 +94,10 @@ return [
         'editteacher' => 'BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher'
     ],
 
+    'playlist' => [
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index'
+    ],
+
     'announment' => [
         'index' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
         'create' => 'BlendedConcept/System/Presentation/Resources/Announcements/Create',
