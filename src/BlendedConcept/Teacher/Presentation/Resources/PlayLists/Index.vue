@@ -2,11 +2,13 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 
 const items = [
-  'Name',
-  'Age',
-  'Name',
-  'Name',
+    'Name',
+    'Age',
+    'Name',
+    'Name',
 ]
+
+const currentPage = ref(1);
 
 
 </script>
@@ -28,28 +30,70 @@ const items = [
                 <VCol cols="12">
                     <VTextField placeholder="Search ..." append-inner-icon="" density="compact" rounded>
                         <template #append-inner>
-                            <VIcon v-bind="props" icon="mdi-magnify" size="30"/>
+                            <VIcon v-bind="props" icon="mdi-magnify" size="30" />
                         </template>
                     </VTextField>
                 </VCol>
                 <VCol cols="12">
-                  <VRow class="bg-line mx-1 rounded pa-1">
-                    <VCol cols="3">
-                       <VSelect
-                       density="compact"
-                       compact=""
-                       :items="items"
-                        placeholder="Name" size="10"/>
-                    </VCol>
-                    <VCol cols="3">
+                    <VRow class="bg-line mx-1 rounded pa-1 mb-5" align="center">
+                        <VCol cols="3" class="ml-4">
+                            <VLabel class="tiggie-label pr-3">Name</VLabel>
+                            <VIcon icon="mdi-menu-down"></VIcon>
+                        </VCol>
+                        <VCol cols="3">
+                            <VLabel class="tiggie-label pr-3">Assinged To</VLabel>
+                            <VIcon icon="mdi-menu-down"></VIcon>
+                        </VCol>
 
-                    </VCol>
-                    <VCol cols="3">
+                        <VCol cols="3">
+                            <VLabel class="tiggie-label pr-3">Actions</VLabel>
+                            <VIcon icon="mdi-menu-down"></VIcon>
+                        </VCol>
+                    </VRow>
+                    <VRow class="bg-line mx-1 rounded pa-1 my-2" align="center" v-for="item in 7" :key="item">
+                        <VCol cols="3" class="ml-4">
+                            <div class="d-flex flex-row align-center justify-center gap-3 ">
+                                <div clas="music-component">
+                                    <VImg src="/teacherdashboard/videoicon1.svg" width="73px" height="56px" />
+                                    <div class="music-icon bg-dark d-flex justify-center align-center gap-1 rounded">
+                                        <VIcon icon="mdi-playlist-music-outline" />
+                                        <span>3</span>
+                                    </div>
+                                </div>
+                                <span class="tiggie-p">Self-Love</span>
+                            </div>
+                        </VCol>
+                        <VCol cols="3">
+                            <p class="tiggie-p">William Tan</p>
+                        </VCol>
 
-                    </VCol>
-                  </VRow>
+                        <VCol cols="3">
+                            <div class="d-flex flex-row">
+                                <VBtn color="teal" class="text-white" variant="flat" rounded>
+                                    <VIcon icon="mdi-pencil" class="mr-2" />
+                                    <span>Edit</span>
+                                </VBtn>
+
+                                <VBtn color="error" class="text-white ml-2" variant="flat" rounded>
+                                    <VIcon icon="mdi-trash-can-outline" class="mr-2" />
+                                    <span>Edit</span>
+                                </VBtn>
+                            </div>
+                        </VCol>
+                    </VRow>
+                    <VRow justify="center" align="center">
+                        <VPagination v-model="currentPage" variant="outlined" :length="5" />
+                    </VRow>
                 </VCol>
             </VRow>
         </VContainer>
     </AdminLayout>
 </template>
+
+
+<style scoped>
+.music-icon {
+    width: 73px;
+    height: 18px;
+}
+</style>

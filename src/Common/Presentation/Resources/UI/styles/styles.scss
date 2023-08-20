@@ -122,7 +122,7 @@ textarea {
 }
 
 .tiggie-teacher-title {
-    color: var(--text)  !important;
+    color: var(--text) !important;
     /* H3 Ruddy */
     // font-family: Ruddy;
     font-size: 40px !important;
@@ -131,15 +131,38 @@ textarea {
     line-height: 52px !important;
     /* 130% */
     text-transform: capitalize !important;
+}
+
+.tiggie-teacher-subtitle {
+    color: var(--graphite) !important;
+    // font-family: PP Pangram Sans;
+    font-size: 20px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 32px !important;
+    /* 160% */
 
 }
 
+
+.tiggie-teacher-label {
+    color: var(--gray)  !important;
+    /* Body Style Small */
+    // font-family: PP Pangram Sans;
+    font-size: 16px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 26px !important;
+    /* 162.5% */
+}
 
 
 .tiggie-btn {
     border-radius: 8px !important;
     box-shadow: 0px 4px 8px -4px rgba(76, 78, 100, 0.42) !important;
 }
+
+
 
 
 .cancel-btn {
@@ -405,4 +428,19 @@ thead {
     height: 180px;
     flex-shrink: 0;
     border-radius: 180px;
+}
+
+
+
+.required::after {
+    content: '*';
+    color: var(--candy-red, #FF6262);
+    /* Body Style Small */
+    padding-left: 10px;
+    font-family: PP Pangram Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+
 }

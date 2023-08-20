@@ -10,4 +10,13 @@ class PlayListController
     {
         return Inertia::render(config('route.playlist.index'));
     }
+
+    public function create()
+    {
+        return Inertia::render(config('route.playlist.create'));
+    }
+    public function show()
+    {
+        return Inertia::render(config('route.playlist.show'));
+    }
 }

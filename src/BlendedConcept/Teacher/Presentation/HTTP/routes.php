@@ -16,6 +16,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('playlists',[PlayListController::class,'index']);
 
+    Route::get('createplaylists',[PlayListController::class,'create']);
+    Route::get('showplaylists',[PlayListController::class,'show']);
+
     Route::get('/conduct_lessons', [ConductLessonController::class, 'index'])->name('conduct_lessons.index');
     Route::get('/conduct_lessons/show', [ConductLessonController::class, 'show'])->name('conduct_lessons.show');
 

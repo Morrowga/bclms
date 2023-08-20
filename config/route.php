@@ -107,7 +107,9 @@ return [
     ],
 
     'playlist' => [
-        'index' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index'
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index',
+        'create' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Create',
+        'show' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show'
     ],
 
     'announment' => [
