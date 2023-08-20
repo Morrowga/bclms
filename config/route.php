@@ -125,6 +125,12 @@ return [
         'editteacher' => 'BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher',
     ],
 
+    'playlist' => [
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index',
+        'create' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Create',
+        'show' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show'
+    ],
+
     'announment' => [
         'index' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
         'create' => 'BlendedConcept/System/Presentation/Resources/Announcements/Create',

@@ -81,7 +81,7 @@ const pages = {
     //conduct lesson
     "BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Index.vue'),
     "BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Show" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Show.vue'),
-    
+
     //view student
     "BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Index.vue'),
     "BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Create": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Create.vue'),
@@ -111,6 +111,11 @@ const pages = {
 
      "BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher.vue'),
 
+     //playlists
+
+     'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index' : import('../../src/BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index.vue'),
+     'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Create' : import('../../src/BlendedConcept/Teacher/Presentation/Resources/PlayLists/Create.vue'),
+     'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show' : import('../../src/BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show.vue'),
 
 
     // Security Domain

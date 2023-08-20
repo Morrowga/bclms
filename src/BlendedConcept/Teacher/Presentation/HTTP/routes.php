@@ -8,6 +8,7 @@ use Src\BlendedConcept\Teacher\Presentation\HTTP\ProfillingSurvey;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\SetAccessibilityController;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\TeacherController;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\TeacherStorybookController;
+use Src\BlendedConcept\Teacher\Presentation\HTTP\PlayListController;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\ViewStudentController;
 
 Route::group(['middleware' => ['auth']], function () {
@@ -16,6 +17,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('viewteacher', [TeacherController::class, 'viewteacher'])->name('viewteacher');
     Route::get('editteacher', [TeacherController::class, 'editteacher'])->name('editteacher');
+
+    Route::get('playlists', [PlayListController::class, 'index']);
+
+    Route::get('createplaylists', [PlayListController::class, 'create']);
+    Route::get('showplaylists', [PlayListController::class, 'show']);
 
     Route::get('/conduct_lessons', [ConductLessonController::class, 'index'])->name('conduct_lessons.index');
     Route::get('/conduct_lessons/show', [ConductLessonController::class, 'show'])->name('conduct_lessons.show');
