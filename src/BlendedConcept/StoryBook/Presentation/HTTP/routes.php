@@ -1,4 +1,4 @@
-l<?php
+<?php
 
 use Illuminate\Support\Facades\Route;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\AssignRewardController;
