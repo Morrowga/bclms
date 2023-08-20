@@ -5,6 +5,7 @@ import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
+import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 
 let props = defineProps(["users"]);
 //## start datatable section
@@ -93,7 +94,18 @@ const selectionChanged = (data) => {
 </script>
 <template>
     <section>
+        <h1 class="assign-std mb-4">Assign Students</h1>
         <VCard>
+            <VCardText class="d-flex flex-wrap gap-4">
+                <v-text-field
+                    density="compact"
+                    variant="solo"
+                    label="Search templates"
+                    append-inner-icon="mdi-magnify"
+                    single-line
+                    hide-details
+                ></v-text-field>
+            </VCardText>
             <VDivider />
 
             <vue-good-table
@@ -160,7 +172,9 @@ const selectionChanged = (data) => {
                     </div>
                 </template>
             </vue-good-table>
-
+            <v-col cols="12" class="d-flex justify-center align-center">
+                <Pagination />
+            </v-col>
             <VDivider />
         </VCard>
     </section>
@@ -209,5 +223,15 @@ const selectionChanged = (data) => {
     white-space: nowrap;
     padding-left: 12px;
     padding-right: 12px;
+}
+.assign-std {
+    color: var(--text, #161616);
+    /* H3 Ruddy */
+
+    font-size: 40px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 52px !important; /* 130% */
+    text-transform: capitalize !important;
 }
 </style>

@@ -220,6 +220,26 @@ let tab = ref(false);
                     </v-row>
                 </v-col>
                 <br />
+                <v-col cols="12">
+                    <div class="d-flex justify-center">
+                        <VBtn
+                            color="#e9eff0"
+                            variant="flat"
+                            rounded
+                            class="pl-16 pr-16 mr-4"
+                        >
+                            <span class="text-primary">Cancel</span>
+                        </VBtn>
+                        <VBtn
+                            color="primary"
+                            variant="flat"
+                            rounded
+                            class="pl-16 pr-16"
+                        >
+                            <span>Submit</span>
+                        </VBtn>
+                    </div>
+                </v-col>
             </v-row>
         </VContainer>
     </AdminLayout>

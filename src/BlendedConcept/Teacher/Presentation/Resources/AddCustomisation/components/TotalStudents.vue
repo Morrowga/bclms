@@ -5,7 +5,7 @@ import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
-
+import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 let props = defineProps(["users"]);
 //## start datatable section
 let columns = [
@@ -162,6 +162,9 @@ const selectionChanged = (data) => {
             </vue-good-table>
 
             <VDivider />
+            <div class="d-flex justify-center">
+                <Pagination />
+            </div>
         </VCard>
     </section>
 </template>

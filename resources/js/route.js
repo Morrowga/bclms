@@ -94,6 +94,18 @@ const pages = {
     //profilling survey
     "BlendedConcept/Teacher/Presentation/Resources/ProfillingSurvey/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ProfillingSurvey/Index.vue'),
 
+    //set accessibility device
+    "BlendedConcept/Teacher/Presentation/Resources/SetAccessibilityDevice/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/SetAccessibilityDevice/Index.vue'),
+
+    //teacher view storybook
+    "BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Index.vue'),
+    "BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Show": import('../../src/BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Show.vue'),
+    "BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/AssignStudent": import('../../src/BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/AssignStudent.vue'),
+
+    //teacher add customisation
+    "BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create": import('../../src/BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create.vue'),
+    "BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit": import('../../src/BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit.vue'),
+
 
      "BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher.vue'),
 

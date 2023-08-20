@@ -55,7 +55,6 @@ const resolveComponent = (item) => {
         </div>
         <v-slide-group v-model="model" center-active show-arrows mandatory>
             <v-slide-group-item v-for="data in datas" :key="data.image">
-                <!-- <ShowDetail :data="data" /> -->
                 <Component :is="resolveComponent(item)" :data="data" />
             </v-slide-group-item>
         </v-slide-group>

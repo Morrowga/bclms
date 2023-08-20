@@ -1,10 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Src\BlendedConcept\Teacher\Presentation\HTTP\AddCustomisationController;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\ConductLessonController;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\LearningActivityController;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\ProfillingSurvey;
+use Src\BlendedConcept\Teacher\Presentation\HTTP\SetAccessibilityController;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\TeacherController;
+use Src\BlendedConcept\Teacher\Presentation\HTTP\TeacherStorybookController;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\ViewStudentController;
 
 Route::group(['middleware' => ['auth']], function () {
@@ -25,4 +28,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/learning_activities', [LearningActivityController::class, 'index'])->name('learning_activities.index');
 
     Route::get('/profilling_survey', [ProfillingSurvey::class, 'index'])->name('profilling_survey.index');
+
+    Route::get('/set_accessibility_device', [SetAccessibilityController::class, 'index'])->name('set_accessibility_device.index');
+
+    Route::get('/teacher_storybook', [TeacherStorybookController::class, 'index'])->name('teacher_storybook.index');
+    Route::get('/teacher_storybook/show', [TeacherStorybookController::class, 'show'])->name('teacher_storybook.show');
+    Route::get('/teacher_storybook/assign_student', [TeacherStorybookController::class, 'assign_student'])->name('teacher_storybook.assign_student');
+
+    Route::get('/add_customisation/create', [AddCustomisationController::class, 'create'])->name('add_customisation.create');
+    Route::get('/add_customisation/edit', [AddCustomisationController::class, 'edit'])->name('add_customisation.edit');
 });

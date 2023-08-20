@@ -116,63 +116,69 @@ const goRoute = (route) => {
 </script>
 <template>
     <AdminLayout>
-        <h1 class="tiggie-title mb-4">Accessibility Devices</h1>
-        <VRow>
-            <VCol cols="12" sm="12" lg="12">
-                <section>
-                    <VCard>
-                        <VCardText class="d-flex flex-wrap gap-4">
-                            <!-- 👉 Export button -->
-                            <VTextField
-                                placeholder="Search Users"
-                                density="compact"
-                            />
-                            <VSpacer />
-                            <VSpacer />
-
-                            <div
-                                class="app-user-search-filter d-flex align-center justify-end gap-3"
-                                style="width: 20%"
-                            >
-                                <selectBox
-                                    :datas="[]"
-                                    placeholder="Sort By"
+        <v-container>
+            <h1 class="tiggie-title mb-4">Survey Results</h1>
+            <VRow>
+                <VCol cols="12" sm="12" lg="12">
+                    <section>
+                        <VCard>
+                            <VCardText class="d-flex flex-wrap gap-4">
+                                <!-- 👉 Export button -->
+                                <VTextField
+                                    placeholder="Search Users"
                                     density="compact"
-                                    variant="solo"
                                 />
-                            </div>
-                        </VCardText>
-                        <VDivider />
+                                <VSpacer />
+                                <VSpacer />
 
-                        <vue-good-table
-                            class="role-data-table"
-                            styleClass="vgt-table"
-                            v-on:selected-rows-change="selectionChanged"
-                            :columns="columns"
-                            :rows="rows"
-                            :select-options="{
-                                enabled: false,
-                            }"
-                            :pagination-options="{ enabled: true }"
-                        >
-                            <template #table-row="dataProps">
-                                <div v-if="dataProps.column.field == 'action'">
-                                    <VBtn
-                                        variant="text"
+                                <div
+                                    class="app-user-search-filter d-flex align-center justify-end gap-3"
+                                    style="width: 20%"
+                                >
+                                    <selectBox
+                                        :datas="[]"
+                                        placeholder="Sort By"
                                         density="compact"
-                                        icon="mdi-trash"
-                                        class="ml-2"
-                                        color="secondary"
-                                    >
-                                    </VBtn>
+                                        variant="solo"
+                                    />
                                 </div>
-                            </template>
-                        </vue-good-table>
+                            </VCardText>
+                            <VDivider />
 
-                        <VDivider />
-                    </VCard>
-                </section>
-            </VCol>
-        </VRow>
+                            <vue-good-table
+                                class="role-data-table"
+                                styleClass="vgt-table"
+                                v-on:selected-rows-change="selectionChanged"
+                                :columns="columns"
+                                :rows="rows"
+                                :select-options="{
+                                    enabled: false,
+                                }"
+                                :pagination-options="{ enabled: true }"
+                            >
+                                <template #table-row="dataProps">
+                                    <div
+                                        v-if="
+                                            dataProps.column.field == 'action'
+                                        "
+                                    >
+                                        <VBtn
+                                            variant="text"
+                                            density="compact"
+                                            icon="mdi-trash"
+                                            class="ml-2"
+                                            color="secondary"
+                                        >
+                                        </VBtn>
+                                    </div>
+                                </template>
+                            </vue-good-table>
+
+                            <VDivider />
+                        </VCard>
+                    </section>
+                </VCol>
+            </VRow>
+        </v-container>
     </AdminLayout>
 </template>

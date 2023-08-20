@@ -70,28 +70,30 @@ const alertNow = () => {
 </script>
 <template>
     <AdminLayout>
-        <div class="head-section">
-            <div class="title-section">
-                <p class="heading">Manage Books</p>
-                <span class="subheading">Showing 18 books</span>
+        <v-container>
+            <div class="head-section">
+                <div class="title-section">
+                    <p class="heading">Manage Books</p>
+                    <span class="subheading">Showing 18 books</span>
+                </div>
+                <div class="head-button">
+                    <Create />
+                </div>
             </div>
-            <div class="head-button">
-                <Create />
-            </div>
-        </div>
 
-        <v-row class="mt-5">
-            <v-col
-                cols="12"
-                sm="6"
-                md="4"
-                lg="3"
-                v-for="data in datas"
-                :key="data.image"
-            >
-                <Show :data="data" />
-            </v-col>
-        </v-row>
+            <v-row class="mt-5">
+                <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                    lg="3"
+                    v-for="data in datas"
+                    :key="data.image"
+                >
+                    <Show :data="data" />
+                </v-col>
+            </v-row>
+        </v-container>
     </AdminLayout>
 </template>
 <style scoped>

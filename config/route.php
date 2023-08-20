@@ -103,6 +103,21 @@ return [
         'index' => 'BlendedConcept/Teacher/Presentation/Resources/ProfillingSurvey/Index',
     ],
 
+    'set_accessibility_device' => [
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/SetAccessibilityDevice/Index',
+    ],
+
+    'teacher_storybook' => [
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Index',
+        'show' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Show',
+        'assign_student' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/AssignStudent'
+    ],
+
+    'add_customisation' => [
+        'create' => 'BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create',
+        'edit' => 'BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit',
+    ],
+
     //teacher profile view
 
     'viewteacher' => [
