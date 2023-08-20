@@ -91,6 +91,9 @@ const pages = {
     //learning activities
     "BlendedConcept/Teacher/Presentation/Resources/LearningActivities/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/LearningActivities/Index.vue'),
 
+    //profilling survey
+    "BlendedConcept/Teacher/Presentation/Resources/ProfillingSurvey/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ProfillingSurvey/Index.vue'),
+
 
      "BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher.vue'),
 

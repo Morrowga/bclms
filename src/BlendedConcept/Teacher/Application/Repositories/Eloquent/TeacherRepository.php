@@ -20,13 +20,13 @@ class TeacherRepository implements TeacherRepositoryInterface
     {
         //set roles
         $users = TeacherResource::collection(UserEloquentModel::filter($filters)
-                ->where('organization_id', auth()->user()->organization_id)
-                ->with('roles')
-                ->whereHas('roles', function ($query) {
-                    return $query->where('name', 'Teacher');
-                })
-                ->orderBy('id', 'desc')
-                ->paginate($filters['perPage'] ?? 10));
+            ->where('organization_id', auth()->user()->organization_id)
+            ->with('roles')
+            ->whereHas('roles', function ($query) {
+                return $query->where('name', 'Teacher');
+            })
+            ->orderBy('id', 'desc')
+            ->paginate($filters['perPage'] ?? 10));
 
         return $users;
     }

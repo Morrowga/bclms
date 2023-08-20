@@ -8,8 +8,8 @@ class StoryBook extends AggregateRoot implements \JsonSerializable
 {
     public function __construct(
         // TODO Add properties
-    )
-    {}
+    ) {
+    }
 
     public function toArray(): array
     {

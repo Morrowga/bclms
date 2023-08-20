@@ -21,6 +21,7 @@ class SurveyResultController
     {
         return Inertia::render(config('route.survey_results.show'));
     }
+
     public function view()
     {
         return Inertia::render(config('route.survey_results.view'));

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\ConductLessonController;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\LearningActivityController;
+use Src\BlendedConcept\Teacher\Presentation\HTTP\ProfillingSurvey;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\TeacherController;
 use Src\BlendedConcept\Teacher\Presentation\HTTP\ViewStudentController;
 
@@ -10,8 +11,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('teachers', TeacherController::class);
 
-    Route::get("viewteacher", [TeacherController::class, 'viewteacher'])->name('viewteacher');
-    Route::get("editteacher", [TeacherController::class, 'editteacher'])->name('editteacher');
+    Route::get('viewteacher', [TeacherController::class, 'viewteacher'])->name('viewteacher');
+    Route::get('editteacher', [TeacherController::class, 'editteacher'])->name('editteacher');
 
     Route::get('/conduct_lessons', [ConductLessonController::class, 'index'])->name('conduct_lessons.index');
     Route::get('/conduct_lessons/show', [ConductLessonController::class, 'show'])->name('conduct_lessons.show');
@@ -22,4 +23,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/view_students/edit', [ViewStudentController::class, 'edit'])->name('view_students.edit');
 
     Route::get('/learning_activities', [LearningActivityController::class, 'index'])->name('learning_activities.index');
+
+    Route::get('/profilling_survey', [ProfillingSurvey::class, 'index'])->name('profilling_survey.index');
 });

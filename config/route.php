@@ -25,11 +25,11 @@ return [
     'pathways' => [
         'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Pathways/Index',
         'create' => 'BlendedConcept/StoryBook/Presentation/Resources/Pathways/Create',
-        'show' => 'BlendedConcept/StoryBook/Presentation/Resources/Pathways/Show'
+        'show' => 'BlendedConcept/StoryBook/Presentation/Resources/Pathways/Show',
     ],
 
     'bookreviews' => [
-        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/BookReviews/Index'
+        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/BookReviews/Index',
     ],
 
     'permissions' => 'BlendedConcept/Security/Presentation/Resources/Permissions/Index',
@@ -52,7 +52,7 @@ return [
     ],
 
     'subscriptioninvoice' => [
-        'index' => 'BlendedConcept/Organization/Presentation/Resources/SubScriptionInvoice/Index'
+        'index' => 'BlendedConcept/Organization/Presentation/Resources/SubScriptionInvoice/Index',
     ],
 
     'disability_device' => [
@@ -65,10 +65,10 @@ return [
         'edit' => 'BlendedConcept/Student/Presentation/Resources/Accessibility/Edit',
     ],
     'games' => [
-        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Games/Index'
+        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Games/Index',
     ],
     'books' => [
-        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/Index'
+        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/Index',
     ],
 
     'assign_rewards' => [
@@ -96,14 +96,18 @@ return [
     ],
 
     'learning_activities' => [
-        'index' => 'BlendedConcept/Teacher/Presentation/Resources/LearningActivities/Index'
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/LearningActivities/Index',
+    ],
+
+    'profilling_survey' => [
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/ProfillingSurvey/Index',
     ],
 
     //teacher profile view
 
     'viewteacher' => [
         'viewteacher' => 'BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher',
-        'editteacher' => 'BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher'
+        'editteacher' => 'BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher',
     ],
 
     'announment' => [

@@ -3,10 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\AssignRewardController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\BookController;
-use Src\BlendedConcept\StoryBook\Presentation\HTTP\GameController;
-use Src\BlendedConcept\StoryBook\Presentation\HTTP\RewardController;
-use Src\BlendedConcept\StoryBook\Presentation\HTTP\PathWaysController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\BookReviewController;
+use Src\BlendedConcept\StoryBook\Presentation\HTTP\GameController;
+use Src\BlendedConcept\StoryBook\Presentation\HTTP\PathWaysController;
+use Src\BlendedConcept\StoryBook\Presentation\HTTP\RewardController;
 
 Route::group(['middleware' => ['auth']], function () {
 

@@ -10,6 +10,7 @@ class ViewStudentController
     {
         return Inertia::render(config('route.view_students.index'));
     }
+
     public function show()
     {
         return Inertia::render(config('route.view_students.show'));
@@ -19,6 +20,7 @@ class ViewStudentController
     {
         return Inertia::render(config('route.view_students.create'));
     }
+
     public function edit()
     {
         return Inertia::render(config('route.view_students.edit'));
