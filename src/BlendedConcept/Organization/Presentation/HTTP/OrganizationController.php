@@ -4,23 +4,22 @@ namespace Src\BlendedConcept\Organization\Presentation\HTTP;
 
 use Inertia\Inertia;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\GetOrganizationWithPagination;
-use Src\BlendedConcept\Organization\Domain\Model\Organization;
-use Src\BlendedConcept\Organization\Domain\Services\OrganizationService;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\System\Application\Policies\OrganizationPolicy;
 use Src\BlendedConcept\System\Application\Requests\StoreOrganizationRequest;
 use Src\BlendedConcept\System\Application\Requests\UpdateOrganizationRequest;
 use Src\Common\Infrastructure\Laravel\Controller;
+use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
+use Src\BlendedConcept\Organization\Application\Mappers\OrganizationMapper;
+use Src\BlendedConcept\Organization\Application\UseCases\Commands\StoreOrganizationCommand;
+use Src\BlendedConcept\Organization\Application\UseCases\Commands\UpdateOrganizationCommand;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
+use Stancl\Tenancy\Database\Models\Domain;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrganizationController extends Controller
 {
-    private $organizationServices;
 
-    public function __construct()
-    {
-        $this->organizationServices = app()->make(OrganizationService::class);
-    }
 
     public function index()
     {
@@ -85,8 +84,9 @@ class OrganizationController extends Controller
             // Validate the request data
             $request->validated();
 
-            // Create the organization using the provided request
-            $this->organizationServices->createOrganization($request);
+            $newOrganizaton = OrganizationMapper::fromRequest($request);
+            $saveOrganizaton = (new StoreOrganizationCommand($newOrganizaton));
+            $saveOrganizaton->execute();
 
             return redirect()->route('organizations.index')->with('successMessage', 'Organizations Created Successfully!');
         } catch (\Exception $error) {
@@ -101,7 +101,11 @@ class OrganizationController extends Controller
     public function update(UpdateOrganizationRequest $request, OrganizationEloquentModel $organization)
     {
         abort_if(authorize('edit', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->organizationServices->updateOrganization($request, $organization);
+
+
+        $updateOrganization = OrganizationData::fromRequest($request, $organization);
+        $updateOrganizationcommand = (new updateOrganizationCommand($updateOrganization));
+        $updateOrganizationcommand->execute();
 
         return redirect()->route('organizations.index')->with('successMessage', 'Organization Updated Successfully!');
     }
@@ -114,9 +118,11 @@ class OrganizationController extends Controller
     public function destroy(OrganizationEloquentModel $organization)
     {
         abort_if(authorize('destroy', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        //delete organization frm service class
-        $this->organizationServices->deleteOrganization($organization);
-
+        $tenant = Tenant::get();
+        dd($tenant->id);
+        Domain::where('tenant_id', $tenant->id)->delete();
+        $tenant->delete();
+        $organization->delete();
         return redirect()->route('organizations.index')->with('successMessage', 'Organizations Deleted Successfully!');
     }
 }

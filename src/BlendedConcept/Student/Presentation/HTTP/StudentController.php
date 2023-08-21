@@ -3,10 +3,14 @@
 namespace Src\BlendedConcept\Student\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Src\BlendedConcept\Student\Application\Requests\storeStudentRequest;
-use Src\BlendedConcept\Student\Application\Requests\updateStudentRequest;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
 use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
+use Src\BlendedConcept\Student\Application\DTO\StudentData;
+use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
+use Src\BlendedConcept\Student\Application\Requests\storeStudentRequest;
+use Src\BlendedConcept\Student\Application\Requests\updateStudentRequest;
+use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreStudentCommand;
+use Src\BlendedConcept\Student\Application\UseCases\Commands\UpdateStudentCommand;
 use Src\BlendedConcept\Student\Domain\Services\StudentService;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\Common\Infrastructure\Laravel\Controller;
@@ -69,7 +73,12 @@ class StudentController extends Controller
         abort_if(authorize('create', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
-            $this->studentService->createStudent($request);
+
+            $request->validated();
+            $newUser = StudentMapper::fromRequest($request);
+
+            $createNewUser = new StoreStudentCommand($newUser);
+            $createNewUser->execute();
 
             return redirect()->route($this->route_url.'students.index')->with('successMessage', 'Student created successfully!');
 
@@ -85,7 +94,10 @@ class StudentController extends Controller
         abort_if(authorize('edit', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
-            $this->studentService->updateStudent($request, $student->id);
+
+            $updateStudent = StudentData::fromRequest($request, $student->id);
+            $updateStudent = (new UpdateStudentCommand($updateStudent));
+            $updateStudent->execute();
 
             return redirect()->route($this->route_url.'students.index')->with('successMessage', 'Student Updated Successfully!');
 
@@ -98,7 +110,8 @@ class StudentController extends Controller
     public function destroy(StudentEloquentModel $student)
     {
         abort_if(authorize('destroy', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->studentService->deleteStudent($student);
+
+        $student->delete();
 
         return redirect()->route($this->route_url.'students.index')->with('successMessage', 'Student Deleted Successfully!');
     }

@@ -24,7 +24,6 @@ class AccessibilityDeviceController
 
     public function edit()
     {
-        // dd('hello');
         return Inertia::render(config('route.accessibility_device.edit'));
     }
 }
