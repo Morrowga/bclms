@@ -8,7 +8,7 @@ const PREFIX = localStorage.getItem("tenant") !="" ? `/${localStorage.getItem("t
 
 const DASHBOARD_URL = PREFIX != "" ? "/c" : "/home";
 const DASHBOARD_ROUTE = PREFIX != "" ? "c.organizationaadmin" : "dashboard";
-
+const HASH_ROUTE = "#"
 
 export default [
     {
@@ -20,8 +20,8 @@ export default [
     },
     {
         title: 'Resources',
-        url: DASHBOARD_URL,
-        icon: { icon: 'mdi-home' },
+        url: "#",
+        icon: { icon: 'mdi-folder-outline' },
         access_module: "access_dashboard",
         route_name: DASHBOARD_ROUTE,
     },
@@ -69,6 +69,20 @@ export default [
         title: 'ClassRoom',
         url: `${PREFIX}/classrooms`,
         icon: { icon: ' mdi-google-classroom' },
+        route_name: 'classrooms',
+        access_module: "access_classroom",
+    },
+    {
+        title: 'Users',
+        url: `#`,
+        icon: { icon: ' mdi-google-classroom' },
+        route_name: 'classrooms',
+        access_module: "access_classroom",
+    },
+    {
+        title: 'Reports',
+        url: `#`,
+        icon: { icon: 'mdi-file-chart-outline' },
         route_name: 'classrooms',
         access_module: "access_classroom",
     },
