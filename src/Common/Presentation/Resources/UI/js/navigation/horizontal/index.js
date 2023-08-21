@@ -19,6 +19,17 @@ export default [
         route_name: DASHBOARD_ROUTE,
     },
     {
+        title: 'Accessibility',
+        url: "/",
+        icon: { icon: 'mdi-wheel-chair ' },
+        route_name: 'accessibility',
+        access_module: "access_accessibility",
+        children: [
+            { title: 'Manage Tags', url: '/desibility_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'disability_device', access_module: "access_disabilityDevice", },
+            { title: 'Devices', url: '/accessibility_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'accessibility_device', access_module: "access_accessibilityDevice", },
+        ]
+    },
+    {
         title: 'Organizations',
         url: "/organizations",
         icon: { icon: 'mdi-briefcase-variant' },
