@@ -16,6 +16,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('teachers', TeacherController::class);
 
     Route::get('viewteacher', [TeacherController::class, 'viewteacher'])->name('viewteacher');
+
     Route::get('editteacher', [TeacherController::class, 'editteacher'])->name('editteacher');
 
     Route::get('playlists', [PlayListController::class, 'index']);
