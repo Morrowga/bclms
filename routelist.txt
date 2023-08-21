@@ -17,4 +17,6 @@ http://bc-lms.test/pathways/show
 
 
 
-
+classrooms
+classroom.show => shopCopy
+classroom.create => create
