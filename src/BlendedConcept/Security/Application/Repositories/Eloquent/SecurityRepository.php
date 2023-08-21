@@ -95,8 +95,8 @@ class SecurityRepository implements SecurityRepositoryInterface
 
     public function deleteUser(int $user_id)
     {
-        $annount = UserEloquentModel::query()->findOrFail($user_id);
-        $annount->delete();
+        $user = UserEloquentModel::query()->findOrFail($user_id);
+        $user->delete();
     }
     //user filter
     public function filter($filters = [])
