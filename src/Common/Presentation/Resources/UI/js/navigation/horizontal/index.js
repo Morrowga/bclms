@@ -18,13 +18,13 @@ export default [
         access_module: "access_dashboard",
         route_name: DASHBOARD_ROUTE,
     },
-    {
-        title: 'Resources',
-        url: "#",
-        icon: { icon: 'mdi-folder-outline' },
-        access_module: "access_dashboard",
-        route_name: DASHBOARD_ROUTE,
-    },
+    // {
+    //     title: 'Resources',
+    //     url: "#",
+    //     icon: { icon: 'mdi-folder-outline' },
+    //     access_module: "access_dashboard",
+    //     route_name: DASHBOARD_ROUTE,
+    // },
     {
         title: 'Storybooks',
         url: "/",
