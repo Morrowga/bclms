@@ -19,16 +19,38 @@ export default [
         route_name: DASHBOARD_ROUTE,
     },
     {
-        title: 'Accessibility',
+        title: 'Resources',
+        url: DASHBOARD_URL,
+        icon: { icon: 'mdi-home' },
+        access_module: "access_dashboard",
+        route_name: DASHBOARD_ROUTE,
+    },
+    {
+        title: 'Storybooks',
         url: "/",
-        icon: { icon: 'mdi-wheel-chair ' },
+        icon: { icon: 'mdi-book-variant' },
         route_name: 'accessibility',
-        access_module: "access_accessibility",
+        access_module: "access_user",
         children: [
-            { title: 'Manage Tags', url: '/desibility_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'disability_device', access_module: "access_disabilityDevice", },
-            { title: 'Devices', url: '/accessibility_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'accessibility_device', access_module: "access_accessibilityDevice", },
+            { title: 'Books', url: '/books', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'books', access_module: "access_user", },
+            { title: 'Games', url: '/games', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'games', access_module: "access_user", },
+            { title: 'Pathways', url: '/pathways', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'pathways', access_module: "access_user", },
+            { title: 'Rewards', url: '/rewards', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'rewards', access_module: "access_user", },
+            { title: 'Reviews', url: '/bookreviews', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'bookreviews', access_module: "access_user", },
         ]
     },
+    {
+        title: 'Accessibility',
+        url: "/",
+        icon: { icon: 'mdi-wheelchair' },
+        route_name: 'accessibility',
+        access_module: "access_user",
+        children: [
+            { title: 'Manage Tags', url: '/disability_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'disability_device', access_module: "access_user", },
+            { title: 'Devices', url: '/accessibility_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'accessibility_device', access_module: "access_user", },
+        ]
+    },
+    
     {
         title: 'Organizations',
         url: "/organizations",
@@ -71,6 +93,18 @@ export default [
             { title: 'Roles', url: '/roles', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'roles', access_module: "access_role" },
             { title: 'Users', url: '/users', icon: { icon: 'mdi-account-group' }, route_name: 'users', access_module: "access_user" },
             { title: 'Student', url: `${PREFIX}/students`, icon: { icon: 'mdi-account-group-outline' }, route_name: 'students', access_module: "access_student" },
+        ],
+    },
+
+    {
+        title: 'Surveys',
+        url: "#",
+        icon: { icon: 'mdi-account' },
+        access_module: "access_user",
+        children: [
+            { title: 'User Surveys', url: '/userexperiencesurvey', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'userexperiencesurvey', access_module: "access_user", },
+            { title: 'Survey Results', url: '/survey_results', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'survey_results', access_module: "access_user", },
+            { title: 'Profilling Surveys', url: '/profilling_survey', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'profilling_survey', access_module: "access_user", },
         ],
     },
     // {
