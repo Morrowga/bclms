@@ -9,19 +9,16 @@ use Src\BlendedConcept\Security\Application\Requests\UpdateRoleRequest;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Permissions\GetPermissionwithPagination;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRoleName;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRolewithPagniation;
-use Src\BlendedConcept\Security\Domain\Services\RoleService;
+use Src\BlendedConcept\Security\Application\DTO\RoleData;
+use Src\BlendedConcept\Security\Application\Mappers\RoleMapper;
+use Src\BlendedConcept\Security\Application\UseCases\Commands\Role\StoreRoleCommand;
+use Src\BlendedConcept\Security\Application\UseCases\Commands\Role\UpdateRoleCommand;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class RoleController extends Controller
 {
-    protected $roleSevice;
-
-    public function __construct()
-    {
-        $this->roleSevice = app()->make(RoleService::class);
-    }
 
     public function index()
     {
@@ -65,7 +62,14 @@ class RoleController extends Controller
         abort_if(authorize('create', RolePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
-            $this->roleSevice->createRole($request);
+
+            // Validate the incoming request data based on the specified rules in StoreRoleRequest
+            $request->validated();
+
+            // Create a new role using the
+            $newRole = RoleMapper::fromRequest($request);
+            $createNewRole = (new StoreRoleCommand($newRole));
+            $createNewRole->execute();
             // Redirect the user to the index page for roles with a success message
             return redirect()->route('roles.index')->with('successMessage', 'Roles created Successfully!');
         } catch (\Exception $e) {
@@ -86,7 +90,14 @@ class RoleController extends Controller
 
         try {
 
-            $this->roleSevice->updateRole($request, $role->id);
+            // Create a RoleData object from the request data and the ID of the role to be updated
+            $roleData = RoleData::fromRequest($request, $role->id);
+
+            // Create an instance of the UpdateRoleCommand with the role data
+            $updateRole = (new UpdateRoleCommand($roleData));
+
+            // Execute the update role command
+            $updateRole->execute();
 
             // Redirect the user to the index page for roles with a success message
             return redirect()->route('roles.index')->with('successMessage', 'Role updated Successfully!');
@@ -100,7 +111,8 @@ class RoleController extends Controller
     public function destroy(RoleEloquentModel $role)
     {
         abort_if(authorize('destroy', RolePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->roleSevice->deleteRole($role);
+
+        $role->delete();
 
         return redirect()->route('roles.index')->with('successMessage', 'Role deleted Successfully!');
     }
