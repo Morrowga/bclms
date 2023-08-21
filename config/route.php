@@ -150,4 +150,7 @@ return [
     'students' => 'BlendedConcept/Student/Presentation/Resources/Student/Index',
     'teachers' => 'BlendedConcept/Teacher/Presentation/Resources/Teacher/Index',
     'classrooms' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index',
+    //UI
+    'showCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show',
+    'createCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create',
 ];

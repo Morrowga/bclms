@@ -31,7 +31,7 @@ class ClassRoomController extends Controller
 
         // Check if the user is authorized to view classrooms
 
-        abort_if(authorize('view', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('view', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -51,6 +51,27 @@ class ClassRoomController extends Controller
             return redirect()->route('c.classrooms.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
+
+    public function showCopy()
+    {
+        try {
+            return Inertia::render(config('route.showCopy'));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return redirect()->route('c.classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+        }
+    }
+
+    public function create()
+    {
+        try {
+            return Inertia::render(config('route.createCopy'));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return redirect()->route('c.classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+        }
+    }
+
 
     /**
      * Store a new user.

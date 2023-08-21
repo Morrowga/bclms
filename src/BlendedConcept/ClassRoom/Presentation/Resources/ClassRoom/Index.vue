@@ -1,6 +1,7 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 let props = defineProps([
@@ -76,81 +77,228 @@ watch(serverPerPage, function (value) {
 <template>
     <AdminLayout>
         <section>
-            <VCard>
-                <VCardText class="d-flex flex-wrap gap-4">
-                    <!-- 👉 Export button -->
-                    <VBtn prepend-icon="mdi-export" variant="outlined" color="secondary">Export</VBtn>
-                    <VSpacer />
-                    <div class="app-user-search-filter d-flex align-center gap-6">
-                        <!-- 👉 Search  -->
-                        <VTextField @keyup.enter="searchItems" v-model="serverParams.search" placeholder="Search Student"
-                            density="compact" />
-                        <!-- 👉 Add User button -->
-                        <Create :flash="flash" :students="students" :teachers="teachers"
-                            v-if="permissions.includes('create_classroom')" />
-                    </div>
-                </VCardText>
-                <VDivider />
-
-                <vue-good-table class="user-data-table" mode="remote" @column-filter="onColumnFilter"
-                    :totalRows="props.classrooms.meta.total" :selected-rows-change="selectionChanged"
-                    styleClass="vgt-table " :pagination-options="options" :rows="props.classrooms.data" :columns="columns"
-                    :select-options="{
-                        enabled: true,
-                        selectOnCheckboxOnly: true,
-                    }">
-                    <template #table-row="props">
-                        <div v-if="props.column.field == 'teacher'">
-                            <VChip color="primary">
-                                {{ props.row.teacher.name }}
-                            </VChip>
-                        </div>
-                        <div v-if="props.column.field == 'contact_number'">
-                            <span>
-                                {{ props.row.teacher.contact_number }}
-                            </span>
-                        </div>
-                        <div v-if="props.column.field == 'nofstudent'">
-                            <span>
-                                {{ props.row.students.length }}
-                            </span>
-                        </div>
-                        <div v-if="props.column.field == 'action'">
-                            <div class="d-flex">
-                                <Edit :students="students" :teachers="teachers" :classroom="props.row" :flash="flash" v-if="permissions.includes('edit_classroom')
-                                    " />
-                                <VBtn v-if="permissions.includes('delete_classroom')
-                                    " density="compact" icon="mdi-trash" class="ml-2" color="secondary" variant="text"
-                                    @click="deleteClassRoom(props.row.id)">
-                                </VBtn>
-                            </div>
-                        </div>
-                    </template>
-                    <template #pagination-bottom>
-                        <VRow class="pa-4">
-                            <VCol cols="12" class="d-flex justify-space-between">
-                                <span>
-                                    Showing
-                                    {{ props.classrooms.meta.from }} to
-                                    {{ props.classrooms.meta.to }} of
-                                    {{ props.classrooms.meta.total }}
-                                    entries
+            <VContainer>
+                <VRow>
+                    <VCol size="6">
+                        <span class="span-text">Classrooms</span>
+                    </VCol>
+                    <VCol size="6" class="text-right">
+                        <v-btn varient="flat" @click="() => router.get(route('classrooms.create'))"  rounded>
+                            + Add
+                        </v-btn>
+                    </VCol>
+                </VRow>
+                <VRow>
+                    <VCol size="3">
+                        <VCard @click="() => router.get(route('showCopy'))">
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
                                 </span>
-                                <div class="d-flex">
-                                    <div class="d-flex align-center">
-                                        <span class="me-2">Show</span>
-                                        <VSelect v-model="serverPerPage" density="compact" :items="options.perPageDropdown">
-                                        </VSelect>
-                                    </div>
-                                    <VPagination v-model="serverPage" size="small" :total-visible="5" :length="props.classrooms.meta.last_page
-                                        " @next="onPageChange" @prev="onPageChange" @click="onPageChange" />
-                                </div>
-                            </VCol>
-                        </VRow>
-                    </template>
-                </vue-good-table>
-                <VDivider />
-            </VCard>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol size="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol size="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol size="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                </VRow>
+                <VRow>
+                    <VCol size="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol size="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol size="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol size="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                </VRow>
+                <VRow>
+                    <VCol size="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol size="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol size="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol size="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                </VRow>
+            </VContainer>
         </section>
     </AdminLayout>
 </template>
@@ -158,6 +306,40 @@ watch(serverPerPage, function (value) {
 <style lang="scss">
 .app-user-search-filter {
     inline-size: 24.0625rem;
+}
+
+.span-text{
+    color: var(--text, #161616) !important;
+    /* H3 Ruddy */
+    font-family: Ruddy !important;
+    font-size: 40px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 52px !important; /* 130% */
+    text-transform: capitalize !important;
+}
+
+.class-count{
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    color: #000;
+    margin: 1vh;
+    background-color: rgba(255, 255, 255, 0.70);
+    backdrop-filter: blur(2px);
+}
+
+.class-label{
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    font-size: 24px;
+    width: 100%;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 8px;
+    border-radius: 4px;
+    text-align: center;
 }
 
 .text-capitalize {
