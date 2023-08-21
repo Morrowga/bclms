@@ -196,6 +196,21 @@ class PermissionTableSeeder extends Seeder
                 'guard_name' => 'web',
             ],
 
+            // 8/21/23
+            [
+                'name' => 'access_accessibility',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'access_disabilityDevice',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'access_accessibilityDevice',
+                'guard_name' => 'web',
+            ],
+
+
         ];
 
         foreach ($permissions as $permission) {

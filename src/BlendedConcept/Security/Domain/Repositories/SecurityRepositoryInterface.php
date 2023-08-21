@@ -26,6 +26,12 @@ interface SecurityRepositoryInterface
     //  update user
     public function updateUser(UserData $user);
 
+
+    //delete user
+
+
+    public function deleteUser(int $user_id);
+
     // server side rendering data for user
     public function filter($filters = []);
 

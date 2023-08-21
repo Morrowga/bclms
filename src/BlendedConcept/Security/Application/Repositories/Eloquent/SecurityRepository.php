@@ -93,6 +93,11 @@ class SecurityRepository implements SecurityRepositoryInterface
         $updateUserEloquent->roles()->sync(request('role'));
     }
 
+    public function deleteUser(int $user_id)
+    {
+        $user = UserEloquentModel::query()->findOrFail($user_id);
+        $user->delete();
+    }
     //user filter
     public function filter($filters = [])
     {

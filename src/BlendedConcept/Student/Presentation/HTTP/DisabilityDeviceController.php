@@ -24,7 +24,6 @@ class DisabilityDeviceController
 
     public function edit()
     {
-        // dd('hello');
         return Inertia::render(config('route.plans.edit'));
     }
 }

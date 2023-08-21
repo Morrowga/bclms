@@ -6,11 +6,16 @@ use Inertia\Inertia;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\GetOrganizatonName;
 use Src\BlendedConcept\Security\Application\Policies\UserPolicy;
 use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
-use Src\BlendedConcept\Security\Application\Requests\updateUserPasswordRequest;
 use Src\BlendedConcept\Security\Application\Requests\UpdateUserRequest;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRoleName;
+use Src\BlendedConcept\Security\Application\Requests\updateUserPasswordRequest;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserName;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUsersWithPagination;
+use Src\BlendedConcept\Security\Application\DTO\UserData;
+use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
+use Src\BlendedConcept\Security\Application\UseCases\Commands\User\StoreUserCommand;
+use Src\BlendedConcept\Security\Application\UseCases\Commands\User\UpdateUserCommand;
+use Src\BlendedConcept\Security\Application\UseCases\Commands\User\DelectUserCommand;
 use Src\BlendedConcept\Security\Domain\Services\UserService;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\Common\Infrastructure\Laravel\Controller;
@@ -34,8 +39,6 @@ class UserController extends Controller
     public function index()
     {
 
-        // return auth()->user()->load('organization');
-        // Check if the user is authorized to view users
 
         abort_if(authorize('view', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -83,7 +86,11 @@ class UserController extends Controller
 
         try {
 
-            $this->userService->createUser($request);
+            $request->validated();
+            $newUser = UserMapper::fromRequest($request);
+
+            $createNewUser = new StoreUserCommand($newUser);
+            $createNewUser->execute();
 
             return redirect()->route('users.index')->with('successMessage', 'User created successfully!');
         } catch (\Exception $e) {
@@ -96,7 +103,11 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, UserEloquentModel $user)
     {
         abort_if(authorize('edit', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->userService->updateUser($request, $user->id);
+
+        $updateUser = UserData::fromRequest($request, $user->id);
+        $updatedUserCommand = (new UpdateUserCommand($updateUser));
+
+        $updatedUserCommand->execute();
 
         return redirect()->route('users.index')->with('successMessage', 'User Updated Successfully!');
     }
@@ -104,7 +115,9 @@ class UserController extends Controller
     public function destroy(UserEloquentModel $user)
     {
         abort_if(authorize('destroy', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->userService->deleteUser($user);
+
+        $user = new DelectUserCommand($user->id);
+        $user->execute();
 
         return redirect()->route('users.index')->with('successMessage', 'User Deleted Successfully!');
     }

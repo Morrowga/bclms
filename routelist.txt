@@ -1,4 +1,56 @@
-disability_device
+Subscription Plan
+http://bc-lms.test/plans
+http://bc-lms.test/plans/create
+http://bc-lms.test/plans/show
+
+
+Announcements
+http://bc-lms.test/announcements
+http://bc-lms.test/announcements/create
+
+
+Organizations
+http://bc-lms.test/organizations/create
+http://bc-lms.test/organizations
+http://bc-lms.test/organizations/show
+
+
+User Profile
+http://bc-lms.test/userprofile
+
+
+Manged Users
+http://bc-lms.test/users
+
+
+Managed Student
+http://bc-lms.test/students
+
+
+Managed Site Configuration
+http://bc-lms.test/settings
+
+Managed Site SiteTheme
+http://bc-lms.test/updateSiteTheme
+
+
+
+Technical Support Request
+http://bc-lms.test/supports
+
+
+SubScription&Invoice
+http://bc-lms.test/subscribptioninvoice
+
+
+Disability Device
+http://bc-lms.test/disability_device
+
+
+
+Student List
+http://bc-lms.test/students
+
 
 userexperiencesurvey
 
@@ -9,10 +61,47 @@ http://bc-lms.test/plans/orgcreate
 http://bc-lms.test/subscribptioninvoice
 
 
-rewards
+Rewards
+http://bc-lms.test/rewards
+http://bc-lms.test/rewards/create
+http://bc-lms.test/rewards/show
+
+Pathways
 http://bc-lms.test/pathways/create
 http://bc-lms.test/pathways
 http://bc-lms.test/pathways/show
+
+
+UserFeedback
+http://bc-lms.test/bookreviews
+
+
+View Teacher
+
+http://bc-lms.test/viewteacher
+
+
+
+Contact ClassRoom
+
+http://bc-lms.test/conduct_lessons
+http://bc-lms.test/conduct_lessons/show
+
+
+List of playlists
+
+http://bc-lms.test/playlists
+http://bc-lms.test/createplaylists
+
+
+
+
+
+
+
+
+
+
 
 
 

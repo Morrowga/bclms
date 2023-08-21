@@ -8,20 +8,17 @@ use Src\BlendedConcept\ClassRoom\Application\Requests\updateClassRoomRequest;
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetClassRoomWithPagination;
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetStudents;
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetTeachers;
+use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomData;
+use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
+use Src\BlendedConcept\ClassRoom\Application\UseCases\Commands\StoreClassRoomCommand;
+use Src\BlendedConcept\ClassRoom\Application\UseCases\Commands\UpdateClassRoomCommand;
 use Src\BlendedConcept\ClassRoom\Domain\Policies\ClassRoomPolicy;
-use Src\BlendedConcept\ClassRoom\Domain\Services\ClassRoomService;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class ClassRoomController extends Controller
 {
-    protected $classRoomService;
-
-    public function __construct()
-    {
-        $this->classRoomService = app()->make(ClassRoomService::class);
-    }
 
     /***
      *  @params null
@@ -88,7 +85,11 @@ class ClassRoomController extends Controller
         abort_if(authorize('create', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
-            $this->classRoomService->createClassRoom($request);
+            $request->validated();
+            $newUser = ClassRoomMapper::fromRequest($request);
+
+            $createNewUser = new StoreClassRoomCommand($newUser);
+            $createNewUser->execute();
 
             return redirect()->route('c.classrooms.index')->with('successMessage', 'ClassRoom created successfully!');
         } catch (\Exception $e) {
@@ -102,7 +103,10 @@ class ClassRoomController extends Controller
     public function update(updateClassRoomRequest $request, ClassRoomEloquentModel $classroom)
     {
         abort_if(authorize('edit', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->classRoomService->updateClassRoom($request, $classroom->id);
+
+        $updateClassRoom = ClassRoomData::fromRequest($request, $classroom->id);
+        $updateClassRoom = (new UpdateClassRoomCommand($updateClassRoom));
+        $updateClassRoom->execute();
 
         return redirect()->route('c.classrooms.index')->with('successMessage', 'ClassRoom Updated Successfully!');
     }
@@ -110,7 +114,8 @@ class ClassRoomController extends Controller
     public function destroy(ClassRoomEloquentModel $classroom)
     {
         abort_if(authorize('destroy', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->classRoomService->deleteClassRoom($classroom);
+
+        $classroom->delete();
 
         return redirect()->route('c.classrooms.index')->with('successMessage', 'Student Deleted Successfully!');
     }

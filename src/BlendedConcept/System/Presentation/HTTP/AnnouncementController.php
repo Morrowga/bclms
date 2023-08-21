@@ -7,6 +7,11 @@ use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserList;
 use Src\BlendedConcept\System\Application\Policies\AnnouncementPolicy;
 use Src\BlendedConcept\System\Application\Requests\StoreAnnouncementRequest;
 use Src\BlendedConcept\System\Application\Requests\UpdateAnnouncementRequest;
+use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
+use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
+use Src\BlendedConcept\System\Application\UseCases\Commands\DeleteAnnounmentCommand;
+use Src\BlendedConcept\System\Application\UseCases\Commands\StoreAnnounmentCommand;
+use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateAnnounmentCommand;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetAnnounmetAllWithPagination;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganizationList;
 use Src\BlendedConcept\System\Domain\Services\AnnounmnetService;
@@ -16,12 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AnnouncementController extends Controller
 {
-    protected $announmentService;
-
-    public function __construct()
-    {
-        $this->announmentService = app()->make(AnnounmnetService::class);
-    }
 
     //get all announcements
     public function index()
@@ -71,7 +70,12 @@ class AnnouncementController extends Controller
 
         try {
 
-            $this->announmentService->createAnnoument($request);
+            $request->validated();
+            //Creates a new announcement object from the request data.
+            $newAnnoument = AnnounmentMapper::fromRequest($request);
+            // Creates a new StoreAnnounmentCommand object and executes it.
+            $storeAnnounmentCommand = new StoreAnnounmentCommand($newAnnoument);
+            $storeAnnounmentCommand->execute();
         } catch (\Exception $e) {
 
             // Handle the exception here
@@ -106,7 +110,10 @@ class AnnouncementController extends Controller
          * Try to update the announcement.
          */
         try {
-            $this->announmentService->updateAnnounment($request, $announcement->id);
+
+            $announcement = AnnounmentData::fromRequest($request, $announcement->id);
+            $updateAnnounmentCommand = (new UpdateAnnounmentCommand($announcement));
+            $updateAnnounmentCommand->execute();
 
             return redirect()->route('announcements.index')->with('successMessage', 'Announcement updated Successfully!');
         } catch (\Exception $e) {
@@ -133,7 +140,8 @@ class AnnouncementController extends Controller
          */
         try {
 
-            $this->announmentService->deleteAnnounment($announcement->id);
+            $announment = new DeleteAnnounmentCommand($announcement->id);
+            $announment->execute();
 
             return redirect()->route('announcements.index')->with('successMessage', 'Announcement deleted Successfully!');
         } catch (\Exception $e) {
