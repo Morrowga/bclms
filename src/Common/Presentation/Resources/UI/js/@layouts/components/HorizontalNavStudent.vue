@@ -2,23 +2,29 @@
 
 import BcDropDownMenu from "@mainRoot/components/BCDropDownMenu/BCDropDownMenu.vue";
 import NavMenuItem from "@mainRoot/components/NavMenuItems/NavMenuItem.vue";
+import StudentNavMenuItem from "@mainRoot/components/StudentNavMenu/StudentNavMenuItem.vue";
 
 const props = defineProps({
     navItems: {
         type: null,
         required: true,
-},
+    },
+    current_user_role: {
+        type: String,
+        required: false,
+    },
 });
-const resolveNavItemComponent = (item) => {
+
+const resolveNavItemComponentStudent = (item) => {
     if ("children" in item) return BcDropDownMenu;
 
-    return NavMenuItem;
-};
+    return StudentNavMenuItem;
+}
 </script>
 
 <template>
     <Component
-    :is="resolveNavItemComponent(item)"
+    :is="resolveNavItemComponentStudent(item)"
     v-for="(item, index) in navItems"
     :key="index"
     :item="item"
