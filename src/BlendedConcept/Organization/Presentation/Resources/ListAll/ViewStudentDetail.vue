@@ -1,17 +1,13 @@
 <script setup>
-import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import StoryBookSlider from "./components/StoryBookSlider.vue";
-import PlaylistSlider from "./components/PlaylistSlider.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 
 import { ref } from "vue";
 let tab = ref(null);
-const isPasswordVisible = ref(false);
 </script>
 <template>
     <AdminLayout>
-        <VContainer style="width: 80%; margin: 0 auto">
+        <v-container style="width: 80%; margin: 0 auto">
             <v-row>
                 <v-col cols="12" md="6">
                     <v-img src="/images/student_pf.png" />
@@ -24,6 +20,31 @@ const isPasswordVisible = ref(false);
                         >
                             Students
                         </h1>
+                        <div>
+                            <Link
+                                :href="
+                                    route(
+                                        'org_view_teacher_student.student.edit'
+                                    )
+                                "
+                            >
+                                <v-btn
+                                    variant="flat"
+                                    rounded
+                                    color="#17CAB6"
+                                    prepend-icon="mdi-pencil"
+                                    class="mr-4 text-white"
+                                    >Edit</v-btn
+                                >
+                            </Link>
+                            <v-btn
+                                variant="flat"
+                                rounded
+                                color="error"
+                                prepend-icon="mdi-trash"
+                                >Delete</v-btn
+                            >
+                        </div>
                     </div>
                     <v-row>
                         <v-col cols="12" class="mt-10">
@@ -33,31 +54,23 @@ const isPasswordVisible = ref(false);
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Fullname</p>
-                            <v-text-field
-                                placeholder="e.g. Wren Clark"
-                                variant="outlined"
-                            >
-                            </v-text-field>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                Wren Clark
+                            </p>
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Gender</p>
-                            <v-select placeholder="Select" variant="outlined">
-                            </v-select>
+                            <p class="text-h6 font-weight-bold mx-4">Female</p>
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Date of birth</p>
-                            <v-text-field
-                                placeholder="e.g January 24, 2010"
-                                variant="outlined"
-                            >
-                            </v-text-field>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                January 24, 2010
+                            </p>
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Education Level</p>
-                            <v-text-field
-                                placeholder="e.g K1"
-                                variant="outlined"
-                            ></v-text-field>
+                            <p class="text-h6 font-weight-bold mx-4">K1</p>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -68,52 +81,27 @@ const isPasswordVisible = ref(false);
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Fullname</p>
-                            <v-text-field
-                                placeholder="e.g. Fransico Maia"
-                                variant="outlined"
-                            >
-                            </v-text-field>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                Francisco Maia
+                            </p>
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">
                                 Relationship To Child
                             </p>
-                            <v-text-field
-                                placeholder="e.g. Mother"
-                                variant="outlined"
-                            >
-                            </v-text-field>
+                            <p class="text-h6 font-weight-bold mx-4">Mother</p>
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Contact Number</p>
-                            <v-text-field
-                                placeholder="e.g. 9180003"
-                                variant="outlined"
-                            >
-                            </v-text-field>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                9872333243
+                            </p>
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Email Address</p>
-                            <v-text-field
-                                placeholder="e.g. @fransico@gmail.com"
-                                variant="outlined"
-                            >
-                            </v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <p class="text-subtitle-1 mb-0">Login Password</p>
-                            <v-text-field
-                                variant="outlined"
-                                :type="isPasswordVisible ? 'text' : 'password'"
-                                :append-inner-icon="
-                                    isPasswordVisible
-                                        ? 'mdi-eye-off-outline'
-                                        : 'mdi-eye-outline'
-                                "
-                                @click:append-inner="
-                                    isPasswordVisible = !isPasswordVisible
-                                "
-                            ></v-text-field>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                francisco@gmail.com
+                            </p>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -147,30 +135,23 @@ const isPasswordVisible = ref(false);
                         </v-col>
                     </v-row>
                 </v-col>
-                <v-col cols="12">
-                    <div class="d-flex justify-center">
-                        <Link :href="route('view_students.index')">
-                            <v-btn
-                                variant="flat"
-                                rounded
-                                class="mr-4 text-primary"
-                                width="200"
-                                color="rgba(55, 73, 233, 0.10)"
-                                >Cancel</v-btn
-                            >
-                        </Link>
+            </v-row>
+            <v-row justify="center">
+                <v-col cols="2">
+                    <Link :href="route('org_view_teacher_student.index')">
                         <v-btn
+                            color="#e9eff0"
                             variant="flat"
                             rounded
-                            width="200"
-                            color="primary"
-                            class="text-white"
-                            >Save</v-btn
+                            height="50"
+                            class="pl-16 pr-16"
                         >
-                    </div>
+                            <span class="text-primary">Back</span>
+                        </v-btn>
+                    </Link>
                 </v-col>
             </v-row>
-        </VContainer>
+        </v-container>
     </AdminLayout>
 </template>
 <style scoped></style>

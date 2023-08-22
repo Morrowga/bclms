@@ -109,6 +109,17 @@ const pages = {
     "BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create": import('../../src/BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create.vue'),
     "BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit": import('../../src/BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit.vue'),
 
+    //org teacher and student list
+    "BlendedConcept/Organization/Presentation/Resources/ListAll/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/Index.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/ListAll/EditTeacher": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/EditTeacher.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/ListAll/CreateTeacher": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/CreateTeacher.vue'),
+    
+    "BlendedConcept/Organization/Presentation/Resources/ListAll/ViewStudentDetail": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/ViewStudentDetail.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/ListAll/EditStudent": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/EditStudent.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/ListAll/CreateStudent": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/CreateStudent.vue'),
+
+    
 
      "BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher.vue'),
 
