@@ -89,7 +89,7 @@ watch(serverPerPage, function (value) {
                     </VCol>
                 </VRow>
                 <VRow>
-                    <VCol size="3">
+                    <VCol cols="12" sm="6" md="4" lg="3">
                         <VCard @click="() => router.get(route('showCopy'))">
                             <v-chip class="class-count">
                                 5  /  5
@@ -106,7 +106,7 @@ watch(serverPerPage, function (value) {
                             </div>
                         </VCard>
                     </VCol>
-                    <VCol size="3">
+                    <VCol cols="12" sm="6" md="4" lg="3">
                         <VCard>
                             <v-chip class="class-count">
                                 5  /  5
@@ -140,77 +140,7 @@ watch(serverPerPage, function (value) {
                             </div>
                         </VCard>
                     </VCol>
-                    <VCol size="3">
-                        <VCard>
-                            <v-chip class="class-count">
-                                5  /  5
-                            </v-chip>
-                            <v-img
-                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                                height="200px"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <span class="class-label">
-                                    1A
-                                </span>
-                            </div>
-                        </VCard>
-                    </VCol>
-                </VRow>
-                <VRow>
-                    <VCol size="3">
-                        <VCard>
-                            <v-chip class="class-count">
-                                5  /  5
-                            </v-chip>
-                            <v-img
-                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                                height="200px"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <span class="class-label">
-                                    1A
-                                </span>
-                            </div>
-                        </VCard>
-                    </VCol>
-                    <VCol size="3">
-                        <VCard>
-                            <v-chip class="class-count">
-                                5  /  5
-                            </v-chip>
-                            <v-img
-                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                                height="200px"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <span class="class-label">
-                                    1A
-                                </span>
-                            </div>
-                        </VCard>
-                    </VCol>
-                    <VCol size="3">
-                        <VCard>
-                            <v-chip class="class-count">
-                                5  /  5
-                            </v-chip>
-                            <v-img
-                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                                height="200px"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <span class="class-label">
-                                    1A
-                                </span>
-                            </div>
-                        </VCard>
-                    </VCol>
-                    <VCol size="3">
+                    <VCol cols="12" sm="6" md="4" lg="3">
                         <VCard>
                             <v-chip class="class-count">
                                 5  /  5
@@ -229,7 +159,94 @@ watch(serverPerPage, function (value) {
                     </VCol>
                 </VRow>
                 <VRow>
-                    <VCol size="3">
+                    <VCol cols="12" sm="6" md="4" lg="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol cols="12" sm="6" md="4" lg="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol cols="12" sm="6" md="4" lg="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol cols="12" sm="6" md="4" lg="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                </VRow>
+                <VRow>
+                    <VCol cols="12" sm="6" md="4" lg="3">
+                        <VCard>
+                            <v-chip class="class-count">
+                                5  /  5
+                            </v-chip>
+                            <v-img
+                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                                height="200px"
+                                cover
+                            ></v-img>
+                            <div class="d-flex justify-center">
+                                <span class="class-label">
+                                    1A
+                                </span>
+                            </div>
+                        </VCard>
+                    </VCol>
+                    <VCol cols="12" sm="6" md="4" lg="3">
                         <VCard>
                             <v-chip class="class-count">
                                 5  /  5
@@ -263,24 +280,7 @@ watch(serverPerPage, function (value) {
                             </div>
                         </VCard>
                     </VCol>
-                    <VCol size="3">
-                        <VCard>
-                            <v-chip class="class-count">
-                                5  /  5
-                            </v-chip>
-                            <v-img
-                                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                                height="200px"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <span class="class-label">
-                                    1A
-                                </span>
-                            </div>
-                        </VCard>
-                    </VCol>
-                    <VCol size="3">
+                    <VCol cols="12" sm="6" md="4" lg="3">
                         <VCard>
                             <v-chip class="class-count">
                                 5  /  5
