@@ -25,7 +25,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                     </v-btn>
                 </Link>
             </div>
-            <div class="d-flex justify-end">
+            <div class="d-flex justify-end mb-4">
                 <v-spacer></v-spacer>
                 <v-spacer></v-spacer>
                 <v-spacer></v-spacer>

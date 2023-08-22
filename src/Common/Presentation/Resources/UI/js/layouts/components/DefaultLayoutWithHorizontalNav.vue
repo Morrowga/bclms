@@ -15,6 +15,7 @@ import MobileSidebar from "./MobileSidebar.vue";
 import Header from "@mainRoot/components/Header/Header.vue";
 import BCTeacherHeader from "@mainRoot/components/BCTeacherHeader/BCTeacherHeader.vue";
 import B2BTeacherHeader from "@mainRoot/components/B2BTeacherHeader/B2BTeacherHeader.vue";
+import StudentHeader from "@mainRoot/components/Student/StudentHeader.vue";
 import Footer from "@mainRoot/components/Footer/Footer.vue";
 import UserProfile from "@mainRoot/components/UserProfile/UserProfile.vue";
 import DefaultBtn from "@mainRoot/components/Buttons/DefaultBtn.vue";
@@ -49,9 +50,14 @@ const resolveHeaderComponent = () => {
         case "Teacher":
             showMenubar.value = false;
             return B2BTeacherHeader;
+        case "Student":
+            showMenubar.value = false;
+            return StudentHeader;
         default:
             return Header;
     }
+    // showMenubar.value = false;
+    // return StudentHeader;
 };
 const resolveNavItemComponent = (item) => {
     if ("children" in item) return MobileGroupNavLink;
@@ -123,7 +129,7 @@ const siteName = computed(() => page?.site_settings?.site_name);
             </main>
         </Transition>
         <!-- :point_right: Footer -->
-        <template #footer>
+        <template v-if="props.user_role !== 'Student'" #footer>
             <Footer />
         </template>
         <!-- :point_right: Customizer -->

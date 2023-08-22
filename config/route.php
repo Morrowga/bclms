@@ -116,6 +116,9 @@ return [
         'create' => 'BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create',
         'edit' => 'BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit',
     ],
+    'org_view_teacher_student' => [
+        'index' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/Index',
+    ],
 
     //teacher profile view
 
@@ -151,6 +154,7 @@ return [
     'classrooms' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index',
     //UI
     'showCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show',
+    'editCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Edit',
     'createCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create',
 
     'organization' => [
