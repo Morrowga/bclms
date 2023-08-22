@@ -152,5 +152,6 @@ return [
     'classrooms' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index',
     //UI
     'showCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show',
+    'editCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Edit',
     'createCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create',
 ];

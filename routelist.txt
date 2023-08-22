@@ -107,5 +107,6 @@ http://bc-lms.test/createplaylists
 
 
 classrooms
-classroom.show => shopCopy
+classroom.show => showCopy
+classroom.edit => editCopy
 classroom.create => create
