@@ -8,7 +8,6 @@ class OrganizationTeacherStudentController
 {
     public function index()
     {
-        dd('hello');
-        return Inertia::render(config('route.org_teacher_student.index'));
+        return Inertia::render(config('route.org_view_teacher_student.index'));
     }
 }
