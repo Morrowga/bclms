@@ -108,6 +108,8 @@ const pages = {
 
     //org teacher and student list
     "BlendedConcept/Organization/Presentation/Resources/ListAll/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/Index.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/ListAll/EditTeacher": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/EditTeacher.vue'),
 
 
     "BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher.vue'),

@@ -1,5 +1,7 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import StudentList from "./components/StudentList.vue";
+import TeacherList from "./components/TeacherList.vue";
 import { ref } from "vue";
 let tab = ref("student");
 const changeTab = (tabName) => {
@@ -64,27 +66,14 @@ const changeTab = (tabName) => {
                     </v-btn>
                 </div>
             </div>
-            <div class="d-flex justify-end mb-4">
-                <v-spacer></v-spacer>
-                <v-spacer></v-spacer>
-                <v-spacer></v-spacer>
-                <VTextField
-                    placeholder="Search User ..."
-                    density="compact"
-                    class="mr-4"
-                />
-
-                <VSelect
-                    v-model="selectedRole"
-                    label="Sort By"
-                    :items="roles"
-                    density="compact"
-                />
+            <div class="tab-list">
+                <section v-if="tab == 'student'">
+                    <StudentList />
+                </section>
+                <section v-if="tab == 'teacher'">
+                    <TeacherList />
+                </section>
             </div>
-            <VRow cols="6">
-                <VCol cols="2" class="pe-2" v-for="item in 12" :key="item">
-                </VCol>
-            </VRow>
         </VContainer>
     </AdminLayout>
 </template>

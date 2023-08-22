@@ -27,4 +27,6 @@ Route::group(['middleware' => ['auth']], function () {
     // Route::get('/organizations/show', [OrganizationController::class, 'show'])->name('organizations.show');
 
     Route::get('/org_view_teacher_student', [OrganizationTeacherStudentController::class, 'index'])->name('org_view_teacher_student.index');
+    Route::get('/org_view_teacher_student/teacher/show', [OrganizationTeacherStudentController::class, 'showTeacher'])->name('org_view_teacher_student.teacher.show');
+    Route::get('/org_view_teacher_student/teacher/edit', [OrganizationTeacherStudentController::class, 'editTeacher'])->name('org_view_teacher_student.teacher.edit');
 });

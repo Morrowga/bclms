@@ -119,6 +119,8 @@ return [
     ],
     'org_view_teacher_student' => [
         'index' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/Index',
+        'teacher-edit' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/EditTeacher',
+        'teacher-show' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail'
     ],
 
     //teacher profile view
