@@ -4,7 +4,7 @@ import TotalStudents from "./TotalStudents.vue";
 <template>
     <v-expansion-panel>
         <v-expansion-panel-title>
-            <h2 class="font-weight-bold text-h5">Step 1: Select Teachers <v-chip class="chip-count">3</v-chip></h2>
+            <h2 class="font-weight-bold text-h5">Step 1: Select Teachers</h2>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
             <div class="d-flex justify-end align-center mb-4">
@@ -50,13 +50,6 @@ import TotalStudents from "./TotalStudents.vue";
     justify-content: center;
     border: 1px solid #17cab6;
 }
-
-.chip-count{
-    background: var(--seaform, #D7F2F0) !important;
-    gap: 10px !important;
-    border-radius: 50px !important;
-    color: #17CAB6 !important;
- }
 
 .chip-content {
     cursor: inherit;

@@ -16,7 +16,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
         <section>
             <VContainer>
                 <VRow>
-                    <VCol cols="12" sm="6" md="6">
+                    <VCol size="6">
                        <div class="classroom">
                         <v-img src="/images/bg.png" cover></v-img>
                         <div class="overlay-container">
@@ -27,7 +27,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                         </div>
                        </div>
                     </VCol>
-                    <VCol cols="12" sm="6" md="6" class="marginadjust">
+                    <VCol size="6" class="marginadjust">
                         <div class="text-left">
                             <span class="font-weight-black classname">
                                 1 A
@@ -45,7 +45,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                         <br>
                         <br>
                        <div>
-                        <v-btn prepend-icon="mdi-pencil" varient="flat" @click="() => router.get(route('editCopy'))" color="#16cab6" class="textcolor" rounded>
+                        <v-btn prepend-icon="mdi-pencil" varient="flat" color="#16cab6" class="textcolor" rounded>
                          Edit
                         </v-btn>
                         <v-btn prepend-icon="mdi-trash-can-outline" color="#ff6262" class="ml-2 textcolor" varient="flat" rounded>
@@ -57,7 +57,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                 <div class="mt-10">
                     <span class="span-text">Teacher</span>
                     <VRow class="mt-5">
-                        <VCol cols="12" sm="6" md="4" lg="2" class="text-center d-flex justify-center">
+                        <VCol cols="2" class="text-center d-flex justify-center">
                             <div>
                                 <v-img
                                 src="/images/classroom8.jpeg"
@@ -69,7 +69,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 </div>
                             </div>
                         </VCol>
-                        <VCol cols="12" sm="6" md="4" lg="2" class="text-center d-flex justify-center">
+                        <VCol cols="2" class="text-center d-flex justify-center">
                             <div>
                                 <v-img
                                 src="/images/classroom7.jpeg"
@@ -89,7 +89,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                         <span class="semi-label">Group 1</span>
                     </div>
                     <VRow class="mt-5">
-                        <VCol cols="12" sm="6" md="4" lg="2" class="text-center d-flex justify-center">
+                        <VCol cols="2" class="text-center d-flex justify-center">
                             <div>
                                 <v-img
                                 src="/images/classroom2.jpeg"
@@ -107,7 +107,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 </div>
                             </div>
                         </VCol>
-                        <VCol cols="12" sm="6" md="4" lg="2" class="text-center d-flex justify-center">
+                        <VCol cols="2" class="text-center d-flex justify-center">
                             <div>
                                 <v-img
                                 src="/images/classroom3.jpeg"
@@ -132,7 +132,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                         <span class="semi-label">Group 2</span>
                     </div>
                     <VRow class="mt-5">
-                        <VCol cols="12" sm="6" md="4" lg="2" class="text-center d-flex justify-center">
+                        <VCol cols="2" class="text-center d-flex justify-center">
                             <div>
                                 <v-img
                                 src="/images/classroom4.jpeg"
@@ -157,7 +157,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                         <span class="semi-label">Student Without A Group</span>
                     </div>
                     <VRow class="mt-5">
-                        <VCol cols="12" sm="6" md="4" lg="2" class="text-center d-flex justify-center">
+                        <VCol cols="2" class="text-center d-flex justify-center">
                             <div>
                                 <v-img
                                 src="/images/classroom6.jpeg"
@@ -175,7 +175,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 </div>
                             </div>
                         </VCol>
-                        <VCol cols="12" sm="6" md="4" lg="2" class="text-center d-flex justify-center">
+                        <VCol cols="2" class="text-center d-flex justify-center">
                             <div>
                                 <v-img
                                 src="/images/classroom1.jpeg"
@@ -193,7 +193,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 </div>
                             </div>
                         </VCol>
-                        <VCol cols="12" sm="6" md="4" lg="2" class="text-center d-flex justify-center">
+                        <VCol cols="2" class="text-center d-flex justify-center">
                             <div>
                                 <v-img
                                 src="/images/classroom5.jpeg"

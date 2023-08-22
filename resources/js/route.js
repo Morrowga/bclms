@@ -38,7 +38,10 @@ const pages = {
 
     "BlendedConcept/Organization/Presentation/Resources/SubScriptionInvoice/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/SubScriptionInvoice/Index.vue'),
 
-
+    // Organization Dashboard for Teacher
+    "BlendedConcept/System/Presentation/Resources/OrganizationDashboard/Admin/Profile": import(
+        '../../src/BlendedConcept/System/Presentation/Resources/OrganizationDashboard/Admin/Profile.vue'
+    ),
 
 
     /***
@@ -118,8 +121,7 @@ const pages = {
 
     
 
-
-    "BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher.vue'),
+     "BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher.vue'),
 
      "BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/EditTeacher.vue'),
 
@@ -224,8 +226,7 @@ const pages = {
     //classRoom crud
     "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index.vue'),
     "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show.vue'),
-    "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create.vue'),
-    "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Edit": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Edit.vue')
+    "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create.vue')
 
 };
 export default pages;

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Src\BlendedConcept\System\Presentation\HTTP\AnnouncementController;
+use Src\BlendedConcept\System\Presentation\HTTP\Controllers\Admin\AdminProfileController;
 use Src\BlendedConcept\System\Presentation\HTTP\DashBoardController;
 use Src\BlendedConcept\System\Presentation\HTTP\LibraryController;
 use Src\BlendedConcept\System\Presentation\HTTP\NotificationController;
@@ -54,6 +55,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     //get all notifications
     Route::get('/notifications/index', [NotificationController::class, 'getAllNotifications'])->name('notifications');
+
+    /*
+     * Organization Admin Profile
+     */
+    Route::get('/admins/profile', [AdminProfileController::class, 'index'])->name('admins.profile');
 });
 
 Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {

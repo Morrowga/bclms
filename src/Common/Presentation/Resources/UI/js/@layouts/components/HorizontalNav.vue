@@ -7,7 +7,7 @@ const props = defineProps({
     navItems: {
         type: null,
         required: true,
-},
+    },
 });
 const resolveNavItemComponent = (item) => {
     if ("children" in item) return BcDropDownMenu;
@@ -18,10 +18,10 @@ const resolveNavItemComponent = (item) => {
 
 <template>
     <Component
-    :is="resolveNavItemComponent(item)"
-    v-for="(item, index) in navItems"
-    :key="index"
-    :item="item"
+        :is="resolveNavItemComponent(item)"
+        v-for="(item, index) in navItems"
+        :key="index"
+        :item="item"
     />
 </template>
 
