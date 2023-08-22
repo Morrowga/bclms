@@ -21,7 +21,15 @@ import TeacherProfileCard from "./TeacherProfileCard.vue";
             />
         </div>
         <VRow cols="6">
-            <VCol cols="2" class="pe-2" v-for="item in 12" :key="item">
+            <VCol
+                cols="12"
+                sm="6"
+                md="3"
+                lg="2"
+                class="pe-2"
+                v-for="item in 12"
+                :key="item"
+            >
                 <TeacherProfileCard
                     :studentInfo="{
                         name: 'Wren Clark',

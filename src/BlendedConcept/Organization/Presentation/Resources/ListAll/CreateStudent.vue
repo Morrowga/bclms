@@ -1,8 +1,5 @@
 <script setup>
-import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import StoryBookSlider from "./components/StoryBookSlider.vue";
-import PlaylistSlider from "./components/PlaylistSlider.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 
 import { ref } from "vue";
@@ -100,21 +97,6 @@ const isPasswordVisible = ref(false);
                             >
                             </v-text-field>
                         </v-col>
-                        <v-col cols="12">
-                            <p class="text-subtitle-1 mb-0">Login Password</p>
-                            <v-text-field
-                                variant="outlined"
-                                :type="isPasswordVisible ? 'text' : 'password'"
-                                :append-inner-icon="
-                                    isPasswordVisible
-                                        ? 'mdi-eye-off-outline'
-                                        : 'mdi-eye-outline'
-                                "
-                                @click:append-inner="
-                                    isPasswordVisible = !isPasswordVisible
-                                "
-                            ></v-text-field>
-                        </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12">
@@ -149,7 +131,7 @@ const isPasswordVisible = ref(false);
                 </v-col>
                 <v-col cols="12">
                     <div class="d-flex justify-center">
-                        <Link :href="route('view_students.index')">
+                        <Link :href="route('org_view_teacher_student.index')">
                             <v-btn
                                 variant="flat"
                                 rounded

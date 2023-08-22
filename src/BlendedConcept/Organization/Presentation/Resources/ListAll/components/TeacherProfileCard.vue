@@ -3,8 +3,11 @@ import { Link } from "@inertiajs/vue3";
 const studentInfo = defineProps(["studentInfo"]);
 </script>
 <template>
-    <div class="d-flex flex-column justify-center align-center">
-        <Link :href="route('org_view_teacher_student.teacher.show')">
+    <div>
+        <Link
+            :href="route('org_view_teacher_student.teacher.show')"
+            class="d-flex flex-column justify-center align-center"
+        >
             <VImg src="/images/teacher.png" class="tggie-student-img" />
             <h4 class="tiggie-subtitle">Wren Clark</h4>
             <p class="text-candy-red mb-1">

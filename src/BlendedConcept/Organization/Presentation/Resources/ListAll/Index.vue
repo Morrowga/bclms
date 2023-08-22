@@ -11,60 +11,113 @@ const changeTab = (tabName) => {
 <template>
     <AdminLayout>
         <VContainer style="width: 80%; margin: 0 auto">
-            <div class="d-flex justify-space-between align-center mb-10">
-                <div class="d-flex align-center" style="gap: 10px">
-                    <v-btn
-                        variant="flat"
-                        rounded
-                        :color="tab == 'student' ? 'primary' : 'secondary'"
-                        class="text-white"
-                        @click="changeTab('student')"
-                    >
-                        Students
-                    </v-btn>
-                    <v-btn
-                        variant="flat"
-                        rounded
-                        :color="tab == 'teacher' ? 'primary' : 'secondary'"
-                        class="text-white"
-                        @click="changeTab('teacher')"
-                    >
-                        Teacher
-                    </v-btn>
-                </div>
-                <div class="d-flex align-center" style="gap: 10px">
-                    <v-btn
-                        variant="flat"
-                        rounded
-                        color="#17CAB6"
-                        class="text-white"
-                        prepend-icon="mdi-plus"
-                    >
-                        Allocate Storage
-                    </v-btn>
-
-                    <Link :href="route('view_students.create')">
-                        <v-btn
-                            variant="flat"
-                            rounded
-                            color="primary"
-                            class="text-white"
-                            prepend-icon="mdi-plus"
+            <div class="mb-10">
+                <v-row>
+                    <v-col cols="12" md="6">
+                        <div class="d-flex align-center" style="gap: 10px">
+                            <v-btn
+                                variant="flat"
+                                rounded
+                                :color="
+                                    tab == 'student' ? 'primary' : 'secondary'
+                                "
+                                class="text-white"
+                                @click="changeTab('student')"
+                            >
+                                Students
+                            </v-btn>
+                            <v-btn
+                                variant="flat"
+                                rounded
+                                :color="
+                                    tab == 'teacher' ? 'primary' : 'secondary'
+                                "
+                                class="text-white"
+                                @click="changeTab('teacher')"
+                            >
+                                Teacher
+                            </v-btn>
+                        </div>
+                    </v-col>
+                    <v-col cols="12" md="6" class="d-flex justify-end">
+                        <div
+                            v-if="tab == 'student'"
+                            class="d-flex justify-end"
+                            style="gap: 10px"
                         >
-                            Add
-                        </v-btn>
-                    </Link>
+                            <Link
+                                :href="
+                                    route(
+                                        'org_view_teacher_student.student.create'
+                                    )
+                                "
+                            >
+                                <v-btn
+                                    variant="flat"
+                                    rounded
+                                    color="primary"
+                                    class="text-white"
+                                    prepend-icon="mdi-plus"
+                                >
+                                    Add
+                                </v-btn>
+                            </Link>
 
-                    <v-btn
-                        variant="flat"
-                        rounded
-                        color="primary"
-                        class="text-white"
-                        prepend-icon="mdi-upload"
-                    >
-                        Upload
-                    </v-btn>
-                </div>
+                            <v-btn
+                                variant="flat"
+                                rounded
+                                color="primary"
+                                class="text-white"
+                                prepend-icon="mdi-upload"
+                            >
+                                Upload
+                            </v-btn>
+                        </div>
+                        <div
+                            v-if="tab == 'teacher'"
+                            class="d-flex justify-end"
+                            style="gap: 10px"
+                        >
+                            <v-btn
+                                variant="flat"
+                                rounded
+                                color="#17CAB6"
+                                class="text-white"
+                                prepend-icon="mdi-plus"
+                            >
+                                Allocate Storage
+                            </v-btn>
+
+                            <Link
+                                :href="
+                                    route(
+                                        'org_view_teacher_student.teacher.create'
+                                    )
+                                "
+                            >
+                                <v-btn
+                                    variant="flat"
+                                    rounded
+                                    color="primary"
+                                    class="text-white"
+                                    prepend-icon="mdi-plus"
+                                >
+                                    Add
+                                </v-btn>
+                            </Link>
+
+                            <v-btn
+                                variant="flat"
+                                rounded
+                                color="primary"
+                                class="text-white"
+                                prepend-icon="mdi-upload"
+                            >
+                                Upload
+                            </v-btn>
+                        </div>
+                    </v-col>
+                </v-row>
             </div>
             <div class="tab-list">
                 <section v-if="tab == 'student'">

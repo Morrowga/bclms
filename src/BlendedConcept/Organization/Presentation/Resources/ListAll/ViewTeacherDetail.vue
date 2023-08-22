@@ -4,13 +4,13 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 </script>
 <template>
     <AdminLayout>
-        <VContainer>
-            <VRow justify="center">
-                <VCol cols="6">
+        <v-container>
+            <v-row justify="center">
+                <v-col cols="6">
                     <VImg src="/images/teacherimg.png" />
-                </VCol>
-                <VCol cols="6">
-                    <VText class="teacherprofile-title">Profile</VText>
+                </v-col>
+                <v-col cols="6">
+                    <v-text class="teacherprofile-title">Profile</v-text>
                     <div class="d-flex justify-space-between mt-10">
                         <h1
                             class="tiggie-label"
@@ -19,7 +19,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                             Personal Details
                         </h1>
                         <div class="d-flex align-center" style="gap: 10px">
-                            <VBtn variant="flat" rounded color="teal">
+                            <v-btn variant="flat" rounded color="teal">
                                 <Link
                                     :href="
                                         route(
@@ -33,37 +33,37 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                                     ></VIcon>
                                     <span class="text-white">Edit</span>
                                 </Link>
-                            </VBtn>
-                            <VBtn variant="flat" rounded color="error">
+                            </v-btn>
+                            <v-btn variant="flat" rounded color="error">
                                 <VIcon
                                     icon="mdi-trash-outline"
                                     class="text-white mr-2"
                                 ></VIcon>
                                 <span class="text-white">Delete</span>
-                            </VBtn>
+                            </v-btn>
                         </div>
                     </div>
-                    <VRow>
-                        <VCol cols="12" class="py-2">
+                    <v-row>
+                        <v-col cols="12" class="py-2">
                             <h6 class="tiggie-small-label">FullName</h6>
                             <p class="tiggie-p">Tyler Covington</p>
-                        </VCol>
-                        <VCol cols="12" class="py-2">
+                        </v-col>
+                        <v-col cols="12" class="py-2">
                             <h6 class="tiggie-small-label">Work Email</h6>
                             <p class="tiggie-p">tyler.covington@work.sg</p>
-                        </VCol>
-                        <VCol cols="12" class="py-2">
+                        </v-col>
+                        <v-col cols="12" class="py-2">
                             <h6 class="tiggie-small-label">Contact Number</h6>
                             <p class="tiggie-p">9123 4567</p>
-                        </VCol>
-                    </VRow>
+                        </v-col>
+                    </v-row>
                     <!-- contact user plan -->
-                </VCol>
-            </VRow>
-            <VRow justify="center">
-                <VCol cols="2">
+                </v-col>
+            </v-row>
+            <v-row justify="center">
+                <v-col cols="2">
                     <Link :href="route('org_view_teacher_student.index')">
-                        <VBtn
+                        <v-btn
                             color="#e9eff0"
                             variant="flat"
                             rounded
@@ -71,11 +71,11 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                             class="pl-16 pr-16"
                         >
                             <span class="text-primary">Back</span>
-                        </VBtn>
+                        </v-btn>
                     </Link>
-                </VCol>
-            </VRow>
-        </VContainer>
+                </v-col>
+            </v-row>
+        </v-container>
     </AdminLayout>
 </template>
 

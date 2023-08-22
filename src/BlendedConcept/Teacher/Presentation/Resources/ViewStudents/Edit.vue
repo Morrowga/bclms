@@ -49,7 +49,7 @@ const isPasswordVisible = ref(false);
                             <v-text-field
                                 v-model="form.student_fullname"
                                 placeholder="e.g. Wren Clark"
-                                variant="solo"
+                                variant="outlined"
                             >
                             </v-text-field>
                         </v-col>
@@ -57,7 +57,7 @@ const isPasswordVisible = ref(false);
                             <p class="text-subtitle-1 mb-0">Gender</p>
                             <v-select
                                 placeholder="Select"
-                                variant="solo"
+                                variant="outlined"
                                 v-model="form.gender"
                             >
                             </v-select>
@@ -67,7 +67,7 @@ const isPasswordVisible = ref(false);
                             <v-text-field
                                 v-model="form.dob"
                                 placeholder="e.g January 24, 2010"
-                                variant="solo"
+                                variant="outlined"
                             >
                             </v-text-field>
                         </v-col>
@@ -76,7 +76,7 @@ const isPasswordVisible = ref(false);
                             <v-text-field
                                 v-model="form.education_level"
                                 placeholder="e.g K1"
-                                variant="solo"
+                                variant="outlined"
                             ></v-text-field>
                         </v-col>
                     </v-row>
@@ -91,7 +91,7 @@ const isPasswordVisible = ref(false);
                             <v-text-field
                                 v-model="form.parent_fullname"
                                 placeholder="e.g. Fransico Maia"
-                                variant="solo"
+                                variant="outlined"
                             >
                             </v-text-field>
                         </v-col>
@@ -102,7 +102,7 @@ const isPasswordVisible = ref(false);
                             <v-text-field
                                 v-model="form.relation_to_child"
                                 placeholder="e.g. Mother"
-                                variant="solo"
+                                variant="outlined"
                             >
                             </v-text-field>
                         </v-col>
@@ -111,7 +111,7 @@ const isPasswordVisible = ref(false);
                             <v-text-field
                                 v-model="form.contact_number"
                                 placeholder="e.g. 9180003"
-                                variant="solo"
+                                variant="outlined"
                             >
                             </v-text-field>
                         </v-col>
@@ -120,7 +120,7 @@ const isPasswordVisible = ref(false);
                             <v-text-field
                                 v-model="form.login_email"
                                 placeholder="e.g. @fransico@gmail.com"
-                                variant="solo"
+                                variant="outlined"
                             >
                             </v-text-field>
                         </v-col>
@@ -128,7 +128,7 @@ const isPasswordVisible = ref(false);
                             <p class="text-subtitle-1 mb-0">Login Password</p>
                             <v-text-field
                                 v-model="form.login_password"
-                                variant="solo"
+                                variant="outlined"
                                 :type="isPasswordVisible ? 'text' : 'password'"
                                 :append-inner-icon="
                                     isPasswordVisible

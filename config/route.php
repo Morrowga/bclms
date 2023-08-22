@@ -120,7 +120,12 @@ return [
     'org_view_teacher_student' => [
         'index' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/Index',
         'teacher-edit' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/EditTeacher',
-        'teacher-show' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail'
+        'teacher-create' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/CreateTeacher',
+        'teacher-show' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail',
+
+        'student-edit' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/EditStudent',
+        'student-create' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/CreateStudent',
+        'student-show' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/ViewStudentDetail'
     ],
 
     //teacher profile view
