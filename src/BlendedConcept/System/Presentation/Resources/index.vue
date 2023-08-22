@@ -1,9 +1,11 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import AnalyticsCongratulationsJohn from "@/views/dashboard/analytics/AnalyticsCongratulationsJohn.vue";
 import EcommerceSalesOverview from "@/views/dashboard/ecommerce/EcommerceSalesOverview.vue";
 import StaffDashboard from "./StaffDashBoard/index.vue";
 import SuperAdminDashboard from "./SuperAdminDashBoard/index.vue";
+import StudentDashboard from "./Student/Index.vue";
 import TeacherOrParentDashboard from "./TeacherDashBoard/index.vue";
 import OrganizatinDashBoard from "./OrganizationDashboard/Index.vue";
 import B2BTeacherDashboard from "./B2BTeacher/Index.vue";
@@ -56,7 +58,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <AdminLayout :user="user" :user_role="current_user_role" :tenant="tenant">
+    <AdminLayout v-if="current_user_role !== 'Student'" :user="user" :user_role="current_user_role" :tenant="tenant">
         <!--
             VAlert is use for show annnounment pages
         -->
@@ -111,4 +113,31 @@ onMounted(() => {
             ></StaffDashboard>
         </div>
     </AdminLayout>
+    <StudentLayout v-else>
+        <!-- <VAlert
+            v-for="item in notifications"
+            :key="item.id"
+            variant="tonal"
+            density="compact"
+            :type="item.data.type"
+            v-model="isAlertVisible"
+            closable
+            class="mb-2"
+            close-label="Close Alert"
+        >
+            <template #text>
+                <span style="font-size:24px:">{{ item?.data?.type }}</span>
+                <br />
+                <span>{{ item.data.message }}</span>
+            </template>
+            <template #close>
+                <v-btn
+                    icon="mdi-close"
+                    @click="removeNotification(item.id)"
+                ></v-btn>
+            </template>
+        </VAlert> -->
+        <StudentDashboard :orgainzations_users="props.orgainzations_users">
+        </StudentDashboard>
+    </StudentLayout>
 </template>

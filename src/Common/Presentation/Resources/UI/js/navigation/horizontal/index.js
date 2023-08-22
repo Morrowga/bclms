@@ -50,7 +50,7 @@ export default [
             { title: 'Devices', url: '/accessibility_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'accessibility_device', access_module: "access_user", },
         ]
     },
-    
+
     {
         title: 'Organizations',
         url: "/organizations",
@@ -152,11 +152,26 @@ export default [
         ]
     },
     {
-        title: 'Announcement',
+        title: 'StoryBooks',
         url: "/announcements",
         icon: { icon: 'mdi-bullhorn' },
         route_name: 'announcements',
-        access_module: "access_announcement",
+        access_module: "access_studentStorybook",
+    },
+    {
+        title: 'Games',
+        url: "/announcements",
+        icon: { icon: 'mdi-bullhorn' },
+        route_name: 'announcements',
+        access_module: "access_studentGames",
+    },
+
+    {
+        title: 'Rewards',
+        url: "/announcements",
+        icon: { icon: 'mdi-bullhorn' },
+        route_name: 'announcements',
+        access_module: "access_studentRewards",
     },
 ]
 
