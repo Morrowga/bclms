@@ -34,7 +34,7 @@ const openFileInput = () => {
             <VContainer>
                 <span class="span-text">Create Classroom</span>
                 <VRow class="mt-3">
-                    <VCol cols="12" sm="6" md="6">
+                    <VCol cols="6">
                         <VCard class="upload-card" @click="openFileInput">
                             <v-img v-if="selectedImage" :src="selectedImage" cover></v-img>
                             <div v-else class="card-text">
@@ -58,7 +58,7 @@ const openFileInput = () => {
                         </VCard>
                         <input type="file" ref="fileInput" style="display: none" @change="handleFileUpload">
                     </VCol>
-                    <VCol cols="12" sm="6" md="4">
+                    <VCol cols="6">
                         <span class="semi-label">Classroom Details</span>
                         <div>
                             <span class="input-label">Name <span class="star">*</span></span>

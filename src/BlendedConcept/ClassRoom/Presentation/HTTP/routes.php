@@ -7,5 +7,4 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('classrooms', ClassRoomController::class);
     Route::get('/classroom-show-copy', [ClassRoomController::class, 'showCopy'])->name('showCopy');
-    Route::get('/classroom-edit-copy', [ClassRoomController::class, 'editCopy'])->name('editCopy');
 });

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Src\BlendedConcept\Organization\Presentation\HTTP\OrganizationController;
-use Src\BlendedConcept\Organization\Presentation\HTTP\OrganizationTeacherStudentController;
 use Src\BlendedConcept\Organization\Presentation\HTTP\PlanController;
 use Src\BlendedConcept\Organization\Presentation\HTTP\SubscribtionInvoiceController;
 
@@ -25,6 +24,4 @@ Route::group(['middleware' => ['auth']], function () {
     // Route::get('/organizations/edit', [OrganizationController::class, 'edit'])->name('organizations.edit');
     // Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
     // Route::get('/organizations/show', [OrganizationController::class, 'show'])->name('organizations.show');
-
-    Route::get('/org_view_teacher_student', [OrganizationTeacherStudentController::class, 'index'])->name('org_view_teacher_student.index');
 });
