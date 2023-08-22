@@ -45,7 +45,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                         <br>
                         <br>
                        <div>
-                        <v-btn prepend-icon="mdi-pencil" varient="flat" color="#16cab6" class="textcolor" rounded>
+                        <v-btn prepend-icon="mdi-pencil" varient="flat" @click="() => router.get(route('editCopy'))" color="#16cab6" class="textcolor" rounded>
                          Edit
                         </v-btn>
                         <v-btn prepend-icon="mdi-trash-can-outline" color="#ff6262" class="ml-2 textcolor" varient="flat" rounded>
