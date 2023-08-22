@@ -38,7 +38,10 @@ const pages = {
 
     "BlendedConcept/Organization/Presentation/Resources/SubScriptionInvoice/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/SubScriptionInvoice/Index.vue'),
 
-
+    // Organization Dashboard for Teacher
+    "BlendedConcept/System/Presentation/Resources/OrganizationDashboard/Admin/Profile": import(
+        '../../src/BlendedConcept/System/Presentation/Resources/OrganizationDashboard/Admin/Profile.vue'
+    ),
 
 
     /***

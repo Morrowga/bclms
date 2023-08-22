@@ -48,7 +48,6 @@ return [
         'edit' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Edit',
         'show' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Show',
         'planorg' => 'BlendedConcept/Organization/Presentation/Resources/PlanForOrg/CreatePlan',
-
     ],
 
     'subscriptioninvoice' => [
@@ -110,7 +109,7 @@ return [
     'teacher_storybook' => [
         'index' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Index',
         'show' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Show',
-        'assign_student' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/AssignStudent'
+        'assign_student' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/AssignStudent',
     ],
 
     'add_customisation' => [
@@ -128,7 +127,7 @@ return [
     'playlist' => [
         'index' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index',
         'create' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Create',
-        'show' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show'
+        'show' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show',
     ],
 
     'announment' => [
@@ -153,4 +152,8 @@ return [
     //UI
     'showCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show',
     'createCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create',
+
+    'organization' => [
+        'profile' => 'BlendedConcept/System/Presentation/Resources/OrganizationDashboard/Admin/Profile',
+    ],
 ];
