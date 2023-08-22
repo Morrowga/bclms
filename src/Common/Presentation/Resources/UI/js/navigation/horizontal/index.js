@@ -14,7 +14,7 @@ export default [
     {
         title: 'Home',
         url: DASHBOARD_URL,
-        icon: { icon: 'mdi-home' },
+        icon: { icon: 'fa:fas fa-home' },
         access_module: "access_dashboard",
         route_name: DASHBOARD_ROUTE,
     },
@@ -50,7 +50,7 @@ export default [
             { title: 'Devices', url: '/accessibility_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'accessibility_device', access_module: "access_user", },
         ]
     },
-    
+
     {
         title: 'Organizations',
         url: "/organizations",

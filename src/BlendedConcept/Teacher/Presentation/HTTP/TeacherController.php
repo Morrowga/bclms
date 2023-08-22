@@ -105,4 +105,9 @@ class TeacherController extends Controller
     {
         return Inertia::render(config('route.viewteacher.editteacher'));
     }
+
+    public function listofteacher()
+    {
+         return Inertia::render(config('route.listofteacher.index'));
+    }
 }

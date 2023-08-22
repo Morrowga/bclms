@@ -95,17 +95,12 @@ http://bc-lms.test/createplaylists
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 classrooms
 classroom.show => shopCopy
 classroom.create => create
+
+
+
+Org_Admin_list_of_teachers #22.8.2023
+
+http://bc-lms.test/listoforgteacher

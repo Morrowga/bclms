@@ -215,7 +215,12 @@ const pages = {
     //classRoom crud
     "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index.vue'),
     "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show.vue'),
-    "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create.vue')
+    "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create.vue'),
+
+
+    //list of organization teacher
+
+    "BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index.vue')
 
 };
 export default pages;

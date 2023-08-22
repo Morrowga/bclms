@@ -156,4 +156,8 @@ return [
     'organization' => [
         'profile' => 'BlendedConcept/System/Presentation/Resources/OrganizationDashboard/Admin/Profile',
     ],
+
+    'listofteacher' => [
+       'index' => 'BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index'
+    ]
 ];
