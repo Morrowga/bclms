@@ -117,6 +117,9 @@ return [
         'create' => 'BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create',
         'edit' => 'BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit',
     ],
+    'org_view_teacher_student' => [
+        'index' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/Index',
+    ],
 
     //teacher profile view
 

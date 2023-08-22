@@ -1,5 +1,5 @@
 <script setup>
-import StudentProfile from "./components/StudentInfo.vue";
+// import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 </script>
 <template>
@@ -44,13 +44,13 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
             </div>
             <VRow cols="6">
                 <VCol cols="2" class="pe-2" v-for="item in 12" :key="item">
-                    <StudentProfile
+                    <!-- <StudentProfile
                         :studentInfo="{
                             name: 'Wren Clark',
                             phone_number: '9123 4567',
                             img: '/images/students/studentone.svg',
                         }"
-                    />
+                    /> -->
                 </VCol>
             </VRow>
         </VContainer>
