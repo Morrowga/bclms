@@ -33,29 +33,29 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 1 A
                             </span>
                             <v-chip class="ml-5 spacing">
-                               <span class="text-center"> 5  /  5</span>
+                               <span class="text-center pppangram-bold"> 5  /  5</span>
                             </v-chip>
                         </div>
                         <br>
                         <br>
                         <br>
 
-                        <span class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum ipsam animi aspernatur soluta. Illo odio ut molestias ea dolorem alias consequuntur reiciendis eius non minus tempora, adipisci rerum necessitatibus atque?</span>
+                        <span class="description pppangram-bold">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum ipsam animi aspernatur soluta. Illo odio ut molestias ea dolorem alias consequuntur reiciendis eius non minus tempora, adipisci rerum necessitatibus atque?</span>
                         <br>
                         <br>
                         <br>
                        <div>
-                        <v-btn prepend-icon="mdi-pencil" varient="flat" @click="() => router.get(route('editCopy'))" color="#16cab6" class="textcolor" rounded>
+                        <v-btn prepend-icon="mdi-pencil" varient="flat" @click="() => router.get(route('editCopy'))" color="#16cab6" class="textcolor pppangram-bold" rounded>
                          Edit
                         </v-btn>
-                        <v-btn prepend-icon="mdi-trash-can-outline" color="#ff6262" class="ml-2 textcolor" varient="flat" rounded>
+                        <v-btn prepend-icon="mdi-trash-can-outline" color="#ff6262" class="ml-2 textcolor pppangram-bold" varient="flat" rounded>
                         Delete
                         </v-btn>
                        </div>
                     </VCol>
                 </VRow>
                 <div class="mt-10">
-                    <span class="span-text">Teacher</span>
+                    <span class="span-text ruddy-bold">Teachers</span>
                     <VRow class="mt-5">
                         <VCol cols="12" sm="6" md="4" lg="2" class="text-center d-flex justify-center">
                             <div>
@@ -65,7 +65,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text">Isbella Taylor</span>
+                                    <span class="label-text pppangram-bold">Isbella Taylor</span>
                                 </div>
                             </div>
                         </VCol>
@@ -77,16 +77,16 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text">Liams William</span>
+                                    <span class="label-text pppangram-bold">Liams William</span>
                                 </div>
                             </div>
                         </VCol>
                     </VRow>
                 </div>
                 <div class="mt-15">
-                    <span class="span-text">Groups</span>
+                    <span class="span-text ruddy-bold">Groups</span>
                     <div class="mt-5">
-                        <span class="semi-label">Group 1</span>
+                        <span class="semi-label ruddy-bold">Group 1</span>
                     </div>
                     <VRow class="mt-5">
                         <VCol cols="12" sm="6" md="4" lg="2" class="text-center d-flex justify-center">
@@ -97,13 +97,13 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text">Wren Clark</span>
+                                    <span class="label-text pppangram-bold">Wren Clark</span>
                                 </div>
                                 <div class="mt-1 d-flex justify-center">
                                     <div>
                                         <img width="20" src="/images/phone.svg">
                                     </div>
-                                    <span class="label-text-two ml-1"> 9123 4567</span>
+                                    <span class="label-text-two ml-1 pppangram-bold"> 9123 4567</span>
                                 </div>
                             </div>
                         </VCol>
@@ -115,13 +115,13 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text">Madge Dennis</span>
+                                    <span class="label-text pppangram-bold">Madge Dennis</span>
                                 </div>
                                 <div class="mt-1 d-flex justify-center">
                                     <div>
                                         <img width="20" src="/images/phone.svg">
                                     </div>
-                                    <span class="label-text-two ml-1"> 9123 4567</span>
+                                    <span class="label-text-two ml-1 pppangram-bold"> 9123 4567</span>
                                 </div>
                             </div>
                         </VCol>
@@ -129,7 +129,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                 </div>
                 <div class="mt-15">
                     <div class="mt-5">
-                        <span class="semi-label">Group 2</span>
+                        <span class="semi-label ruddy-bold">Group 2</span>
                     </div>
                     <VRow class="mt-5">
                         <VCol cols="12" sm="6" md="4" lg="2" class="text-center d-flex justify-center">
@@ -140,13 +140,13 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text">Wren Clark</span>
+                                    <span class="label-text pppangram-bold">Wren Clark</span>
                                 </div>
                                 <div class="mt-1 d-flex justify-center">
                                     <div>
                                         <img width="20" src="/images/phone.svg">
                                     </div>
-                                    <span class="label-text-two ml-1"> 9123 4567</span>
+                                    <span class="label-text-two ml-1 pppangram-bold"> 9123 4567</span>
                                 </div>
                             </div>
                         </VCol>
@@ -154,7 +154,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                 </div>
                 <div class="mt-15">
                     <div class="mt-5">
-                        <span class="semi-label">Student Without A Group</span>
+                        <span class="semi-label ruddy-bold">Student Without A Group</span>
                     </div>
                     <VRow class="mt-5">
                         <VCol cols="12" sm="6" md="4" lg="2" class="text-center d-flex justify-center">
@@ -165,13 +165,13 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text">Ethan Jonathan</span>
+                                    <span class="label-text pppangram-bold">Ethan Jonathan</span>
                                 </div>
                                 <div class="mt-1 d-flex justify-center">
                                     <div>
                                         <img width="20" src="/images/phone.svg">
                                     </div>
-                                    <span class="label-text-two ml-1"> 9123 4567</span>
+                                    <span class="label-text-two ml-1 pppangram-bold"> 9123 4567</span>
                                 </div>
                             </div>
                         </VCol>
@@ -183,13 +183,13 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text">Olivia Smith</span>
+                                    <span class="label-text pppangram-bold">Olivia Smith</span>
                                 </div>
                                 <div class="mt-1 d-flex justify-center">
                                     <div>
                                         <img width="20" src="/images/phone.svg">
                                     </div>
-                                    <span class="label-text-two ml-1"> 9123 4567</span>
+                                    <span class="label-text-two ml-1 pppangram-bold"> 9123 4567</span>
                                 </div>
                             </div>
                         </VCol>
@@ -201,13 +201,13 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text">Emma Brown</span>
+                                    <span class="label-text pppangram-bold">Emma Brown</span>
                                 </div>
                                 <div class="mt-1 d-flex justify-center">
                                     <div>
                                         <img width="20" src="/images/phone.svg">
                                     </div>
-                                    <span class="label-text-two ml-1"> 9123 4567</span>
+                                    <span class="label-text-two ml-1 pppangram-bold"> 9123 4567</span>
                                 </div>
                             </div>
                         </VCol>
@@ -251,7 +251,6 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 .label-text{
     color: var(--graphite, #282828) !important;
     /* Body Style Large */
-    font-family: PP Pangram Sans !important;
     font-size: 24px !important;
     font-style: normal !important;
     font-weight: 500 !important;
@@ -267,7 +266,6 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 .semi-label{
     color: var(--graphite, #282828) !important;
-    font-family: Ruddy;
     font-size: 30px !important;
     font-style: normal !important;
     font-weight: 700 !important;
@@ -281,7 +279,6 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 .span-text{
     color: #000 !important;
-    font-family: Ruddy !important;
     font-size: 40px !important;
     font-style: normal !important;
     font-weight: 700 !important;

@@ -4,7 +4,7 @@ import TotalStudents from "./TotalStudents.vue";
 <template>
     <v-expansion-panel>
         <v-expansion-panel-title>
-            <h2 class="font-weight-bold text-h5">Step 1: Select Teachers <v-chip class="chip-count">3</v-chip></h2>
+            <h2 class="font-weight-bold ruddy-bold" style="font-size: 25px !important;">Step 1: Select Teachers <v-chip class="chip-count">3</v-chip></h2>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
             <div class="d-flex justify-end align-center mb-4">

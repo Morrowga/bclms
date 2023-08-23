@@ -22,13 +22,45 @@
     --text: #161616;
 }
 
+
+
+// @font-face {
+//     font-family: 'tiggiefont';
+//     src: url('/fonts/tiggiekidsfont/PPPangramSans-Medium.otf');
+// }
+
 @font-face {
-    font-family: 'tiggiefont';
-    src: url('/fonts/tiggiekidsfont/PPPangramSans-Medium.otf');
+    font-family: 'pppangram-bold';
+    src: url('/fonts/PPPangramSans-Bold.otf');
 }
 
+@font-face {
+    font-family: 'pppangram-medium';
+    src: url('/fonts/PPPangramSans-Medium.otf');
+}
+
+@font-face {
+    font-family: 'ruddy-bold';
+    src: url('/fonts/Ruddy-Bold.ttf');
+}
+
+
+.pppangram-bold {
+    font-family: 'pppangram-bold';
+}
+
+.pppangram-medium {
+    font-family: 'pppangram-medium';
+}
+
+.ruddy-bold {
+    font-family: 'ruddy-bold';
+}
+
+
+
 * {
-    font-family: 'tiggiefont';
+    font-family: 'pppangram-medium';
     font-size: 16px !important;
     font-style: normal !important;
     font-weight: 500 !important;
@@ -146,7 +178,7 @@ textarea {
 
 
 .tiggie-teacher-label {
-    color: var(--gray)  !important;
+    color: var(--gray) !important;
     /* Body Style Small */
     // font-family: PP Pangram Sans;
     font-size: 16px !important;

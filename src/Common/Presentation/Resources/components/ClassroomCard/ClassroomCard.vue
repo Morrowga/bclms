@@ -12,7 +12,7 @@ let props = defineProps(["route", "count", "label"]);
             cover
         ></v-img>
         <div class="d-flex justify-center">
-            <span class="class-label"> {{ props.label }} </span>
+            <span class="class-label ruddy-bold"> {{ props.label }} </span>
         </div>
     </VCard>
 </template>

@@ -114,12 +114,12 @@ const pages = {
     "BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail.vue'),
     "BlendedConcept/Organization/Presentation/Resources/ListAll/EditTeacher": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/EditTeacher.vue'),
     "BlendedConcept/Organization/Presentation/Resources/ListAll/CreateTeacher": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/CreateTeacher.vue'),
-    
+
     "BlendedConcept/Organization/Presentation/Resources/ListAll/ViewStudentDetail": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/ViewStudentDetail.vue'),
     "BlendedConcept/Organization/Presentation/Resources/ListAll/EditStudent": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/EditStudent.vue'),
     "BlendedConcept/Organization/Presentation/Resources/ListAll/CreateStudent": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/CreateStudent.vue'),
 
-    
+
 
      "BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/Profile/ViewTeacher.vue'),
 
@@ -227,11 +227,23 @@ const pages = {
     "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index.vue'),
     "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show.vue'),
     "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create.vue'),
+    "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Edit": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Edit.vue'),
 
 
     //list of organization teacher
 
-    "BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index.vue')
+    "BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index.vue'),
 
+
+    //Student story book
+    "BlendedConcept/Student/Presentation/Resources/Storybook/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Storybook/Index.vue'),
+
+    //Student game
+    "BlendedConcept/Student/Presentation/Resources/Games/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Games/Index.vue'),
+
+    //Student rewards
+    "BlendedConcept/Student/Presentation/Resources/Rewards/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/Index.vue'),
+    "BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky.vue'),
+    "BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker.vue'),
 };
 export default pages;

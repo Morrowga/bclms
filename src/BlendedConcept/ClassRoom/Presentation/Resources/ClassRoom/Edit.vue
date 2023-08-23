@@ -32,7 +32,7 @@ const openFileInput = () => {
     <AdminLayout>
         <section>
             <VContainer>
-                <span class="span-text">Edit Classroom</span>
+                <span class="span-text ruddy-bold">Edit Classroom</span>
                 <VRow class="mt-3">
                     <VCol cols="12" sm="6" md="6">
                         <VCard class="upload-card" @click="openFileInput">
@@ -59,7 +59,7 @@ const openFileInput = () => {
                         <input type="file" ref="fileInput" style="display: none" @change="handleFileUpload">
                     </VCol>
                     <VCol cols="12" sm="6" md="4">
-                        <span class="semi-label">Classroom Details</span>
+                        <span class="semi-label pppangram-bold">Classroom Details</span>
                         <div>
                             <span class="input-label">Name <span class="star">*</span></span>
                             <VTextField value="1A"/>
@@ -82,10 +82,10 @@ const openFileInput = () => {
                     </v-expansion-panels>
                 </div>
                 <div class="mt-10 d-flex justify-center">
-                    <v-btn varient="flat" color="#F6F6F6" class="cancel" width="200" rounded>
+                    <v-btn varient="flat" color="#F6F6F6" class="cancel pppangram-bold" width="200" rounded>
                          Cancel
                     </v-btn>
-                    <v-btn varient="flat" color="#3749E9" class="textcolor ml-2" width="200" rounded>
+                    <v-btn varient="flat" color="#3749E9" class="textcolor ml-2 pppangram-bold" width="200" rounded>
                          Save
                     </v-btn>
                 </div>
@@ -107,7 +107,6 @@ const openFileInput = () => {
 
 .fade-text{
     color: var(--secondary-2, rgba(86, 86, 96, 0.40));
-    font-family: DM Sans !important;
     font-size: 14px !important;
     font-style: normal !important;
     font-weight: 400 !important;
@@ -124,7 +123,6 @@ const openFileInput = () => {
 .input-label{
     color: var(--gray, #BFC0C1);
     /* Body Style Small */
-    font-family: PP Pangram Sans !important;
     font-size: 16px !important;
     font-style: normal !important;
     font-weight: 500 !important;
@@ -137,7 +135,6 @@ const openFileInput = () => {
 
 .semi-label{
     color: var(--graphite, #282828) !important;
-    font-family: PP Pangram Sans !important;
     font-size: 20px !important;
     font-style: normal !important;
     font-weight: 700 !important;
@@ -146,7 +143,6 @@ const openFileInput = () => {
 
 .drag-text{
     color: var(--secondary, #565660);
-    font-family: DM Sans !important;
     font-size: 16px !important;
     font-style: normal !important;
     font-weight: 700 !important;
@@ -169,7 +165,6 @@ const openFileInput = () => {
 
 .span-text{
     color: #000 !important;
-    font-family: Ruddy !important;
     font-size: 40px !important;
     font-style: normal !important;
     font-weight: 700 !important;

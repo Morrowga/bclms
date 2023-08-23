@@ -184,15 +184,15 @@ export default [
     {
         title: 'Games',
         url: "/student-games",
-        icon: { icon: 'mdi-bullhorn' },
+        icon: { icon: 'mdi-rocket-launch-outline' },
         route_name: 'student-games',
         access_module: "access_studentStorybook",
     },
     {
         title: 'Rewards',
-        url: "/announcements",
-        icon: { icon: 'mdi-bullhorn' },
-        route_name: 'announcements',
+        url: "/student-rewards",
+        icon: { icon: 'mdi-emoticon-happy-outline' },
+        route_name: 'student-rewards',
         access_module: "access_studentRewards",
     },
     {
