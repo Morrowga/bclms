@@ -45,7 +45,7 @@ let goLink = (url) => {
         "
     >
         <v-icon :icon="item.icon.icon" class="ma-2" :color="isLinkActive(item.route_name) ? '#FF8015': '#fff'"></v-icon>
-        <span
+        <span class="ruddy-bold"
             :style="
                 isLinkActive(item.route_name)
                     ? 'color: #FF8015'

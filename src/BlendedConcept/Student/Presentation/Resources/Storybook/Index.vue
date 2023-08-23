@@ -28,7 +28,7 @@ const activeTab = (name) => {
                     <div class="d-flex justify-center mt-1">
                         <img src="/images/bookicon.png" class="icon-sidebar" alt="">
                     </div>
-                    <p class="text-center sidebartext">Assigned</p>
+                    <p class="text-center sidebartext pppangram-medium">Assigned</p>
                 </div>
             </div>
             <div @click="activeTab('pathway')" :class="{'inside-div': active === 'pathway'}" class="mt-5">
@@ -36,7 +36,7 @@ const activeTab = (name) => {
                     <div class="d-flex justify-center mt-1">
                         <img src="/images/pathicon.png" class="icon-sidebar" alt="">
                     </div>
-                    <p class="text-center sidebartext">Path Way</p>
+                    <p class="text-center sidebartext pppangram-medium">Path Way</p>
                 </div>
             </div>
             <div @click="activeTab('playlist')" :class="{'inside-div': active === 'playlist'}" class="mt-5">
@@ -44,7 +44,7 @@ const activeTab = (name) => {
                     <div class="d-flex justify-center mt-1">
                         <img src="/images/play-square.png" class="icon-sidebar" alt="">
                     </div>
-                    <p class="text-center sidebartext">Playlist</p>
+                    <p class="text-center sidebartext pppangram-medium">Playlist</p>
                 </div>
             </div>
             </v-navigation-drawer>
@@ -70,7 +70,7 @@ const activeTab = (name) => {
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">It's Ok to Lose</span>
+                            <span class="bookname  ruddy-bold">It's Ok to Lose</span>
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
@@ -93,7 +93,7 @@ const activeTab = (name) => {
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">Jack And The Beanstalk</span>
+                            <span class="bookname ruddy-bold">Jack And The Beanstalk</span>
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
@@ -116,7 +116,7 @@ const activeTab = (name) => {
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">Denver The River</span>
+                            <span class="bookname ruddy-bold">Denver The River</span>
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
@@ -139,7 +139,7 @@ const activeTab = (name) => {
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">I Am Able To Shine</span>
+                            <span class="bookname ruddy-bold">I Am Able To Shine</span>
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
@@ -162,7 +162,7 @@ const activeTab = (name) => {
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">"Ohana Means Family</span>
+                            <span class="bookname ruddy-bold">"Ohana Means Family</span>
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
@@ -185,7 +185,7 @@ const activeTab = (name) => {
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">A Walk On The Thundra</span>
+                            <span class="bookname ruddy-bold">A Walk On The Thundra</span>
                         </div>
                     </VCol>
                 </VRow>
@@ -197,7 +197,7 @@ const activeTab = (name) => {
             </VContainer>
             <VContainer v-if="active === 'playlist'">
                 <div class="text-center d-flex justify-center">
-                    <div class="title-chip"><span class="title-chip-text">Self-Love (3 Books)</span></div>
+                    <div class="title-chip"><span class="title-chip-text  ruddy-bold">Self-Love (3 Books)</span></div>
                 </div>
                 <VRow class="mt-5">
                      <VCol cols="12" sm="6" md="4" lg="4">
@@ -220,7 +220,7 @@ const activeTab = (name) => {
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">It's Ok To Lose</span>
+                            <span class="bookname ruddy-bold">It's Ok To Lose</span>
                         </div>
                      </VCol>
                      <VCol cols="12" sm="6" md="4" lg="4">
@@ -243,7 +243,7 @@ const activeTab = (name) => {
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">Jack And The Beanstalk</span>
+                            <span class="bookname ruddy-bold">Jack And The Beanstalk</span>
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
@@ -266,12 +266,12 @@ const activeTab = (name) => {
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">Denver The River</span>
+                            <span class="bookname ruddy-bold">Denver The River</span>
                         </div>
                     </VCol>
                 </VRow>
                 <div class="text-center d-flex justify-center mt-5">
-                    <div class="title-chip"><span class="title-chip-text">Bravery (2 Books)</span></div>
+                    <div class="title-chip"><span class="title-chip-text ruddy-bold">Bravery (2 Books)</span></div>
                 </div>
                 <VRow class="mt-5">
                      <VCol cols="12" sm="6" md="4" lg="4">
@@ -294,7 +294,7 @@ const activeTab = (name) => {
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">It's Ok To Lose</span>
+                            <span class="bookname ruddy-bold">It's Ok To Lose</span>
                         </div>
                      </VCol>
                      <VCol cols="12" sm="6" md="4" lg="4">
@@ -317,7 +317,7 @@ const activeTab = (name) => {
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">Jack And The Beanstalk</span>
+                            <span class="bookname ruddy-bold">Jack And The Beanstalk</span>
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
@@ -340,7 +340,7 @@ const activeTab = (name) => {
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">Denver The River</span>
+                            <span class="bookname ruddy-bold">Denver The River</span>
                         </div>
                     </VCol>
                 </VRow>
