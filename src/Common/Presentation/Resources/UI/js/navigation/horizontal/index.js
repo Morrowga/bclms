@@ -14,7 +14,7 @@ export default [
     {
         title: 'Home',
         url: DASHBOARD_URL,
-        icon: { icon: 'fa:fas fa-home' },
+        icon: { icon: 'mdi-home' },
         access_module: "access_dashboard",
         route_name: DASHBOARD_ROUTE,
     },
@@ -152,11 +152,26 @@ export default [
         ]
     },
     {
-        title: 'Announcement',
+        title: 'StoryBooks',
+        url: "/storybooks",
+        icon: { icon: 'mdi-bullhorn' },
+        route_name: 'storybooks',
+        access_module: "access_studentStorybook",
+    },
+    {
+        title: 'Games',
+        url: "/student-games",
+        icon: { icon: 'mdi-bullhorn' },
+        route_name: 'student-games',
+        access_module: "access_studentStorybook",
+    },
+
+    {
+        title: 'Rewards',
         url: "/announcements",
         icon: { icon: 'mdi-bullhorn' },
         route_name: 'announcements',
-        access_module: "access_announcement",
+        access_module: "access_studentRewards",
     },
 ]
 

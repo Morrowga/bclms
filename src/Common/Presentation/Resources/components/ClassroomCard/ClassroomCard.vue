@@ -1,6 +1,10 @@
-<script setup></script>
+<script setup>
+import { router } from "@inertiajs/core";
+
+let props = defineProps(["route"]);
+</script>
 <template>
-    <VCard>
+    <VCard @click="() => router.get(props.route)">
         <v-chip class="class-count"> 5 / 5 </v-chip>
         <v-img
             src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
