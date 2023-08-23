@@ -97,6 +97,7 @@ const theme = {
         'grey-700': '#B6BEE3',
         'grey-800': '#CFD3EC',
         'grey-900': '#E7E9F6',
+        'light-states-outlined-resting-border' : '#6D788D'
       },
       variables: {
         'code-color': '#d400ff',

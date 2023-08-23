@@ -99,7 +99,14 @@ watch(serverPerPage, function (value) {
             <VCard>
                 <VCardText class="d-flex flex-wrap gap-4">
                     <!-- 👉 Export button -->
-                    <IconOutlineBtn icon="mdi-export-variant" title="Export" />
+                    <!-- <IconOutlineBtn icon="mdi-export-variant" title="Export" /> -->
+                    <VBtn
+                        variant="tonal"
+                        color="primary"
+                        prepend-icon="mdi-tray-arrow-up"
+                    >
+                        Export
+                    </VBtn>
                     <VSpacer />
                     <VTextField
                         @keyup.enter="searchItems"
@@ -117,7 +124,7 @@ watch(serverPerPage, function (value) {
                                 :datas="[]"
                                 placeholder="Sort By"
                                 density="compact"
-                                variant="solo"
+                                variant="outlined"
                             />
                             <!-- 👉 Add User button -->
                             <Create
@@ -129,7 +136,45 @@ watch(serverPerPage, function (value) {
                         </div>
                     </div>
                 </VCardText>
+                <VCardText class="d-flex flex-wrap gap-4">
+                    <!-- 👉 Export button -->
+                    <!-- <IconOutlineBtn icon="mdi-export-variant" title="Export" /> -->
+                    <VBtn
+                        variant="tonal"
+                        color="primary"
+                        prepend-icon="mdi-tray-arrow-up"
+                    >
+                        Export
+                    </VBtn>
+                    <VSpacer />
+                    <VTextField
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
+                        placeholder="Search Users"
+                        density="compact"
+                        style="width: 10%"
+                    />
 
+                    <div class="d-flex">
+                        <div
+                            class="app-user-search-filter d-flex align-center justify-end gap-3"
+                        >
+                            <selectBox
+                                :datas="[]"
+                                placeholder="Sort By"
+                                density="compact"
+                                variant="outlined"
+                            />
+                            <!-- 👉 Add User button -->
+                            <Create
+                                :organizations="organizations"
+                                :roles="roles_name"
+                                :flash="flash"
+                                v-if="permissions.includes('create_user')"
+                            />
+                        </div>
+                    </div>
+                </VCardText>
                 <VDivider />
 
                 <vue-good-table

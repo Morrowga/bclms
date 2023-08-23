@@ -121,11 +121,13 @@ watch(serverPerPage, function (value) {
                             density="compact"
                         />
                         <!-- 👉 Add user button -->
-                        <VBtn height="40" density="compact">
-                            <span class="text-capatlize text-white">
-                                Add New
-                            </span>
-                        </VBtn>
+                        <Link :href="route('organizations.create')">
+                            <VBtn height="40" density="compact">
+                                <span class="text-capatlize text-white">
+                                    Add New
+                                </span>
+                            </VBtn>
+                        </Link>
                     </div>
                 </VCardText>
                 <VDivider />

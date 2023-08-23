@@ -64,7 +64,7 @@ let goLink = (item) => {
                     :prepend-icon="item.icon.icon"
                     append-icon="mdi-chevron-down"
                     :title="item.title"
-                    class="mx-1 text-none tiggie-menu-item-font-size"
+                    class="mx-1 text-none tiggie-menu-item-font-size hover-list"
                     :class="isParentActive(item.children) ? '' : ''"
                     :color="
                         isParentActive(item.children) ? '#4066E4' : '#282828'
@@ -154,5 +154,8 @@ let goLink = (item) => {
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 13px solid rgb(var(--v-theme-surface));
+}
+.hover-list {
+    cursor: pointer;
 }
 </style>

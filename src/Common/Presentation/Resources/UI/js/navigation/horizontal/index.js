@@ -18,19 +18,13 @@ export default [
         access_module: "access_dashboard",
         route_name: DASHBOARD_ROUTE,
     },
-    // {
-    //     title: 'Resources',
-    //     url: "#",
-    //     icon: { icon: 'mdi-folder-outline' },
-    //     access_module: "access_dashboard",
-    //     route_name: DASHBOARD_ROUTE,
-    // },
+    
     {
         title: 'Storybooks',
         url: "/",
         icon: { icon: 'mdi-book-variant' },
         route_name: 'accessibility',
-        access_module: "access_user",
+        access_module: "access_storybook",
         children: [
             { title: 'Books', url: '/books', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'books', access_module: "access_user", },
             { title: 'Games', url: '/games', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'games', access_module: "access_user", },
@@ -40,14 +34,42 @@ export default [
         ]
     },
     {
+        title: 'StoryBooks',
+        url: "/teacher_storybook",
+        icon: { icon: 'mdi-book' },
+        route_name: 'teacher_storybook',
+        access_module: "access_teacherStorybook",
+    },
+    {
+        title: 'Resources',
+        url: "#",
+        icon: { icon: 'mdi-folder-outline' },
+        access_module: "access_resources",
+        route_name: "/resources",
+    },
+    {
+        title: 'Students',
+        url: "/view_students",
+        icon: { icon: 'mdi-account-multiple-outline' },
+        access_module: "access_viewStudents",
+        route_name: "view_students",
+    },
+    {
+        title: 'Playlists',
+        url: "/playlists",
+        icon: { icon: 'mdi-play-circle-outline' },
+        access_module: "access_playlists",
+        route_name: "playlists",
+    },
+    {
         title: 'Accessibility',
         url: "/",
         icon: { icon: 'mdi-wheelchair' },
         route_name: 'accessibility',
-        access_module: "access_user",
+        access_module: "access_accessibility",
         children: [
-            { title: 'Manage Tags', url: '/disability_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'disability_device', access_module: "access_user", },
-            { title: 'Devices', url: '/accessibility_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'accessibility_device', access_module: "access_user", },
+            { title: 'Manage Tags', url: '/disability_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'disability_device', access_module: "access_disabilityDevice", },
+            { title: 'Devices', url: '/accessibility_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'accessibility_device', access_module: "access_accessibilityDevice", },
         ]
     },
 
@@ -77,14 +99,14 @@ export default [
         url: `#`,
         icon: { icon: ' mdi-google-classroom' },
         route_name: 'classrooms',
-        access_module: "access_classroom",
+        access_module: "access_usersOne",
     },
     {
         title: 'Reports',
         url: `#`,
         icon: { icon: 'mdi-file-chart-outline' },
-        route_name: 'classrooms',
-        access_module: "access_classroom",
+        route_name: '/reports',
+        access_module: "access_reports",
     },
     {
         title: 'Subscriptions',
@@ -103,22 +125,22 @@ export default [
         icon: { icon: 'mdi-account' },
         access_module: "access_user",
         children: [
-            { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
-            { title: 'Roles', url: '/roles', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'roles', access_module: "access_role" },
             { title: 'Users', url: '/users', icon: { icon: 'mdi-account-group' }, route_name: 'users', access_module: "access_user" },
             { title: 'Student', url: `${PREFIX}/students`, icon: { icon: 'mdi-account-group-outline' }, route_name: 'students', access_module: "access_student" },
+            { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
+            { title: 'Roles', url: '/roles', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'roles', access_module: "access_role" },
         ],
     },
 
     {
         title: 'Surveys',
         url: "#",
-        icon: { icon: 'mdi-account' },
-        access_module: "access_user",
+        icon: { icon: 'mdi-note-edit' },
+        access_module: "access_surveys",
         children: [
-            { title: 'User Surveys', url: '/userexperiencesurvey', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'userexperiencesurvey', access_module: "access_user", },
-            { title: 'Survey Results', url: '/survey_results', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'survey_results', access_module: "access_user", },
-            { title: 'Profilling Surveys', url: '/profilling_survey', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'profilling_survey', access_module: "access_user", },
+            { title: 'User Surveys', url: '/userexperiencesurvey', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'userexperiencesurvey', access_module: "access_userSurveys", },
+            { title: 'Survey Results', url: '/survey_results', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'survey_results', access_module: "access_surveyResults", },
+            { title: 'Profilling Surveys', url: '/profilling_survey', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'profilling_survey', access_module: "access_profillingSurveys", },
         ],
     },
     // {
@@ -139,7 +161,7 @@ export default [
     {
         title: 'Settings',
         url: "/",
-        icon: { icon: 'mdi-cog' },
+        icon: { icon: 'mdi-wrench' },
         route_name: 'system',
         access_module: "access_system",
         children: [
@@ -151,6 +173,7 @@ export default [
 
         ]
     },
+    
     {
         title: 'StoryBooks',
         url: "/storybooks",
@@ -165,13 +188,19 @@ export default [
         route_name: 'student-games',
         access_module: "access_studentStorybook",
     },
-
     {
         title: 'Rewards',
         url: "/announcements",
         icon: { icon: 'mdi-bullhorn' },
         route_name: 'announcements',
         access_module: "access_studentRewards",
+    },
+    {
+        title: 'Announcements',
+        url: "/announcements",
+        icon: { icon: 'mdi-bullhorn' },
+        route_name: 'announcements',
+        access_module: "access_announcement",
     },
 ]
 

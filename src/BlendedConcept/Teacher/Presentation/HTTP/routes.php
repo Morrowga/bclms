@@ -19,7 +19,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('editteacher', [TeacherController::class, 'editteacher'])->name('editteacher');
 
-    Route::get('playlists', [PlayListController::class, 'index']);
+    Route::get('playlists', [PlayListController::class, 'index'])->name('playlists.index');
 
     Route::get('createplaylists', [PlayListController::class, 'create']);
     Route::get('showplaylists', [PlayListController::class, 'show']);
@@ -45,5 +45,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/add_customisation/create', [AddCustomisationController::class, 'create'])->name('add_customisation.create');
     Route::get('/add_customisation/edit', [AddCustomisationController::class, 'edit'])->name('add_customisation.edit');
 
-    Route::get('listoforgteacher',[TeacherController::class,'listofteacher']);
+    Route::get('listoforgteacher', [TeacherController::class, 'listofteacher']);
 });

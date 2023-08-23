@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
     form: {
-        type: Object
+        type: Object,
     },
     userData: {
         type: Object,
@@ -9,46 +9,45 @@ const props = defineProps({
         default: () => ({
             currentpassword: "",
             updatedpassword: "",
-            passwordConfirmation:""
-
+            passwordConfirmation: "",
         }),
     },
     isDialogVisible: {
         type: Boolean,
         required: true,
     },
-})
+});
 
-const emit = defineEmits([
-    'submit',
-    'update:isDialogVisible',
-])
+const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
-const userData = ref(structuredClone(toRaw(props.userData)))
-const isUseAsBillingAddress = ref(false)
+const userData = ref(structuredClone(toRaw(props.userData)));
+const isUseAsBillingAddress = ref(false);
 
 watch(props, () => {
-    userData.value = structuredClone(toRaw(props.userData))
-})
+    userData.value = structuredClone(toRaw(props.userData));
+});
 
 const onFormSubmit = () => {
     // emit('submit', userData.value)
-    emit('submit',{title:"Password Changed Successfully"})
-}
+    emit("submit", { title: "Password Changed Successfully" });
+};
 
 const onFormReset = () => {
-    userData.value = structuredClone(toRaw(props.userData))
-    emit('update:isDialogVisible', false)
-}
+    userData.value = structuredClone(toRaw(props.userData));
+    emit("update:isDialogVisible", false);
+};
 
-const dialogVisibleUpdate = val => {
-    emit('update:isDialogVisible', val)
-}
+const dialogVisibleUpdate = (val) => {
+    emit("update:isDialogVisible", val);
+};
 </script>
 
 <template>
-    <VDialog :width="$vuetify.display.smAndDown ? 'auto' : 600" :model-value="props.isDialogVisible"
-        @update:model-value="dialogVisibleUpdate">
+    <VDialog
+        :width="$vuetify.display.smAndDown ? 'auto' : 600"
+        :model-value="props.isDialogVisible"
+        @update:model-value="dialogVisibleUpdate"
+    >
         <VCard class="">
             <!-- 👉 dialog close btn -->
             <DialogCloseBtn variant="text" size="small" @click="onFormReset" />
@@ -66,40 +65,76 @@ const dialogVisibleUpdate = val => {
                         <VRow justify="center">
                             <!-- 👉 Contact -->
                             <VCol cols="12" md="12">
-                                <VLabel class="tiggie-label">Old Password</VLabel>
-                                <VTextField type="password" v-model="userData.currentpassword"
-                                    placeholder="Enter Current Password" class="tiggie-resize-input-text"
-                                    :error-messages="props?.form?.errors?.currentpassword" />
+                                <VLabel class="tiggie-label required"
+                                    >Old Password</VLabel
+                                >
+                                <VTextField
+                                    type="password"
+                                    v-model="userData.currentpassword"
+                                    placeholder="Enter Current Password"
+                                    class="tiggie-resize-input-text"
+                                    :error-messages="
+                                        props?.form?.errors?.currentpassword
+                                    "
+                                />
                             </VCol>
-
 
                             <!-- 👉 Contact -->
                             <VCol cols="12" md="12">
-                                <VLabel class="tiggie-label">Password</VLabel>
-                                <VTextField type="password" placeholder="Enter new password"
-                                    v-model="userData.updatedpassword" class="tiggie-resize-input-text"
-                                    :error-messages="props?.form?.errors?.updatedpassword" />
+                                <VLabel class="tiggie-label required"
+                                    >Password</VLabel
+                                >
+                                <VTextField
+                                    type="password"
+                                    placeholder="Enter new password"
+                                    v-model="userData.updatedpassword"
+                                    class="tiggie-resize-input-text"
+                                    :error-messages="
+                                        props?.form?.errors?.updatedpassword
+                                    "
+                                />
                             </VCol>
                             <VCol cols="12" md="12">
-                                <VLabel class="tiggie-label">Confirm Password</VLabel>
-                                <VTextField type="password" placeholder="Enter new password again"
-                                    v-model="userData.passwordConfirmation" class="tiggie-resize-input-text"
-                                    :error-messages="props?.form?.errors?.passwordConfirmation" />
+                                <VLabel class="tiggie-label required"
+                                    >Confirm Password</VLabel
+                                >
+                                <VTextField
+                                    type="password"
+                                    placeholder="Enter new password again"
+                                    v-model="userData.passwordConfirmation"
+                                    class="tiggie-resize-input-text"
+                                    :error-messages="
+                                        props?.form?.errors
+                                            ?.passwordConfirmation
+                                    "
+                                />
                             </VCol>
 
                             <!-- 👉 Submit and Cancel -->
-                            <VCol cols="12" class="d-flex flex-wrap justify-center gap-10 pt-8">
-                                <VBtn color="gray" text-color="white" height="58" class="pl-16 pr-16" @click="onFormReset">
+                            <VCol
+                                cols="12"
+                                class="d-flex flex-wrap justify-space-between gap-10 pt-8"
+                            >
+                                <VBtn
+                                    color="gray"
+                                    text-color="white"
+                                    height="58"
+                                    class="pl-16 pr-16"
+                                    @click="onFormReset"
+                                >
                                     <span class="text-white">Cancel</span>
                                 </VBtn>
 
-                                <VBtn type="submit" height="58" class="pl-16 pr-16">
+                                <VBtn
+                                    type="submit"
+                                    height="58"
+                                    class="pl-16 pr-16"
+                                >
                                     Save
                                 </VBtn>
                             </VCol>
                         </VRow>
                     </VContainer>
-
                 </VForm>
             </VCardText>
         </VCard>
