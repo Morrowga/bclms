@@ -62,6 +62,16 @@ class ClassRoomController extends Controller
         }
     }
 
+    public function editCopy()
+    {
+        try {
+            return Inertia::render(config('route.editCopy'));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return redirect()->route('c.classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+        }
+    }
+
     public function create()
     {
         try {

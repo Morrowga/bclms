@@ -1,5 +1,6 @@
 <script setup>
-import StudentProfileCard from "./StudentProfileCard.vue";
+import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue";
+import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 </script>
 <template>
     <div>
@@ -30,15 +31,17 @@ import StudentProfileCard from "./StudentProfileCard.vue";
                 v-for="item in 12"
                 :key="item"
             >
-                <StudentProfileCard
-                    :studentInfo="{
-                        name: 'Wren Clark',
-                        phone_number: '9123 4567',
-                        img: '/images/students/studentone.svg',
-                    }"
+                <StudentAvatar
+                    image="/images/student.png"
+                    title="Wren Clark"
+                    phone_number="9111 1112"
+                    route="#"
                 />
             </VCol>
         </VRow>
+        <div class="d-flex justify-center">
+            <Pagination />
+        </div>
     </div>
 </template>
 <style scoped></style>

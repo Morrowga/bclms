@@ -4,7 +4,7 @@ import { usePage, Link } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import { router } from "@inertiajs/core";
-import { SuccessDialog } from '@actions/useSuccess';
+import { SuccessDialog } from "@actions/useSuccess";
 
 let props = defineProps(["organizations", "flash", "auth"]);
 import {
@@ -21,22 +21,20 @@ serverPage.value = ref(props.organizations.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 
-
-
 const deleteOrganization = (id) => {
     deleteItem(id, "organizations");
 };
 
 const items = ref([
     {
-        title: 'Edit',
-        value: 'edit',
+        title: "Edit",
+        value: "edit",
     },
     {
-        title: 'Delete',
-        value: 'delete',
-    }
-])
+        title: "Delete",
+        value: "delete",
+    },
+]);
 
 let columns = [
     {
@@ -68,7 +66,7 @@ let columns = [
         label: "",
         field: "action",
         sortable: false,
-    }
+    },
 ];
 
 let options = ref({
@@ -90,7 +88,6 @@ watch(serverPerPage, function (value) {
 // }
 </script>
 
-
 <template>
     <AdminLayout>
         <section>
@@ -98,17 +95,31 @@ watch(serverPerPage, function (value) {
             <VCard>
                 <VCardText class="d-flex align-center flex-wrap gap-4">
                     <!-- 👉 Export button -->
-                    <VBtn variant="tonal" color="secondary" prepend-icon="mdi-tray-arrow-up">
+                    <VBtn
+                        variant="tonal"
+                        color="secondary"
+                        prepend-icon="mdi-tray-arrow-up"
+                    >
                         Export
                     </VBtn>
 
                     <VSpacer />
 
-                    <VTextField placeholder="Search User ..." density="compact" />
+                    <VTextField
+                        placeholder="Search User ..."
+                        density="compact"
+                    />
 
-                    <div class="app-user-search-filter d-flex align-center gap-6">
+                    <div
+                        class="app-user-search-filter d-flex align-center gap-6"
+                    >
                         <!-- 👉 Search  -->
-                        <VSelect v-model="selectedRole" label="Sort By" :items="roles" density="compact" />
+                        <VSelect
+                            v-model="selectedRole"
+                            label="Sort By"
+                            :items="roles"
+                            density="compact"
+                        />
                         <!-- 👉 Add user button -->
                         <VBtn height="40" density="compact">
                             <span class="text-capatlize text-white">
@@ -119,28 +130,53 @@ watch(serverPerPage, function (value) {
                 </VCardText>
                 <VDivider />
 
-                <vue-good-table class="user-data-table" mode="remote" @column-filter="onColumnFilter"
-                    :totalRows="props.organizations.meta.total" :selected-rows-change="selectionChanged"
-                    styleClass="vgt-table " :pagination-options="options" :rows="props.organizations.data"
-                    :columns="columns" :select-options="{
+                <vue-good-table
+                    class="user-data-table"
+                    mode="remote"
+                    @column-filter="onColumnFilter"
+                    :totalRows="props.organizations.meta.total"
+                    :selected-rows-change="selectionChanged"
+                    styleClass="vgt-table "
+                    :pagination-options="options"
+                    :rows="props.organizations.data"
+                    :columns="columns"
+                    :select-options="{
                         enabled: true,
                         selectOnCheckboxOnly: true,
-                    }">
+                    }"
+                >
                     <template #table-row="props">
                         <div v-if="props.column.field == 'plan'">
                             <span>{{ props.row?.plan?.name }}</span>
                         </div>
                         <div v-if="props.column.field == 'teacher_usage'">
-                            <VProgressLinear color="yellow-darken-2" model-value="80" :height="8"></VProgressLinear>
+                            <VProgressLinear
+                                color="yellow-darken-2"
+                                model-value="80"
+                                :height="8"
+                            ></VProgressLinear>
                             <span><span class="text-warning">8 </span>/10</span>
                         </div>
                         <div v-if="props.column.field == 'student_usage'">
-                            <VProgressLinear color="yellow-darken-2" model-value="80" :height="8"></VProgressLinear>
-                            <span><span class="text-warning">82 </span>/100</span>
+                            <VProgressLinear
+                                color="yellow-darken-2"
+                                model-value="80"
+                                :height="8"
+                            ></VProgressLinear>
+                            <span
+                                ><span class="text-warning">82 </span>/100</span
+                            >
                         </div>
                         <div v-if="props.column.field == 'storage_usage'">
-                            <VProgressLinear color="green" model-value="80" :height="8"></VProgressLinear>
-                            <span><span class="text-green">321 MD </span>/1GB</span>
+                            <VProgressLinear
+                                color="green"
+                                model-value="80"
+                                :height="8"
+                            ></VProgressLinear>
+                            <span
+                                ><span class="text-green">321 MD </span
+                                >/1GB</span
+                            >
                         </div>
                         <div v-if="props.column.field == 'status'">
                             <VChip color="success" class="v-chip">
@@ -150,17 +186,45 @@ watch(serverPerPage, function (value) {
                         <div v-if="props.column.field == 'action'">
                             <VMenu location="end">
                                 <template #activator="{ props }">
-                                    <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black"
-                                        class="mt-n4" />
+                                    <VIcon
+                                        v-bind="props"
+                                        size="24"
+                                        icon="mdi-dots-horizontal"
+                                        color="black"
+                                        class="mt-n4"
+                                    />
                                 </template>
                                 <VList>
-                                    <VListItem @click="() => router.get(route('organizations.show', { id: props.row.id }))">
+                                    <VListItem
+                                        @click="
+                                            () =>
+                                                router.get(
+                                                    route(
+                                                        'organizations.show',
+                                                        { id: props.row.id }
+                                                    )
+                                                )
+                                        "
+                                    >
                                         <VListItemTitle>View</VListItemTitle>
                                     </VListItem>
-                                    <VListItem @click="() => router.get(route('organizations.test.edit'))">
+                                    <VListItem
+                                        @click="
+                                            () =>
+                                                router.get(
+                                                    route(
+                                                        'organizations.test.edit'
+                                                    )
+                                                )
+                                        "
+                                    >
                                         <VListItemTitle>Edit</VListItemTitle>
                                     </VListItem>
-                                    <VListItem @click="deleteOrganization(props.row.id)">
+                                    <VListItem
+                                        @click="
+                                            deleteOrganization(props.row.id)
+                                        "
+                                    >
                                         <VListItemTitle>Delete</VListItemTitle>
                                     </VListItem>
                                 </VList>
@@ -169,7 +233,10 @@ watch(serverPerPage, function (value) {
                     </template>
                     <template #pagination-bottom>
                         <VRow class="pa-4">
-                            <VCol cols="12" class="d-flex justify-space-between">
+                            <VCol
+                                cols="12"
+                                class="d-flex justify-space-between"
+                            >
                                 <span>
                                     Showing
                                     {{ props.organizations.meta.from }} to
@@ -180,12 +247,24 @@ watch(serverPerPage, function (value) {
                                 <div class="d-flex">
                                     <div class="d-flex align-center">
                                         <span class="me-2">Show</span>
-                                        <VSelect v-model="serverPerPage" density="compact" :items="options.perPageDropdown">
+                                        <VSelect
+                                            v-model="serverPerPage"
+                                            density="compact"
+                                            :items="options.perPageDropdown"
+                                        >
                                         </VSelect>
                                     </div>
-                                    <VPagination v-model="serverPage" size="small" :total-visible="5"
-                                        :length="props.organizations.meta.last_page" @next="onPageChange"
-                                        @prev="onPageChange" @click="onPageChange" />
+                                    <VPagination
+                                        v-model="serverPage"
+                                        size="small"
+                                        :total-visible="5"
+                                        :length="
+                                            props.organizations.meta.last_page
+                                        "
+                                        @next="onPageChange"
+                                        @prev="onPageChange"
+                                        @click="onPageChange"
+                                    />
                                 </div>
                             </VCol>
                         </VRow>
@@ -196,7 +275,6 @@ watch(serverPerPage, function (value) {
         </section>
     </AdminLayout>
 </template>
-
 
 <style lang="scss">
 .app-user-search-filter {
@@ -227,7 +305,7 @@ watch(serverPerPage, function (value) {
 
 .v-progress-linear {
     border-radius: 10px !important;
-    color: #FFCC00 !important;
-    background-color: #F4F4F4 !important;
+    color: #ffcc00 !important;
+    background-color: #f4f4f4 !important;
 }
 </style>
