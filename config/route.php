@@ -166,19 +166,17 @@ return [
     //Storybook student
     'storybooks' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Index',
 
-     //Game student
-     'student-games' => 'BlendedConcept/Student/Presentation/Resources/Games/Index',
+    //Game student
+    'student-games' => 'BlendedConcept/Student/Presentation/Resources/Games/Index',
 
-     //Rewards student
-     'student-rewards' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Index',
-     'be-lucky' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky',
-     'buy-sticker' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker',
+    //Rewards student
+    'student-rewards' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Index',
+    'be-lucky' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky',
+    'buy-sticker' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker',
 
-    'organization' => [
-        'profile' => 'BlendedConcept/System/Presentation/Resources/OrganizationDashboard/Admin/Profile',
-    ],
+
 
     'listofteacher' => [
-       'index' => 'BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index'
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index'
     ]
 ];
