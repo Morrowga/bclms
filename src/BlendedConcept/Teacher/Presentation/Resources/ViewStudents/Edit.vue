@@ -174,7 +174,7 @@ const isPasswordVisible = ref(false);
                 </v-col>
                 <v-col cols="12">
                     <div class="d-flex justify-center">
-                        <Link :href="route('view_students.index')">
+                        <Link :href="route('view_students.show')">
                             <v-btn
                                 variant="flat"
                                 rounded

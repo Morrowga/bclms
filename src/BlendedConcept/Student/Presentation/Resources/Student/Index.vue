@@ -149,129 +149,135 @@ watch(serverPerPage, function (value) {
 
 <template>
     <AdminLayout>
-        <h1 class="tiggie-title mb-4">Students</h1>
-        <SystemErrorAlert
-            :sytemErrorMessage="sytemErrorMessage"
-            v-if="sytemErrorMessage"
-        />
-        <section>
-            <VCard>
-                <VCardText class="d-flex flex-wrap gap-4">
-                    <!-- 👉 Export button -->
-                    <!-- <IconOutlineBtn icon="mdi-export-variant" title="Export" /> -->
-                    <VBtn
-                        variant="tonal"
-                        color="primary"
-                        prepend-icon="mdi-tray-arrow-up"
-                    >
-                        Export
-                    </VBtn>
-                    <VSpacer />
-                    <VSpacer />
-                    <VTextField
-                        @keyup.enter="searchItems"
-                        v-model="serverParams.search"
-                        placeholder="Search Users"
-                        density="compact"
-                        style="width: 10%"
-                    />
-
-                    <div class="d-flex">
-                        <div
-                            class="app-user-search-filter d-flex align-center justify-end gap-3"
+        <VContainer fluid>
+            <h1 class="tiggie-title mb-4">Students</h1>
+            <SystemErrorAlert
+                :sytemErrorMessage="sytemErrorMessage"
+                v-if="sytemErrorMessage"
+            />
+            <section>
+                <VCard>
+                    <VCardText class="d-flex flex-wrap gap-4">
+                        <!-- 👉 Export button -->
+                        <!-- <IconOutlineBtn icon="mdi-export-variant" title="Export" /> -->
+                        <VBtn
+                            variant="tonal"
+                            color="primary"
+                            prepend-icon="mdi-tray-arrow-up"
                         >
-                            <selectBox
-                                :datas="[]"
-                                placeholder="Sort By"
-                                density="compact"
-                                variant="outlined"
-                            />
-                            <!-- 👉 Add User button -->
-                        </div>
-                    </div>
-                </VCardText>
-                <VDivider />
+                            Export
+                        </VBtn>
+                        <VSpacer />
+                        <VSpacer />
+                        <VTextField
+                            @keyup.enter="searchItems"
+                            v-model="serverParams.search"
+                            placeholder="Search Users"
+                            density="compact"
+                            style="width: 10%"
+                        />
 
-                <vue-good-table
-                    class="user-data-table"
-                    mode="remote"
-                    @column-filter="onColumnFilter"
-                    :totalRows="props.students.meta.total"
-                    :selected-rows-change="selectionChanged"
-                    styleClass="vgt-table "
-                    :pagination-options="options"
-                    :rows="rows"
-                    :columns="columns"
-                    :select-options="{
-                        enabled: true,
-                        selectOnCheckboxOnly: true,
-                    }"
-                >
-                    <template #table-row="props">
-                        <div v-if="props.column.field == 'name'">
-                            <div class="d-flex flex-row gap-2">
-                                <img
-                                    src="/images/defaults/avator.png"
-                                    class="user-profile-image"
+                        <div class="d-flex">
+                            <div
+                                class="app-user-search-filter d-flex align-center justify-end gap-3"
+                            >
+                                <selectBox
+                                    :datas="[]"
+                                    placeholder="Sort By"
+                                    density="compact"
+                                    variant="outlined"
                                 />
-                                <span>{{ props.row.name }}</span>
+                                <!-- 👉 Add User button -->
                             </div>
                         </div>
-                        <div v-if="props.column.field == 'organization'">
-                            <div class="">
-                                <div v-if="props.row.isOrganization">
-                                    <p>{{ props.row.organization }}</p>
-                                </div>
-                                <div v-else class="d-flex flex-row gap-2">
+                    </VCardText>
+                    <VDivider />
+
+                    <vue-good-table
+                        class="user-data-table"
+                        mode="remote"
+                        @column-filter="onColumnFilter"
+                        :totalRows="props.students.meta.total"
+                        :selected-rows-change="selectionChanged"
+                        styleClass="vgt-table "
+                        :pagination-options="options"
+                        :rows="rows"
+                        :columns="columns"
+                        :select-options="{
+                            enabled: true,
+                            selectOnCheckboxOnly: true,
+                        }"
+                    >
+                        <template #table-row="props">
+                            <div v-if="props.column.field == 'name'">
+                                <div class="d-flex flex-row gap-2">
                                     <img
                                         src="/images/defaults/avator.png"
                                         class="user-profile-image"
                                     />
-                                    <span>{{ props.row.organization }}</span>
+                                    <span>{{ props.row.name }}</span>
                                 </div>
                             </div>
-                        </div>
-                    </template>
-                    <template #pagination-bottom>
-                        <VRow class="pa-4">
-                            <VCol
-                                cols="12"
-                                class="d-flex justify-space-between"
-                            >
-                                <span>
-                                    Showing
-                                    {{ props.students.meta.from }} to
-                                    {{ props.students.meta.to }} of
-                                    {{ props.students.meta.total }}
-                                    entries
-                                </span>
-                                <div class="d-flex">
-                                    <div class="d-flex align-center">
-                                        <span class="me-2">Show</span>
-                                        <VSelect
-                                            v-model="serverPerPage"
-                                            density="compact"
-                                            :items="options.perPageDropdown"
-                                        >
-                                        </VSelect>
+                            <div v-if="props.column.field == 'organization'">
+                                <div class="">
+                                    <div v-if="props.row.isOrganization">
+                                        <p>{{ props.row.organization }}</p>
                                     </div>
-                                    <VPagination
-                                        v-model="serverPage"
-                                        size="small"
-                                        :total-visible="5"
-                                        :length="props.students.meta.last_page"
-                                        @next="onPageChange"
-                                        @prev="onPageChange"
-                                        @click="onPageChange"
-                                    />
+                                    <div v-else class="d-flex flex-row gap-2">
+                                        <img
+                                            src="/images/defaults/avator.png"
+                                            class="user-profile-image"
+                                        />
+                                        <span>{{
+                                            props.row.organization
+                                        }}</span>
+                                    </div>
                                 </div>
-                            </VCol>
-                        </VRow>
-                    </template>
-                </vue-good-table>
-                <VDivider />
-            </VCard>
-        </section>
+                            </div>
+                        </template>
+                        <template #pagination-bottom>
+                            <VRow class="pa-4">
+                                <VCol
+                                    cols="12"
+                                    class="d-flex justify-space-between"
+                                >
+                                    <span>
+                                        Showing
+                                        {{ props.students.meta.from }} to
+                                        {{ props.students.meta.to }} of
+                                        {{ props.students.meta.total }}
+                                        entries
+                                    </span>
+                                    <div class="d-flex">
+                                        <div class="d-flex align-center">
+                                            <span class="me-2">Show</span>
+                                            <VSelect
+                                                v-model="serverPerPage"
+                                                density="compact"
+                                                :items="options.perPageDropdown"
+                                            >
+                                            </VSelect>
+                                        </div>
+                                        <VPagination
+                                            v-model="serverPage"
+                                            size="small"
+                                            :total-visible="5"
+                                            :length="
+                                                props.students.meta.last_page
+                                            "
+                                            @next="onPageChange"
+                                            @prev="onPageChange"
+                                            @click="onPageChange"
+                                        />
+                                    </div>
+                                </VCol>
+                            </VRow>
+                        </template>
+                    </vue-good-table>
+                    <VDivider />
+                </VCard>
+            </section>
+        </VContainer>
     </AdminLayout>
 </template>
 

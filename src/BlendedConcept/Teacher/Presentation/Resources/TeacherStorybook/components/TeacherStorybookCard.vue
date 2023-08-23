@@ -3,9 +3,10 @@ import { ref } from "vue";
 let is_description = ref(false);
 let is_chip = ref(true);
 import GreenChip from "@mainRoot/components/GreenChip/GreenChip.vue";
+import { router } from "@inertiajs/core";
 </script>
 <template>
-    <v-card>
+    <v-card @click="router.get(route('teacher_storybook.show'))">
         <v-card-title style="position: relative">
             <v-img src="/images/image4.png" />
             <div class="chip-page" v-if="is_chip">

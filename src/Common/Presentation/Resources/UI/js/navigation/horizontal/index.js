@@ -96,10 +96,10 @@ export default [
     },
     {
         title: 'Users',
-        url: `#`,
+        url: `/org_view_teacher_student`,
         icon: { icon: ' mdi-google-classroom' },
-        route_name: 'classrooms',
-        access_module: "access_usersOne",
+        route_name: 'org_view_teacher_student',
+        access_module: "access_orgusers",
     },
     {
         title: 'Reports',

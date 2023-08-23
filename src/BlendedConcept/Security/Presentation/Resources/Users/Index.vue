@@ -95,7 +95,7 @@ watch(serverPerPage, function (value) {
 
 <template>
     <AdminLayout>
-        <section>
+        <VContainer fluid>
             <VCard>
                 <VCardText class="d-flex flex-wrap gap-4">
                     <!-- 👉 Export button -->
@@ -238,7 +238,7 @@ watch(serverPerPage, function (value) {
                 </vue-good-table>
                 <VDivider />
             </VCard>
-        </section>
+        </VContainer>
     </AdminLayout>
 </template>
 

@@ -1,7 +1,6 @@
 <script setup>
 import { defineProps } from "vue";
 import { router } from "@inertiajs/core";
-
 </script>
 
 <template>
@@ -10,140 +9,206 @@ import { router } from "@inertiajs/core";
             <VCol cols="3">
                 <VCard class="text-center card-student">
                     <div class="d-flex justify-center mt-2">
-                        <img src="/images/classroom1.jpeg" class="studentimg">
+                        <img src="/images/classroom1.jpeg" class="studentimg" />
                     </div>
                     <div class="mt-4">
-                        <span class="studentname pppangram-bold">Francisco Maia</span>
+                        <span class="studentname pppangram-bold"
+                            >Francisco Maia</span
+                        >
                     </div>
                     <div class="mt-1">
                         <span class="semi-text pppangram-medium">Female</span>
                     </div>
                     <VRow class="mx-2 mt-3">
                         <VCol cols="5" class="text-left">
-                            <span class="label-student pppangram-bold">DOB</span>
+                            <span class="label-student pppangram-bold"
+                                >DOB</span
+                            >
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium">January 1, 2012</span>
+                                <span class="value-student pppangram-medium"
+                                    >January 1, 2012</span
+                                >
                             </div>
                         </VCol>
                     </VRow>
                     <VRow class="mx-2">
                         <VCol cols="5" class="text-left">
                             <div>
-                                <span class="label-student pppangram-bold">Education </span>
+                                <span class="label-student pppangram-bold"
+                                    >Education
+                                </span>
                             </div>
                             <div class="text-left">
-                                <span class="label-student pppangram-bold">Level </span>
+                                <span class="label-student pppangram-bold"
+                                    >Level
+                                </span>
                             </div>
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium">K1</span>
+                                <span class="value-student pppangram-medium"
+                                    >K1</span
+                                >
                             </div>
                         </VCol>
                     </VRow>
                     <VRow class="mx-2">
                         <VCol cols="5" class="text-left">
                             <div>
-                                <span class="label-student pppangram-bold">Disability </span>
+                                <span class="label-student pppangram-bold"
+                                    >Disability
+                                </span>
                             </div>
                             <div class="text-left">
-                                <span class="label-student pppangram-bold">Types </span>
+                                <span class="label-student pppangram-bold"
+                                    >Types
+                                </span>
                             </div>
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium">Down Syndrome</span>
+                                <span class="value-student pppangram-medium"
+                                    >Down Syndrome</span
+                                >
                             </div>
                         </VCol>
                     </VRow>
                     <VRow class="mx-2">
                         <VCol cols="5" class="text-left">
                             <div>
-                                <span class="label-student pppangram-bold">Accessibility </span>
+                                <span class="label-student pppangram-bold"
+                                    >Accessibility
+                                </span>
                             </div>
                             <div class="text-left">
-                                <span class="label-student pppangram-bold">Device </span>
+                                <span class="label-student pppangram-bold"
+                                    >Device
+                                </span>
                             </div>
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium">Switch Single</span>
+                                <span class="value-student pppangram-medium"
+                                    >Switch Single</span
+                                >
                             </div>
                         </VCol>
                     </VRow>
                     <VRow class="mx-2">
                         <VCol cols="5" class="text-left">
-                            <span class="label-student pppangram-bold">Student Code</span>
+                            <span class="label-student pppangram-bold"
+                                >Student Code</span
+                            >
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium">128, 274</span>
+                                <span class="value-student pppangram-medium"
+                                    >128, 274</span
+                                >
                             </div>
                         </VCol>
                     </VRow>
                     <div class="text-center mt-5">
-                        <span class="semi-text pppangram-medium">Parent's Details</span>
+                        <span class="semi-text pppangram-medium"
+                            >Parent's Details</span
+                        >
                     </div>
                     <VRow class="mx-2 mt-3">
                         <VCol cols="5" class="text-left">
-                            <span class="label-student pppangram-bold">Name</span>
+                            <span class="label-student pppangram-bold"
+                                >Name</span
+                            >
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium">Jane Ang</span>
+                                <span class="value-student pppangram-medium"
+                                    >Jane Ang</span
+                                >
                             </div>
                         </VCol>
                     </VRow>
                     <VRow class="mx-2">
                         <VCol cols="5" class="text-left">
-                            <span class="label-student pppangram-bold">Relationship</span>
+                            <span class="label-student pppangram-bold"
+                                >Relationship</span
+                            >
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium">Mother</span>
+                                <span class="value-student pppangram-medium"
+                                    >Mother</span
+                                >
                             </div>
                         </VCol>
                     </VRow>
                     <VRow class="mx-2">
                         <VCol cols="5" class="text-left">
-                            <span class="label-student pppangram-bold">Contact No.</span>
+                            <span class="label-student pppangram-bold"
+                                >Contact No.</span
+                            >
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium">9123 4567</span>
+                                <span class="value-student pppangram-medium"
+                                    >9123 4567</span
+                                >
                             </div>
                         </VCol>
                     </VRow>
                     <VRow class="mx-2 mt-3">
                         <VCol cols="5" class="text-left">
-                            <span class="label-student pppangram-bold">Email</span>
+                            <span class="label-student pppangram-bold"
+                                >Email</span
+                            >
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium">jane.ang@gmail.com</span>
+                                <span class="value-student pppangram-medium"
+                                    >jane.ang@gmail.com</span
+                                >
                             </div>
                         </VCol>
                     </VRow>
                     <div class="mt-5 my-3 mx-3">
-                        <v-btn varient="flat" color="#BFC0C1" class="textcolor w-100 pppangram-bold" rounded>
-                        Exit Kids Mode
+                        <v-btn
+                            varient="flat"
+                            color="#BFC0C1"
+                            class="textcolor w-100 pppangram-bold"
+                            rounded
+                        >
+                            Exit Kids Mode
                         </v-btn>
                     </div>
                 </VCard>
             </VCol>
             <VCol cols="5">
                 <div class="ml-10">
-                    <img src="/images/Storybooks.png" @click="() => router.get(route('storybooks'))" class="storybook" alt="">
+                    <img
+                        src="/images/Storybooks.png"
+                        @click="() => router.get(route('storybooks'))"
+                        class="storybook"
+                        alt=""
+                    />
                 </div>
             </VCol>
             <VCol cols="4" class="text-center">
                 <div class="text-center">
-                    <img src="/images/Games.png" @click="() => router.get(route('student-games'))" class="games" alt="">
+                    <img
+                        src="/images/Games.png"
+                        @click="() => router.get(route('student-games'))"
+                        class="games"
+                        alt=""
+                    />
                 </div>
                 <div class="text-center">
-                    <img src="/images/Rewards.png" @click="() => router.get(route('student-rewards'))" class="rewards" alt="">
+                    <img
+                        src="/images/Rewards.png"
+                        @click="() => router.get(route('student-rewards'))"
+                        class="rewards"
+                        alt=""
+                    />
                 </div>
             </VCol>
         </VRow>
@@ -151,42 +216,41 @@ import { router } from "@inertiajs/core";
 </template>
 
 <style>
-
-.label-student{
+.label-student {
     color: #000 !important;
     font-size: 16px !important;
     font-weight: 700 !important;
 }
 
-.games{
+.games {
     width: 60%;
     height: 250px;
     cursor: pointer !important;
 }
 
-.rewards{
+.rewards {
     cursor: pointer !important;
     width: 60%;
     height: 250px;
 }
 
-.storybook{
+.storybook {
     cursor: pointer !important;
     width: 100%;
     height: 506px;
 }
 
-.card-student{
-    background: var(--pale-blue, #D7DDF2);
+.card-student {
+    background: var(--pale-blue, #d7ddf2);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.value-student{
+.value-student {
     color: #000 !important;
     font-size: 16px !important;
 }
 
-.semi-text{
+.semi-text {
     color: var(--text, #161616);
     font-size: 14px;
     font-style: normal;
@@ -194,7 +258,7 @@ import { router } from "@inertiajs/core";
     line-height: 22px; /* 157.143% */
 }
 
-.studentimg{
+.studentimg {
     object-fit: cover;
     /* border-radius: 180.181px; */
     width: 130.181px;
@@ -203,7 +267,7 @@ import { router } from "@inertiajs/core";
     border-radius: 50% !important;
 }
 
-.studentname{
+.studentname {
     color: var(--text, #161616) !important;
     font-size: 24px !important;
     font-style: normal !important;

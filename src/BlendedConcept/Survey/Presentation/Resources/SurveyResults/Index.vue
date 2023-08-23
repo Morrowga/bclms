@@ -116,7 +116,7 @@ const goRoute = (route) => {
 </script>
 <template>
     <AdminLayout>
-        <v-container>
+        <VContainer fluid>
             <h1 class="tiggie-title mb-4">Survey Results</h1>
             <VRow>
                 <VCol cols="12" sm="12" lg="12">
@@ -179,6 +179,6 @@ const goRoute = (route) => {
                     </section>
                 </VCol>
             </VRow>
-        </v-container>
+        </VContainer>
     </AdminLayout>
 </template>

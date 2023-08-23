@@ -92,7 +92,7 @@ let tab = ref(false);
                     <SecondaryBtn
                         class="mr-4"
                         title="Back"
-                        @click="router.get(route('teacher_storybook.index'))"
+                        @click="router.get(route('teacher_storybook.show'))"
                     />
                     <PrimaryBtn title="Assign" />
                 </v-col>

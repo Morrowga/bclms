@@ -5,7 +5,7 @@ let tab = ref(false);
 </script>
 <template>
     <AdminLayout>
-        <VContainer style="width: 80%; margin: 0 auto">
+        <VContainer fluid>
             <v-row>
                 <v-col cols="12" md="12">
                     <h1

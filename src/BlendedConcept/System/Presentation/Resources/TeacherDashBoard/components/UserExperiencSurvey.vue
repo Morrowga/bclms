@@ -5,9 +5,9 @@ const isDialogVisible = ref(true);
 <template>
     <VDialog v-model="isDialogVisible" width="70%">
         <!-- Activator -->
-        <template #activator="{ props }">
+        <!-- <template #activator="{ props }">
             <VBtn v-bind="props"> UserExperiencSurvey </VBtn>
-        </template>
+        </template> -->
 
         <!-- Dialog Content -->
         <VCard class="pa-16">

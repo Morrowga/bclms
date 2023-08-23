@@ -70,7 +70,7 @@ const alertNow = () => {
 </script>
 <template>
     <AdminLayout>
-        <v-container>
+        <VContainer fluid>
             <div class="head-section">
                 <div class="title-section">
                     <p class="heading">Manage Games</p>
@@ -81,8 +81,8 @@ const alertNow = () => {
                 </div>
             </div>
 
-            <v-row class="mt-5">
-                <v-col
+            <VRow class="mt-5">
+                <VCol
                     cols="12"
                     sm="6"
                     md="4"
@@ -91,9 +91,9 @@ const alertNow = () => {
                     :key="data.image"
                 >
                     <Show :data="data" />
-                </v-col>
-            </v-row>
-        </v-container>
+                </VCol>
+            </VRow>
+        </VContainer>
     </AdminLayout>
 </template>
 <style scoped>
