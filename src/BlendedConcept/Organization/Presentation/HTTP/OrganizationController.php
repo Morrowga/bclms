@@ -55,9 +55,11 @@ class OrganizationController extends Controller
         return Inertia::render(config('route.organizations.create'));
     }
 
-    public function edit($id)
+    public function edit()
     {
-        $organization = OrganizationEloquentModel::find($id);
+        $organization = OrganizationEloquentModel::find(1);
+
+        // return "hello";
 
         return Inertia::render(config('route.organizations.edit'), [
             'organization' => $organization,

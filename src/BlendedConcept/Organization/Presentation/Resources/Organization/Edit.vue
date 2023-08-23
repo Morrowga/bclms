@@ -14,8 +14,8 @@ let refForm = ref();
 let flash = computed(() => usePage().props.flash);
 
 let form = useForm({
-    name: "",
-    contact_person: "",
+    name: "Blended Concept",
+    contact_person: "Jordan Stevenson",
     contact_email: "",
     contact_number: "",
     price: "",
@@ -29,18 +29,6 @@ let form = useForm({
 // submit create form
 let handleSubmit = () => {
 SuccessDialog({title:"You've successfully created organization"})
-
-    // refForm.value?.validate().then(({ valid }) => {
-    //     if (valid) {
-    //         form.post(route("organizations.store"), {
-    //             onSuccess: () => {
-    //                 SuccessDialog({title:flash?.successMessage})
-    //                 isDialogVisible.value = false;
-    //             },
-    //             onError: (error) => { },
-    //         });
-    //     }
-    // });
 };
 </script>
 
