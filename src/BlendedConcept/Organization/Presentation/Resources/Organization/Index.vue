@@ -97,7 +97,7 @@ watch(serverPerPage, function (value) {
                     <!-- 👉 Export button -->
                     <VBtn
                         variant="tonal"
-                        color="secondary"
+                        color="primary"
                         prepend-icon="mdi-tray-arrow-up"
                     >
                         Export

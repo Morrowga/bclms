@@ -85,11 +85,13 @@ const selectionChanged = (data) => {
                         density="compact"
                     />
                     <!-- 👉 Add user button -->
-                    <VBtn height="40" density="compact">
-                        <span class="text-uppercase text-white">
-                            View More
-                        </span>
-                    </VBtn>
+                    <Link :href="route('organizations.index')">
+                        <VBtn height="40" density="compact">
+                            <span class="text-uppercase text-white">
+                                View More
+                            </span>
+                        </VBtn>
+                    </Link>
                 </div>
             </VCardText>
 

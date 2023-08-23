@@ -8,10 +8,10 @@ use Src\BlendedConcept\Organization\Presentation\HTTP\SubscribtionInvoiceControl
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::get('organizations', [OrganizationController::class,'index'])->name('organizations.index');
-    Route::get('createorg',[OrganizationController::class,'create']);
-    Route::get('showorg',[OrganizationController::class,'show']);
-    Route::get('editorg',[OrganizationController::class,'edit']);
+    Route::get('organizations', [OrganizationController::class, 'index'])->name('organizations.index');
+    Route::get('createorg', [OrganizationController::class, 'create']);
+    Route::get('showorg', [OrganizationController::class, 'show']);
+    Route::get('editorg', [OrganizationController::class, 'edit']);
     // Route::resource('plans', PlanController::class);
 
     Route::get('/plans', [PlanController::class, 'index'])->name('plans.index');
@@ -23,9 +23,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('subscribptioninvoice', [SubscribtionInvoiceController::class, 'index']);
 
     // Route::get('/organizations', [OrganizationController::class, 'index'])->name('organizations.index');
-    // Route::get('/organizations/edit', [OrganizationController::class, 'edit'])->name('organizations.edit');
-    // Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
-    // Route::get('/organizations/show', [OrganizationController::class, 'show'])->name('organizations.show');
+    Route::get('/organizations/edit', [OrganizationController::class, 'edit'])->name('organizations.test.edit');
+    Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
+    Route::get('/organizations/show', [OrganizationController::class, 'show'])->name('organizations.show');
 
     Route::get('/org_view_teacher_student', [OrganizationTeacherStudentController::class, 'index'])->name('org_view_teacher_student.index');
     Route::get('/org_view_teacher_student/teacher/show', [OrganizationTeacherStudentController::class, 'showTeacher'])->name('org_view_teacher_student.teacher.show');
