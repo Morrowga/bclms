@@ -79,7 +79,7 @@ watch(serverPerPage, function (value) {
 });
 
 const checkUserRole = () => {
-    return user_role.value == "BC Super Admin" || user_role.value == "Bc Staff";
+    return user_role.value == "BC Super Admin" || user_role.value == "BC Staff";
 };
 </script>
 

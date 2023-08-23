@@ -61,7 +61,23 @@ const statisticsWithImages = [
             </VCol>
             <VCol cols="12" sm="12" lg="12" class="mt-10">
                 <div class="header">
-                    <h1 class="tiggie-title">Students</h1>
+                    <div class="d-flex justify-end mb-4">
+                        <h1 class="tiggie-title">Student</h1>
+                        <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+                        <VTextField
+                            placeholder="Search User ..."
+                            density="compact"
+                            class="mr-4"
+                        />
+
+                        <VSelect
+                            label="Sort By"
+                            :items="[]"
+                            density="compact"
+                        />
+                    </div>
                     <VRow no-gutters>
                         <v-col v-for="n in 12" :key="n">
                             <StudentAvatar
@@ -79,7 +95,23 @@ const statisticsWithImages = [
             </VCol>
             <VCol cols="12" sm="12" lg="12" class="mt-10">
                 <div class="header">
-                    <h1 class="tiggie-title">Teachers</h1>
+                    <div class="d-flex justify-end mb-4">
+                        <h1 class="tiggie-title">Teachers</h1>
+                        <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+                        <VTextField
+                            placeholder="Search User ..."
+                            density="compact"
+                            class="mr-4"
+                        />
+
+                        <VSelect
+                            label="Sort By"
+                            :items="[]"
+                            density="compact"
+                        />
+                    </div>
                     <VRow no-gutters>
                         <v-col v-for="n in 12" :key="n">
                             <TeacherAvatar
