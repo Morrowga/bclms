@@ -1,14 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Src\BlendedConcept\Student\Presentation\HTTP\AccessibilityDeviceController;
-use Src\BlendedConcept\Student\Presentation\HTTP\DisabilityDeviceController;
+use Src\BlendedConcept\Student\Presentation\HTTP\GamesController;
+use Src\BlendedConcept\Student\Presentation\HTTP\RewardsController;
 use Src\BlendedConcept\Student\Presentation\HTTP\StudentController;
+use Src\BlendedConcept\Student\Presentation\HTTP\StoryBookController;
+use Src\BlendedConcept\Student\Presentation\HTTP\DisabilityDeviceController;
+use Src\BlendedConcept\Student\Presentation\HTTP\AccessibilityDeviceController;
 
 Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('students', StudentController::class);
     Route::resource('disability_device', DisabilityDeviceController::class);
+    Route::get('storybooks', [StoryBookController::class, 'index'])->name('storybooks');
+    Route::get('student-games', [GamesController::class, 'index'])->name('student-games');
+    Route::get('student-rewards', [RewardsController::class, 'index'])->name('student-rewards');
+    Route::get('be-lucky', [RewardsController::class, 'beLucky'])->name('be-lucky');
+    Route::get('buy-sticker', [RewardsController::class, 'buySticker'])->name('buy-sticker');
     // Route::resource('accessibility_device', AccessibilityDeviceController::class);
 
     Route::get('/accessibility_device', [AccessibilityDeviceController::class, 'index'])->name('accessibility_device.index');

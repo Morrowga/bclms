@@ -153,24 +153,24 @@ export default [
     },
     {
         title: 'StoryBooks',
-        url: "/announcements",
+        url: "/storybooks",
         icon: { icon: 'mdi-bullhorn' },
-        route_name: 'announcements',
+        route_name: 'storybooks',
         access_module: "access_studentStorybook",
     },
     {
         title: 'Games',
-        url: "/announcements",
-        icon: { icon: 'mdi-bullhorn' },
-        route_name: 'announcements',
-        access_module: "access_studentGames",
+        url: "/student-games",
+        icon: { icon: 'mdi-rocket-launch-outline' },
+        route_name: 'student-games',
+        access_module: "access_studentStorybook",
     },
 
     {
         title: 'Rewards',
-        url: "/announcements",
-        icon: { icon: 'mdi-bullhorn' },
-        route_name: 'announcements',
+        url: "/student-rewards",
+        icon: { icon: 'mdi-emoticon-happy-outline' },
+        route_name: 'student-rewards',
         access_module: "access_studentRewards",
     },
 ]

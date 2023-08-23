@@ -157,4 +157,14 @@ return [
     'showCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show',
     'editCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Edit',
     'createCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create',
+    //Storybook student
+    'storybooks' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Index',
+
+     //Game student
+     'student-games' => 'BlendedConcept/Student/Presentation/Resources/Games/Index',
+
+     //Rewards student
+     'student-rewards' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Index',
+     'be-lucky' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky',
+     'buy-sticker' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker',
 ];

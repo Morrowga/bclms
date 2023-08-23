@@ -110,3 +110,7 @@ classrooms
 classroom.show => showCopy
 classroom.edit => editCopy
 classroom.create => create
+student-games
+storybooks
+be-lucky
+buy-sticker
