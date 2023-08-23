@@ -4,6 +4,9 @@ import { defineProps } from "vue";
 
 import TotalClassRooms from "./TotalClassRooms.vue";
 import TotalStudents from "./TotalStudents.vue";
+import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue";
+import TeacherAvatar from "@mainRoot/components/TeacherAvatar/TeacherAvatar.vue";
+import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue";
 
 const statisticsWithImages = [
     {
@@ -48,20 +51,20 @@ const statisticsWithImages = [
                     </VBtn>
                 </div>
                 <div class="mt-5">
-                    <v-row no-gutters>
-                        <v-col v-for="n in 4" :key="n">
-                            <v-card class="mx-auto mr-5" max-width="400">
-                                <v-img
-                                    class="align-end text-white"
-                                    height="200"
-                                    src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                                    cover
-                                >
-                                    <v-card-title class="text-white"
-                                        >Top 10 Australian beaches</v-card-title
-                                    >
-                                </v-img>
-                            </v-card>
+                    <v-row>
+                        <v-col
+                            v-for="n in 4"
+                            :key="n"
+                            cols="12"
+                            sm="6"
+                            md="4"
+                            lg="3"
+                        >
+                            <ClassroomCard
+                                route="#"
+                                count="5 / 5"
+                                :label="`${n}A`"
+                            />
                         </v-col>
                     </v-row>
                 </div>
@@ -71,30 +74,12 @@ const statisticsWithImages = [
                     <h1 class="tiggie-title">Students</h1>
                     <v-row no-gutters>
                         <v-col v-for="n in 6" :key="n">
-                            <div class="ma-2 pa-2">
-                                <div class="d-flex flex-column align-center">
-                                    <img
-                                        class="rounded-circle w-10 h-10"
-                                        src="https://images.unsplash.com/profile-1446404465118-3a53b909cc82?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=64&w=64&s=3ef46b07bb19f68322d027cb8f9ac99f"
-                                    />
-                                    <div class="mt-2">
-                                        <h5 class="tiggie-subtitle">
-                                            When clark
-                                        </h5>
-                                        <div class="d-flex align-center">
-                                            <v-icon
-                                                icon="mdi-phone-outline"
-                                                color="candy-red"
-                                                size="19"
-                                            />
-
-                                            <span class="ml-2 text-candy-red"
-                                                >890809076</span
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <StudentAvatar
+                                image="/images/student.png"
+                                title="Wren Clark"
+                                phone_number="9111 1112"
+                                route="#"
+                            />
                         </v-col>
                     </v-row>
                 </div>
@@ -104,29 +89,13 @@ const statisticsWithImages = [
                     <h1 class="tiggie-title">Teachers</h1>
                     <v-row no-gutters>
                         <v-col v-for="n in 6" :key="n">
-                            <div class="ma-2 pa-2">
-                                <div class="d-flex flex-column align-center">
-                                    <img
-                                        class="rounded-circle w-10 h-10"
-                                        src="https://images.unsplash.com/profile-1446404465118-3a53b909cc82?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=64&w=64&s=3ef46b07bb19f68322d027cb8f9ac99f"
-                                    />
-                                    <div class="mt-2">
-                                        <h5 class="tiggie-subtitle">
-                                            When clark
-                                        </h5>
-                                        <div class="d-flex align-center">
-                                            <v-icon
-                                                icon="mdi-phone-outline"
-                                                color="candy-red"
-                                                size="19"
-                                            />
-                                            <span class="ml-2 text-candy-red"
-                                                >890809076</span
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <TeacherAvatar
+                                image="/images/teacher.png"
+                                title="Wren Clark"
+                                phone_number="9111 1112"
+                                route="#"
+                                storage="135 MB/ 200 MB"
+                            />
                         </v-col>
                     </v-row>
                 </div>

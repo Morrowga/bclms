@@ -105,7 +105,11 @@ watch(serverPerPage, function (value) {
                         md="4"
                         lg="3"
                     >
-                        <ClassroomCard :route="route('showCopy')" />
+                        <ClassroomCard
+                            :route="route('showCopy')"
+                            count="5 / 5"
+                            :label="`${n}A`"
+                        />
                     </VCol>
                 </VRow>
             </VContainer>
