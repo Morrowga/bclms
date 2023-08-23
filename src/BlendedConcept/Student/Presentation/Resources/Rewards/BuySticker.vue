@@ -29,15 +29,15 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                             <VCard class="stickercard text-center">
                                                 <v-img src="/images/stickerb1.png" class="stickimg" cover></v-img>
                                                 <div>
-                                                    <span class="stickertext">SecretAgent Tiggie</span>
+                                                    <span class="stickertext ruddy-bold">SecretAgent Tiggie</span>
                                                 </div>
                                                 <div>
                                                     <v-chip class="sticker-chip text-left">
                                                         <img src="/images/chipcoin.png" class="">
-                                                        <span class="sticker-chip-text"> 10</span>
-                                                        <span class="sticker-chip-or-text mx-2">OR</span>
+                                                        <span class="sticker-chip-text ruddy-bold"> 10</span>
+                                                        <span class="sticker-chip-or-text mx-2 ruddy-bold">OR</span>
                                                         <img src="/images/chipcoin2.png">
-                                                        <span class="sticker-chip-text">1</span>
+                                                        <span class="sticker-chip-text ruddy-bold">1</span>
                                                     </v-chip>
                                                 </div>
                                             </VCard>
@@ -46,15 +46,15 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                             <VCard class="stickercard text-center">
                                                 <v-img src="/images/stick6.png" class="stickimg" cover></v-img>
                                                 <div>
-                                                    <span class="stickertext">SecretAgent Tiggie</span>
+                                                    <span class="stickertext ruddy-bold">SecretAgent Tiggie</span>
                                                 </div>
                                                 <div>
                                                     <v-chip class="sticker-chip text-left">
                                                         <img src="/images/chipcoin.png" class="">
-                                                        <span class="sticker-chip-text"> 10</span>
-                                                        <span class="sticker-chip-or-text mx-2">OR</span>
+                                                        <span class="sticker-chip-text ruddy-bold"> 10</span>
+                                                        <span class="sticker-chip-or-text mx-2 ruddy-bold">OR</span>
                                                         <img src="/images/chipcoin2.png">
-                                                        <span class="sticker-chip-text">1</span>
+                                                        <span class="sticker-chip-text ruddy-bold">1</span>
                                                     </v-chip>
                                                 </div>
                                             </VCard>
@@ -63,15 +63,15 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                             <VCard class="stickercard text-center">
                                                 <v-img src="/images/stick4.png" class="stickimg" cover></v-img>
                                                 <div>
-                                                    <span class="stickertext">SecretAgent Tiggie</span>
+                                                    <span class="stickertext ruddy-bold">SecretAgent Tiggie</span>
                                                 </div>
                                                 <div>
                                                     <v-chip class="sticker-chip text-left">
                                                         <img src="/images/chipcoin.png" class="">
-                                                        <span class="sticker-chip-text"> 10</span>
-                                                        <span class="sticker-chip-or-text mx-2">OR</span>
+                                                        <span class="sticker-chip-text ruddy-bold"> 10</span>
+                                                        <span class="sticker-chip-or-text mx-2 ruddy-bold">OR</span>
                                                         <img src="/images/chipcoin2.png">
-                                                        <span class="sticker-chip-text">1</span>
+                                                        <span class="sticker-chip-text ruddy-bold">1</span>
                                                     </v-chip>
                                                 </div>
                                             </VCard>
@@ -80,15 +80,15 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                             <VCard class="stickercard text-center">
                                                 <v-img src="/images/stick1.png" class="stickimg" cover></v-img>
                                                 <div>
-                                                    <span class="stickertext">SecretAgent Tiggie</span>
+                                                    <span class="stickertext ruddy-bold">SecretAgent Tiggie</span>
                                                 </div>
                                                 <div>
                                                     <v-chip class="sticker-chip text-left">
                                                         <img src="/images/chipcoin.png" class="">
-                                                        <span class="sticker-chip-text"> 10</span>
-                                                        <span class="sticker-chip-or-text mx-2">OR</span>
+                                                        <span class="sticker-chip-text ruddy-bold"> 10</span>
+                                                        <span class="sticker-chip-or-text mx-2 ruddy-bold">OR</span>
                                                         <img src="/images/chipcoin2.png">
-                                                        <span class="sticker-chip-text">1</span>
+                                                        <span class="sticker-chip-text ruddy-bold">1</span>
                                                     </v-chip>
                                                 </div>
                                             </VCard>
@@ -97,15 +97,15 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                             <VCard class="stickercard text-center">
                                                 <v-img src="/images/stick3.png" class="stickimg" cover></v-img>
                                                 <div>
-                                                    <span class="stickertext">SecretAgent Tiggie</span>
+                                                    <span class="stickertext ruddy-bold">SecretAgent Tiggie</span>
                                                 </div>
                                                 <div>
                                                     <v-chip class="sticker-chip text-left">
                                                         <img src="/images/chipcoin.png" class="">
-                                                        <span class="sticker-chip-text"> 10</span>
-                                                        <span class="sticker-chip-or-text mx-2">OR</span>
+                                                        <span class="sticker-chip-text ruddy-bold"> 10</span>
+                                                        <span class="sticker-chip-or-text mx-2 ruddy-bold">OR</span>
                                                         <img src="/images/chipcoin2.png">
-                                                        <span class="sticker-chip-text">1</span>
+                                                        <span class="sticker-chip-text ruddy-bold">1</span>
                                                     </v-chip>
                                                 </div>
                                             </VCard>
@@ -114,15 +114,15 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                             <VCard class="stickercard text-center">
                                                 <v-img src="/images/stick5.png" class="stickimg" cover></v-img>
                                                 <div>
-                                                    <span class="stickertext">SecretAgent Tiggie</span>
+                                                    <span class="stickertext ruddy-bold">SecretAgent Tiggie</span>
                                                 </div>
                                                 <div>
                                                     <v-chip class="sticker-chip text-left">
                                                         <img src="/images/chipcoin.png" class="">
-                                                        <span class="sticker-chip-text"> 10</span>
-                                                        <span class="sticker-chip-or-text mx-2">OR</span>
+                                                        <span class="sticker-chip-text ruddy-bold"> 10</span>
+                                                        <span class="sticker-chip-or-text mx-2 ruddy-bold">OR</span>
                                                         <img src="/images/chipcoin2.png">
-                                                        <span class="sticker-chip-text">1</span>
+                                                        <span class="sticker-chip-text ruddy-bold">1</span>
                                                     </v-chip>
                                                 </div>
                                             </VCard>
@@ -131,15 +131,15 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                             <VCard class="stickercard text-center">
                                                 <v-img src="/images/stick7.png" class="stickimg" cover></v-img>
                                                 <div>
-                                                    <span class="stickertext">SecretAgent Tiggie</span>
+                                                    <span class="stickertext ruddy-bold">SecretAgent Tiggie</span>
                                                 </div>
                                                 <div>
                                                     <v-chip class="sticker-chip text-left">
                                                         <img src="/images/chipcoin.png" class="">
-                                                        <span class="sticker-chip-text"> 10</span>
-                                                        <span class="sticker-chip-or-text mx-2">OR</span>
+                                                        <span class="sticker-chip-text ruddy-bold"> 10</span>
+                                                        <span class="sticker-chip-or-text mx-2 ruddy-bold">OR</span>
                                                         <img src="/images/chipcoin2.png">
-                                                        <span class="sticker-chip-text">1</span>
+                                                        <span class="sticker-chip-text ruddy-bold">1</span>
                                                     </v-chip>
                                                 </div>
                                             </VCard>

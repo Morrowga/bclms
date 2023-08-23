@@ -50,13 +50,13 @@ let toggle = () => {
         <v-img src="/images/Tiggie Face Blue.png"></v-img>
 
         <div class="ml-5 mt-1">
-            <span class="header-coin-text">Coins</span>
+            <span class="header-coin-text ruddy-bold">Coins</span>
             <div>
                 <v-chip style="padding: 0 !important; margin: 0 !important;">
                     <img src="/images/chipcoin.png" width="16" height="16">
-                    <span class="header-coin-chip ml-1">47</span>
+                    <span class="header-coin-chip ml-1 ruddy-bold">47</span>
                     <img src="/images/chipcoin2.png" class="ml-2" width="16" height="16">
-                    <span class="header-coin-chip">13</span>
+                    <span class="header-coin-chip ruddy-bold">13</span>
                 </v-chip>
             </div>
         </div>
@@ -68,7 +68,6 @@ let toggle = () => {
 
 .header-coin-text{
     color: #FFF !important;
-    font-family: Ruddy !important;
     font-size: 20px !important;
     font-style: normal !important;
     font-weight: 700 !important;
@@ -77,7 +76,6 @@ let toggle = () => {
 
 .header-coin-chip{
     color: #FFF;
-    font-family: Ruddy;
     font-size: 15px;
     font-style: normal;
     font-weight: 700;

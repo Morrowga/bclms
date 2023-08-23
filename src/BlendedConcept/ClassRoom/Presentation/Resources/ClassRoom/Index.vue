@@ -82,11 +82,11 @@ watch(serverPerPage, function (value) {
             <VContainer>
                 <VRow>
                     <VCol size="6">
-                        <span class="span-text">Classrooms</span>
+                        <span class="span-text ruddy-bold">Classrooms</span>
                     </VCol>
                     <VCol size="6" class="text-right">
                         <v-btn
-                            varient="flat"
+                            varient="flat" class="ruddy-bold"
                             @click="
                                 () => router.get(route('classrooms.create'))
                             "
@@ -108,7 +108,7 @@ watch(serverPerPage, function (value) {
                         <ClassroomCard
                             :route="route('showCopy')"
                             count="5 / 5"
-                            :label="`${n}A`"
+                            :label="`${item} A`"
                         />
                     </VCol>
                 </VRow>
@@ -124,8 +124,6 @@ watch(serverPerPage, function (value) {
 
 .span-text {
     color: var(--text, #161616) !important;
-    /* H3 Ruddy */
-    font-family: Ruddy !important;
     font-size: 40px !important;
     font-style: normal !important;
     font-weight: 700 !important;

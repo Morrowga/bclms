@@ -29,13 +29,13 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                            <div class="d-flex justify-center">
                                                 <div>
                                                     <div class="text-center">
-                                                    <span class="adtext">Get It Today!</span>
+                                                    <span class="adtext  ruddy-bold">Get It Today!</span>
                                                     </div>
                                                     <div class="d-flex justify-center">
                                                         <img class="poster" src="/images/tiger.png">
                                                     </div>
                                                     <div class="mt-3 text-center">
-                                                        <span class="rewardimagetext">
+                                                        <span class="rewardimagetext  ruddy-bold">
                                                             Super Rare
                                                             <br>
                                                             WarriorTiggie
@@ -51,15 +51,15 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                                 </div>
                                                 <VRow class="mt-8">
                                                     <VCol cols="6" class="text-center">
-                                                        <v-btn variant="flat" color="#282828" width="200" height="100" class="rollbtn">Roll Once</v-btn>
+                                                        <v-btn variant="flat" color="#282828" width="200" height="100" class="rollbtn pppangram-bold">Roll Once</v-btn>
                                                         <div class="text-center">
-                                                            <span class="rolltext">Spend <strong>1 Gold Coin</strong></span>
+                                                            <span class="rolltext ruddy-bold">Spend <strong class="ruddy-bold">1 Gold Coin</strong></span>
                                                         </div>
                                                     </VCol>
                                                     <VCol cols="6" class="text-center">
-                                                        <v-btn variant="flat" color="#282828" width="200" height="100" class="rollbtn mx-3">Roll 10 Times</v-btn>
+                                                        <v-btn variant="flat" color="#282828" width="200" height="100" class="rollbtn mx-3 pppangram-bold">Roll 10 Times</v-btn>
                                                         <div class="text-center">
-                                                            <span class="rolltext">Spend <strong>1 Gold Coin</strong></span>
+                                                            <span class="rolltext ruddy-bold">Spend <strong class="ruddy-bold">1 Gold Coin</strong></span>
                                                         </div>
                                                     </VCol>
                                                 </VRow>

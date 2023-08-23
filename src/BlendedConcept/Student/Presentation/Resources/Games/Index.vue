@@ -24,7 +24,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">Om Nom Rush</span>
+                            <span class="bookname ruddy-bold">Om Nom Rush</span>
                         </div>
                     </VCol>
                     <VCol cols="4">
@@ -35,7 +35,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">Tower Crash 3D</span>
+                            <span class="bookname ruddy-bold">Tower Crash 3D</span>
                         </div>
                     </VCol>
                     <VCol cols="4">
@@ -46,7 +46,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">Endless Truck</span>
+                            <span class="bookname ruddy-bold">Endless Truck</span>
                         </div>
                     </VCol>
                     <VCol cols="4">
@@ -57,7 +57,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">Color Strings</span>
+                            <span class="bookname ruddy-bold">Color Strings</span>
                         </div>
                     </VCol>
                     <VCol cols="4">
@@ -68,7 +68,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">Find Me</span>
+                            <span class="bookname ruddy-bold">Find Me</span>
                         </div>
                     </VCol>
                     <VCol cols="4">
@@ -79,7 +79,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname">Pendguin Rush</span>
+                            <span class="bookname ruddy-bold">Pendguin Rush</span>
                         </div>
                     </VCol>
                 </VRow>
