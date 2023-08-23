@@ -1,12 +1,22 @@
 <script setup>
-import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import StoryBookSlider from "./components/StoryBookSlider.vue";
-import PlaylistSlider from "./components/PlaylistSlider.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
+
+import { Link, useForm } from "@inertiajs/vue3";
 
 import { ref } from "vue";
 let tab = ref(null);
+let form = useForm({
+    student_fullname: "Wren Clark",
+    gender: "Female",
+    dob: "January 24,2010",
+    education_level: "K1",
+    parent_fullname: "Fransico Maia",
+    relation_to_child: "Mother",
+    contact_number: "9133232322",
+    login_email: "fransica@mail.com",
+    login_password: "password",
+});
 const isPasswordVisible = ref(false);
 </script>
 <template>
@@ -34,6 +44,7 @@ const isPasswordVisible = ref(false);
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Fullname</p>
                             <v-text-field
+                                v-model="form.student_fullname"
                                 placeholder="e.g. Wren Clark"
                                 variant="outlined"
                             >
@@ -41,12 +52,17 @@ const isPasswordVisible = ref(false);
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Gender</p>
-                            <v-select placeholder="Select" variant="outlined">
+                            <v-select
+                                placeholder="Select"
+                                variant="outlined"
+                                v-model="form.gender"
+                            >
                             </v-select>
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Date of birth</p>
                             <v-text-field
+                                v-model="form.dob"
                                 placeholder="e.g January 24, 2010"
                                 variant="outlined"
                             >
@@ -55,6 +71,7 @@ const isPasswordVisible = ref(false);
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Education Level</p>
                             <v-text-field
+                                v-model="form.education_level"
                                 placeholder="e.g K1"
                                 variant="outlined"
                             ></v-text-field>
@@ -69,6 +86,7 @@ const isPasswordVisible = ref(false);
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Fullname</p>
                             <v-text-field
+                                v-model="form.parent_fullname"
                                 placeholder="e.g. Fransico Maia"
                                 variant="outlined"
                             >
@@ -79,6 +97,7 @@ const isPasswordVisible = ref(false);
                                 Relationship To Child
                             </p>
                             <v-text-field
+                                v-model="form.relation_to_child"
                                 placeholder="e.g. Mother"
                                 variant="outlined"
                             >
@@ -87,6 +106,7 @@ const isPasswordVisible = ref(false);
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Contact Number</p>
                             <v-text-field
+                                v-model="form.contact_number"
                                 placeholder="e.g. 9180003"
                                 variant="outlined"
                             >
@@ -95,25 +115,11 @@ const isPasswordVisible = ref(false);
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Email Address</p>
                             <v-text-field
+                                v-model="form.login_email"
                                 placeholder="e.g. @fransico@gmail.com"
                                 variant="outlined"
                             >
                             </v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <p class="text-subtitle-1 mb-0">Login Password</p>
-                            <v-text-field
-                                variant="outlined"
-                                :type="isPasswordVisible ? 'text' : 'password'"
-                                :append-inner-icon="
-                                    isPasswordVisible
-                                        ? 'mdi-eye-off-outline'
-                                        : 'mdi-eye-outline'
-                                "
-                                @click:append-inner="
-                                    isPasswordVisible = !isPasswordVisible
-                                "
-                            ></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -149,7 +155,11 @@ const isPasswordVisible = ref(false);
                 </v-col>
                 <v-col cols="12">
                     <div class="d-flex justify-center">
-                        <Link :href="route('view_students.index')">
+                        <Link
+                            :href="
+                                route('org_view_teacher_student.student.show')
+                            "
+                        >
                             <v-btn
                                 variant="flat"
                                 rounded
@@ -165,7 +175,7 @@ const isPasswordVisible = ref(false);
                             width="200"
                             color="primary"
                             class="text-white"
-                            >Save</v-btn
+                            >Update</v-btn
                         >
                     </div>
                 </v-col>

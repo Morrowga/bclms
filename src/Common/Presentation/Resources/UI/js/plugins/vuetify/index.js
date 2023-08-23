@@ -7,6 +7,7 @@ import theme from './theme'
 // Styles
 import '@core-scss/template/libs/vuetify/index.scss'
 import 'vuetify/styles'
+import 'font-awesome/css/font-awesome.min.css'
 
 export default createVuetify({
   aliases: {

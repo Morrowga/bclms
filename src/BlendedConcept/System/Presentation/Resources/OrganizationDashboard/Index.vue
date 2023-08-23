@@ -4,6 +4,9 @@ import { defineProps } from "vue";
 
 import TotalClassRooms from "./TotalClassRooms.vue";
 import TotalStudents from "./TotalStudents.vue";
+import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue";
+import TeacherAvatar from "@mainRoot/components/TeacherAvatar/TeacherAvatar.vue";
+import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue";
 
 const statisticsWithImages = [
     {
@@ -26,7 +29,7 @@ const statisticsWithImages = [
 </script>
 
 <template>
-    <section>
+    <v-container fluid>
         <VRow class="match-height mb-5">
             <!-- <VCol
                 v-for="statistics in statisticsWithImages"
@@ -40,27 +43,85 @@ const statisticsWithImages = [
         </VRow>
         <VRow>
             <VCol cols="12" sm="12" lg="12">
-                <div class="header">
-                    <span class="text-xl">Total ClassRooms</span>
-                    <br />
-
-                    <!-- <TotalClassRooms  /> -->
-
-                    <br />
+                <div class="header d-flex justify-space-between">
+                    <h1 class="tiggie-title">Classrooms</h1>
+                    <VBtn color="primary" variant="flat" rounded>
+                        <VIcon icon="mdi-plus"></VIcon>
+                        <span class="text-white">Add</span>
+                    </VBtn>
                 </div>
-                <br />
+                <div class="mt-5">
+                    <v-row>
+                        <v-col
+                            v-for="n in 4"
+                            :key="n"
+                            cols="12"
+                            sm="6"
+                            md="4"
+                            lg="3"
+                        >
+                            <ClassroomCard
+                                route="#"
+                                count="5 / 5"
+                                :label="`${n}A`"
+                            />
+                        </v-col>
+                    </v-row>
+                </div>
             </VCol>
-            <VCol cols="12" sm="12" lg="12">
+            <VCol cols="12" sm="12" lg="12" class="mt-10">
                 <div class="header">
-                    <span class="text-xl">Latest Students</span>
-                    <br />
-
-                    <!-- <TotalStudents  /> -->
-
-                    <br />
+                    <h1 class="tiggie-title">Students</h1>
+                    <v-row no-gutters>
+                        <v-col v-for="n in 6" :key="n">
+                            <StudentAvatar
+                                image="/images/student.png"
+                                title="Wren Clark"
+                                phone_number="9111 1112"
+                                route="#"
+                            />
+                        </v-col>
+                    </v-row>
                 </div>
-                <br />
+            </VCol>
+            <VCol cols="12" sm="12" lg="12" class="mt-10">
+                <div class="header">
+                    <h1 class="tiggie-title">Teachers</h1>
+                    <v-row no-gutters>
+                        <v-col v-for="n in 6" :key="n">
+                            <TeacherAvatar
+                                image="/images/teacher.png"
+                                title="Wren Clark"
+                                phone_number="9111 1112"
+                                route="#"
+                                storage="135 MB/ 200 MB"
+                            />
+                        </v-col>
+                    </v-row>
+                </div>
             </VCol>
         </VRow>
-    </section>
+    </v-container>
 </template>
+
+<style lang="scss">
+.phone-color {
+    color: #ff6262;
+}
+
+.w-10 {
+    width: 180px;
+}
+
+.h-10 {
+    width: 180px;
+}
+
+.w-6 {
+    width: 16px;
+}
+
+.h-6 {
+    height: 16px;
+}
+</style>

@@ -95,22 +95,16 @@ http://bc-lms.test/createplaylists
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 classrooms
-classroom.show => showCopy
-classroom.edit => editCopy
+classroom.show => shopCopy
 classroom.create => create
 student-games
 storybooks
 be-lucky
 buy-sticker
+
+
+
+Org_Admin_list_of_teachers #22.8.2023
+
+http://bc-lms.test/listoforgteacher

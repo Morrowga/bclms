@@ -48,7 +48,6 @@ return [
         'edit' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Edit',
         'show' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Show',
         'planorg' => 'BlendedConcept/Organization/Presentation/Resources/PlanForOrg/CreatePlan',
-
     ],
 
     'subscriptioninvoice' => [
@@ -110,7 +109,7 @@ return [
     'teacher_storybook' => [
         'index' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Index',
         'show' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Show',
-        'assign_student' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/AssignStudent'
+        'assign_student' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/AssignStudent',
     ],
 
     'add_customisation' => [
@@ -119,6 +118,13 @@ return [
     ],
     'org_view_teacher_student' => [
         'index' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/Index',
+        'teacher-edit' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/EditTeacher',
+        'teacher-create' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/CreateTeacher',
+        'teacher-show' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail',
+
+        'student-edit' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/EditStudent',
+        'student-create' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/CreateStudent',
+        'student-show' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/ViewStudentDetail'
     ],
 
     //teacher profile view
@@ -131,7 +137,7 @@ return [
     'playlist' => [
         'index' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index',
         'create' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Create',
-        'show' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show'
+        'show' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show',
     ],
 
     'announment' => [
@@ -155,7 +161,6 @@ return [
     'classrooms' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index',
     //UI
     'showCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show',
-    'editCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Edit',
     'createCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create',
     //Storybook student
     'storybooks' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Index',
@@ -167,4 +172,12 @@ return [
      'student-rewards' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Index',
      'be-lucky' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky',
      'buy-sticker' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker',
+
+    'organization' => [
+        'profile' => 'BlendedConcept/System/Presentation/Resources/OrganizationDashboard/Admin/Profile',
+    ],
+
+    'listofteacher' => [
+       'index' => 'BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index'
+    ]
 ];

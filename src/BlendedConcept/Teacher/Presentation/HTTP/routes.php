@@ -44,4 +44,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/add_customisation/create', [AddCustomisationController::class, 'create'])->name('add_customisation.create');
     Route::get('/add_customisation/edit', [AddCustomisationController::class, 'edit'])->name('add_customisation.edit');
+
+    Route::get('listoforgteacher',[TeacherController::class,'listofteacher']);
 });

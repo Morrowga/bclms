@@ -426,6 +426,7 @@ thead {
 .tggie-student-img {
     width: 180px;
     height: 180px;
+    object-fit: cover;
     flex-shrink: 0;
     border-radius: 180px;
 }
