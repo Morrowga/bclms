@@ -21,16 +21,33 @@
  Then you need to Create `UserController.php` you need to create Controller and you need to create some file before working on Controller 
  </strong>
 
+
+<br/>
+
 <details>
  
 <summary>
- <b>Create Repository and Interface for that.</b>
+ <b>Create Repository and Interface for that</b>
+ </br>
+ <strong style="color:#EB5A5A">
+ Repository is implement for RepositoryInterFace for database related queries
+ </strong>
 </summary>
+
+<h4>
+Create `SecurityRepositoryInterface.php` inside these folder path  `src/BlendedConcept/Security/Domain/Repositories/SecurityRepositoryInterface.php`
+</h4>
+
+<h4>Create `SecurityRepository.php` inside these folder path `src/BlendedConcept/Security/Application/Repositories/Eloquent/SecurityRepository.php`</h4>
+
+<p>
+Before implementing `SecurityRepository.php` you might need to create the following.
+</p> 
 <ul>
-<li>First You need t</li>
-<li>install dotenv package</li>
-<li>import in your server.js file</li>
-<li><code> dotenv.config()</code></li>
-<li> use in your project from anywhere using ```production.env.YOURKEYNAME```</li>
+<li><b style="color:#EB5A5A">Mappers</b></li>
+   Map is used to 
+<li><b style="color:#EB5A5A">DTO</b> </li>
+<li><b style="color:#EB5A5A">UseCases</b></li>  
+<li><b style="color:#EB5A5A">Models</b></li>
 </ul>
 </details>
