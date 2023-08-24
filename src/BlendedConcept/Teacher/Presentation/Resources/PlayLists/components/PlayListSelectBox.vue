@@ -1,4 +1,5 @@
 <script setup>
+import GreenChip from "@mainRoot/components/GreenChip/GreenChip.vue";
 const stateList = [
     'Alabama',
     'Alaska',
@@ -83,14 +84,8 @@ const paymentMethods = [
                         </VCol>
                         <VCol cols="4">
                             <div class="d-flex flex-column gap-2">
-                                <VChip color="secondary" width>
-                                    <VIcon icon="mdi-circle" color="primary"></VIcon>
-                                    Down Syndrome
-                                </VChip>
-                                <VChip>
-                                    <VIcon icon="mdi-circle" color="primary"></VIcon>
-                                    Down Syndrome
-                                </VChip>
+                                <GreenChip title="Down Syndrome" :icon="true" class="ma-1"/>
+                                <GreenChip title="Down Syndrome" :icon="true" class="ma-1"/>
                             </div>
                         </VCol>
                     </VRow>
@@ -129,15 +124,9 @@ const paymentMethods = [
                             </VCardItem>
                             <VCardActions>
                                 <div class="d-flex">
-                                    <VChip color="teal" variant="outlined">
-                                        Switch
-                                    </VChip>
-                                    <VChip color="teal" variant="outlined">
-                                        Eye-Gaze
-                                    </VChip>
-                                    <VChip color="teal" variant="outlined">
-                                        Touch
-                                    </VChip>
+                                    <GreenChip title="Switch" class="ma-1"/>
+                                    <GreenChip title="Eye-Gaze" class="ma-1"/>
+                                    <GreenChip title="Touch" class="ma-1"/>
                                 </div>
 
                             </VCardActions>

@@ -128,12 +128,12 @@ watch(serverPerPage, function (value) {
                                 variant="outlined"
                             />
                             <!-- 👉 Add User button -->
-                            <!-- <Create
+                            <Create
                                 :organizations="organizations"
                                 :roles="roles_name"
                                 :flash="flash"
                                 v-if="permissions.includes('create_user')"
-                            /> -->
+                            />
                             <ImportUser/>
                         </div>
                     </div>

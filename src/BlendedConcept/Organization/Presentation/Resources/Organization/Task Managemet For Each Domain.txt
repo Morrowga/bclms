@@ -1,0 +1,105 @@
+Task Managemet For Each Domain
+
+
+All the Domain that might used inside our project
+
+Organization
+
+- Organization Managemet
+
+
+Finance
+
+- Subscription Plans
+- Subscription and Invoice
+- Manage Subscription and Select Organizations
+
+
+
+Securtiy
+
+- User
+- Role Managemet
+- Permission
+
+
+Student
+
+- Manage Student
+- List of Student
+- PlayLists
+- Org List of Students
+
+
+System
+
+- System Settings
+- Site theme
+- Technical Support
+- Home Page For BC Staff
+- Announment
+- Group and Student B2C Teacher/Parent Home Page
+- Organization Admin Home Page
+- Org Admin Reports
+- Org Teacher Home Page
+- Student Home Page
+
+
+
+Survey
+
+- Survey Settings
+- User Experience Survey
+- View Survey Result
+- Specific Student Profiling Survey
+- Org Teacher User Experience Survey
+
+
+
+
+Disability
+
+- Manage Accessibility
+- Manage Disability
+
+
+
+StoryBook
+
+- Manage Games
+- Manage Reward
+- Manage PathWays
+- Manage Books
+- Manage Reward Books
+- Manage User FeedBack On Books
+- View StoryBook
+- Student Reward pages
+- Student Sticker
+
+
+
+
+Teacher
+
+- Teacher Group
+- B2C Teacher Add Customisation
+- Org Admin List of Teacher
+
+
+
+
+ClassRoom
+
+- Conduct Lessons
+- Learning Activity
+- Org Teacher ClassRoom
+- Org Teacher Group
+-
+
+
+Library
+
+- Teacher Resource Library
+- Org Admin Resources
+
+

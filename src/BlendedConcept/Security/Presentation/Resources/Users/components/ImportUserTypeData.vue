@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from "vue"
-import ImportUserTypeData from "./ImportUserTypeData.vue"
-
 const isDialogVisible = ref(false)
+
 const items = [
     'Blended Concepted',
     'Blended Center',
@@ -16,10 +15,8 @@ const items = [
     <VDialog v-model="isDialogVisible" width="500">
         <!-- Activator -->
         <template #activator="{ props }">
-            <VBtn v-bind="props" height="40" density="compact">
-                <span class="text-uppercase text-white">
-                    Import
-                </span>
+            <VBtn v-bind="props" color="primary" variant="flat" width="164px">
+                    <span class="text-white">Next</span>
             </VBtn>
         </template>
 
@@ -41,8 +38,9 @@ const items = [
                 <VBtn color="gray" variant="flat" width="164px" @click="isDialogVisible = false">
                     <span class="text-white">Cancel</span>
                 </VBtn>
-                <ImportUserTypeData/>
-
+                <VBtn color="primary" variant="flat" width="164px">
+                    <span class="text-white">Next</span>
+                </VBtn>
             </VCardActions>
         </VCard>
     </VDialog>
