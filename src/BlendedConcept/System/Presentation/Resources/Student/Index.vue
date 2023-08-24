@@ -152,6 +152,12 @@ import { router } from "@inertiajs/core";
 
 <style>
 
+/* .student .layout-page-content{
+    background: url('/images/artbg.png') no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+} */
+
 .label-student{
     color: #000 !important;
     font-size: 16px !important;
