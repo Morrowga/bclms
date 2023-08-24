@@ -71,7 +71,10 @@ onMounted(() => {
         <!--
             VAlert is use for show annnounment pages
         -->
-        <VContainer :fluid="checkUserRole()">
+        <VContainer
+            v-if="user_role != 'BC Subscriber'"
+            :fluid="checkUserRole()"
+        >
             <VAlert
                 v-for="item in notifications"
                 :key="item.id"
