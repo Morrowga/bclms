@@ -15,4 +15,12 @@ class GamesController extends Controller
             return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
+
+    public function show(){
+        try {
+            return Inertia::render(config('route.game-show'));
+        } catch (Exception $e) {
+            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
+        }
+    }
 }

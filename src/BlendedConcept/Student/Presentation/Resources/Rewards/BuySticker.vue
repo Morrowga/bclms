@@ -160,6 +160,13 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     inline-size: 24.0625rem;
 }
 
+// .student .layout-page-content{
+//     background: url('/images/artbg.png') no-repeat !important;
+//     background-size: cover !important;
+//     background-position: center !important;
+// }
+
+
 .sticker-chip-or-text{
     color: var(--candy-red, #FF6262) !important;
     font-size: 25px !important;

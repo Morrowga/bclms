@@ -54,7 +54,7 @@ const activeTab = (name) => {
                         <VCard class="card-story">
                             <v-img src="/images/21.jpg" class="showimg" cover></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" class="playButton" alt="">
+                                <img src="/images/Play Button.png" @click="() => router.get(route('storybooks.show'))"  class="playButton" alt="">
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -77,7 +77,7 @@ const activeTab = (name) => {
                         <VCard class="card-story">
                             <v-img src="/images/3.jpg" class="showimg" cover></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" class="playButton" alt="">
+                                <img src="/images/Play Button.png" @click="() => router.get(route('storybooks.show'))" class="playButton" alt="">
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -100,7 +100,7 @@ const activeTab = (name) => {
                         <VCard class="card-story">
                             <v-img src="/images/sample2.png" class="showimg" cover></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" class="playButton" alt="">
+                                <img src="/images/Play Button.png" @click="() => router.get(route('storybooks.show'))" class="playButton" alt="">
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -123,7 +123,7 @@ const activeTab = (name) => {
                         <VCard class="card-story">
                             <v-img src="/images/1.webp" class="showimg" cover></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" class="playButton" alt="">
+                                <img src="/images/Play Button.png" @click="() => router.get(route('storybooks.show'))"  class="playButton" alt="">
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -146,7 +146,7 @@ const activeTab = (name) => {
                         <VCard class="card-story">
                             <v-img src="/images/2.jpg" class="showimg" cover></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" class="playButton" alt="">
+                                <img src="/images/Play Button.png" @click="() => router.get(route('storybooks.show'))" class="playButton" alt="">
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -169,7 +169,7 @@ const activeTab = (name) => {
                         <VCard class="card-story">
                             <v-img src="/images/storybook.png" class="showimg" cover></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" class="playButton" alt="">
+                                <img src="/images/Play Button.png" @click="() => router.get(route('storybooks.show'))" class="playButton" alt="">
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -204,7 +204,7 @@ const activeTab = (name) => {
                         <VCard class="card-story">
                             <v-img src="/images/21.jpg" class="showimg" cover></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" class="playButton" alt="">
+                                <img src="/images/Play Button.png" @click="() => router.get(route('storybooks.show'))" class="playButton" alt="">
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -227,7 +227,7 @@ const activeTab = (name) => {
                         <VCard class="card-story">
                             <v-img src="/images/3.jpg" class="showimg" cover></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" class="playButton" alt="">
+                                <img src="/images/Play Button.png" @click="() => router.get(route('storybooks.show'))" class="playButton" alt="">
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -250,7 +250,7 @@ const activeTab = (name) => {
                         <VCard class="card-story">
                             <v-img src="/images/sample2.png" class="showimg" cover></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" class="playButton" alt="">
+                                <img src="/images/Play Button.png" @click="() => router.get(route('storybooks.show'))" class="playButton" alt="">
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -278,7 +278,7 @@ const activeTab = (name) => {
                         <VCard class="card-story">
                             <v-img src="/images/21.jpg" class="showimg" cover></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" class="playButton" alt="">
+                                <img src="/images/Play Button.png" @click="() => router.get(route('storybooks.show'))" class="playButton" alt="">
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -301,7 +301,7 @@ const activeTab = (name) => {
                         <VCard class="card-story">
                             <v-img src="/images/3.jpg" class="showimg" cover></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" class="playButton" alt="">
+                                <img src="/images/Play Button.png" @click="() => router.get(route('storybooks.show'))" class="playButton" alt="">
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -324,7 +324,7 @@ const activeTab = (name) => {
                         <VCard class="card-story">
                             <v-img src="/images/sample2.png" class="showimg" cover></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" class="playButton" alt="">
+                                <img src="/images/Play Button.png" @click="() => router.get(route('storybooks.show'))" class="playButton" alt="">
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -350,6 +350,13 @@ const activeTab = (name) => {
 </template>
 
 <style  lang="scss">
+// .student .layout-page-content{
+//     background: url('/images/artbg.png') no-repeat !important;
+//     background-size: cover !important;
+//     background-position: center !important;
+// }
+
+
 .app-user-search-filter {
     inline-size: 24.0625rem;
 }
@@ -433,6 +440,7 @@ const activeTab = (name) => {
 }
 
 .playButton{
+    cursor: pointer;
     position: absolute;
     top: 28%;
     z-index: 1;

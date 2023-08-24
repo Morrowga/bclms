@@ -21,11 +21,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                             ></v-img>
                             <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    class="playButton"
-                                    alt=""
-                                />
+                                <img src="/images/Play Button.png" @click="() => router.get(route('games.show'))" class="playButton" alt="">
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
@@ -40,11 +36,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                             ></v-img>
                             <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    class="playButton"
-                                    alt=""
-                                />
+                                <img src="/images/Play Button.png" @click="() => router.get(route('games.show'))" class="playButton" alt="">
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
@@ -61,11 +53,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                             ></v-img>
                             <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    class="playButton"
-                                    alt=""
-                                />
+                                <img src="/images/Play Button.png" @click="() => router.get(route('games.show'))" class="playButton" alt="">
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
@@ -82,11 +70,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                             ></v-img>
                             <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    class="playButton"
-                                    alt=""
-                                />
+                                <img src="/images/Play Button.png" @click="() => router.get(route('games.show'))" class="playButton" alt="">
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
@@ -103,11 +87,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                             ></v-img>
                             <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    class="playButton"
-                                    alt=""
-                                />
+                                <img src="/images/Play Button.png" @click="() => router.get(route('games.show'))" class="playButton" alt="">
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
@@ -122,11 +102,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 cover
                             ></v-img>
                             <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    class="playButton"
-                                    alt=""
-                                />
+                                <img src="/images/Play Button.png" @click="() => router.get(route('games.show'))" class="playButton" alt="">
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
@@ -146,8 +122,14 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     inline-size: 24.0625rem;
 }
 
-.bookname {
-    color: var(--white, #fff) !important;
+// .student .layout-page-content{
+//     background: url('/images/artbg.png') no-repeat !important;
+//     background-size: cover !important;
+//     background-position: center !important;
+// }
+
+.bookname{
+    color: var(--white, #FFF) !important;
     // font-family: Ruddy;
     font-size: 25px !important;
     font-style: normal !important;

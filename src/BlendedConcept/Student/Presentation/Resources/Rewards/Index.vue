@@ -12,26 +12,80 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 </script>
 
 <template>
-    <StudentLayout>
+    <StudentLayout class="section-bg">
+        <div class="storereward">
+            <img src="/images/store.png" @click="() => router.get(route('reward-store'))" alt="">
+        </div>
         <section>
-            <VRow>
-                <VCol cols="1">
-                    <img src="/images/back.png" @click="() => router.get(route('dashboard'))" class="backarrow" alt="">
-                </VCol>
-                <VCol cols="11">
-                    <div class="d-flex justify-center">
-                        <img src="/images/reward.png" alt="" class="reward-img">
-                        <div class="b1">
-                            <div class="mt-12">
-                                <img src="/images/b1.png" @click="() => router.get(route('be-lucky'))" alt="">
-                            </div>
-                            <div class="mt-15">
-                                <img src="/images/b2.png" @click="() => router.get(route('buy-sticker'))" alt="">
-                            </div>
-                        </div>
+            <v-navigation-drawer
+            floating
+            permanent
+            class="reward-sidebar"
+            >
+            <div  class="mt-5">
+                <div  class="vlis" value="home">
+                    <div class="d-flex justify-center mt-1">
+                        <img src="/images/s5.png" class="icon-reward-sidebar" alt="">
                     </div>
-                </VCol>
-            </VRow>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div  class="vlis" value="home">
+                    <div class="d-flex justify-center mt-1">
+                        <img src="/images/s6.png" class="icon-reward-sidebar" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div  class="vlis" value="home">
+                    <div class="d-flex justify-center mt-1">
+                        <img src="/images/s1.png" class="icon-reward-sidebar" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div  class="vlis" value="home">
+                    <div class="d-flex justify-center mt-1">
+                        <img src="/images/s2.png" class="icon-reward-sidebar" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div  class="vlis" value="home">
+                    <div class="d-flex justify-center mt-1">
+                        <img src="/images/s7.png" class="icon-reward-sidebar" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div  class="vlis" value="home">
+                    <div class="d-flex justify-center mt-1">
+                        <img src="/images/s8.png" class="icon-reward-sidebar" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3">
+            <div  class="vlis" value="home">
+                <div class="d-flex justify-center mt-1">
+                    <img src="/images/s4.png" class="icon-reward-sidebar" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="mt-3">
+            <div  class="vlis" value="home">
+                <div class="d-flex justify-center mt-1">
+                    <img src="/images/s3.png" class="icon-reward-sidebar" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="mt-3">
+            <div  class="vlis" value="home">
+                <div class="d-flex justify-center mt-1">
+                    <img src="/images/s3.png" class="icon-reward-sidebar" alt="">
+                </div>
+            </div>
+        </div>
+            </v-navigation-drawer>
         </section>
     </StudentLayout>
 </template>
@@ -41,26 +95,18 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     inline-size: 24.0625rem;
 }
 
-.b1{
-    position: absolute;
-    right: 15%;
-    top: 20%
+.section-bg .layout-page-content{
+    height: 1000px;
+    background: url('/images/rewardbg.png') no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
 }
 
-.b1 > div > img{
-    height: 20vh;
+.storereward{
     cursor: pointer;
-}
-
-
-.backarrow{
-    cursor: pointer !important;
-    width: 40px !important;
-    height: 40px !important;
-}
-
-.reward-img{
-    height: 85vh;
+    position: absolute;
+    left: 39.5%;
+    top: 11%;
 }
 
 .overlay-container {
@@ -73,6 +119,36 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.reward-sidebar::-webkit-scrollbar {
+  width: 1px !important; /* Width of the scroll bar */
+}
+
+
+.reward-sidebar{
+    overflow: auto; /* Enable scroll bars when content overflows */
+    margin-top: 3%;
+    margin-bottom: 3%;
+    height: 630px !important;
+    width: 130px !important;
+    border-top: 4px solid #fff;
+    border-bottom: 4px solid #fff;
+    border-right: 4px solid #fff;
+    border-top-right-radius: 17px;
+    border-bottom-right-radius: 17px;
+    background: var(--gray, #BFC0C1);
+}
+
+.rewardsidebartext{
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+    font-weight: bold;
+    color: #000;
+}
+
+.icon-reward-sidebar{
+    height: 60px !important;
 }
 
 

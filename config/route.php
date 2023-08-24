@@ -165,15 +165,17 @@ return [
     'createCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create',
     //Storybook student
     'storybooks' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Index',
+    'storybook-show' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Show',
 
-    //Game student
-    'student-games' => 'BlendedConcept/Student/Presentation/Resources/Games/Index',
+     //Game student
+     'student-games' => 'BlendedConcept/Student/Presentation/Resources/Games/Index',
+     'game-show' => 'BlendedConcept/Student/Presentation/Resources/Games/Show',
 
-    //Rewards student
-    'student-rewards' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Index',
-    'be-lucky' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky',
-    'buy-sticker' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker',
-
+     //Rewards student
+     'student-rewards' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Index',
+     'reward-store' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Store',
+     'be-lucky' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky',
+     'buy-sticker' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker',
 
 
     'listofteacher' => [

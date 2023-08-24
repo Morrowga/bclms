@@ -13,8 +13,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('students', StudentController::class);
     Route::resource('disability_device', DisabilityDeviceController::class);
     Route::get('storybooks', [StoryBookController::class, 'index'])->name('storybooks');
+    Route::get('storybooks/show', [StoryBookController::class, 'show'])->name('storybooks.show');
     Route::get('student-games', [GamesController::class, 'index'])->name('student-games');
+    Route::get('game/show', [GamesController::class, 'show'])->name('games.show');
     Route::get('student-rewards', [RewardsController::class, 'index'])->name('student-rewards');
+    Route::get('reward-store', [RewardsController::class, 'store'])->name('reward-store');
     Route::get('be-lucky', [RewardsController::class, 'beLucky'])->name('be-lucky');
     Route::get('buy-sticker', [RewardsController::class, 'buySticker'])->name('buy-sticker');
     // Route::resource('accessibility_device', AccessibilityDeviceController::class);

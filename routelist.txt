@@ -102,8 +102,10 @@ student-games
 storybooks
 be-lucky
 buy-sticker
-
-
+student-rewards
+reward-store
+storybook/show
+game/show
 
 Org_Admin_list_of_teachers #22.8.2023
 
