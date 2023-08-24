@@ -33,6 +33,7 @@ const theme = {
         'surface' : '#F6F6F6',
         'line' : "#E5E5E5",
         'perfect-scrollbar-thumb': '#DBDADE',
+        'sea-form' :'#D7F2F0',
         'snackbar-background': '#212121',
         'tooltip-background': '#262732',
         'alert-background': '#F7F7F9',

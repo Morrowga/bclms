@@ -80,6 +80,7 @@ let onFormSubmit = () => {
                                 <VTextField
                                     placeholder="Type here..."
                                     density="compact"
+                                    suffix="GB"
                                 />
                             </VCol>
                             <VCol cols="8">

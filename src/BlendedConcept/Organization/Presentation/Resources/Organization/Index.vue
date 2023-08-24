@@ -25,16 +25,13 @@ const deleteOrganization = (id) => {
     deleteItem(id, "organizations");
 };
 
-const items = ref([
-    {
-        title: "Edit",
-        value: "edit",
-    },
-    {
-        title: "Delete",
-        value: "delete",
-    },
-]);
+const roles = [
+    'Name',
+    'Teacher Usage',
+    'Student Usage',
+    'Storage Usage',
+    'Status'
+];
 
 let columns = [
     {

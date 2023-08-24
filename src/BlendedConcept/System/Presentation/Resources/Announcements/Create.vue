@@ -78,11 +78,11 @@ let onFormSubmit = () => {
                             :href="route('announcements.index')"
                             class="text-black"
                         >
-                            <VBtn color="gray" height="50" class="" width="200">
+                            <VBtn color="gray" height="50" class="" width="250">
                                 Cancel
                             </VBtn>
                         </Link>
-                        <VBtn type="submit" class="" height="50" width="200">
+                        <VBtn type="submit" class="" height="50" width="250">
                             Post
                         </VBtn>
                     </VCol>

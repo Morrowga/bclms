@@ -68,6 +68,7 @@ let handleSubmit = () => {
                                             density="compact"
                                             v-model="form.name"
                                             class="w-100"
+                                            placeholder="Type here ..."
                                             :rules="[requiredValidator]"
                                             :error-messages="form?.errors?.name"
                                         />
@@ -78,6 +79,7 @@ let handleSubmit = () => {
                                         >
                                         <VTextField
                                             density="compact"
+                                            placeholder="Type here ..."
                                             v-model="form.contact_person"
                                             class="w-100"
                                             :rules="[requiredValidator]"
@@ -92,6 +94,7 @@ let handleSubmit = () => {
                                         >
                                         <VTextField
                                             density="compact"
+                                            placeholder="Type here ..."
                                             v-model="form.contact_email"
                                             class="w-100"
                                             :rules="[
@@ -109,6 +112,7 @@ let handleSubmit = () => {
                                         >
                                         <VTextField
                                             density="compact"
+                                            placeholder="Type here ..."
                                             v-model="form.contact_number"
                                             class="w-100"
                                             :rules="[requiredValidator]"
@@ -132,6 +136,7 @@ let handleSubmit = () => {
                                         >
                                         <VTextField
                                             density="compact"
+                                            placeholder="Type here ..."
                                             v-model="form.teacher_license"
                                             class="w-100"
                                             :error-messages="
@@ -148,6 +153,7 @@ let handleSubmit = () => {
 
                                         <VTextField
                                             density="compact"
+                                            placeholder="Type here ..."
                                             v-model="form.allocated_storage"
                                             class="w-100"
                                             :rules="[requiredValidator]"
@@ -164,6 +170,7 @@ let handleSubmit = () => {
                                         <VTextField
                                             type="email"
                                             density="compact"
+                                            placeholder="Type here ..."
                                             v-model="form.price"
                                             class="w-100"
                                             :rules="[requiredValidator]"
@@ -178,6 +185,7 @@ let handleSubmit = () => {
                                         >
                                         <VTextField
                                             density="compact"
+                                            placeholder="Type here ..."
                                             v-model="form.payment_period"
                                             class="w-100"
                                             :error-messages="

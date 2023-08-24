@@ -14,8 +14,8 @@ let refForm = ref();
 let flash = computed(() => usePage().props.flash);
 
 let form = useForm({
-    name: "",
-    contact_person: "",
+    name: "Blended Concept",
+    contact_person: "Jordan Stevenson",
     contact_email: "",
     contact_number: "",
     price: "",
