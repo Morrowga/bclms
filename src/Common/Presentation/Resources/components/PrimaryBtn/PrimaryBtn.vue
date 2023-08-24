@@ -18,6 +18,10 @@ let props = defineProps({
         type: String,
         default: "200",
     },
+    route: {
+        type: String,
+        default: "#",
+    },
 });
 let emit = defineEmits(["click:runFunction"]);
 let clicked = () => {
@@ -26,12 +30,16 @@ let clicked = () => {
 </script>
 
 <template>
-    <v-btn
-        variant="flat"
-        rounded
-        color="primary"
-        :width="width"
-        @click="clicked"
-        >{{ title }}</v-btn
-    >
+    <div>
+        <Link :href="route">
+            <v-btn
+                variant="flat"
+                rounded
+                color="primary"
+                :width="width"
+                @click="clicked"
+                >{{ title }}</v-btn
+            >
+        </Link>
+    </div>
 </template>

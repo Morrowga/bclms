@@ -5,8 +5,10 @@ import { usePage, Link } from "@inertiajs/vue3";
 import { computed } from "vue";
 import { router } from "@inertiajs/core";
 const ability = useAppAbility();
-const userData = computed(() => usePage().props.auth);
-
+let page = usePage();
+const userData = computed(() => page.props.auth);
+let user_role = computed(() => page.props.user_info.user_role.name);
+const profileRoute = ref(route("userprofile"));
 const logout = () => {
     const PREFIX =
         localStorage.getItem("tenant") != ""
@@ -14,6 +16,18 @@ const logout = () => {
             : "";
     localStorage.removeItem("menu_title");
     router.post(`${PREFIX}/logout`);
+};
+const dynamicProfileLink = () => {
+    console.log(user_role.value);
+    switch (user_role.value) {
+        case "Teacher":
+            return route("profiles.org-teacher");
+            break;
+
+        default:
+            return route("userprofile");
+            break;
+    }
 };
 </script>
 
@@ -76,7 +90,7 @@ const logout = () => {
                     <VDivider class="my-2" />
 
                     <!-- 👉 Profile -->
-                    <VListItem @click="() => router.get('userprofile')">
+                    <VListItem @click="() => router.get(dynamicProfileLink())">
                         <template #prepend>
                             <VIcon
                                 class="me-2"
@@ -88,52 +102,8 @@ const logout = () => {
                         <VListItemTitle>Profile</VListItemTitle>
                     </VListItem>
 
-                    <!-- 👉 Settings -->
-                    <VListItem
-                        :to="{
-                            name: 'pages-account-settings-tab',
-                            params: { tab: 'account' },
-                        }"
-                    >
-                        <template #prepend>
-                            <VIcon
-                                class="me-2"
-                                icon="mdi-cog-outline"
-                                size="22"
-                            />
-                        </template>
-
-                        <VListItemTitle>Settings</VListItemTitle>
-                    </VListItem>
-
-                    <!-- 👉 Pricing -->
-                    <VListItem :to="{ name: 'pages-pricing' }">
-                        <template #prepend>
-                            <VIcon
-                                class="me-2"
-                                icon="mdi-currency-usd"
-                                size="22"
-                            />
-                        </template>
-
-                        <VListItemTitle>Pricing</VListItemTitle>
-                    </VListItem>
-
-                    <!-- 👉 FAQ -->
-                    <VListItem :to="{ name: 'pages-faq' }">
-                        <template #prepend>
-                            <VIcon
-                                class="me-2"
-                                icon="mdi-help-circle-outline"
-                                size="22"
-                            />
-                        </template>
-
-                        <VListItemTitle>FAQ</VListItemTitle>
-                    </VListItem>
-
                     <!-- Divider -->
-                    <VDivider class="my-2" />
+                    <!-- <VDivider class="my-2" /> -->
 
                     <!-- 👉 Logout -->
                     <VListItem link @click="logout">

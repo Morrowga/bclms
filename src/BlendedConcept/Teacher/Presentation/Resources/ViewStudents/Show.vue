@@ -16,13 +16,15 @@ let tab = ref(null);
                     <v-img src="/images/student_pf.png" />
 
                     <div class="d-flex justify-center my-4">
-                        <v-btn
-                            variant="flat"
-                            rounded
-                            color="#FF8015"
-                            class="text-white"
-                            >Enter Kids Mode</v-btn
-                        >
+                        <Link href="#">
+                            <v-btn
+                                variant="flat"
+                                rounded
+                                color="#FF8015"
+                                class="text-white"
+                                >Enter Kids Mode</v-btn
+                            >
+                        </Link>
                     </div>
                 </v-col>
                 <v-col cols="12" md="6" class="pa-5">
@@ -143,20 +145,28 @@ let tab = ref(null);
 
                         <v-col cols="12">
                             <div>
-                                <v-btn
-                                    variant="flat"
-                                    rounded
-                                    color="#FF8015"
-                                    class="mr-4 text-white"
-                                    >Do/Redo Profiling Survey</v-btn
+                                <Link :href="route('profilling_survey.index')">
+                                    <v-btn
+                                        variant="flat"
+                                        rounded
+                                        color="#FF8015"
+                                        class="mr-4 text-white"
+                                        >Do/Redo Profiling Survey</v-btn
+                                    >
+                                </Link>
+                                <Link
+                                    :href="
+                                        route('set_accessibility_device.index')
+                                    "
                                 >
-                                <v-btn
-                                    variant="flat"
-                                    rounded
-                                    color="#FF8015"
-                                    class="text-white"
-                                    >Set Accessibility Device</v-btn
-                                >
+                                    <v-btn
+                                        variant="flat"
+                                        rounded
+                                        color="#FF8015"
+                                        class="text-white"
+                                        >Set Accessibility Device</v-btn
+                                    >
+                                </Link>
                             </div>
                         </v-col>
                     </v-row>

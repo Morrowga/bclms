@@ -31,6 +31,7 @@ const theme = {
         'orange' : '#FF8015',
         'on-surface': '#4c4e64',
         'surface' : '#F6F6F6',
+        'inactive-tab' : '#F7F7F7',
         'line' : "#E5E5E5",
         'perfect-scrollbar-thumb': '#DBDADE',
         'sea-form' :'#D7F2F0',

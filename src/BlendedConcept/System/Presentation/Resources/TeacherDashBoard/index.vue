@@ -6,10 +6,19 @@ import UserExperiencSurvey from "./components/UserExperiencSurvey.vue";
 
 <template>
     <section>
-        <SystemErrorAlert sytemErrorMessage="Something is wrong" v-if="true" />
-        <SystemErrorAlert sytemErrorMessage="Something is wrong" v-if="true" />
-        <SystemErrorAlert sytemErrorMessage="Something is wrong" v-if="true" />
-        <VContainer style="width: 80%; margin: 0 auto">
+        <VContainer>
+            <SystemErrorAlert
+                sytemErrorMessage="Something is wrong"
+                v-if="true"
+            />
+            <SystemErrorAlert
+                sytemErrorMessage="Something is wrong"
+                v-if="true"
+            />
+            <SystemErrorAlert
+                sytemErrorMessage="Something is wrong"
+                v-if="true"
+            />
             <VRow align="center">
                 <VCol cols="6">
                     <h1

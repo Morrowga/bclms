@@ -87,4 +87,15 @@ class DashBoardController extends Controller
     {
         return $this->pageBuilderInterface->uploadsUrl();
     }
+
+    public function orgTeacherProfile()
+    {
+
+        return Inertia::render(config('route.profiles.org-teacher'));
+    }
+    public function editOrgTeacherProfile()
+    {
+
+        return Inertia::render(config('route.edit-profiles.org-teacher'));
+    }
 }
