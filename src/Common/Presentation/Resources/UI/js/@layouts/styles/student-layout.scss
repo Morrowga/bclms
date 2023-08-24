@@ -16,10 +16,20 @@ body {
 
   // TODO: Use grid gutter variable here
   padding-block: 1.5rem;
-  background: url('/images/artbg.png') no-repeat !important;
-  background-size: cover !important;
 }
 
 .layout-footer {
-    display: none !important;
+  .footer-content-container {
+    block-size: variables.$layout-vertical-nav-footer-height;
+  }
+
+  .layout-footer-sticky & {
+    position: sticky;
+    inset-block-end: 0;
+    will-change: transform;
+  }
+
+  .layout-footer-hidden & {
+    display: none;
+  }
 }

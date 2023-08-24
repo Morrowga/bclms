@@ -76,60 +76,71 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                             <h1 class="tiggie-title pb-3">Organisation Plan</h1>
                         </VCol>
                         <VCol cols="10">
-                           <VRow>
-                            <VCol cols="6">
-                                <h1 class="tiggie-label pb-3">No of Teachers</h1>
-                                <p>
-                                    <span class="text-warning">
-                                        8
-                                    </span>
-                                    <span>/10</span>
-                                </p>
-                            </VCol>
-                            <VCol cols="6">
-                                <h1 class="tiggie-label pb-3">No of Teachers</h1>
-                                <p>
-                                    <span class="text-success">
-                                     324.3 MB
-                                    </span>
-                                    <span>/1GB</span>
-                                </p>
-                            </VCol>
-                            <VCol cols="6">
-                                <h1 class="tiggie-label pb-3">No of Teachers</h1>
-                                <p>
-                                    <span class="text-warning">
-                                        82
-                                    </span>
-                                    <span>/100</span>
-                                </p>
-                            </VCol>
-                            <VCol cols="6">
-                                <h1 class="tiggie-label pb-3">No of Teachers</h1>
-                                <p>
-                                    <span>$100</span>
-                                </p>
-                            </VCol>
-                            <VCol cols="6">
-                                <VBtn class="text-white" color="secondary">
-                                    Import Users
-                                </VBtn>
-                            </VCol>
-                           </VRow>
+                            <VRow>
+                                <VCol cols="6">
+                                    <h1 class="tiggie-label pb-3">No of Teachers</h1>
+                                    <p>
+                                        <span class="text-warning">
+                                            8
+                                        </span>
+                                        <span>/10</span>
+                                    </p>
+                                </VCol>
+                                <VCol cols="6">
+                                    <h1 class="tiggie-label pb-3">No of Teachers</h1>
+                                    <p>
+                                        <span class="text-success">
+                                            324.3 MB
+                                        </span>
+                                        <span>/1GB</span>
+                                    </p>
+                                </VCol>
+                                <VCol cols="6">
+                                    <h1 class="tiggie-label pb-3">No of Teachers</h1>
+                                    <p>
+                                        <span class="text-warning">
+                                            82
+                                        </span>
+                                        <span>/100</span>
+                                    </p>
+                                </VCol>
+                                <VCol cols="6">
+                                    <h1 class="tiggie-label pb-3">No of Teachers</h1>
+                                    <p>
+                                        <span>$100</span>
+                                    </p>
+                                </VCol>
+                                <VCol cols="6">
+                                    <VBtn class="text-white" color="secondary">
+                                        Import Users
+                                    </VBtn>
+                                </VCol>
+                            </VRow>
                         </VCol>
                     </VRow>
                 </VCol>
             </VRow>
             <VRow justify="center">
-              <VCol cols="4">
-                <VBtn class="text-dark pl-16 pr-16" color="gray">Back</VBtn>
-              </VCol>
-              <VCol cols="4">
-                <VBtn class="text-white pl-16 pr-16" color="candy-red">Delete</VBtn>
-              </VCol>
-              <VCol cols="4">
-                <VBtn class="text-dark pl-16 pr-16" color="primary">Edit</VBtn>
-              </VCol>
+                <VCol cols="4">
+                    <VBtn class="text-dark pl-16 pr-16"
+                    color="gray" width="250">
+                    <Link  :href="route('organizations.index')" class="text-dark">
+                        Back
+                    </Link>
+                    </VBtn>
+                </VCol>
+                <VCol cols="4">
+                    <VBtn class="text-white pl-16 pr-16" color="candy-red" width="250">Delete</VBtn>
+                </VCol>
+                <VCol cols="4">
+                    <VBtn class="text-dark pl-16 pr-16" color="primary" width="250">
+
+                    <Link :href="route('organizations.test.edit')" class="text-white">
+                        Edit
+                    </Link>
+
+                    </VBtn>
+                </VCol>
             </VRow>
         </VContainer>
     </AdminLayout>

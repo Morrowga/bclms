@@ -7,7 +7,7 @@ import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import IconOutlineBtn from "@mainRoot/components/Buttons/IconOutlineBtn.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-
+import ImportUser from "./components/ImportUser.vue"
 import {
     serverParams,
     onColumnFilter,
@@ -96,6 +96,7 @@ watch(serverPerPage, function (value) {
 <template>
     <AdminLayout>
         <VContainer fluid>
+            <h1 class="tiggie-title mb-2">Users</h1>
             <VCard>
                 <VCardText class="d-flex flex-wrap gap-4">
                     <!-- 👉 Export button -->
@@ -133,6 +134,7 @@ watch(serverPerPage, function (value) {
                                 :flash="flash"
                                 v-if="permissions.includes('create_user')"
                             />
+                            <ImportUser/>
                         </div>
                     </div>
                 </VCardText>

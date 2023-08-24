@@ -16,6 +16,14 @@ class RewardsController extends Controller
         }
     }
 
+    public function store(){
+        try {
+            return Inertia::render(config('route.reward-store'));
+        } catch (Exception $e) {
+            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
+        }
+    }
+
     public function beLucky(){
         try {
             return Inertia::render(config('route.be-lucky'));
