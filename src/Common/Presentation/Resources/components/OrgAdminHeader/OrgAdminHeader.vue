@@ -24,7 +24,7 @@ let toggle = () => {
 };
 </script>
 <template>
-    <v-app-bar elevation="0" style="padding: 0 50px">
+    <v-app-bar elevation="0" style="padding: 0 171px">
         <!-- mobile side navigation -->
         <v-app-bar-nav-icon
             variant="text"

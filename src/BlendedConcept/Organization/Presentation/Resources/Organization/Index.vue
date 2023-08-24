@@ -25,16 +25,13 @@ const deleteOrganization = (id) => {
     deleteItem(id, "organizations");
 };
 
-const items = ref([
-    {
-        title: "Edit",
-        value: "edit",
-    },
-    {
-        title: "Delete",
-        value: "delete",
-    },
-]);
+const roles = [
+    'Name',
+    'Teacher Usage',
+    'Student Usage',
+    'Storage Usage',
+    'Status'
+];
 
 let columns = [
     {
@@ -97,7 +94,7 @@ watch(serverPerPage, function (value) {
                     <!-- 👉 Export button -->
                     <VBtn
                         variant="tonal"
-                        color="secondary"
+                        color="primary"
                         prepend-icon="mdi-tray-arrow-up"
                     >
                         Export
@@ -121,11 +118,13 @@ watch(serverPerPage, function (value) {
                             density="compact"
                         />
                         <!-- 👉 Add user button -->
-                        <VBtn height="40" density="compact">
-                            <span class="text-capatlize text-white">
-                                Add New
-                            </span>
-                        </VBtn>
+                        <Link :href="route('organizations.create')">
+                            <VBtn height="40" density="compact">
+                                <span class="text-capatlize text-white">
+                                    Add New
+                                </span>
+                            </VBtn>
+                        </Link>
                     </div>
                 </VCardText>
                 <VDivider />

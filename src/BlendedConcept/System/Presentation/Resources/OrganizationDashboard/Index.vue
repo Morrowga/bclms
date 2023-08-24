@@ -7,6 +7,7 @@ import TotalStudents from "./TotalStudents.vue";
 import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue";
 import TeacherAvatar from "@mainRoot/components/TeacherAvatar/TeacherAvatar.vue";
 import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue";
+import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 
 const statisticsWithImages = [
     {
@@ -29,18 +30,7 @@ const statisticsWithImages = [
 </script>
 
 <template>
-    <v-container fluid>
-        <VRow class="match-height mb-5">
-            <!-- <VCol
-                v-for="statistics in statisticsWithImages"
-                :key="statistics.title"
-                cols="12"
-                sm="12"
-                md="6"
-            >
-                <UserListCard :statistics="statistics" />
-            </VCol> -->
-        </VRow>
+    <v-container>
         <VRow>
             <VCol cols="12" sm="12" lg="12">
                 <div class="header d-flex justify-space-between">
@@ -53,7 +43,7 @@ const statisticsWithImages = [
                 <div class="mt-5">
                     <v-row>
                         <v-col
-                            v-for="n in 4"
+                            v-for="n in 8"
                             :key="n"
                             cols="12"
                             sm="6"
@@ -71,9 +61,25 @@ const statisticsWithImages = [
             </VCol>
             <VCol cols="12" sm="12" lg="12" class="mt-10">
                 <div class="header">
-                    <h1 class="tiggie-title">Students</h1>
-                    <v-row no-gutters>
-                        <v-col v-for="n in 6" :key="n">
+                    <div class="d-flex justify-end mb-4">
+                        <h1 class="tiggie-title">Student</h1>
+                        <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+                        <VTextField
+                            placeholder="Search User ..."
+                            density="compact"
+                            class="mr-4"
+                        />
+
+                        <VSelect
+                            label="Sort By"
+                            :items="[]"
+                            density="compact"
+                        />
+                    </div>
+                    <VRow no-gutters>
+                        <v-col v-for="n in 12" :key="n">
                             <StudentAvatar
                                 image="/images/student.png"
                                 title="Wren Clark"
@@ -81,15 +87,35 @@ const statisticsWithImages = [
                                 route="#"
                             />
                         </v-col>
-                    </v-row>
+                    </VRow>
+                    <VRow class="d-flex justify-center align-center">
+                        <Pagination />
+                    </VRow>
                 </div>
             </VCol>
             <VCol cols="12" sm="12" lg="12" class="mt-10">
                 <div class="header">
-                    <h1 class="tiggie-title">Teachers</h1>
-                    <v-row no-gutters>
-                        <v-col v-for="n in 6" :key="n">
+                    <div class="d-flex justify-end mb-4">
+                        <h1 class="tiggie-title">Teachers</h1>
+                        <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+                        <v-spacer></v-spacer>
+                        <VTextField
+                            placeholder="Search User ..."
+                            density="compact"
+                            class="mr-4"
+                        />
+
+                        <VSelect
+                            label="Sort By"
+                            :items="[]"
+                            density="compact"
+                        />
+                    </div>
+                    <VRow no-gutters>
+                        <v-col v-for="n in 12" :key="n">
                             <TeacherAvatar
+                                class="py-2"
                                 image="/images/teacher.png"
                                 title="Wren Clark"
                                 phone_number="9111 1112"
@@ -97,7 +123,10 @@ const statisticsWithImages = [
                                 storage="135 MB/ 200 MB"
                             />
                         </v-col>
-                    </v-row>
+                    </VRow>
+                    <VRow class="d-flex justify-center align-center">
+                        <Pagination />
+                    </VRow>
                 </div>
             </VCol>
         </VRow>

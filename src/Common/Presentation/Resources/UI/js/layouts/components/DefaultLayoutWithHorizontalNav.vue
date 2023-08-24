@@ -15,6 +15,7 @@ import MobileSidebar from "./MobileSidebar.vue";
 import Header from "@mainRoot/components/Header/Header.vue";
 import BCTeacherHeader from "@mainRoot/components/BCTeacherHeader/BCTeacherHeader.vue";
 import B2BTeacherHeader from "@mainRoot/components/B2BTeacherHeader/B2BTeacherHeader.vue";
+import OrgAdminHeader from "@mainRoot/components/OrgAdminHeader/OrgAdminHeader.vue";
 import StudentHeader from "@mainRoot/components/Student/StudentHeader.vue";
 import Footer from "@mainRoot/components/Footer/Footer.vue";
 import UserProfile from "@mainRoot/components/UserProfile/UserProfile.vue";
@@ -53,6 +54,9 @@ const resolveHeaderComponent = () => {
         case "Student":
             showMenubar.value = false;
             return StudentHeader;
+        case "Organization Admin":
+            showMenubar.value = false;
+            return OrgAdminHeader;
         default:
             return Header;
     }

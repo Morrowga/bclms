@@ -24,7 +24,9 @@ let props = defineProps([
 const isAlertVisible = ref(true);
 let form = useForm({});
 let notifications = ref([]);
-let reactiveNoti = computed(() => usePage().props.notifications?.data);
+let page = usePage();
+let user_role = computed(() => page.props.user_info.user_role.name);
+let reactiveNoti = computed(() => page.props.notifications?.data);
 let watchNoti = watch(reactiveNoti, (value) => {
     getNotifications();
 });
@@ -51,40 +53,52 @@ const removeNotification = (notificationId) => {
         },
     });
 };
-
+const checkUserRole = () => {
+    return user_role.value == "BC Super Admin" || user_role.value == "BC Staff";
+};
 onMounted(() => {
     getNotifications();
 });
 </script>
 
 <template>
-    <AdminLayout v-if="current_user_role !== 'Student'" :user="user" :user_role="current_user_role" :tenant="tenant">
+    <AdminLayout
+        v-if="current_user_role !== 'Student'"
+        :user="user"
+        :user_role="current_user_role"
+        :tenant="tenant"
+    >
         <!--
             VAlert is use for show annnounment pages
         -->
-        <VAlert
-            v-for="item in notifications"
-            :key="item.id"
-            variant="tonal"
-            density="compact"
-            :type="item.data.type"
-            v-model="isAlertVisible"
-            closable
-            class="mb-2"
-            close-label="Close Alert"
+        <VContainer
+            v-if="user_role != 'BC Subscriber'"
+            :fluid="checkUserRole()"
         >
-            <template #text>
-                <span style="font-size:24px:">{{ item?.data?.type }}</span>
-                <br />
-                <span>{{ item.data.message }}</span>
-            </template>
-            <template #close>
-                <v-btn
-                    icon="mdi-close"
-                    @click="removeNotification(item.id)"
-                ></v-btn>
-            </template>
-        </VAlert>
+            <VAlert
+                v-for="item in notifications"
+                :key="item.id"
+                variant="tonal"
+                density="compact"
+                :type="item.data.type"
+                v-model="isAlertVisible"
+                closable
+                class="mb-2"
+                close-label="Close Alert"
+            >
+                <template #text>
+                    <span style="font-size:24px:">{{ item?.data?.type }}</span>
+                    <br />
+                    <span>{{ item.data.message }}</span>
+                </template>
+                <template #close>
+                    <v-btn
+                        icon="mdi-close"
+                        @click="removeNotification(item.id)"
+                    ></v-btn>
+                </template>
+            </VAlert>
+        </VContainer>
 
         <!--
             Check current_user_role and redirect to that

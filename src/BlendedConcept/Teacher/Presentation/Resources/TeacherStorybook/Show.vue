@@ -9,6 +9,7 @@ import PhysicalResources from "./components/PhysicalResources.vue";
 import RecommendedBooks from "./components/RecommendedBooks.vue";
 import { router } from "@inertiajs/core";
 import { ref } from "vue";
+
 let tab = ref(false);
 </script>
 <template>
@@ -84,13 +85,15 @@ let tab = ref(false);
                         </div>
                     </div>
                     <div class="manage-btn mt-10">
-                        <v-btn
-                            variant="flat"
-                            rounded
-                            class="text-white"
-                            color="#FF8015"
-                            >Manage Assignment to Students</v-btn
-                        >
+                        <Link :href="route('teacher_storybook.assign_student')">
+                            <v-btn
+                                variant="flat"
+                                rounded
+                                class="text-white"
+                                color="#FF8015"
+                                >Manage Assignment to Students</v-btn
+                            >
+                        </Link>
                     </div>
                 </v-col>
             </v-row>

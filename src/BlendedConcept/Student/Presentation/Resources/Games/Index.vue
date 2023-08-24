@@ -3,10 +3,7 @@ import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-let props = defineProps([
-    "flash",
-    "auth",
-]);
+let props = defineProps(["flash", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 </script>
@@ -18,7 +15,11 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                 <VRow>
                     <VCol cols="4">
                         <VCard class="card-story">
-                            <v-img src="/images/storybook1.jpeg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/storybook1.jpeg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
                                 <img src="/images/Play Button.png" @click="() => router.get(route('games.show'))" class="playButton" alt="">
                             </div>
@@ -29,40 +30,62 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                     </VCol>
                     <VCol cols="4">
                         <VCard class="card-story">
-                            <v-img src="/images/storybook2.jpeg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/storybook2.jpeg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
                                 <img src="/images/Play Button.png" @click="() => router.get(route('games.show'))" class="playButton" alt="">
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">Tower Crash 3D</span>
+                            <span class="bookname ruddy-bold"
+                                >Tower Crash 3D</span
+                            >
                         </div>
                     </VCol>
                     <VCol cols="4">
                         <VCard class="card-story">
-                            <v-img src="/images/storybook1.jpeg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/storybook1.jpeg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
                                 <img src="/images/Play Button.png" @click="() => router.get(route('games.show'))" class="playButton" alt="">
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">Endless Truck</span>
+                            <span class="bookname ruddy-bold"
+                                >Endless Truck</span
+                            >
                         </div>
                     </VCol>
                     <VCol cols="4">
                         <VCard class="card-story">
-                            <v-img src="/images/storybook2.jpeg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/storybook2.jpeg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
                                 <img src="/images/Play Button.png" @click="() => router.get(route('games.show'))" class="playButton" alt="">
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">Color Strings</span>
+                            <span class="bookname ruddy-bold"
+                                >Color Strings</span
+                            >
                         </div>
                     </VCol>
                     <VCol cols="4">
                         <VCard class="card-story">
-                            <v-img src="/images/storybook1.jpeg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/storybook1.jpeg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
                                 <img src="/images/Play Button.png" @click="() => router.get(route('games.show'))" class="playButton" alt="">
                             </div>
@@ -73,13 +96,19 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                     </VCol>
                     <VCol cols="4">
                         <VCard class="card-story">
-                            <v-img src="/images/storybook2.jpeg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/storybook2.jpeg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
                                 <img src="/images/Play Button.png" @click="() => router.get(route('games.show'))" class="playButton" alt="">
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">Pendguin Rush</span>
+                            <span class="bookname ruddy-bold"
+                                >Pendguin Rush</span
+                            >
                         </div>
                     </VCol>
                 </VRow>
@@ -109,23 +138,23 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     text-transform: capitalize !important;
 }
 
-.showimg{
+.showimg {
     object-fit: cover;
     height: 230px;
 }
 
-.coinChip{
+.coinChip {
     border-radius: 30px !important;
     display: inline-flex !important;
     height: 30px !important;
     padding: 20px !important;
     align-items: center !important;
     flex-shrink: 0 !important;
-    background: var(--candy-red, #FF6262);
+    background: var(--candy-red, #ff6262);
 }
 
-.chipText{
-    color: #FFF !important;
+.chipText {
+    color: #fff !important;
     // font-family: Ruddy;
     font-size: 25px !important;
     font-style: normal !important;
@@ -134,13 +163,13 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     text-transform: capitalize !important;
 }
 
-.playButton{
+.playButton {
     position: absolute;
     top: 28%;
     z-index: 1;
 }
 
-.goldCoin{
+.goldCoin {
     position: absolute;
     top: 0;
     margin: 10px;
@@ -149,27 +178,26 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     z-index: 1;
 }
 
-.card-story{
+.card-story {
     justify-content: center;
     align-items: center;
     height: auto !important;
     border-radius: 30px;
-    border: 5px solid var(--white, #FFF);
+    border: 5px solid var(--white, #fff);
     backdrop-filter: blur(2px);
 }
 
 .overlay-container {
-//   z-index: 1;
-  position: absolute;
-  top: 8%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    //   z-index: 1;
+    position: absolute;
+    top: 8%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
 
 .user-data-table table.vgt-table {
     background-color: rgb(var(--v-theme-surface));
@@ -180,11 +208,11 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
 
-.textcolor{
+.textcolor {
     color: #fff;
 }
 
-.classname{
+.classname {
     color: #000;
     font-size: 36px;
     font-style: normal;

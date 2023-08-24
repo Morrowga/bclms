@@ -64,7 +64,11 @@ const selectionChanged = (data) => {
         <VCard>
             <VCardText class="d-flex align-center flex-wrap gap-4">
                 <!-- 👉 Export button -->
-                <VBtn variant="tonal" color="secondary" prepend-icon="mdi-tray-arrow-up">
+                <VBtn
+                    variant="tonal"
+                    color="primary"
+                    prepend-icon="mdi-tray-arrow-up"
+                >
                     Export
                 </VBtn>
 
@@ -75,72 +79,129 @@ const selectionChanged = (data) => {
                 <div class="app-user-search-filter d-flex align-center gap-6">
                     <!-- 👉 Search  -->
                     <VSelect
-                        v-model="selectedRole" label="Sort By" :items="roles" density="compact"
-                     />
+                        v-model="selectedRole"
+                        label="Sort By"
+                        :items="roles"
+                        density="compact"
+                    />
                     <!-- 👉 Add user button -->
-                    <VBtn height="40" density="compact">
-                        <span class="text-uppercase text-white">
-                            Import
-                        </span>
-                    </VBtn>
+                    <Link :href="route('organizations.index')">
+                        <VBtn height="40" density="compact">
+                            <span class="text-uppercase text-white">
+                                View More
+                            </span>
+                        </VBtn>
+                    </Link>
                 </div>
             </VCardText>
 
-
-
             <VDivider />
 
-            <vue-good-table class="role-data-table" styleClass="vgt-table" v-on:selected-rows-change="selectionChanged"
-                :columns="columns" :rows="rows" :select-options="{
+            <vue-good-table
+                class="role-data-table"
+                styleClass="vgt-table"
+                v-on:selected-rows-change="selectionChanged"
+                :columns="columns"
+                :rows="rows"
+                :select-options="{
                     enabled: true,
-                }" :pagination-options="{
-    enabled: true,
-}">
+                }"
+                :pagination-options="{
+                    enabled: true,
+                }"
+            >
                 <template #table-row="dataProps">
-                    <div v-if="dataProps.column.field == 'user'" class="flex flex-nowrap">
+                    <div
+                        v-if="dataProps.column.field == 'user'"
+                        class="flex flex-nowrap"
+                    >
                         <VListItem class="pa-0">
                             <!-- 👉 Avatar  -->
                             <template #prepend>
-                                <VAvatar rounded :size="38" class="me-3" :image="avatar4" />
+                                <VAvatar
+                                    rounded
+                                    :size="38"
+                                    class="me-3"
+                                    :image="avatar4"
+                                />
                             </template>
 
                             <!-- 👉 Title and Subtitle -->
-                            <VListItemTitle class="text-sm font-weight-semibold mb-1">
+                            <VListItemTitle
+                                class="text-sm font-weight-semibold mb-1"
+                            >
                                 {{ dataProps.row.user }}
                             </VListItemTitle>
 
-                            <VListItemSubtitle class="text-xs text-no-wrap d-flex align-center">
+                            <VListItemSubtitle
+                                class="text-xs text-no-wrap d-flex align-center"
+                            >
                                 <span> {{ dataProps.row.email }}</span>
                             </VListItemSubtitle>
                         </VListItem>
                     </div>
-                    <div v-if="dataProps.column.field == 'plan'" class="flex flex-nowrap">
+                    <div
+                        v-if="dataProps.column.field == 'plan'"
+                        class="flex flex-nowrap"
+                    >
                         {{ dataProps.row.plan.name }}
                     </div>
-                    <div v-if="dataProps.column.field == 'role'" class="flex flex-nowrap">
+                    <div
+                        v-if="dataProps.column.field == 'role'"
+                        class="flex flex-nowrap"
+                    >
                         <VChip size="small" color="primary">organization</VChip>
                     </div>
-                    <div v-if="dataProps.column.field == 'status'" class="flex flex-nowrap">
+                    <div
+                        v-if="dataProps.column.field == 'status'"
+                        class="flex flex-nowrap"
+                    >
                         <VChip size="small" color="danger"> pending </VChip>
                     </div>
-                    <div v-if="dataProps.column.field == 'action'" class="flex flex-nowrap">
-                            <VMenu location="end">
-                                <template #activator="{ props }">
-                                    <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black"
-                                        class="mt-n4" />
-                                </template>
-                                <VList>
-                                    <VListItem @click="() => router.get(route('organizations.show', { id: props.row.id }))">
-                                        <VListItemTitle>View</VListItemTitle>
-                                    </VListItem>
-                                    <VListItem @click="() => router.get(route('organizations.test.edit'))">
-                                        <VListItemTitle>Edit</VListItemTitle>
-                                    </VListItem>
-                                    <VListItem @click="deleteOrganization(props.row.id)">
-                                        <VListItemTitle>Delete</VListItemTitle>
-                                    </VListItem>
-                                </VList>
-                            </VMenu>
+                    <div
+                        v-if="dataProps.column.field == 'action'"
+                        class="flex flex-nowrap"
+                    >
+                        <VMenu location="end">
+                            <template #activator="{ props }">
+                                <VIcon
+                                    v-bind="props"
+                                    size="24"
+                                    icon="mdi-dots-horizontal"
+                                    color="black"
+                                    class="mt-n4"
+                                />
+                            </template>
+                            <VList>
+                                <VListItem
+                                    @click="
+                                        () =>
+                                            router.get(
+                                                route('organizations.show', {
+                                                    id: props.row.id,
+                                                })
+                                            )
+                                    "
+                                >
+                                    <VListItemTitle>View</VListItemTitle>
+                                </VListItem>
+                                <VListItem
+                                    @click="
+                                        () =>
+                                            router.get(
+                                                route('organizations.test.edit')
+                                            )
+                                    "
+                                >
+                                    <VListItemTitle>Edit</VListItemTitle>
+                                </VListItem>
+                                <VListItem
+                                    @click="deleteOrganization(props.row.id)"
+                                >
+                                    <VListItemTitle>Delete</VListItemTitle>
+                                </VListItem>
+                            </VList>
+                        </VMenu>
                     </div>
                 </template>
             </vue-good-table>

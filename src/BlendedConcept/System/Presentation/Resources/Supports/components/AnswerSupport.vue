@@ -1,43 +1,42 @@
 <script setup>
 const props = defineProps({
     form: {
-        type: Object
+        type: Object,
     },
     userData: {
         type: Object,
         required: false,
         default: () => ({
             currentpassword: "",
-            updatedpassword: ""
-
+            updatedpassword: "",
         }),
     },
     isDialogVisible: {
         type: Boolean,
         required: true,
     },
-})
+});
 
-const emit = defineEmits([
-    'submit',
-    'update:isDialogVisible',
-])
+const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
-const userData = ref(structuredClone(toRaw(props.userData)))
+const userData = ref(structuredClone(toRaw(props.userData)));
 
 const onFormReset = () => {
-    userData.value = structuredClone(toRaw(props.userData))
-    emit('update:isDialogVisible', false)
-}
+    userData.value = structuredClone(toRaw(props.userData));
+    emit("update:isDialogVisible", false);
+};
 
-const dialogVisibleUpdate = val => {
-    emit('update:isDialogVisible', val)
-}
+const dialogVisibleUpdate = (val) => {
+    emit("update:isDialogVisible", val);
+};
 </script>
 
 <template>
-    <VDialog :width="$vuetify.display.smAndDown ? 'auto' : 540" :model-value="props.isDialogVisible"
-        @update:model-value="dialogVisibleUpdate">
+    <VDialog
+        :width="$vuetify.display.smAndDown ? 'auto' : 540"
+        :model-value="props.isDialogVisible"
+        @update:model-value="dialogVisibleUpdate"
+    >
         <VCard class="pt-10">
             <!-- 👉 dialog close btn -->
             <DialogCloseBtn variant="text" size="small" @click="onFormReset" />
@@ -46,7 +45,10 @@ const dialogVisibleUpdate = val => {
                     Technical Support
                 </VCardTitle>
                 <VLabel class="tiggie-label">Question</VLabel>
-                <p class="tiggie-p">The computer is saying ‘press any key’ but I’m struggling to find it</p>
+                <p class="tiggie-p">
+                    The computer is saying ‘press any key’ but I’m struggling to
+                    find it
+                </p>
             </VCardItem>
 
             <VCardText>
@@ -57,12 +59,26 @@ const dialogVisibleUpdate = val => {
                             <!-- 👉 Contact -->
                             <VCol cols="11" md="11">
                                 <VLabel class="tiggie-label">Answer</VLabel>
-                                <VTextarea placeholder="Type here ...." v-model="description" auto-grow rows="5" />
+                                <VTextarea
+                                    placeholder="Type here ...."
+                                    v-model="description"
+                                    auto-grow
+                                    rows="5"
+                                />
                             </VCol>
 
                             <!-- 👉 Submit and Cancel -->
-                            <VCol cols="11" class="d-flex flex-wrap justify-space-between gap-10">
-                                <VBtn color="gray" text-color="white" height="58" class="pl-10"  @click="onFormReset">
+                            <VCol
+                                cols="11"
+                                class="d-flex flex-wrap justify-space-between gap-10"
+                            >
+                                <VBtn
+                                    color="gray"
+                                    text-color="white"
+                                    height="58"
+                                    class=""
+                                    @click="onFormReset"
+                                >
                                     <span class="text-white">Cancel</span>
                                 </VBtn>
 

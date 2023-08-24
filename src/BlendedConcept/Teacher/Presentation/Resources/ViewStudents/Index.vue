@@ -1,6 +1,8 @@
 <script setup>
 import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+let roles = [];
+let selectedRole = null;
 </script>
 <template>
     <AdminLayout>

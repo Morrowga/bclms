@@ -33,6 +33,7 @@ const theme = {
         'surface' : '#F6F6F6',
         'line' : "#E5E5E5",
         'perfect-scrollbar-thumb': '#DBDADE',
+        'sea-form' :'#D7F2F0',
         'snackbar-background': '#212121',
         'tooltip-background': '#262732',
         'alert-background': '#F7F7F9',
@@ -97,6 +98,7 @@ const theme = {
         'grey-700': '#B6BEE3',
         'grey-800': '#CFD3EC',
         'grey-900': '#E7E9F6',
+        'light-states-outlined-resting-border' : '#6D788D'
       },
       variables: {
         'code-color': '#d400ff',

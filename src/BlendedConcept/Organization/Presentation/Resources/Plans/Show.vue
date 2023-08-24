@@ -23,7 +23,7 @@ let form = useForm({
             <VRow justify="space-around" :gutter="5">
                 <VCol cols="6">
                     <span class="tiggie-show-title  margin-buttom-18 pr-4">Basic Plan</span>
-                    <VChip color="success">
+                    <VChip color="teal">
                         Active
                     </VChip>
 
@@ -85,11 +85,11 @@ let form = useForm({
 
                  <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
                         <Link :href="route('plans.index')" class="text-black">
-                           <VBtn color="gray" height="50" class="" width="200">
+                           <VBtn color="gray" height="50" class="" width="250">
                             Cancel
                           </VBtn>
                         </Link>
-                    <VBtn type="submit" class="" height="50" width="200"> Edit </VBtn>
+                    <VBtn type="submit" class="" height="50" width="250"> Edit </VBtn>
                 </VCol>
             </VRow>
         </VContainer>

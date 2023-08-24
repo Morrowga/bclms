@@ -177,11 +177,8 @@ return [
      'be-lucky' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky',
      'buy-sticker' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker',
 
-    'organization' => [
-        'profile' => 'BlendedConcept/System/Presentation/Resources/OrganizationDashboard/Admin/Profile',
-    ],
 
     'listofteacher' => [
-       'index' => 'BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index'
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index'
     ]
 ];

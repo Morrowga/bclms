@@ -95,11 +95,18 @@ watch(serverPerPage, function (value) {
 
 <template>
     <AdminLayout>
-        <section>
+        <VContainer fluid>
             <VCard>
                 <VCardText class="d-flex flex-wrap gap-4">
                     <!-- 👉 Export button -->
-                    <IconOutlineBtn icon="mdi-export-variant" title="Export" />
+                    <!-- <IconOutlineBtn icon="mdi-export-variant" title="Export" /> -->
+                    <VBtn
+                        variant="tonal"
+                        color="primary"
+                        prepend-icon="mdi-tray-arrow-up"
+                    >
+                        Export
+                    </VBtn>
                     <VSpacer />
                     <VTextField
                         @keyup.enter="searchItems"
@@ -117,7 +124,7 @@ watch(serverPerPage, function (value) {
                                 :datas="[]"
                                 placeholder="Sort By"
                                 density="compact"
-                                variant="solo"
+                                variant="outlined"
                             />
                             <!-- 👉 Add User button -->
                             <Create
@@ -231,7 +238,7 @@ watch(serverPerPage, function (value) {
                 </vue-good-table>
                 <VDivider />
             </VCard>
-        </section>
+        </VContainer>
     </AdminLayout>
 </template>
 
