@@ -231,6 +231,8 @@ const pages = {
 
     //Student story book
     "BlendedConcept/Student/Presentation/Resources/Storybook/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Storybook/Index.vue'),
+    "BlendedConcept/Student/Presentation/Resources/Storybook/Pathway": import('../../src/BlendedConcept/Student/Presentation/Resources/Storybook/Pathway.vue'),
+    "BlendedConcept/Student/Presentation/Resources/Storybook/Show": import('../../src/BlendedConcept/Student/Presentation/Resources/Storybook/Show.vue'),
 
     //Student game
     "BlendedConcept/Student/Presentation/Resources/Games/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Games/Index.vue'),
@@ -241,6 +243,5 @@ const pages = {
     "BlendedConcept/Student/Presentation/Resources/Rewards/Store": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/Store.vue'),
     "BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky.vue'),
     "BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker.vue'),
-    "BlendedConcept/Student/Presentation/Resources/Storybook/Show": import('../../src/BlendedConcept/Student/Presentation/Resources/Storybook/Show.vue'),
 };
 export default pages;

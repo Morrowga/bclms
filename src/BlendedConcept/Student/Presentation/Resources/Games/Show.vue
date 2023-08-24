@@ -3,6 +3,8 @@ import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
+import GameOver from "@mainRoot/components/Games/GameOver.vue";
+
 let props = defineProps([
     "flash",
     "auth",
@@ -17,9 +19,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
             <div class="">
                 <img src="/images/back.png" @click="() => router.get(route('storybooks'))" class="backarrow" alt="">
             </div>
-            <div class="d-flex justify-center">
-                <img src="/images/gamebg.png" class="videoplayer" alt="">
-            </div>
+            <GameOver image="/images/gamebg.png" />
         </section>
     </StudentLayout>
 </template>
@@ -27,6 +27,10 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 <style lang="scss">
 .app-user-search-filter {
     inline-size: 24.0625rem;
+}
+
+.videoplayer{
+    cursor: pointer;
 }
 
 .overlay-container {

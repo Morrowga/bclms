@@ -1,0 +1,52 @@
+<script setup>
+import { router } from "@inertiajs/core";
+
+let props = defineProps(["route", "count", "image"]);
+const isDialogVisible = ref(false)
+</script>
+<template #activator="{ props }">
+    <div class="d-flex justify-center">
+        <img :src="image" class="videoplayer" @click="isDialogVisible = true" alt="">
+    </div>
+    <VDialog
+        v-model="isDialogVisible"
+        width="700"
+    >
+        <VCard class="gameover-card">
+        <VCardText>
+                <div class="d-flex justify-center text-center">
+                    <span class="ruddy-bold gameover-text ruddy-bold">congratulations, <strong class="ruddy-bold">100 Stars</strong> has been  <br> added to your account!</span>
+                </div>
+        </VCardText>
+        </VCard>
+    </VDialog>
+</template>
+<style scoped>
+.gameover-card{
+    /* height: 400px; */
+    background: url('/images/Game Pop Up.png') no-repeat;
+    background-size: cover;
+}
+
+.gameoverimg{
+    object-fit: cover !important;
+}
+
+.gameover-text > strong {
+    color: #FF6262 !important;
+    font-size: 30px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    text-transform: capitalize !important;
+}
+
+.gameover-text{
+    margin-top: 50% !important;
+    color: var(--white, #FFF);
+    font-size: 30px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 40px !important;
+    text-transform: capitalize;
+}
+</style>

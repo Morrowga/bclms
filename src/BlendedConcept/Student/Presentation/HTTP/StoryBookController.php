@@ -27,4 +27,14 @@ class StoryBookController extends Controller
             return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
+
+    public function pathway(){
+        try {
+
+            // Get the filters from the request, or initialize an empty array if they are not present
+            return Inertia::render(config('route.storybook-pathway'));
+        } catch (Exception $e) {
+            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
+        }
+    }
 }
