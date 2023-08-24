@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('disability_device', DisabilityDeviceController::class);
     Route::get('storybooks', [StoryBookController::class, 'index'])->name('storybooks');
     Route::get('storybooks/show', [StoryBookController::class, 'show'])->name('storybooks.show');
+    Route::get('storybooks/pathway', [StoryBookController::class, 'pathway'])->name('storybooks.pathway');
     Route::get('student-games', [GamesController::class, 'index'])->name('student-games');
     Route::get('game/show', [GamesController::class, 'show'])->name('games.show');
     Route::get('student-rewards', [RewardsController::class, 'index'])->name('student-rewards');

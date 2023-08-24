@@ -192,7 +192,7 @@ const activeTab = (name) => {
             </VContainer>
             <VContainer v-if="active === 'pathway'">
                 <div class="d-flex justify-center">
-                    <img src="images/Pathway Card.png" class="pathwayimg" alt="">
+                    <img src="images/Pathway Card.png" @click="() => router.get(route('storybooks.pathway'))" class="pathwayimg" alt="">
                 </div>
             </VContainer>
             <VContainer v-if="active === 'playlist'">
@@ -387,6 +387,7 @@ const activeTab = (name) => {
 
 .pathwayimg{
     height: 80vh;
+    cursor: pointer;
 }
 
 .bookname{

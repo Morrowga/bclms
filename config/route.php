@@ -166,6 +166,7 @@ return [
     //Storybook student
     'storybooks' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Index',
     'storybook-show' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Show',
+    'storybook-pathway' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Pathway',
 
      //Game student
      'student-games' => 'BlendedConcept/Student/Presentation/Resources/Games/Index',

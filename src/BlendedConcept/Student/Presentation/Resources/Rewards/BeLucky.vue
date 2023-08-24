@@ -2,6 +2,7 @@
 import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
+import Rolling from "@mainRoot/components/Rewards/Rolling.vue";
 import { computed, defineProps } from "vue";
 let props = defineProps([
     "flash",
@@ -49,20 +50,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                                 <div class="mt-15 text-center">
                                                     <img src="/images/posterbg.png" class="posterbg" alt="">
                                                 </div>
-                                                <VRow class="mt-8">
-                                                    <VCol cols="6" class="text-center">
-                                                        <v-btn variant="flat" color="#282828" width="200" height="100" class="rollbtn pppangram-bold">Roll Once</v-btn>
-                                                        <div class="text-center">
-                                                            <span class="rolltext ruddy-bold">Spend <strong class="ruddy-bold">1 Gold Coin</strong></span>
-                                                        </div>
-                                                    </VCol>
-                                                    <VCol cols="6" class="text-center">
-                                                        <v-btn variant="flat" color="#282828" width="200" height="100" class="rollbtn mx-3 pppangram-bold">Roll 10 Times</v-btn>
-                                                        <div class="text-center">
-                                                            <span class="rolltext ruddy-bold">Spend <strong class="ruddy-bold">1 Gold Coin</strong></span>
-                                                        </div>
-                                                    </VCol>
-                                                </VRow>
+                                                <Rolling />
                                             </div>
                                         </VCol>
                                     </VRow>
