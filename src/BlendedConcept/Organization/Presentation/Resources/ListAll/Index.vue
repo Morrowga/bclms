@@ -13,9 +13,9 @@ const changeTab = (tabName) => {
         <VContainer style="width: 80%; margin: 0 auto">
             <div class="mb-10">
                 <v-row>
-                    <v-col cols="12" md="6">
+                    <VCol cols="12" md="6">
                         <div class="d-flex align-center" style="gap: 10px">
-                            <v-btn
+                            <VBtn
                                 variant="flat"
                                 rounded
                                 :color="
@@ -25,8 +25,8 @@ const changeTab = (tabName) => {
                                 @click="changeTab('student')"
                             >
                                 Students
-                            </v-btn>
-                            <v-btn
+                            </VBtn>
+                            <VBtn
                                 variant="flat"
                                 rounded
                                 :color="
@@ -36,10 +36,10 @@ const changeTab = (tabName) => {
                                 @click="changeTab('teacher')"
                             >
                                 Teacher
-                            </v-btn>
+                            </VBtn>
                         </div>
-                    </v-col>
-                    <v-col cols="12" md="6" class="d-flex justify-end">
+                    </VCol>
+                    <VCol cols="12" md="6" class="d-flex justify-end">
                         <div
                             v-if="tab == 'student'"
                             class="d-flex justify-end"
@@ -52,7 +52,7 @@ const changeTab = (tabName) => {
                                     )
                                 "
                             >
-                                <v-btn
+                                <VBtn
                                     variant="flat"
                                     rounded
                                     color="primary"
@@ -60,10 +60,10 @@ const changeTab = (tabName) => {
                                     prepend-icon="mdi-plus"
                                 >
                                     Add
-                                </v-btn>
+                                </VBtn>
                             </Link>
 
-                            <v-btn
+                            <VBtn
                                 variant="flat"
                                 rounded
                                 color="primary"
@@ -71,31 +71,29 @@ const changeTab = (tabName) => {
                                 prepend-icon="mdi-upload"
                             >
                                 Upload
-                            </v-btn>
+                            </VBtn>
                         </div>
                         <div
                             v-if="tab == 'teacher'"
                             class="d-flex justify-end"
                             style="gap: 10px"
                         >
-                            <v-btn
+
+                          <Link  :href="route('listoforgteacher')">
+                            <VBtn
                                 variant="flat"
                                 rounded
                                 color="#17CAB6"
                                 class="text-white"
-                                prepend-icon="mdi-plus"
-                            >
+                                prepend-icon="mdi-plus">
                                 Allocate Storage
-                            </v-btn>
+                            </VBtn>
+                          </Link>
+
 
                             <Link
-                                :href="
-                                    route(
-                                        'org_view_teacher_student.teacher.create'
-                                    )
-                                "
-                            >
-                                <v-btn
+                                :href="route('org_view_teacher_student.teacher.create')">
+                                <VBtn
                                     variant="flat"
                                     rounded
                                     color="primary"
@@ -103,10 +101,10 @@ const changeTab = (tabName) => {
                                     prepend-icon="mdi-plus"
                                 >
                                     Add
-                                </v-btn>
+                                </VBtn>
                             </Link>
 
-                            <v-btn
+                            <VBtn
                                 variant="flat"
                                 rounded
                                 color="primary"
@@ -114,9 +112,9 @@ const changeTab = (tabName) => {
                                 prepend-icon="mdi-upload"
                             >
                                 Upload
-                            </v-btn>
+                            </VBtn>
                         </div>
-                    </v-col>
+                    </VCol>
                 </v-row>
             </div>
             <div class="tab-list">

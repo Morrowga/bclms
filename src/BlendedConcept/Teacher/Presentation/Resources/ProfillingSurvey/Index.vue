@@ -231,7 +231,7 @@ const checkUserRole = () => {
                 <br />
                 <v-col cols="12">
                     <div class="d-flex justify-center" style="gap: 10px">
-                        <SecondaryBtn title="Cancel" />
+                        <SecondaryBtn title="Cancel" :route="route('view_students.index')" />
                         <PrimaryBtn title="Submit" />
                     </div>
                 </v-col>

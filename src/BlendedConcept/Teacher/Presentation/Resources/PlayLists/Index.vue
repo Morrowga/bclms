@@ -15,17 +15,14 @@ const currentPage = ref(1);
                 </VCol>
                 <VCol cols="6" class="text-end">
                     <VBtn color="primary" variant="flat" rounded>
+                        <Link :href="route('createplaylists')">
                         <VIcon icon="mdi-plus"></VIcon>
                         <span class="text-white">Add</span>
+                        </Link>
                     </VBtn>
                 </VCol>
                 <VCol cols="12">
-                    <VTextField
-                        placeholder="Search ..."
-                        append-inner-icon=""
-                        density="compact"
-                        rounded
-                    >
+                    <VTextField placeholder="Search ..." append-inner-icon="" density="compact" rounded>
                         <template #append-inner>
                             <VIcon icon="mdi-magnify" size="30" />
                         </template>
@@ -38,9 +35,7 @@ const currentPage = ref(1);
                             <VIcon icon="mdi-menu-down"></VIcon>
                         </VCol>
                         <VCol cols="3">
-                            <VLabel class="tiggie-label pr-3"
-                                >Assinged To</VLabel
-                            >
+                            <VLabel class="tiggie-label pr-3">Assinged To</VLabel>
                             <VIcon icon="mdi-menu-down"></VIcon>
                         </VCol>
 
@@ -49,28 +44,13 @@ const currentPage = ref(1);
                             <VIcon icon="mdi-menu-down"></VIcon>
                         </VCol>
                     </VRow>
-                    <VRow
-                        class="bg-line mx-1 rounded pa-1 my-2"
-                        align="center"
-                        v-for="item in 7"
-                        :key="item"
-                    >
+                    <VRow class="bg-line mx-1 rounded pa-1 my-2" align="center" v-for="item in 7" :key="item">
                         <VCol cols="3" class="ml-4">
-                            <div
-                                class="d-flex flex-row align-center justify-center gap-3"
-                            >
+                            <div class="d-flex flex-row align-center justify-center gap-3">
                                 <div clas="music-component">
-                                    <VImg
-                                        src="/teacherdashboard/videoicon1.svg"
-                                        width="73px"
-                                        height="56px"
-                                    />
-                                    <div
-                                        class="music-icon bg-dark d-flex justify-center align-center gap-1 rounded"
-                                    >
-                                        <VIcon
-                                            icon="mdi-playlist-music-outline"
-                                        />
+                                    <VImg src="/teacherdashboard/videoicon1.svg" width="73px" height="56px" />
+                                    <div class="music-icon bg-dark d-flex justify-center align-center gap-1 rounded">
+                                        <VIcon icon="mdi-playlist-music-outline" />
                                         <span>3</span>
                                     </div>
                                 </div>
@@ -83,37 +63,20 @@ const currentPage = ref(1);
 
                         <VCol cols="3">
                             <div class="d-flex flex-row">
-                                <VBtn
-                                    color="teal"
-                                    class="text-white"
-                                    variant="flat"
-                                    rounded
-                                >
+                                <VBtn color="teal" class="text-white" variant="flat" rounded>
                                     <VIcon icon="mdi-pencil" class="mr-2" />
                                     <span>Edit</span>
                                 </VBtn>
 
-                                <VBtn
-                                    color="error"
-                                    class="text-white ml-2"
-                                    variant="flat"
-                                    rounded
-                                >
-                                    <VIcon
-                                        icon="mdi-trash-can-outline"
-                                        class="mr-2"
-                                    />
+                                <VBtn color="error" class="text-white ml-2" variant="flat" rounded>
+                                    <VIcon icon="mdi-trash-can-outline" class="mr-2" />
                                     <span>Edit</span>
                                 </VBtn>
                             </div>
                         </VCol>
                     </VRow>
                     <VRow justify="center" align="center">
-                        <VPagination
-                            v-model="currentPage"
-                            variant="outlined"
-                            :length="5"
-                        />
+                        <VPagination v-model="currentPage" variant="outlined" :length="5" />
                     </VRow>
                 </VCol>
             </VRow>

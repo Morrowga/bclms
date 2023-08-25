@@ -41,13 +41,15 @@ import UserExperiencSurvey from "./components/UserExperiencSurvey.vue";
             </VRow>
             <VRow cols="6">
                 <VCol cols="2" class="pe-2" v-for="item in 12" :key="item">
-                    <StudentProfile
+                    <Link :href="route('view_students.show')">
+                        <StudentProfile
                         :studentInfo="{
                             name: 'Wren Clark',
                             phone_number: '9123 4567',
                             img: '/images/students/studentone.svg',
                         }"
                     />
+                    </Link>
                 </VCol>
             </VRow>
         </VContainer>

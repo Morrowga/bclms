@@ -21,8 +21,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('playlists', [PlayListController::class, 'index'])->name('playlists.index');
 
-    Route::get('createplaylists', [PlayListController::class, 'create']);
-    Route::get('showplaylists', [PlayListController::class, 'show']);
+    Route::get('createplaylists', [PlayListController::class, 'create'])->name('createplaylists');
+    Route::get('showplaylists', [PlayListController::class, 'show'])->name('showplaylists');
 
     Route::get('/conduct_lessons', [ConductLessonController::class, 'index'])->name('conduct_lessons.index');
     Route::get('/conduct_lessons/show', [ConductLessonController::class, 'show'])->name('conduct_lessons.show');
@@ -45,5 +45,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/add_customisation/create', [AddCustomisationController::class, 'create'])->name('add_customisation.create');
     Route::get('/add_customisation/edit', [AddCustomisationController::class, 'edit'])->name('add_customisation.edit');
 
-    Route::get('listoforgteacher', [TeacherController::class, 'listofteacher']);
+    Route::get('listoforgteacher', [TeacherController::class, 'listofteacher'])->name('listoforgteacher');
 });

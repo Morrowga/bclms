@@ -5,9 +5,10 @@ import EditTeacherStorage from "./EditTeacherStorage.vue"
 </script>
 <template>
     <VCard>
-        <VRow justify="space-between" class="pa-2">
+        <VRow justify="space-between" class="pa-5">
             <VCol cols="4" class="teacher-profile">
-                <VImg src="/images/teacherimg.png" class="tggie-student-img" />
+
+                <img src="/images/teacherimg.png" class="tggie-student-img"/>
             </VCol>
             <VCol cols="8" class="allocated-storage">
                 <div class="d-flex align-center justify-space-between">
