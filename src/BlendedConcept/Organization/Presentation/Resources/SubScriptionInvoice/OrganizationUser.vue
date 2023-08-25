@@ -1,16 +1,32 @@
 <script setup>
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import { defineProps } from "vue";
+import { computed, defineProps } from "vue";
 import UpdateSubscrptionStatus from "./components/UpdateSubscrptionStatus.vue"
+
 
 let props = defineProps();
 
 //## start datatable section
 let columns = [
     {
-        label: "User",
+        label: "Organization Name",
         field: "user",
+        sortable: false,
+    },
+    {
+        label: "Teachers",
+        field: "teachers",
+        sortable: false,
+    },
+    {
+        label: "Students",
+        field: "students",
+        sortable: false,
+    },
+    {
+        label: "Storage",
+        field: "storage",
         sortable: false,
     },
     {
@@ -21,11 +37,6 @@ let columns = [
     {
         label: "End Date",
         field: "end_date",
-        sortable: false,
-    },
-    {
-        label: "Plan",
-        field: "plan",
         sortable: false,
     },
     {
@@ -42,28 +53,40 @@ let columns = [
 
 let rows = [
     {
-        user: "Jordan Stevenson",
+        user: "Blended Concept",
+        teachers : 1,
+        students : 1,
+        storage : "10GB",
         start_date: "02/07/23",
         end_date: "02/08/23",
         plan: 1,
         status: 1,
     },
     {
-        user: "Jordan Stevenson",
+        user: "Blended Concept",
+        teachers : 1,
+        students : 1,
+        storage : "10GB",
         start_date: "02/07/23",
         end_date: "02/08/23",
         plan: 0,
         status: 0,
     },
     {
-        user: "Jordan Stevenson",
+        user: "Blended Concept",
+        teachers : 1,
+        students : 1,
+        storage : "10GB",
         start_date: "02/07/23",
         end_date: "02/08/23",
         plan: 1,
         status: 1,
     },
     {
-        user: "Jordan Stevenson",
+        user: "Blended Concept",
+        teachers : 1,
+        students : 1,
+        storage : "10GB",
         start_date: "02/07/23",
         end_date: "02/08/23",
         plan: 0,
@@ -114,14 +137,10 @@ const selectionChanged = (data) => {
             <vue-good-table class="role-data-table" styleClass="vgt-table" v-on:selected-rows-change="selectionChanged"
                 :columns="columns" :rows="rows" :select-options="{
                     enabled: true,
-                }" :pagination-options="{enabled: true,}">
+                }" :pagination-options="{
+                 enabled: true,
+                }">
                 <template #table-row="dataProps">
-                    <div v-if="dataProps.column.field === 'user'">
-                        <div class="d-flex flex-row gap-2">
-                            <img src="/images/defaults/avator.png" class="user-profile-image" />
-                            <span>Jordan Stevenson</span>
-                        </div>
-                    </div>
                     <div v-if="dataProps.column.field == 'plan'">
                         <div class="d-flex flex-row align-center gap-2">
                             <span v-if="dataProps.row.plan" class="d-flex flex-row justify-center align-center gap-2">
@@ -151,7 +170,7 @@ const selectionChanged = (data) => {
                             <VList>
                                 <VListItem @click="() => router.get(route('organizations.show',{ id: props.row.id }))
                                 ">
-                                  <UpdateSubscrptionStatus/>
+                                    <UpdateSubscrptionStatus/>
                                 </VListItem>
                                 <VListItem @click="() => router.get(route('organizations.test.edit'))">
                                     <VListItemTitle>Get Invoice</VListItemTitle>
