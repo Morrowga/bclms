@@ -5,6 +5,7 @@ let props = defineProps(["route", "count", "label"]);
 </script>
 <template>
     <VCard>
+        <span class="resourcemenu">...</span>
         <v-img src="images/chair.jpeg" cover></v-img>
         <div class="resource-label">
             <VRow>
@@ -43,7 +44,14 @@ let props = defineProps(["route", "count", "label"]);
     </VCard>
 </template>
 <style scoped>
-
+.resourcemenu{
+    font-weight: bold !important;
+    font-size: 20px !important;
+    position: absolute;
+    z-index: 1;
+    color: #000 !important;
+    right: 6%;
+}
 .media-text{
     font-size: 13px !important;
 }
