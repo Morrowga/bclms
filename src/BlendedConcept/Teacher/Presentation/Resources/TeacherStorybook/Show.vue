@@ -7,6 +7,7 @@ import LearningActivity from "./components/LearningActivity.vue";
 import RecommendedGames from "./components/RecommendedGames.vue";
 import PhysicalResources from "./components/PhysicalResources.vue";
 import RecommendedBooks from "./components/RecommendedBooks.vue";
+import ReviewDialog from "./components/ReviewDialog.vue";
 import { router } from "@inertiajs/core";
 import { ref } from "vue";
 
@@ -25,12 +26,19 @@ let tab = ref(false);
                     </div>
                 </v-col>
                 <v-col cols="12" md="6">
-                    <h1
-                        class="tiggie-sub-subtitle ml-10"
-                        style="font-size: 40px !important"
-                    >
-                        Toy Story 2
-                    </h1>
+                    <VRow>
+                        <VCol cols="12" md="6">
+                            <h1
+                                class="tiggie-sub-subtitle ml-10"
+                                style="font-size: 40px !important"
+                            >
+                                Toy Story 2
+                            </h1>
+                        </VCol>
+                        <VCol cols="12" md="6" class="text-end">
+                            <ReviewDialog />
+                        </VCol>
+                    </VRow>
                     <p class="text-subtitle-1">
                         When Woody is kidnapped by a greedy toy collector and is
                         nowhere to be found, Buzz and his friends set out to
