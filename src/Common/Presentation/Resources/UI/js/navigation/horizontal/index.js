@@ -18,7 +18,7 @@ export default [
         access_module: "access_dashboard",
         route_name: DASHBOARD_ROUTE,
     },
-    
+
     {
         title: 'Storybooks',
         url: "/",
@@ -122,7 +122,7 @@ export default [
         route_name: 'subscribers',
         access_module: "access_subscriber",
         children: [
-            { title: 'Subscriptions', url: '/plans', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'plans', access_module: "access_plan", },
+            { title: 'Subscriptions', url: '/subscribptioninvoice', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'subscribptioninvoice', access_module: "access_plan", },
             { title: 'Plans', url: '/plans', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'plans', access_module: "access_plan", },
         ]
     },
@@ -180,7 +180,7 @@ export default [
 
         ]
     },
-    
+
     {
         title: 'StoryBooks',
         url: "/storybooks",

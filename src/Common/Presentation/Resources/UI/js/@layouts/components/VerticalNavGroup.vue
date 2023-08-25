@@ -42,10 +42,10 @@ const auth = computed(() => usePage().props.auth);
 defineProps(["item"]);
 const emit = defineEmits(["open_menu"]);
 let isLinkActive = (currentRoute) => {
-  return route().current().includes(currentRoute);
+  return route()?.current()?.includes(currentRoute);
 };
 const isParentActive = (routeList) => {
-  return routeList.find((item) => route().current().includes(item.route_name));
+  return routeList.find((item) => route()?.current()?.includes(item.route_name));
 };
 const goLink = (item, pitem) => {
   emit("open_menu", pitem.title);
