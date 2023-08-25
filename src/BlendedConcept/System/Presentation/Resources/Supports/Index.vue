@@ -159,9 +159,7 @@ const selectionChanged = (data) => {
                                 </template>
                             </vue-good-table>
                             <AnswerSupport
-                                v-model:isDialogVisible="
-                                    isAnswerTechnicalSupport
-                                "
+                                v-model="isAnswerTechnicalSupport"
                                 :user-data="user"
                                 :form="form"
                                 @submit="hanleSubmit"
