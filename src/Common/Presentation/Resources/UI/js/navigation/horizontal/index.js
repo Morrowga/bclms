@@ -110,9 +110,9 @@ export default [
     },
     {
         title: 'Reports',
-        url: `#`,
+        url: `/reports`,
         icon: { icon: 'mdi-file-chart-outline' },
-        route_name: '/reports',
+        route_name: 'reports',
         access_module: "access_reports",
     },
     {

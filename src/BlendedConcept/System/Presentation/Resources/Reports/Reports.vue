@@ -5,7 +5,11 @@ import Organization from "./components/Organization.vue";
 import Usage from "./components/Usage.vue";
 import BookInteractivity from "./components/BookInteractivity.vue";
 import { ref } from "vue";
-let tabName = ref("user_demographic");
+import { usePage, useForm } from "@inertiajs/vue3";
+
+let tabName = ref("");
+let page = usePage();
+let user_role = computed(() => page.props.user_info.user_role.name);
 const isActiveTab = (tabNameEnter) => {
     return tabName.value == tabNameEnter
         ? "primary"
@@ -14,6 +18,14 @@ const isActiveTab = (tabNameEnter) => {
 const activeTab = (tabNameEnter) => {
     tabName.value = tabNameEnter;
 };
+
+onMounted(() => {
+    if (user_role.value == "Organization Admin") {
+        tabName.value = "user_demographic";
+    } else {
+        tabName.value = "usage";
+    }
+});
 </script>
 <template>
     <AdminLayout>
@@ -32,6 +44,7 @@ const activeTab = (tabNameEnter) => {
                             rounded
                             :color="isActiveTab('user_demographic')"
                             @click="activeTab('user_demographic')"
+                            v-if="user_role == 'Organization Admin'"
                             >User Demographic</VBtn
                         >
                         <VBtn
@@ -39,6 +52,7 @@ const activeTab = (tabNameEnter) => {
                             rounded
                             :color="isActiveTab('organization')"
                             @click="activeTab('organization')"
+                            v-if="user_role == 'Organization Admin'"
                             >Organization</VBtn
                         >
                         <VBtn
@@ -69,6 +83,17 @@ const activeTab = (tabNameEnter) => {
                     <Usage />
                 </VCol>
                 <VCol cols="12" v-if="tabName == 'book_interactivity'">
+                    <VRow>
+                        <VCol cols="12" md="4">
+                            <VSelect
+                                placeholder="Select/Student Class"
+                                :items="[]"
+                                rounded
+                                variant="solo"
+                            >
+                            </VSelect>
+                        </VCol>
+                    </VRow>
                     <BookInteractivity />
                 </VCol>
             </VRow>
