@@ -137,6 +137,7 @@ return [
     'playlist' => [
         'index' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index',
         'create' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Create',
+        'edit' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Edit',
         'show' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show',
     ],
 
@@ -177,15 +178,15 @@ return [
     'storybook-show' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Show',
     'storybook-pathway' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Pathway',
 
-     //Game student
-     'student-games' => 'BlendedConcept/Student/Presentation/Resources/Games/Index',
-     'game-show' => 'BlendedConcept/Student/Presentation/Resources/Games/Show',
+    //Game student
+    'student-games' => 'BlendedConcept/Student/Presentation/Resources/Games/Index',
+    'game-show' => 'BlendedConcept/Student/Presentation/Resources/Games/Show',
 
-     //Rewards student
-     'student-rewards' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Index',
-     'reward-store' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Store',
-     'be-lucky' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky',
-     'buy-sticker' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker',
+    //Rewards student
+    'student-rewards' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Index',
+    'reward-store' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Store',
+    'be-lucky' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky',
+    'buy-sticker' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker',
 
 
     'listofteacher' => [
