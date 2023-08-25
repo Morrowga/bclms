@@ -50,7 +50,7 @@ const gameResources = [
 </script>
 
 <template>
-    <section>
+    <VContainer fluid>
         <VRow class="match-height mb-5">
             <RoleCard
                 title="Organizations"
@@ -106,7 +106,7 @@ const gameResources = [
                 <br />
             </VCol>
         </VRow>
-    </section>
+    </VContainer>
 </template>
 
 <style>

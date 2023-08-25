@@ -26,11 +26,11 @@ const deleteOrganization = (id) => {
 };
 
 const roles = [
-    'Name',
-    'Teacher Usage',
-    'Student Usage',
-    'Storage Usage',
-    'Status'
+    "Name",
+    "Teacher Usage",
+    "Student Usage",
+    "Storage Usage",
+    "Status",
 ];
 
 let columns = [
@@ -87,7 +87,7 @@ watch(serverPerPage, function (value) {
 
 <template>
     <AdminLayout>
-        <section>
+        <VContainer fluid>
             <h1 class="tiggie-title">Organizations</h1>
             <VCard>
                 <VCardText class="d-flex align-center flex-wrap gap-4">
@@ -271,7 +271,7 @@ watch(serverPerPage, function (value) {
                 </vue-good-table>
                 <VDivider />
             </VCard>
-        </section>
+        </VContainer>
     </AdminLayout>
 </template>
 
