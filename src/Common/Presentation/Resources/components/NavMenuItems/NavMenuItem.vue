@@ -40,7 +40,7 @@ let goLink = (url) => {
         :hidden="
             !auth?.data?.permissions?.includes(item?.access_module) &&
             item?.access_module != 'access_dashboard'? true: false">
-        <VIcon :icon="item.icon.icon" :color="isLinkActive(item.route_name) ?  '#4066E4': '#282828'" class="mr-3"/>
+        <VIcon :icon="item.icon.icon" :color="isLinkActive(item.route_name) ?  '#4066E4': '#282828'" class="mr-2"/>
         <span
             :style="
                 isLinkActive(item.route_name)
