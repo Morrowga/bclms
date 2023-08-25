@@ -200,5 +200,8 @@ return [
     ],
     'reports' => [
         'reports' => 'BlendedConcept/System/Presentation/Resources/Reports/Reports'
-    ]
+    ],
+
+    //resource
+    'resource' => 'BlendedConcept/Library/Presentation/Resources/Resource/Index'
 ];
