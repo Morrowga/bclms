@@ -29,10 +29,10 @@ import SetContent from "./components/SetContent.vue";
                 </v-expansion-panels>
             </div>
             <div class="d-flex justify-center aligns-center w-100 pt-4">
-                <div>
-                    <SecondaryBtn title="Cancel" class="mr-4" />
+                    <SecondaryBtn
+                    title="Cancel"
+                    class="mr-4"/>
                     <PrimaryBtn title="Create" />
-                </div>
             </div>
         </VContainer>
     </AdminLayout>

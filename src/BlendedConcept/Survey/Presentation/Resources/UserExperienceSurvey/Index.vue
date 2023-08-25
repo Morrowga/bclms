@@ -106,11 +106,11 @@ let rows = [
 
 const items = ref([
     {
-        title: "Edit",
+        title: "User Type",
         value: "edit",
     },
     {
-        title: "Delete",
+        title: "Date",
         value: "delete",
     },
 ]);
@@ -137,120 +137,74 @@ const selectionChanged = (data) => {
     <AdminLayout>
         <VContainer fluid>
             <h1 class="tiggie-title mb-4">User Surveys</h1>
-            <VRow>
+            <VRow justify="end">
                 <VCol cols="12" sm="12" lg="12">
                     <section>
                         <VCard>
-                            <VContainer class="">
-                                <VRow justify="end" align="center">
-                                    <VCol cols="4">
-                                        <VTextField
-                                            label="Search User Experience Surveys"
-                                            density="compact"
-                                            width="100"
-                                        />
-                                    </VCol>
-                                    <Vcol cols="4">
-                                        <VSelect
-                                            :items="items"
-                                            rounded="100%"
-                                            density="compact"
-                                        />
-                                    </Vcol>
-                                    <VCol cols="4" class="">
+                            <VCardText class="d-flex flex-wrap gap-4">
+                                <VSpacer />
+                                <VTextField @keyup.enter="searchItems"
+                                    placeholder="Search Users" density="compact" style="width: 10%" />
+
+                                <div class="d-flex">
+                                    <div class="app-user-search-filter d-flex align-center justify-end gap-3">
+                                        <selectBox :datas="[]" placeholder="Sort By" density="compact" variant="outlined" />
+                                        <!-- 👉 Add User button -->
+                                        <Create :organizations="organizations" :roles="roles_name" :flash="flash"/>
+                                        <VSelect :items="items" rounded="100%" density="compact" />
                                         <VBtn>
-                                            <span class="text-white pl-4 pr-4">
-                                                Add Survey
-                                            </span>
-                                        </VBtn>
-                                    </VCol>
-                                </VRow>
-                            </VContainer>
+                                        <span class="text-white pl-4 pr-4">
+                                            Add Survey
+                                        </span>
+                                    </VBtn>
+                                    </div>
+                                </div>
+                            </VCardText>
                             <VDivider />
 
-                            <vue-good-table
-                                class="role-data-table"
-                                styleClass="vgt-table"
-                                v-on:selected-rows-change="selectionChanged"
-                                :columns="columns"
-                                :rows="rows"
+                            <vue-good-table class="role-data-table" styleClass="vgt-table"
+                                v-on:selected-rows-change="selectionChanged" :columns="columns" :rows="rows"
                                 :select-options="{
                                     enabled: false,
-                                }"
-                                :pagination-options="{ enabled: true }"
-                            >
+                                }" :pagination-options="{ enabled: true }">
                                 <template #table-row="dataProps">
-                                    <div
-                                        v-if="
-                                            dataProps.column.field ==
-                                            'user_types'
-                                        "
-                                    >
-                                        <v-chip
-                                            v-for="user_type in dataProps.row
-                                                .user_types"
-                                            :key="user_type.name"
-                                            class="ma-2"
-                                            color="primary"
-                                            size="small"
-                                            >{{ user_type.name }}
+                                    <div v-if="dataProps.column.field ==
+                                        'user_types'
+                                        ">
+                                        <v-chip v-for="user_type in dataProps.row
+                                            .user_types" :key="user_type.name" class="ma-2" color="primary"
+                                            size="small">{{ user_type.name }}
                                         </v-chip>
                                     </div>
-                                    <div
-                                        v-if="
-                                            dataProps.column.field ==
-                                            'completion_status'
-                                        "
-                                    >
-                                        <VProgressLinear
-                                            color="yellow-darken-2"
-                                            class="custom-progress"
-                                            model-value="80"
-                                            :height="8"
-                                        >
+                                    <div v-if="dataProps.column.field ==
+                                        'completion_status'
+                                        ">
+                                        <VProgressLinear color="yellow-darken-2" class="custom-progress" model-value="80"
+                                            :height="8">
                                         </VProgressLinear>
-                                        <span
-                                            ><span class="text-warning">8 </span
-                                            >/10</span
-                                        >
+                                        <span><span class="text-warning">8 </span>/10</span>
                                         Users
                                     </div>
 
-                                    <div
-                                        v-if="
-                                            dataProps.column.field == 'action'
-                                        "
-                                    >
+                                    <div v-if="dataProps.column.field == 'action'
+                                        ">
                                         <VMenu location="end">
                                             <template #activator="{ props }">
-                                                <VIcon
-                                                    v-bind="props"
-                                                    size="24"
-                                                    icon="mdi-dots-horizontal"
-                                                    color="black"
-                                                    class="mt-n4"
-                                                />
+                                                <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black"
+                                                    class="mt-n4" />
                                             </template>
                                             <VList>
-                                                <VListItem
-                                                    @click="
-                                                        isEditDiability = true
-                                                    "
-                                                >
-                                                    <VListItemTitle
-                                                        >Edit</VListItemTitle
-                                                    >
+                                                <VListItem @click="
+                                                    isEditDiability = true
+                                                    ">
+                                                    <VListItemTitle>Edit</VListItemTitle>
                                                 </VListItem>
-                                                <VListItem
-                                                    @click="
-                                                        deleteOrganization(
-                                                            props.row.id
-                                                        )
-                                                    "
-                                                >
-                                                    <VListItemTitle
-                                                        >Delete</VListItemTitle
-                                                    >
+                                                <VListItem @click="
+                                                    deleteOrganization(
+                                                        props.row.id
+                                                    )
+                                                    ">
+                                                    <VListItemTitle>Delete</VListItemTitle>
                                                 </VListItem>
                                             </VList>
                                         </VMenu>

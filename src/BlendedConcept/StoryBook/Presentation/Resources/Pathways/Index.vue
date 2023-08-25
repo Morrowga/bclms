@@ -122,7 +122,7 @@ let truncatedText = (text) => {
                                     >Export</VBtn
                                 >
                                 <VSpacer />
-                                <div class="app-user-search-filter">
+                                <div class="app-user-search-filter d-flex justify-end align-center">
                                     <div class="d-flex flex-row flex-end gap-2">
                                         <!-- 👉 Search  -->
 

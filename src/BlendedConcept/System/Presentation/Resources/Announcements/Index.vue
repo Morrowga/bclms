@@ -104,12 +104,7 @@ const checkUserRole = () => {
                             class="app-user-search-filter d-flex justify-end align-center"
                         >
                             <!-- 👉 Add Announcement button -->
-                            <VBtn
-                                v-if="
-                                    permissions.includes('create_organization')
-                                "
-                                class="tiggie-btn"
-                            >
+                            <VBtn class="tiggie-btn">
                                 <Link
                                     :href="route('announcements.create')"
                                     class="text-white"

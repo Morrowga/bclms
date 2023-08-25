@@ -107,7 +107,7 @@ let truncatedText = (text) => {
                             <VCardText class="d-flex flex-wrap gap-4">
                                 <!-- 👉 Export button -->
                                 <VSpacer />
-                                <div class="app-user-search-filter">
+                                <div class="app-user-search-filter d-flex justify-end align-center">
                                     <div class="d-flex flex-row flex-end gap-2">
                                         <!-- 👉 Search  -->
 
