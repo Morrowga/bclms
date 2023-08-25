@@ -8,7 +8,7 @@ import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
 <template>
     <section>
         <VRow>
-            <VCol cols="3">
+            <VCol cols="12" lg="3" md="6">
                 <VCard class="text-center card-student">
                     <div class="d-flex justify-center mt-2">
                         <img src="/images/classroom1.jpeg" class="studentimg" />
@@ -178,8 +178,16 @@ import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
                     </div>
                 </VCard>
             </VCol>
-            <VCol cols="5">
-                <div class="ml-10">
+            <VCol cols="12" lg="5" md="6">
+                <div class="ml-10 d-none d-md-flex">
+                    <img
+                        src="/images/Storybooks.png"
+                        @click="() => router.get(route('storybooks'))"
+                        class="storybook"
+                        alt=""
+                    />
+                </div>
+                <div class="d-flex d-sm-none">
                     <img
                         src="/images/Storybooks.png"
                         @click="() => router.get(route('storybooks'))"
@@ -188,7 +196,7 @@ import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
                     />
                 </div>
             </VCol>
-            <VCol cols="4" class="text-center">
+            <VCol cols="12" lg="4" md="6" class="text-center">
                 <div class="text-center">
                     <img
                         src="/images/Games.png"
@@ -296,4 +304,14 @@ import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
 .head-button {
     align-self: flex-end;
 }
+
+@media only screen and (max-width: 600px) {
+    .games {
+    width: 100% !important;
+  }
+  .rewards {
+    width: 100% !important;
+  }
+}
+
 </style>
