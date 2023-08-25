@@ -1,6 +1,8 @@
 <script setup>
 import { defineProps } from "vue";
 import { router } from "@inertiajs/core";
+import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
+
 </script>
 
 <template>
@@ -172,14 +174,7 @@ import { router } from "@inertiajs/core";
                         </VCol>
                     </VRow>
                     <div class="mt-5 my-3 mx-3">
-                        <v-btn
-                            varient="flat"
-                            color="#BFC0C1"
-                            class="textcolor w-100 pppangram-bold"
-                            rounded
-                        >
-                            Exit Kids Mode
-                        </v-btn>
+                       <ExitMode />
                     </div>
                 </VCard>
             </VCol>
