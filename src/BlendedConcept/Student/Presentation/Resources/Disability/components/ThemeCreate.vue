@@ -1,89 +1,95 @@
 <script setup>
-import {Link} from "@inertiajs/inertia-vue3"
+import { Link } from "@inertiajs/inertia-vue3";
 const props = defineProps({
     form: {
-        type: Object
+        type: Object,
     },
     userData: {
         type: Object,
         required: false,
         default: () => ({
-            name: "",
-            email: "",
-            contact_number: ""
-
+            theme: "",
+            description: "",
         }),
     },
     isDialogVisible: {
         type: Boolean,
         required: true,
     },
-})
+});
 
-const emit = defineEmits([
-    'submit',
-    'update:isDialogVisible',
-])
+const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
-const userData = ref(structuredClone(toRaw(props.userData)))
-const isUseAsBillingAddress = ref(false)
+const userData = ref(structuredClone(toRaw(props.userData)));
+const isUseAsBillingAddress = ref(false);
 
 watch(props, () => {
-    userData.value = structuredClone(toRaw(props.userData))
-})
+    userData.value = structuredClone(toRaw(props.userData));
+});
 
 const onFormSubmit = () => {
     // emit('submit', userData.value)
-    emit('submit',{title:"You have succesfully edited your profiled"});
-}
+    emit("submit", { title: "You have succesfully edited your profiled" });
+};
 
 const onFormReset = () => {
-    userData.value = structuredClone(toRaw(props.userData))
-    emit('update:isDialogVisible', false)
-}
+    userData.value = structuredClone(toRaw(props.userData));
+    emit("update:isDialogVisible", false);
+};
 
-const dialogVisibleUpdate = val => {
-    emit('update:isDialogVisible', val)
-}
+const dialogVisibleUpdate = (val) => {
+    emit("update:isDialogVisible", val);
+};
 </script>
 
 <template>
-    <VDialog :width="$vuetify.display.smAndDown ? 'auto' : 600" :model-value="props.isDialogVisible"
-        @update:model-value="dialogVisibleUpdate">
+    <VDialog
+        :width="$vuetify.display.smAndDown ? 'auto' : 600"
+        :model-value="props.isDialogVisible"
+        @update:model-value="dialogVisibleUpdate"
+    >
         <VCard class="pa-sm-9 pa-5">
             <!-- 👉 dialog close btn -->
             <DialogCloseBtn variant="text" size="small" @click="onFormReset" />
 
             <VCardItem class="text-left">
                 <VCardTitle class="te mb-2 tiggie-title">
-                    Add Disabilities
+                    Add Theme
                 </VCardTitle>
             </VCardItem>
 
             <VCardText>
                 <!-- 👉 Form -->
                 <VForm class="mt-6" @submit.prevent="onFormSubmit">
-                    <VRow >
+                    <VRow>
                         <!-- 👉 Contact -->
                         <VCol cols="12" md="12">
-                            <VLabel class="tiggie-label">Disability Type</VLabel>
+                            <VLabel class="tiggie-label required"
+                                >Theme Name</VLabel
+                            >
                             <VTextField
-                            type="text"
-                            class="tiggie-resize-input-text"
-                            v-model="userData.name"
-                            :error-messages="props?.form?.errors?.name"/>
+                                type="text"
+                                class="tiggie-resize-input-text"
+                                v-model="userData.theme"
+                            />
                         </VCol>
-
 
                         <!-- 👉 Contact -->
                         <VCol cols="12" md="12">
                             <VLabel class="tiggie-label">Description</VLabel>
-                                <VTextarea placeholder="Type here ...." v-model="description" auto-grow rows="5" />
+                            <VTextarea
+                                placeholder="Type here ...."
+                                v-model="userData.description"
+                                auto-grow
+                                rows="5"
+                            />
                         </VCol>
 
                         <!-- 👉 Submit and Cancel -->
-                        <VCol cols="12"
-                        class="d-flex flex-wrap justify-space-between gap-10 pt-8">
+                        <VCol
+                            cols="12"
+                            class="d-flex flex-wrap justify-space-between gap-10 pt-8"
+                        >
                             <!-- <VBtn color="gray" text-color="white" height="58" @click="onFormReset">
                                 <Link :href="route('userprofile')" class="pl-5 pr-5">
                                     Cancel
@@ -94,13 +100,19 @@ const dialogVisibleUpdate = val => {
                                     Save
                                 </span>
                             </VBtn> -->
-                            <VBtn color="gray" text-color="white" height="58" class="pl-16 pr-16" @click="onFormReset">
+                            <VBtn
+                                color="gray"
+                                text-color="white"
+                                height="58"
+                                class="pl-16 pr-16"
+                                @click="onFormReset"
+                            >
                                 Cancel
                             </VBtn>
 
                             <VBtn type="submit" height="58" class="pl-16 pr-16">
                                 Submit
-                             </VBtn>
+                            </VBtn>
                         </VCol>
                     </VRow>
                 </VForm>

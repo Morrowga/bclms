@@ -122,7 +122,7 @@ export default [
         route_name: 'subscribers',
         access_module: "access_subscriber",
         children: [
-            { title: 'Subscriptions', url: '/subscribptioninvoice', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'subscribptioninvoice', access_module: "access_plan", },
+            { title: 'Subscriptions', url: '/subscribptioninvoice', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'subscription_invoice', access_module: "access_plan", },
             { title: 'Plans', url: '/plans', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'plans', access_module: "access_plan", },
         ]
     },

@@ -20,7 +20,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/plans/show', [PlanController::class, 'show'])->name('plans.show');
     Route::get('/plans/orgcreate', [PlanController::class, 'planfororg'])->name('planfororg.show');
 
-    Route::get('subscribptioninvoice', [SubscribtionInvoiceController::class, 'index']);
+    Route::get('subscribptioninvoice', [SubscribtionInvoiceController::class, 'index'])->name('subscription_invoice');
 
 
 
