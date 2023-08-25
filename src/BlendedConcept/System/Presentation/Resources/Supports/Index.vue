@@ -95,7 +95,7 @@ const selectionChanged = (data) => {
         <VContainer fluid>
             <VRow>
                 <VCol cols="6">
-                    <h1 class="tiggie-title">Technical Support Requests</h1>
+                    <h1 class="tiggie-title">Technical Support Request</h1>
                 </VCol>
                 <VCol cols="12">
                     <section>
