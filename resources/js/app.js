@@ -1,5 +1,6 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp,Link } from '@inertiajs/vue3'
+import PrimeVue from 'primevue/config';
 
 import { Ziggy } from './ziggy';
 /* eslint-disable import/order */
@@ -47,6 +48,7 @@ createInertiaApp({
       .use(layoutsPlugin)
       .use(VueGoodTablePlugin)
       .use(i18n)
+      .use(PrimeVue)
       .use(abilitiesPlugin, ability, {
         useGlobalProperties: true,
       })

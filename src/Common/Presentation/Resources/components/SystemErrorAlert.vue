@@ -2,14 +2,18 @@
 import { defineProps, ref } from "vue";
 
 let props = defineProps(["sytemErrorMessage"]);
-
-
-
 </script>
 
 <template>
-    <VAlert variant="tonal" density="compact" type="error" closable class="mt-4 mb-4" close-label="Close Alert"
-        style="padding: 6px 16px;width: 80%;margin:0 auto;">
+    <VAlert
+        variant="tonal"
+        density="compact"
+        type="error"
+        closable
+        class="mt-4 mb-4"
+        close-label="Close Alert"
+        style="padding: 6px 16px"
+    >
         <template #text>
             <span style="font-size:24px:"> System Error </span>
             <br />
@@ -22,8 +26,8 @@ let props = defineProps(["sytemErrorMessage"]);
 
 <style scoped>
 .bg-success {
-    background-color: #72E128 !important;
-    color: #72E128 !important;
+    background-color: #72e128 !important;
+    color: #72e128 !important;
 }
 
 .bg-font {
@@ -33,7 +37,5 @@ let props = defineProps(["sytemErrorMessage"]);
     font-weight: 400;
     line-height: 21px;
     letter-spacing: 0.15px;
-
 }
 </style>
-

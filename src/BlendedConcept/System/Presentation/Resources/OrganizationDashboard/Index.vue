@@ -8,6 +8,7 @@ import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue"
 import TeacherAvatar from "@mainRoot/components/TeacherAvatar/TeacherAvatar.vue";
 import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
+import UserExperienceSurvey from "./components/UserExperienceSurvey.vue";
 
 const statisticsWithImages = [
     {
@@ -35,10 +36,12 @@ const statisticsWithImages = [
             <VCol cols="12" sm="12" lg="12">
                 <div class="header d-flex justify-space-between">
                     <h1 class="tiggie-title">Classrooms</h1>
-                    <VBtn color="primary" variant="flat" rounded>
-                        <VIcon icon="mdi-plus"></VIcon>
-                        <span class="text-white">Add</span>
-                    </VBtn>
+                    <Link :href="route('classrooms.create')">
+                        <VBtn color="primary" variant="flat" rounded>
+                            <VIcon icon="mdi-plus"></VIcon>
+                            <span class="text-white">Add</span>
+                        </VBtn>
+                    </Link>
                 </div>
                 <div class="mt-5">
                     <v-row>
@@ -130,6 +133,7 @@ const statisticsWithImages = [
                 </div>
             </VCol>
         </VRow>
+        <UserExperienceSurvey />
     </v-container>
 </template>
 

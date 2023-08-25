@@ -4260,6 +4260,11 @@ prelude-ls@^1.2.1:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
+primevue@^3.32.2:
+  version "3.32.2"
+  resolved "https://registry.yarnpkg.com/primevue/-/primevue-3.32.2.tgz#d1d008acf97b0c63f54e3f2fd2edb98b05314abd"
+  integrity sha512-BEDhIb+VqfjjIF9+G+dCRsE542afz5Xl01XHbViYR13T7ZreBMWsPcJCCTyKzouwJHr6HTskJXJnrkTmOI1vKg==
+
 prismjs@1.29.0:
   version "1.29.0"
   resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.29.0.tgz#f113555a8fa9b57c35e637bba27509dcf802dd12"

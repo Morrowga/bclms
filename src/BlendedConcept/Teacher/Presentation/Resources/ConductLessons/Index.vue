@@ -11,7 +11,7 @@ import { router } from "@inertiajs/core";
 <template>
     <AdminLayout>
         <VContainer>
-            <div class="d-flex mb-4">
+            <!-- <div class="d-flex mb-4">
                 <h1 class="tiggie-title mb-4">Happiness Survey</h1>
                 <v-spacer></v-spacer>
                 <div>
@@ -23,7 +23,7 @@ import { router } from "@inertiajs/core";
                         Responses
                     </VBtn>
                 </div>
-            </div>
+            </div> -->
             <div class="book-panels">
                 <v-expansion-panels>
                     <ChooseStorybook />

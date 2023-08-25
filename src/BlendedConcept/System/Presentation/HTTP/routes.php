@@ -6,6 +6,7 @@ use Src\BlendedConcept\System\Presentation\HTTP\Controllers\Admin\AdminProfileCo
 use Src\BlendedConcept\System\Presentation\HTTP\DashBoardController;
 use Src\BlendedConcept\System\Presentation\HTTP\LibraryController;
 use Src\BlendedConcept\System\Presentation\HTTP\NotificationController;
+use Src\BlendedConcept\System\Presentation\HTTP\ReportController;
 use Src\BlendedConcept\System\Presentation\HTTP\SettingController;
 use Src\BlendedConcept\System\Presentation\HTTP\TechnicalSupportController;
 
@@ -21,7 +22,6 @@ Route::get('/admin', function () {
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/home', [DashBoardController::class, 'superAdminDashboard'])->name('dashboard');
-
     // announcement
     Route::resource('announcements', AnnouncementController::class);
 
@@ -55,6 +55,15 @@ Route::group(['middleware' => ['auth']], function () {
 
     //get all notifications
     Route::get('/notifications/index', [NotificationController::class, 'getAllNotifications'])->name('notifications');
+
+    //org teacher profile
+    Route::get('/profiles/org-teacher', [DashBoardController::class, 'orgTeacherProfile'])->name('profiles.org-teacher');
+
+    //edit org teacher profile
+    Route::get('/profiles/org-teacher/edit', [DashBoardController::class, 'editOrgTeacherProfile'])->name('edit-profiles.org-teacher');
+
+    //reports
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 });
 
 Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {

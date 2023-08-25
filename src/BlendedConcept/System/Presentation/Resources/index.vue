@@ -56,6 +56,9 @@ const removeNotification = (notificationId) => {
 const checkUserRole = () => {
     return user_role.value == "BC Super Admin" || user_role.value == "BC Staff";
 };
+const forbiddenRole = () => {
+    return user_role.value != "BC Subscriber" || user_role.value != "Teacher";
+};
 onMounted(() => {
     getNotifications();
 });
@@ -71,10 +74,7 @@ onMounted(() => {
         <!--
             VAlert is use for show annnounment pages
         -->
-        <VContainer
-            v-if="user_role != 'BC Subscriber'"
-            :fluid="checkUserRole()"
-        >
+        <VContainer v-if="!forbiddenRole()" :fluid="checkUserRole()">
             <VAlert
                 v-for="item in notifications"
                 :key="item.id"

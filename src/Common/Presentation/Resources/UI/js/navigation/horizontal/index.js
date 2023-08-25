@@ -95,6 +95,13 @@ export default [
         access_module: "access_classroom",
     },
     {
+        title: 'ClassRoom',
+        url: `${PREFIX}/classroom/org-teacher`,
+        icon: { icon: ' mdi-google-classroom' },
+        route_name: 'org-teacher-classroom',
+        access_module: "access_orgClassroom",
+    },
+    {
         title: 'Users',
         url: `/org_view_teacher_student`,
         icon: { icon: ' mdi-google-classroom' },

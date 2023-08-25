@@ -223,6 +223,14 @@ const pages = {
     "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create.vue'),
     "BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Edit": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Edit.vue'),
 
+    //org teacher classRoom crud
+    "BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Index": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Index.vue'),
+    "BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Show": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Show.vue'),
+    "BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Create": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Create.vue'),
+    "BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Edit": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Edit.vue'),
+    "BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/AddGroup": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/AddGroup.vue'),
+    "BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/EditGroup": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/EditGroup.vue'),
+
 
     //list of organization teacher
 
@@ -243,5 +251,12 @@ const pages = {
     "BlendedConcept/Student/Presentation/Resources/Rewards/Store": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/Store.vue'),
     "BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky.vue'),
     "BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker.vue'),
+
+    //profiles
+    "Common/Presentation/Resources/components/UserProfile/OrgTeacherProfile" : import('../../src/Common/Presentation/Resources/components/UserProfile/OrgTeacherProfile.vue'),
+    "Common/Presentation/Resources/components/EditProfiles/OrgTeacherEditProfile" : import('../../src/Common/Presentation/Resources/components/EditProfiles/OrgTeacherEditProfile.vue'),
+
+    //reports
+    "BlendedConcept/System/Presentation/Resources/Reports/Reports": import('../../src/BlendedConcept/System/Presentation/Resources/Reports/Reports.vue'),
 };
 export default pages;

@@ -1,11 +1,10 @@
 <script setup>
 import TotalStudents from "./TotalStudents.vue";
-import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 </script>
 <template>
     <v-expansion-panel>
         <v-expansion-panel-title>
-            <h2 class="font-weight-bold text-h5">Step 2: Select Students</h2>
+            <h2 class="font-weight-bold ruddy-bold" style="font-size: 25px !important;">Step 1: Select Teachers <v-chip class="chip-count">3</v-chip></h2>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
             <div class="d-flex justify-end align-center mb-4">
@@ -26,7 +25,7 @@ import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
             </v-row>
             <br />
             <div class="d-flex justify-center">
-                <Pagination />
+                <v-btn variant="outlined" color="primary">Load More</v-btn>
             </div>
         </v-expansion-panel-text>
     </v-expansion-panel>
@@ -51,6 +50,13 @@ import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
     justify-content: center;
     border: 1px solid #17cab6;
 }
+
+.chip-count{
+    background: var(--seaform, #D7F2F0) !important;
+    gap: 10px !important;
+    border-radius: 50px !important;
+    color: #17CAB6 !important;
+ }
 
 .chip-content {
     cursor: inherit;

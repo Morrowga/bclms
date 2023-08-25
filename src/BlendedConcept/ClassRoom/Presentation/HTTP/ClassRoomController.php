@@ -129,4 +129,31 @@ class ClassRoomController extends Controller
 
         return redirect()->route('c.classrooms.index')->with('successMessage', 'Student Deleted Successfully!');
     }
+
+    public function orgTeacherIndex()
+    {
+
+        return Inertia::render(config('route.org-teacher-classroom.index'));
+    }
+    public function orgTeacherShow()
+    {
+        return Inertia::render(config('route.org-teacher-classroom.show'));
+    }
+    public function orgTeacherEdit()
+    {
+        return Inertia::render(config('route.org-teacher-classroom.edit'));
+    }
+    public function orgTeacherCreate()
+    {
+        return Inertia::render(config('route.org-teacher-classroom.create'));
+    }
+
+    public function orgTeacherAddGroup()
+    {
+        return Inertia::render(config('route.org-teacher-classroom.add-group'));
+    }
+    public function orgTeacherEditGroup()
+    {
+        return Inertia::render(config('route.org-teacher-classroom.edit-group'));
+    }
 }

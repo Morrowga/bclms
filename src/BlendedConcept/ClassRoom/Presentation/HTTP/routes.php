@@ -8,4 +8,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('classrooms', ClassRoomController::class);
     Route::get('/classroom-show-copy', [ClassRoomController::class, 'showCopy'])->name('showCopy');
     Route::get('/classroom-edit-copy', [ClassRoomController::class, 'editCopy'])->name('editCopy');
+
+    Route::get('/classroom/org-teacher', [ClassRoomController::class, 'orgTeacherIndex'])->name('org-teacher-classroom.index');
+    Route::get('/classroom/org-teacher/create', [ClassRoomController::class, 'orgTeacherCreate'])->name('org-teacher-classroom.create');
+    Route::get('/classroom/org-teacher/edit', [ClassRoomController::class, 'orgTeacherEdit'])->name('org-teacher-classroom.edit');
+    Route::get('/classroom/org-teacher/show', [ClassRoomController::class, 'orgTeacherShow'])->name('org-teacher-classroom.show');
+    Route::get('/classroom/org-teacher/add-group', [ClassRoomController::class, 'orgTeacherAddGroup'])->name('org-teacher-classroom.add-group');
+    Route::get('/classroom/org-teacher/edit-group', [ClassRoomController::class, 'orgTeacherEditGroup'])->name('org-teacher-classroom.edit-group');
 });

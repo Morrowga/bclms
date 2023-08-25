@@ -35,7 +35,7 @@ import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
                     image="/images/teacher.png"
                     title="Wren Clark"
                     phone_number="9111 1112"
-                    route="#"
+                    :route="route('org_view_teacher_student.teacher.show')"
                     storage="135 MB/ 200 MB"
                 />
             </VCol>

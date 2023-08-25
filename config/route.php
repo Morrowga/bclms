@@ -163,6 +163,15 @@ return [
     'showCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Show',
     'editCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Edit',
     'createCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create',
+
+    'org-teacher-classroom' => [
+        'index' => 'BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Index',
+        'show' => 'BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Show',
+        'edit' => 'BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Edit',
+        'create' => 'BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Create',
+        'add-group' => 'BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/AddGroup',
+        'edit-group' => 'BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/EditGroup',
+    ],
     //Storybook student
     'storybooks' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Index',
     'storybook-show' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Show',
@@ -181,5 +190,15 @@ return [
 
     'listofteacher' => [
         'index' => 'BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index'
+    ],
+
+    'profiles' => [
+        'org-teacher' => 'Common/Presentation/Resources/components/UserProfile/OrgTeacherProfile'
+    ],
+    'edit-profiles' => [
+        'org-teacher' => 'Common/Presentation/Resources/components/EditProfiles/OrgTeacherEditProfile'
+    ],
+    'reports' => [
+        'reports' => 'BlendedConcept/System/Presentation/Resources/Reports/Reports'
     ]
 ];

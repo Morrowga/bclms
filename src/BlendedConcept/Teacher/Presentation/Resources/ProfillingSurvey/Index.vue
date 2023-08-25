@@ -1,11 +1,20 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
+import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
 import { ref } from "vue";
+import { usePage, useForm } from "@inertiajs/vue3";
+
+let page = usePage();
+let user_role = computed(() => page.props.user_info.user_role.name);
 let tab = ref(false);
+const checkUserRole = () => {
+    return user_role.value == "BC Super Admin" || user_role.value == "BC Staff";
+};
 </script>
 <template>
     <AdminLayout>
-        <VContainer fluid>
+        <VContainer :fluid="checkUserRole()">
             <v-row>
                 <v-col cols="12" md="12">
                     <h1
@@ -221,23 +230,9 @@ let tab = ref(false);
                 </v-col>
                 <br />
                 <v-col cols="12">
-                    <div class="d-flex justify-center">
-                        <VBtn
-                            color="#e9eff0"
-                            variant="flat"
-                            rounded
-                            class="pl-16 pr-16 mr-4"
-                        >
-                            <span class="text-primary">Cancel</span>
-                        </VBtn>
-                        <VBtn
-                            color="primary"
-                            variant="flat"
-                            rounded
-                            class="pl-16 pr-16"
-                        >
-                            <span>Submit</span>
-                        </VBtn>
+                    <div class="d-flex justify-center" style="gap: 10px">
+                        <SecondaryBtn title="Cancel" />
+                        <PrimaryBtn title="Submit" />
                     </div>
                 </v-col>
             </v-row>

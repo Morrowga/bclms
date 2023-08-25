@@ -5,11 +5,18 @@ let props = defineProps({
         type: String,
         default: "",
     },
+    icon : {
+        type : Boolean,
+        default : false
+    }
 });
 </script>
 <template>
     <div class="chip green">
-        <div class="chip-content">{{ props.title }}</div>
+        <div class="chip-content d-flex gap-4 ">
+            <VIcon v-if="props.icon" icon="mdi-circle" color="primary"/>
+           <span>{{ props.title }}</span>
+        </div>
     </div>
 </template>
 <style scoped>
