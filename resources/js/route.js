@@ -231,6 +231,8 @@ const pages = {
     "BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/AddGroup": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/AddGroup.vue'),
     "BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/EditGroup": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/EditGroup.vue'),
 
+    //Resource
+    "BlendedConcept/Library/Presentation/Resources/Resource/Index": import('../../src/BlendedConcept/Library/Presentation/Resources/Resource/Index.vue'),
 
     //list of organization teacher
 

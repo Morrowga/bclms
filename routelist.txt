@@ -107,6 +107,7 @@ reward-store
 storybook/show
 game/show
 storybook/pathway
+resource
 
 Org_Admin_list_of_teachers #22.8.2023
 
