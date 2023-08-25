@@ -5,6 +5,7 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import ResourceCard from "@mainRoot/components/Resource/ResourceCard.vue";
+import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 
 let props = defineProps([
     "classrooms",
@@ -85,6 +86,9 @@ let props = defineProps([
                         <ResourceCard />
                     </VCol>
                 </VRow>
+              </div>
+              <div class="d-flex justify-center mt-10">
+                <Pagination />
               </div>
             </VContainer>
         </section>
