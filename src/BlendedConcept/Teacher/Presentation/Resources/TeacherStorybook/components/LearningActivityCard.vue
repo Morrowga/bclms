@@ -1,6 +1,8 @@
-<script setup></script>
+<script setup>
+import { router } from "@inertiajs/core";
+</script>
 <template>
-    <v-card>
+    <v-card @click="router.get(route('add_customisation.create'))">
         <v-card-title>
             <div class="d-flex align-center" style="gap: 10px">
                 <img src="/images/h5p.png" class="h5p-logo" />
