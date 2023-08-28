@@ -202,6 +202,7 @@ export default [
         route_name: 'student-rewards',
         access_module: "access_studentRewards",
     },
+
     {
         title: 'Announcements',
         url: "/announcements",

@@ -10,6 +10,7 @@ import RecommendedBooks from "./components/RecommendedBooks.vue";
 import ReviewDialog from "./components/ReviewDialog.vue";
 import { router } from "@inertiajs/core";
 import { ref } from "vue";
+import VersionCard from "@mainRoot/components/Teacher/VersionCard.vue";
 
 let tab = ref(false);
 </script>
@@ -21,7 +22,7 @@ let tab = ref(false);
                     <div style="position: relative">
                         <v-img src="/images/img.png" class="main-pic" />
                         <div class="vector-background">
-                            <img src="/images/vector.png" />
+                            <img src="/images/bg.png" />
                         </div>
                     </div>
                 </v-col>
@@ -138,6 +139,7 @@ let tab = ref(false);
                     />
                 </v-col>
             </v-row>
+            <VersionCard />
         </VContainer>
     </AdminLayout>
 </template>
@@ -147,7 +149,7 @@ let tab = ref(false);
 }
 .vector-background {
     position: absolute;
-    top: -42%;
+    top: -52%;
     left: -36%;
     z-index: 1;
 }
