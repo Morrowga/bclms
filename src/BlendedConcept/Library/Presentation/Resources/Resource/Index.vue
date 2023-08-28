@@ -5,7 +5,9 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import ResourceCard from "@mainRoot/components/Resource/ResourceCard.vue";
+import CreateModal from "@mainRoot/components/Resource/CreateModal.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
+import { isConfirmedDialog } from "@actions/useConfirm";
 
 let props = defineProps([
     "classrooms",
@@ -14,6 +16,9 @@ let props = defineProps([
     "flash",
     "auth",
 ]);
+let onFormSubmit = () => {
+    isConfirmedDialog({ title: "Are you sure want to delete it." });
+};
 </script>
 
 <template>
@@ -32,8 +37,9 @@ let props = defineProps([
                <div>
                 <span class="ruddy-bold resource">Resources</span>
                     <div class="mt-5">
-                        <v-btn  prepend-icon="mdi-plus" varient="flat" class="menuchip" rounded>Add</v-btn>
-                        <v-btn prepend-icon="mdi-trash-can-outline" color="#ff6262" varient="flat" class="ml-2 resourcebtn" rounded="">Delete</v-btn>
+                        <!-- <v-btn  prepend-icon="mdi-plus" varient="flat" class="menuchip" rounded>Add</v-btn> -->
+                        <CreateModal />
+                        <v-btn prepend-icon="mdi-trash-can-outline" @click="onFormSubmit" color="#ff6262" varient="flat" class="ml-2 resourcebtn" rounded="">Delete</v-btn>
                     </div>
                </div>
               </div>
@@ -83,7 +89,7 @@ let props = defineProps([
                     md="4"
                     lg="3"
                         :key="item">
-                        <ResourceCard />
+                        <ResourceCard :key="item" />
                     </VCol>
                 </VRow>
               </div>

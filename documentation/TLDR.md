@@ -45,9 +45,12 @@ Before implementing `SecurityRepository.php` you might need to create the follow
 </p> 
 <ul>
 <li><b style="color:#EB5A5A">Mappers</b></li>
-   Map is used to 
+   Map is used to check User  data type that check validation static type.
 <li><b style="color:#EB5A5A">DTO</b> </li>
+ DTO is called Data Transfer Object that might use to check UserData.php  that will check the datatypes and Change Data Format.
 <li><b style="color:#EB5A5A">UseCases</b></li>  
+UseCase has two moudels that has Queries and Command .Queries are used for getting data from UserEloquent and Command is used for Store,Update and Delete on the UserEloquent.
 <li><b style="color:#EB5A5A">Models</b></li>
+Models are used for define data type on the eloquentModel
 </ul>
 </details>

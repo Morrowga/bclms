@@ -10,6 +10,7 @@ import RecommendedBooks from "./components/RecommendedBooks.vue";
 import ReviewDialog from "./components/ReviewDialog.vue";
 import { router } from "@inertiajs/core";
 import { ref } from "vue";
+import VersionCard from "@mainRoot/components/Teacher/VersionCard.vue";
 
 let tab = ref(false);
 </script>
@@ -138,6 +139,7 @@ let tab = ref(false);
                     />
                 </v-col>
             </v-row>
+            <VersionCard />
         </VContainer>
     </AdminLayout>
 </template>
