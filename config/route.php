@@ -35,6 +35,9 @@ return [
     'permissions' => 'BlendedConcept/Security/Presentation/Resources/Permissions/Index',
     'roles' => 'BlendedConcept/Security/Presentation/Resources/Roles/Index',
 
+    'roles-create' => 'BlendedConcept/Security/Presentation/Resources/Roles/Create',
+    'roles-edit' => 'BlendedConcept/Security/Presentation/Resources/Roles/Edit',
+
     'organizations' => [
         'index' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Index',
         'create' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Create',

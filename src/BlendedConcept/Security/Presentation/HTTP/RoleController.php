@@ -55,6 +55,32 @@ class RoleController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
+
+    public function create()
+    {
+        try {
+
+            $permissions = (new GetPermissionwithPagination([]))->handle();
+            return Inertia::render(config('route.roles-create'), [
+                'permissions' => $permissions['default_permissions'],
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('roles.create')->with('sytemErrorMessage', $e->getMessage());
+        }
+    }
+    public function edit(RoleEloquentModel $role)
+    {
+        try {
+            $permissions = (new GetPermissionwithPagination([]))->handle();
+            return Inertia::render(config('route.roles-edit'), [
+                'permissions' => $permissions['default_permissions'],
+                'role' => $role,
+                'exists_permissions' => $role->permissions()->pluck('id')
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('roles.create')->with('sytemErrorMessage', $e->getMessage());
+        }
+    }
     public function store(StoreRoleRequest $request)
     {
         // Check if the user is authorized to create roles

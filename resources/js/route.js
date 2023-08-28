@@ -130,6 +130,9 @@ const pages = {
     // Security Domain
     "BlendedConcept/Security/Presentation/Resources/Permissions/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/Permissions/Index.vue'),
     "BlendedConcept/Security/Presentation/Resources/Roles/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/Roles/Index.vue'),
+    "BlendedConcept/Security/Presentation/Resources/Roles/Create": import('../../src/BlendedConcept/Security/Presentation/Resources/Roles/Create.vue'),
+    "BlendedConcept/Security/Presentation/Resources/Roles/Edit": import('../../src/BlendedConcept/Security/Presentation/Resources/Roles/Edit.vue'),
+
 
     //user experience survey
 
