@@ -1,11 +1,10 @@
 <script setup>
 import { router } from "@inertiajs/core";
-
-let props = defineProps(["route", "count", "label"]);
+import CardAction from "@mainRoot/components/Resource/CardAction.vue";
 </script>
 <template>
     <VCard>
-        <span class="resourcemenu">...</span>
+        <CardAction />
         <v-img src="images/chair.jpeg" cover></v-img>
         <div class="resource-label">
             <VRow>
@@ -49,6 +48,7 @@ let props = defineProps(["route", "count", "label"]);
     font-size: 20px !important;
     position: absolute;
     z-index: 1;
+    cursor: pointer;
     color: #000 !important;
     right: 6%;
 }
