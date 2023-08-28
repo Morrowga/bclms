@@ -14,6 +14,10 @@ class PathWaysController
 
     public function create()
     {
+        return Inertia::render(config('route.pathways.create'));
+    }
+    public function show()
+    {
         return Inertia::render(config('route.pathways.show'));
     }
 }
