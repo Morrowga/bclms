@@ -15,6 +15,5 @@ class VerifyCsrfToken extends Middleware
         'login',
         'admin/h5p/ajax',
         'admin/h5p/ajax/*',
-        'admin/h5p/*',
     ];
 }
