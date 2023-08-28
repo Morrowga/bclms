@@ -123,6 +123,7 @@ const pages = {
 
      'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index' : import('../../src/BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index.vue'),
      'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Create' : import('../../src/BlendedConcept/Teacher/Presentation/Resources/PlayLists/Create.vue'),
+     'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Edit' : import('../../src/BlendedConcept/Teacher/Presentation/Resources/PlayLists/Edit.vue'),
      'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show' : import('../../src/BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show.vue'),
 
 

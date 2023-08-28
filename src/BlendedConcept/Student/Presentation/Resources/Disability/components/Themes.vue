@@ -93,7 +93,7 @@ const selectionChanged = (data) => {
                     <VCardText class="d-flex justify-between flex-wrap gap-4">
                         <!-- 👉 Export button -->
                         <VTextField
-                            label="Search Disabilities"
+                            label="Search Themes"
                             single-line
                             density="compact"
                         />

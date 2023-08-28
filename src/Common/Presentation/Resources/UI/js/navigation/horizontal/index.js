@@ -42,10 +42,10 @@ export default [
     },
     {
         title: 'Resources',
-        url: "#",
+        url: "/resource",
         icon: { icon: 'mdi-folder-outline' },
         access_module: "access_resources",
-        route_name: "/resources",
+        route_name: "resource",
     },
     {
         title: 'Students',
@@ -202,6 +202,7 @@ export default [
         route_name: 'student-rewards',
         access_module: "access_studentRewards",
     },
+
     {
         title: 'Announcements',
         url: "/announcements",

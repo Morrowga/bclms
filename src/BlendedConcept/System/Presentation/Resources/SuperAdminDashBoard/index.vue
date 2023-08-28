@@ -13,50 +13,52 @@ let orgainzations_users = defineProps(["orgainzations_users"]);
 </script>
 
 <template>
-  <!-- role card section -->
-  <section class="role-card-section">
-    <VRow>
-      <RoleCard
-        title="Organizations"
-        btnText="Manage"
-        totalText="Total 4 Organizations"
-      />
-      <RoleCard
-        title="Users"
-        btnText="Manage"
-        totalText="Total 300 Users"
-      />
-      <RoleCard
-        title="Students"
-        :avatars="avatars"
-        btnText="Manage"
-        totalText="Total 600 Students"
-      />
-    </VRow>
-  </section>
-  <br />
-  <br />
-  <!-- latest modified organization section -->
-  <section class="latest-modified">
-    <div class="header">
-      <span class="tiggie-title">Recent Organizations</span>
-      <br />
-    </div>
-    <br />
-    <LatestModifiedOrganizations
-      :organization="orgainzations_users.orgainzations_users[1]"
-    />
-  </section>
-  <br />
-  <br />
-  <!--Total Users With Their Role Section -->
-  <section class="total-users">
-    <div class="header">
-      <span class="tiggie-title">Recent Users</span>
+    <VContainer fluid>
+        <!-- role card section -->
+        <section class="role-card-section">
+            <VRow>
+                <RoleCard
+                    title="Organizations"
+                    btnText="Manage"
+                    totalText="Total 4 Organizations"
+                />
+                <RoleCard
+                    title="Users"
+                    btnText="Manage"
+                    totalText="Total 300 Users"
+                />
+                <RoleCard
+                    title="Students"
+                    :avatars="avatars"
+                    btnText="Manage"
+                    totalText="Total 600 Students"
+                />
+            </VRow>
+        </section>
+        <br />
+        <br />
+        <!-- latest modified organization section -->
+        <section class="latest-modified">
+            <div class="header">
+                <span class="tiggie-title">Recent Organizations</span>
+                <br />
+            </div>
+            <br />
+            <LatestModifiedOrganizations
+                :organization="orgainzations_users.orgainzations_users[1]"
+            />
+        </section>
+        <br />
+        <br />
+        <!--Total Users With Their Role Section -->
+        <section class="total-users">
+            <div class="header">
+                <span class="tiggie-title">Recent Users</span>
 
-      <br />
-    </div>
-    <br />
-    <TotalUsers :users="orgainzations_users.orgainzations_users[0]" />
-  </section>
+                <br />
+            </div>
+            <br />
+            <TotalUsers :users="orgainzations_users.orgainzations_users[0]" />
+        </section>
+    </VContainer>
 </template>
