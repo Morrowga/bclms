@@ -21,7 +21,7 @@ let tab = ref(false);
                     <div style="position: relative">
                         <v-img src="/images/img.png" class="main-pic" />
                         <div class="vector-background">
-                            <img src="/images/vector.png" />
+                            <img src="/images/bg.png" />
                         </div>
                     </div>
                 </v-col>
@@ -147,7 +147,7 @@ let tab = ref(false);
 }
 .vector-background {
     position: absolute;
-    top: -42%;
+    top: -52%;
     left: -36%;
     z-index: 1;
 }
