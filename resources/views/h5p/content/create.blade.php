@@ -9,6 +9,7 @@
 
                 <form method="POST" action="{{ route('h5p.store') }}" class="form-horizontal" id="laravel-h5p-form"
                     enctype="multipart/form-data">
+                    @csrf
                     <input type="hidden" name="library" id="laravel-h5p-library" value="{{ $library }}">
                     <input type="hidden" name="parameters" id="laravel-h5p-parameters" value="{{ $parameters }}">
                     <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
