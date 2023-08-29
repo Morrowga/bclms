@@ -1,5 +1,4 @@
 H5PEditor.FileUploader = (function ($, EventDispatcher) {
-
   /**
    * File Upload API for H5P
    *
@@ -22,9 +21,9 @@ H5PEditor.FileUploader = (function ($, EventDispatcher) {
     self.upload = function (file, filename) {
       var formData = new FormData();
       formData.append('file', file, filename);
+      console.log(file);
       formData.append('field', JSON.stringify(field));
       formData.append('contentId', H5PEditor.contentId || 0);
-
       // Submit the form
       var request = new XMLHttpRequest();
       request.upload.onprogress = function (e) {
@@ -38,12 +37,17 @@ H5PEditor.FileUploader = (function ($, EventDispatcher) {
           error: null,
           data: null
         };
-
         try {
-
-        const regex = /{"mime":"[^"]+","path":"[^"]+"}/;
-        const match = request.responseText.match(regex);
-        result = JSON.parse(match[0]);
+            if(getFileTypeByExtension(filename) === 'image'){
+                console.log(request.responseText)
+                const regex = /{"width":\d+,"height":\d+,"mime":"[^"]+","path":"[^"]+"}/;
+                const match = request.responseText.match(regex);
+                result = JSON.parse(match[0]);
+            } else {
+                const regex = /{"mime":"[^"]+","path":"[^"]+"}/;
+                const match = request.responseText.match(regex);
+                result = JSON.parse(match[0]);
+            }
         }
         catch (err) {
           H5P.error(err);
@@ -125,6 +129,22 @@ H5PEditor.FileUploader = (function ($, EventDispatcher) {
       }
     }
   }
+
+  function getFileTypeByExtension(fileName) {
+    const ext = fileName.split('.').pop().toLowerCase();
+
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+    const videoExtensions = ['mp4', 'avi', 'mkv', 'mov'];
+
+    if (imageExtensions.includes(ext)) {
+        return 'image';
+    } else if (videoExtensions.includes(ext)) {
+        return 'video';
+    } else {
+        return 'unknown';
+    }
+}
+
 
   // Extends the event dispatcher
   FileUploader.prototype = Object.create(EventDispatcher.prototype);

@@ -1111,7 +1111,6 @@ H5P.Dialog = function (name, title, content, $element) {
  */
 H5P.getCopyrights = function (instance, parameters, contentId, metadata) {
   var copyrights;
-
   if (instance.getCopyrights !== undefined) {
     try {
       // Use the instance's own copyright generator
