@@ -1,10 +1,10 @@
 <?php
 
-namespace Src\BlendedConcept\Teacher\Presentation\HTTP;
+namespace Src\BlendedConcept\Survey\Presentation\HTTP;
 
 use Inertia\Inertia;
 
-class ProfillingSurvey
+class ProfillingSurveyController
 {
     public function index()
     {

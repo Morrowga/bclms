@@ -1,7 +1,7 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import StudentList from "./components/StudentList.vue";
-import TeacherList from "./components/TeacherList.vue";
+import StudentList from "./components/OrgAdminListOfStudent/StudentList.vue";
+import TeacherList from "./components/OrgAdminListOfTeacher/TeacherList.vue";
 import { ref } from "vue";
 let tab = ref("student");
 const changeTab = (tabName) => {
@@ -78,21 +78,25 @@ const changeTab = (tabName) => {
                             class="d-flex justify-end"
                             style="gap: 10px"
                         >
-
-                          <Link  :href="route('listoforgteacher')">
-                            <VBtn
-                                variant="flat"
-                                rounded
-                                color="#17CAB6"
-                                class="text-white"
-                                prepend-icon="mdi-plus">
-                                Allocate Storage
-                            </VBtn>
-                          </Link>
-
+                            <Link :href="route('listoforgteacher')">
+                                <VBtn
+                                    variant="flat"
+                                    rounded
+                                    color="#17CAB6"
+                                    class="text-white"
+                                    prepend-icon="mdi-plus"
+                                >
+                                    Allocate Storage
+                                </VBtn>
+                            </Link>
 
                             <Link
-                                :href="route('org_view_teacher_student.teacher.create')">
+                                :href="
+                                    route(
+                                        'org_view_teacher_student.teacher.create'
+                                    )
+                                "
+                            >
                                 <VBtn
                                     variant="flat"
                                     rounded

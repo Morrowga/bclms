@@ -25,18 +25,18 @@ const pages = {
      *  Index,Create,Edit,Show Plans
      *
      */
-    "BlendedConcept/Organization/Presentation/Resources/Plans/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Index.vue'),
+    "BlendedConcept/Finance/Presentation/Resources/Plans/Index": import('../../src/BlendedConcept/Finance/Presentation/Resources/Plans/Index.vue'),
 
-    "BlendedConcept/Organization/Presentation/Resources/Plans/Create": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Create.vue'),
+    "BlendedConcept/Finance/Presentation/Resources/Plans/Create": import('../../src/BlendedConcept/Finance/Presentation/Resources/Plans/Create.vue'),
 
-    "BlendedConcept/Organization/Presentation/Resources/Plans/Edit": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Edit.vue'),
+    "BlendedConcept/Finance/Presentation/Resources/Plans/Edit": import('../../src/BlendedConcept/Finance/Presentation/Resources/Plans/Edit.vue'),
 
-    "BlendedConcept/Organization/Presentation/Resources/Plans/Show": import('../../src/BlendedConcept/Organization/Presentation/Resources/Plans/Show.vue'),
+    "BlendedConcept/Finance/Presentation/Resources/Plans/Show": import('../../src/BlendedConcept/Finance/Presentation/Resources/Plans/Show.vue'),
 
-    "BlendedConcept/Organization/Presentation/Resources/PlanForOrg/CreatePlan": import('../../src/BlendedConcept/Organization/Presentation/Resources/PlanForOrg/CreatePlan.vue'),
+    "BlendedConcept/Finance/Presentation/Resources/PlanForOrg/CreatePlan": import('../../src/BlendedConcept/Finance/Presentation/Resources/PlanForOrg/CreatePlan.vue'),
 
 
-    "BlendedConcept/Organization/Presentation/Resources/SubScriptionInvoice/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/SubScriptionInvoice/Index.vue'),
+    "BlendedConcept/Finance/Presentation/Resources/SubScriptionInvoice/Index": import('../../src/BlendedConcept/Finance/Presentation/Resources/SubScriptionInvoice/Index.vue'),
 
     /***
      * this below contains users  lists that will used for superadmin
@@ -52,12 +52,12 @@ const pages = {
 
 
     //manage disabilty device
-    "BlendedConcept/Student/Presentation/Resources/Disability/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Disability/Index.vue'),
+    "BlendedConcept/Disability/Presentation/Resources/Disability/Index": import('../../src/BlendedConcept/Disability/Presentation/Resources/Disability/Index.vue'),
 
     //manage accessibility device
-    "BlendedConcept/Student/Presentation/Resources/Accessibility/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Accessibility/Index.vue'),
-    "BlendedConcept/Student/Presentation/Resources/Accessibility/Create": import('../../src/BlendedConcept/Student/Presentation/Resources/Accessibility/Create.vue'),
-    "BlendedConcept/Student/Presentation/Resources/Accessibility/Edit": import('../../src/BlendedConcept/Student/Presentation/Resources/Accessibility/Edit.vue'),
+    "BlendedConcept/Disability/Presentation/Resources/Accessibility/Index": import('../../src/BlendedConcept/Disability/Presentation/Resources/Accessibility/Index.vue'),
+    "BlendedConcept/Disability/Presentation/Resources/Accessibility/Create": import('../../src/BlendedConcept/Disability/Presentation/Resources/Accessibility/Create.vue'),
+    "BlendedConcept/Disability/Presentation/Resources/Accessibility/Edit": import('../../src/BlendedConcept/Disability/Presentation/Resources/Accessibility/Edit.vue'),
 
     //manage games
     "BlendedConcept/StoryBook/Presentation/Resources/Games/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Games/Index.vue'),
@@ -76,42 +76,42 @@ const pages = {
     "BlendedConcept/Survey/Presentation/Resources/SurveyResults/View": import('../../src/BlendedConcept/Survey/Presentation/Resources/SurveyResults/View.vue'),
 
     //conduct lesson
-    "BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Index.vue'),
-    "BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Show" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Show.vue'),
+    "BlendedConcept/Classroom/Presentation/Resources/ConductLessons/Index": import('../../src/BlendedConcept/Classroom/Presentation/Resources/ConductLessons/Index.vue'),
+    "BlendedConcept/Classroom/Presentation/Resources/ConductLessons/Show" : import('../../src/BlendedConcept/Classroom/Presentation/Resources/ConductLessons/Show.vue'),
 
     //view student
-    "BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Index.vue'),
-    "BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Create": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Create.vue'),
-    "BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Edit": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Edit.vue'),
-    "BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Show": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Show.vue'),
+    "BlendedConcept/Student/Presentation/Resources/ViewStudents/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/ViewStudents/Index.vue'),
+    "BlendedConcept/Student/Presentation/Resources/ViewStudents/Create": import('../../src/BlendedConcept/Student/Presentation/Resources/ViewStudents/Create.vue'),
+    "BlendedConcept/Student/Presentation/Resources/ViewStudents/Edit": import('../../src/BlendedConcept/Student/Presentation/Resources/ViewStudents/Edit.vue'),
+    "BlendedConcept/Student/Presentation/Resources/ViewStudents/Show": import('../../src/BlendedConcept/Student/Presentation/Resources/ViewStudents/Show.vue'),
 
     //learning activities
-    "BlendedConcept/Teacher/Presentation/Resources/LearningActivities/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/LearningActivities/Index.vue'),
+    "BlendedConcept/Classroom/Presentation/Resources/LearningActivities/Index": import('../../src/BlendedConcept/Classroom/Presentation/Resources/LearningActivities/Index.vue'),
 
     //profilling survey
-    "BlendedConcept/Teacher/Presentation/Resources/ProfillingSurvey/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/ProfillingSurvey/Index.vue'),
+    "BlendedConcept/Survey/Presentation/Resources/ProfillingSurvey/Index": import('../../src/BlendedConcept/Survey/Presentation/Resources/ProfillingSurvey/Index.vue'),
 
     //set accessibility device
-    "BlendedConcept/Teacher/Presentation/Resources/SetAccessibilityDevice/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/SetAccessibilityDevice/Index.vue'),
+    "BlendedConcept/Disability/Presentation/Resources/SetAccessibilityDevice/Index": import('../../src/BlendedConcept/Disability/Presentation/Resources/SetAccessibilityDevice/Index.vue'),
 
     //teacher view storybook
-    "BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Index": import('../../src/BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Index.vue'),
-    "BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Show": import('../../src/BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Show.vue'),
-    "BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/AssignStudent": import('../../src/BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/AssignStudent.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Index.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Show": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Show.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/AssignStudent": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/AssignStudent.vue'),
 
     //teacher add customisation
     "BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create": import('../../src/BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create.vue'),
     "BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit": import('../../src/BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit.vue'),
 
     //org teacher and student list
-    "BlendedConcept/Organization/Presentation/Resources/ListAll/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/Index.vue'),
-    "BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail.vue'),
-    "BlendedConcept/Organization/Presentation/Resources/ListAll/EditTeacher": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/EditTeacher.vue'),
-    "BlendedConcept/Organization/Presentation/Resources/ListAll/CreateTeacher": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/CreateTeacher.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/Index.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/ViewTeacherDetail": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/ViewTeacherDetail.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/EditTeacher": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/EditTeacher.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/CreateTeacher": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/CreateTeacher.vue'),
 
-    "BlendedConcept/Organization/Presentation/Resources/ListAll/ViewStudentDetail": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/ViewStudentDetail.vue'),
-    "BlendedConcept/Organization/Presentation/Resources/ListAll/EditStudent": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/EditStudent.vue'),
-    "BlendedConcept/Organization/Presentation/Resources/ListAll/CreateStudent": import('../../src/BlendedConcept/Organization/Presentation/Resources/ListAll/CreateStudent.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/EditStudent": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/EditStudent.vue'),
+    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/CreateStudent": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/CreateStudent.vue'),
 
 
 
@@ -121,10 +121,10 @@ const pages = {
 
      //playlists
 
-     'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index' : import('../../src/BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index.vue'),
-     'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Create' : import('../../src/BlendedConcept/Teacher/Presentation/Resources/PlayLists/Create.vue'),
-     'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Edit' : import('../../src/BlendedConcept/Teacher/Presentation/Resources/PlayLists/Edit.vue'),
-     'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show' : import('../../src/BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show.vue'),
+     'BlendedConcept/Student/Presentation/Resources/PlayLists/Index' : import('../../src/BlendedConcept/Student/Presentation/Resources/PlayLists/Index.vue'),
+     'BlendedConcept/Student/Presentation/Resources/PlayLists/Create' : import('../../src/BlendedConcept/Student/Presentation/Resources/PlayLists/Create.vue'),
+     'BlendedConcept/Student/Presentation/Resources/PlayLists/Edit' : import('../../src/BlendedConcept/Student/Presentation/Resources/PlayLists/Edit.vue'),
+     'BlendedConcept/Student/Presentation/Resources/PlayLists/Show' : import('../../src/BlendedConcept/Student/Presentation/Resources/PlayLists/Show.vue'),
 
 
     // Security Domain
@@ -244,19 +244,19 @@ const pages = {
 
 
     //Student story book
-    "BlendedConcept/Student/Presentation/Resources/Storybook/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Storybook/Index.vue'),
-    "BlendedConcept/Student/Presentation/Resources/Storybook/Pathway": import('../../src/BlendedConcept/Student/Presentation/Resources/Storybook/Pathway.vue'),
-    "BlendedConcept/Student/Presentation/Resources/Storybook/Show": import('../../src/BlendedConcept/Student/Presentation/Resources/Storybook/Show.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Index.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Pathway": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Pathway.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Show": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Show.vue'),
 
     //Student game
-    "BlendedConcept/Student/Presentation/Resources/Games/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Games/Index.vue'),
-    "BlendedConcept/Student/Presentation/Resources/Games/Show": import('../../src/BlendedConcept/Student/Presentation/Resources/Games/Show.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/StudentGames/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentGames/Index.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/StudentGames/Show": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentGames/Show.vue'),
 
     //Student rewards
-    "BlendedConcept/Student/Presentation/Resources/Rewards/Index": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/Index.vue'),
-    "BlendedConcept/Student/Presentation/Resources/Rewards/Store": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/Store.vue'),
-    "BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky.vue'),
-    "BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker": import('../../src/BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/Index.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/Store": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/Store.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BeLucky": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BeLucky.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BuySticker": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BuySticker.vue'),
 
     //profiles
     "Common/Presentation/Resources/components/UserProfile/OrgTeacherProfile" : import('../../src/Common/Presentation/Resources/components/UserProfile/OrgTeacherProfile.vue'),

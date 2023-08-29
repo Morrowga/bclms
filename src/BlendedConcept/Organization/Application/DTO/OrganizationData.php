@@ -3,8 +3,8 @@
 namespace Src\BlendedConcept\Organization\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Organization\Application\Mappers\PlanMapper;
-use Src\BlendedConcept\Organization\Domain\Model\Entities\Plan;
+use Src\BlendedConcept\Finance\Application\Mappers\PlanMapper;
+use Src\BlendedConcept\Finance\Domain\Model\Entities\Plan;
 
 class OrganizationData
 {
@@ -24,17 +24,18 @@ class OrganizationData
     public static function fromRequest(Request $request, $organizaton): OrganizationData
     {
 
-        $planitems = $request->only([
-            'stripe_id',
-            'name',
-            'description',
-            'price',
-            'payment_period',
-            'allocated_storage',
-            'teacher_license',
-            'student_license',
-            'is_hidden',
-        ]
+        $planitems = $request->only(
+            [
+                'stripe_id',
+                'name',
+                'description',
+                'price',
+                'payment_period',
+                'allocated_storage',
+                'teacher_license',
+                'student_license',
+                'is_hidden',
+            ]
         );
 
         return new self(
@@ -46,7 +47,7 @@ class OrganizationData
             contact_person: $request->contact_person,
             contact_email: $request->contact_email,
             contact_number: $request->contact_number,
-            plan : PlanMapper::fromArray($planitems)
+            plan: PlanMapper::fromArray($planitems)
         );
     }
 

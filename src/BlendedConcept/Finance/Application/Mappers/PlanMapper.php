@@ -1,10 +1,10 @@
 <?php
 
-namespace Src\BlendedConcept\Organization\Application\Mappers;
+namespace Src\BlendedConcept\Finance\Application\Mappers;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Organization\Domain\Model\Entities\Plan;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\PlanEloquentModel;
+use Src\BlendedConcept\Finance\Domain\Model\Entities\Plan;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
 
 class PlanMapper
 {

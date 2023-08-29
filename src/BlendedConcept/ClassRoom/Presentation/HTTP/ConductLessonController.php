@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Teacher\Presentation\HTTP;
+namespace Src\BlendedConcept\Classroom\Presentation\HTTP;
 
 use Inertia\Inertia;
 

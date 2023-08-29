@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Organization\Domain\Model\Entities;
+namespace Src\BlendedConcept\Finance\Domain\Model\Entities;
 
 use Src\Common\Domain\Entity;
 

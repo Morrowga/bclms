@@ -1,30 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Src\BlendedConcept\Student\Presentation\HTTP\GamesController;
-use Src\BlendedConcept\Student\Presentation\HTTP\RewardsController;
+use Src\BlendedConcept\Student\Presentation\HTTP\PlayListController;
 use Src\BlendedConcept\Student\Presentation\HTTP\StudentController;
-use Src\BlendedConcept\Student\Presentation\HTTP\StoryBookController;
-use Src\BlendedConcept\Student\Presentation\HTTP\DisabilityDeviceController;
-use Src\BlendedConcept\Student\Presentation\HTTP\AccessibilityDeviceController;
+use Src\BlendedConcept\Student\Presentation\HTTP\ViewStudentController;
 
 Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('students', StudentController::class);
-    Route::resource('disability_device', DisabilityDeviceController::class);
-    Route::get('storybooks', [StoryBookController::class, 'index'])->name('storybooks');
-    Route::get('storybooks/show', [StoryBookController::class, 'show'])->name('storybooks.show');
-    Route::get('storybooks/pathway', [StoryBookController::class, 'pathway'])->name('storybooks.pathway');
-    Route::get('student-games', [GamesController::class, 'index'])->name('student-games');
-    Route::get('game/show', [GamesController::class, 'show'])->name('games.show');
-    Route::get('student-rewards', [RewardsController::class, 'index'])->name('student-rewards');
-    Route::get('reward-store', [RewardsController::class, 'store'])->name('reward-store');
-    Route::get('be-lucky', [RewardsController::class, 'beLucky'])->name('be-lucky');
-    Route::get('buy-sticker', [RewardsController::class, 'buySticker'])->name('buy-sticker');
-    // Route::resource('accessibility_device', AccessibilityDeviceController::class);
+    Route::get('playlists', [PlayListController::class, 'index'])->name('playlists.index');
 
-    Route::get('/accessibility_device', [AccessibilityDeviceController::class, 'index'])->name('accessibility_device.index');
-    Route::get('/accessibility_device/edit', [AccessibilityDeviceController::class, 'edit'])->name('accessibility_device.edit');
-    Route::get('/accessibility_device/create', [AccessibilityDeviceController::class, 'create'])->name('accessibility_device.create');
-    Route::get('/accessibility_device/show', [AccessibilityDeviceController::class, 'show'])->name('accessibility_device.show');
+    Route::get('createplaylists', [PlayListController::class, 'create'])->name('createplaylists');
+    Route::get('editplaylists', [PlayListController::class, 'edit'])->name('editplaylists');
+    Route::get('showplaylists', [PlayListController::class, 'show'])->name('showplaylists');
+
+    Route::get('/view_students', [ViewStudentController::class, 'index'])->name('view_students.index');
+    Route::get('/view_students/show', [ViewStudentController::class, 'show'])->name('view_students.show');
+    Route::get('/view_students/create', [ViewStudentController::class, 'create'])->name('view_students.create');
+    Route::get('/view_students/edit', [ViewStudentController::class, 'edit'])->name('view_students.edit');
+    // Route::resource('accessibility_device', AccessibilityDeviceController::class);
 });

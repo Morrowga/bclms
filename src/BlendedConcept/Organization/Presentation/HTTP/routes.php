@@ -14,14 +14,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/organizations/show', [OrganizationController::class, 'show'])->name('organizations.show');
     // Route::resource('plans', PlanController::class);
 
-    Route::get('/plans', [PlanController::class, 'index'])->name('plans.index');
-    Route::get('/plans/edit', [PlanController::class, 'edit'])->name('plans.edit');
-    Route::get('/plans/create', [PlanController::class, 'create'])->name('plans.create');
-    Route::get('/plans/show', [PlanController::class, 'show'])->name('plans.show');
-    Route::get('/plans/orgcreate', [PlanController::class, 'planfororg'])->name('planfororg.show');
-
-    Route::get('subscribptioninvoice', [SubscribtionInvoiceController::class, 'index'])->name('subscription_invoice');
-
 
 
     Route::get('/org_view_teacher_student', [OrganizationTeacherStudentController::class, 'index'])->name('org_view_teacher_student.index');

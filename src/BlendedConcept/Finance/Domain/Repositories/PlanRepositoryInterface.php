@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Organization\Domain\Repositories;
+namespace Src\BlendedConcept\Finance\Domain\Repositories;
 
 interface PlanRepositoryInterface
 {

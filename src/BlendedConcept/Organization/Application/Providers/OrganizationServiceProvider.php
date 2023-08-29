@@ -4,9 +4,9 @@ namespace Src\BlendedConcept\Organization\Application\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\OrganizationRepository;
-use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\PlanRepository;
+use Src\BlendedConcept\Finance\Application\Repositories\Eloquent\PlanRepository;
 use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
-use Src\BlendedConcept\Organization\Domain\Repositories\PlanRepositoryInterface;
+use Src\BlendedConcept\Finance\Domain\Repositories\PlanRepositoryInterface;
 
 class OrganizationServiceProvider extends ServiceProvider
 {

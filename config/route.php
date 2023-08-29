@@ -46,25 +46,25 @@ return [
     ],
 
     'plans' => [
-        'index' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Index',
-        'create' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Create',
-        'edit' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Edit',
-        'show' => 'BlendedConcept/Organization/Presentation/Resources/Plans/Show',
-        'planorg' => 'BlendedConcept/Organization/Presentation/Resources/PlanForOrg/CreatePlan',
+        'index' => 'BlendedConcept/Finance/Presentation/Resources/Plans/Index',
+        'create' => 'BlendedConcept/Finance/Presentation/Resources/Plans/Create',
+        'edit' => 'BlendedConcept/Finance/Presentation/Resources/Plans/Edit',
+        'show' => 'BlendedConcept/Finance/Presentation/Resources/Plans/Show',
+        'planorg' => 'BlendedConcept/Finance/Presentation/Resources/PlanForOrg/CreatePlan',
     ],
 
     'subscriptioninvoice' => [
-        'index' => 'BlendedConcept/Organization/Presentation/Resources/SubScriptionInvoice/Index',
+        'index' => 'BlendedConcept/Finance/Presentation/Resources/SubScriptionInvoice/Index',
     ],
 
     'disability_device' => [
-        'index' => 'BlendedConcept/Student/Presentation/Resources/Disability/Index',
+        'index' => 'BlendedConcept/Disability/Presentation/Resources/Disability/Index',
     ],
 
     'accessibility_device' => [
-        'index' => 'BlendedConcept/Student/Presentation/Resources/Accessibility/Index',
-        'create' => 'BlendedConcept/Student/Presentation/Resources/Accessibility/Create',
-        'edit' => 'BlendedConcept/Student/Presentation/Resources/Accessibility/Edit',
+        'index' => 'BlendedConcept/Disability/Presentation/Resources/Accessibility/Index',
+        'create' => 'BlendedConcept/Disability/Presentation/Resources/Accessibility/Create',
+        'edit' => 'BlendedConcept/Disability/Presentation/Resources/Accessibility/Edit',
     ],
     'games' => [
         'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Games/Index',
@@ -86,33 +86,33 @@ return [
     ],
 
     'conduct_lessons' => [
-        'index' => 'BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Index',
-        'show' => 'BlendedConcept/Teacher/Presentation/Resources/ConductLessons/Show',
+        'index' => 'BlendedConcept/Classroom/Presentation/Resources/ConductLessons/Index',
+        'show' => 'BlendedConcept/Classroom/Presentation/Resources/ConductLessons/Show',
     ],
 
     'view_students' => [
-        'index' => 'BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Index',
-        'create' => 'BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Create',
-        'edit' => 'BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Edit',
-        'show' => 'BlendedConcept/Teacher/Presentation/Resources/ViewStudents/Show',
+        'index' => 'BlendedConcept/Student/Presentation/Resources/ViewStudents/Index',
+        'create' => 'BlendedConcept/Student/Presentation/Resources/ViewStudents/Create',
+        'edit' => 'BlendedConcept/Student/Presentation/Resources/ViewStudents/Edit',
+        'show' => 'BlendedConcept/Student/Presentation/Resources/ViewStudents/Show',
     ],
 
     'learning_activities' => [
-        'index' => 'BlendedConcept/Teacher/Presentation/Resources/LearningActivities/Index',
+        'index' => 'BlendedConcept/Classroom/Presentation/Resources/LearningActivities/Index',
     ],
 
     'profilling_survey' => [
-        'index' => 'BlendedConcept/Teacher/Presentation/Resources/ProfillingSurvey/Index',
+        'index' => 'BlendedConcept/Survey/Presentation/Resources/ProfillingSurvey/Index',
     ],
 
     'set_accessibility_device' => [
-        'index' => 'BlendedConcept/Teacher/Presentation/Resources/SetAccessibilityDevice/Index',
+        'index' => 'BlendedConcept/Disability/Presentation/Resources/SetAccessibilityDevice/Index',
     ],
 
     'teacher_storybook' => [
-        'index' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Index',
-        'show' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/Show',
-        'assign_student' => 'BlendedConcept/Teacher/Presentation/Resources/TeacherStorybook/AssignStudent',
+        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Index',
+        'show' => 'BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Show',
+        'assign_student' => 'BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/AssignStudent',
     ],
 
     'add_customisation' => [
@@ -120,14 +120,14 @@ return [
         'edit' => 'BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit',
     ],
     'org_view_teacher_student' => [
-        'index' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/Index',
-        'teacher-edit' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/EditTeacher',
-        'teacher-create' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/CreateTeacher',
-        'teacher-show' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/ViewTeacherDetail',
+        'index' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/Index',
+        'teacher-edit' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/EditTeacher',
+        'teacher-create' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/CreateTeacher',
+        'teacher-show' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/ViewTeacherDetail',
 
-        'student-edit' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/EditStudent',
-        'student-create' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/CreateStudent',
-        'student-show' => 'BlendedConcept/Organization/Presentation/Resources/ListAll/ViewStudentDetail'
+        'student-edit' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/EditStudent',
+        'student-create' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/CreateStudent',
+        'student-show' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail'
     ],
 
     //teacher profile view
@@ -138,10 +138,10 @@ return [
     ],
 
     'playlist' => [
-        'index' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Index',
-        'create' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Create',
-        'edit' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Edit',
-        'show' => 'BlendedConcept/Teacher/Presentation/Resources/PlayLists/Show',
+        'index' => 'BlendedConcept/Student/Presentation/Resources/PlayLists/Index',
+        'create' => 'BlendedConcept/Student/Presentation/Resources/PlayLists/Create',
+        'edit' => 'BlendedConcept/Student/Presentation/Resources/PlayLists/Edit',
+        'show' => 'BlendedConcept/Student/Presentation/Resources/PlayLists/Show',
     ],
 
     'announment' => [
@@ -177,19 +177,19 @@ return [
         'edit-group' => 'BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/EditGroup',
     ],
     //Storybook student
-    'storybooks' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Index',
-    'storybook-show' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Show',
-    'storybook-pathway' => 'BlendedConcept/Student/Presentation/Resources/Storybook/Pathway',
+    'storybooks' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Index',
+    'storybook-show' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Show',
+    'storybook-pathway' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Pathway',
 
     //Game student
-    'student-games' => 'BlendedConcept/Student/Presentation/Resources/Games/Index',
-    'game-show' => 'BlendedConcept/Student/Presentation/Resources/Games/Show',
+    'student-games' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentGames/Index',
+    'game-show' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentGames/Show',
 
     //Rewards student
-    'student-rewards' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Index',
-    'reward-store' => 'BlendedConcept/Student/Presentation/Resources/Rewards/Store',
-    'be-lucky' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BeLucky',
-    'buy-sticker' => 'BlendedConcept/Student/Presentation/Resources/Rewards/BuySticker',
+    'student-rewards' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/Index',
+    'reward-store' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/Store',
+    'be-lucky' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BeLucky',
+    'buy-sticker' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BuySticker',
 
 
     'listofteacher' => [

@@ -36,6 +36,7 @@ class OrganizationController extends Controller
             $organizations = (new GetOrganizationWithPagination($filters))->handle();
 
             // Render the organization index page with the retrieved organizations
+
             return Inertia::render(config('route.organizations.index'), [
                 'organizations' => $organizations['paginate_organizations'],
             ]);

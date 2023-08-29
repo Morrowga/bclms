@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\PlanEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
 
 class OrganizationSeeder extends Seeder
@@ -57,8 +57,7 @@ class OrganizationSeeder extends Seeder
                 'organization_id' => $organizationModel->id,
             ]);
 
-            $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
-
+            $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
         }
     }
 }
