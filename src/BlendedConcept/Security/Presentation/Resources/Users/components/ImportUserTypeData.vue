@@ -11,13 +11,9 @@ const items = [
 const uploadedImages = ref([]);
 const fileInput = ref(null);
 
-const openFileInput = () => {
-  fileInput.value.click();
-};
-
-
-const handleFileUpload = (event) => {
-  const files = event.target.files;
+const handleDrop = (event) => {
+  event.preventDefault();
+  const files = event.dataTransfer.files;
 
   if (files.length > 0) {
     for (const file of files) {
@@ -28,9 +24,27 @@ const handleFileUpload = (event) => {
       });
     }
   }
-
-  fileInput.value.value = '';
 };
+// const openFileInput = () => {
+//   fileInput.value.click();
+// };
+
+
+// const handleFileUpload = (event) => {
+//   const files = event.target.files;
+
+//   if (files.length > 0) {
+//     for (const file of files) {
+//         uploadedImages.value.push({
+//         file: file,
+//         src: URL.createObjectURL(file),
+//         name: file.name
+//       });
+//     }
+//   }
+
+//   fileInput.value.value = '';
+// };
 
 const removeUploadedItem = (index) => {
     uploadedImages.value.splice(index, 1);
@@ -67,11 +81,11 @@ const removeUploadedItem = (index) => {
                             </div>
 
                             <div class="mt-3 mr-3">
-                                <VIcon icon="mdi-close" @click="removeUploadedItem"></VIcon>
+                                <VIcon icon="mdi-close" @click="removeUploadedItem(index)"></VIcon>
                             </div>
                         </div>
                     </div>
-                    <div class="import-card-text mt-6 mx-5" @click="openFileInput">
+                    <div class="import-card-text mt-6 mx-5" @dragover.prevent @drop="handleDrop" >
                         <div class="text-center">
                             <div class="mt-2">
                                 <span class="import-fade-text">
@@ -90,7 +104,7 @@ const removeUploadedItem = (index) => {
                             </div>
                         </div>
                     </div>
-                    <input type="file" ref="fileInput" style="display: none" @change="handleFileUpload">
+                    <!-- <input type="file" ref="fileInput" style="display: none" @change="handleFileUpload"> -->
                 </div>
             </VCardText>
 
