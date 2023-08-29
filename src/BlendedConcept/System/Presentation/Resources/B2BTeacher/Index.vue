@@ -24,10 +24,6 @@ import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue"
                 <VCol cols="12" sm="12" lg="12">
                     <div class="header d-flex justify-space-between">
                         <h1 class="tiggie-title">Classrooms</h1>
-                        <VBtn color="primary" variant="flat" rounded>
-                            <VIcon icon="mdi-plus"></VIcon>
-                            <span class="text-white">Add</span>
-                        </VBtn>
                     </div>
                     <div class="mt-5">
                         <v-row>

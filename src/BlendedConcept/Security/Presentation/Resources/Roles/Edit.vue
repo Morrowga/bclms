@@ -1,106 +1,51 @@
 <script setup>
-import { watch, defineProps, computed, ref, onUpdated } from "vue";
+import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { useForm } from "@inertiajs/vue3";
+import { watch, defineProps, computed, ref } from "vue";
 import { requiredValidator } from "@validators";
 import { toastAlert } from "@Composables/useToastAlert";
-const isDialogVisible = ref(false);
-let props = defineProps(["permissions", "role", "flash"]);
-const isFormValid = ref(false);
-const refForm = ref();
-//## start get only module from permission
-let modules = computed(() => {
-    let permissions = [];
-    props.permissions.forEach((permission) => {
-        let perArray = permission.name.split("_");
-        permissions.push(perArray[1]);
-    });
-    return new Set(permissions);
-});
-//## end get only module from permission
-
-//## start get modules with related permission
-let permissions_modules = computed(() => {
-    let newArrays = [];
-    modules.value.forEach((item, index) => {
-        newArrays.push({
-            key: index,
-            name: item,
-            permissions: props.permissions.filter(
-                (permission) => permission.name.split("_")[1] == item
-            ),
-        });
-    });
-    return newArrays;
-});
-//## end get modules with related permission
+import { router } from "@inertiajs/core";
 
 //## start for form submit
 let form = useForm({
-    name: props.role.name,
-    description: props.role.description,
+    name: "",
+    description: "",
     selectedIds: [],
 });
+let headers = [
+    {
+        title: "Permission Name",
+        align: "start",
+        sortable: false,
+        key: "name",
+    },
+    {
+        title: "Description",
+        align: "start",
+        sortable: false,
+        key: "name",
+    },
+    {
+        title: "Guard Name",
+        align: "start",
+        sortable: false,
+        key: "name",
+    },
+    {
+        title: "",
+        key: "check-all",
+    },
+];
+let props = defineProps(["permissions", "flash", "role", "exists_permissions"]);
+let permissionsFilter = computed(() =>
+    props.permissions.filter((item) => item.name?.includes(searchName.value))
+);
+let searchName = ref("");
+const isFormValid = ref(false);
+const refForm = ref();
+const selectedIds = ref([]);
+const check_all = ref(false);
 //## end for form submit
-
-//## start uncheck modules when selectedIds array is empty
-let watchSelectedIds = watch(form.selectedIds, (value) => {
-    if (value.length <= 0) {
-        document.getElementById(
-            "check-all-edit" + props.role.id
-        ).checked = false;
-    }
-});
-//## end uncheck modules when selectedIds array is empty
-
-//## start select all permissions
-let selectAll = () => {
-    form.selectedIds = [];
-    let isChecked = document.getElementById(
-        "check-all-edit" + props.role.id
-    ).checked;
-    if (isChecked) {
-        modules.value.forEach((item, index) => {
-            document.getElementById(
-                `${props.role.id}-edit-checkbox-${index}`
-            ).checked = true;
-            selectByModule(item, index);
-        });
-    } else {
-        modules.value.forEach((item, index) => {
-            document.getElementById(
-                `${props.role.id}-edit-checkbox-${index}`
-            ).checked = false;
-        });
-        form.selectedIds = [];
-    }
-};
-//## end select all permissions
-
-//## start select permission by module
-let selectByModule = (item, index) => {
-    let isChecked = document.getElementById(
-        `${props.role.id}-edit-checkbox-${index}`
-    ).checked;
-    if (isChecked) {
-        props.permissions.forEach((per) => {
-            if (
-                per.name.split("_")[1] == item &&
-                !form.selectedIds.includes(per.id)
-            ) {
-                form.selectedIds.push(per.id);
-            }
-        });
-    } else {
-        props.permissions.forEach((per) => {
-            if (per.name.split("_")[1] == item) {
-                form.selectedIds = form.selectedIds.filter(
-                    (item) => item != per.id
-                );
-            }
-        });
-    }
-};
-//## end select permission by module
 
 //## start updateRole
 let updateRole = (id) => {
@@ -111,9 +56,7 @@ let updateRole = (id) => {
                     toastAlert({
                         title: props.flash?.successMessage,
                     });
-                    isDialogVisible.value = false;
-                    refForm.value?.reset();
-                    refForm.value?.resetValidation();
+                    router.get(route("roles.index"));
                 },
                 onError: (error) => {
                     form.setError("name", error?.name);
@@ -124,34 +67,47 @@ let updateRole = (id) => {
     });
 };
 //## end updateRole
+const insertIds = (id) => {
+    const index = selectedIds.value.indexOf(id);
 
-//## start reative name and description when edit
-onUpdated(() => {
-    form.selectedIds = [];
-    props.role.permissions.filter((rp) => form.selectedIds.push(rp.id));
+    if (index === -1) {
+        selectedIds.value.push(id);
+    } else {
+        selectedIds.value.splice(index, 1);
+    }
+    form.selectedIds = selectedIds.value;
+};
+
+// const checkAll = (e) => {
+//     check_all.value = !check_all.value;
+//     selectedIds.value = [];
+//     if (check_all.value) {
+//         for (let i = 0; i < props.permissions.length; i++) {
+//             const id = props.permissions[i].id;
+//             selectedIds.value.push(id);
+//         }
+//     } else {
+//         selectedIds.value = [];
+//     }
+//     console.log(selectedIds.value);
+// };
+const checkingExistsId = (id) => {
+    let condition = props.exists_permissions.includes(id);
+    return condition ? true : false;
+};
+onMounted(() => {
+    form.selectedIds = props.exists_permissions;
+    selectedIds.value = props.exists_permissions;
     form.name = props.role.name;
     form.description = props.role.description;
+    console.log(form.selectedIds);
 });
-//## end reative name and description when edit
 </script>
-
 <template>
-    <VDialog v-model="isDialogVisible" max-width="1000">
-        <!-- Dialog Activator -->
-        <template #activator="{ props }">
-            <VBtn
-                density="compact"
-                icon="mdi-pencil"
-                class="ml-2"
-                color="secondary"
-                variant="text"
-                v-bind="props"
-            >
-            </VBtn>
-        </template>
+    <AdminLayout>
+        <VContainer fluid>
+            <h1 class="tiggie-title mb-0">Edit Role</h1>
 
-        <!-- Dialog Content -->
-        <VCard title="Add Role">
             <VForm
                 ref="refForm"
                 v-model="isFormValid"
@@ -162,175 +118,98 @@ onUpdated(() => {
                     size="small"
                     @click="isDialogVisible = false"
                 />
-
-                <VCardText>
-                    <VRow>
-                        <VCol cols="12">
-                            <VTextField
-                                label="Role Name"
-                                v-model="form.name"
-                                :rules="[requiredValidator]"
-                            />
-                        </VCol>
-                        <VCol cols="12">
-                            <VTextarea
-                                label="Description"
-                                v-model="form.description"
-                            />
-                        </VCol>
-                        <VCol cols="12">
-                            <div class="mb-6 flex-auto">
-                                <label for="permission" class="px-6"
-                                    >Assign Permission To Roles</label
-                                >
-
-                                <div class="relative overflow-x-auto">
-                                    <table class="w-100">
-                                        <thead>
-                                            <tr>
-                                                <th
-                                                    scope="col"
-                                                    class="px-4 py-4"
-                                                >
-                                                    <div
-                                                        class="flex items-center"
-                                                    >
-                                                        <VCheckbox
-                                                            :id="
-                                                                'check-all-edit' +
-                                                                props.role.id
-                                                            "
-                                                            label="Module"
-                                                            density="compact"
-                                                            @click="selectAll"
-                                                            style="
-                                                                font-weight: bold;
-                                                            "
-                                                        >
-                                                            <template
-                                                                #label="{
-                                                                    label,
-                                                                }"
-                                                            >
-                                                                <span>{{
-                                                                    label
-                                                                }}</span>
-                                                            </template>
-                                                        </VCheckbox>
-                                                    </div>
-                                                </th>
-                                                <th
-                                                    scope="col"
-                                                    class="px-6 py-3"
-                                                    align="start"
-                                                >
-                                                    <VLabel>
-                                                        Permissions
-                                                    </VLabel>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="text-xs">
-                                            <tr
-                                                v-for="item in permissions_modules"
-                                                :key="item.key"
+                <VRow>
+                    <VCol cols="12">
+                        <VTextField
+                            :error-messages="form.errors?.name"
+                            label="Role Name"
+                            v-model="form.name"
+                            :rules="[requiredValidator]"
+                        />
+                    </VCol>
+                    <VCol cols="12">
+                        <VTextarea
+                            label="Description"
+                            v-model="form.description"
+                            :error-messages="form.errors?.description"
+                        />
+                    </VCol>
+                    <VCol cols="12">
+                        <div class="mb-6 flex-auto">
+                            <h1 class="tiggie-title mb-2">
+                                Assign Permission To Roles
+                            </h1>
+                            <div class="relative overflow-x-auto">
+                                <VCard>
+                                    <VCardTitle>
+                                        <div class="mb-4">
+                                            <VTextField
+                                                placeholder="Search Permissions"
+                                                v-model="searchName"
                                             >
-                                                <td class="px-4 py-4">
-                                                    <VCheckbox
-                                                        :id="
-                                                            role.id +
-                                                            '-edit-checkbox-' +
-                                                            item.key
-                                                        "
-                                                        @click="
-                                                            selectByModule(
-                                                                item.name,
-                                                                item.key
-                                                            )
-                                                        "
-                                                        :label="item.name"
-                                                        density="compact"
-                                                        style="
-                                                            font-weight: bold;
-                                                        "
+                                            </VTextField>
+                                        </div>
+                                    </VCardTitle>
+                                    <VCardText>
+                                        <v-table fixed-header height="500">
+                                            <thead>
+                                                <tr>
+                                                    <th
+                                                        class="text-left"
+                                                        v-for="header in headers"
+                                                        :key="header"
                                                     >
-                                                        <template
-                                                            #label="{ label }"
-                                                        >
-                                                            <span
-                                                                class="text-no-wrap"
-                                                                >{{
-                                                                    label
-                                                                }}</span
-                                                            >
-                                                        </template>
-                                                    </VCheckbox>
-                                                </td>
-                                                <td class="px-4 py-4">
-                                                    <VRow>
-                                                        <VCol
-                                                            cols="4"
-                                                            md="2"
-                                                            v-for="permission in item.permissions"
-                                                            :key="permission.id"
-                                                        >
-                                                            <VCheckbox
-                                                                v-model="
-                                                                    form.selectedIds
-                                                                "
-                                                                :value="
-                                                                    permission.id
-                                                                "
-                                                                :label="
-                                                                    permission.name
-                                                                "
-                                                                density="compact"
-                                                                style="
-                                                                    font-weight: bold;
-                                                                "
-                                                            >
-                                                                <template
-                                                                    #label="{
-                                                                        label,
-                                                                    }"
-                                                                >
-                                                                    <span>{{
-                                                                        label.split(
-                                                                            "_"
-                                                                        )[0]
-                                                                    }}</span>
-                                                                </template>
-                                                            </VCheckbox>
-                                                        </VCol>
-                                                    </VRow>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                                        {{ header.title }}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    v-for="item in permissionsFilter"
+                                                    :key="item.id"
+                                                >
+                                                    <td>{{ item.name }}</td>
+                                                    <td>
+                                                        {{ item.description }}
+                                                    </td>
+                                                    <td>
+                                                        {{ item.guard_name }}
+                                                    </td>
+                                                    <td>
+                                                        <v-checkbox
+                                                            :model-value="
+                                                                checkingExistsId(
+                                                                    item.id
+                                                                )
+                                                            "
+                                                            @click="
+                                                                insertIds(
+                                                                    item.id
+                                                                )
+                                                            "
+                                                        ></v-checkbox>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </v-table>
+                                    </VCardText>
+                                </VCard>
                             </div>
-                        </VCol>
-                        <VCol cols="12" class="d-flex justify-center">
-                            <VBtn type="submit" class="me-3"> Submit </VBtn>
-                            <VBtn
-                                type="reset"
-                                variant="outlined"
-                                color="secondary"
-                                @click="isDialogVisible = false"
-                            >
-                                Cancel
-                            </VBtn>
-                        </VCol>
-                    </VRow>
-                </VCardText>
+                        </div>
+                    </VCol>
+                    <VCol cols="12" class="d-flex justify-center">
+                        <VBtn
+                            variant="outlined"
+                            class="me-3"
+                            color="secondary"
+                            @click="router.get(route('roles.index'))"
+                        >
+                            Cancel
+                        </VBtn>
+                        <VBtn type="submit"> Update </VBtn>
+                    </VCol>
+                </VRow>
             </VForm>
-        </VCard>
-    </VDialog>
+        </VContainer>
+    </AdminLayout>
 </template>
-
-<style lang="scss" scoped>
-table td,
-table td * {
-    vertical-align: top;
-}
-</style>

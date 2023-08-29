@@ -80,9 +80,11 @@ watch(serverPerPage, function (value) {
                         class="app-user-search-filter d-flex align-center justify-end"
                     >
                         <!-- 👉 Add permission button -->
-                        <Link :href="route('roles.create')">
-                            <VBtn>Add Role</VBtn>
-                        </Link>
+                        <Create
+                            :permissions="props.permissions"
+                            :flash="flash"
+                            v-if="permissions.includes('create_role')"
+                        />
                     </div>
                 </VCardText>
 
@@ -152,22 +154,12 @@ watch(serverPerPage, function (value) {
                             class="flex flex-nowrap"
                         >
                             <div class="d-flex">
-                                <Link
-                                    :href="
-                                        route('roles.edit', {
-                                            id: dataProps.row.id,
-                                        })
-                                    "
-                                >
-                                    <VBtn
-                                        density="compact"
-                                        icon="mdi-pencil"
-                                        class="ml-2"
-                                        color="secondary"
-                                        variant="text"
-                                    >
-                                    </VBtn>
-                                </Link>
+                                <Edit
+                                    :permissions="props.permissions"
+                                    :role="dataProps.row"
+                                    :flash="flash"
+                                    v-if="permissions.includes('edit_role')"
+                                />
                                 <VBtn
                                     density="compact"
                                     icon="mdi-trash"
