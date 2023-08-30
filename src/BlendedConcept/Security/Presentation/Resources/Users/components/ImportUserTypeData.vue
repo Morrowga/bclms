@@ -2,6 +2,9 @@
 import { ref } from "vue"
 const isDialogVisible = ref(false)
 import FileUpload from 'primevue/fileupload';
+
+let props = defineProps(["type"]);
+
 const items = [
     'Blended Concepted',
     'Blended Center',
@@ -10,6 +13,8 @@ const items = [
 ];
 const uploadedImages = ref([]);
 const fileInput = ref(null);
+
+console.log(props.type);
 
 const handleDrop = (event) => {
   event.preventDefault();
@@ -70,8 +75,10 @@ const removeUploadedItem = (index) => {
             </VCardText> -->
             <VCardText>
                 <p class="importfile-title pppangram-bold ml-5 mt-5">
-                    Upload Storybooks File
+                    Upload {{props.type}}
+                    <VIcon icon="mdi-file-download" class="ml-10" color="primary" size="30px" />
                 </p>
+                <p class="pppangram-bold ml-5" style="color: #000; font-size: 20px !important;"><strong style="color: #4066e4; font-size: 20px !important;">2</strong> {{type}} Remaining</p>
                 <div class="mt-3">
                     <div class="image-container mt-2 mx-4" v-for="(image, index) in uploadedImages" :key="index">
                         <div class="d-flex justify-space-between">

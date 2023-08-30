@@ -38,9 +38,6 @@ const openFileInput = () => {
                 <v-list-item @click="onFormSubmit">
                     <v-list-item-title>Delete</v-list-item-title>
                 </v-list-item>
-                <v-list-item>
-                    <v-list-item-title>Publish to Organization</v-list-item-title>
-                </v-list-item>
             </v-list>
         </v-menu>
     </span>

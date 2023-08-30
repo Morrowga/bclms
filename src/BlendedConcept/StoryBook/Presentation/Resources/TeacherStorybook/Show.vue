@@ -111,11 +111,11 @@ let tab = ref(false);
                     <StorybookVersion />
                 </v-col>
             </v-row>
-            <v-row class="learning-activity" style="margin-top: 100px">
+            <!-- <v-row class="learning-activity" style="margin-top: 100px">
                 <v-col cols="12">
                     <LearningActivity />
                 </v-col>
-            </v-row>
+            </v-row> -->
             <v-row class="recommended-games" style="margin-top: 100px">
                 <v-col cols="12">
                     <RecommendedGames />

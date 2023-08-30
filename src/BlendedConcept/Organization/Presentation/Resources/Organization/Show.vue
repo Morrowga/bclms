@@ -79,7 +79,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                             <VRow>
                                 <VCol cols="6">
                                     <h1 class="tiggie-label pb-3">No of Teachers</h1>
-                                    <p>
+                                    <p class="ml-2">
                                         <span class="text-warning">
                                             8
                                         </span>
@@ -87,8 +87,8 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                                     </p>
                                 </VCol>
                                 <VCol cols="6">
-                                    <h1 class="tiggie-label pb-3">No of Teachers</h1>
-                                    <p>
+                                    <h1 class="tiggie-label pb-3">Storage Size</h1>
+                                    <p class="ml-2">
                                         <span class="text-success">
                                             324.3 MB
                                         </span>
@@ -96,8 +96,8 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                                     </p>
                                 </VCol>
                                 <VCol cols="6">
-                                    <h1 class="tiggie-label pb-3">No of Teachers</h1>
-                                    <p>
+                                    <h1 class="tiggie-label pb-3">No of Students</h1>
+                                    <p class="ml-2">
                                         <span class="text-warning">
                                             82
                                         </span>
@@ -105,13 +105,13 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                                     </p>
                                 </VCol>
                                 <VCol cols="6">
-                                    <h1 class="tiggie-label pb-3">No of Teachers</h1>
-                                    <p>
+                                    <h1 class="tiggie-label pb-3">Price</h1>
+                                    <p class="ml-2">
                                         <span>$100</span>
                                     </p>
                                 </VCol>
                                 <VCol cols="6">
-                                    <VBtn class="text-white" color="secondary">
+                                    <VBtn class="text-white" color="#565660">
                                         Import Users
                                     </VBtn>
                                 </VCol>

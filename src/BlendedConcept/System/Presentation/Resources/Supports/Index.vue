@@ -103,12 +103,16 @@ const selectionChanged = (data) => {
                             <VCardText class="d-flex flex-wrap gap-4">
                                 <VSpacer />
                                 <div
-                                    class="app-user-search-filter d-flex justify-end align-center gap-6"
+                                    class="d-flex justify-end align-center gap-3"
                                 >
                                     <VTextField
                                         placeholder="Search Organizations"
                                         density="compact"
+                                        style="width: 250px;"
                                     />
+                                    <VSelect label="Sort By"
+                                    :items="['Name', 'Date', 'Status']"
+                                    density="compact" style="width: 150px;" />
                                     <VBtn
                                         class="tiggie-btn"
                                         @click="isAnswerTechnicalSupport = true"

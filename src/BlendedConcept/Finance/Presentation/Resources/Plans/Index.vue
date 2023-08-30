@@ -7,11 +7,15 @@ import InactivePlan from "./planstypes/InactivePlan.vue";
     <AdminLayout>
         <VContainer fluid>
             <h1 class="tiggie-title mb-4">
-                Subscription plans &nbsp;<V-icon
-                    icon="mdi-information-variant-circle"
-                    size="30"
-                />
+                Subscription plans
+                <v-tooltip text="Drag rows to re-arrange the order subscription plans are shown">
+                    <template v-slot:activator="{ props }">
+                        <VIcon icon="mdi-information-variant-circle-outline" size="30" v-bind="props"></VIcon>
+                    </template>
+                </v-tooltip>
+                <!-- icon="mdi-information-variant-circle" -->
             </h1>
+
             <VRow>
                 <VCol cols="12" sm="12" lg="12">
                     <ActivePlan />

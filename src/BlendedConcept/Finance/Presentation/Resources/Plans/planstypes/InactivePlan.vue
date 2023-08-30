@@ -105,6 +105,9 @@ SuccessDialog({title:"Subscription plan has been set activated"})
 </script>
 <template>
     <section>
+        <h3 class="mb-4 pppangram-bold inactive-plan-title">
+            Inactive Plans
+        </h3>
         <VCard>
             <VCardText class="d-flex flex-wrap gap-4">
                 <!-- 👉 Export button -->
@@ -162,6 +165,11 @@ SuccessDialog({title:"Subscription plan has been set activated"})
 <style lang="scss" >
 .vgt-table th {
     font-size: 10pt !important;
+}
+
+.inactive-plan-title{
+    font-size: 20px !important;
+    color: rgb(0,0,0,0.6);
 }
 
 .vgt-table th.vgt-checkbox-col {

@@ -15,8 +15,8 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 <template>
     <StudentLayout>
-        <section>
-            <div class="">
+        <section class="mb-6">
+            <div class="ml-2">
                 <img src="/images/back.png" @click="() => router.get(route('storybooks'))" class="backarrow" alt="">
             </div>
             <GameOver image="/images/gamebg.png" />

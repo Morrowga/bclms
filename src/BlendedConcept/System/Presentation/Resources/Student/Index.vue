@@ -6,99 +6,97 @@ import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
 </script>
 
 <template>
-    <section>
+    <section class="section-student-home">
         <VRow>
             <VCol cols="12" lg="3" md="6">
-                <VCard class="text-center card-student">
+                <VCard class="text-center card-student ml-5">
                     <div class="d-flex justify-center mt-2">
                         <img src="/images/classroom1.jpeg" class="studentimg" />
                     </div>
-                    <div class="mt-4">
-                        <span class="studentname pppangram-bold"
-                            >Francisco Maia</span
+                    <div class="mt-2">
+                        <p class="studentname pppangram-bold"
+                            >Francisco Maia</p
                         >
+                        <p class="semi-text pppangram-medium">Female</p>
                     </div>
-                    <div class="mt-1">
-                        <span class="semi-text pppangram-medium">Female</span>
-                    </div>
-                    <VRow class="mx-2 mt-3">
+                    <VRow class="mx-2 my-2">
                         <VCol cols="5" class="text-left">
-                            <span class="label-student pppangram-bold"
-                                >DOB</span
+                            <p class="label-student pppangram-bold"
+                                >DOB</p
                             >
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium"
-                                    >January 1, 2012</span
+                                <p class="value-student pppangram-medium"
+                                    >January 1, 2012</p
                                 >
                             </div>
                         </VCol>
                     </VRow>
-                    <VRow class="mx-2">
+                    <VRow class="mx-2 my-1">
                         <VCol cols="5" class="text-left">
                             <div>
-                                <span class="label-student pppangram-bold"
+                                <p class="label-student pppangram-bold"
                                     >Education
-                                </span>
+                                </p>
                             </div>
                             <div class="text-left">
-                                <span class="label-student pppangram-bold"
+                                <p class="label-student pppangram-bold"
                                     >Level
-                                </span>
+                                </p>
                             </div>
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium"
-                                    >K1</span
+                                <p class="value-student pppangram-medium"
+                                    >K1</p
                                 >
                             </div>
                         </VCol>
                     </VRow>
-                    <VRow class="mx-2">
+                    <VRow class="mx-2 my-0">
                         <VCol cols="5" class="text-left">
                             <div>
-                                <span class="label-student pppangram-bold"
+                                <p class="label-student pppangram-bold"
                                     >Disability
-                                </span>
+                                </p>
                             </div>
                             <div class="text-left">
-                                <span class="label-student pppangram-bold"
+                                <p class="label-student pppangram-bold"
                                     >Types
-                                </span>
+                                </p>
                             </div>
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium"
-                                    >Down Syndrome</span
+                                <p class="value-student pppangram-medium"
+                                    >Down Syndrome</p
                                 >
                             </div>
                         </VCol>
                     </VRow>
-                    <VRow class="mx-2">
+                    <VRow class="mx-2 my-0">
                         <VCol cols="5" class="text-left">
                             <div>
-                                <span class="label-student pppangram-bold"
+                                <p class="label-student pppangram-bold"
                                     >Accessibility
-                                </span>
+                                </p>
                             </div>
                             <div class="text-left">
-                                <span class="label-student pppangram-bold"
+                                <p class="label-student pppangram-bold"
                                     >Device
-                                </span>
+                                </p>
                             </div>
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium"
-                                    >Switch Single</span
+                                <p class="value-student pppangram-medium"
+                                    >Switch Single</p
                                 >
                             </div>
                         </VCol>
                     </VRow>
-                    <VRow class="mx-2">
+                    <VRow class="mx-2 my-0">
                         <VCol cols="5" class="text-left">
                             <span class="label-student pppangram-bold"
                                 >Student Code</span
@@ -112,68 +110,68 @@ import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
                             </div>
                         </VCol>
                     </VRow>
-                    <div class="text-center mt-5">
-                        <span class="semi-text pppangram-medium"
-                            >Parent's Details</span
+                    <div class="text-center mt-6">
+                        <p class="semi-text pppangram-medium"
+                            >Parent's Details</p
                         >
                     </div>
-                    <VRow class="mx-2 mt-3">
+                    <VRow class="mx-2 my-4">
                         <VCol cols="5" class="text-left">
-                            <span class="label-student pppangram-bold"
-                                >Name</span
+                            <p class="label-student pppangram-bold"
+                                >Name</p
                             >
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium"
-                                    >Jane Ang</span
+                                <p class="value-student pppangram-medium"
+                                    >Jane Ang</p
                                 >
                             </div>
                         </VCol>
                     </VRow>
-                    <VRow class="mx-2">
+                    <VRow class="mx-2 my-0">
                         <VCol cols="5" class="text-left">
-                            <span class="label-student pppangram-bold"
-                                >Relationship</span
+                            <p class="label-student pppangram-bold"
+                                >Relationship</p
                             >
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium"
-                                    >Mother</span
+                                <p class="value-student pppangram-medium"
+                                    >Mother</p
                                 >
                             </div>
                         </VCol>
                     </VRow>
-                    <VRow class="mx-2">
+                    <VRow class="mx-2 my-0">
                         <VCol cols="5" class="text-left">
-                            <span class="label-student pppangram-bold"
-                                >Contact No.</span
+                            <p class="label-student pppangram-bold"
+                                >Contact No.</p
                             >
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium"
-                                    >9123 4567</span
+                                <p class="value-student pppangram-medium"
+                                    >9123 4567</p
                                 >
                             </div>
                         </VCol>
                     </VRow>
-                    <VRow class="mx-2 mt-3">
+                    <VRow class="mx-2 my-0">
                         <VCol cols="5" class="text-left">
-                            <span class="label-student pppangram-bold"
-                                >Email</span
+                            <p class="label-student pppangram-bold"
+                                >Email</p
                             >
                         </VCol>
                         <VCol cols="7" class="text-left">
                             <div class="ml-5">
-                                <span class="value-student pppangram-medium"
-                                    >jane.ang@gmail.com</span
+                                <p class="value-student pppangram-medium"
+                                    >jane.ang@gmail.com</p
                                 >
                             </div>
                         </VCol>
                     </VRow>
-                    <div class="mt-5 my-3 mx-3">
+                    <div class="mt-1 my-3 mx-3">
                        <ExitMode />
                     </div>
                 </VCard>
@@ -228,8 +226,9 @@ import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
 
 .label-student{
     color: #000 !important;
-    font-size: 16px !important;
+    font-size: 13px !important;
     font-weight: 700 !important;
+    line-height: 0.1 !important;
 }
 
 .games {
@@ -257,32 +256,40 @@ import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
 
 .value-student {
     color: #000 !important;
-    font-size: 16px !important;
+    font-size: 13px !important;
+    line-height: 0.1 !important;
 }
 
 .semi-text {
     color: var(--text, #161616);
-    font-size: 14px;
+    font-size: 11px !important;
     font-style: normal;
     font-weight: 700;
-    line-height: 22px; /* 157.143% */
+    margin: 0 !important;
+    line-height: 0.1 !important;
+    padding: 0 !important;
+    /* line-height: 22px;  */
+}
+
+.section-student-home{
+    overflow: hidden !important;
 }
 
 .studentimg {
     object-fit: cover;
     /* border-radius: 180.181px; */
-    width: 130.181px;
-    height: 121px;
+    width: 50.181px;
+    height: 50px;
     flex-shrink: 0;
     border-radius: 50% !important;
 }
 
 .studentname {
     color: var(--text, #161616) !important;
-    font-size: 24px !important;
+    font-size: 15px !important;
     font-style: normal !important;
     font-weight: 700 !important;
-    line-height: 32px !important; /* 133.333% */
+    /* line-height: 32px !important; */
     text-transform: capitalize !important;
 }
 
@@ -296,7 +303,7 @@ import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
     font-size: 40px !important;
     font-style: normal !important;
     font-weight: 700 !important;
-    line-height: 52px !important; /* 130% */
+    /* line-height: 52px !important; */
     text-transform: capitalize !important;
     color: var(--tiggie-blue, #4066e4);
 }

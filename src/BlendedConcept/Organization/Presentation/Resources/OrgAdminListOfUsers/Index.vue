@@ -19,23 +19,23 @@ const changeTab = (tabName) => {
                                 variant="flat"
                                 rounded
                                 :color="
-                                    tab == 'student' ? 'primary' : 'secondary'
+                                    tab == 'teacher' ? 'primary' : '#f6f6f6'
                                 "
-                                class="text-white"
-                                @click="changeTab('student')"
+                                :class="tab == 'teacher' ? 'text-white' : 'text-black border-black'"
+                                @click="changeTab('teacher')"
                             >
-                                Students
+                                Teacher
                             </VBtn>
                             <VBtn
                                 variant="flat"
                                 rounded
                                 :color="
-                                    tab == 'teacher' ? 'primary' : 'secondary'
+                                    tab == 'student' ? 'primary' : '#f6f6f6'
                                 "
-                                class="text-white"
-                                @click="changeTab('teacher')"
+                                :class="tab == 'student' ? 'text-white' : 'text-black border-black'"
+                                @click="changeTab('student')"
                             >
-                                Teacher
+                                Students
                             </VBtn>
                         </div>
                     </VCol>
@@ -132,4 +132,8 @@ const changeTab = (tabName) => {
         </VContainer>
     </AdminLayout>
 </template>
-<style scoped></style>
+<style scoped>
+.border-black{
+    border: 1px solid #E5E5E5 !important;
+}
+</style>

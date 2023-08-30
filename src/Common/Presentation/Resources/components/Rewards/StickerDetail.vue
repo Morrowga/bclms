@@ -6,7 +6,7 @@ const isDialogVisible = ref(false)
 </script>
 <template #activator="{ props }">
      <VCard class="stickercard text-center" @click="isDialogVisible = true">
-        <v-img :src="image" class="stickimg" cover></v-img>
+        <v-img :src="image" class="stickimg-reward" cover></v-img>
         <div>
             <span class="stickertext ruddy-bold">{{title}}</span>
         </div>
@@ -68,6 +68,11 @@ const isDialogVisible = ref(false)
     border: 3px solid #000;
     padding: 20px;
     background: var(--seaform, #D7F2F0);
+}
+
+.stickimg-reward{
+    height: 180px !important;
+    object-fit: cover !important;
 }
 
 .detail-btn{
