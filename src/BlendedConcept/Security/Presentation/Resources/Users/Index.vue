@@ -7,7 +7,9 @@ import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import IconOutlineBtn from "@mainRoot/components/Buttons/IconOutlineBtn.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-import ImportUser from "./components/ImportUser.vue"
+import ImportUser from "./components/ImportUser.vue";
+import { router } from "@inertiajs/core";
+
 import {
     serverParams,
     onColumnFilter,
@@ -91,6 +93,9 @@ let options = ref({
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
+const viewInfoRow = (id) => {
+    router.get(route("users.show", { id: id }));
+};
 </script>
 
 <template>
@@ -109,12 +114,12 @@ watch(serverPerPage, function (value) {
                         Export
                     </VBtn>
                     <VSpacer />
+                    <VSpacer />
                     <VTextField
                         @keyup.enter="searchItems"
                         v-model="serverParams.search"
                         placeholder="Search Users"
                         density="compact"
-                        style="width: 10%"
                     />
 
                     <div class="d-flex">
@@ -122,19 +127,25 @@ watch(serverPerPage, function (value) {
                             class="app-user-search-filter d-flex align-center justify-end gap-3"
                         >
                             <selectBox
-                                :datas="[]"
+                                :datas="[
+                                    'Name',
+                                    'Email',
+                                    'Contact Number',
+                                    'Role',
+                                    'Status',
+                                ]"
                                 placeholder="Sort By"
                                 density="compact"
                                 variant="outlined"
                             />
                             <!-- 👉 Add User button -->
-                            <Create
+                            <!-- <Create
                                 :organizations="organizations"
                                 :roles="roles_name"
                                 :flash="flash"
                                 v-if="permissions.includes('create_user')"
-                            />
-                            <ImportUser/>
+                            /> -->
+                            <ImportUser />
                         </div>
                     </div>
                 </VCardText>
@@ -152,7 +163,11 @@ watch(serverPerPage, function (value) {
                     :columns="columns"
                 >
                     <template #table-row="props">
-                        <div v-if="props.column.field == 'name'">
+                        <div
+                            v-if="props.column.field == 'name'"
+                            style="cursor: pointer"
+                            @click="viewInfoRow(props.row.id)"
+                        >
                             <div class="d-flex flex-row gap-2">
                                 <img
                                     src="/images/defaults/avator.png"
@@ -199,7 +214,13 @@ watch(serverPerPage, function (value) {
                                         class="mt-n4"
                                     />
                                 </template>
-                                <VList :items="items" />
+                                <VList>
+                                    <VListItem>
+                                        <VListItemTitle
+                                            >Set Inactive</VListItemTitle
+                                        >
+                                    </VListItem>
+                                </VList>
                             </VMenu>
                         </div>
                     </template>

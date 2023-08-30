@@ -176,8 +176,6 @@ export default [
             { title: 'Site Theme', url: '/settings', icon: { icon: 'mdi-cog' }, route_name: '/settings', access_module: "access_pagebuilder" },
             { title: 'Export Data', url: '/users', icon: { icon: 'mdi-cog' }, route_name: 'updateSiteTheme', access_module: "access_pagebuilder" },
             { title: 'Tech Support', url: '/supports', icon: { icon: 'mdi-cog' }, route_name: 'supports', access_module: "access_pagebuilder" },
-
-
         ]
     },
 

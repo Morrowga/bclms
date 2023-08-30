@@ -7,7 +7,7 @@ import UserExperiencSurvey from "./components/UserExperiencSurvey.vue";
 <template>
     <section>
         <VContainer>
-            <SystemErrorAlert
+            <!-- <SystemErrorAlert
                 sytemErrorMessage="Something is wrong"
                 v-if="true"
             />
@@ -18,7 +18,7 @@ import UserExperiencSurvey from "./components/UserExperiencSurvey.vue";
             <SystemErrorAlert
                 sytemErrorMessage="Something is wrong"
                 v-if="true"
-            />
+            /> -->
             <VRow align="center">
                 <VCol cols="6">
                     <h1
@@ -43,12 +43,12 @@ import UserExperiencSurvey from "./components/UserExperiencSurvey.vue";
                 <VCol cols="2" class="pe-2" v-for="item in 12" :key="item">
                     <Link :href="route('view_students.show')">
                         <StudentProfile
-                        :studentInfo="{
-                            name: 'Wren Clark',
-                            phone_number: '9123 4567',
-                            img: '/images/students/studentone.svg',
-                        }"
-                    />
+                            :studentInfo="{
+                                name: 'Wren Clark',
+                                phone_number: '9123 4567',
+                                img: '/images/students/studentone.svg',
+                            }"
+                        />
                     </Link>
                 </VCol>
             </VRow>

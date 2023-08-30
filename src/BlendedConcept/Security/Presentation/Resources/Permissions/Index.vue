@@ -97,9 +97,9 @@ watch(serverPerPage, function (value) {
                         class="app-user-search-filter d-flex align-center justify-end"
                     >
                         <!-- 👉 Add Permission button -->
-                        <Create
+                        <!-- <Create
                             v-if="permissions.includes('create_permission')"
-                        />
+                        /> -->
                     </div>
                 </VCardText>
 

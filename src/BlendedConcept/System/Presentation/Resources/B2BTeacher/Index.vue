@@ -8,7 +8,7 @@ import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue"
 <template>
     <section>
         <VContainer>
-            <SystemErrorAlert
+            <!-- <SystemErrorAlert
                 sytemErrorMessage="Something is wrong"
                 v-if="true"
             />
@@ -19,7 +19,7 @@ import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue"
             <SystemErrorAlert
                 sytemErrorMessage="Something is wrong"
                 v-if="true"
-            />
+            /> -->
             <VRow>
                 <VCol cols="12" sm="12" lg="12">
                     <div class="header d-flex justify-space-between">

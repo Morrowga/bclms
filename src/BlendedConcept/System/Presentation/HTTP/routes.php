@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('updateSiteTheme', [SettingController::class, 'updateSiteTheme'])->name('updateSiteTheme');
 
-    Route::get('supports', [TechnicalSupportController::class, 'index']);
+    Route::get('supports', [TechnicalSupportController::class, 'index'])->name('supports');
 
     /***
      * This route handles system-related notifications.
