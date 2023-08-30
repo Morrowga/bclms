@@ -98,7 +98,7 @@ return [
     ],
 
     'learning_activities' => [
-        'index' => 'BlendedConcept/Classroom/Presentation/Resources/LearningActivities/Index',
+        'index' => 'BlendedConcept/ClassRoom/Presentation/Resources/LearningActivities/Index',
     ],
 
     'profilling_survey' => [

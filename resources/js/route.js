@@ -86,7 +86,7 @@ const pages = {
     "BlendedConcept/Student/Presentation/Resources/ViewStudents/Show": import('../../src/BlendedConcept/Student/Presentation/Resources/ViewStudents/Show.vue'),
 
     //learning activities
-    "BlendedConcept/Classroom/Presentation/Resources/LearningActivities/Index": import('../../src/BlendedConcept/Classroom/Presentation/Resources/LearningActivities/Index.vue'),
+    "BlendedConcept/ClassRoom/Presentation/Resources/LearningActivities/Index": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/LearningActivities/Index.vue'),
 
     //profilling survey
     "BlendedConcept/Survey/Presentation/Resources/ProfillingSurvey/Index": import('../../src/BlendedConcept/Survey/Presentation/Resources/ProfillingSurvey/Index.vue'),
