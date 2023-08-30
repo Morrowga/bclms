@@ -93,17 +93,6 @@ let tab = ref(false);
                             </v-window>
                         </div>
                     </div>
-                    <div class="manage-btn mt-10">
-                        <Link :href="route('teacher_storybook.assign_student')">
-                            <v-btn
-                                variant="flat"
-                                rounded
-                                class="text-white"
-                                color="#FF8015"
-                                >Manage Assignment to Students</v-btn
-                            >
-                        </Link>
-                    </div>
                 </v-col>
             </v-row>
             <v-row class="storybook-version" style="margin-top: 100px">

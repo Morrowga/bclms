@@ -20,18 +20,19 @@ let orgainzations_users = defineProps(["orgainzations_users"]);
                 <RoleCard
                     title="Organizations"
                     btnText="Manage"
-                    totalText="Total 4 Organizations"
+                    totalText="Total 19 Organizations"
+                />
+                <RoleCard
+                    title="Subscriptions"
+                    btnText="Manage"
+                    totalText="Total 87 Users"
                 />
                 <RoleCard
                     title="Users"
-                    btnText="Manage"
-                    totalText="Total 300 Users"
-                />
-                <RoleCard
-                    title="Students"
                     :avatars="avatars"
                     btnText="Manage"
-                    totalText="Total 600 Students"
+                    totalText="Total 253 Students"
+                    :url="route('users.index')"
                 />
             </VRow>
         </section>

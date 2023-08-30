@@ -3,6 +3,11 @@ import { useForm, Link } from "@inertiajs/vue3";
 import { ref, defineProps, computed } from "vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+
+const deleteOrganization = () => {
+    isConfirmedDialog({ title: "Are you sure want to delete it." });
+};
 </script>
 <template>
     <AdminLayout>
@@ -11,7 +16,9 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                 <VCol cols="6">
                     <VRow justify="center" noGutters>
                         <VCol cols="10">
-                            <h1 class="tiggie-title pb-3">Organisation Particulars</h1>
+                            <h1 class="tiggie-title pb-3">
+                                Organisation Particulars
+                            </h1>
                         </VCol>
                         <VCol cols="10">
                             <h4 class="tiggie-label pb-3">Organisation Name</h4>
@@ -30,7 +37,6 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                             <p class="tiggie-p">95159746</p>
                         </VCol>
                     </VRow>
-
                 </VCol>
                 <VCol cols="6">
                     <VRow>
@@ -38,25 +44,33 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                             <h1 class="tiggie-title">Logo</h1>
                         </VCol>
                         <VCol cols="10">
-                            <VImg src="/images/defaults/organization_logo.png" width="234px" height="256px" />
+                            <VImg
+                                src="/images/defaults/organization_logo.png"
+                                width="234px"
+                                height="256px"
+                            />
                         </VCol>
-
                     </VRow>
-
                 </VCol>
             </VRow>
             <VRow justify="space-around" :gutter="5">
                 <VCol cols="6">
                     <VRow justify="center" noGutters>
                         <VCol cols="10">
-                            <h1 class="tiggie-title pb-3">Organisation Admin</h1>
+                            <h1 class="tiggie-title pb-3">
+                                Organisation Admin
+                            </h1>
                         </VCol>
                         <VCol cols="10">
-                            <h4 class="tiggie-label pb-3">Organization Admin Name</h4>
+                            <h4 class="tiggie-label pb-3">
+                                Organization Admin Name
+                            </h4>
                             <p class="tiggie-p">Jordan Stevenson</p>
                         </VCol>
                         <VCol cols="10">
-                            <h4 class="tiggie-label pb-3">Organisation Admin Contact Number</h4>
+                            <h4 class="tiggie-label pb-3">
+                                Organisation Admin Contact Number
+                            </h4>
                             <p class="tiggie-p">98561483</p>
                         </VCol>
                         <VCol cols="10">
@@ -67,7 +81,6 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                             <h4 class="tiggie-label pb-3">Password</h4>
                             <p class="tiggie-p">*********</p>
                         </VCol>
-
                     </VRow>
                 </VCol>
                 <VCol cols="6">
@@ -78,16 +91,18 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                         <VCol cols="10">
                             <VRow>
                                 <VCol cols="6">
-                                    <h1 class="tiggie-label pb-3">No of Teachers</h1>
+                                    <h1 class="tiggie-label pb-3">
+                                        No of Teachers
+                                    </h1>
                                     <p>
-                                        <span class="text-warning">
-                                            8
-                                        </span>
+                                        <span class="text-warning"> 8 </span>
                                         <span>/10</span>
                                     </p>
                                 </VCol>
                                 <VCol cols="6">
-                                    <h1 class="tiggie-label pb-3">No of Teachers</h1>
+                                    <h1 class="tiggie-label pb-3">
+                                        No of Teachers
+                                    </h1>
                                     <p>
                                         <span class="text-success">
                                             324.3 MB
@@ -96,16 +111,18 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                                     </p>
                                 </VCol>
                                 <VCol cols="6">
-                                    <h1 class="tiggie-label pb-3">No of Teachers</h1>
+                                    <h1 class="tiggie-label pb-3">
+                                        No of Teachers
+                                    </h1>
                                     <p>
-                                        <span class="text-warning">
-                                            82
-                                        </span>
+                                        <span class="text-warning"> 82 </span>
                                         <span>/100</span>
                                     </p>
                                 </VCol>
                                 <VCol cols="6">
-                                    <h1 class="tiggie-label pb-3">No of Teachers</h1>
+                                    <h1 class="tiggie-label pb-3">
+                                        No of Teachers
+                                    </h1>
                                     <p>
                                         <span>$100</span>
                                     </p>
@@ -122,23 +139,40 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
             </VRow>
             <VRow justify="center">
                 <VCol cols="4">
-                    <VBtn class="text-dark pl-16 pr-16"
-                    color="gray" width="250">
-                    <Link  :href="route('organizations.index')" class="text-dark">
-                        Back
-                    </Link>
+                    <VBtn
+                        class="text-dark pl-16 pr-16"
+                        color="gray"
+                        width="250"
+                    >
+                        <Link
+                            :href="route('organizations.index')"
+                            class="text-dark"
+                        >
+                            Back
+                        </Link>
                     </VBtn>
                 </VCol>
                 <VCol cols="4">
-                    <VBtn class="text-white pl-16 pr-16" color="candy-red" width="250">Delete</VBtn>
+                    <VBtn
+                        @click="deleteOrganization"
+                        class="text-white pl-16 pr-16"
+                        color="candy-red"
+                        width="250"
+                        >Delete</VBtn
+                    >
                 </VCol>
                 <VCol cols="4">
-                    <VBtn class="text-dark pl-16 pr-16" color="primary" width="250">
-
-                    <Link :href="route('organizations.test.edit')" class="text-white">
-                        Edit
-                    </Link>
-
+                    <VBtn
+                        class="text-dark pl-16 pr-16"
+                        color="primary"
+                        width="250"
+                    >
+                        <Link
+                            :href="route('organizations.test.edit')"
+                            class="text-white"
+                        >
+                            Edit
+                        </Link>
                     </VBtn>
                 </VCol>
             </VRow>

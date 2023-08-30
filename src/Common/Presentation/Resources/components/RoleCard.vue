@@ -30,7 +30,9 @@ const props = defineProps({
         <VCard>
             <VCardText class="position-relative">
                 <!--  Mutual Friends -->
-                <div class="d-flex justify-space-between align-center mb-3 tiggie-label">
+                <div
+                    class="d-flex justify-space-between align-center mb-3 tiggie-label"
+                >
                     <span class="font-weight-medium text-xs">{{
                         totalText
                     }}</span>
@@ -43,22 +45,24 @@ const props = defineProps({
                             size="45"
                         />
                         <!-- custom width and height for UI -->
-                        <div v-if="avatars.length==0" style="height: 45px;width: 45px;">
-                        </div>
+                        <div
+                            v-if="avatars.length == 0"
+                            style="height: 45px; width: 45px"
+                        ></div>
                     </div>
                 </div>
                 <div class="d-flex justify-space-between align-center">
                     <div>
                         <p class="tiggie-subtitle">{{ title }}</p>
-                        <Link  :href="url">{{ btnText }}</Link>
+                        <Link :href="url">{{ btnText }}</Link>
                     </div>
                     <div>
-                        <v-btn
+                        <!-- <v-btn
                             density="compact"
                             icon="mdi-content-copy"
                             variant="text"
                             color="secondary"
-                        ></v-btn>
+                        ></v-btn> -->
                     </div>
                 </div>
             </VCardText>

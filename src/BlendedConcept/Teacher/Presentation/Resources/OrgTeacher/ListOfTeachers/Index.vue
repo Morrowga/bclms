@@ -31,7 +31,7 @@ import TeacherStorageField from "./components/TeacherStorageField.vue";
                     1.23GB of 2GB allocated to teachers,130MB available
                 </div>
             </div>
-            <div class="d-flex justify-space-between align-center mt-4 pt-2">
+            <div class="d-flex justify-space-between align-center">
                 <v-sheet
                     width="100%"
                     height="42px"
@@ -61,13 +61,13 @@ import TeacherStorageField from "./components/TeacherStorageField.vue";
                 <VCol cols="3">
                     <div class="tiggie-teacher-label">
                         <VIcon icon="mdi-circle" color="primary" class="mr-2" />
-                        <span>Organization Resources</span>
+                        <span style="color: #000">Organization Resources</span>
                     </div>
                 </VCol>
                 <VCol cols="3">
                     <div class="tiggie-teacher-label">
                         <VIcon icon="mdi-circle" color="teal" class="mr-2" />
-                        <span>Teacher Resources</span>
+                        <span style="color: #000">Teacher Resources</span>
                     </div>
                 </VCol>
                 <VCol cols="4">
@@ -77,7 +77,9 @@ import TeacherStorageField from "./components/TeacherStorageField.vue";
                             color="sun-yellow"
                             class="mr-2"
                         />
-                        <span>Allocated to teachers but not in use</span>
+                        <span style="color: #000"
+                            >Allocated to teachers but not in use</span
+                        >
                     </div>
                 </VCol>
             </VRow>
