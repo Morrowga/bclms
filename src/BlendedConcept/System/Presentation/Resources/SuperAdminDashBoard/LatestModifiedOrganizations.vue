@@ -5,6 +5,7 @@ import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 let props = defineProps(["organization"]);
 
@@ -78,7 +79,7 @@ const selectionChanged = (data) => {
 
                 <div class="app-user-search-filter d-flex align-center gap-6">
                     <!-- 👉 Search  -->
-                    <VSelect
+                    <SelectBox
                         v-model="selectedRole"
                         label="Sort By"
                         :items="roles"

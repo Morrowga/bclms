@@ -2,6 +2,7 @@
 import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue";
 import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue";
 import UserExperienceSurvey from "./components/UserExperienceSurvey.vue";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue";
 </script>
 
@@ -57,9 +58,9 @@ import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue"
                                 class="mr-4"
                             />
 
-                            <VSelect
+                            <SelectBox
                                 label="Sort By"
-                                :items="[]"
+                                :datas="[]"
                                 density="compact"
                             />
                         </div>

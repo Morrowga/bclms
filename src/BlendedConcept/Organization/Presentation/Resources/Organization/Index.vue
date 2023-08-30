@@ -5,6 +5,7 @@ import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import { router } from "@inertiajs/core";
 import { SuccessDialog } from "@actions/useSuccess";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 let props = defineProps(["organizations", "flash", "auth"]);
 import {
@@ -111,7 +112,7 @@ watch(serverPerPage, function (value) {
                         class="app-user-search-filter d-flex align-center gap-6"
                     >
                         <!-- 👉 Search  -->
-                        <VSelect
+                        <SelectBox
                             v-model="selectedRole"
                             label="Sort By"
                             :items="roles"

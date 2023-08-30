@@ -5,6 +5,7 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 // import avatar4 from "@images/avatars/avatar-4.png";
 import AnswerSupport from "./components/AnswerSupport.vue";
@@ -110,8 +111,8 @@ const selectionChanged = (data) => {
                                         density="compact"
                                         style="width: 250px;"
                                     />
-                                    <VSelect label="Sort By"
-                                    :items="['Name', 'Date', 'Status']"
+                                    <SelectBox label="Sort By"
+                                    :datas="['Name', 'Date', 'Status']"
                                     density="compact" style="width: 150px;" />
                                     <VBtn
                                         class="tiggie-btn"

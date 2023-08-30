@@ -1,5 +1,7 @@
 <script setup>
 import GreenChip from "@mainRoot/components/GreenChip/GreenChip.vue";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+
 const stateList = [
     'Alabama',
     'Alaska',
@@ -108,8 +110,8 @@ const paymentMethods = [
                     </VCol>
 
                     <VCol cols="2">
-                        <VSelect placeholder="Sort By" density="compact" rounded>
-                        </VSelect>
+                        <SelectBox placeholder="Sort By" density="compact" rounded>
+                        </SelectBox>
                     </VCol>
                 </VRow>
                 <VRow justify="center">

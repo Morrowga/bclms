@@ -8,6 +8,7 @@ import ResourceCard from "@mainRoot/components/Resource/ResourceCard.vue";
 import CreateModal from "@mainRoot/components/Resource/CreateModal.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import { isConfirmedDialog } from "@actions/useConfirm";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 let props = defineProps([
     "classrooms",
@@ -55,7 +56,7 @@ let onFormSubmit = () => {
                                     />
                             </VCol>
                             <VCol cols="6">
-                                <VSelect label="Sort By" density="compact" />
+                                <SelectBox label="Sort By" density="compact" />
                             </VCol>
                         </VRow>
                     </VCol>

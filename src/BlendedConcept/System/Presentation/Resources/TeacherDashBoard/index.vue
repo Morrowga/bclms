@@ -2,6 +2,8 @@
 import StudentProfile from "./components/StudentProfile.vue";
 import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue";
 import UserExperiencSurvey from "./components/UserExperiencSurvey.vue";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+
 </script>
 
 <template>
@@ -36,7 +38,7 @@ import UserExperiencSurvey from "./components/UserExperiencSurvey.vue";
                     />
                 </VCol>
                 <VCol cols="3">
-                    <VSelect label="Sort By" density="compact" />
+                    <SelectBox label="Sort By" density="compact" />
                 </VCol>
             </VRow>
             <VRow cols="6">

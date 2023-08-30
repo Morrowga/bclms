@@ -1,5 +1,7 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+
 </script>
 <template>
     <AdminLayout>
@@ -23,12 +25,11 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                         </VTextField>
                     </VCol>
                     <VCol cols="2">
-                        <VSelect
+                        <SelectBox
                             placeholder="Sort By"
                             density="compact"
                             rounded
-                        >
-                        </VSelect>
+                        />
                     </VCol>
                 </VRow>
             </VRow>
