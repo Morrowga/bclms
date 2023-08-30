@@ -1,7 +1,5 @@
 <script setup>
-
 import { ref } from "vue";
-
 
 let file = ref(null);
 // for check image exisit  or not
@@ -16,8 +14,7 @@ let emit = defineEmits("update:modelValue");
 let props = defineProps({
     old_img: {
         type: String,
-        default:
-            "/images/defaults/upload_image.png",
+        default: "/images/defaults/upload_image.png",
     },
 });
 function fileData(event) {
@@ -59,8 +56,7 @@ function handleRemoveImage() {
     allImg.forEach((item) => item.remove());
     imgArea.dataset.img = "";
     let img = document.createElement("img");
-    img.src =
-        "/images/defaults/upload_image.png";
+    img.src = "/images/defaults/upload_image.png";
     imgArea.appendChild(img);
     hasImage.value = false;
 }
@@ -148,7 +144,7 @@ function handleRemoveImage() {
 .img-area img {
     width: 100%;
     border-radius: 10px;
-    background: no-repeat,lightgray 50% / cover no-repeat;
+    background: no-repeat, lightgray 50% / cover no-repeat;
 }
 .img-area::before {
     content: attr(data-img);

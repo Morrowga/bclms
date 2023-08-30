@@ -122,7 +122,9 @@ let truncatedText = (text) => {
                                     >Export</VBtn
                                 >
                                 <VSpacer />
-                                <div class="app-user-search-filter d-flex justify-end align-center">
+                                <div
+                                    class="app-user-search-filter d-flex justify-end align-center"
+                                >
                                     <div class="d-flex flex-row flex-end gap-2">
                                         <!-- 👉 Search  -->
 
@@ -152,6 +154,20 @@ let truncatedText = (text) => {
                                 :pagination-options="{ enabled: true }"
                             >
                                 <template #table-row="dataProps">
+                                    <div
+                                        v-if="dataProps.column.field == 'name'"
+                                    >
+                                        <Link
+                                            style="color: #000"
+                                            :href="
+                                                route('pathways.show', {
+                                                    id: 1,
+                                                })
+                                            "
+                                        >
+                                            {{ dataProps.row.name }}
+                                        </Link>
+                                    </div>
                                     <div
                                         v-if="
                                             dataProps.column.field ==

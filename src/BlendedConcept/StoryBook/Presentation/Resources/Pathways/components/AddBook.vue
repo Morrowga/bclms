@@ -1,5 +1,7 @@
 <script setup>
 import { ref, defineProps } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
 let model = ref(false);
 const props = defineProps({
     title: {
@@ -51,7 +53,32 @@ const toggleDialog = (id) => {
                 <span class="subheading">{{ subtitle }}</span>
             </div>
         </div>
-        <v-slide-group v-model="model" center-active show-arrows>
+        <swiper :slides-per-view="3" :space-between="10">
+            <swiper-slide v-for="data in datas" :key="data.image">
+                <div style="position: relative">
+                    <v-card
+                        class="ma-4"
+                        height="200"
+                        style="position: relative; z-index: 1"
+                        :color="'primary'"
+                    >
+                        <div
+                            class="d-flex fill-height align-center justify-center"
+                        >
+                            <img class="bg-white fit-img-2" :src="data.image" />
+                        </div>
+                        <v-scale-transition class="full-icon">
+                            <!-- <v-icon
+                                size="48"
+                                icon="mdi-check-circle-outline"
+                            ></v-icon> -->
+                        </v-scale-transition>
+                    </v-card>
+                    <p class="font-weight-bold text-center">{{ data.title }}</p>
+                </div>
+            </swiper-slide>
+        </swiper>
+        <!-- <v-slide-group v-model="model" center-active show-arrows>
             <v-slide-group-item v-for="data in datas" :key="data.image" v-slot="{ isSelected, toggle }">
                 <div style="position: relative">
 
@@ -68,7 +95,7 @@ const toggleDialog = (id) => {
                     <p class="font-weight-bold text-center">{{ data.title }}</p>
                 </div>
             </v-slide-group-item>
-        </v-slide-group>
+        </v-slide-group> -->
     </div>
 </template>
 
