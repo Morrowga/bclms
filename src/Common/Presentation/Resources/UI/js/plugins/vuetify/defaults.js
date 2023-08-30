@@ -95,8 +95,8 @@ export default {
     hideDetails: 'auto',
   },
   VAutocomplete: {
-    variant: 'outlined',
-    density: 'comfortable',
+    variant: 'solo',
+    density: 'compact',
     color: 'primary',
     hideDetails: 'auto',
   },

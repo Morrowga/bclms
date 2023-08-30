@@ -9,6 +9,7 @@ import StudentDashboard from "./Student/Index.vue";
 import TeacherOrParentDashboard from "./TeacherDashBoard/index.vue";
 import OrganizatinDashBoard from "./OrganizationDashboard/Index.vue";
 import B2BTeacherDashboard from "./B2BTeacher/Index.vue";
+import SystemAlert from "@mainRoot/components/SystemAlert/SystemAlert.vue";
 
 import { defineProps, onMounted, watch, computed } from "vue";
 import { usePage, useForm } from "@inertiajs/vue3";
@@ -74,7 +75,23 @@ onMounted(() => {
         <!--
             VAlert is use for show annnounment pages
         -->
-        <VContainer v-if="!forbiddenRole()" :fluid="checkUserRole()">
+        <VContainer v-if="!checkUserRole()" :fluid="checkUserRole()">
+            <span class="welcome-text ruddy-bold"
+                >Welcome, Isabella Taylor</span
+            >
+            <br /><br />
+            <SystemAlert
+                class="pb-4"
+                icon="fa:fa-light fa-user"
+                text="New student “Mary Tan” joined Class 1A"
+            />
+            <SystemAlert
+                class="pb-4"
+                icon="fa:fa-solid fa-book"
+                text="New storybook “Toy Story” has been added"
+            />
+        </VContainer>
+        <!-- <VContainer v-if="!forbiddenRole()" :fluid="checkUserRole()">
             <VAlert
                 v-for="item in notifications"
                 :key="item.id"
@@ -98,7 +115,7 @@ onMounted(() => {
                     ></v-btn>
                 </template>
             </VAlert>
-        </VContainer>
+        </VContainer> -->
 
         <!--
             Check current_user_role and redirect to that
@@ -155,3 +172,14 @@ onMounted(() => {
         </StudentDashboard>
     </StudentLayout>
 </template>
+<style scoped>
+.welcome-text {
+    color: #000;
+    /* H2 */
+    font-size: 60px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 74px !important; /* 123.333% */
+    text-transform: capitalize !important;
+}
+</style>

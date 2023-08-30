@@ -4,7 +4,7 @@
             clearable
             :label="label"
             :menu-props="menu_props"
-            :error-messages="error_message"
+            :error-messages="error_messages"
             :item-title="item_title"
             :item-value="item_value"
             :density="density"
@@ -12,9 +12,9 @@
             :items="datas"
             :modal-value="modelValue"
             @change="updateValue"
-            :variant="variant"
+            variant="plain"
             :placeholder="placeholder"
-            rounded
+            class="select-box"
         ></VAutocomplete>
     </div>
 </template>
@@ -50,7 +50,7 @@ let props = defineProps({
     },
     density: {
         type: String,
-        default: "solo",
+        default: "compact",
     },
     rules: {
         type: Array,
@@ -87,5 +87,17 @@ let updateValue = (event) => {
 
 .custom-select .v-input__control .v-label.v-field-label {
     top: 0 !important;
+}
+.select-box {
+    border: 1px solid var(--line, #e5e5e5);
+    padding: 8px 16px;
+    border-radius: 100px;
+}
+::v-deep .v-field__input {
+    padding: 0 !important;
+}
+::v-deep .v-field__input input {
+    line-height: 38px !important;
+    color: #000 !important;
 }
 </style>

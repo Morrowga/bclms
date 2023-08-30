@@ -175,7 +175,8 @@ export default [
             { title: 'Website Manager', url: '/bc/admin', icon: { icon: 'mdi-alpha-r-circle' }, route_name: '/bc/admin', access_module: "access_pagebuilder", isNativeLink: true },
             { title: 'Setting Configuration', url: '/settings', icon: { icon: 'mdi-cog' }, route_name: '/settings', access_module: "access_pagebuilder" },
             { title: 'Setting Themems', url: '/updateSiteTheme', icon: { icon: 'mdi-cog' }, route_name: 'updateSiteTheme', access_module: "access_pagebuilder" },
-            { title: 'Supports', url: '/supports', icon: { icon: 'mdi-cog' }, route_name: 'supports', access_module: "access_pagebuilder" },
+            { title: 'Export Data', url: '/reports', icon: { icon: 'mdi-cog' }, route_name: 'reports', access_module: "access_system" },
+            { title: 'Tech Supports', url: '/supports', icon: { icon: 'mdi-cog' }, route_name: 'supports', access_module: "access_pagebuilder" },
 
 
         ]

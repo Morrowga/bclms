@@ -4,6 +4,7 @@ import UserDemographic from "./components/UserDemographic.vue";
 import Organization from "./components/Organization.vue";
 import Usage from "./components/Usage.vue";
 import BookInteractivity from "./components/BookInteractivity.vue";
+import Subscribers from "./components/Subscribers.vue";
 import { ref } from "vue";
 import { usePage, useForm } from "@inertiajs/vue3";
 
@@ -20,7 +21,11 @@ const activeTab = (tabNameEnter) => {
 };
 
 onMounted(() => {
-    if (user_role.value == "Organization Admin") {
+    if (
+        user_role.value == "Organization Admin" ||
+        user_role == "BC Super Admin" ||
+        user_role == "BC Staff"
+    ) {
         tabName.value = "user_demographic";
     } else {
         tabName.value = "usage";
@@ -40,22 +45,47 @@ onMounted(() => {
                         style="gap: 10px"
                     >
                         <VBtn
+                            v-if="
+                                user_role == 'Organization Admin' ||
+                                user_role == 'BC Super Admin' ||
+                                user_role == 'BC Staff'
+                            "
                             variant="flat"
                             rounded
                             :color="isActiveTab('user_demographic')"
                             @click="activeTab('user_demographic')"
-                            v-if="user_role == 'Organization Admin'"
                             >User Demographic</VBtn
                         >
                         <VBtn
+                            v-if="
+                                user_role == 'BC Super Admin' ||
+                                user_role == 'BC Staff'
+                            "
+                            variant="flat"
+                            rounded
+                            :color="isActiveTab('subscriber')"
+                            @click="activeTab('subscriber')"
+                            >Subscriber</VBtn
+                        >
+                        <VBtn
+                            v-if="
+                                user_role == 'Organization Admin' ||
+                                user_role == 'BC Super Admin' ||
+                                user_role == 'BC Staff'
+                            "
                             variant="flat"
                             rounded
                             :color="isActiveTab('organization')"
                             @click="activeTab('organization')"
-                            v-if="user_role == 'Organization Admin'"
                             >Organization</VBtn
                         >
                         <VBtn
+                            v-if="
+                                user_role == 'BC Super Admin' ||
+                                user_role == 'BC Staff' ||
+                                user_role == 'Teacher' ||
+                                user_role == 'BC Subscriber'
+                            "
                             variant="flat"
                             rounded
                             :color="isActiveTab('usage')"
@@ -63,6 +93,12 @@ onMounted(() => {
                             >Usage</VBtn
                         >
                         <VBtn
+                            v-if="
+                                user_role == 'BC Super Admin' ||
+                                user_role == 'BC Staff' ||
+                                user_role == 'Teacher' ||
+                                user_role == 'BC Subscriber'
+                            "
                             variant="flat"
                             rounded
                             :color="isActiveTab('book_interactivity')"
@@ -75,6 +111,9 @@ onMounted(() => {
             <VRow>
                 <VCol cols="12" v-if="tabName == 'user_demographic'">
                     <UserDemographic />
+                </VCol>
+                <VCol cols="12" v-if="tabName == 'subscriber'">
+                    <Subscribers />
                 </VCol>
                 <VCol cols="12" v-if="tabName == 'organization'">
                     <Organization />
