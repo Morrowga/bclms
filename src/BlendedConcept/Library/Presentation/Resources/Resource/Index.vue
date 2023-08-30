@@ -8,6 +8,7 @@ import ResourceCard from "@mainRoot/components/Resource/ResourceCard.vue";
 import CreateModal from "@mainRoot/components/Resource/CreateModal.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import { isConfirmedDialog } from "@actions/useConfirm";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 let props = defineProps([
     "classrooms",
@@ -35,12 +36,11 @@ let onFormSubmit = () => {
                     </div>
                </div>
                <div>
-                <span class="ruddy-bold resource">Resources</span>
-                    <div class="mt-5">
-                        <!-- <v-btn  prepend-icon="mdi-plus" varient="flat" class="menuchip" rounded>Add</v-btn> -->
-                        <CreateModal />
-                        <v-btn prepend-icon="mdi-trash-can-outline" @click="onFormSubmit" color="#ff6262" varient="flat" class="ml-2 resourcebtn" rounded="">Delete</v-btn>
-                    </div>
+                <div class="mt-5">
+                    <v-btn varient="flat" class="mr-2 text-white" color="#FF8015" rounded>Requested Upload</v-btn>
+                    <CreateModal />
+                    <v-btn prepend-icon="mdi-trash-can-outline" @click="onFormSubmit" color="#ff6262" varient="flat" class="ml-2 resourcebtn" rounded="">Delete</v-btn>
+                </div>
                </div>
               </div>
               <div class="d-flex justify-space-between mt-5">
@@ -56,7 +56,7 @@ let onFormSubmit = () => {
                                     />
                             </VCol>
                             <VCol cols="6">
-                                <VSelect label="Sort By" density="compact" />
+                                <SelectBox label="Sort By" density="compact" />
                             </VCol>
                         </VRow>
                     </VCol>

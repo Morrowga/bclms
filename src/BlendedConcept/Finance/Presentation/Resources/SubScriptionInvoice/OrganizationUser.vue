@@ -119,7 +119,8 @@ const selectionChanged = (data) => {
                     <VSpacer />
                     <div class="app-user-search-filter d-flex align-center gap-6">
                         <VTextField
-                        placeholder="Search User ..."
+                        style="width: 100px;"
+                        placeholder="Search Organisation ..."
                         density="compact"
                     />
                         <!-- 👉 Search  -->

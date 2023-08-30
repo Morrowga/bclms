@@ -9,6 +9,7 @@ import TeacherAvatar from "@mainRoot/components/TeacherAvatar/TeacherAvatar.vue"
 import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import UserExperienceSurvey from "./components/UserExperienceSurvey.vue";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 const statisticsWithImages = [
     {
@@ -75,9 +76,9 @@ const statisticsWithImages = [
                             class="mr-4"
                         />
 
-                        <VSelect
+                        <SelectBox
                             label="Sort By"
-                            :items="[]"
+                            :datas="[]"
                             density="compact"
                         />
                     </div>
@@ -109,7 +110,7 @@ const statisticsWithImages = [
                             class="mr-4"
                         />
 
-                        <VSelect
+                        <SelectBox
                             label="Sort By"
                             :items="[]"
                             density="compact"

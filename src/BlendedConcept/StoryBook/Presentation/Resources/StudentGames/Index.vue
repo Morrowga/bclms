@@ -11,7 +11,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 <template>
     <StudentLayout>
         <section style="min-height: 100vh">
-            <VContainer>
+            <VContainer class="mb-3">
                 <VRow>
                     <VCol cols="4">
                         <VCard class="card-story">

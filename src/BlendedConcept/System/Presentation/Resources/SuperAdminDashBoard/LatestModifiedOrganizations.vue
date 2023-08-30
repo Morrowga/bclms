@@ -5,38 +5,39 @@ import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 let props = defineProps(["organization"]);
 
 //## start datatable section
 let columns = [
     {
-        label: "USER",
+        label: "Organisation",
         field: "name",
         sortable: false,
     },
     {
-        label: "EMAIL",
+        label: "Email",
         field: "contact_email",
         sortable: false,
     },
     {
-        label: "ROLE",
-        field: "role",
+        label: "Contact Number",
+        field: "contact_number",
         sortable: false,
     },
     {
-        label: "PLAN",
-        field: "plan",
+        label: "Admin",
+        field: "admin",
         sortable: false,
     },
     {
-        label: "STATUS",
+        label: "Status",
         field: "status",
         sortable: false,
     },
     {
-        label: "ACTION",
+        label: "",
         field: "action",
         sortable: false,
     },
@@ -74,11 +75,11 @@ const selectionChanged = (data) => {
 
                 <VSpacer />
 
-                <VTextField placeholder="Search User ..." density="compact" />
+                <VTextField placeholder="Search Organisation" density="compact" />
 
                 <div class="app-user-search-filter d-flex align-center gap-6">
                     <!-- 👉 Search  -->
-                    <VSelect
+                    <SelectBox
                         v-model="selectedRole"
                         label="Sort By"
                         :items="roles"
@@ -141,16 +142,23 @@ const selectionChanged = (data) => {
                         </VListItem>
                     </div>
                     <div
-                        v-if="dataProps.column.field == 'plan'"
+                        v-if="dataProps.column.field == 'contact_number'"
                         class="flex flex-nowrap"
                     >
-                        {{ dataProps.row.plan.name }}
+                        {{ dataProps.row.contact_number }}
                     </div>
                     <div
-                        v-if="dataProps.column.field == 'role'"
+                        v-if="dataProps.column.field == 'admin'"
                         class="flex flex-nowrap"
                     >
-                        <VChip size="small" color="primary">organization</VChip>
+                        <VAvatar
+                            rounded
+                            :size="38"
+                            class="me-3"
+                            :image="avatar4"
+                        />
+                        {{ dataProps.row.name }}
+                        <!-- <VChip size="small" color="primary">organization</VChip> -->
                     </div>
                     <div
                         v-if="dataProps.column.field == 'status'"

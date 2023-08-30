@@ -5,6 +5,7 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 // import avatar4 from "@images/avatars/avatar-4.png";
 import AnswerSupport from "./components/AnswerSupport.vue";
@@ -103,12 +104,16 @@ const selectionChanged = (data) => {
                             <VCardText class="d-flex flex-wrap gap-4">
                                 <VSpacer />
                                 <div
-                                    class="app-user-search-filter d-flex justify-end align-center gap-6"
+                                    class="d-flex justify-end align-center gap-3"
                                 >
                                     <VTextField
                                         placeholder="Search Organizations"
                                         density="compact"
+                                        style="width: 250px;"
                                     />
+                                    <SelectBox label="Sort By"
+                                    :datas="['Name', 'Date', 'Status']"
+                                    density="compact" style="width: 150px;" />
                                     <VBtn
                                         class="tiggie-btn"
                                         @click="isAnswerTechnicalSupport = true"

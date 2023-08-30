@@ -20,7 +20,6 @@ let props = defineProps({
 let emit = defineEmits();
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
-
 let toggle = () => {
     emit("openDrawer");
 };
@@ -28,7 +27,7 @@ let toggle = () => {
 <template>
     <v-app-bar elevation="0" style="background: #000 !important; padding: 0 40px">
         <!-- mobile side navigation -->
-        <StudentProfile class="d-flex pe-3 "/>
+        <StudentProfile class="d-flex pe-3 " v-if="route().current() === 'dashboard'"/>
 
         <VSpacer />
 

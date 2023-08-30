@@ -1,4 +1,10 @@
-<script setup></script>
+<script setup>
+import { isConfirmedDialog } from "@actions/useConfirm";
+
+let onFormSubmit = () => {
+    isConfirmedDialog({ title: "Are you sure want to delete it." });
+};
+</script>
 <template>
     <v-card>
         <v-card-title>
@@ -11,7 +17,7 @@
                         <v-list-item>
                             <v-list-item-title>Edit</v-list-item-title>
                         </v-list-item>
-                        <v-list-item>
+                        <v-list-item @click="onFormSubmit">
                             <v-list-item-title>Delete</v-list-item-title>
                         </v-list-item>
                     </v-list>

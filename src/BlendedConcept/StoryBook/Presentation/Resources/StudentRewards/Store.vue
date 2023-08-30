@@ -13,12 +13,12 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 <template>
     <StudentLayout>
-        <section>
+        <section class="mb-3">
             <VRow>
                 <VCol cols="1">
-                    <img src="/images/back.png" @click="() => router.get(route('student-rewards'))" class="backarrow" alt="">
+                    <img src="/images/back.png" @click="() => router.get(route('student-rewards'))" class="backarrow ml-2" alt="">
                 </VCol>
-                <VCol cols="11">
+                <VCol cols="10">
                     <div class="d-flex justify-center">
                         <img src="/images/reward.png" alt="" class="reward-img">
                         <div class="b1">

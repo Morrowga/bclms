@@ -8,6 +8,15 @@ function showBook() {
     isShowBook.value = !isShowBook.value;
 }
 let switchBtn = ref("");
+const selectedImage = ref(null);
+
+const handleDrop = (event) => {
+  event.preventDefault();
+  const selectedFile = event.dataTransfer.files[0];
+  if (selectedFile) {
+    selectedImage.value = URL.createObjectURL(selectedFile);
+  }
+};
 </script>
 <template>
     <AdminLayout>
@@ -24,7 +33,6 @@ let switchBtn = ref("");
                             density="compact"
                             variant="tonal"
                             class="pl-16 pr-16"
-                            @click=""
                             height="30"
                         >
                             <span class="text-dark">Back</span>
@@ -83,8 +91,9 @@ let switchBtn = ref("");
                         </VCol>
                         <VCol cols="12" sm="6" md="4" class="py-4">
                             <h1 class="tiggie-title required">Current Flow</h1>
-                            <div class="coming-soon">
-                                <p>Drop And Drop</p>
+                            <div class="coming-soon" @dragover.prevent @drop="handleDrop">
+                                <v-img v-if="selectedImage" :src="selectedImage" cover></v-img>
+                                <p v-else>Drop And Drop</p>
                             </div>
                         </VCol>
                     </VRow>

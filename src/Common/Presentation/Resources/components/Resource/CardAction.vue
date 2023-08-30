@@ -30,136 +30,138 @@ const publish = () => {
 };
 </script>
 <template #activator="{ props }">
-    <span class="resourcemenu">
-        ...
+    <div>
+        <span class="resourcemenu">
+            ...
 
-        <v-menu activator="parent">
-            <v-list>
-                <v-list-item @click="isEditDialogVisible = true">
-                    <v-list-item-title>Edit</v-list-item-title>
-                </v-list-item>
-                <v-list-item @click="onFormSubmit">
-                    <v-list-item-title>Delete</v-list-item-title>
-                </v-list-item>
-                <v-list-item @click="publish()">
-                    <v-list-item-title
-                        >Publish to Organization</v-list-item-title
-                    >
-                </v-list-item>
-            </v-list>
-        </v-menu>
-    </span>
-    <VDialog v-model="isEditDialogVisible" width="1000">
-        <!-- Activator -->
-        <!-- Dialog Content -->
-        <VCard class="rolling-card">
-            <VCardText>
-                <div class="d-flex justify-space-between">
-                    <div>
-                        <span class="ruddy-bold resource-create-title"
-                            >Edit File</span
+            <v-menu activator="parent">
+                <v-list>
+                    <v-list-item @click="isEditDialogVisible = true">
+                        <v-list-item-title>Edit</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item @click="onFormSubmit">
+                        <v-list-item-title>Delete</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item @click="publish()">
+                        <v-list-item-title
+                            >Publish to Organization</v-list-item-title
                         >
-                    </div>
-                    <div class="mt-2">
-                        <v-icon @click="isEditDialogVisible = false"
-                            >mdi-close</v-icon
-                        >
-                    </div>
-                </div>
-                <div class="mt-5">
-                    <div>
-                        <span class="input-label-resource"
-                            >Filename <span class="star">*</span></span
-                        >
-                        <VTextField class="textfield-round" />
-                    </div>
-                    <div class="mt-3">
-                        <span class="input-label-resource"
-                            >Uploaded File <span class="star">*</span></span
-                        >
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+        </span>
+        <VDialog v-model="isEditDialogVisible" width="1000">
+            <!-- Activator -->
+            <!-- Dialog Content -->
+            <VCard class="rolling-card">
+                <VCardText>
+                    <div class="d-flex justify-space-between">
                         <div>
-                            <div class="uploadedchip text-left mt-2">
-                                <div class="d-flex">
-                                    <v-img
-                                        src="/images/chair.jpeg"
-                                        width="60"
-                                        height="50"
-                                        cover
-                                    ></v-img>
-                                    <span class="mt-4 ml-2"
-                                        >themonkeysad.jpg</span
-                                    >
+                            <span class="ruddy-bold resource-create-title"
+                                >Edit File</span
+                            >
+                        </div>
+                        <div class="mt-2">
+                            <v-icon @click="isEditDialogVisible = false"
+                                >mdi-close</v-icon
+                            >
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <div>
+                            <span class="input-label-resource"
+                                >Filename <span class="star">*</span></span
+                            >
+                            <VTextField class="textfield-round" />
+                        </div>
+                        <div class="mt-3">
+                            <span class="input-label-resource"
+                                >Uploaded File <span class="star">*</span></span
+                            >
+                            <div>
+                                <div class="uploadedchip text-left mt-2">
+                                    <div class="d-flex">
+                                        <v-img
+                                            src="/images/chair.jpeg"
+                                            width="60"
+                                            height="50"
+                                            cover
+                                        ></v-img>
+                                        <span class="mt-4 ml-2"
+                                            >themonkeysad.jpg</span
+                                        >
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mt-3">
-                        <VCard
-                            class="upload-card-resource"
-                            @click="openFileInput"
-                        >
-                            <v-img
-                                v-if="selectedImage"
-                                class="image-resource"
-                                :src="selectedImage"
-                                cover
-                            ></v-img>
-                            <div v-else class="card-text">
-                                <div class="text-center">
-                                    <div class="d-flex justify-center">
-                                        <img
-                                            src="/images/Icons.png"
-                                            width="100"
-                                        />
-                                    </div>
-                                    <div class="mt-2">
-                                        <span class="drag-text">
-                                            Drag your item to upload
-                                        </span>
-                                    </div>
-                                    <div class="mt-2">
-                                        <span class="fade-text">
-                                            PNG, GIF, WebP, MP4 or MP3. Maximum
-                                            file size 100 Mb.
-                                        </span>
+                        <div class="mt-3">
+                            <VCard
+                                class="upload-card-resource"
+                                @click="openFileInput"
+                            >
+                                <v-img
+                                    v-if="selectedImage"
+                                    class="image-resource"
+                                    :src="selectedImage"
+                                    cover
+                                ></v-img>
+                                <div v-else class="card-text">
+                                    <div class="text-center">
+                                        <div class="d-flex justify-center">
+                                            <img
+                                                src="/images/Icons.png"
+                                                width="100"
+                                            />
+                                        </div>
+                                        <div class="mt-2">
+                                            <span class="drag-text">
+                                                Drag your item to upload
+                                            </span>
+                                        </div>
+                                        <div class="mt-2">
+                                            <span class="fade-text">
+                                                PNG, GIF, WebP, MP4 or MP3.
+                                                Maximum file size 100 Mb.
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
+                            </VCard>
+                            <div>
+                                <input
+                                    type="file"
+                                    ref="fileInput"
+                                    style="display: none"
+                                    @change="handleFileUpload"
+                                />
                             </div>
-                        </VCard>
-                        <div>
-                            <input
-                                type="file"
-                                ref="fileInput"
-                                style="display: none"
-                                @change="handleFileUpload"
-                            />
-                        </div>
-                        <div class="mt-10 d-flex justify-center">
-                            <v-btn
-                                varient="flat"
-                                color="#F6F6F6"
-                                class="cancel pppangram-bold"
-                                @click="isEditDialogVisible = false"
-                                width="200"
-                                rounded
-                            >
-                                Cancel
-                            </v-btn>
-                            <v-btn
-                                varient="flat"
-                                color="#3749E9"
-                                class="textcolor ml-2 pppangram-bold"
-                                width="200"
-                                rounded
-                            >
-                                Save
-                            </v-btn>
+                            <div class="mt-10 d-flex justify-center">
+                                <v-btn
+                                    varient="flat"
+                                    color="#F6F6F6"
+                                    class="cancel pppangram-bold"
+                                    @click="isEditDialogVisible = false"
+                                    width="200"
+                                    rounded
+                                >
+                                    Cancel
+                                </v-btn>
+                                <v-btn
+                                    varient="flat"
+                                    color="#3749E9"
+                                    class="textcolor ml-2 pppangram-bold"
+                                    width="200"
+                                    rounded
+                                >
+                                    Save
+                                </v-btn>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </VCardText>
-        </VCard>
-    </VDialog>
+                </VCardText>
+            </VCard>
+        </VDialog>
+    </div>
 </template>
 <style scoped>
 .uploadedchip {

@@ -1,6 +1,7 @@
 <script setup>
 import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 </script>
 <template>
     <div>
@@ -14,10 +15,10 @@ import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
                 class="mr-4"
             />
 
-            <VSelect
+            <SelectBox
                 v-model="selectedRole"
                 label="Sort By"
-                :items="roles"
+                :datas="roles"
                 density="compact"
             />
         </div>

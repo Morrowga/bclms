@@ -179,13 +179,13 @@ watch(serverPerPage, function (value) {
 
                         <div class="d-flex">
                             <div
-                                class="app-user-search-filter d-flex align-center justify-end gap-3"
+                                class="app-user-search-filter d-flex align-center justify-end gap-3" style="width: 200px"
                             >
                                 <selectBox
-                                    :datas="[]"
                                     placeholder="Sort By"
                                     density="compact"
                                     variant="outlined"
+                                    :datas="['Name', 'Email', 'Contact Number', 'Role', 'Status']"
                                 />
                                 <!-- 👉 Add User button -->
                             </div>

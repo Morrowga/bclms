@@ -71,7 +71,7 @@ const activeTab = (name) => {
                     </div>
                 </div>
             </v-navigation-drawer>
-            <VContainer v-if="active === 'assigned'">
+            <VContainer class="mb-3" v-if="active === 'assigned'">
                 <VRow>
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
@@ -327,7 +327,7 @@ const activeTab = (name) => {
                     </VCol>
                 </VRow>
             </VContainer>
-            <VContainer v-if="active === 'pathway'">
+            <VContainer class="mb-3" v-if="active === 'pathway'">
                 <div class="d-flex justify-center">
                     <img
                         src="images/Pathway Card.png"
@@ -337,7 +337,7 @@ const activeTab = (name) => {
                     />
                 </div>
             </VContainer>
-            <VContainer v-if="active === 'playlist'">
+            <VContainer class="mb-3" v-if="active === 'playlist'">
                 <div class="text-center d-flex justify-center">
                     <div class="title-chip">
                         <span class="title-chip-text ruddy-bold"

@@ -1,5 +1,7 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+
 </script>
 <template>
     <AdminLayout>
@@ -23,12 +25,11 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                         </VTextField>
                     </VCol>
                     <VCol cols="2">
-                        <VSelect
+                        <SelectBox
                             placeholder="Sort By"
                             density="compact"
                             rounded
-                        >
-                        </VSelect>
+                        />
                     </VCol>
                 </VRow>
             </VRow>
@@ -70,6 +71,9 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                     <VRow>
                         <VCol cols="4" v-for="item in 12" :key="item">
                             <VCard>
+                                <div class="playmenu">
+                                </div>
+                                <v-checkbox label="" class="checkmenu ml-2"></v-checkbox>
                                 <VImg
                                     src="/teacherdashboard/student1.png"
                                     height="282px"
@@ -87,14 +91,14 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                                     </VCardTitle>
                                 </VCardItem>
                                 <VCardActions>
-                                    <div class="d-flex">
-                                        <VChip color="teal" variant="outlined">
+                                    <div class="d-flex justify-start">
+                                        <VChip color="teal" class="mx-1 playlistchip" variant="outlined">
                                             Switch
                                         </VChip>
-                                        <VChip color="teal" variant="outlined">
+                                        <VChip color="teal" class="mx-1 playlistchip" variant="outlined">
                                             Eye-Gaze
                                         </VChip>
-                                        <VChip color="teal" variant="outlined">
+                                        <VChip color="teal" class="mx-1 playlistchip" variant="outlined">
                                             Touch
                                         </VChip>
                                     </div>
@@ -121,6 +125,31 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 </template>
 
 <style scoped>
+
+.playlistchip{
+    font-size: 12px !important;
+}
+
+.checkmenu{
+    position: absolute !important;
+    right: 0%;
+    /* top: 1%; */
+    z-index: 1;
+    color:#E5E5E5 !important;
+}
+
+.playmenu{
+    position: absolute !important;
+    width: 20px;
+    border-radius: 4px !important;
+    padding: 10px;
+    height: 20px;
+    background:#E5E5E5 !important;
+    z-index: 1 !important;
+    color: #E5E5E5 !important;
+    right: 3%;
+    top: 2%;
+}
 .img-text-info {
     position: relative;
     bottom: 10px;

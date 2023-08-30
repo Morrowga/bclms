@@ -86,6 +86,9 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
             </div>
         </div>
             </v-navigation-drawer>
+            <div class="dragsticker">
+                <img src="/images/stickerdrag.png">
+            </div>
         </section>
     </StudentLayout>
 </template>
@@ -100,6 +103,12 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     background: url('/images/rewardbg.png') no-repeat !important;
     background-size: cover !important;
     background-position: center !important;
+}
+
+.dragsticker{
+    position: absolute;
+    top: 35%;
+    left: 6.8%;
 }
 
 .storereward{

@@ -17,7 +17,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
         <section>
             <VRow>
                 <VCol cols="1">
-                    <img src="/images/back.png" @click="() => router.get(route('student-rewards'))" class="backarrow" alt="">
+                    <img src="/images/back.png" @click="() => router.get(route('student-rewards'))" class="backarrow ml-2" alt="">
                 </VCol>
                 <VCol cols="11">
                     <div class="d-flex justify-center">
