@@ -51,11 +51,11 @@ watch(selectedValueForSecondSelect, () => {
 
         <!-- Dialog Content -->
         <VCard class="d-flex justify-center">
-            <VCardTitle class="d-flex justify-content-center align-center  gap-16">
+            <VCardTitle class="d-flex justify-space-between align-center  gap-16">
                 <h4 class="tiggie-title">
                     Batch Import Users
                 </h4>
-                <VIcon icon="mdi-file-download" color="primary" size="30px" />
+                <VIcon icon="mdi-file-download" color="tiggie-blue" size="30px" />
             </VCardTitle>
             <VCardText>
                 <VLabel class="tiggie-label required" v-if="!showSecondSelect">Organization</VLabel>
@@ -80,12 +80,11 @@ watch(selectedValueForSecondSelect, () => {
                     placeholder="Select type of user to import" />
             </VCardText>
 
-            <VCardActions class="d-flex justify-center gap-5 ml-5 mt-16">
-                <VBtn color="gray" variant="flat" width="164px" @click="isDialogVisible = false">
-                    <span class="text-white">Cancel</span>
+            <VCardActions class="d-flex justify-space-between gap-5 ml-3 mr-3 mt-5">
+                <VBtn color="gray" variant="flat" width="164px" @click="isDialogVisible = false" height="51px">
+                    <span class="text-light">Cancel</span>
                 </VBtn>
                 <ImportUserTypeData :type="selectedType"/>
-
             </VCardActions>
         </VCard>
     </VDialog>

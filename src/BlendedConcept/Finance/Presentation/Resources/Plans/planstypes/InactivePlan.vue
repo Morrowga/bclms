@@ -139,17 +139,11 @@ SuccessDialog({title:"Subscription plan has been set activated"})
                                 <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black" class="mt-n4" />
                             </template>
                              <VList>
-                                <VListItem @click="() => router.get(route('plans.show'))">
-                                     <VListItemTitle>View</VListItemTitle>
-                                </VListItem>
                                 <VListItem @click="() => router.get(route('plans.edit'))">
                                      <VListItemTitle>Edit</VListItemTitle>
                                 </VListItem>
                                  <VListItem @click="setActive">
                                      <VListItemTitle>Set Active</VListItemTitle>
-                                </VListItem>
-                                <VListItem @click="deletePlan">
-                                     <VListItemTitle>Delete</VListItemTitle>
                                 </VListItem>
                             </VList>
                         </VMenu>

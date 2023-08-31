@@ -66,4 +66,8 @@ import { router } from "@inertiajs/core";
     padding-left: 12px;
     padding-right: 12px;
 }
+.chip
+{
+    background-color: #FfFfFf !important;
+}
 </style>

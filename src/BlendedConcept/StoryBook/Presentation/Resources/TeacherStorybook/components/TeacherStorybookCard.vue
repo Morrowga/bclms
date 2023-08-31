@@ -12,7 +12,9 @@ import { router } from "@inertiajs/core";
             <v-card
                 @click="router.get(route('teacher_storybook.show'))"
                 v-bind="props"
+                color="#f6f6f6"
             >
+
                 <v-card-title style="position: relative">
                     <v-img src="/images/image4.png" />
                     <div class="chip-page" v-if="is_chip">
@@ -99,5 +101,19 @@ import { router } from "@inertiajs/core";
 
     height: 150%;
     z-index: 10;
+}
+
+
+.checkbox-position
+{
+    position: absolute;
+    top:4px;
+    right: 10px;
+    padding: initial;
+    color: #282828;
+}
+.chip
+{
+    background-color: #FfFfFf !important;
 }
 </style>
