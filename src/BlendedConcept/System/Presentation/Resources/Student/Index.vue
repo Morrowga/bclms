@@ -5,7 +5,7 @@ import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
 let props = defineProps({
     isOpenMenu: {
         type: Boolean,
-        default: false,
+        default: true,
     },
 });
 </script>
@@ -14,165 +14,176 @@ let props = defineProps({
     <section class="section-student-home" style="min-height: 86.8vh">
         <VRow>
             <VCol cols="12" lg="3" md="6">
-                <VCard
-                    v-if="props.isOpenMenu"
-                    class="text-center card-student ml-5"
-                >
-                    <div class="d-flex justify-center mt-2">
-                        <img src="/images/classroom1.jpeg" class="studentimg" />
-                    </div>
-                    <div class="mt-2">
-                        <p class="studentname pppangram-bold">Francisco Maia</p>
-                        <p class="semi-text pppangram-medium">Female</p>
-                    </div>
-                    <VRow class="mx-2 my-2">
-                        <VCol cols="5" class="text-left">
-                            <p class="label-student pppangram-bold">DOB</p>
-                        </VCol>
-                        <VCol cols="7" class="text-left">
-                            <div class="ml-5">
-                                <p class="value-student pppangram-medium">
-                                    January 1, 2012
-                                </p>
-                            </div>
-                        </VCol>
-                    </VRow>
-                    <VRow class="mx-2 my-1">
-                        <VCol cols="5" class="text-left">
-                            <div>
-                                <p class="label-student pppangram-bold">
-                                    Education
-                                </p>
-                            </div>
-                            <div class="text-left">
-                                <p class="label-student pppangram-bold">
-                                    Level
-                                </p>
-                            </div>
-                        </VCol>
-                        <VCol cols="7" class="text-left">
-                            <div class="ml-5">
-                                <p class="value-student pppangram-medium">K1</p>
-                            </div>
-                        </VCol>
-                    </VRow>
-                    <VRow class="mx-2 my-0">
-                        <VCol cols="5" class="text-left">
-                            <div>
-                                <p class="label-student pppangram-bold">
-                                    Disability
-                                </p>
-                            </div>
-                            <div class="text-left">
-                                <p class="label-student pppangram-bold">
-                                    Types
-                                </p>
-                            </div>
-                        </VCol>
-                        <VCol cols="7" class="text-left">
-                            <div class="ml-5">
-                                <p class="value-student pppangram-medium">
-                                    Down Syndrome
-                                </p>
-                            </div>
-                        </VCol>
-                    </VRow>
-                    <VRow class="mx-2 my-0">
-                        <VCol cols="5" class="text-left">
-                            <div>
-                                <p class="label-student pppangram-bold">
-                                    Accessibility
-                                </p>
-                            </div>
-                            <div class="text-left">
-                                <p class="label-student pppangram-bold">
-                                    Device
-                                </p>
-                            </div>
-                        </VCol>
-                        <VCol cols="7" class="text-left">
-                            <div class="ml-5">
-                                <p class="value-student pppangram-medium">
-                                    Switch Single
-                                </p>
-                            </div>
-                        </VCol>
-                    </VRow>
-                    <VRow class="mx-2 my-0">
-                        <VCol cols="5" class="text-left">
-                            <span class="label-student pppangram-bold"
-                                >Student Code</span
-                            >
-                        </VCol>
-                        <VCol cols="7" class="text-left">
-                            <div class="ml-5">
-                                <span class="value-student pppangram-medium"
-                                    >128, 274</span
+                <VFadeTransition>
+                    <VCard
+                        v-if="props.isOpenMenu"
+                        class="text-center card-student ml-5"
+                    >
+                        <div class="d-flex justify-center mt-2">
+                            <img
+                                src="/images/classroom1.jpeg"
+                                class="studentimg"
+                            />
+                        </div>
+                        <div class="mt-2">
+                            <p class="studentname pppangram-bold">
+                                Francisco Maia
+                            </p>
+                            <p class="semi-text pppangram-medium">Female</p>
+                        </div>
+                        <VRow class="mx-2 my-2">
+                            <VCol cols="5" class="text-left">
+                                <p class="label-student pppangram-bold">DOB</p>
+                            </VCol>
+                            <VCol cols="7" class="text-left">
+                                <div class="ml-5">
+                                    <p class="value-student pppangram-medium">
+                                        January 1, 2012
+                                    </p>
+                                </div>
+                            </VCol>
+                        </VRow>
+                        <VRow class="mx-2 my-1">
+                            <VCol cols="5" class="text-left">
+                                <div>
+                                    <p class="label-student pppangram-bold">
+                                        Education
+                                    </p>
+                                </div>
+                                <div class="text-left">
+                                    <p class="label-student pppangram-bold">
+                                        Level
+                                    </p>
+                                </div>
+                            </VCol>
+                            <VCol cols="7" class="text-left">
+                                <div class="ml-5">
+                                    <p class="value-student pppangram-medium">
+                                        K1
+                                    </p>
+                                </div>
+                            </VCol>
+                        </VRow>
+                        <VRow class="mx-2 my-0">
+                            <VCol cols="5" class="text-left">
+                                <div>
+                                    <p class="label-student pppangram-bold">
+                                        Disability
+                                    </p>
+                                </div>
+                                <div class="text-left">
+                                    <p class="label-student pppangram-bold">
+                                        Types
+                                    </p>
+                                </div>
+                            </VCol>
+                            <VCol cols="7" class="text-left">
+                                <div class="ml-5">
+                                    <p class="value-student pppangram-medium">
+                                        Down Syndrome
+                                    </p>
+                                </div>
+                            </VCol>
+                        </VRow>
+                        <VRow class="mx-2 my-0">
+                            <VCol cols="5" class="text-left">
+                                <div>
+                                    <p class="label-student pppangram-bold">
+                                        Accessibility
+                                    </p>
+                                </div>
+                                <div class="text-left">
+                                    <p class="label-student pppangram-bold">
+                                        Device
+                                    </p>
+                                </div>
+                            </VCol>
+                            <VCol cols="7" class="text-left">
+                                <div class="ml-5">
+                                    <p class="value-student pppangram-medium">
+                                        Switch Single
+                                    </p>
+                                </div>
+                            </VCol>
+                        </VRow>
+                        <VRow class="mx-2 my-0">
+                            <VCol cols="5" class="text-left">
+                                <span class="label-student pppangram-bold"
+                                    >Student Code</span
                                 >
-                            </div>
-                        </VCol>
-                    </VRow>
-                    <div class="text-center mt-6">
-                        <p class="semi-text pppangram-medium">
-                            Parent's Details
-                        </p>
-                    </div>
-                    <VRow class="mx-2 my-4">
-                        <VCol cols="5" class="text-left">
-                            <p class="label-student pppangram-bold">Name</p>
-                        </VCol>
-                        <VCol cols="7" class="text-left">
-                            <div class="ml-5">
-                                <p class="value-student pppangram-medium">
-                                    Jane Ang
-                                </p>
-                            </div>
-                        </VCol>
-                    </VRow>
-                    <VRow class="mx-2 my-0">
-                        <VCol cols="5" class="text-left">
-                            <p class="label-student pppangram-bold">
-                                Relationship
+                            </VCol>
+                            <VCol cols="7" class="text-left">
+                                <div class="ml-5">
+                                    <span class="value-student pppangram-medium"
+                                        >128, 274</span
+                                    >
+                                </div>
+                            </VCol>
+                        </VRow>
+                        <div class="text-center mt-6">
+                            <p class="semi-text pppangram-medium">
+                                Parent's Details
                             </p>
-                        </VCol>
-                        <VCol cols="7" class="text-left">
-                            <div class="ml-5">
-                                <p class="value-student pppangram-medium">
-                                    Mother
+                        </div>
+                        <VRow class="mx-2 my-4">
+                            <VCol cols="5" class="text-left">
+                                <p class="label-student pppangram-bold">Name</p>
+                            </VCol>
+                            <VCol cols="7" class="text-left">
+                                <div class="ml-5">
+                                    <p class="value-student pppangram-medium">
+                                        Jane Ang
+                                    </p>
+                                </div>
+                            </VCol>
+                        </VRow>
+                        <VRow class="mx-2 my-0">
+                            <VCol cols="5" class="text-left">
+                                <p class="label-student pppangram-bold">
+                                    Relationship
                                 </p>
-                            </div>
-                        </VCol>
-                    </VRow>
-                    <VRow class="mx-2 my-0">
-                        <VCol cols="5" class="text-left">
-                            <p class="label-student pppangram-bold">
-                                Contact No.
-                            </p>
-                        </VCol>
-                        <VCol cols="7" class="text-left">
-                            <div class="ml-5">
-                                <p class="value-student pppangram-medium">
-                                    9123 4567
+                            </VCol>
+                            <VCol cols="7" class="text-left">
+                                <div class="ml-5">
+                                    <p class="value-student pppangram-medium">
+                                        Mother
+                                    </p>
+                                </div>
+                            </VCol>
+                        </VRow>
+                        <VRow class="mx-2 my-0">
+                            <VCol cols="5" class="text-left">
+                                <p class="label-student pppangram-bold">
+                                    Contact No.
                                 </p>
-                            </div>
-                        </VCol>
-                    </VRow>
-                    <VRow class="mx-2 my-0">
-                        <VCol cols="5" class="text-left">
-                            <p class="label-student pppangram-bold">Email</p>
-                        </VCol>
-                        <VCol cols="7" class="text-left">
-                            <div class="ml-5">
-                                <p class="value-student pppangram-medium">
-                                    jane.ang@gmail.com
+                            </VCol>
+                            <VCol cols="7" class="text-left">
+                                <div class="ml-5">
+                                    <p class="value-student pppangram-medium">
+                                        9123 4567
+                                    </p>
+                                </div>
+                            </VCol>
+                        </VRow>
+                        <VRow class="mx-2 my-0">
+                            <VCol cols="5" class="text-left">
+                                <p class="label-student pppangram-bold">
+                                    Email
                                 </p>
-                            </div>
-                        </VCol>
-                    </VRow>
-                    <div class="mt-1 my-3 mx-3">
-                        <ExitMode />
-                    </div>
-                </VCard>
+                            </VCol>
+                            <VCol cols="7" class="text-left">
+                                <div class="ml-5">
+                                    <p class="value-student pppangram-medium">
+                                        jane.ang@gmail.com
+                                    </p>
+                                </div>
+                            </VCol>
+                        </VRow>
+                        <div class="mt-1 my-3 mx-3">
+                            <ExitMode />
+                        </div>
+                    </VCard>
+                </VFadeTransition>
             </VCol>
             <VCol cols="12" lg="5" md="6">
                 <div class="ml-10 d-none d-md-flex">

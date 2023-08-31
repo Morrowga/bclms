@@ -60,7 +60,7 @@ const checkUserRole = () => {
 const forbiddenRole = () => {
     return user_role.value != "BC Subscriber" || user_role.value != "Teacher";
 };
-let isOpenMenu = ref(false);
+let isOpenMenu = ref(true);
 let toggleMenu = () => {
     isOpenMenu.value = !isOpenMenu.value;
 };
