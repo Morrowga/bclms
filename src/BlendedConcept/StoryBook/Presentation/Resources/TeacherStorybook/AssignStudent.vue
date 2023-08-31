@@ -14,7 +14,7 @@ let tab = ref(false);
             <v-row class="mb-10">
                 <v-col cols="12" md="6">
                     <div style="position: relative">
-                        <v-img src="/images/img.png" class="main-pic" />
+                        <v-img src="/images/imgbook.png" class="main-pic" />
                         <div class="vector-background">
                             <!-- <img src="/images/vector.png" /> -->
                         </div>

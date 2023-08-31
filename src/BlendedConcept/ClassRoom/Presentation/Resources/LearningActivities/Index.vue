@@ -10,7 +10,7 @@ let tab = ref(false);
         <VContainer style="width: 80%; margin: 0 auto">
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-img src="/images/img.png" />
+                    <v-img src="/images/imgbook.png" />
                 </v-col>
                 <v-col cols="12" md="6">
                     <h1
