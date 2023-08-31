@@ -8,6 +8,7 @@ import ResourceCard from "@mainRoot/components/Resource/ResourceCard.vue";
 import CreateModal from "@mainRoot/components/Resource/CreateModal.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import { isConfirmedDialog } from "@actions/useConfirm";
+import { SuccessDialog } from "@actions/useSuccess";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 let props = defineProps([
@@ -20,82 +21,146 @@ let props = defineProps([
 let onFormSubmit = () => {
     isConfirmedDialog({ title: "Are you sure want to delete it." });
 };
+
+let isEditMode = ref(false);
+const activeEditMode = () => {
+    isEditMode.value = true;
+};
+const approve = () => {
+    SuccessDialog({
+        title: "You have successfully added resource{s}!",
+        color: "#17CAB6",
+    });
+    isEditMode.value = false;
+};
+const reject = () => {
+    SuccessDialog({
+        title: "You have rejected added resource{s}!",
+        color: "#17CAB6",
+    });
+    isEditMode.value = false;
+};
 </script>
 
 <template>
     <AdminLayout>
         <section>
             <VContainer>
-              <div class="d-flex justify-space-between">
-                <div>
-                    <span class="ruddy-bold resource">Resources</span>
-                    <div class="mt-5">
-                        <v-chip class="menuchip">All</v-chip>
-                        <v-chip class="ml-2">Organization</v-chip>
-                        <v-chip class="ml-2">Me</v-chip>
+                <div class="d-flex justify-space-between">
+                    <div>
+                        <span class="ruddy-bold resource">Resources</span>
+                        <div class="mt-5">
+                            <v-chip class="menuchip">All</v-chip>
+                            <v-chip class="ml-2">Organization</v-chip>
+                            <v-chip class="ml-2">Me</v-chip>
+                        </div>
                     </div>
-               </div>
-               <div>
-                <div class="mt-5">
-                    <v-btn varient="flat" class="mr-2 text-white" color="#FF8015" rounded>Requested Upload</v-btn>
-                    <CreateModal />
-                    <v-btn prepend-icon="mdi-trash-can-outline" @click="onFormSubmit" color="#ff6262" varient="flat" class="ml-2 resourcebtn" rounded="">Delete</v-btn>
+                    <div>
+                        <div class="mt-5">
+                            <div v-if="isEditMode">
+                                <v-btn
+                                    @click="approve()"
+                                    color="primary"
+                                    varient="flat"
+                                    class="ml-2 resourcebtn"
+                                    rounded=""
+                                    >Approve</v-btn
+                                >
+                                <v-btn
+                                    prepend-icon="mdi-trash-can-outline"
+                                    @click="reject()"
+                                    color="#ff6262"
+                                    varient="flat"
+                                    class="ml-2 resourcebtn"
+                                    rounded=""
+                                    >Reject</v-btn
+                                >
+                            </div>
+                            <div v-else>
+                                <v-btn
+                                    varient="flat"
+                                    class="mr-2 text-white"
+                                    color="#FF8015"
+                                    rounded
+                                    @click="activeEditMode()"
+                                    >Requested Upload</v-btn
+                                >
+                                <CreateModal />
+                                <v-btn
+                                    prepend-icon="mdi-trash-can-outline"
+                                    @click="onFormSubmit"
+                                    color="#ff6262"
+                                    varient="flat"
+                                    class="ml-2 resourcebtn"
+                                    rounded=""
+                                    >Delete</v-btn
+                                >
+                            </div>
+                        </div>
+                    </div>
                 </div>
-               </div>
-              </div>
-              <div class="d-flex justify-space-between mt-5">
-                  <VRow>
-                    <VCol cols="6"></VCol>
-                    <VCol cols="6">
-                        <VRow>
-                            <VCol cols="6">
-                                <VTextField
+                <div class="d-flex justify-space-between mt-5">
+                    <VRow>
+                        <VCol cols="6"></VCol>
+                        <VCol cols="6">
+                            <VRow>
+                                <VCol cols="6">
+                                    <VTextField
                                         rounded
                                         placeholder="Search User ..."
                                         density="compact"
                                     />
-                            </VCol>
-                            <VCol cols="6">
-                                <SelectBox label="Sort By" density="compact" />
-                            </VCol>
-                        </VRow>
-                    </VCol>
-                  </VRow>
-              </div>
-              <div class="d-flex justify-space-between mt-5">
-                  <VRow>
-                    <VCol cols="6"></VCol>
-                    <VCol cols="6">
-                        <VRow>
-                            <VCol cols="6"></VCol>
-                            <VCol cols="6">
-                                <div>
-                                    <span>55.4 MB of 80MB used </span>
+                                </VCol>
+                                <VCol cols="6">
+                                    <SelectBox
+                                        label="Sort By"
+                                        density="compact"
+                                    />
+                                </VCol>
+                            </VRow>
+                        </VCol>
+                    </VRow>
+                </div>
+                <div class="d-flex justify-space-between mt-5">
+                    <VRow>
+                        <VCol cols="6"></VCol>
+                        <VCol cols="6">
+                            <VRow>
+                                <VCol cols="6"></VCol>
+                                <VCol cols="6">
+                                    <div>
+                                        <span>55.4 MB of 80MB used </span>
                                         <VProgressLinear
                                             color="yellow-darken-2"
                                             model-value="80"
                                             :height="8"
                                         ></VProgressLinear>
-                                </div>
-                            </VCol>
-                        </VRow>
-                    </VCol>
-                  </VRow>
-              </div>
-              <div class="mt-10">
-                <VRow>
-                    <VCol cols="12"  v-for="item in 16"
-                    sm="6"
-                    md="4"
-                    lg="3"
-                        :key="item">
-                        <ResourceCard :key="item" />
-                    </VCol>
-                </VRow>
-              </div>
-              <div class="d-flex justify-center mt-10">
-                <Pagination />
-              </div>
+                                    </div>
+                                </VCol>
+                            </VRow>
+                        </VCol>
+                    </VRow>
+                </div>
+                <div class="mt-10">
+                    <VRow>
+                        <VCol
+                            cols="12"
+                            v-for="item in 16"
+                            sm="6"
+                            md="4"
+                            lg="3"
+                            :key="item"
+                        >
+                            <ResourceCard
+                                :key="item"
+                                :isEditMode="isEditMode"
+                            />
+                        </VCol>
+                    </VRow>
+                </div>
+                <div class="d-flex justify-center mt-10">
+                    <Pagination />
+                </div>
             </VContainer>
         </section>
     </AdminLayout>
@@ -106,16 +171,16 @@ let onFormSubmit = () => {
     inline-size: 24.0625rem;
 }
 
-.resourcebtn{
+.resourcebtn {
     color: #fff;
 }
 
-.menuchip{
-    background: #4066E4 !important;
+.menuchip {
+    background: #4066e4 !important;
     color: #fff;
 }
 
-.resource{
+.resource {
     color: #000 !important;
     font-size: 30px !important;
 }

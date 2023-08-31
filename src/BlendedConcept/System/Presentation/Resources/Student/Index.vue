@@ -2,13 +2,22 @@
 import { defineProps } from "vue";
 import { router } from "@inertiajs/core";
 import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
+let props = defineProps({
+    isOpenMenu: {
+        type: Boolean,
+        default: false,
+    },
+});
 </script>
 
 <template>
     <section class="section-student-home" style="min-height: 86.8vh">
         <VRow>
             <VCol cols="12" lg="3" md="6">
-                <VCard class="text-center card-student ml-5">
+                <VCard
+                    v-if="props.isOpenMenu"
+                    class="text-center card-student ml-5"
+                >
                     <div class="d-flex justify-center mt-2">
                         <img src="/images/classroom1.jpeg" class="studentimg" />
                     </div>

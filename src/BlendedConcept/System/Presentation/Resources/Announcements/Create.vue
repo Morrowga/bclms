@@ -41,7 +41,8 @@ let onFormSubmit = () => {
                                     >Title</VLabel
                                 >
                                 <VTextField
-                                    :focused="true"
+                                    class="blue-outline-field"
+                                    variant="plain"
                                     placeholder="Type here..."
                                     density="compact"
                                 />
@@ -49,7 +50,8 @@ let onFormSubmit = () => {
                             <VCol cols="2">
                                 <VLabel class="tiggie-label"></VLabel>
                                 <VCombobox
-                                    :focused="true"
+                                    class="blue-outline-field"
+                                    variant="plain"
                                     v-model="selectedItem"
                                     :items="items"
                                     density="compact"
@@ -61,11 +63,12 @@ let onFormSubmit = () => {
                                 >
 
                                 <VTextarea
-                                    :focused="true"
+                                    class="blue-outline-field"
+                                    variant="plain"
                                     placeholder="Type here ...."
                                     v-model="description"
                                     auto-grow
-                                    rows="5"
+                                    rows="3"
                                 />
                             </VCol>
                             <VCol cols="5">
@@ -73,7 +76,8 @@ let onFormSubmit = () => {
                                     >Announcement by</VLabel
                                 >
                                 <VTextField
-                                    :focused="true"
+                                    class="blue-outline-field"
+                                    variant="plain"
                                     placeholder="Type here ...."
                                     density="compact"
                                 />
@@ -83,7 +87,8 @@ let onFormSubmit = () => {
                                     >Announcement to</VLabel
                                 >
                                 <VSelect
-                                    :focused="true"
+                                    class="blue-outline-field"
+                                    variant="plain"
                                     :items="items"
                                     density="compact"
                                     placeholder="Select a group"
@@ -112,3 +117,23 @@ let onFormSubmit = () => {
         </VContainer>
     </AdminLayout>
 </template>
+<style scoped>
+.blue-outline-field {
+    border: 1px solid var(--Primary, #001a8f);
+    border-radius: 5px;
+    background: var(--White, #fff);
+    padding: 8px 16px;
+}
+:deep(.v-field__input) {
+    padding: 0 !important;
+}
+:deep(.v-field__input input) {
+    line-height: 38px !important;
+}
+:deep(textarea) {
+    line-height: 58px !important;
+
+    border: 0 !important;
+    background: #fff !important;
+}
+</style>

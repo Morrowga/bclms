@@ -2,7 +2,7 @@
 import { initialAbility } from "@/plugins/casl/ability";
 import { useAppAbility } from "@/plugins/casl/useAppAbility";
 import { usePage, Link } from "@inertiajs/vue3";
-import { computed } from "vue";
+import { computed, defineEmits } from "vue";
 import { router } from "@inertiajs/core";
 const ability = useAppAbility();
 const userData = computed(() => usePage().props.auth);
@@ -14,6 +14,10 @@ const logout = () => {
             : "";
     localStorage.removeItem("menu_title");
     router.post(`${PREFIX}/logout`);
+};
+const emit = defineEmits();
+const openMenu = () => {
+    emit("openStdMenu");
 };
 </script>
 
@@ -30,16 +34,13 @@ const logout = () => {
             class="cursor-pointer studentpro"
             color="primary"
             variant="tonal"
+            @click="openMenu()"
         >
-            <VImg
+            <!-- <VImg
                 v-if="userData?.data && userData?.data?.image"
                 :src="userData?.data?.image"
-            />
-            <VIcon
-                v-else
-                icon="mdi-account-multiple-outline"
-                class="studenticon"
-            />
+            /> -->
+            <VIcon icon="mdi-account-multiple-outline" class="studenticon" />
 
             <!-- <VMenu activator="parent" width="230" offset="14px">
                 <VList class="my-menu">

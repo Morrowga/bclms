@@ -93,10 +93,10 @@ let updateValue = (event) => {
     padding: 8px 16px;
     border-radius: 100px;
 }
-::v-deep .v-field__input {
+:deep(.v-field__input) {
     padding: 0 !important;
 }
-::v-deep .v-field__input input {
+:deep(.v-field__input input) {
     line-height: 38px !important;
     color: #000 !important;
 }

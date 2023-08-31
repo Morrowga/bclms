@@ -47,6 +47,9 @@ onMounted(() => {
             break;
     }
 });
+const openStdMenu = () => {
+    emit("openMenu");
+};
 </script>
 <template>
     <v-app-bar
@@ -57,6 +60,7 @@ onMounted(() => {
         <StudentProfile
             class="d-flex pe-3"
             v-if="route().current() === 'dashboard'"
+            @openStdMenu="openStdMenu()"
         />
 
         <VSpacer />

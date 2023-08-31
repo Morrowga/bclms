@@ -26,7 +26,10 @@ const openFileInput = () => {
 };
 
 const publish = () => {
-    SuccessDialog({ title: "You have successfully requested" });
+    SuccessDialog({
+        title: "You have successfully requested",
+        color: "#17CAB6",
+    });
 };
 </script>
 <template #activator="{ props }">
@@ -163,7 +166,7 @@ const publish = () => {
         </VDialog>
     </div>
 </template>
-<style scoped>
+<style>
 .uploadedchip {
     display: flex;
     background: #e5e5e5;

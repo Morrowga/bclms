@@ -2,8 +2,8 @@
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { defineProps } from "vue";
-import UpdateSubscrptionStatus from "./components/UpdateSubscrptionStatus.vue"
-
+import UpdateSubscrptionStatus from "./components/UpdateSubscrptionStatus.vue";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 let props = defineProps();
 
 //## start datatable section
@@ -91,44 +91,67 @@ const selectionChanged = (data) => {
 <template>
     <section>
         <VCard>
-            <VCardText class="d-flex align-center flex-wrap gap-4">
-                    <!-- 👉 Export button -->
-                    <VSpacer />
-                    <div class="app-user-search-filter d-flex align-center gap-6">
-                        <VTextField
+            <VCardText class="d-flex justify-end align-center flex-wrap gap-4">
+                <!-- 👉 Export button -->
+
+                <div class="app-user-search-filter d-flex align-center gap-6">
+                    <VTextField
                         placeholder="Search User ..."
                         density="compact"
+                        style="width: 100%"
                     />
-                        <!-- 👉 Search  -->
-                        <VSelect
+                    <!-- 👉 Search  -->
+                    <!-- <VSelect
                             v-model="selectedRole"
                             label="Sort By"
                             :items="roles"
                             density="compact"
-                        />
-                    </div>
+                        /> -->
+                    <SelectBox
+                        :datas="[]"
+                        placeholder="Sort By"
+                        density="compact"
+                        variant="solo"
+                    />
+                </div>
             </VCardText>
 
             <VDivider />
 
-            <vue-good-table class="role-data-table" styleClass="vgt-table" v-on:selected-rows-change="selectionChanged"
-                :columns="columns" :rows="rows" :select-options="{
+            <vue-good-table
+                class="role-data-table"
+                styleClass="vgt-table"
+                v-on:selected-rows-change="selectionChanged"
+                :columns="columns"
+                :rows="rows"
+                :select-options="{
                     enabled: true,
-                }" :pagination-options="{enabled: true,}">
+                }"
+                :pagination-options="{ enabled: true }"
+            >
                 <template #table-row="dataProps">
                     <div v-if="dataProps.column.field === 'user'">
                         <div class="d-flex flex-row gap-2">
-                            <img src="/images/defaults/avator.png" class="user-profile-image" />
+                            <img
+                                src="/images/defaults/avator.png"
+                                class="user-profile-image"
+                            />
                             <span>Jordan Stevenson</span>
                         </div>
                     </div>
                     <div v-if="dataProps.column.field == 'plan'">
                         <div class="d-flex flex-row align-center gap-2">
-                            <span v-if="dataProps.row.plan" class="d-flex flex-row justify-center align-center gap-2">
+                            <span
+                                v-if="dataProps.row.plan"
+                                class="d-flex flex-row justify-center align-center gap-2"
+                            >
                                 <img src="/images/icons/freeplan.svg" />
                                 <span>free plan</span>
                             </span>
-                            <span v-else class="d-flex flex-row align-center gap-2">
+                            <span
+                                v-else
+                                class="d-flex flex-row align-center gap-2"
+                            >
                                 <img src="/images/icons/proplan.svg" />
                                 <span>pro plan</span>
                             </span>
@@ -146,14 +169,35 @@ const selectionChanged = (data) => {
                     <div v-if="dataProps.column.field == 'action'">
                         <VMenu location="end">
                             <template #activator="{ props }">
-                                <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black" class="mt-n4" />
+                                <VIcon
+                                    v-bind="props"
+                                    size="24"
+                                    icon="mdi-dots-horizontal"
+                                    color="black"
+                                    class="mt-n4"
+                                />
                             </template>
                             <VList>
-                                <VListItem @click="() => router.get(route('organizations.show',{ id: props.row.id }))
-                                ">
-                                  <UpdateSubscrptionStatus/>
+                                <VListItem
+                                    @click="
+                                        () =>
+                                            router.get(
+                                                route('organizations.show', {
+                                                    id: props.row.id,
+                                                })
+                                            )
+                                    "
+                                >
+                                    <UpdateSubscrptionStatus />
                                 </VListItem>
-                                <VListItem @click="() => router.get(route('organizations.test.edit'))">
+                                <VListItem
+                                    @click="
+                                        () =>
+                                            router.get(
+                                                route('organizations.test.edit')
+                                            )
+                                    "
+                                >
                                     <VListItemTitle>Get Invoice</VListItemTitle>
                                 </VListItem>
                             </VList>

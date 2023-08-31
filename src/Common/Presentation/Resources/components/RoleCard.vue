@@ -53,7 +53,9 @@ const props = defineProps({
                 </div>
                 <div class="d-flex justify-space-between align-center">
                     <div>
-                        <p class="tiggie-subtitle">{{ title }}</p>
+                        <p class="pppangram-medium role-card-title">
+                            {{ title }}
+                        </p>
                         <Link :href="url">{{ btnText }}</Link>
                     </div>
                     <div>
@@ -69,3 +71,13 @@ const props = defineProps({
         </VCard>
     </VCol>
 </template>
+<style scoped>
+.role-card-title {
+    color: rgba(40, 40, 40, 0.6) !important;
+    /* Body Style Large */
+    font-size: 24px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 38px !important; /* 158.333% */
+}
+</style>

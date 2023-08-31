@@ -1,49 +1,61 @@
 <script setup>
-import { ref } from "vue";
+import { ref, defineProps } from "vue";
 import HoverCard from "./HoverCard.vue";
 let is_description = ref(false);
 let is_chip = ref(true);
 import GreenChip from "@mainRoot/components/GreenChip/GreenChip.vue";
 import { router } from "@inertiajs/core";
+const props = defineProps({
+    isDisabled: {
+        type: Boolean,
+        default: false,
+    },
+});
 </script>
 <template>
-    <v-hover v-slot="{ isHovering, props }" open-delay="200">
-        <div class="main-card-book">
-            <v-card
-                @click="router.get(route('teacher_storybook.show'))"
-                v-bind="props"
-            >
-                <v-card-title style="position: relative">
-                    <v-img src="/images/image4.png" />
-                    <div class="chip-page" v-if="is_chip">
-                        <div class="chip-content">14 pages</div>
-                    </div>
-                </v-card-title>
-                <v-card-text>
-                    <h1 class="font-weight-bold text-h6 text-center pb-4">
-                        Toy Story 1
-                    </h1>
-                    <p v-if="is_description">
-                        When Woody is kidnapped by a greedy toy collector and is
-                        nowhere to be found, Buzz and his friends set out to
-                        rescue him.
-                    </p>
-                    <div class="chip-group">
-                        <GreenChip title="Switch" />
-                        <GreenChip title="Eye-Gaze" />
-                        <GreenChip title="Touch" />
-                    </div>
-                </v-card-text>
-            </v-card>
-            <v-scale-transition>
-                <HoverCard
-                    v-if="isHovering"
-                    class="card-hover"
+    <div>
+        <v-hover
+            v-slot="{ isHovering, props }"
+            open-delay="200"
+            :disabled="props.isDisabled"
+        >
+            <div class="main-card-book">
+                <v-card
+                    @click="router.get(route('teacher_storybook.show'))"
                     v-bind="props"
-                />
-            </v-scale-transition>
-        </div>
-    </v-hover>
+                >
+                    <v-card-title style="position: relative">
+                        <v-img src="/images/image4.png" />
+                        <div class="chip-page" v-if="is_chip">
+                            <div class="chip-content">14 pages</div>
+                        </div>
+                    </v-card-title>
+                    <v-card-text>
+                        <h1 class="font-weight-bold text-h6 text-center pb-4">
+                            Toy Story 1
+                        </h1>
+                        <p v-if="is_description">
+                            When Woody is kidnapped by a greedy toy collector
+                            and is nowhere to be found, Buzz and his friends set
+                            out to rescue him.
+                        </p>
+                        <div class="chip-group">
+                            <GreenChip title="Switch" />
+                            <GreenChip title="Eye-Gaze" />
+                            <GreenChip title="Touch" />
+                        </div>
+                    </v-card-text>
+                </v-card>
+                <v-scale-transition>
+                    <HoverCard
+                        v-if="isHovering"
+                        class="card-hover"
+                        v-bind="props"
+                    />
+                </v-scale-transition>
+            </div>
+        </v-hover>
+    </div>
 </template>
 <style scoped>
 .chip-group {
