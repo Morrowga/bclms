@@ -363,19 +363,19 @@ span {
 }
 
 .swal2-actions .swal2-confirm {
-    background-color: var(--success) !important;
+    // background-color: var(--success) !important;
     border: none;
     width: 340px;
 }
 
 
-.swal2-icon.swal2-success .swal2-success-ring {
-    border: 8px solid var(--success) !important;
-}
+// .swal2-icon.swal2-success .swal2-success-ring {
+//     border: 8px solid var(--success) !important;
+// }
 
-.swal2-icon.swal2-success [class^=swal2-success-line] {
-    background-color: var(--success) !important;
-}
+// .swal2-icon.swal2-success [class^=swal2-success-line] {
+//     background-color: var(--success) !important;
+// }
 
 // set inactive button
 .swal2-deny.swal2-styled {
@@ -424,8 +424,9 @@ span {
     // border: 10px solid var(--candy-red) !important;
 }
 
-
-
+.swal-teal{
+    color: var(--teal) !important;
+}
 //menu item styles
 
 .tiggie-menu-item-font-size {

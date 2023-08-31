@@ -60,6 +60,10 @@ const checkUserRole = () => {
 const forbiddenRole = () => {
     return user_role.value != "BC Subscriber" || user_role.value != "Teacher";
 };
+let isOpenMenu = ref(true);
+let toggleMenu = () => {
+    isOpenMenu.value = !isOpenMenu.value;
+};
 onMounted(() => {
     getNotifications();
 });
@@ -71,6 +75,7 @@ onMounted(() => {
         :user="user"
         :user_role="current_user_role"
         :tenant="tenant"
+        @openMenu="toggleMenu()"
     >
         <!--
             VAlert is use for show annnounment pages
@@ -144,31 +149,11 @@ onMounted(() => {
             ></StaffDashboard>
         </div>
     </AdminLayout>
-    <StudentLayout v-else>
-        <!-- <VAlert
-            v-for="item in notifications"
-            :key="item.id"
-            variant="tonal"
-            density="compact"
-            :type="item.data.type"
-            v-model="isAlertVisible"
-            closable
-            class="mb-2"
-            close-label="Close Alert"
+    <StudentLayout v-else @openMenu="toggleMenu()">
+        <StudentDashboard
+            :orgainzations_users="props.orgainzations_users"
+            :isOpenMenu="isOpenMenu"
         >
-            <template #text>
-                <span style="font-size:24px:">{{ item?.data?.type }}</span>
-                <br />
-                <span>{{ item.data.message }}</span>
-            </template>
-            <template #close>
-                <v-btn
-                    icon="mdi-close"
-                    @click="removeNotification(item.id)"
-                ></v-btn>
-            </template>
-        </VAlert> -->
-        <StudentDashboard :orgainzations_users="props.orgainzations_users">
         </StudentDashboard>
     </StudentLayout>
 </template>

@@ -6,9 +6,7 @@ import OrganizationUser from "./OrganizationUser.vue";
 <template>
     <AdminLayout>
         <VContainer fluid>
-            <h1 class="tiggie-title mb-4">
-                Subscription
-            </h1>
+            <h1 class="tiggie-title mb-4">Subscription</h1>
             <h4 class="tiggie-subtitle">B2C Users</h4>
             <VRow>
                 <VCol cols="12">

@@ -24,7 +24,10 @@ let model = ref(false);
                     mandatory
                 >
                     <v-slide-group-item v-for="item in 10" :key="item">
-                        <TeacherStorybookCard class="mr-4" />
+                        <TeacherStorybookCard
+                            :isDisabled="true"
+                            class="margin-card"
+                        />
                     </v-slide-group-item>
                 </v-slide-group>
             </div>
@@ -32,6 +35,9 @@ let model = ref(false);
     </div>
 </template>
 <style scoped>
+.margin-card {
+    margin-right: 20px !important;
+}
 .header-sec {
     width: 100%;
     gap: 20px;

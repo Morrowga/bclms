@@ -40,17 +40,41 @@ const date = ref("");
                         />
                     </VCol>
                     <VCol cols="12">
-                        <VLabel>Plan</VLabel>
+                        <VLabel class="tiggie-label">Plan</VLabel>
                         <div class="subplan">
                             <v-radio-group inline>
-                                <v-radio label="Free" value="1"></v-radio>
-                                <v-radio label="Base" value="2"></v-radio>
-                                <v-radio label="Pro" value="3"></v-radio>
-                                <v-radio label="Premium" value="4"></v-radio>
+                                <v-radio label="Free" value="1">
+                                    <template #label="{ label }">
+                                        <VLabel class="tiggie-label">
+                                            {{ label }}</VLabel
+                                        >
+                                    </template>
+                                </v-radio>
+                                <v-radio label="Base" value="2">
+                                    <template #label="{ label }">
+                                        <VLabel class="tiggie-label">
+                                            {{ label }}</VLabel
+                                        >
+                                    </template>
+                                </v-radio>
+                                <v-radio label="Pro" value="3">
+                                    <template #label="{ label }">
+                                        <VLabel class="tiggie-label">
+                                            {{ label }}</VLabel
+                                        >
+                                    </template>
+                                </v-radio>
+                                <v-radio label="Premium" value="4">
+                                    <template #label="{ label }">
+                                        <VLabel class="tiggie-label">
+                                            {{ label }}</VLabel
+                                        >
+                                    </template>
+                                </v-radio>
                             </v-radio-group>
                         </div>
                     </VCol>
-                    <VCol cols="6">
+                    <VCol cols="10">
                         <VRow justify="space-between">
                             <VCol cols="4">
                                 <div class="d-flex flex-column">

@@ -39,7 +39,9 @@
                 >
                     <div class="physicalresource-child-content">
                         <img src="/images/pdficon.png" class="px-2" />
-                        <span>Receiptasdasfddsfsadfasdf...</span>
+                        <span class="text-white"
+                            >Receiptasdasfddsfsadfasdf...</span
+                        >
                     </div>
                 </div>
             </div>

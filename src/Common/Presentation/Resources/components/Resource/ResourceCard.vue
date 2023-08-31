@@ -1,10 +1,18 @@
 <script setup>
 import { router } from "@inertiajs/core";
 import CardAction from "@mainRoot/components/Resource/CardAction.vue";
+import { defineProps } from "vue";
+const props = defineProps({
+    isEditMode: {
+        type: Boolean,
+        default: false,
+    },
+});
 </script>
 <template>
     <VCard>
-        <CardAction />
+        <CardAction :hidden="isEditMode" />
+        <VCheckbox class="checkboxcard" v-if="isEditMode"></VCheckbox>
         <v-img src="images/chair.jpeg" cover></v-img>
         <div class="resource-label">
             <VRow>
@@ -21,7 +29,13 @@ import CardAction from "@mainRoot/components/Resource/CardAction.vue";
                 <VCol cols="3">
                     <div class="d-flex justify-center">
                         <div>
-                            <img src="/images/media.png" width="15" height="15" class="mt-1" alt="">
+                            <img
+                                src="/images/media.png"
+                                width="15"
+                                height="15"
+                                class="mt-1"
+                                alt=""
+                            />
                         </div>
                         <div>
                             <span class="media-text ml-1">JPG</span>
@@ -38,12 +52,11 @@ import CardAction from "@mainRoot/components/Resource/CardAction.vue";
                     <span class="media-text">1920x1080</span>
                 </VCol>
             </VRow>
-
         </div>
     </VCard>
 </template>
 <style scoped>
-.resourcemenu{
+.resourcemenu {
     font-weight: bold !important;
     font-size: 20px !important;
     position: absolute;
@@ -52,16 +65,25 @@ import CardAction from "@mainRoot/components/Resource/CardAction.vue";
     color: #000 !important;
     right: 6%;
 }
-.media-text{
+.checkboxcard {
+    font-weight: bold !important;
+    font-size: 20px !important;
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+    color: #000 !important;
+    left: 6%;
+}
+.media-text {
     font-size: 13px !important;
 }
-.rolling-card{
+.rolling-card {
     border: 3px solid #000;
-    background: var(--seaform, #D7F2F0);
+    background: var(--seaform, #d7f2f0);
 }
 
-.me-chip{
-    background: #FC0 !important;
+.me-chip {
+    background: #fc0 !important;
     z-index: 1;
     height: 30px !important;
 }

@@ -8,10 +8,8 @@ let onFormSubmit = () => {
 <template>
     <v-card>
         <v-card-title>
-            <v-btn class="dotbtn" icon="true"
-            color="rgba(255, 255, 255, 0.70)"
-            >
-            <img src="/images/dot.png" width="10" height="18" alt="">
+            <v-btn class="dotbtn" icon="true" color="rgba(255, 255, 255, 0.70)">
+                <img src="/images/dot.png" width="10" height="18" alt="" />
                 <v-menu activator="parent">
                     <v-list>
                         <v-list-item>
@@ -32,7 +30,11 @@ let onFormSubmit = () => {
         </v-card-text>
 
         <div class="my-3 mx-2">
-            <v-btn class="manage-btn" variant="flat" color="#FF8015" rounded>Manage Assignment to Students</v-btn>
+            <Link :href="route('teacher_storybook.assign_student')">
+                <v-btn class="manage-btn" variant="flat" color="#FF8015" rounded
+                    >Manage Assignment to Students</v-btn
+                >
+            </Link>
         </div>
     </v-card>
 </template>
@@ -42,15 +44,15 @@ let onFormSubmit = () => {
     gap: 10px;
 }
 
-.dotbtn{
-   padding: 8px !important;
-   position: absolute;
-   z-index: 1 !important;
-   right: 10% !important;
-   top: 5%;
+.dotbtn {
+    padding: 8px !important;
+    position: absolute;
+    z-index: 1 !important;
+    right: 10% !important;
+    top: 5%;
 }
 
-.manage-btn{
+.manage-btn {
     color: #fff !important;
 }
 
@@ -62,5 +64,4 @@ let onFormSubmit = () => {
 ::v-deep .manage-btn > span.v-btn__content {
     font-size: 13px !important;
 }
-
 </style>

@@ -25,6 +25,10 @@ injectSkinClasses();
 let props = defineProps(["user"]);
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
+let emit = defineEmits();
+const openMenu = () => {
+    emit("openMenu");
+};
 </script>
 <template>
     <AppLayout class="student">
@@ -40,6 +44,7 @@ let user_role = computed(() => page.props.user_info.user_role.name);
             <DefaultLayoutWithHorizontalNav
                 v-bind="layoutAttrs"
                 :user_role="user_role"
+                @openMenu="openMenu()"
             >
                 <slot />
             </DefaultLayoutWithHorizontalNav>
