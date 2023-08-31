@@ -11,6 +11,8 @@ import { isConfirmedDialog } from "@actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
+let page = usePage();
+let user_role = computed(() => page.props.user_info.user_role.name);
 let props = defineProps([
     "classrooms",
     "students",
@@ -39,6 +41,9 @@ const reject = () => {
         color: "#17CAB6",
     });
     isEditMode.value = false;
+};
+const checkIsOrg = () => {
+    return user_role.value == "Organization Admin" ? true : false;
 };
 </script>
 
@@ -78,6 +83,7 @@ const reject = () => {
                             </div>
                             <div v-else>
                                 <v-btn
+                                    v-if="checkIsOrg()"
                                     varient="flat"
                                     class="mr-2 text-white"
                                     color="#FF8015"
