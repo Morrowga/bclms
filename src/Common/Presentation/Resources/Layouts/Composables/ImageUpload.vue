@@ -10,6 +10,7 @@ function SelectImage() {
     file.value.click();
 }
 
+let modelValue = ref("");
 let emit = defineEmits("update:modelValue");
 let props = defineProps({
     old_img: {
@@ -93,7 +94,7 @@ function handleRemoveImage() {
             <div class="d-flex justify-end w-100">
                 <VBtn
                     size="small"
-                    variant="outlined"
+                    variant="flat"
                     color="error"
                     v-if="hasImage"
                     @click="handleRemoveImage"

@@ -162,7 +162,7 @@ let form = useForm({
     timezone: props?.setting?.timezone,
     locale: props?.setting?.locale,
     email: props?.setting?.email,
-    contact_number: props?.setting?.contact_number,
+    contact_number: props?.setting?.contact_number ?? "",
     url: "",
     sub_domain: "",
 });
@@ -193,12 +193,12 @@ function handleUpdateSite() {
                                     v-model="form.site_name"
                                     :rules="[requiredValidator]"
                                     :error-messages="form?.errors?.site_name"
-                                    class="pt-5"
+                                    class=""
                                 />
                             </VCol>
                             <VCol cols="8">
                                 <VLabel class="tiggie-label">SSL</VLabel>
-                                <VTextField v-model="form.ssl" class="pt-5" />
+                                <VTextField v-model="form.ssl" class="" />
                             </VCol>
                             <VCol cols="8">
                                 <VLabel class="tiggie-label"
@@ -208,6 +208,7 @@ function handleUpdateSite() {
                                     :items="timezone"
                                     v-model="form.timezone"
                                     :error-messages="form?.errors?.timezone"
+                                    class=""
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -218,6 +219,7 @@ function handleUpdateSite() {
                                     :items="locales"
                                     v-model="form.locale"
                                     :error-messages="form?.errors?.locale"
+                                    class=""
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -227,7 +229,7 @@ function handleUpdateSite() {
                                     v-model="form.email"
                                     :rules="[emailValidator]"
                                     :error-messages="form?.errors?.email"
-                                    class="pt-5"
+                                    class=""
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -238,7 +240,7 @@ function handleUpdateSite() {
                                     type="number"
                                     v-model="form.contact_number"
                                     :rules="[requiredValidator]"
-                                    class="pt-5"
+                                    class=""
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -246,7 +248,7 @@ function handleUpdateSite() {
                                 <VTextField
                                     v-model="form.url"
                                     :rules="[requiredValidator]"
-                                    class="pt-5"
+                                    class=""
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -254,7 +256,7 @@ function handleUpdateSite() {
                                 <VTextField
                                     v-model="form.sub_domain"
                                     :rules="[requiredValidator]"
-                                    class="pt-5"
+                                    class=""
                                 />
                             </VCol>
                         </VRow>
@@ -307,8 +309,15 @@ function handleUpdateSite() {
     </AdminLayout>
 </template>
 
-<style>
+<style scoped>
 .v-btn__content {
     color: var(--v-theme-white) !important;
+}
+:deep(.v-input__control) {
+    border: 1px solid blue !important;
+    border-radius: 10px !important;
+}
+:deep(.v-btn__content) {
+    color: #fff !important;
 }
 </style>
