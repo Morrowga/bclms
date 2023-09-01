@@ -396,7 +396,7 @@ span {
 .swal2-cancel.swal2-styled {
     width: 170.045px !important;
     border-radius: 8px !important;
-    background: var(--gray, #BFC0C1);
+    background: var(--gray, #BFC0C1) !important;
     color: var(--light-gray, #F4F4F4);
     text-align: center;
     font-feature-settings: 'clig' off, 'liga' off;

@@ -221,9 +221,13 @@ watch(serverPerPage, function (value) {
                             <div v-if="props.column.field == 'organization'">
                                 <div class="">
                                     <div v-if="props.row.isOrganization">
-                                        <p>{{ props.row.organization }}</p>
+                                        <Link :href="route('organizations.show')">
+                                            <span style="cursor: pointer;" class="text-default-color">{{ props.row.organization }}</span>
+                                        </Link>
                                     </div>
-                                    <div v-else class="d-flex flex-row gap-2">
+                                    <div v-else>
+
+                                        <Link :href="route('viewteacher')" class="d-flex flex-row gap-2 text-default-color">
                                         <img
                                             src="/images/defaults/avator.png"
                                             class="user-profile-image"
@@ -231,6 +235,7 @@ watch(serverPerPage, function (value) {
                                         <span>{{
                                             props.row.organization
                                         }}</span>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

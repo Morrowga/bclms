@@ -78,24 +78,6 @@ const toggleDialog = (id) => {
                 </div>
             </swiper-slide>
         </swiper>
-        <!-- <v-slide-group v-model="model" center-active show-arrows>
-            <v-slide-group-item v-for="data in datas" :key="data.image" v-slot="{ isSelected, toggle }">
-                <div style="position: relative">
-
-                    <v-card class="ma-4" height="250" width="400" @click="toggle" style="position: relative;z-index: 1;"
-                        :color="isSelected ? 'primary' : 'grey-lighten-3'">
-
-                        <div class="d-flex fill-height align-center justify-center">
-                            <img class="bg-white fit-img-2" :src="data.image" />
-                        </div>
-                        <v-scale-transition class="full-icon">
-                            <v-icon v-if="isSelected" size="48" icon="mdi-check-circle-outline"></v-icon>
-                        </v-scale-transition>
-                    </v-card>
-                    <p class="font-weight-bold text-center">{{ data.title }}</p>
-                </div>
-            </v-slide-group-item>
-        </v-slide-group> -->
     </div>
 </template>
 

@@ -2,9 +2,10 @@
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
-import { toastAlert } from "@Composables/useToastAlert";
+import { isConfirmedDialog } from "@actions/useConfirm";
+
+
 
 let props = defineProps(["users"]);
 //## start datatable section
@@ -43,31 +44,21 @@ let columns = [
 
 let rows = props.users;
 
-//## truncatedText
-let truncatedText = (text) => {
-    if (text) {
-        if (text?.length <= 30) {
-            return text;
-        } else {
-            return text?.substring(0, 30) + "...";
-        }
-    }
-};
 
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
+
+const handleSetInActive = () => {
+    isConfirmedDialog({ title : "",icon: "warning",confirmButtonText : "Save" ,denyButtonText : "Set Inactive" });
+}
 </script>
 <template>
     <section>
         <VCard>
             <VCardText class="d-flex align-center flex-wrap gap-4">
                 <!-- 👉 Export button -->
-                <VBtn
-                    variant="tonal"
-                    color="primary"
-                    prepend-icon="mdi-tray-arrow-up"
-                >
+                <VBtn variant="tonal" color="primary" prepend-icon="mdi-tray-arrow-up">
                     Export
                 </VBtn>
 
@@ -77,142 +68,67 @@ const selectionChanged = (data) => {
 
                 <div class="app-user-search-filter d-flex align-center gap-6">
                     <!-- 👉 Search  -->
-                    <VSelect
-                        v-model="selectedRole"
-                        label="Sort By"
-                        :items="roles"
-                        density="compact"
-                    />
+                    <VSelect v-model="selectedRole" label="Sort By" :items="roles" density="compact" />
                     <!-- 👉 Add user button -->
                     <Link :href="route('users.index')">
-                        <VBtn height="40" density="compact">
-                            <span class="text-uppercase text-white">
-                                Vew More
-                            </span>
-                        </VBtn>
+                    <VBtn height="40" density="compact">
+                        <span class="text-uppercase text-white">
+                            Vew More
+                        </span>
+                    </VBtn>
                     </Link>
                 </div>
             </VCardText>
             <VDivider />
 
-            <vue-good-table
-                class="role-data-table"
-                styleClass="vgt-table"
-                v-on:selected-rows-change="selectionChanged"
-                :columns="columns"
-                :rows="rows"
-                :select-options="{
+            <vue-good-table class="role-data-table" styleClass="vgt-table" v-on:selected-rows-change="selectionChanged"
+                :columns="columns" :rows="rows" :select-options="{
                     enabled: true,
-                }"
-                :pagination-options="{
-                    enabled: true,
-                }"
-            >
+                }" :pagination-options="{ enabled: true, }">
                 <template #table-row="dataProps">
-                    <div
-                        v-if="dataProps.column.field == 'user'"
-                        class="flex flex-nowrap"
-                    >
+                    <div v-if="dataProps.column.field == 'user'" class="flex flex-nowrap">
                         <VListItem class="pa-0">
                             <!-- 👉 Avatar  -->
                             <template #prepend>
-                                <VAvatar
-                                    rounded
-                                    :size="38"
-                                    class="me-3"
-                                    :image="avatar4"
-                                />
+                                <VAvatar rounded :size="38" class="me-3" :image="avatar4" />
                             </template>
 
                             <!-- 👉 Title and Subtitle -->
-                            <VListItemTitle
-                                class="text-sm font-weight-semibold mb-1"
-                            >
+                            <VListItemTitle class="text-sm font-weight-semibold mb-1">
                                 {{ dataProps.row.user }}
                             </VListItemTitle>
 
-                            <VListItemSubtitle
-                                class="text-xs text-no-wrap d-flex align-center"
-                            >
+                            <VListItemSubtitle class="text-xs text-no-wrap d-flex align-center">
                                 <span> {{ dataProps.row.email }}</span>
                             </VListItemSubtitle>
                         </VListItem>
                     </div>
-                    <div
-                        v-if="dataProps.column.field == 'role'"
-                        class="flex flex-nowrap"
-                    >
+                    <div v-if="dataProps.column.field == 'role'" class="flex flex-nowrap">
                         <VChip size="small" color="primary">
                             {{ dataProps.row?.roles[0]?.name }}
                         </VChip>
                     </div>
-                    <div
-                        v-if="dataProps.column.field == 'plan'"
-                        class="flex flex-nowrap"
-                    >
+                    <div v-if="dataProps.column.field == 'plan'" class="flex flex-nowrap">
                         &minus;
                     </div>
-                    <div
-                        v-if="dataProps.column.field == 'status'"
-                        class="flex flex-nowrap"
-                    >
-                        <VChip
-                            size="small"
-                            color="success"
-                            v-if="dataProps.row.email_verified_at"
-                        >
+                    <div v-if="dataProps.column.field == 'status'" class="flex flex-nowrap">
+                        <VChip size="small" color="success" v-if="dataProps.row.email_verified_at">
                             verify
                         </VChip>
-                        <VChip
-                            size="small"
-                            color="warning"
-                            v-if="!dataProps.row.email_verified_at"
-                        >
+                        <VChip size="small" color="warning" v-if="!dataProps.row.email_verified_at">
                             pending
                         </VChip>
                     </div>
-                    <div
-                        v-if="dataProps.column.field == 'action'"
-                        class="flex flex-nowrap"
-                    >
+                    <div v-if="dataProps.column.field == 'action'" class="flex flex-nowrap">
                         <VMenu location="end">
                             <template #activator="{ props }">
-                                <VIcon
-                                    v-bind="props"
-                                    size="24"
-                                    icon="mdi-dots-horizontal"
-                                    color="black"
-                                    class="mt-n4"
-                                />
+                                <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black" class="mt-n4" />
                             </template>
                             <VList>
-                                <VListItem
-                                    @click="
-                                        () =>
-                                            router.get(
-                                                route('organizations.show', {
-                                                    id: props.row.id,
-                                                })
-                                            )
-                                    "
-                                >
-                                    <VListItemTitle>View</VListItemTitle>
+                                <VListItem @click="handleSetInActive">
+                                    <VListItemTitle>Set Inactive</VListItemTitle>
                                 </VListItem>
-                                <VListItem
-                                    @click="
-                                        () =>
-                                            router.get(
-                                                route('organizations.test.edit')
-                                            )
-                                    "
-                                >
-                                    <VListItemTitle>Edit</VListItemTitle>
-                                </VListItem>
-                                <VListItem
-                                    @click="deleteOrganization(props.row.id)"
-                                >
-                                    <VListItemTitle>Delete</VListItemTitle>
-                                </VListItem>
+
                             </VList>
                         </VMenu>
                     </div>
