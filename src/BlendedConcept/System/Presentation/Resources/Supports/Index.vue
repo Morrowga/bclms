@@ -107,13 +107,16 @@ const selectionChanged = (data) => {
                                     class="d-flex justify-end align-center gap-3"
                                 >
                                     <VTextField
-                                        placeholder="Search Organizations"
+                                        placeholder="Search Request"
                                         density="compact"
-                                        style="width: 250px;"
+                                        style="width: 250px"
                                     />
-                                    <SelectBox label="Sort By"
-                                    :datas="['Name', 'Date', 'Status']"
-                                    density="compact" style="width: 150px;" />
+                                    <SelectBox
+                                        label="Sort By"
+                                        :datas="['Name', 'Date', 'Status']"
+                                        density="compact"
+                                        style="width: 150px"
+                                    />
                                     <VBtn
                                         class="tiggie-btn"
                                         @click="isAnswerTechnicalSupport = true"

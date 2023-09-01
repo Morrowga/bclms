@@ -36,40 +36,28 @@ const toggleDialog = (id) => {
     console.log("id", id);
     // dialog.value = !dialog.value;
 };
+const resolveComponent = (item) => {
+    if (props.type == "games") return ShowDetail;
 
+    return ShowBookDetail;
+};
 </script>
 <template>
-     <div class="control-position">
+    <div class="control-position">
         <div class="head-section">
             <div class="title-section">
                 <p class="heading-title">{{ title }}</p>
                 <span class="subheading">{{ subtitle }}</span>
             </div>
+            <div class="head-button">
+                <Link :href="url">
+                    <VBtn>{{ btnText }}</VBtn>
+                </Link>
+            </div>
         </div>
-        <swiper :slides-per-view="5" :space-between="2" class="d-flex ">
+        <swiper :slides-per-view="5" :space-between="200" class="d-flex">
             <swiper-slide v-for="data in datas" :key="data.image">
-                <div style="position: relative">
-                    <v-card
-                        class="ma-4"
-                        width="254px"
-                        height="162px"
-                        style="position: relative; z-index: 1"
-                        :color="'primary'"
-                    >
-                        <div
-                            class="d-flex fill-height align-center justify-center"
-                        >
-                            <img class="bg-white fit-img-2" :src="data.image" />
-                        </div>
-                        <v-scale-transition class="full-icon">
-                            <!-- <v-icon
-                                size="48"
-                                icon="mdi-check-circle-outline"
-                            ></v-icon> -->
-                        </v-scale-transition>
-                    </v-card>
-                    <p class="font-weight-bold text-center">{{ data.title }}</p>
-                </div>
+                <Component :is="resolveComponent(item)" :data="data" />
             </swiper-slide>
         </swiper>
     </div>

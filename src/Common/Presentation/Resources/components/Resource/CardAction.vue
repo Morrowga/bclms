@@ -3,8 +3,11 @@ import { router } from "@inertiajs/core";
 import EditModal from "@mainRoot/components/Resource/EditModal.vue";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
+import { usePage } from "@inertiajs/vue3";
 
 let props = defineProps(["route", "title", "type"]);
+let page = usePage();
+let user_role = computed(() => page.props.user_info.user_role.name);
 const isEditDialogVisible = ref(false);
 const selectedImage = ref(null);
 
@@ -31,6 +34,9 @@ const publish = () => {
         color: "#17CAB6",
     });
 };
+const checkIsOrg = () => {
+    return user_role.value == "Organization Admin" ? true : false;
+};
 </script>
 <template #activator="{ props }">
     <div>
@@ -45,7 +51,7 @@ const publish = () => {
                     <v-list-item @click="onFormSubmit">
                         <v-list-item-title>Delete</v-list-item-title>
                     </v-list-item>
-                    <v-list-item @click="publish()">
+                    <v-list-item @click="publish()" v-if="!checkIsOrg()">
                         <v-list-item-title
                             >Publish to Organization</v-list-item-title
                         >

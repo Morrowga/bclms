@@ -37,6 +37,7 @@ let drawer = ref(false);
 let toggle = () => {
     drawer.value = !drawer.value;
 };
+
 let props = defineProps(["user_role"]);
 let page = usePage();
 let showMenubar = ref(true);
@@ -64,6 +65,7 @@ const resolveHeaderComponent = () => {
     // showMenubar.value = false;
     // return StudentHeader;
 };
+
 const resolveNavItemComponent = (item) => {
     if ("children" in item) return MobileGroupNavLink;
 
@@ -122,7 +124,7 @@ const openMenu = () => {
                 "
                 elevation="1"
             >
-                <HorizontalNav :nav-items="navItems"/>
+                <HorizontalNav :nav-items="navItems" />
             </v-toolbar>
         </template>
         <template #padding v-if="showMenubar">
@@ -147,11 +149,8 @@ const openMenu = () => {
     </HorizontalNavLayout>
 </template>
 
-
 <style scoped>
-:deep(.v-toolbar__content)
-{
+:deep(.v-toolbar__content) {
     justify-content: space-between;
 }
-
 </style>

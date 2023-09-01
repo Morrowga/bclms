@@ -309,15 +309,12 @@ function handleUpdateSite() {
     </AdminLayout>
 </template>
 
-<style scoped>
-.v-btn__content {
-    color: var(--v-theme-white) !important;
-}
+<style lang="scss" scoped>
 :deep(.v-input__control) {
     border: 1px solid blue !important;
     border-radius: 10px !important;
 }
-:deep(.v-btn__content) {
+/* :deep(.v-btn__content) {
     color: #fff !important;
-}
+} */
 </style>

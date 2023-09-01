@@ -11,7 +11,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 <template>
     <StudentLayout>
-        <section style="min-height: 90vh">
+        <section>
             <VRow>
                 <VCol cols="1">
                     <img
@@ -24,14 +24,14 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                 <VCol cols="11">
                     <div class="d-flex justify-center">
                         <div class="postercard">
-                            <img
+                            <!-- <img
                                 src="/images/blankpage.png"
                                 alt=""
                                 class="reward-img"
-                            />
+                            /> -->
                             <!-- <div class="d-flex justify-center"> -->
                             <div class="b4">
-                                <VRow>
+                                <VRow class="mt-4">
                                     <VCol
                                         cols="12"
                                         sm="6"
@@ -113,7 +113,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                     <VCol
                                         cols="12"
                                         sm="6"
-                                        md="4"
+                                        md="6"
                                         lg="3"
                                         class="text-center"
                                     >
@@ -190,6 +190,8 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 .postercard {
     position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 .rolltext {
@@ -242,13 +244,17 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 }
 
 .b4 {
-    position: absolute;
-    top: 10% !important;
-    z-index: 1;
-    width: 100%;
-    overflow: auto !important;
-    padding: 20px;
-    height: 588px;
+    background: url("/images/blankpage.png");
+    background-size: 100% 100%;
+    padding: 60px;
+    width: 85%;
+    // position: absolute;
+    // top: 10% !important;
+    // z-index: 1;
+    // width: 100%;
+    // overflow: auto !important;
+    // padding: 20px;
+    // height: 588px;
     // top: 20%
 }
 
@@ -263,8 +269,8 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 }
 
 .reward-img {
-    position: relative;
-    height: 85vh;
+    // position: fixed;
+    // height: 85vh;
 }
 
 .overlay-container {
