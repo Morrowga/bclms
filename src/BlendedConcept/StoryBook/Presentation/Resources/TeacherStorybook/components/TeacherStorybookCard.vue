@@ -112,4 +112,18 @@ const props = defineProps({
     height: 150%;
     z-index: 10;
 }
+
+
+.checkbox-position
+{
+    position: absolute;
+    top:4px;
+    right: 10px;
+    padding: initial;
+    color: #282828;
+}
+.chip
+{
+    background-color: #FfFfFf !important;
+}
 </style>

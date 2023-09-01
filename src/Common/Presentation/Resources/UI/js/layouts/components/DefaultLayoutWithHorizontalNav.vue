@@ -122,7 +122,7 @@ const openMenu = () => {
                 "
                 elevation="1"
             >
-                <HorizontalNav :nav-items="navItems" />
+                <HorizontalNav :nav-items="navItems"/>
             </v-toolbar>
         </template>
         <template #padding v-if="showMenubar">
@@ -146,3 +146,12 @@ const openMenu = () => {
         <TheCustomizer />
     </HorizontalNavLayout>
 </template>
+
+
+<style scoped>
+:deep(.v-toolbar__content)
+{
+    justify-content: space-between;
+}
+
+</style>

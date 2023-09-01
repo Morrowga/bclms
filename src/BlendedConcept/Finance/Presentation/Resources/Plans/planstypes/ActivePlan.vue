@@ -2,8 +2,6 @@
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { ref, defineProps } from "vue";
-import Swal from "sweetalert2";
-import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 import {SuccessDialog} from '@actions/useSuccess';
 
@@ -11,16 +9,6 @@ import {SuccessDialog} from '@actions/useSuccess';
 
 let props = defineProps();
 
-const actions = ref([
-    {
-        title: 'Edit',
-        value: 'edit',
-    },
-    {
-        title: 'Delete',
-        value: 'delete',
-    }
-]);
 let searchItem = ref("")
 let columns = [
     {
@@ -126,7 +114,7 @@ SuccessDialog({title:"Subscription plan has been set inactivated"})
             <VCardText class="d-flex flex-wrap gap-4">
                 <!-- 👉 Export button -->
                     <VTextField
-                    v-model="searchItem"
+                     v-model="searchItem"
                      density="compact"
                      placeholder="Search Subscription Plans" />
                 <VSpacer />
@@ -159,17 +147,11 @@ SuccessDialog({title:"Subscription plan has been set inactivated"})
                                 <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black" class="mt-n4" />
                             </template>
                             <VList>
-                                 <VListItem @click="() => router.get(route('plans.show'))">
-                                     <VListItemTitle>View</VListItemTitle>
-                                </VListItem>
                                 <VListItem @click="() => router.get(route('plans.edit'))">
                                      <VListItemTitle>Edit</VListItemTitle>
                                 </VListItem>
                                 <VListItem @click="setInactive">
                                      <VListItemTitle>Set Inactive</VListItemTitle>
-                                </VListItem>
-                                <VListItem @click="deletePlan">
-                                     <VListItemTitle>Delete</VListItemTitle>
                                 </VListItem>
                             </VList>
                         </VMenu>

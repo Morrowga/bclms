@@ -4,24 +4,31 @@ import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 </script>
 <template>
-    <div>
-        <div class="d-flex justify-end mb-4">
-            <v-spacer></v-spacer>
-            <v-spacer></v-spacer>
-            <v-spacer></v-spacer>
-            <VTextField
-                placeholder="Search User ..."
-                density="compact"
-                class="mr-4"
-            />
-
-            <SelectBox
-                v-model="selectedRole"
-                label="Sort By"
-                :datas="roles"
-                density="compact"
-            />
-        </div>
+    <VContainer>
+        <VRow justify="space-between">
+            <VCOl cols="4">
+                <h1 class="tiggie-teacher-title">Teachers</h1>
+            </VCOl>
+            <VCol cols="8">
+                <VRow align="center" justify="end">
+                    <VCol cols="4" class="okay-par">
+                        <VTextField placeholder="Search User ..."
+                        variant="plain"
+                        density="compact">
+                        <template #append-inner>
+                        <VIcon icon="mdi-magnify" size="26px" height="26px"
+                            style="position: absolute;right: 10px;">
+                        </VIcon>
+                        </template>
+                        </VTextField>
+                    </VCol>
+                    <VCol cols="4">
+                        <SelectBox v-model="selectedRole"
+                        placeholder="Sort By" :datas="roles" :density="compact" />
+                    </VCol>
+                </VRow>
+            </VCol>
+        </VRow>
         <VRow cols="6">
             <VCol
                 cols="12"
@@ -44,6 +51,15 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
         <div class="d-flex justify-center">
             <Pagination />
         </div>
-    </div>
+    </VContainer>
 </template>
-<style scoped></style>
+<style scoped>
+
+:deep(.okay-par .v-text-field input)
+{
+    border-radius: 100px !important;
+    border: 1px solid #E5E5E5 !important;
+    padding: 8px 16px 8px 20px !important;
+    background: #F6F6F6 !important;
+}
+</style>
