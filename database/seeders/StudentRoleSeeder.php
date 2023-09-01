@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
-class OrganizationAdminSeeder extends Seeder
+class StudentRoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,22 +16,22 @@ class OrganizationAdminSeeder extends Seeder
     {
         $users = [
             [
-
-                'name' => 'Org One',
-                'organization_id' => 1,
+                'name' => 'Student One',
+                'organization_id' => null,
                 'email_verified_at' => now(),
                 'dob' => now(),
                 'contact_number' => '1234567890',
                 'storage_limit' => 100,
                 'is_active' => true,
-                'email' => 'orgone@mail.com',
+                'email' => 'studentone@mail.com',
                 'password' => 'password',
             ]
         ];
 
         foreach ($users as $user) {
-            $userModel = UserEloquentModel::create($user);
-            $userModel->roles()->sync([5]);
+            $userCreate = UserEloquentModel::create($user);
+
+            $userCreate->roles()->sync([6]);
         }
     }
 }

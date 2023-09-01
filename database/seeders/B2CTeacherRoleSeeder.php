@@ -25,18 +25,7 @@ class B2CTeacherRoleSeeder extends Seeder
                 'is_active' => true,
                 'email' => 'teacherone@mail.com',
                 'password' => 'password',
-            ],
-            [
-                'name' => 'Teacher Two',
-                'organization_id' => null,
-                'email_verified_at' => now(),
-                'dob' => now(),
-                'contact_number' => '1234567890',
-                'storage_limit' => 100,
-                'is_active' => true,
-                'email' => 'teachertwo@mail.com',
-                'password' => 'password',
-            ],
+            ]
 
         ];
 

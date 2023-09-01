@@ -11,7 +11,7 @@ const date = ref("");
         </template>
 
         <!-- Dialog Content -->
-        <VCard class="pa-7">
+        <VCard class="update-subscription pa-7">
             <DialogCloseBtn
                 variant="text"
                 size="small"
@@ -21,22 +21,24 @@ const date = ref("");
             <VCardTitle class="tiggie-title">Update Subscription</VCardTitle>
 
             <VCardText>
-                <VRow justify="center" align="center">
-                    <VCol cols="6">
+                <VRow justify="center" align="center" class="subscription">
+                    <VCol cols="6" class="date-time">
                         <VLabel class="tiggie-label">Start Date</VLabel>
                         <AppDateTimePicker
                             v-model="date"
-                            class="subplan-icon"
+                            class="subplan-icon blue-outline-field"
                             append-inner-icon="fa:fa-regular fa-calendar"
+                            variant="plain"
                         >
                         </AppDateTimePicker>
                     </VCol>
-                    <VCol cols="6">
+                    <VCol cols="6" class="date-time">
                         <VLabel class="tiggie-label">End Date</VLabel>
                         <AppDateTimePicker
                             v-model="date"
-                            class="subplan-icon"
+                            class="subplan-icon blue-outline-field"
                             append-inner-icon="fa:fa-regular fa-calendar"
+                            variant="plain"
                         />
                     </VCol>
                     <VCol cols="12">
@@ -124,7 +126,27 @@ const date = ref("");
 /* .subplan .v-selection-control-group--inline {
     justify-content: center;
 } */
-.subplan-icon .v-field__append-inner i {
+.update-subscription .subplan-icon .v-field__append-inner i {
     font-size: 25px !important;
+}
+.update-subscription .blue-outline-field {
+    border: 1px solid var(--Primary, #001a8f);
+    border-radius: 5px;
+    background: var(--White, #fff);
+    padding: 4px 16px;
+}
+body
+    > div.v-overlay-container
+    > div.v-overlay.v-overlay--active.v-theme--light.v-locale--is-ltr.v-dialog.v-overlay--scroll-blocked
+    > div.v-overlay__content
+    > div
+    > div.v-card-text
+    > div.subscription
+    > div
+    > div
+    > div
+    > div
+    > div.v-field__append-inner {
+    padding-top: 6px !important;
 }
 </style>
