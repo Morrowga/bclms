@@ -12,6 +12,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     <StudentLayout class="section-bg">
         <div class="storereward">
             <img
+                style="width: 214px; height: 234px"
                 src="/images/store.gif"
                 @click="() => router.get(route('reward-store'))"
                 alt=""
