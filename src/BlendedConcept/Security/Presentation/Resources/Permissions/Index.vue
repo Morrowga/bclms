@@ -41,25 +41,25 @@ const deletePermission = (id) => {
 //start datatable section
 let columns = [
     {
-        label: "PERMISSION NAME",
+        label: "Permission Name",
         field: "name",
         sortable: false,
     },
     {
-        label: "DESCRIPTION",
+        label: "Description",
         field: "description",
         sortable: false,
     },
     {
-        label: "GUARD NAME",
+        label: "Guard Name",
         field: "guard_name",
         sortable: false,
     },
-    {
-        label: "ACTION",
-        field: "action",
-        sortable: false,
-    },
+    // {
+    //     label: "ACTION",
+    //     field: "action",
+    //     sortable: false,
+    // },
 ];
 
 //## options for datatable
@@ -130,7 +130,7 @@ watch(serverPerPage, function (value) {
                                 truncatedText(props.row.description)
                             }}</span>
                         </div>
-                        <div v-if="props.column.field == 'action'">
+                        <!-- <div v-if="props.column.field == 'action'">
                             <div class="d-flex">
                                 <VBtn
                                     variant="text"
@@ -142,7 +142,7 @@ watch(serverPerPage, function (value) {
                                 >
                                 </VBtn>
                             </div>
-                        </div>
+                        </div> -->
                     </template>
                     <template #pagination-bottom>
                         <VRow class="pa-4">
