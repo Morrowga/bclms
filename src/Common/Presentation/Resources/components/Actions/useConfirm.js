@@ -1,6 +1,12 @@
 import Swal from "sweetalert2";
 
-let isConfirmedDialog = ({ title = '', icon = "warning",confirmButtonText ='Save',denyButtonText="Don't save"}) => {
+let isConfirmedDialog = ({ 
+    title = '', 
+    icon = "warning",
+    confirmButtonText ='Save',
+    denyButtonText="Don't save",
+    onConfirm = null
+}) => {
 
     Swal.fire({
         title: 'Are you sure?',
@@ -13,13 +19,14 @@ let isConfirmedDialog = ({ title = '', icon = "warning",confirmButtonText ='Save
         denyButtonText: denyButtonText,
 
     }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-            )
-        }
+        if (result.isDenied && onConfirm) {
+            //     Swal.fire(
+            //     'Deleted!',
+            //     'Your file has been deleted.',
+            //     'success'
+            // );
+            onConfirm(); // Execute the callback function if confirmed
+          }
     })
 
 

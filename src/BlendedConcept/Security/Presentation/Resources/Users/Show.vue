@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 
@@ -12,6 +13,15 @@ let form = useForm({
     isWeeklyLearningReport: false,
     isDedicatedStudentReport: false,
 });
+const setInactive = () => {
+    isConfirmedDialog({
+        title: "Are you sure?",
+        denyButtonText: "Set Inactive",
+        onConfirm: () => {
+            alert("good to go");
+        },
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -37,7 +47,9 @@ let form = useForm({
                                 <VLabel class="tiggie-label"
                                     >Organisation Name</VLabel
                                 >
-                                <p class="tiggie-p ml-4">Blended Concept</p>
+                                <p class="tiggie-p ml-4 text-underline">
+                                    Blended Concept
+                                </p>
                             </Link>
                         </VCol>
                         <VCol cols="12">
@@ -118,6 +130,7 @@ let form = useForm({
                                 color="candy-red"
                                 class="finish-btn pl-5 pr-5"
                                 height="50"
+                                @click="setInactive()"
                             >
                                 Set Inactive
                             </VBtn>
