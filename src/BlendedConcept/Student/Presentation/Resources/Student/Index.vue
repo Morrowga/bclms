@@ -179,13 +179,20 @@ watch(serverPerPage, function (value) {
 
                         <div class="d-flex">
                             <div
-                                class="app-user-search-filter d-flex align-center justify-end gap-3" style="width: 200px"
+                                class="app-user-search-filter d-flex align-center justify-end gap-3"
+                                style="width: 200px"
                             >
                                 <selectBox
                                     placeholder="Sort By"
                                     density="compact"
                                     variant="outlined"
-                                    :datas="['Name', 'Email', 'Contact Number', 'Role', 'Status']"
+                                    :datas="[
+                                        'Name',
+                                        'Email',
+                                        'Contact Number',
+                                        'Role',
+                                        'Status',
+                                    ]"
                                 />
                                 <!-- 👉 Add User button -->
                             </div>
@@ -221,20 +228,32 @@ watch(serverPerPage, function (value) {
                             <div v-if="props.column.field == 'organization'">
                                 <div class="">
                                     <div v-if="props.row.isOrganization">
-                                        <Link :href="route('organizations.show')">
-                                            <span style="cursor: pointer;" class="text-default-color">{{ props.row.organization }}</span>
+                                        <Link
+                                            :href="route('organizations.show')"
+                                        >
+                                            <span
+                                                style="cursor: pointer"
+                                                class="text-default-color"
+                                                >{{
+                                                    props.row.organization
+                                                }}</span
+                                            >
                                         </Link>
                                     </div>
                                     <div v-else>
-
-                                        <Link :href="route('viewteacher')" class="d-flex flex-row gap-2 text-default-color">
-                                        <img
-                                            src="/images/defaults/avator.png"
-                                            class="user-profile-image"
-                                        />
-                                        <span>{{
-                                            props.row.organization
-                                        }}</span>
+                                        <Link
+                                            :href="
+                                                route('users.show', { id: 1 })
+                                            "
+                                            class="d-flex flex-row gap-2 text-default-color"
+                                        >
+                                            <img
+                                                src="/images/defaults/avator.png"
+                                                class="user-profile-image"
+                                            />
+                                            <span>{{
+                                                props.row.organization
+                                            }}</span>
                                         </Link>
                                     </div>
                                 </div>

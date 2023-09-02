@@ -18,7 +18,7 @@ const setInactive = () => {
         title: "Are you sure?",
         denyButtonText: "Set Inactive",
         onConfirm: () => {
-            alert("good to go");
+            // alert("good to go");
         },
     });
 };
@@ -47,7 +47,7 @@ const setInactive = () => {
                                 <VLabel class="tiggie-label"
                                     >Organisation Name</VLabel
                                 >
-                                <p class="tiggie-p ml-4 text-underline">
+                                <p class="tiggie-p ml-4 underline">
                                     Blended Concept
                                 </p>
                             </Link>
@@ -143,3 +143,8 @@ const setInactive = () => {
         </VContainer>
     </AdminLayout>
 </template>
+<style scoped>
+.underline {
+    text-decoration: underline;
+}
+</style>
