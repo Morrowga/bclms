@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from "vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
+import { SuccessDialog } from "@actions/useSuccess";
 
 import AddBook from "./components/AddBook.vue";
 
@@ -11,11 +13,14 @@ let switchBtn = ref("");
 const selectedImage = ref(null);
 
 const handleDrop = (event) => {
-  event.preventDefault();
-  const selectedFile = event.dataTransfer.files[0];
-  if (selectedFile) {
-    selectedImage.value = URL.createObjectURL(selectedFile);
-  }
+    event.preventDefault();
+    const selectedFile = event.dataTransfer.files[0];
+    if (selectedFile) {
+        selectedImage.value = URL.createObjectURL(selectedFile);
+    }
+};
+const addPathway = () => {
+    SuccessDialog({ title: "You have successfully created Pathway" });
 };
 </script>
 <template>
@@ -38,7 +43,9 @@ const handleDrop = (event) => {
                             <span class="text-dark">Back</span>
                         </VBtn>
                     </Link>
-                    <VBtn height="30" class="ml-4"> Add Pathway </VBtn>
+                    <VBtn height="30" class="ml-4" @click="addPathway">
+                        Add Pathway
+                    </VBtn>
                 </VCol>
             </VRow>
             <VRow>
@@ -89,18 +96,16 @@ const handleDrop = (event) => {
                             >
                             <VSwitch v-model="switchBtn"> </VSwitch>
                         </VCol>
-                        <VCol cols="12" sm="6" md="4" class="py-4">
+                        <VCol cols="12" sm="6" md="6" class="py-4">
                             <h1 class="tiggie-title required">Current Flow</h1>
-                            <div class="coming-soon" @dragover.prevent @drop="handleDrop">
-                                <v-img v-if="selectedImage" :src="selectedImage" cover></v-img>
-                                <p v-else>Drop And Drop</p>
-                            </div>
+                            <ImageUpload data_type="pathway" />
                         </VCol>
                     </VRow>
                 </VCol>
             </VRow>
             <VRow>
                 <VCol cols="12" class="pt-0">
+                    <h1 class="tiggie-title required">Book Library</h1>
                     <AddBook />
                 </VCol>
             </VRow>
@@ -113,17 +118,15 @@ const handleDrop = (event) => {
     width: 70%;
 }
 
-.coming-soon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    height: 200px;
-    border: 1px dashed black;
-    border-radius: 10px;
-}
-.coming-soon p {
-    margin-bottom: 0;
+.import-card-text {
+    display: flex !important;
+    width: 469px !important;
+    height: 299px !important;
+    padding: 56px 79px !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 17px !important;
+    flex-shrink: 0 !important;
 }
 </style>

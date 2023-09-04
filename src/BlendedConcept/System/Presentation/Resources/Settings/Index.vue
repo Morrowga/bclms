@@ -3,7 +3,8 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { defineProps } from "vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
-import { toastAlert } from "@Composables/useToastAlert";
+import { SuccessDialog } from "@actions/useSuccess";
+
 import {
     emailValidator,
     requiredValidator,
@@ -162,19 +163,22 @@ let form = useForm({
     timezone: props?.setting?.timezone,
     locale: props?.setting?.locale,
     email: props?.setting?.email,
-    contact_number: props?.setting?.contact_number,
+    contact_number: props?.setting?.contact_number ?? "",
+    url: "",
+    sub_domain: "",
 });
 
 function handleUpdateSite() {
     form.post(route("updateSetting"), {
         onSuccess: () => {
-            toastAlert({ title: "updated" });
+            SuccessDialog({
+                title: "You have successfully updated site setting",
+            });
         },
-        onError: (error) => { },
+        onError: (error) => {},
     });
 }
 </script>
-
 
 <template>
     <AdminLayout>
@@ -182,55 +186,123 @@ function handleUpdateSite() {
             <VForm @submit.prevent="handleUpdateSite">
                 <VRow>
                     <VCol cols="6">
-                        <h4 class="tiggie-show-title  pr-10 margin-buttom-18">Website Details </h4>
+                        <h4 class="tiggie-show-title pr-10 margin-buttom-18">
+                            Website Details
+                        </h4>
                         <VRow>
-                            <VCol cols="12">
+                            <VCol cols="8">
                                 <VLabel class="tiggie-label">Site Name</VLabel>
-                                <VTextField v-model="form.site_name" :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.site_name" class="pt-5" />
+                                <VTextField
+                                    v-model="form.site_name"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.site_name"
+                                    class=""
+                                />
                             </VCol>
-                            <VCol cols="12">
+                            <VCol cols="8">
                                 <VLabel class="tiggie-label">SSL</VLabel>
-                                <VTextField v-model="form.ssl" class="pt-5" />
+                                <VTextField v-model="form.ssl" class="" />
                             </VCol>
-                            <VCol cols="12">
-                                <VLabel class="tiggie-label">Site Time Zone</VLabel>
-                                <VSelect :items="timezone" v-model="form.timezone"
-                                    :error-messages="form?.errors?.timezone" />
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label"
+                                    >Site Time Zone</VLabel
+                                >
+                                <VSelect
+                                    :items="timezone"
+                                    v-model="form.timezone"
+                                    :error-messages="form?.errors?.timezone"
+                                    class=""
+                                />
                             </VCol>
-                            <VCol cols="12">
-                                <VLabel class="tiggie-label">Site Locale</VLabel>
-                                <VSelect :items="locales" v-model="form.locale" :error-messages="form?.errors?.locale" />
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label"
+                                    >Site Locale</VLabel
+                                >
+                                <VSelect
+                                    :items="locales"
+                                    v-model="form.locale"
+                                    :error-messages="form?.errors?.locale"
+                                    class=""
+                                />
                             </VCol>
-                            <VCol cols="12">
+                            <VCol cols="8">
                                 <VLabel class="tiggie-label">Email</VLabel>
-                                <VTextField type="email" v-model="form.email" :rules="[emailValidator]"
-                                    :error-messages="form?.errors?.email" class="pt-5" />
+                                <VTextField
+                                    type="email"
+                                    v-model="form.email"
+                                    :rules="[emailValidator]"
+                                    :error-messages="form?.errors?.email"
+                                    class=""
+                                />
                             </VCol>
-                            <VCol cols="12">
-                                <VLabel class="tiggie-label">Contact Number</VLabel>
-                                <VTextField type="number" v-model="form.contact_number"
-                                    :rules="[requiredValidator, requiredValidator]"
-                                    :error-messages="form?.errors?.contact_number" class="pt-5" />
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label"
+                                    >Contact Number</VLabel
+                                >
+                                <VTextField
+                                    type="number"
+                                    v-model="form.contact_number"
+                                    :rules="[requiredValidator]"
+                                    class=""
+                                />
+                            </VCol>
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">URL</VLabel>
+                                <VTextField
+                                    v-model="form.url"
+                                    :rules="[requiredValidator]"
+                                    class=""
+                                />
+                            </VCol>
+                            <VCol cols="8">
+                                <VLabel class="tiggie-label">Sub Domain</VLabel>
+                                <VTextField
+                                    v-model="form.sub_domain"
+                                    :rules="[requiredValidator]"
+                                    class=""
+                                />
                             </VCol>
                         </VRow>
                     </VCol>
                     <VCol cols="6">
                         <VRow>
                             <VCol cols="12">
-                                <h4 class="pb-2 tiggie-show-title">Website Logo</h4>
-                                <ImageUpload v-model="form.site_logo" :old_img="$page?.props?.site_logo ?? ''" />
+                                <h4 class="pb-2 tiggie-show-title">
+                                    Website Logo
+                                </h4>
+                                <ImageUpload
+                                    v-model="form.site_logo"
+                                    :old_img="$page?.props?.site_logo ?? ''"
+                                />
+
+                                <VBtn class="w-100" height="55" max-width="400"
+                                    >Change Logo</VBtn
+                                >
                             </VCol>
                             <VCol cols="12">
-                                <h4 class="pb-2 tiggie-show-title">Website Favicon</h4>
-                                <ImageUpload v-model="form.fav_icon" :old_img="$page?.props?.fav_icon ?? ''" />
+                                <h4 class="pb-2 tiggie-show-title">
+                                    Website Favicon
+                                </h4>
+                                <ImageUpload
+                                    v-model="form.fav_icon"
+                                    :old_img="$page?.props?.fav_icon ?? ''"
+                                />
+
+                                <VBtn class="w-100" height="55" max-width="400"
+                                    >Change Favicon</VBtn
+                                >
                             </VCol>
                         </VRow>
                     </VCol>
                 </VRow>
-                <VRow justify="center">
+                <VRow justify="center" class="mt-16">
                     <VCol cols="4" justify="center" class="ml-2">
-                        <VBtn type="submit" class="tiggie-btn text-white" height="50" width="200">
+                        <VBtn
+                            type="submit"
+                            class="tiggie-btn text-white"
+                            height="50"
+                            width="200"
+                        >
                             Update
                         </VBtn>
                     </VCol>
@@ -240,8 +312,12 @@ function handleUpdateSite() {
     </AdminLayout>
 </template>
 
-<style>
-.v-btn__content {
-    color: var(--v-theme-white) !important;
+<style lang="scss" scoped>
+:deep(.v-input__control) {
+    border: 1px solid blue !important;
+    border-radius: 10px !important;
 }
+/* :deep(.v-btn__content) {
+    color: #fff !important;
+} */
 </style>

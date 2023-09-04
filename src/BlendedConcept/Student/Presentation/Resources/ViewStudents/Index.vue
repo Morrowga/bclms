@@ -1,6 +1,8 @@
 <script setup>
 import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+
 let roles = [];
 let selectedRole = null;
 </script>
@@ -27,22 +29,37 @@ let selectedRole = null;
                     </v-btn>
                 </Link>
             </div>
-            <div class="d-flex justify-end mb-4">
+            <div class="d-flex justify-end mb-4 align-center">
                 <v-spacer></v-spacer>
-                <v-spacer></v-spacer>
-                <v-spacer></v-spacer>
-                <VTextField
-                    placeholder="Search User ..."
-                    density="compact"
-                    class="mr-4"
-                />
 
-                <VSelect
-                    v-model="selectedRole"
-                    label="Sort By"
-                    :items="roles"
-                    density="compact"
-                />
+                <div class="search-field">
+                    <VTextField
+                        placeholder="Search User ..."
+                        density="compact"
+                        class="mr-4"
+                        variant="solo"
+                    />
+                </div>
+                <div class="d-flex">
+                    <div
+                        class="app-user-search-filter d-flex align-center justify-end gap-3"
+                        style="width: 200px"
+                    >
+                        <selectBox
+                            placeholder="Sort By"
+                            density="compact"
+                            variant="outlined"
+                            :datas="[
+                                'Name',
+                                'Email',
+                                'Contact Number',
+                                'Role',
+                                'Status',
+                            ]"
+                        />
+                        <!-- 👉 Add User button -->
+                    </div>
+                </div>
             </div>
             <VRow cols="6">
                 <VCol cols="2" class="pe-2" v-for="item in 12" :key="item">

@@ -2,9 +2,9 @@
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
-import { toastAlert } from "@Composables/useToastAlert";
+import { isConfirmedDialog } from "@actions/useConfirm";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 let props = defineProps(["users"]);
 //## start datatable section
@@ -43,20 +43,19 @@ let columns = [
 
 let rows = props.users;
 
-//## truncatedText
-let truncatedText = (text) => {
-    if (text) {
-        if (text?.length <= 30) {
-            return text;
-        } else {
-            return text?.substring(0, 30) + "...";
-        }
-    }
-};
-
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
+
+const handleSetInActive = () => {
+    isConfirmedDialog({
+        title: "",
+        icon: "warning",
+        confirmButtonText: "Save",
+        denyButtonText: "Set Inactive",
+    });
+};
+let selectedRole = ref("");
 </script>
 <template>
     <section>
@@ -72,15 +71,26 @@ const selectionChanged = (data) => {
                 </VBtn>
 
                 <VSpacer />
-
-                <VTextField placeholder="Search User ..." density="compact" />
+                <div class="search-field">
+                    <VTextField
+                        placeholder="Search User ..."
+                        density="compact"
+                        variant="solo"
+                    />
+                </div>
 
                 <div class="app-user-search-filter d-flex align-center gap-6">
                     <!-- 👉 Search  -->
-                    <VSelect
+                    <SelectBox
                         v-model="selectedRole"
-                        label="Sort By"
-                        :items="roles"
+                        placeholder="Sort By"
+                        :datas="[
+                            'Name',
+                            'Email',
+                            'Contact Number',
+                            'Admin',
+                            'Status',
+                        ]"
                         density="compact"
                     />
                     <!-- 👉 Add user button -->
@@ -104,9 +114,7 @@ const selectionChanged = (data) => {
                 :select-options="{
                     enabled: true,
                 }"
-                :pagination-options="{
-                    enabled: true,
-                }"
+                :pagination-options="{ enabled: true }"
             >
                 <template #table-row="dataProps">
                     <div
@@ -186,32 +194,10 @@ const selectionChanged = (data) => {
                                 />
                             </template>
                             <VList>
-                                <VListItem
-                                    @click="
-                                        () =>
-                                            router.get(
-                                                route('organizations.show', {
-                                                    id: props.row.id,
-                                                })
-                                            )
-                                    "
-                                >
-                                    <VListItemTitle>View</VListItemTitle>
-                                </VListItem>
-                                <VListItem
-                                    @click="
-                                        () =>
-                                            router.get(
-                                                route('organizations.test.edit')
-                                            )
-                                    "
-                                >
-                                    <VListItemTitle>Edit</VListItemTitle>
-                                </VListItem>
-                                <VListItem
-                                    @click="deleteOrganization(props.row.id)"
-                                >
-                                    <VListItemTitle>Delete</VListItemTitle>
+                                <VListItem @click="handleSetInActive">
+                                    <VListItemTitle
+                                        >Set Inactive</VListItemTitle
+                                    >
                                 </VListItem>
                             </VList>
                         </VMenu>

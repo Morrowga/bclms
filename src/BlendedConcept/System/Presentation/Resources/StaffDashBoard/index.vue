@@ -28,9 +28,44 @@ const bookResources = [
         id: 5,
         image: "/images/image5.png",
     },
+    {
+        id: 6,
+        image: "/images/image1.png",
+    },
+    {
+        id: 7,
+        image: "/images/image2.png",
+    },
+    {
+        id: 8,
+        image: "/images/image3.png",
+    },
+    {
+        id: 9,
+        image: "/images/image4.png",
+    },
+    {
+        id: 5,
+        image: "/images/image5.png",
+    },
 ];
 
 const gameResources = [
+    {
+        image: "/images/image6.png",
+    },
+    {
+        image: "/images/image7.png",
+    },
+    {
+        image: "/images/image8.png",
+    },
+    {
+        image: "/images/image9.png",
+    },
+    {
+        image: "/images/image10.png",
+    },
     {
         image: "/images/image6.png",
     },
@@ -56,11 +91,13 @@ const gameResources = [
                 title="Organizations"
                 btnText="Manage"
                 totalText="Total 19 Organizations"
+                :url="route('organizations.index')"
             />
             <RoleCard
                 title="Subscriptions"
                 btnText="Manage"
                 totalText="Total 87 Users"
+                :url="route('subscription_invoice')"
             />
             <RoleCard
                 title="Users"

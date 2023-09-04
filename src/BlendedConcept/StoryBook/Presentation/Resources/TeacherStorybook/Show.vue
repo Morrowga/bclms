@@ -20,7 +20,7 @@ let tab = ref(false);
             <v-row>
                 <v-col cols="12" md="6">
                     <div style="position: relative">
-                        <v-img src="/images/img.png" class="main-pic" />
+                        <v-img src="/images/imgbook.png" class="main-pic" />
                         <div class="vector-background">
                             <img src="/images/bg.png" />
                         </div>
@@ -92,17 +92,6 @@ let tab = ref(false);
                                 </v-window-item>
                             </v-window>
                         </div>
-                    </div>
-                    <div class="manage-btn mt-10">
-                        <Link :href="route('teacher_storybook.assign_student')">
-                            <v-btn
-                                variant="flat"
-                                rounded
-                                class="text-white"
-                                color="#FF8015"
-                                >Manage Assignment to Students</v-btn
-                            >
-                        </Link>
                     </div>
                 </v-col>
             </v-row>

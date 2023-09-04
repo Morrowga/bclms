@@ -5,7 +5,7 @@ import { ref, defineProps } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
-import {SuccessDialog} from '@actions/useSuccess';
+import { SuccessDialog } from "@actions/useSuccess";
 
 // import avatar4 from "@images/avatars/avatar-4.png";
 // let permissions = computed(() => usePage().props.auth.data.permissions);
@@ -14,13 +14,13 @@ let props = defineProps();
 
 const actions = ref([
     {
-        title: 'Edit',
-        value: 'edit',
+        title: "Edit",
+        value: "edit",
     },
     {
-        title: 'Delete',
-        value: 'delete',
-    }
+        title: "Delete",
+        value: "delete",
+    },
 ]);
 let columns = [
     {
@@ -67,17 +67,11 @@ let rows = [
         description: "Allow access to basic features",
         price: "$4.99",
         no_students: 1,
-        storage_space: "1GB"
-    }
+        storage_space: "1GB",
+    },
 ];
 
-
-const items = [
-    'Foo',
-    'Bar',
-]
-
-
+const items = ["Foo", "Bar"];
 
 //## truncatedText
 let truncatedText = (text) => {
@@ -95,61 +89,73 @@ const selectionChanged = (data) => {
 };
 
 const deletePlan = () => {
-SuccessDialog({title:"Subscription plan deleted"})
-
-}
+    SuccessDialog({ title: "Subscription plan deleted" });
+};
 const setActive = () => {
-SuccessDialog({title:"Subscription plan has been set activated"})
-
-}
+    SuccessDialog({ title: "Subscription plan has been set activated" });
+};
 </script>
 <template>
     <section>
-        <h3 class="mb-4 pppangram-bold inactive-plan-title">
-            Inactive Plans
-        </h3>
+        <h3 class="mb-4 pppangram-bold inactive-plan-title">Inactive Plans</h3>
         <VCard>
             <VCardText class="d-flex flex-wrap gap-4">
                 <!-- 👉 Export button -->
-                <VTextField
-                    v-model="searchItem"
-                    density="compact"
-                     placeholder="Search Subscription Plans" />
+                <div class="search-field">
+                    <VTextField
+                        v-model="searchItem"
+                        density="compact"
+                        placeholder="Search Subscription Plans"
+                        variant="solo"
+                    />
+                </div>
                 <VSpacer />
             </VCardText>
 
             <VDivider />
 
-            <vue-good-table class="role-data-table" styleClass="vgt-table" v-on:selected-rows-change="selectionChanged"
-                :columns="columns" :rows="rows" :select-options="{
+            <vue-good-table
+                class="role-data-table"
+                styleClass="vgt-table"
+                v-on:selected-rows-change="selectionChanged"
+                :columns="columns"
+                :rows="rows"
+                :select-options="{
                     enabled: true,
                 }"
-                :pagination-options="{enabled: true,}">
-
+                :pagination-options="{ enabled: true }"
+            >
                 <template #table-row="dataProps">
                     <div v-if="dataProps.column.field === 'user'">
-                        <div class="d-flex flex-row gap-2 ">
-                            <img src="/images/defaults/avator.png" class="user-profile-image" />
+                        <div class="d-flex flex-row gap-2">
+                            <img
+                                src="/images/defaults/avator.png"
+                                class="user-profile-image"
+                            />
                             <span>Jordan Stevenson</span>
                         </div>
                     </div>
                     <div v-if="dataProps.column.field == 'action'">
                         <VMenu location="end">
                             <template #activator="{ props }">
-                                <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black" class="mt-n4" />
+                                <VIcon
+                                    v-bind="props"
+                                    size="24"
+                                    icon="mdi-dots-horizontal"
+                                    color="black"
+                                    class="mt-n4"
+                                />
                             </template>
-                             <VList>
-                                <VListItem @click="() => router.get(route('plans.show'))">
-                                     <VListItemTitle>View</VListItemTitle>
+                            <VList>
+                                <VListItem
+                                    @click="
+                                        () => router.get(route('plans.edit'))
+                                    "
+                                >
+                                    <VListItemTitle>Edit</VListItemTitle>
                                 </VListItem>
-                                <VListItem @click="() => router.get(route('plans.edit'))">
-                                     <VListItemTitle>Edit</VListItemTitle>
-                                </VListItem>
-                                 <VListItem @click="setActive">
-                                     <VListItemTitle>Set Active</VListItemTitle>
-                                </VListItem>
-                                <VListItem @click="deletePlan">
-                                     <VListItemTitle>Delete</VListItemTitle>
+                                <VListItem @click="setActive">
+                                    <VListItemTitle>Set Active</VListItemTitle>
                                 </VListItem>
                             </VList>
                         </VMenu>
@@ -162,14 +168,14 @@ SuccessDialog({title:"Subscription plan has been set activated"})
     </section>
 </template>
 
-<style lang="scss" >
+<style lang="scss">
 .vgt-table th {
     font-size: 10pt !important;
 }
 
-.inactive-plan-title{
+.inactive-plan-title {
     font-size: 20px !important;
-    color: rgb(0,0,0,0.6);
+    color: rgb(0, 0, 0, 0.6);
 }
 
 .vgt-table th.vgt-checkbox-col {
@@ -188,4 +194,4 @@ SuccessDialog({title:"Subscription plan has been set activated"})
 //     top: 10px !important;
 // }
 </style>
-    height: 50px !important;
+height: 50px !important;

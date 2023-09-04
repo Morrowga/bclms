@@ -3,21 +3,44 @@ import { ref } from "vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import SampleStorybookSlider from "./components/SampleStoryBookSlider.vue";
 import AddBook from "./components/AddBook.vue";
+import { SuccessDialog } from "@actions/useSuccess";
+
 const isShowBook = ref(false);
 
 function showBook() {
     isShowBook.value = !isShowBook.value;
 }
+const savePathway = () => {
+    SuccessDialog({ title: "You have successfully saved Pathway" });
+};
 </script>
 <template>
     <AdminLayout>
         <VContainer>
             <VRow>
-                <VCol cols="6">
-                    <h1 class="tiggie-title">Inclusive Learning Stars</h1>
-                    <p class="tiggie-p">
-                        Fostering inclusive education and personalized support
-                    </p>
+                <VCol cols="12">
+                    <div class="d-flex justify-space-between align-center">
+                        <div>
+                            <h1 class="tiggie-title">
+                                Inclusive Learning Stars
+                            </h1>
+                            <p class="tiggie-p">
+                                Fostering inclusive education and personalized
+                                support
+                            </p>
+                        </div>
+                        <div class="d-flex align-center gap-4">
+                            <Link :href="route('pathways.index')">
+                                <VBtn color="gray" width="150">Back</VBtn>
+                            </Link>
+                            <VBtn
+                                @click="savePathway"
+                                color="success"
+                                width="150"
+                                >Save</VBtn
+                            >
+                        </div>
+                    </div>
 
                     <h3 class="tiggie-title">Current Flow</h3>
                 </VCol>

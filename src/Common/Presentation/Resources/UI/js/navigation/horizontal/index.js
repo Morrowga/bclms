@@ -134,8 +134,8 @@ export default [
         children: [
             { title: 'Users', url: '/users', icon: { icon: 'mdi-account-group' }, route_name: 'users', access_module: "access_user" },
             { title: 'Student', url: `${PREFIX}/students`, icon: { icon: 'mdi-account-group-outline' }, route_name: 'students', access_module: "access_student" },
-            { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
             { title: 'Roles', url: '/roles', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'roles', access_module: "access_role" },
+            { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
         ],
     },
 
@@ -172,9 +172,9 @@ export default [
         route_name: 'system',
         access_module: "access_system",
         children: [
-            { title: 'System', url: '/bc/admin', icon: { icon: 'mdi-alpha-r-circle' }, route_name: '/bc/admin', access_module: "access_pagebuilder", isNativeLink: true },
-            { title: 'Site Theme', url: '/settings', icon: { icon: 'mdi-cog' }, route_name: '/settings', access_module: "access_pagebuilder" },
-            { title: 'Export Data', url: '/users', icon: { icon: 'mdi-cog' }, route_name: 'updateSiteTheme', access_module: "access_pagebuilder" },
+            { title: 'System', url: '/settings', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'settings', access_module: "access_pagebuilder" },
+            { title: 'Site Theme', url: '/updateSiteTheme', icon: { icon: 'mdi-cog' }, route_name: 'updateSiteTheme', access_module: "access_pagebuilder" },
+            { title: 'Export Data', url: '/reports', icon: { icon: 'mdi-cog' }, route_name: 'reports', access_module: "access_pagebuilder" },
             { title: 'Tech Support', url: '/supports', icon: { icon: 'mdi-cog' }, route_name: 'supports', access_module: "access_pagebuilder" },
         ]
     },

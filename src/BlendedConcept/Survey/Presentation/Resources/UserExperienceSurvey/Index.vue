@@ -5,7 +5,10 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
-import { toastAlert } from "@Composables/useToastAlert";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+
 // import Create from "./Create.vue";
 // import Edit from "./Edit.vue";
 let props = defineProps();
@@ -132,6 +135,12 @@ let truncatedText = (text) => {
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
+const deleteOrganization = (id) => {
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes, delete it!",
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -141,36 +150,38 @@ const selectionChanged = (data) => {
                 <VCol cols="12" sm="12" lg="12">
                     <section>
                         <VCard>
-                            <VCardText class="d-flex flex-wrap gap-4">
+                            <VCardText
+                                class="d-flex flex-wrap gap-4 align-center"
+                            >
                                 <VSpacer />
-                                <VTextField
-                                    @keyup.enter="searchItems"
-                                    placeholder="Search Users"
-                                    density="compact"
-                                    style="width: 10%"
-                                />
+                                <div class="search-field">
+                                    <VTextField
+                                        @keyup.enter="searchItems"
+                                        placeholder="Search Surveys"
+                                        density="compact"
+                                        variant="solo"
+                                    />
+                                </div>
 
                                 <div class="d-flex">
                                     <div
                                         class="app-user-search-filter d-flex align-center justify-end gap-3"
                                     >
-                                        <selectBox
-                                            :datas="[]"
-                                            placeholder="Sort By"
-                                            density="compact"
-                                            variant="outlined"
-                                        />
                                         <!-- 👉 Add User button -->
                                         <Create
                                             :organizations="organizations"
                                             :roles="roles_name"
                                             :flash="flash"
                                         />
-                                        <VSelect
-                                            :items="items"
-                                            rounded="100%"
+                                        <SelectBox
+                                            placeholder="Sort By"
                                             density="compact"
-                                        />
+                                            :datas="[
+                                                'Name',
+                                                'Date Created',
+                                                'Completion Status',
+                                            ]"
+                                        ></SelectBox>
                                         <Link
                                             :href="
                                                 route(
@@ -203,6 +214,22 @@ const selectionChanged = (data) => {
                                 :pagination-options="{ enabled: true }"
                             >
                                 <template #table-row="dataProps">
+                                    <div
+                                        v-if="dataProps.column.field == 'name'"
+                                    >
+                                        <Link
+                                            class="text-secondary"
+                                            :href="
+                                                route(
+                                                    'userexperiencesurvey.create'
+                                                )
+                                            "
+                                        >
+                                            <span>{{
+                                                dataProps.row.name
+                                            }}</span>
+                                        </Link>
+                                    </div>
                                     <div
                                         v-if="
                                             dataProps.column.field ==
@@ -258,7 +285,7 @@ const selectionChanged = (data) => {
                                                 <VListItem
                                                     @click="
                                                         deleteOrganization(
-                                                            props.row.id
+                                                            dataProps.row.id
                                                         )
                                                     "
                                                 >

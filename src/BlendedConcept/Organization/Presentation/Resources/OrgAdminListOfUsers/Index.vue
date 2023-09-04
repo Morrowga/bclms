@@ -21,7 +21,11 @@ const changeTab = (tabName) => {
                                 :color="
                                     tab == 'teacher' ? 'primary' : '#f6f6f6'
                                 "
-                                :class="tab == 'teacher' ? 'text-white' : 'text-black border-black'"
+                                :class="
+                                    tab == 'teacher'
+                                        ? 'text-white'
+                                        : 'text-black border-black'
+                                "
                                 @click="changeTab('teacher')"
                             >
                                 Teacher
@@ -32,7 +36,11 @@ const changeTab = (tabName) => {
                                 :color="
                                     tab == 'student' ? 'primary' : '#f6f6f6'
                                 "
-                                :class="tab == 'student' ? 'text-white' : 'text-black border-black'"
+                                :class="
+                                    tab == 'student'
+                                        ? 'text-white'
+                                        : 'text-black border-black'
+                                "
                                 @click="changeTab('student')"
                             >
                                 Students
@@ -133,7 +141,7 @@ const changeTab = (tabName) => {
     </AdminLayout>
 </template>
 <style scoped>
-.border-black{
-    border: 1px solid #E5E5E5 !important;
+.border-black {
+    border: 1px solid #e5e5e5 !important;
 }
 </style>

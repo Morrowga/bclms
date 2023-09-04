@@ -55,7 +55,7 @@ const statisticsWithImages = [
                             lg="3"
                         >
                             <ClassroomCard
-                                route="#"
+                                :route="route('showCopy')"
                                 count="5 / 5"
                                 :label="`${n}A`"
                             />
@@ -65,22 +65,27 @@ const statisticsWithImages = [
             </VCol>
             <VCol cols="12" sm="12" lg="12" class="mt-10">
                 <div class="header">
-                    <div class="d-flex justify-end mb-4">
+                    <div class="d-flex justify-space-between align-center mb-4">
                         <h1 class="tiggie-title">Student</h1>
-                        <v-spacer></v-spacer>
-                        <v-spacer></v-spacer>
-                        <v-spacer></v-spacer>
-                        <VTextField
-                            placeholder="Search User ..."
-                            density="compact"
-                            class="mr-4"
-                        />
 
-                        <SelectBox
-                            label="Sort By"
-                            :datas="[]"
-                            density="compact"
-                        />
+                        <div class="d-flex">
+                            <div class="search-field">
+                                <VTextField
+                                    placeholder="Search User ..."
+                                    density="compact"
+                                    class="mr-4"
+                                    variant="solo"
+                                />
+                            </div>
+
+                            <div class="sort-field">
+                                <SelectBox
+                                    placeholder="Sort By"
+                                    :datas="['A-Z', 'Z-A', 'Contact Number']"
+                                    density="compact"
+                                />
+                            </div>
+                        </div>
                     </div>
                     <VRow no-gutters>
                         <v-col v-for="n in 12" :key="n">
@@ -99,32 +104,40 @@ const statisticsWithImages = [
             </VCol>
             <VCol cols="12" sm="12" lg="12" class="mt-10">
                 <div class="header">
-                    <div class="d-flex justify-end mb-4">
-                        <h1 class="tiggie-title">Teachers</h1>
-                        <v-spacer></v-spacer>
-                        <v-spacer></v-spacer>
-                        <v-spacer></v-spacer>
-                        <VTextField
-                            placeholder="Search User ..."
-                            density="compact"
-                            class="mr-4"
-                        />
+                    <div class="d-flex justify-space-between align-center mb-4">
+                        <h1 class="tiggie-title">Teacher</h1>
 
-                        <SelectBox
-                            label="Sort By"
-                            :items="[]"
-                            density="compact"
-                        />
+                        <div class="d-flex">
+                            <div class="search-field">
+                                <VTextField
+                                    placeholder="Search User ..."
+                                    density="compact"
+                                    class="mr-4"
+                                    variant="solo"
+                                />
+                            </div>
+
+                            <div class="sort-field">
+                                <SelectBox
+                                    placeholder="Sort By"
+                                    :datas="['A-Z', 'Z-A', 'Contact Number']"
+                                    density="compact"
+                                />
+                            </div>
+                        </div>
                     </div>
                     <VRow no-gutters>
                         <v-col v-for="n in 12" :key="n">
                             <TeacherAvatar
-
                                 class="py-2"
                                 image="/images/teacher.png"
                                 title="Wren Clark"
                                 phone_number="9111 1112"
-                                :route="route('org_view_teacher_student.teacher.show')"
+                                :route="
+                                    route(
+                                        'org_view_teacher_student.teacher.show'
+                                    )
+                                "
                                 storage="135 MB/ 200 MB"
                             />
                         </v-col>

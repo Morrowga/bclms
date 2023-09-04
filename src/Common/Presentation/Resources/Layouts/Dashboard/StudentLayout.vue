@@ -25,6 +25,10 @@ injectSkinClasses();
 let props = defineProps(["user"]);
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
+let emit = defineEmits();
+const openMenu = () => {
+    emit("openMenu");
+};
 </script>
 <template>
     <AppLayout class="student">
@@ -40,6 +44,7 @@ let user_role = computed(() => page.props.user_info.user_role.name);
             <DefaultLayoutWithHorizontalNav
                 v-bind="layoutAttrs"
                 :user_role="user_role"
+                @openMenu="openMenu()"
             >
                 <slot />
             </DefaultLayoutWithHorizontalNav>
@@ -47,15 +52,15 @@ let user_role = computed(() => page.props.user_info.user_role.name);
     </AppLayout>
 </template>
 
-<style  lang="scss">
-
+<style lang="scss">
 // As we are using `layouts` plugin we need its styles to be imported
 @use "@layouts/styles/default-layout";
 
-.student .layout-page-content{
-    background: url('/images/artbg.png') no-repeat !important;
+.student .layout-page-content {
+    background: url("/images/artbg.png") no-repeat !important;
     background-size: cover !important;
     background-position: center !important;
+    background-attachment: fixed !important;
 }
 .student .layout-footer {
     display: none !important;

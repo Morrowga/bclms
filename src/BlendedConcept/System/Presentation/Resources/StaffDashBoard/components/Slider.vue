@@ -2,6 +2,8 @@
 import { ref, defineProps } from "vue";
 import ShowDetail from "./ShowDetail.vue";
 import ShowBookDetail from "./ShowBookDetail.vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
 let model = ref(false);
 const props = defineProps({
     title: {
@@ -44,7 +46,7 @@ const resolveComponent = (item) => {
     <div class="control-position">
         <div class="head-section">
             <div class="title-section">
-                <p class="heading">{{ title }}</p>
+                <p class="heading-title">{{ title }}</p>
                 <span class="subheading">{{ subtitle }}</span>
             </div>
             <div class="head-button">
@@ -53,11 +55,11 @@ const resolveComponent = (item) => {
                 </Link>
             </div>
         </div>
-        <v-slide-group v-model="model" center-active show-arrows mandatory>
-            <v-slide-group-item v-for="data in datas" :key="data.image">
+        <swiper :slides-per-view="5" :space-between="200" class="d-flex">
+            <swiper-slide v-for="data in datas" :key="data.image">
                 <Component :is="resolveComponent(item)" :data="data" />
-            </v-slide-group-item>
-        </v-slide-group>
+            </swiper-slide>
+        </swiper>
     </div>
 </template>
 
@@ -65,25 +67,28 @@ const resolveComponent = (item) => {
 .control-position {
     position: relative;
 }
-.control-position .v-slide-group__next {
+
+.v-slide-group__next {
     cursor: pointer;
     position: absolute;
-    top: 40px;
+    top: 10px !important;
     right: -38px;
     height: 100%;
 }
-.control-position .v-slide-group__prev {
+
+.v-slide-group__prev {
     cursor: pointer;
     position: absolute;
-    top: 40px;
+    top: 10px !important;
     left: -24px;
     height: 100%;
     z-index: 1;
 }
-.fit-img {
+
+.fit-img-2 {
     object-fit: cover;
-    width: 300px;
-    height: auto;
+    width: 120%;
+    height: 120%;
     /* height: 100%; */
 }
 
@@ -92,17 +97,29 @@ const resolveComponent = (item) => {
     justify-content: space-between;
     align-items: center;
 }
-.heading {
+
+.heading-title {
     margin: 0;
-    font-size: 40px !important;
+    font-size: 20px !important;
     font-style: normal !important;
     font-weight: 700 !important;
-    line-height: 52px !important; /* 130% */
+    line-height: 52px !important;
+    /* 130% */
     text-transform: capitalize !important;
     color: var(--tiggie-blue, #4066e4);
+    padding-left: 9px !important;
 }
 
 .head-button {
     align-self: flex-end;
+}
+
+.full-icon {
+    position: absolute;
+    left: 50%;
+    right: 0;
+    bottom: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 </style>

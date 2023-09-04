@@ -1,7 +1,5 @@
 <script setup>
-
 import { ref } from "vue";
-
 
 let file = ref(null);
 // for check image exisit  or not
@@ -12,12 +10,12 @@ function SelectImage() {
     file.value.click();
 }
 
+let modelValue = ref("");
 let emit = defineEmits("update:modelValue");
 let props = defineProps({
     old_img: {
         type: String,
-        default:
-            "/images/defaults/upload_image.png",
+        default: "/images/defaults/upload_image.png",
     },
 });
 function fileData(event) {
@@ -59,8 +57,7 @@ function handleRemoveImage() {
     allImg.forEach((item) => item.remove());
     imgArea.dataset.img = "";
     let img = document.createElement("img");
-    img.src =
-        "/images/defaults/upload_image.png";
+    img.src = "/images/defaults/upload_image.png";
     imgArea.appendChild(img);
     hasImage.value = false;
 }
@@ -87,17 +84,17 @@ function handleRemoveImage() {
                         "
                         class=""
                     />
-                    <h3 :class="hasImage ? '' : 'd-none'">Upload Image</h3>
-                    <p :class="hasImage ? '' : 'd-none'">
+                    <!-- <h3 :class="hasImage ? '' : 'd-none'">Upload Image</h3> -->
+                    <!-- <p :class="hasImage ? '' : 'd-none'">
                         Image size must be less than
                         <span>2MB</span>
-                    </p>
+                    </p> -->
                 </div>
             </div>
             <div class="d-flex justify-end w-100">
                 <VBtn
                     size="small"
-                    variant="outlined"
+                    variant="flat"
                     color="error"
                     v-if="hasImage"
                     @click="handleRemoveImage"
@@ -148,7 +145,7 @@ function handleRemoveImage() {
 .img-area img {
     width: 100%;
     border-radius: 10px;
-    background: no-repeat,lightgray 50% / cover no-repeat;
+    background: no-repeat, lightgray 50% / cover no-repeat;
 }
 .img-area::before {
     content: attr(data-img);

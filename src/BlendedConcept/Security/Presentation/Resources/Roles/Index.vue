@@ -68,12 +68,15 @@ watch(serverPerPage, function (value) {
                 <VCardText class="d-flex flex-wrap gap-4">
                     <!-- 👉 Export button -->
                     <!-- 👉 Search  -->
-                    <VTextField
-                        @keyup.enter="searchItems"
-                        v-model="serverParams.search"
-                        placeholder="Search Role"
-                        density="compact"
-                    />
+                    <div class="search-field">
+                        <VTextField
+                            @keyup.enter="searchItems"
+                            v-model="serverParams.search"
+                            placeholder="Search Role"
+                            density="compact"
+                            variant="solo"
+                        />
+                    </div>
                     <VSpacer />
 
                     <div

@@ -31,7 +31,8 @@ let props = defineProps({
     border-radius: 16px;
     vertical-align: middle;
     text-decoration: none;
-    justify-content: center;
+    border: 1px solid #686868;
+    /* justify-content: center; */
 }
 .chip-head {
     display: flex;

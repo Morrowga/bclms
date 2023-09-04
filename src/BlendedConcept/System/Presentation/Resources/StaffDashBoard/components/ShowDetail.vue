@@ -13,36 +13,36 @@ const toggleDialog = () => {
 </script>
 <template>
     <div>
-        <v-card class="ma-4" height="150" width="250" @click="toggleDialog">
-            <div class="d-flex fill-height align-center justify-center">
-                <img class="bg-white fit-img" :src="data.image" />
+        <v-card class="my-4" height="200" width="300" @click="toggleDialog">
+            <div class="d-flex fill-height align-center justify-center h-100">
+                <img class="bg-white fit-img h-100" :src="data.image" />
             </div>
         </v-card>
         <v-dialog v-model="dialog" width="auto" max-width="800">
             <v-card>
-                <v-card-title class="pa-0">
-                    <div class="faded-image">
-                        <img
-                            :src="'/images/teacherbanner.png'"
-                            class="img-header"
-                            alt="Faded Image"
-                        />
-                        <div class="faded-overlay"></div>
-                        <div class="book-title">
-                            <span>Boj Giggly Park Adventure</span>
-                        </div>
-                        <div class="close-btn">
-                            <v-btn
-                                @click="dialog = false"
-                                color="default"
-                                variant="elevated"
-                                icon="$close"
-                                :rounded="false"
-                            >
-                            </v-btn>
-                        </div>
+                <div class="faded-image">
+                    <img
+                        :src="'/images/teacherbanner.png'"
+                        class="img-header"
+                        alt="Faded Image"
+                    />
+                    <div class="faded-overlay"></div>
+                    <div class="book-title">
+                        <span>Boj Giggly Park Adventure</span>
                     </div>
-                </v-card-title>
+                    <div class="close-btn">
+                        <v-btn
+                            @click="dialog = false"
+                            color="default"
+                            variant="elevated"
+                            icon="$close"
+                            :rounded="false"
+                        >
+                        </v-btn>
+                    </div>
+                </div>
+                <!-- <v-card-title class="pa-0">
+                </v-card-title> -->
                 <v-card-text class="px-10 py-0 pb-5">
                     <div class="paragraph">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -100,9 +100,9 @@ const toggleDialog = () => {
 
 .faded-image img {
     display: block;
-    height: 270px;
+    /* height: 270px; */
     width: 100%;
-    object-fit: fill;
+    object-fit: cover;
     position: relative;
 }
 

@@ -1,7 +1,20 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+import { SuccessDialog } from "@actions/useSuccess";
+const deletePlaylist = () => {
+    isConfirmedDialog({
+        title: "You won't be able to revert it!",
+        denyButtonText: "Yes, delete it!",
+        onConfirm: () => {
+            SuccessDialog({
+                title: "You have successfully deleted playlist!",
+                color: "#17CAB6",
+            });
+        },
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -46,21 +59,24 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
                     </div>
 
                     <div class="d-flex flex-row justify-center mt-3">
-                        <VBtn
-                            color="teal"
-                            class="text-white"
-                            variant="flat"
-                            rounded
-                        >
-                            <VIcon icon="mdi-pencil" class="mr-2" />
-                            <span>Edit</span>
-                        </VBtn>
+                        <Link :href="route('editplaylists')">
+                            <VBtn
+                                color="teal"
+                                class="text-white"
+                                variant="flat"
+                                rounded
+                            >
+                                <VIcon icon="mdi-pencil" class="mr-2" />
+                                <span>Edit</span>
+                            </VBtn>
+                        </Link>
 
                         <VBtn
                             color="error"
                             class="text-white ml-2"
                             variant="flat"
                             rounded
+                            @click="deletePlaylist()"
                         >
                             <VIcon icon="mdi-trash-can-outline" class="mr-2" />
                             <span>Delete</span>
@@ -71,9 +87,11 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
                     <VRow>
                         <VCol cols="4" v-for="item in 12" :key="item">
                             <VCard>
-                                <div class="playmenu">
-                                </div>
-                                <v-checkbox label="" class="checkmenu ml-2"></v-checkbox>
+                                <div class="playmenu"></div>
+                                <v-checkbox
+                                    label=""
+                                    class="checkmenu ml-2"
+                                ></v-checkbox>
                                 <VImg
                                     src="/teacherdashboard/student1.png"
                                     height="282px"
@@ -92,13 +110,25 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
                                 </VCardItem>
                                 <VCardActions>
                                     <div class="d-flex justify-start">
-                                        <VChip color="teal" class="mx-1 playlistchip" variant="outlined">
+                                        <VChip
+                                            color="teal"
+                                            class="mx-1 playlistchip"
+                                            variant="outlined"
+                                        >
                                             Switch
                                         </VChip>
-                                        <VChip color="teal" class="mx-1 playlistchip" variant="outlined">
+                                        <VChip
+                                            color="teal"
+                                            class="mx-1 playlistchip"
+                                            variant="outlined"
+                                        >
                                             Eye-Gaze
                                         </VChip>
-                                        <VChip color="teal" class="mx-1 playlistchip" variant="outlined">
+                                        <VChip
+                                            color="teal"
+                                            class="mx-1 playlistchip"
+                                            variant="outlined"
+                                        >
                                             Touch
                                         </VChip>
                                     </div>
@@ -125,28 +155,27 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 </template>
 
 <style scoped>
-
-.playlistchip{
+.playlistchip {
     font-size: 12px !important;
 }
 
-.checkmenu{
+.checkmenu {
     position: absolute !important;
     right: 0%;
     /* top: 1%; */
     z-index: 1;
-    color:#E5E5E5 !important;
+    color: #e5e5e5 !important;
 }
 
-.playmenu{
+.playmenu {
     position: absolute !important;
     width: 20px;
     border-radius: 4px !important;
     padding: 10px;
     height: 20px;
-    background:#E5E5E5 !important;
+    background: #e5e5e5 !important;
     z-index: 1 !important;
-    color: #E5E5E5 !important;
+    color: #e5e5e5 !important;
     right: 3%;
     top: 2%;
 }

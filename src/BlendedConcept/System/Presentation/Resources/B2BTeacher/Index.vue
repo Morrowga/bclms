@@ -37,7 +37,7 @@ import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue"
                                 lg="3"
                             >
                                 <ClassroomCard
-                                    route="#"
+                                    :route="route('showCopy')"
                                     count="5 / 5"
                                     :label="`${n}A`"
                                 />

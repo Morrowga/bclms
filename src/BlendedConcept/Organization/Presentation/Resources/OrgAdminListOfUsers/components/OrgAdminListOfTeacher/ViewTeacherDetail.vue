@@ -1,6 +1,20 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+import { SuccessDialog } from "@actions/useSuccess";
+const deleteTeacher = () => {
+    isConfirmedDialog({
+        title: "You won't be able to revert it!",
+        denyButtonText: "Yes, delete it!",
+        onConfirm: () => {
+            SuccessDialog({
+                title: "You have successfully deleted teacher!",
+                color: "#17CAB6",
+            });
+        },
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -34,7 +48,12 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                                     <span class="text-white">Edit</span>
                                 </Link>
                             </v-btn>
-                            <v-btn variant="flat" rounded color="error">
+                            <v-btn
+                                variant="flat"
+                                rounded
+                                color="error"
+                                @click="deleteTeacher()"
+                            >
                                 <VIcon
                                     icon="mdi-trash-outline"
                                     class="text-white mr-2"

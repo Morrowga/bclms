@@ -2,8 +2,16 @@
 import { ref } from "vue";
 import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
 import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
+import { SuccessDialog } from "@actions/useSuccess";
 
 let dialog = ref(false);
+const submitReview = () => {
+    dialog.value = false;
+    SuccessDialog({
+        title: "You have successfully created a version",
+        color: "#17CAB6",
+    });
+};
 </script>
 <template>
     <div>
@@ -66,7 +74,11 @@ let dialog = ref(false);
                                         title="Cancel"
                                         @click="dialog = false"
                                     />
-                                    <PrimaryBtn title="Save" />
+                                    <PrimaryBtn
+                                        title="Save"
+                                        :isLink="false"
+                                        @click="submitReview()"
+                                    />
                                 </div>
                             </v-col>
                         </v-row>

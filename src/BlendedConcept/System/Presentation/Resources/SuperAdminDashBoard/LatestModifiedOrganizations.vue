@@ -2,10 +2,9 @@
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
-import { toastAlert } from "@Composables/useToastAlert";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+import { isConfirmedDialog } from "@actions/useConfirm";
 
 let props = defineProps(["organization"]);
 
@@ -59,6 +58,16 @@ let truncatedText = (text) => {
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
+
+const deleteOrganization = () => {
+    isConfirmedDialog({
+        title: "",
+        icon: "warning",
+        confirmButtonText: "Save",
+        denyButtonText: "Yes,delete it",
+    });
+};
+let selectedRole = ref("");
 </script>
 <template>
     <section>
@@ -75,14 +84,27 @@ const selectionChanged = (data) => {
 
                 <VSpacer />
 
-                <VTextField placeholder="Search Organisation" density="compact" />
+                <div class="search-field">
+                    <VTextField
+                        placeholder="Search Organisation"
+                        density="compact"
+                        width="100"
+                        variant="solo"
+                    />
+                </div>
 
                 <div class="app-user-search-filter d-flex align-center gap-6">
                     <!-- 👉 Search  -->
                     <SelectBox
                         v-model="selectedRole"
-                        label="Sort By"
-                        :items="roles"
+                        placeholder="Sort By"
+                        :datas="[
+                            'Name',
+                            'Email',
+                            'Contact Number',
+                            'Admin',
+                            'Status',
+                        ]"
                         density="compact"
                     />
                     <!-- 👉 Add user button -->
@@ -147,9 +169,10 @@ const selectionChanged = (data) => {
                     >
                         {{ dataProps.row.contact_number }}
                     </div>
-                    <div
+                    <Link
+                        :href="route('users.show', { id: 1 })"
                         v-if="dataProps.column.field == 'admin'"
-                        class="flex flex-nowrap"
+                        class="flex flex-nowrap text-secondary"
                     >
                         <VAvatar
                             rounded
@@ -159,7 +182,7 @@ const selectionChanged = (data) => {
                         />
                         {{ dataProps.row.name }}
                         <!-- <VChip size="small" color="primary">organization</VChip> -->
-                    </div>
+                    </Link>
                     <div
                         v-if="dataProps.column.field == 'status'"
                         class="flex flex-nowrap"
@@ -185,27 +208,13 @@ const selectionChanged = (data) => {
                                     @click="
                                         () =>
                                             router.get(
-                                                route('organizations.show', {
-                                                    id: props.row.id,
-                                                })
-                                            )
-                                    "
-                                >
-                                    <VListItemTitle>View</VListItemTitle>
-                                </VListItem>
-                                <VListItem
-                                    @click="
-                                        () =>
-                                            router.get(
                                                 route('organizations.test.edit')
                                             )
                                     "
                                 >
                                     <VListItemTitle>Edit</VListItemTitle>
                                 </VListItem>
-                                <VListItem
-                                    @click="deleteOrganization(props.row.id)"
-                                >
+                                <VListItem @click="deleteOrganization()">
                                     <VListItemTitle>Delete</VListItemTitle>
                                 </VListItem>
                             </VList>

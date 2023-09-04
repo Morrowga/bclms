@@ -31,16 +31,18 @@ import MobileGroupNavLink from "@mainRoot/components/MobileGroupNavLink/MobileGr
 // import HorizontalMobileNavGroup from "./HorizontalMobileNavGroup.vue";
 
 const { appRouteTransition } = useThemeConfig();
-import { ref, defineProps, computed } from "vue";
+import { ref, defineProps, computed, defineEmits } from "vue";
 
 let drawer = ref(false);
 let toggle = () => {
     drawer.value = !drawer.value;
 };
+
 let props = defineProps(["user_role"]);
 let page = usePage();
 let showMenubar = ref(true);
 let text = ref("");
+let emit = defineEmits();
 const resolveHeaderComponent = () => {
     switch (props.user_role) {
         case "BC Super Admin":
@@ -63,6 +65,7 @@ const resolveHeaderComponent = () => {
     // showMenubar.value = false;
     // return StudentHeader;
 };
+
 const resolveNavItemComponent = (item) => {
     if ("children" in item) return MobileGroupNavLink;
 
@@ -70,6 +73,9 @@ const resolveNavItemComponent = (item) => {
 };
 const siteImage = computed(() => page?.site_settings?.media[0]?.original_url);
 const siteName = computed(() => page?.site_settings?.site_name);
+const openMenu = () => {
+    emit("openMenu");
+};
 </script>
 <template>
     <HorizontalNavLayout>
@@ -107,6 +113,7 @@ const siteName = computed(() => page?.site_settings?.site_name);
                 style="position: fixed"
                 :is="resolveHeaderComponent()"
                 :is_drawer="drawer"
+                @openMenu="openMenu()"
             />
         </template>
         <template #menubar v-if="showMenubar">
@@ -141,3 +148,9 @@ const siteName = computed(() => page?.site_settings?.site_name);
         <TheCustomizer />
     </HorizontalNavLayout>
 </template>
+
+<style scoped>
+:deep(.v-toolbar__content) {
+    justify-content: space-evenly;
+}
+</style>

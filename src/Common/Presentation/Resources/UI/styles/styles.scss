@@ -156,7 +156,7 @@ textarea {
 .tiggie-teacher-title {
     color: var(--text) !important;
     /* H3 Ruddy */
-    // font-family: Ruddy;
+    font-family: 'ruddy-bold';
     font-size: 40px !important;
     font-style: normal !important;
     font-weight: 700 !important;
@@ -363,19 +363,19 @@ span {
 }
 
 .swal2-actions .swal2-confirm {
-    background-color: var(--success) !important;
+    // background-color: var(--success) !important;
     border: none;
     width: 340px;
 }
 
 
-.swal2-icon.swal2-success .swal2-success-ring {
-    border: 8px solid var(--success) !important;
-}
+// .swal2-icon.swal2-success .swal2-success-ring {
+//     border: 8px solid var(--success) !important;
+// }
 
-.swal2-icon.swal2-success [class^=swal2-success-line] {
-    background-color: var(--success) !important;
-}
+// .swal2-icon.swal2-success [class^=swal2-success-line] {
+//     background-color: var(--success) !important;
+// }
 
 // set inactive button
 .swal2-deny.swal2-styled {
@@ -396,7 +396,7 @@ span {
 .swal2-cancel.swal2-styled {
     width: 170.045px !important;
     border-radius: 8px !important;
-    background: var(--gray, #BFC0C1);
+    background: var(--gray, #BFC0C1) !important;
     color: var(--light-gray, #F4F4F4);
     text-align: center;
     font-feature-settings: 'clig' off, 'liga' off;
@@ -421,11 +421,12 @@ span {
 .swal2-icon.swal2-warning.swal2-icon-show .swal2-icon-content {
     color: var(--candy-red) !important;
     font-size: 60px !important;
-    border: 10px solid var(--candy-red) !important;
+    // border: 10px solid var(--candy-red) !important;
 }
 
-
-
+.swal-teal{
+    color: var(--teal) !important;
+}
 //menu item styles
 
 .tiggie-menu-item-font-size {
@@ -476,4 +477,14 @@ thead {
     font-weight: 500;
     line-height: 26px;
 
+}
+
+.v-btn__content {
+    color: var(--v-theme-white) !important;
+}
+.search-field{
+    width: 300px;;
+}
+.sort-field{
+    width: 250px;;
 }

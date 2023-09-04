@@ -2,7 +2,7 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import TeacherStorybookCard from "./components/TeacherStorybookCard.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
-
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 const alertNow = () => {
     alert("hello world");
 };
@@ -18,19 +18,32 @@ const alertNow = () => {
             </div>
             <div class="d-flex justify-end align-center mb-4">
                 <v-spacer></v-spacer>
-                <v-spacer></v-spacer>
-                <v-spacer></v-spacer>
-                <v-text-field
-                    density="compact"
-                    label="Search"
-                    append-inner-icon="mdi-magnify"
-                    single-line
-                    rounded
-                    hide-details
-                    class="mr-4"
-                ></v-text-field>
+                <div class="search-field">
+                    <v-text-field
+                        density="compact"
+                        label="Search"
+                        append-inner-icon="mdi-magnify"
+                        single-line
+                        rounded
+                        hide-details
+                        class="mr-4"
+                        variant="solo"
+                    ></v-text-field>
+                </div>
 
-                <v-select label="Sort By" density="compact"> </v-select>
+                <div class="sort-field">
+                    <SelectBox
+                        :datas="[
+                            'A-Z',
+                            'Z-A',
+                            'Pages:Low to Height',
+                            'Pages:High to Low',
+                        ]"
+                        placeholder="Sort By"
+                        density="compact"
+                        variant="solo"
+                    />
+                </div>
             </div>
             <v-row class="mt-5">
                 <v-col

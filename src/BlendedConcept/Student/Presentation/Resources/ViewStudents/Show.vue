@@ -4,9 +4,19 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import StoryBookSlider from "./components/StoryBookSlider.vue";
 import PlaylistSlider from "./components/PlaylistSlider.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
-
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+import { SuccessDialog } from "@actions/useSuccess";
 import { ref } from "vue";
 let tab = ref(null);
+const deleteStudent = () => {
+    isConfirmedDialog({
+        title: "You won't be able to revert it!",
+        denyButtonText: "Yes, delete it!",
+        onConfirm: () => {
+            SuccessDialog({ title: "You have successfully deleted a student" });
+        },
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -51,6 +61,7 @@ let tab = ref(null);
                                 rounded
                                 color="error"
                                 prepend-icon="mdi-trash"
+                                @click="deleteStudent()"
                                 >Delete</v-btn
                             >
                         </div>

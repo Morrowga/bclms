@@ -4,10 +4,7 @@ import { usePage } from "@inertiajs/vue3";
 import StickerDetail from "@mainRoot/components/Rewards/StickerDetail.vue";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-let props = defineProps([
-    "flash",
-    "auth",
-]);
+let props = defineProps(["flash", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 </script>
@@ -17,38 +14,117 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
         <section>
             <VRow>
                 <VCol cols="1">
-                    <img src="/images/back.png" @click="() => router.get(route('student-rewards'))" class="backarrow ml-2" alt="">
+                    <img
+                        src="/images/back.png"
+                        @click="() => router.get(route('student-rewards'))"
+                        class="backarrow ml-2"
+                        alt=""
+                    />
                 </VCol>
                 <VCol cols="11">
                     <div class="d-flex justify-center">
                         <div class="postercard">
-                            <img src="/images/blankpage.png" alt="" class="reward-img">
+                            <!-- <img
+                                src="/images/blankpage.png"
+                                alt=""
+                                class="reward-img"
+                            /> -->
                             <!-- <div class="d-flex justify-center"> -->
-                                <div class="b4">
-                                    <VRow>
-                                        <VCol cols="3" class="text-center">
-                                            <StickerDetail title="SecretAgent Tiggie" image="/images/stickerb1.png"  />
-                                        </VCol>
-                                        <VCol cols="3" class="text-center">
-                                            <StickerDetail title="Warrior Tiggie" image="/images/stick6.png"  />
-                                        </VCol>
-                                        <VCol cols="3" class="text-center">
-                                            <StickerDetail title="Great Work Tiggie" image="/images/stick4.png"  />
-                                        </VCol>
-                                        <VCol cols="3" class="text-center">
-                                            <StickerDetail title="Streak Tiggie" image="/images/stick1.png"  />
-                                        </VCol>
-                                        <VCol cols="3" class="text-center">
-                                            <StickerDetail title="Streak Tiggie" image="/images/stick3.png"  />
-                                        </VCol>
-                                        <VCol cols="3" class="text-center">
-                                            <StickerDetail title="Streak Tiggie" image="/images/stick5.png"  />
-                                        </VCol>
-                                        <VCol cols="3" class="text-center">
-                                            <StickerDetail title="Streak Tiggie" image="/images/stick7.png"  />
-                                        </VCol>
-                                    </VRow>
-                                </div>
+                            <div class="b4">
+                                <VRow class="mt-4">
+                                    <VCol
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                        lg="3"
+                                        class="text-center"
+                                    >
+                                        <StickerDetail
+                                            style="height: 100%"
+                                            title="SecretAgent Tiggie"
+                                            image="/images/stickerb1.png"
+                                        />
+                                    </VCol>
+                                    <VCol
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                        lg="3"
+                                        class="text-center"
+                                    >
+                                        <StickerDetail
+                                            style="height: 100%"
+                                            title="Warrior Tiggie"
+                                            image="/images/stick6.png"
+                                        />
+                                    </VCol>
+                                    <VCol
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                        lg="3"
+                                        class="text-center"
+                                    >
+                                        <StickerDetail
+                                            style="height: 100%"
+                                            title="Great Work Tiggie"
+                                            image="/images/stick4.png"
+                                        />
+                                    </VCol>
+                                    <VCol
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                        lg="3"
+                                        class="text-center"
+                                    >
+                                        <StickerDetail
+                                            style="height: 100%"
+                                            title="Streak Tiggie"
+                                            image="/images/stick1.png"
+                                        />
+                                    </VCol>
+                                    <VCol
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                        lg="3"
+                                        class="text-center"
+                                    >
+                                        <StickerDetail
+                                            style="height: 100%"
+                                            title="Streak Tiggie"
+                                            image="/images/stick3.png"
+                                        />
+                                    </VCol>
+                                    <VCol
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                        lg="3"
+                                        class="text-center"
+                                    >
+                                        <StickerDetail
+                                            style="height: 100%"
+                                            title="Streak Tiggie"
+                                            image="/images/stick5.png"
+                                        />
+                                    </VCol>
+                                    <VCol
+                                        cols="12"
+                                        sm="6"
+                                        md="6"
+                                        lg="3"
+                                        class="text-center"
+                                    >
+                                        <StickerDetail
+                                            style="height: 100%"
+                                            title="Streak Tiggie"
+                                            image="/images/stick7.png"
+                                        />
+                                    </VCol>
+                                </VRow>
+                            </div>
                             <!-- </div> -->
                         </div>
                     </div>
@@ -69,15 +145,14 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 //     background-position: center !important;
 // }
 
-
-.sticker-chip-or-text{
-    color: var(--candy-red, #FF6262) !important;
+.sticker-chip-or-text {
+    color: var(--candy-red, #ff6262) !important;
     font-size: 25px !important;
     font-style: normal !important;
     text-transform: capitalize !important;
 }
 
-.sticker-chip-text{
+.sticker-chip-text {
     padding: 0 !important;
     font-size: 20px !important;
     font-style: normal !important;
@@ -85,17 +160,17 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     text-transform: capitalize !important;
 }
 
-.stickercard{
+.stickercard {
     padding: 15px;
     cursor: pointer;
     border-radius: 15px;
     border: 5px solid var(--black, #000);
-    background: rgba(40, 40, 40, 0.50);
+    background: rgba(40, 40, 40, 0.5);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.stickertext{
-    color: var(--white, #FFF) !important;
+.stickertext {
+    color: var(--white, #fff) !important;
     font-size: 20px !important;
     font-style: normal !important;
     font-weight: 700 !important;
@@ -103,7 +178,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     text-transform: capitalize !important;
 }
 
-.sticker-chip{
+.sticker-chip {
     padding-right: 20px !important;
     padding-top: 25px !important;
     padding-bottom: 25px !important;
@@ -113,11 +188,13 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     gap: 6px;
 }
 
-.postercard{
+.postercard {
     position: relative;
+    display: flex;
+    justify-content: center;
 }
 
-.rolltext{
+.rolltext {
     color: #000 !important;
     font-size: 20px !important;
     text-transform: capitalize !important;
@@ -127,7 +204,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 }
 
 .rolltext > strong {
-    color: #FF6262 !important;
+    color: #ff6262 !important;
     font-size: 20px !important;
     font-style: normal !important;
     font-weight: 700 !important;
@@ -135,12 +212,12 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     text-transform: capitalize !important;
 }
 
-.stickimg{
+.stickimg {
     height: 180px !important;
     object-fit: cover !important;
 }
 
-.rewardimagetext{
+.rewardimagetext {
     color: var(--graphite, #282828) !important;
     font-size: 30px !important;
     font-style: normal !important;
@@ -148,17 +225,17 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     text-transform: capitalize !important;
 }
 
-.rollbtn{
+.rollbtn {
     border-radius: 23px !important;
     color: #fff;
 }
 
-.posterbg{
+.posterbg {
     height: 15vh;
 }
 
-.adtext{
-    color: #F80808 !important;
+.adtext {
+    color: #f80808 !important;
     font-size: 30px !important;
     font-style: normal !important;
     font-weight: 700 !important;
@@ -166,14 +243,18 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     text-transform: capitalize !important;
 }
 
-.b4{
-    position: absolute;
-    top: 10% !important;
-    z-index: 1;
-    width: 100%;
-    overflow: auto !important;
-    padding: 20px;
-    height: 588px;
+.b4 {
+    background: url("/images/blankpage.png");
+    background-size: 100% 100%;
+    padding: 60px;
+    width: 85%;
+    // position: absolute;
+    // top: 10% !important;
+    // z-index: 1;
+    // width: 100%;
+    // overflow: auto !important;
+    // padding: 20px;
+    // height: 588px;
     // top: 20%
 }
 
@@ -181,29 +262,28 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     height: 35vh;
 }
 
-.backarrow{
+.backarrow {
     cursor: pointer;
     width: 40px !important;
     height: 40px !important;
 }
 
-.reward-img{
-    position: relative;
-    height: 85vh;
+.reward-img {
+    // position: fixed;
+    // height: 85vh;
 }
 
 .overlay-container {
-//   z-index: 1;
-  position: absolute;
-  top: 8%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    //   z-index: 1;
+    position: absolute;
+    top: 8%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
 
 .user-data-table table.vgt-table {
     background-color: rgb(var(--v-theme-surface));
@@ -214,7 +294,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
 
-.textcolor{
+.textcolor {
     color: #fff;
 }
 

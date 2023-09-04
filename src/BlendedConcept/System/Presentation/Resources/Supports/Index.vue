@@ -6,12 +6,13 @@ import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-import { toastAlert } from "@Composables/useToastAlert";
+import { isConfirmedDialog } from "@actions/useConfirm";
+
 // import avatar4 from "@images/avatars/avatar-4.png";
 import AnswerSupport from "./components/AnswerSupport.vue";
 
 let props = defineProps();
-
+const form = useForm({});
 //## start datatable section
 let columns = [
     {
@@ -90,6 +91,13 @@ let truncatedText = (text) => {
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
+const deleteSupport = () => {
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes, delete it!",
+    });
+};
+const handleSubmit = () => {};
 </script>
 <template>
     <AdminLayout>
@@ -107,13 +115,17 @@ const selectionChanged = (data) => {
                                     class="d-flex justify-end align-center gap-3"
                                 >
                                     <VTextField
-                                        placeholder="Search Organizations"
+                                        placeholder="Search Request"
                                         density="compact"
-                                        style="width: 250px;"
+                                        style="width: 300px"
+                                        variant="solo"
                                     />
-                                    <SelectBox label="Sort By"
-                                    :datas="['Name', 'Date', 'Status']"
-                                    density="compact" style="width: 150px;" />
+                                    <SelectBox
+                                        placeholder="Sort By"
+                                        :datas="['Name', 'Date', 'Status']"
+                                        density="compact"
+                                        style="width: 150px"
+                                    />
                                     <VBtn
                                         class="tiggie-btn"
                                         @click="isAnswerTechnicalSupport = true"
@@ -156,18 +168,24 @@ const selectionChanged = (data) => {
                                             dataProps.column.field == 'action'
                                         "
                                     >
-                                        <VIcon
-                                            icon="mdi-trash-can-outline"
-                                            size="21"
-                                        />
+                                        <VBtn
+                                            variant="text"
+                                            class="text-secondary"
+                                            @click="deleteSupport()"
+                                        >
+                                            <VIcon
+                                                icon="mdi-trash-can-outline"
+                                                size="21"
+                                            />
+                                        </VBtn>
                                     </div>
                                 </template>
                             </vue-good-table>
                             <AnswerSupport
                                 v-model="isAnswerTechnicalSupport"
-                                :user-data="user"
+                                :user-data="[]"
                                 :form="form"
-                                @submit="hanleSubmit"
+                                @submit="handleSubmit"
                             />
                             <VDivider />
                         </VCard>

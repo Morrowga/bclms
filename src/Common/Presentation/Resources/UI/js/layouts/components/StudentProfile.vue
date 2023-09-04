@@ -2,7 +2,7 @@
 import { initialAbility } from "@/plugins/casl/ability";
 import { useAppAbility } from "@/plugins/casl/useAppAbility";
 import { usePage, Link } from "@inertiajs/vue3";
-import { computed } from "vue";
+import { computed, defineEmits } from "vue";
 import { router } from "@inertiajs/core";
 const ability = useAppAbility();
 const userData = computed(() => usePage().props.auth);
@@ -15,6 +15,10 @@ const logout = () => {
     localStorage.removeItem("menu_title");
     router.post(`${PREFIX}/logout`);
 };
+const emit = defineEmits();
+const openMenu = () => {
+    emit("openStdMenu");
+};
 </script>
 
 <template>
@@ -26,18 +30,21 @@ const logout = () => {
         color="success"
         bordered
     >
-        <VAvatar class="cursor-pointer studentpro" color="primary" variant="tonal">
-            <VImg
+        <VAvatar
+            class="cursor-pointer studentpro"
+            color="primary"
+            variant="tonal"
+            @click="openMenu()"
+        >
+            <!-- <VImg
                 v-if="userData?.data && userData?.data?.image"
                 :src="userData?.data?.image"
-            />
-            <VIcon v-else icon="mdi-account-multiple-outline" class="studenticon"/>
+            /> -->
+            <VIcon icon="mdi-account-multiple-outline" class="studenticon" />
 
-            <!-- SECTION Menu -->
-
-            <VMenu activator="parent" width="230" offset="14px">
+            <!-- <VMenu activator="parent" width="230" offset="14px">
                 <VList class="my-menu">
-                    <!-- 👉 User Avatar & Name -->
+           
                     <VListItem>
                         <template #prepend>
                             <VListItemAction start>
@@ -75,7 +82,7 @@ const logout = () => {
 
                     <VDivider class="my-2" />
 
-                    <!-- 👉 Profile -->
+    
                     <VListItem @click="() => router.get('userprofile')">
                         <template #prepend>
                             <VIcon
@@ -88,7 +95,7 @@ const logout = () => {
                         <VListItemTitle>Profile</VListItemTitle>
                     </VListItem>
 
-                    <!-- 👉 Settings -->
+               
                     <VListItem
                         :to="{
                             name: 'pages-account-settings-tab',
@@ -106,7 +113,7 @@ const logout = () => {
                         <VListItemTitle>Settings</VListItemTitle>
                     </VListItem>
 
-                    <!-- 👉 Pricing -->
+                 
                     <VListItem :to="{ name: 'pages-pricing' }">
                         <template #prepend>
                             <VIcon
@@ -119,7 +126,7 @@ const logout = () => {
                         <VListItemTitle>Pricing</VListItemTitle>
                     </VListItem>
 
-                    <!-- 👉 FAQ -->
+              
                     <VListItem :to="{ name: 'pages-faq' }">
                         <template #prepend>
                             <VIcon
@@ -132,10 +139,10 @@ const logout = () => {
                         <VListItemTitle>FAQ</VListItemTitle>
                     </VListItem>
 
-                    <!-- Divider -->
+      
                     <VDivider class="my-2" />
 
-                    <!-- 👉 Logout -->
+           
                     <VListItem link @click="logout">
                         <template #prepend>
                             <VIcon class="me-2" icon="mdi-logout" size="22" />
@@ -144,9 +151,7 @@ const logout = () => {
                         <VListItemTitle>Logout</VListItemTitle>
                     </VListItem>
                 </VList>
-            </VMenu>
-
-            <!-- !SECTION -->
+            </VMenu> -->
         </VAvatar>
     </VBadge>
 </template>
@@ -158,11 +163,11 @@ const logout = () => {
     overflow: visible;
 }
 
-.studenticon{
+.studenticon {
     color: #000;
 }
 
-.studentpro{
+.studentpro {
     background: #fff;
 }
 .my-menu::before {

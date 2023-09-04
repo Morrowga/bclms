@@ -1,38 +1,39 @@
 <script setup>
 import GreenChip from "@mainRoot/components/GreenChip/GreenChip.vue";
+import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 const stateList = [
-    'Alabama',
-    'Alaska',
-    'Arizona',
-    'Arkansas',
-    'California',
-    'Colorado',
-    'Connecticut',
-    'Delaware',
-    'Florida',
-    'Georgia',
-    'Hawaii',
-]
+    "Alabama",
+    "Alaska",
+    "Arizona",
+    "Arkansas",
+    "California",
+    "Colorado",
+    "Connecticut",
+    "Delaware",
+    "Florida",
+    "Georgia",
+    "Hawaii",
+];
 
-const radios = ref('home')
-const deliveryOption = ref('standard')
-const paymentMethod = ref('credit-debit-card')
-const panel = ref(0)
+const radios = ref("home");
+const deliveryOption = ref("standard");
+const paymentMethod = ref("credit-debit-card");
+const panel = ref(0);
 
 const paymentMethods = [
     {
-        radioValue: 'credit-debit-card',
-        radioLabel: 'Credit/Debit/ATM Card',
-        icon: 'mdi-credit-card-outline',
+        radioValue: "credit-debit-card",
+        radioLabel: "Credit/Debit/ATM Card",
+        icon: "mdi-credit-card-outline",
     },
     {
-        radioValue: 'cash-on-delivery',
-        radioLabel: 'Cash On Delivery',
-        icon: 'mdi-help-circle-outline',
+        radioValue: "cash-on-delivery",
+        radioLabel: "Cash On Delivery",
+        icon: "mdi-help-circle-outline",
     },
-]
+];
 </script>
 
 <template>
@@ -51,8 +52,8 @@ const paymentMethods = [
                             </VTextField>
                         </VCol>
                     </VRow>
-                    <VRow class="bg-line  rounded pa-1 mb-5" align="center">
-                        <VCol cols="4" class="ml-4">
+                    <VRow class="bg-line rounded pa-1 mb-5" align="center">
+                        <VCol cols="3" class="ml-4">
                             <VLabel class="tiggie-label">Name</VLabel>
                             <VIcon icon="mdi-menu-down"></VIcon>
                         </VCol>
@@ -75,19 +76,19 @@ const paymentMethods = [
                             <div class="d-flex align-center gap-1">
                                 <VRadio />
                                 <VImg src="/teacherdashboard/student1.png" width="56px" height="56px" />
-                                <span class="tiggie-teacher-label" style="color:#282828 !important">Madge Dennis</span>
+                                <span class="tiggie-teacher-label" style="color: #282828 !important">Madge Dennis</span>
                             </div>
                         </VCol>
                         <VCol cols="2">
-                            <span class="tiggie-teacher-label" style="color:#282828 !important">K2</span>
+                            <span class="tiggie-teacher-label ml-10" style="color: #282828 !important">K2</span>
                         </VCol>
                         <VCol cols="1">
-                            <span class="tiggie-teacher-label" style="color:#282828 !important">6</span>
+                            <span class="tiggie-teacher-label ml-5" style="color: #282828 !important">6</span>
                         </VCol>
                         <VCol cols="4">
-                            <div class="d-flex flex-column gap-2">
-                                <GreenChip title="Down Syndrome" :icon="true" class="ma-1"/>
-                                <GreenChip title="Down Syndrome" :icon="true" class="ma-1"/>
+                            <div class="d-flex flex-column gap-2 w-50">
+                                <ChipWithBlueDot title="Down Syndrome" class="ma-1" />
+                                <ChipWithBlueDot title="Dyslexia" class="ma-1" />
                             </div>
                         </VCol>
                     </VRow>
@@ -115,33 +116,36 @@ const paymentMethods = [
                     </VCol>
                 </VRow>
                 <VRow justify="center">
-                    <VCol cols="3" v-for="item in 12" :key="item">
+                    <VCol cols="3" v-for="item in 12" :key="item" class="pa-1">
                         <VCard>
                             <VImg src="/teacherdashboard/student1.png" height="282px" cover />
-
+                            <div class="select-box">
+                                <VCheckbox color="secondary" class="checkbox-position" />
+                            </div>
                             <VCardItem>
-                                <VCardTitle class="text-center tiggie-teacher-p"
-                                    style="color:#282828 !important;font-weight:700 !important">Influencing The Influencer
+                                <VCardTitle class="text-center tiggie-teacher-p" style="
+                                        color: #282828 !important;
+                                        font-weight: 700 !important;
+                                    ">Influencing The Influencer
                                 </VCardTitle>
                             </VCardItem>
                             <VCardActions>
-                                <div class="d-flex">
-                                    <GreenChip title="Switch" class="ma-1"/>
-                                    <GreenChip title="Eye-Gaze" class="ma-1"/>
-                                    <GreenChip title="Touch" class="ma-1"/>
+                                <div class="d-flex gap-1">
+                                    <GreenChip title="Switch" />
+                                    <GreenChip title="Eye-Gaze" />
+                                    <GreenChip title="Touch" />
                                 </div>
-
                             </VCardActions>
                         </VCard>
                     </VCol>
                 </VRow>
                 <VRow justify="center">
                     <VCol cols="2">
-                      <VBtn variant="flat" color="pale-blue" class="text-tiggie-blue"  rounded>
-                        Load more
-                      </VBtn>
+                        <VBtn variant="flat" color="pale-blue" class="text-tiggie-blue" rounded>
+                            Load more
+                        </VBtn>
                     </VCol>
-                 </VRow>
+                </VRow>
             </VExpansionPanelText>
         </VExpansionPanel>
     </VExpansionPanels>
@@ -162,4 +166,21 @@ const paymentMethods = [
         border-color: rgb(var(--v-theme-primary));
     }
 }
+.checkbox-position
+{
+    position: absolute;
+    top:4px;
+    right: 10px;
+    padding: initial;
+    color: #282828;
+}
+
+.chip {
+    background-color: #FfFfFf !important;
+}
+
+input[type=checkbox] {
+  accent-color: red !important;
+}
+
 </style>

@@ -13,7 +13,7 @@ const props = defineProps({
     },
     isDialogVisible: {
         type: Boolean,
-        required: true,
+        default: false,
     },
 });
 
@@ -29,13 +29,13 @@ const onFormReset = () => {
 const dialogVisibleUpdate = (val) => {
     emit("update:isDialogVisible", val);
 };
+let discription = ref("");
 </script>
 
 <template>
     <VDialog
         :width="$vuetify.display.smAndDown ? 'auto' : 540"
         :model-value="props.isDialogVisible"
-        @update:model-value="dialogVisibleUpdate"
     >
         <VCard class="pt-10">
             <!-- 👉 dialog close btn -->

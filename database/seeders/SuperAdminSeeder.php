@@ -33,25 +33,7 @@ class SuperAdminSeeder extends Seeder
         ];
 
         $user = UserEloquentModel::create($data);
-        $permission = PermissionEloquentModel::whereNotIn(
-            'name',
-            [
-                'create_announcement',
-                'edit_announcement',
-                'delete_announcement',
-                'access_student',
-                'create_student',
-                'delete_student',
-                'access_teacher',
-                'create_teacher',
-                'delete_teacher',
-                'access_classroom',
-                'create_classroom',
-                'delete_classroom',
-            ]
-        )->pluck('id');
-        $role = RoleEloquentModel::find(1);
-        $role->permissions()->sync($permission);
+
         $user->roles()->sync(['1']);
     }
 }

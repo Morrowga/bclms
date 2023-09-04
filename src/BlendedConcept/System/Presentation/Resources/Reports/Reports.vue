@@ -82,6 +82,7 @@ onMounted(() => {
                         <VBtn
                             v-if="
                                 user_role == 'BC Super Admin' ||
+                                user_role == 'Organization Admin' ||
                                 user_role == 'BC Staff' ||
                                 user_role == 'Teacher' ||
                                 user_role == 'BC Subscriber'
@@ -95,6 +96,7 @@ onMounted(() => {
                         <VBtn
                             v-if="
                                 user_role == 'BC Super Admin' ||
+                                user_role == 'Organization Admin' ||
                                 user_role == 'BC Staff' ||
                                 user_role == 'Teacher' ||
                                 user_role == 'BC Subscriber'

@@ -41,6 +41,7 @@ const theme = {
         'grey-50': '#FAFAFA',
         'grey-100': '#F4F5FA',
         'grey-200': '#F5F5F7',
+        'default-color' :"#606266",
         'pale-blue' : "#D7DDF2",
         'grey-300': '#E0E0E0',
         'grey-400': '#BDBDBD',

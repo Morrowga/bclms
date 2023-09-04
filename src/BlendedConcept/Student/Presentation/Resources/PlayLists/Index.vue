@@ -1,10 +1,23 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { router } from "@inertiajs/core";
-
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+import { SuccessDialog } from "@actions/useSuccess";
 const items = ["Name", "Age", "Name", "Name"];
 
 const currentPage = ref(1);
+const deletePlaylist = () => {
+    isConfirmedDialog({
+        title: "You won't be able to revert it!",
+        denyButtonText: "Yes, delete it!",
+        onConfirm: () => {
+            SuccessDialog({
+                title: "You have successfully deleted playlist!",
+                color: "#17CAB6",
+            });
+        },
+    });
+};
 </script>
 
 <template>
@@ -106,6 +119,7 @@ const currentPage = ref(1);
                                     class="text-white ml-2"
                                     variant="flat"
                                     rounded
+                                    @click="deletePlaylist()"
                                 >
                                     <VIcon
                                         icon="mdi-trash-can-outline"

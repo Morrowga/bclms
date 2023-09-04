@@ -86,8 +86,8 @@ return [
     ],
 
     'conduct_lessons' => [
-        'index' => 'BlendedConcept/Classroom/Presentation/Resources/ConductLessons/Index',
-        'show' => 'BlendedConcept/Classroom/Presentation/Resources/ConductLessons/Show',
+        'index' => 'BlendedConcept/ClassRoom/Presentation/Resources/ConductLessons/Index',
+        'show' => 'BlendedConcept/ClassRoom/Presentation/Resources/ConductLessons/Show',
     ],
 
     'view_students' => [
@@ -98,7 +98,7 @@ return [
     ],
 
     'learning_activities' => [
-        'index' => 'BlendedConcept/Classroom/Presentation/Resources/LearningActivities/Index',
+        'index' => 'BlendedConcept/ClassRoom/Presentation/Resources/LearningActivities/Index',
     ],
 
     'profilling_survey' => [

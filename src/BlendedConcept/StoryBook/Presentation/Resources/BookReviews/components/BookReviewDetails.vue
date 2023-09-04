@@ -1,15 +1,21 @@
 <script setup>
-const isDialogVisible = ref(false)
+import { defineProps } from "vue";
+const props = defineProps({
+    isDialogVisible: {
+        type: Boolean,
+        default: false,
+    },
+});
 </script>
 
 <template>
-    <VDialog v-model="isDialogVisible" width="800">
+    <VDialog v-model="props.isDialogVisible" width="800">
         <!-- Activator -->
-        <template #activator="{ props }">
+        <!-- <template #activator="{ props }">
             <VBtn v-bind="props">
                 Show Review Details
             </VBtn>
-        </template>
+        </template> -->
 
         <!-- Dialog Content -->
         <VCard>
@@ -27,28 +33,38 @@ const isDialogVisible = ref(false)
             <VCardText>
                 <h1 class="tiggie-label">Absolute Garbage Book! Refund!!!</h1>
                 <p class="tiggie-p">
-                    Bear claw pastry cotton candy jelly toffee. Pudding chocolate cake shortbread bonbon biscuit sweet. Lemon
-                drops cupcake muffin brownie fruitcake. Pastry pastry tootsie roll jujubes chocolate cake gummi bears muffin
-                pudding caramels. Jujubes lollipop gummies croissant shortbread. Cupcake dessert marzipan topping
-                gingerbread apple pie chupa chups powder. Cake croissant halvah candy canes gummies.
+                    Bear claw pastry cotton candy jelly toffee. Pudding
+                    chocolate cake shortbread bonbon biscuit sweet. Lemon drops
+                    cupcake muffin brownie fruitcake. Pastry pastry tootsie roll
+                    jujubes chocolate cake gummi bears muffin pudding caramels.
+                    Jujubes lollipop gummies croissant shortbread. Cupcake
+                    dessert marzipan topping gingerbread apple pie chupa chups
+                    powder. Cake croissant halvah candy canes gummies.
                 </p>
-
             </VCardText>
 
             <VCardActions class="pt-3 justify-space-between">
                 <div class="d-flex align-center">
-                    <img src="/images/profile/profiletwo.png" style="width: 50px;height:50px" />
+                    <img
+                        src="/images/profile/profiletwo.png"
+                        style="width: 50px; height: 50px"
+                    />
                     <div class="">
                         <h5>Customer</h5>
                         <div class="tiggie-p">Jordan Stevenson</div>
                     </div>
                 </div>
-                <VBtn color="secondary" text-color="white" variant="tonal" class="pl-16 pr-16"
-                    @click="isDialogVisible = false" height="50">
+                <VBtn
+                    color="secondary"
+                    text-color="white"
+                    variant="tonal"
+                    class="pl-16 pr-16"
+                    @click="isDialogVisible = false"
+                    height="50"
+                >
                     <span class="text-dark">Close</span>
                 </VBtn>
             </VCardActions>
-
         </VCard>
     </VDialog>
 </template>

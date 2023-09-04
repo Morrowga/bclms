@@ -10,6 +10,7 @@ import DefaultLayoutWithHorizontalNav from "@/layouts/components/DefaultLayoutWi
 import DefaultLayoutWithVerticalNav from "@/layouts/components/DefaultLayoutWithVerticalNav.vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import axios from "axios";
+import { defineEmits } from "vue";
 
 const { width: windowWidth } = useWindowSize();
 const { appContentLayoutNav, switchToVerticalNavOnLtOverlayNavBreakpoint } =
@@ -23,6 +24,7 @@ const { layoutAttrs, injectSkinClasses } = useSkins();
 injectSkinClasses();
 
 let props = defineProps(["user"]);
+let emit = defineEmits();
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
 </script>

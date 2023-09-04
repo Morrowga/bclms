@@ -6,7 +6,15 @@ import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 import AssignStudentsTable from "./components/AssignStudentsTable.vue";
 import { router } from "@inertiajs/core";
 import { ref } from "vue";
+import { SuccessDialog } from "@actions/useSuccess";
+
 let tab = ref(false);
+const assignStudent = () => {
+    SuccessDialog({
+        title: "You have successfully assigned a student",
+        color: "#17CAB6",
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -14,7 +22,7 @@ let tab = ref(false);
             <v-row class="mb-10">
                 <v-col cols="12" md="6">
                     <div style="position: relative">
-                        <v-img src="/images/img.png" class="main-pic" />
+                        <v-img src="/images/imgbook.png" class="main-pic" />
                         <div class="vector-background">
                             <!-- <img src="/images/vector.png" /> -->
                         </div>
@@ -94,7 +102,11 @@ let tab = ref(false);
                         title="Back"
                         @click="router.get(route('teacher_storybook.show'))"
                     />
-                    <PrimaryBtn title="Assign" />
+                    <PrimaryBtn
+                        title="Assign"
+                        :isLink="false"
+                        @click="assignStudent()"
+                    />
                 </v-col>
             </v-row>
         </VContainer>
