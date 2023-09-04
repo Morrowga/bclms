@@ -13,6 +13,8 @@ const props = defineProps({
         default: "",
     },
 });
+
+
 let datas = [
     {
         id: 1,
@@ -40,6 +42,7 @@ let datas = [
         title: "Book 5",
     },
 ];
+
 const toggleDialog = (id) => {
     console.log("id", id);
     // dialog.value = !dialog.value;
@@ -53,10 +56,10 @@ const toggleDialog = (id) => {
                 <span class="subheading">{{ subtitle }}</span>
             </div>
         </div>
-        <swiper :slides-per-view="3" :space-between="10">
-            <swiper-slide v-for="data in datas" :key="data.image">
-                <div style="position: relative">
-                    <v-card
+        <!-- <swiper :slides-per-view="3" :space-between="10"> -->
+            <!-- <swiper-slide v-for="data in datas" :key="data.image"> -->
+                <div style="position: relative" v-for="data in datas" :key="data.image">
+                    <v-card 
                         class="ma-4"
                         height="200"
                         style="position: relative; z-index: 1"
@@ -65,7 +68,9 @@ const toggleDialog = (id) => {
                         <div
                             class="d-flex fill-height align-center justify-center"
                         >
-                            <img class="bg-white fit-img-2" :src="data.image" />
+                            <img class="bg-white fit-img-2" :draggable="true"
+                            @dragstart="startDrag(index)"
+                            :src="data.image" />
                         </div>
                         <v-scale-transition class="full-icon">
                             <!-- <v-icon
@@ -76,8 +81,8 @@ const toggleDialog = (id) => {
                     </v-card>
                     <p class="font-weight-bold text-center">{{ data.title }}</p>
                 </div>
-            </swiper-slide>
-        </swiper>
+            <!-- </swiper-slide> -->
+        <!-- </swiper> -->
     </div>
 </template>
 
