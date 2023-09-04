@@ -151,6 +151,6 @@ const openMenu = () => {
 
 <style scoped>
 :deep(.v-toolbar__content) {
-    justify-content: space-evenly;
+    justify-content: center;
 }
 </style>

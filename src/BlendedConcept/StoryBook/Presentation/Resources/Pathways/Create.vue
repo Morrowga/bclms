@@ -5,7 +5,7 @@ import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 
 import AddBook from "./components/AddBook.vue";
-const props = defineProps(['data_type'])
+const props = defineProps(["data_type"]);
 
 function showBook() {
     isShowBook.value = !isShowBook.value;
@@ -14,7 +14,6 @@ let switchBtn = ref("");
 const selectedImage = ref(null);
 let draggedImageIndex = null;
 const uploadedImages = ref([]);
-
 
 let datas = [
     {
@@ -57,8 +56,8 @@ const addPathway = () => {
 
 function startDrag(index) {
     console.log(index);
-  // Store the index of the dragged image
-  draggedImageIndex = index;
+    // Store the index of the dragged image
+    draggedImageIndex = index;
 }
 
 function handleDropp(event) {
@@ -69,7 +68,7 @@ function handleDropp(event) {
             uploadedImages.value.push({
                 file: file,
                 src: URL.createObjectURL(file),
-                name: file.name
+                name: file.name,
             });
         }
     } else {
@@ -79,9 +78,9 @@ function handleDropp(event) {
         if (droppedImage) {
             // Add the dropped image to the uploadedImages array
             uploadedImages.value.push({
-                file: '',
-                src: 'http://bc-lms.test' + droppedImage.image,
-                name: droppedImage.title
+                file: "",
+                src: "http://bc-lms.test" + droppedImage.image,
+                name: droppedImage.title,
             });
 
             draggedImageIndex = null;
@@ -91,8 +90,7 @@ function handleDropp(event) {
 
 const removeUploadedItem = (index) => {
     uploadedImages.value.splice(index, 1);
-}
-
+};
 </script>
 <template>
     <AdminLayout>
@@ -170,32 +168,69 @@ const removeUploadedItem = (index) => {
                         <VCol cols="12" sm="6" md="6" class="py-4">
                             <h1 class="tiggie-title required">Current Flow</h1>
                             <VCardText>
-                                <p class="pppangram-bold ml-5" style="color: #000; font-size: 20px !important;"><strong
-                                        style="color: #4066e4; font-size: 20px !important;">2</strong> {{ type }} Remaining</p>
+                                <p
+                                    class="pppangram-bold ml-5"
+                                    style="
+                                        color: #000;
+                                        font-size: 20px !important;
+                                    "
+                                >
+                                    <strong
+                                        style="
+                                            color: #4066e4;
+                                            font-size: 20px !important;
+                                        "
+                                        >2</strong
+                                    >
+                                    {{ type }} Remaining
+                                </p>
                                 <div class="mt-3">
-                                    <div class="image-container mt-2 mx-4" v-for="(image, index) in uploadedImages" :key="index">
-                                        <div class="d-flex justify-space-between">
+                                    <div
+                                        class="image-container mt-2 mx-4"
+                                        v-for="(image, index) in uploadedImages"
+                                        :key="index"
+                                    >
+                                        <div
+                                            class="d-flex justify-space-between"
+                                        >
                                             <div class="d-flex">
-                                                <img :src="image.src" class="import-file-img mt-2 ml-3">
-                                                <p class="ml-3 mt-3">{{ image.name }}</p>
+                                                <img
+                                                    :src="image.src"
+                                                    class="import-file-img mt-2 ml-3"
+                                                />
+                                                <p class="ml-3 mt-3">
+                                                    {{ image.name }}
+                                                </p>
                                             </div>
 
                                             <div class="mt-3 mr-3">
-                                                <VIcon icon="mdi-close" @click="removeUploadedItem(index)"></VIcon>
+                                                <VIcon
+                                                    icon="mdi-close"
+                                                    @click="
+                                                        removeUploadedItem(
+                                                            index
+                                                        )
+                                                    "
+                                                ></VIcon>
                                             </div>
                                         </div>
                                     </div>
                                     <div
-
-                                    class="imprt-path-text mt-6 mx-5"
-                                    @dragover.prevent @drop="handleDropp">
+                                        class="imprt-path-text mt-6 mx-5"
+                                        @dragover.prevent
+                                        @drop="handleDropp"
+                                    >
                                         <div class="text-center">
                                             <div class="mt-2">
                                                 <span class="import-fade-text">
                                                     Drag and Drop to add
                                                 </span>
                                                 <div class="mt-2">
-                                                    <span class="text-tiggie-blue">Books</span> Here
+                                                    <span
+                                                        class="text-tiggie-blue"
+                                                        >Books</span
+                                                    >
+                                                    Here
                                                 </div>
                                             </div>
                                         </div>
@@ -209,7 +244,17 @@ const removeUploadedItem = (index) => {
             </VRow>
             <VRow>
                 <VCol cols="12" class="pt-0">
-                    <h1 class="tiggie-title required">Book Library</h1>
+                    <div class="d-flex justify-space-between align-center">
+                        <h1 class="tiggie-title required">Book Library</h1>
+                        <div class="search-field">
+                            <v-text-field
+                                variant="solo"
+                                placeholder="Search Books"
+                                density="compact"
+                            >
+                            </v-text-field>
+                        </div>
+                    </div>
                     <div class="control-position">
                         <div class="head-section">
                             <div class="title-section">
@@ -218,32 +263,37 @@ const removeUploadedItem = (index) => {
                             </div>
                         </div>
                         <div class="scroll-container">
-                            <div v-for="(data, index) in datas"
+                            <div
+                                v-for="(data, index) in datas"
                                 :key="index"
                                 :draggable="true"
                                 @dragstart="startDrag(index)"
                                 class="card-container"
+                            >
+                                <v-card
+                                    class="ma-4"
+                                    height="200"
+                                    style="position: relative; z-index: 1"
+                                    :color="'primary'"
                                 >
-                                    <v-card
-                                        class="ma-4"
-                                        height="200"
-                                        style="position: relative; z-index: 1"
-                                        :color="'primary'"
+                                    <div
+                                        class="d-flex fill-height align-center justify-center"
                                     >
-                                        <div
-                                            class="d-flex fill-height align-center justify-center"
-                                        >
-                                            <img class="bg-white fit-img-2"
-                                            :src="data.image" />
-                                        </div>
-                                        <v-scale-transition class="full-icon">
-                                            <!-- <v-icon
+                                        <img
+                                            class="bg-white fit-img-2"
+                                            :src="data.image"
+                                        />
+                                    </div>
+                                    <v-scale-transition class="full-icon">
+                                        <!-- <v-icon
                                                 size="48"
                                                 icon="mdi-check-circle-outline"
                                             ></v-icon> -->
-                                        </v-scale-transition>
-                                    </v-card>
-                                    <p class="font-weight-bold text-center">{{ data.title }}</p>
+                                    </v-scale-transition>
+                                </v-card>
+                                <p class="font-weight-bold text-center">
+                                    {{ data.title }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -296,11 +346,11 @@ const removeUploadedItem = (index) => {
     display: flex;
     flex-wrap: nowrap;
     padding: 10px; /* Add padding for spacing */
-  }
-  .card-container {
+}
+.card-container {
     min-width: 380px; /* Adjust card width as needed */
     margin-right: 10px; /* Adjust spacing between cards as needed */
-  }
+}
 
 .fit-img-2 {
     object-fit: cover;
@@ -348,7 +398,7 @@ const removeUploadedItem = (index) => {
 .import-card-text {
     cursor: pointer;
     border-radius: 10px;
-    border: 2px dashed var(--gray, #BFC0C1);
+    border: 2px dashed var(--gray, #bfc0c1);
     padding: 10px;
     border-spacing: 4px !important;
     /* Adjust the spacing between dashes */
@@ -358,7 +408,7 @@ const removeUploadedItem = (index) => {
 
 .imprt-path-text {
     border-radius: 10px;
-    border: 2px dashed var(--gray, #BFC0C1);
+    border: 2px dashed var(--gray, #bfc0c1);
     display: flex;
     width: 469px;
     height: 299px;
@@ -367,18 +417,18 @@ const removeUploadedItem = (index) => {
     justify-content: center;
     align-items: center;
     gap: 17px;
-    flex-shrink: 0
+    flex-shrink: 0;
 }
 
 .image-container {
-    background: #F6F6F6;
+    background: #f6f6f6;
     border-radius: 15px;
-    border: 1px solid var(--line, #E5E5E5);
+    border: 1px solid var(--line, #e5e5e5);
     padding: 4px;
 }
 
 .import-fade-text {
-    color: var(--secondary-2, rgba(86, 86, 96, 0.40));
+    color: var(--secondary-2, rgba(86, 86, 96, 0.4));
     font-size: 14px !important;
     font-style: normal !important;
     font-weight: 400 !important;
@@ -388,7 +438,7 @@ const removeUploadedItem = (index) => {
 }
 
 .importfile-title {
-    color: var(--tiggie-blue, #4066E4);
+    color: var(--tiggie-blue, #4066e4);
     font-size: 25px !important;
     font-style: normal;
     font-weight: 700;

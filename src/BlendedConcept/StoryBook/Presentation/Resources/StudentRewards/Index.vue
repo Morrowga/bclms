@@ -23,6 +23,10 @@ const images = [
     "/images/s3.png",
     "/images/s3.png",
 ];
+let isOpen = ref(true);
+const toggleBar = () => {
+    isOpen.value = !isOpen.value;
+};
 </script>
 
 <template>
@@ -37,7 +41,8 @@ const images = [
         </div>
         <section>
             <!-- <v-navigation-drawer floating permanent class="reward-sidebar"> -->
-            <div class="left-panel reward-sidebar">
+            <!-- <v-slide-x-transition> -->
+            <div v-if="isOpen" class="left-panel reward-sidebar">
                 <div class="mt-3" v-for="(image, index) in images" :key="index">
                     <div class="vlis" value="home">
                         <div class="d-flex justify-center mt-1">
@@ -52,9 +57,10 @@ const images = [
                     </div>
                 </div>
             </div>
+            <!-- </v-slide-x-transition> -->
             <!-- </v-navigation-drawer> -->
-            <div class="dragsticker">
-                <img src="/images/stickerdrag.png" />
+            <div :class="isOpen ? 'dragsticker' : 'close-dragsticker'">
+                <img src="/images/stickerdrag.png" @click="toggleBar()" />
             </div>
         </section>
     </StudentLayout>
@@ -76,8 +82,14 @@ const images = [
     position: absolute;
     top: 35%;
     left: 6.8%;
+    cursor: pointer;
 }
-
+.close-dragsticker {
+    position: absolute;
+    top: 35%;
+    left: -1.2%;
+    cursor: pointer;
+}
 .storereward {
     cursor: pointer;
     position: absolute;

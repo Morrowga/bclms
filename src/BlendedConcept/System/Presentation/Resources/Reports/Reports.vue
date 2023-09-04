@@ -37,7 +37,12 @@ onMounted(() => {
         <VContainer>
             <VRow>
                 <VCol cols="12">
-                    <span class="report-text ruddy-bold">Reports</span>
+                    <span
+                        v-if="user_role == 'BC Super Admin'"
+                        class="tiggie-title"
+                        >Export Data</span
+                    >
+                    <span v-else class="report-text ruddy-bold">Reports</span>
                 </VCol>
                 <VCol cols="12">
                     <div
