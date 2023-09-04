@@ -4,6 +4,8 @@ import { router } from "@inertiajs/core";
 import { defineProps } from "vue";
 import UpdateSubscrptionStatus from "./components/UpdateSubscrptionStatus.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+import { SuccessDialog } from "@actions/useSuccess";
+
 let props = defineProps();
 
 //## start datatable section
@@ -72,7 +74,9 @@ let rows = [
 ];
 
 const items = ["Foo", "Bar"];
-
+const getInvoice = () => {
+    SuccessDialog({ title: "You have successfully downloaded invoice" });
+};
 //## truncatedText
 let truncatedText = (text) => {
     if (text) {
@@ -94,12 +98,14 @@ const selectionChanged = (data) => {
             <VCardText class="d-flex justify-end align-center flex-wrap gap-4">
                 <!-- 👉 Export button -->
 
-                <div class="app-user-search-filter d-flex align-center gap-6">
+                <div class="search-field">
                     <VTextField
                         placeholder="Search User ..."
                         density="compact"
-                        style="width: 100%"
+                        variant="solo"
                     />
+                </div>
+                <div class="sort-field">
                     <!-- 👉 Search  -->
                     <!-- <VSelect
                             v-model="selectedRole"
@@ -108,7 +114,13 @@ const selectionChanged = (data) => {
                             density="compact"
                         /> -->
                     <SelectBox
-                        :datas="[]"
+                        :datas="[
+                            'User',
+                            'Start Date',
+                            'End Date',
+                            'Plan',
+                            'Status',
+                        ]"
                         placeholder="Sort By"
                         density="compact"
                         variant="solo"
@@ -190,14 +202,7 @@ const selectionChanged = (data) => {
                                 >
                                     <UpdateSubscrptionStatus />
                                 </VListItem>
-                                <VListItem
-                                    @click="
-                                        () =>
-                                            router.get(
-                                                route('organizations.test.edit')
-                                            )
-                                    "
-                                >
+                                <VListItem @click="getInvoice()">
                                     <VListItemTitle>Get Invoice</VListItemTitle>
                                 </VListItem>
                             </VList>

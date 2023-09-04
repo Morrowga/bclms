@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from "vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import ImageUpload from "@mainRoot/components/DropZone/Index.vue"
+import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
+import { SuccessDialog } from "@actions/useSuccess";
 
 import AddBook from "./components/AddBook.vue";
 
@@ -12,11 +13,14 @@ let switchBtn = ref("");
 const selectedImage = ref(null);
 
 const handleDrop = (event) => {
-  event.preventDefault();
-  const selectedFile = event.dataTransfer.files[0];
-  if (selectedFile) {
-    selectedImage.value = URL.createObjectURL(selectedFile);
-  }
+    event.preventDefault();
+    const selectedFile = event.dataTransfer.files[0];
+    if (selectedFile) {
+        selectedImage.value = URL.createObjectURL(selectedFile);
+    }
+};
+const addPathway = () => {
+    SuccessDialog({ title: "You have successfully created Pathway" });
 };
 </script>
 <template>
@@ -39,7 +43,9 @@ const handleDrop = (event) => {
                             <span class="text-dark">Back</span>
                         </VBtn>
                     </Link>
-                    <VBtn height="30" class="ml-4"> Add Pathway </VBtn>
+                    <VBtn height="30" class="ml-4" @click="addPathway">
+                        Add Pathway
+                    </VBtn>
                 </VCol>
             </VRow>
             <VRow>
@@ -92,13 +98,14 @@ const handleDrop = (event) => {
                         </VCol>
                         <VCol cols="12" sm="6" md="6" class="py-4">
                             <h1 class="tiggie-title required">Current Flow</h1>
-                            <ImageUpload data_type="pathway"/>
+                            <ImageUpload data_type="pathway" />
                         </VCol>
                     </VRow>
                 </VCol>
             </VRow>
             <VRow>
                 <VCol cols="12" class="pt-0">
+                    <h1 class="tiggie-title required">Book Library</h1>
                     <AddBook />
                 </VCol>
             </VRow>
@@ -112,14 +119,14 @@ const handleDrop = (event) => {
 }
 
 .import-card-text {
-display: flex !important;
-width: 469px !important;
-height: 299px !important;
-padding: 56px 79px !important;
-flex-direction: column !important;
-justify-content: center !important;
-align-items: center !important;
-gap: 17px !important;
-flex-shrink: 0 !important;
+    display: flex !important;
+    width: 469px !important;
+    height: 299px !important;
+    padding: 56px 79px !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 17px !important;
+    flex-shrink: 0 !important;
 }
 </style>

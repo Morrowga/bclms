@@ -2,12 +2,19 @@
 import { ref } from "vue";
 import { Link } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import { SuccessDialog } from "@actions/useSuccess";
 
 const studentEditInfo = ref({
     name: "Harry's",
     email: "tyler.covington@work.sg",
     contact_number: "95123456",
 });
+const updateTeacher = () => {
+    SuccessDialog({
+        title: "You have successfully update a teacher!",
+        color: "#17CAB6",
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -84,6 +91,7 @@ const studentEditInfo = ref({
                         rounded
                         height="50"
                         class="pl-16 pr-16"
+                        @click="updateTeacher()"
                     >
                         <span class="text-white">Save</span>
                     </VBtn>

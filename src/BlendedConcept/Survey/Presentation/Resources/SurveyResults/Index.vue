@@ -113,6 +113,15 @@ const selectionChanged = (data) => {
 const goRoute = (route) => {
     router.get(route);
 };
+const deleteItem = () => {
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes, delete it!",
+        onConfirm: () => {
+            // alert("good to go");
+        },
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -124,10 +133,13 @@ const goRoute = (route) => {
                         <VCard>
                             <VCardText class="d-flex flex-wrap gap-4">
                                 <!-- 👉 Export button -->
-                                <VTextField
-                                    placeholder="Search Users"
-                                    density="compact"
-                                />
+                                <div class="search-field">
+                                    <VTextField
+                                        placeholder="Search Surveys"
+                                        density="compact"
+                                        variant="solo"
+                                    />
+                                </div>
                                 <VSpacer />
                                 <VSpacer />
 
@@ -136,7 +148,12 @@ const goRoute = (route) => {
                                     style="width: 20%"
                                 >
                                     <selectBox
-                                        :datas="[]"
+                                        :datas="[
+                                            'User',
+                                            'User Type',
+                                            'Name Of Survey',
+                                            'Date Submitted',
+                                        ]"
                                         placeholder="Sort By"
                                         density="compact"
                                         variant="solo"
@@ -168,6 +185,7 @@ const goRoute = (route) => {
                                             icon="mdi-trash"
                                             class="ml-2"
                                             color="secondary"
+                                            @click="deleteItem()"
                                         >
                                         </VBtn>
                                     </div>

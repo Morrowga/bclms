@@ -3,9 +3,24 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+import { SuccessDialog } from "@actions/useSuccess";
 let props = defineProps(["flash", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
+
+const deleteGroup = () => {
+    isConfirmedDialog({
+        title: "You won't be able to revert it!",
+        denyButtonText: "Yes, delete it!",
+        onConfirm: () => {
+            SuccessDialog({
+                title: "You have successfully deleted a Group!",
+                color: "#17CAB6",
+            });
+        },
+    });
+};
 </script>
 
 <template>
@@ -171,6 +186,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                         rounded
                                         color="candy-red"
                                         class="text-white"
+                                        @click="deleteGroup()"
                                         >Delete</v-btn
                                     >
                                 </div>
@@ -288,6 +304,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                         rounded
                                         color="candy-red"
                                         class="text-white"
+                                        @click="deleteGroup()"
                                         >Delete</v-btn
                                     >
                                 </div>

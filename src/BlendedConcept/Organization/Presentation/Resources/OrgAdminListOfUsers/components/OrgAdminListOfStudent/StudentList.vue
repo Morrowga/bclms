@@ -32,7 +32,7 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
                         <SelectBox
                             v-model="selectedRole"
                             placeholder="Sort By"
-                            :datas="roles"
+                            :datas="['A-Z', 'Z-A', 'Contact Number']"
                             :density="compact"
                         />
                     </VCol>

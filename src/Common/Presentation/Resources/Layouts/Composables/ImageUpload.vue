@@ -84,11 +84,11 @@ function handleRemoveImage() {
                         "
                         class=""
                     />
-                    <h3 :class="hasImage ? '' : 'd-none'">Upload Image</h3>
-                    <p :class="hasImage ? '' : 'd-none'">
+                    <!-- <h3 :class="hasImage ? '' : 'd-none'">Upload Image</h3> -->
+                    <!-- <p :class="hasImage ? '' : 'd-none'">
                         Image size must be less than
                         <span>2MB</span>
-                    </p>
+                    </p> -->
                 </div>
             </div>
             <div class="d-flex justify-end w-100">

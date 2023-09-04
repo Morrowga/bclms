@@ -3,7 +3,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { useForm } from "@inertiajs/vue3";
 import { watch, defineProps, computed, ref } from "vue";
 import { requiredValidator } from "@validators";
-import { toastAlert } from "@Composables/useToastAlert";
+import { SuccessDialog } from "@actions/useSuccess";
 import { router } from "@inertiajs/core";
 
 //## start for form submit
@@ -53,8 +53,10 @@ const saveRole = () => {
         if (valid) {
             form.post(route("roles.store"), {
                 onSuccess: () => {
-                    toastAlert({
-                        title: props.flash?.successMessage,
+                    SuccessDialog({
+                        title:
+                            props.flash?.successMessage ??
+                            "You have successfully created role",
                     });
                     // form.reset();
                     // refForm.value?.reset();

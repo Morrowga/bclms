@@ -1,6 +1,13 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import PlayListSelectBox from "./components/PlayListSelectBox.vue";
+import { SuccessDialog } from "@actions/useSuccess";
+const updatePlaylist = () => {
+    SuccessDialog({
+        title: "You have successfully updated playlist!",
+        color: "#17CAB6",
+    });
+};
 </script>
 
 <template>
@@ -50,6 +57,7 @@ import PlayListSelectBox from "./components/PlayListSelectBox.vue";
                             color="primary"
                             variant="flat"
                             rounded
+                            @click="updatePlaylist()"
                         >
                             Update
                         </VBtn>

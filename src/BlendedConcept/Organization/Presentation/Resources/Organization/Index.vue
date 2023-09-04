@@ -5,6 +5,7 @@ import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import { router } from "@inertiajs/core";
 import { SuccessDialog } from "@actions/useSuccess";
+import { isConfirmedDialog } from "@actions/useConfirm";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 let props = defineProps(["organizations", "flash", "auth"]);
@@ -23,7 +24,15 @@ serverPerPage.value = ref(10);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 
 const deleteOrganization = (id) => {
-    deleteItem(id, "organizations");
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,delete it!",
+        onConfirm: () => {
+            router.delete(`${route_name}/${id}`, {
+                onSuccess: () => {},
+            });
+        },
+    });
 };
 
 const roles = [
@@ -79,7 +88,8 @@ let options = ref({
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
-
+let selectionChanged = () => {};
+let selectedRole = ref("");
 // const deleteOrganization = () => {
 // SuccessDialog({title:"Organization has been deleted"})
 
@@ -103,10 +113,13 @@ watch(serverPerPage, function (value) {
 
                     <VSpacer />
 
-                    <VTextField
-                        placeholder="Search User ..."
-                        density="compact"
-                    />
+                    <div class="search-field">
+                        <VTextField
+                            placeholder="Search User ..."
+                            density="compact"
+                            variant="solo"
+                        />
+                    </div>
 
                     <div
                         class="app-user-search-filter d-flex align-center gap-6"
@@ -114,8 +127,14 @@ watch(serverPerPage, function (value) {
                         <!-- 👉 Search  -->
                         <SelectBox
                             v-model="selectedRole"
-                            label="Sort By"
-                            :items="roles"
+                            placeholder="Sort By"
+                            :datas="[
+                                'Name',
+                                'Email',
+                                'Contact Number',
+                                'Role',
+                                'Status',
+                            ]"
                             density="compact"
                         />
                         <!-- 👉 Add user button -->
@@ -146,6 +165,18 @@ watch(serverPerPage, function (value) {
                     }"
                 >
                     <template #table-row="props">
+                        <div v-if="props.column.field == 'name'">
+                            <Link
+                                class="text-secondary"
+                                :href="
+                                    route('organizations.show', {
+                                        id: props.row.id,
+                                    })
+                                "
+                            >
+                                <span>{{ props.row?.name }}</span>
+                            </Link>
+                        </div>
                         <div v-if="props.column.field == 'plan'">
                             <span>{{ props.row?.plan?.name }}</span>
                         </div>
@@ -195,19 +226,6 @@ watch(serverPerPage, function (value) {
                                     />
                                 </template>
                                 <VList>
-                                    <VListItem
-                                        @click="
-                                            () =>
-                                                router.get(
-                                                    route(
-                                                        'organizations.show',
-                                                        { id: props.row.id }
-                                                    )
-                                                )
-                                        "
-                                    >
-                                        <VListItemTitle>View</VListItemTitle>
-                                    </VListItem>
                                     <VListItem
                                         @click="
                                             () =>

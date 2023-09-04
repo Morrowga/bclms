@@ -14,7 +14,7 @@ const props = defineProps({
     },
     isDialogVisible: {
         type: Boolean,
-        required: true,
+        default: false,
     },
 });
 
@@ -30,6 +30,7 @@ watch(props, () => {
 const onFormSubmit = () => {
     // emit('submit', userData.value)
     emit("submit", { title: "Password Changed Successfully" });
+    emit("update:isDialogVisible", false);
 };
 
 const onFormReset = () => {
@@ -62,12 +63,6 @@ const items = ref([
         <VCard class="">
             <!-- 👉 dialog close btn -->
             <DialogCloseBtn variant="text" size="small" @click="onFormReset" />
-
-            <VCardItem class="text-left pl-16">
-                <VCardTitle class="te mb-2 tiggie-title">
-                    Edit Survey
-                </VCardTitle>
-            </VCardItem>
 
             <VCardText>
                 <!-- 👉 Form -->

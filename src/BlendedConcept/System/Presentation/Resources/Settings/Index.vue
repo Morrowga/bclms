@@ -3,7 +3,8 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { defineProps } from "vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
-import { toastAlert } from "@Composables/useToastAlert";
+import { SuccessDialog } from "@actions/useSuccess";
+
 import {
     emailValidator,
     requiredValidator,
@@ -170,7 +171,9 @@ let form = useForm({
 function handleUpdateSite() {
     form.post(route("updateSetting"), {
         onSuccess: () => {
-            toastAlert({ title: "updated" });
+            SuccessDialog({
+                title: "You have successfully updated site setting",
+            });
         },
         onError: (error) => {},
     });

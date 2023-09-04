@@ -36,7 +36,8 @@ watch(props, () => {
 
 const onFormSubmit = () => {
     // emit('submit', userData.value)
-    emit("submit", { title: "You have succesfully edited your profiled" });
+    emit("submit", { title: "You have succesfully edited a disability type" });
+    emit("update:isDialogVisible", false);
 };
 
 const onFormReset = () => {

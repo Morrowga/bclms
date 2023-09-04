@@ -167,15 +167,17 @@ watch(serverPerPage, function (value) {
                         >
                             Export
                         </VBtn>
+
                         <VSpacer />
-                        <VSpacer />
-                        <VTextField
-                            @keyup.enter="searchItems"
-                            v-model="serverParams.search"
-                            placeholder="Search Users"
-                            density="compact"
-                            style="width: 10%"
-                        />
+                        <div class="search-field">
+                            <VTextField
+                                @keyup.enter="searchItems"
+                                v-model="serverParams.search"
+                                placeholder="Search Users"
+                                density="compact"
+                                variant="solo"
+                            />
+                        </div>
 
                         <div class="d-flex">
                             <div

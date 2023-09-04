@@ -3,8 +3,8 @@ import { avatarText, kFormatter } from "@core/utils/formatters";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { computed } from "vue";
 import { usePage, useForm, Link } from "@inertiajs/vue3";
-import { toastAlert } from "@Composables/useToastAlert";
-import {SuccessDialog} from '@actions/useSuccess';
+
+import { SuccessDialog } from "@actions/useSuccess";
 import ChangePasswordDialog from "./Profiles/ChangePasswordDialog.vue";
 import ProfileEditDialog from "./Profiles/ProfileEditDialog.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
@@ -24,16 +24,15 @@ let form = useForm({
 let profileEdit = useForm({
     name: "superadmin",
     email: "superadmin@mail.com",
-    contact_number: "+959951613400"
+    contact_number: "+959951613400",
 });
-
 
 const hanleSubmit = (data) => {
     isUserPasswordChange.value = false;
     isUserProfileEdit.value = false;
-     SuccessDialog({
-                title: data.title,
-            });
+    SuccessDialog({
+        title: data.title,
+    });
     // form.currentpassword = data.currentpassword;
     // form.updatedpassword = data.updatedpassword;
 
@@ -50,7 +49,6 @@ const hanleSubmit = (data) => {
     //     },
     // });
 };
-
 </script>
 
 <template>
@@ -79,7 +77,7 @@ const hanleSubmit = (data) => {
                     <p class="tiggie-p">superadmin@mail.com</p>
                 </VCol>
                 <VCol cols="6">
-                    <span class="tiggie-label ">Login Email</span>
+                    <span class="tiggie-label">Login Email</span>
                     <p class="tiggie-p">superadmin@mail.com</p>
                 </VCol>
                 <VCol cols="6">
@@ -93,14 +91,25 @@ const hanleSubmit = (data) => {
             </VRow>
             <VRow no-gutters>
                 <VCol cols="6" class="">
-                    <VBtn color="secondary" text-color="white" variant="tonal" class="pl-16 pr-16"
-                        @click="isUserProfileEdit = true" height="50">
+                    <VBtn
+                        color="secondary"
+                        text-color="white"
+                        variant="tonal"
+                        class="pl-16 pr-16"
+                        @click="isUserProfileEdit = true"
+                        height="50"
+                    >
                         <span class="text-dark">Edit Profile</span>
                     </VBtn>
                 </VCol>
                 <VCol cols="6">
-                    <VBtn color="secondary" variant="tonal" height="50" class="pl-16 pr-16"
-                        @click="isUserPasswordChange = true">
+                    <VBtn
+                        color="secondary"
+                        variant="tonal"
+                        height="50"
+                        class="pl-16 pr-16"
+                        @click="isUserPasswordChange = true"
+                    >
                         <span class="text-dark">Change Password</span>
                     </VBtn>
                 </VCol>
@@ -109,11 +118,19 @@ const hanleSubmit = (data) => {
     </AdminLayout>
 
     <!-- 👉 Edit user info dialog -->
-    <ChangePasswordDialog v-model:isDialogVisible="isUserPasswordChange" :user-data="user" :form="form"
-        @submit="hanleSubmit" />
+    <ChangePasswordDialog
+        v-model:isDialogVisible="isUserPasswordChange"
+        :user-data="user"
+        :form="form"
+        @submit="hanleSubmit"
+    />
 
-    <ProfileEditDialog v-model:isDialogVisible="isUserProfileEdit" :user-data="user" :form="profileEdit"
-        @submit="hanleSubmit" />
+    <ProfileEditDialog
+        v-model:isDialogVisible="isUserProfileEdit"
+        :user-data="user"
+        :form="profileEdit"
+        @submit="hanleSubmit"
+    />
 </template>
 
 <style scopted>
@@ -129,7 +146,7 @@ const hanleSubmit = (data) => {
     text-transform: capitalize !important;
 }
 
-.m-padding{
+.m-padding {
     padding: 0 60px;
 }
 </style>

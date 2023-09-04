@@ -3,13 +3,13 @@ import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { ref, defineProps } from "vue";
 import { toastAlert } from "@Composables/useToastAlert";
-import {SuccessDialog} from '@actions/useSuccess';
+import { SuccessDialog } from "@actions/useSuccess";
 
 // import avatar4 from "@images/avatars/avatar-4.png";
 
 let props = defineProps();
 
-let searchItem = ref("")
+let searchItem = ref("");
 let columns = [
     {
         label: "",
@@ -55,7 +55,7 @@ let rows = [
         description: "Allow access to basic features",
         price: "$4.99",
         no_students: 1,
-        storage_space: "1GB"
+        storage_space: "1GB",
     },
     {
         id: 2,
@@ -63,7 +63,7 @@ let rows = [
         description: "Allow access to more features",
         price: "$8.99",
         no_students: 2,
-        storage_space: "5GB"
+        storage_space: "5GB",
     },
     {
         id: 3,
@@ -71,17 +71,11 @@ let rows = [
         description: "Allow access to all features",
         price: "$10.99",
         no_students: 5,
-        storage_space: "20GB"
-    }
+        storage_space: "20GB",
+    },
 ];
 
-
-const items = [
-    'Foo',
-    'Bar',
-]
-
-
+const items = ["Foo", "Bar"];
 
 //## truncatedText
 let truncatedText = (text) => {
@@ -99,59 +93,87 @@ const selectionChanged = (data) => {
 };
 
 const deletePlan = () => {
-SuccessDialog({title:"Subscription plan deleted"})
-
-}
+    SuccessDialog({ title: "Subscription plan deleted" });
+};
 
 const setInactive = () => {
-SuccessDialog({title:"Subscription plan has been set inactivated"})
-
-}
+    SuccessDialog({ title: "Subscription plan has been set inactivated" });
+};
 </script>
 <template>
     <section>
         <VCard>
             <VCardText class="d-flex flex-wrap gap-4">
                 <!-- 👉 Export button -->
+                <div class="search-field">
                     <VTextField
-                     v-model="searchItem"
-                     density="compact"
-                     placeholder="Search Subscription Plans" />
+                        v-model="searchItem"
+                        density="compact"
+                        placeholder="Search Subscription Plans"
+                        variant="solo"
+                    />
+                </div>
                 <VSpacer />
 
-                <div class="app-user-search-filter d-flex justify-end align-center gap-6">
+                <div
+                    class="app-user-search-filter d-flex justify-end align-center gap-6"
+                >
                     <VBtn class="tiggie-btn" height="40">
-                        <Link :href="route('plans.create')" class="text-white"> Add Subscription Plan </Link>
+                        <Link :href="route('plans.create')" class="text-white">
+                            Add Subscription Plan
+                        </Link>
                     </VBtn>
                 </div>
             </VCardText>
 
             <VDivider />
 
-            <vue-good-table class="role-data-table" styleClass="vgt-table" v-on:selected-rows-change="selectionChanged"
-                :columns="columns" :rows="rows" :select-options="{
+            <vue-good-table
+                class="role-data-table"
+                styleClass="vgt-table"
+                v-on:selected-rows-change="selectionChanged"
+                :columns="columns"
+                :rows="rows"
+                :select-options="{
                     enabled: true,
-                }" :pagination-options="{
-    enabled: true,
-}">
+                }"
+                :pagination-options="{
+                    enabled: true,
+                }"
+            >
                 <template #table-row="dataProps">
                     <div v-if="dataProps.column.field === 'user'">
-                        <div class="d-flex flex-row gap-2 ">
-                            <img src="/images/defaults/avator.png" class="user-profile-image" />
+                        <div class="d-flex flex-row gap-2">
+                            <img
+                                src="/images/defaults/avator.png"
+                                class="user-profile-image"
+                            />
                             <span>Jordan Stevenson</span>
                         </div>
                     </div>
                     <div v-if="dataProps.column.field == 'action'">
                         <VMenu location="end">
                             <template #activator="{ props }">
-                                <VIcon v-bind="props" size="24" icon="mdi-dots-horizontal" color="black" class="mt-n4" />
+                                <VIcon
+                                    v-bind="props"
+                                    size="24"
+                                    icon="mdi-dots-horizontal"
+                                    color="black"
+                                    class="mt-n4"
+                                />
                             </template>
                             <VList>
-                                <VListItem @click="() => router.get(route('plans.edit'))">
-                                     <VListItemTitle>Edit</VListItemTitle>
+                                <VListItem
+                                    @click="
+                                        () => router.get(route('plans.edit'))
+                                    "
+                                >
+                                    <VListItemTitle>Edit</VListItemTitle>
                                 </VListItem>
                                 <VListItem @click="setInactive">
-                                     <VListItemTitle>Set Inactive</VListItemTitle>
+                                    <VListItemTitle
+                                        >Set Inactive</VListItemTitle
+                                    >
                                 </VListItem>
                             </VList>
                         </VMenu>
@@ -164,7 +186,7 @@ SuccessDialog({title:"Subscription plan has been set inactivated"})
     </section>
 </template>
 
-<style lang="scss" >
+<style lang="scss">
 .vgt-table th {
     font-size: 10pt !important;
 }
@@ -185,4 +207,4 @@ SuccessDialog({title:"Subscription plan has been set inactivated"})
 //     top: 10px !important;
 // }
 </style>
-    height: 50px !important;
+height: 50px !important;

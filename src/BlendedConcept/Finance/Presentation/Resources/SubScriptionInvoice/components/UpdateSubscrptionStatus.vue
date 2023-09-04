@@ -1,6 +1,14 @@
 <script setup>
+import { SuccessDialog } from "@actions/useSuccess";
+
 const isDialogVisible = ref(false);
 const date = ref("");
+const savePlan = () => {
+    isDialogVisible.value = false;
+    SuccessDialog({
+        title: "You have successfully updated subscription and sent email to affected user",
+    });
+};
 </script>
 
 <template>
@@ -115,7 +123,13 @@ const date = ref("");
                 >
                     <span class="text-white">Cancel</span>
                 </VBtn>
-                <VBtn color="primary" variant="flat" width="164px" height="50">
+                <VBtn
+                    color="primary"
+                    variant="flat"
+                    width="164px"
+                    height="50"
+                    @click="savePlan()"
+                >
                     <span class="text-white">Save</span>
                 </VBtn>
             </VCardActions>

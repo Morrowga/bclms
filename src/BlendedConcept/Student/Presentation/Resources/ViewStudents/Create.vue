@@ -4,10 +4,17 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import StoryBookSlider from "./components/StoryBookSlider.vue";
 import PlaylistSlider from "./components/PlaylistSlider.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
+import { SuccessDialog } from "@actions/useSuccess";
 
 import { ref } from "vue";
 let tab = ref(null);
 const isPasswordVisible = ref(false);
+const saveStudent = () => {
+    SuccessDialog({
+        title: "You have successfully created a student",
+        color: "#17CAB6",
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -165,6 +172,7 @@ const isPasswordVisible = ref(false);
                             width="200"
                             color="primary"
                             class="text-white"
+                            @click="saveStudent"
                             >Save</v-btn
                         >
                     </div>

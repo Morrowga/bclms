@@ -9,6 +9,7 @@ import IconOutlineBtn from "@mainRoot/components/Buttons/IconOutlineBtn.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import ImportUser from "./components/ImportUser.vue";
 import { router } from "@inertiajs/core";
+import { isConfirmedDialog } from "@actions/useConfirm";
 
 import {
     serverParams,
@@ -96,6 +97,11 @@ watch(serverPerPage, function (value) {
 const viewInfoRow = (id) => {
     router.get(route("users.show", { id: id }));
 };
+const setInactive = () => {
+    isConfirmedDialog({
+        denyButtonText: "Set Inactive",
+    });
+};
 </script>
 
 <template>
@@ -115,12 +121,15 @@ const viewInfoRow = (id) => {
                     </VBtn>
                     <VSpacer />
                     <VSpacer />
-                    <VTextField
-                        @keyup.enter="searchItems"
-                        v-model="serverParams.search"
-                        placeholder="Search Users"
-                        density="compact"
-                    />
+                    <div class="search-field">
+                        <VTextField
+                            @keyup.enter="searchItems"
+                            v-model="serverParams.search"
+                            placeholder="Search Users"
+                            density="compact"
+                            variant="solo"
+                        />
+                    </div>
 
                     <div class="d-flex">
                         <div
@@ -215,7 +224,7 @@ const viewInfoRow = (id) => {
                                     />
                                 </template>
                                 <VList>
-                                    <VListItem>
+                                    <VListItem @click="setInactive()">
                                         <VListItemTitle
                                             >Set Inactive</VListItemTitle
                                         >

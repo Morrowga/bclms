@@ -2,9 +2,18 @@
 import { ref } from "vue";
 import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
 import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
+import { SuccessDialog } from "@actions/useSuccess";
+
 let rating = ref(0);
 
 let dialog = ref(false);
+const submitReview = () => {
+    dialog.value = false;
+    SuccessDialog({
+        title: "You have successfully created a review",
+        color: "#17CAB6",
+    });
+};
 </script>
 <template>
     <div>
@@ -53,7 +62,11 @@ let dialog = ref(false);
                             style="gap: 10px"
                         >
                             <SecondaryBtn title="Cancel" />
-                            <PrimaryBtn title="Submit" />
+                            <PrimaryBtn
+                                title="Submit"
+                                :isLink="false"
+                                @click="submitReview()"
+                            />
                         </VCol>
                     </VRow>
                 </VCard-text>

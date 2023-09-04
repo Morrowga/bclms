@@ -115,12 +115,13 @@ let truncatedText = (text) => {
                         <VCard>
                             <VCardText class="d-flex flex-wrap gap-4">
                                 <!-- 👉 Export button -->
-                                <VBtn
-                                    prepend-icon="mdi-export"
-                                    variant="outlined"
-                                    color="secondary"
-                                    >Export</VBtn
-                                >
+                                <div class="search-field">
+                                    <VTextField
+                                        placeholder="Search Pathway"
+                                        density="compact"
+                                        variant="solo"
+                                    />
+                                </div>
                                 <VSpacer />
                                 <div
                                     class="app-user-search-filter d-flex justify-end align-center"

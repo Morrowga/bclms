@@ -8,6 +8,8 @@ import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDo
 import { Link, useForm } from "@inertiajs/vue3";
 
 import { ref } from "vue";
+import { SuccessDialog } from "@actions/useSuccess";
+
 let tab = ref(null);
 let form = useForm({
     student_fullname: "Wren Clark",
@@ -21,6 +23,12 @@ let form = useForm({
     login_password: "password",
 });
 const isPasswordVisible = ref(false);
+const updateStudent = () => {
+    SuccessDialog({
+        title: "You have successfully created a student",
+        color: "#17CAB6",
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -190,6 +198,7 @@ const isPasswordVisible = ref(false);
                             width="200"
                             color="primary"
                             class="text-white"
+                            @click="updateStudent()"
                             >Update</v-btn
                         >
                     </div>
