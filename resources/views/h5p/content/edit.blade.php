@@ -201,7 +201,7 @@
 H5P.jQuery(document).ready(function () {
 
     H5P.jQuery('.h5p-delete').on('click', function () {
-
+        console.log('s');
         var $obj = H5P.jQuery(this);
         var msg = "{{ trans('laravel-h5p.content.confirm_destroy') }}";
         if (confirm(msg)) {

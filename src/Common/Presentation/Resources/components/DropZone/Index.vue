@@ -26,6 +26,7 @@ const handleDrop = (event) => {
 const removeUploadedItem = (index) => {
     uploadedImages.value.splice(index, 1);
 }
+
 </script>
 <template>
     <VCardText>
