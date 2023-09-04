@@ -48,5 +48,16 @@
 @foreach($settings['loadedJs'] as $script)
 {{ Html::script($script) }}
 @endforeach
+<script>
+    function handleSubmit(event) {
+       console.log('Hello World Par kwar')
+    }
 
+    var submitButton = document.getElementById('h5p-interactive-video-endscreen-submit-button');
+    // var submitButton = document.querySelector('.h5p-content');
+    if (submitButton) { // Check if the element exists
+        submitButton.addEventListener('click', handleSubmit);
+    }
+
+</script>
 @endpush
