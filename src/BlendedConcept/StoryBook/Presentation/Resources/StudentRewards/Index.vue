@@ -73,7 +73,7 @@ const toggleBar = () => {
 
 .section-bg .layout-page-content {
     height: 1000px;
-    background: url("/images/rewardbg.png") no-repeat !important;
+    background: url("/images/rewardbg2.png") no-repeat !important;
     background-size: cover !important;
     background-position: center !important;
 }
@@ -93,8 +93,8 @@ const toggleBar = () => {
 .storereward {
     cursor: pointer;
     position: absolute;
-    left: 39.5%;
-    top: 11%;
+    left: 39.8%;
+    top: 12.7%;
 }
 
 .overlay-container {
