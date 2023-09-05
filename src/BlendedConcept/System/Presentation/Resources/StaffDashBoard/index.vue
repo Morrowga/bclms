@@ -108,16 +108,16 @@ const gameResources = [
             />
         </VRow>
         <div class="slider-stction">
+            <p class="pppangram-bold stafftitle">Books</p>
             <Slider
-                title="Books"
                 subtitle="Show 8 of 18 books"
                 btnText="Manage Books"
                 :url="route('books.index')"
                 :datas="bookResources"
                 type="books"
             /><br />
+            <p class="pppangram-bold stafftitle">Games</p>
             <Slider
-                title="Games"
                 subtitle="Show 8 of 18 games"
                 btnText="Manage Games"
                 :url="route('games.index')"
@@ -130,10 +130,10 @@ const gameResources = [
                 <div class="header">
                     <div class="head-section">
                         <div class="title-section">
-                            <p class="heading">User Surveys</p>
+                            <p class="heading pppangram-bold">User Surveys</p>
                         </div>
                     </div>
-                    <TotalUserSurveys
+                    <TotalUserSurveys class="mt-2"
                         :organization="
                             orgainzations_users.orgainzations_users[1]
                         "
@@ -152,6 +152,16 @@ const gameResources = [
     justify-content: space-between;
     align-items: center;
 }
+
+.stafftitle{
+    color: var(--Tiggie-Blue, #4066E4);
+    font-size: 40px !important;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 52px; /* 130% */
+    text-transform: capitalize;
+}
+
 .heading {
     margin: 0;
     font-size: 40px !important;
