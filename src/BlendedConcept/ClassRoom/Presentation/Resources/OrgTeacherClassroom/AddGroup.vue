@@ -5,6 +5,14 @@ import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
 import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import { SuccessDialog } from "@actions/useSuccess";
+
+const addGroup = () => {
+    SuccessDialog({
+        title: "You have successfully added a group!",
+        color: "#17CAB6",
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -56,7 +64,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                     title="Cancel"
                     :route="route('org-teacher-classroom.show')"
                 />
-                <PrimaryBtn title="Save" />
+                <PrimaryBtn title="Save" :isLink="false" @click="addGroup()" />
             </div>
         </VContainer>
     </AdminLayout>

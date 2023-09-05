@@ -3,7 +3,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 
 import { Link, useForm } from "@inertiajs/vue3";
-
+import { SuccessDialog } from "@actions/useSuccess";
 import { ref } from "vue";
 let tab = ref(null);
 let form = useForm({
@@ -18,6 +18,12 @@ let form = useForm({
     login_password: "password",
 });
 const isPasswordVisible = ref(false);
+const updateStudent = () => {
+    SuccessDialog({
+        title: "You have successfully update a student!",
+        color: "#17CAB6",
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -175,6 +181,7 @@ const isPasswordVisible = ref(false);
                             width="200"
                             color="primary"
                             class="text-white"
+                            @click="updateStudent()"
                             >Update</v-btn
                         >
                     </div>

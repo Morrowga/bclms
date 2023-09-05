@@ -111,6 +111,7 @@ return [
 
     'teacher_storybook' => [
         'index' => 'BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Index',
+        'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Edit',
         'show' => 'BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Show',
         'assign_student' => 'BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/AssignStudent',
     ],

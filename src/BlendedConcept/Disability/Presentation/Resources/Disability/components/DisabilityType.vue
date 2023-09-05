@@ -7,6 +7,9 @@ import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 import Create from "./DisabilityCreate.vue";
 import Edit from "./DisabilityEdit.vue";
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
+
 let props = defineProps();
 let user = ref({});
 const form = useForm({});
@@ -63,7 +66,7 @@ const items = ref([
 
 const isDiability = ref(false);
 const isEditDiability = ref(false);
-const handleSubmit = () => {};
+
 //## truncatedText
 let truncatedText = (text) => {
     if (text) {
@@ -78,6 +81,15 @@ let truncatedText = (text) => {
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
+const deleteItem = (id) => {
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes, delete it!",
+    });
+};
+const handleSubmit = ({ title }) => {
+    SuccessDialog({ title: title });
+};
 </script>
 <template>
     <VRow>
@@ -86,11 +98,14 @@ const selectionChanged = (data) => {
                 <VCard>
                     <VCardText class="d-flex justify-between flex-wrap gap-4">
                         <!-- 👉 Export button -->
-                        <VTextField
-                            label="Search Disabilities"
-                            single-line
-                            density="compact"
-                        />
+                        <div class="search-field">
+                            <VTextField
+                                label="Search Disabilities"
+                                single-line
+                                density="compact"
+                                variant="solo"
+                            />
+                        </div>
                         <VSpacer />
 
                         <div
@@ -144,11 +159,7 @@ const selectionChanged = (data) => {
                                                 >Edit</VListItemTitle
                                             >
                                         </VListItem>
-                                        <VListItem
-                                            @click="
-                                                deleteOrganization(props.row.id)
-                                            "
-                                        >
+                                        <VListItem @click="deleteItem()">
                                             <VListItemTitle
                                                 >Delete</VListItemTitle
                                             >

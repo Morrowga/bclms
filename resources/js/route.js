@@ -96,6 +96,7 @@ const pages = {
 
     //teacher view storybook
     "BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Index.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Edit": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Edit.vue'),
     "BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Show": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Show.vue'),
     "BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/AssignStudent": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/AssignStudent.vue'),
 

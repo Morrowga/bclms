@@ -22,6 +22,10 @@ let props = defineProps({
         type: String,
         default: "#",
     },
+    isLink: {
+        type: Boolean,
+        default: true,
+    },
 });
 let emit = defineEmits(["click:runFunction"]);
 let clicked = () => {
@@ -31,15 +35,19 @@ let clicked = () => {
 
 <template>
     <div>
-        <Link :href="route">
-            <v-btn
-                variant="flat"
-                rounded
-                color="primary"
-                :width="width"
-                @click="clicked"
-                >{{ title }}</v-btn
-            >
+        <Link v-if="isLink" :href="route">
+            <v-btn variant="flat" rounded color="primary" :width="width">{{
+                title
+            }}</v-btn>
         </Link>
+        <v-btn
+            v-else
+            variant="flat"
+            rounded
+            color="primary"
+            :width="width"
+            @click="clicked"
+            >{{ title }}</v-btn
+        >
     </div>
 </template>

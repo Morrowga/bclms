@@ -70,7 +70,7 @@ const selectionChanged = (data) => {
                         variant="outlined"
                         color="secondary"
                         >Export</v-btn
-                    >a
+                    >
                 </div>
 
                 <VSpacer />
@@ -154,7 +154,7 @@ const selectionChanged = (data) => {
                         >
                             verify
                         </VChip>
-                         <VChip
+                        <VChip
                             size="small"
                             color="warning"
                             v-if="!dataProps.row.email_verified_at"

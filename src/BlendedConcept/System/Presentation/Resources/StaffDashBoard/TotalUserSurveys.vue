@@ -5,6 +5,8 @@ import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 
 let props = defineProps(["users"]);
 //## start datatable section
@@ -92,6 +94,12 @@ let truncatedText = (text) => {
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
+const deleteOrganization = (id) => {
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes, delete it!",
+    });
+};
 </script>
 <template>
     <section>
@@ -108,20 +116,22 @@ const selectionChanged = (data) => {
                 </div>
 
                 <VSpacer />
-                <div class="d-flex">
-                    <v-select
-                        label="Sort By"
-                        class="w-100"
-                        density="compact"
-                        :items="[]"
-                    ></v-select>
-                    <div
-                        class="app-user-search-filter d-flex justify-end align-center gap-6"
-                    >
-                        <Link :href="route('users.index')">
-                            <v-btn>Manage Surveys</v-btn>
-                        </Link>
+                <div class="d-flex align-center gap-6">
+                    <div class="sort-field">
+                        <SelectBox
+                            placeholder="Sort By"
+                            density="compact"
+                            :datas="[
+                                'Name',
+                                'Date Created',
+                                'Completion Status',
+                            ]"
+                        ></SelectBox>
                     </div>
+
+                    <Link :href="route('userexperiencesurvey.index')">
+                        <v-btn>Manage Surveys</v-btn>
+                    </Link>
                 </div>
             </VCardText>
 
@@ -141,6 +151,14 @@ const selectionChanged = (data) => {
                 }"
             >
                 <template #table-row="dataProps">
+                    <div v-if="dataProps.column.field == 'name'">
+                        <Link
+                            class="text-secondary"
+                            :href="route('userexperiencesurvey.create')"
+                        >
+                            <span>{{ dataProps.row.name }}</span>
+                        </Link>
+                    </div>
                     <div
                         v-if="dataProps.column.field == 'user_types'"
                         class="flex flex-nowrap"
@@ -174,14 +192,19 @@ const selectionChanged = (data) => {
                                 />
                             </template>
                             <VList>
-                                <VListItem>
-                                    <VListItemTitle>View</VListItemTitle>
-                                </VListItem>
-                                <VListItem>
-                                    <VListItemTitle>Edit</VListItemTitle>
-                                </VListItem>
-                                <VListItem>
+                                <VListItem
+                                    @click="
+                                        deleteOrganization(dataProps.row.id)
+                                    "
+                                >
                                     <VListItemTitle>Delete</VListItemTitle>
+                                </VListItem>
+                                <VListItem
+                                    @click="
+                                        router.get(route('survey_results.view'))
+                                    "
+                                >
+                                    <VListItemTitle>Result</VListItemTitle>
                                 </VListItem>
                             </VList>
                         </VMenu>

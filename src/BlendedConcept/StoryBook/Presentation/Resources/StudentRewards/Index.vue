@@ -2,10 +2,31 @@
 import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import { computed, defineProps } from "vue";
+
+import DraggableSticker from "./DraggableSticker.vue";
+import { ref, defineProps } from "vue";
 let props = defineProps(["flash", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
+const isDrag = ref(false);
+const isDragging = (isDragging) => {
+    isDrag.value = isDragging;
+};
+const images = [
+    "/images/s5.png",
+    "/images/s6.png",
+    "/images/s1.png",
+    "/images/s2.png",
+    "/images/s7.png",
+    "/images/s8.png",
+    "/images/s4.png",
+    "/images/s3.png",
+    "/images/s3.png",
+];
+let isOpen = ref(true);
+const toggleBar = () => {
+    isOpen.value = !isOpen.value;
+};
 </script>
 
 <template>
@@ -19,109 +40,27 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
             />
         </div>
         <section>
-            <v-navigation-drawer floating permanent class="reward-sidebar">
-                <div class="mt-5">
+            <!-- <v-navigation-drawer floating permanent class="reward-sidebar"> -->
+            <!-- <v-slide-x-transition> -->
+            <div v-if="isOpen" class="left-panel reward-sidebar">
+                <div class="mt-3" v-for="(image, index) in images" :key="index">
                     <div class="vlis" value="home">
                         <div class="d-flex justify-center mt-1">
-                            <img
-                                src="/images/s5.png"
+                            <DraggableSticker
+                                :imageSrc="image"
+                                :pox="30"
+                                :poy="index * 70"
                                 class="icon-reward-sidebar"
-                                alt=""
+                                @isDragging="isDragging"
                             />
                         </div>
                     </div>
                 </div>
-                <div class="mt-3">
-                    <div class="vlis" value="home">
-                        <div class="d-flex justify-center mt-1">
-                            <img
-                                src="/images/s6.png"
-                                class="icon-reward-sidebar"
-                                alt=""
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <div class="vlis" value="home">
-                        <div class="d-flex justify-center mt-1">
-                            <img
-                                src="/images/s1.png"
-                                class="icon-reward-sidebar"
-                                alt=""
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <div class="vlis" value="home">
-                        <div class="d-flex justify-center mt-1">
-                            <img
-                                src="/images/s2.png"
-                                class="icon-reward-sidebar"
-                                alt=""
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <div class="vlis" value="home">
-                        <div class="d-flex justify-center mt-1">
-                            <img
-                                src="/images/s7.png"
-                                class="icon-reward-sidebar"
-                                alt=""
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <div class="vlis" value="home">
-                        <div class="d-flex justify-center mt-1">
-                            <img
-                                src="/images/s8.png"
-                                class="icon-reward-sidebar"
-                                alt=""
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <div class="vlis" value="home">
-                        <div class="d-flex justify-center mt-1">
-                            <img
-                                src="/images/s4.png"
-                                class="icon-reward-sidebar"
-                                alt=""
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <div class="vlis" value="home">
-                        <div class="d-flex justify-center mt-1">
-                            <img
-                                src="/images/s3.png"
-                                class="icon-reward-sidebar"
-                                alt=""
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <div class="vlis" value="home">
-                        <div class="d-flex justify-center mt-1">
-                            <img
-                                src="/images/s3.png"
-                                class="icon-reward-sidebar"
-                                alt=""
-                            />
-                        </div>
-                    </div>
-                </div>
-            </v-navigation-drawer>
-            <div class="dragsticker">
-                <img src="/images/stickerdrag.png" />
+            </div>
+            <!-- </v-slide-x-transition> -->
+            <!-- </v-navigation-drawer> -->
+            <div :class="isOpen ? 'dragsticker' : 'close-dragsticker'">
+                <img src="/images/stickerdrag.png" @click="toggleBar()" />
             </div>
         </section>
     </StudentLayout>
@@ -134,7 +73,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 .section-bg .layout-page-content {
     height: 1000px;
-    background: url("/images/rewardbg.png") no-repeat !important;
+    background: url("/images/rewardbg2.png") no-repeat !important;
     background-size: cover !important;
     background-position: center !important;
 }
@@ -143,13 +82,19 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     position: absolute;
     top: 35%;
     left: 6.8%;
+    cursor: pointer;
 }
-
+.close-dragsticker {
+    position: absolute;
+    top: 35%;
+    left: -1.2%;
+    cursor: pointer;
+}
 .storereward {
     cursor: pointer;
     position: absolute;
-    left: 39.5%;
-    top: 11%;
+    left: 39.8%;
+    top: 12.7%;
 }
 
 .overlay-container {
@@ -169,7 +114,20 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 }
 
 .reward-sidebar {
-    overflow: auto; /* Enable scroll bars when content overflows */
+    // overflow-x: hidden !important;
+    // overflow-y: scroll !important;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    height: 630px !important;
+    width: 130px !important;
+    border-top: 4px solid #fff;
+    border-bottom: 4px solid #fff;
+    border-right: 4px solid #fff;
+    border-top-right-radius: 17px;
+    border-bottom-right-radius: 17px;
+    background: var(--gray, #bfc0c1);
+}
+.reward-sidebar-drag {
     margin-top: 3%;
     margin-bottom: 3%;
     height: 630px !important;
@@ -213,5 +171,12 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
+.left-panel {
+    position: absolute;
+    left: 0;
+    top: 100px;
+    bottom: 0;
+    z-index: 1;
 }
 </style>

@@ -13,6 +13,7 @@ const props = defineProps({
         default: "",
     },
 });
+
 let datas = [
     {
         id: 1,
@@ -40,6 +41,7 @@ let datas = [
         title: "Book 5",
     },
 ];
+
 const toggleDialog = (id) => {
     console.log("id", id);
     // dialog.value = !dialog.value;
@@ -65,7 +67,12 @@ const toggleDialog = (id) => {
                         <div
                             class="d-flex fill-height align-center justify-center"
                         >
-                            <img class="bg-white fit-img-2" :src="data.image" />
+                            <img
+                                class="bg-white fit-img-2"
+                                :draggable="true"
+                                @dragstart="startDrag(index)"
+                                :src="data.image"
+                            />
                         </div>
                         <v-scale-transition class="full-icon">
                             <!-- <v-icon

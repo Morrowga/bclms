@@ -37,7 +37,15 @@ onMounted(() => {
         <VContainer>
             <VRow>
                 <VCol cols="12">
-                    <span class="report-text ruddy-bold">Reports</span>
+                    <span
+                        v-if="
+                            user_role == 'BC Super Admin' ||
+                            user_role == 'BC Staff'
+                        "
+                        class="tiggie-title"
+                        >Export Data</span
+                    >
+                    <span v-else class="report-text ruddy-bold">Reports</span>
                 </VCol>
                 <VCol cols="12">
                     <div
@@ -82,6 +90,7 @@ onMounted(() => {
                         <VBtn
                             v-if="
                                 user_role == 'BC Super Admin' ||
+                                user_role == 'Organization Admin' ||
                                 user_role == 'BC Staff' ||
                                 user_role == 'Teacher' ||
                                 user_role == 'BC Subscriber'
@@ -95,6 +104,7 @@ onMounted(() => {
                         <VBtn
                             v-if="
                                 user_role == 'BC Super Admin' ||
+                                user_role == 'Organization Admin' ||
                                 user_role == 'BC Staff' ||
                                 user_role == 'Teacher' ||
                                 user_role == 'BC Subscriber'

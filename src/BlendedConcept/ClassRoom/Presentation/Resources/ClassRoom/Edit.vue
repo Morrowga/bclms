@@ -5,27 +5,30 @@ import { router } from "@inertiajs/core";
 import { computed, ref } from "vue";
 import SelectStudent from "./components/SelectStudent.vue";
 import SelectTeacher from "./components/SelectTeacher.vue";
-let props = defineProps([
-    "flash",
-    "auth",
-]);
+import { SuccessDialog } from "@actions/useSuccess";
+let props = defineProps(["flash", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const selectedImage = ref(null);
 
 const handleFileUpload = (event) => {
-  const selectedFile = event.target.files[0];
-  if (selectedFile) {
-    selectedImage.value = URL.createObjectURL(selectedFile);
-  }
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+        selectedImage.value = URL.createObjectURL(selectedFile);
+    }
 };
 
 const fileInput = ref(null);
 
 const openFileInput = () => {
-  fileInput.value.click();
+    fileInput.value.click();
 };
-
+const updateClassroom = () => {
+    SuccessDialog({
+        title: "You have successfully updated classroom!",
+        color: "#17CAB6",
+    });
+};
 </script>
 
 <template>
@@ -36,8 +39,16 @@ const openFileInput = () => {
                 <VRow class="mt-3">
                     <VCol cols="12" sm="6" md="6">
                         <VCard class="upload-card" @click="openFileInput">
-                            <v-img v-if="selectedImage" :src="selectedImage" cover></v-img>
-                            <v-img v-else src="/images/classroom9.jpeg" cover></v-img>
+                            <v-img
+                                v-if="selectedImage"
+                                :src="selectedImage"
+                                cover
+                            ></v-img>
+                            <v-img
+                                v-else
+                                src="/images/classroom9.jpeg"
+                                cover
+                            ></v-img>
                             <!-- <div v-else class="card-text">
                                 <div class="text-center">
                                 <div class="d-flex justify-center">
@@ -56,17 +67,29 @@ const openFileInput = () => {
                             </div>
                             </div> -->
                         </VCard>
-                        <input type="file" ref="fileInput" style="display: none" @change="handleFileUpload">
+                        <input
+                            type="file"
+                            ref="fileInput"
+                            style="display: none"
+                            @change="handleFileUpload"
+                        />
                     </VCol>
                     <VCol cols="12" sm="6" md="4">
-                        <span class="semi-label pppangram-bold">Classroom Details</span>
+                        <span class="semi-label pppangram-bold"
+                            >Classroom Details</span
+                        >
                         <div>
-                            <span class="input-label">Name <span class="star">*</span></span>
-                            <VTextField value="1A"/>
+                            <span class="input-label"
+                                >Name <span class="star">*</span></span
+                            >
+                            <VTextField value="1A" />
                         </div>
                         <div class="mt-2">
                             <span class="input-label">Description</span>
-                            <VTextarea rows="2" value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, impedit repellendus esse corporis voluptas et quis voluptates quo, incidunt consequuntur non temporibus cupiditate eaque dolores! Architecto obcaecati corporis earum tempora!">
+                            <VTextarea
+                                rows="2"
+                                value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, impedit repellendus esse corporis voluptas et quis voluptates quo, incidunt consequuntur non temporibus cupiditate eaque dolores! Architecto obcaecati corporis earum tempora!"
+                            >
                             </VTextarea>
                         </div>
                     </VCol>
@@ -82,11 +105,24 @@ const openFileInput = () => {
                     </v-expansion-panels>
                 </div>
                 <div class="mt-10 d-flex justify-center">
-                    <v-btn varient="flat" color="#F6F6F6" class="cancel pppangram-bold" width="200" rounded>
-                         Cancel
+                    <v-btn
+                        varient="flat"
+                        color="#F6F6F6"
+                        class="cancel pppangram-bold"
+                        width="200"
+                        rounded
+                    >
+                        Cancel
                     </v-btn>
-                    <v-btn varient="flat" color="#3749E9" class="textcolor ml-2 pppangram-bold" width="200" rounded>
-                         Save
+                    <v-btn
+                        varient="flat"
+                        color="#3749E9"
+                        class="textcolor ml-2 pppangram-bold"
+                        width="200"
+                        rounded
+                        @click="updateClassroom()"
+                    >
+                        Save
                     </v-btn>
                 </div>
             </VContainer>
@@ -99,14 +135,14 @@ const openFileInput = () => {
     inline-size: 24.0625rem;
 }
 
-.card-text{
+.card-text {
     padding: 145px 80px;
     justify-content: center;
     align-items: center;
 }
 
-.fade-text{
-    color: var(--secondary-2, rgba(86, 86, 96, 0.40));
+.fade-text {
+    color: var(--secondary-2, rgba(86, 86, 96, 0.4));
     font-size: 14px !important;
     font-style: normal !important;
     font-weight: 400 !important;
@@ -114,14 +150,14 @@ const openFileInput = () => {
     text-transform: capitalize !important;
 }
 
-.cancel{
+.cancel {
     border-radius: 23px !important;
-    background: rgba(55, 73, 233, 0.10) !important;
-    color: #3749E9 !important;
+    background: rgba(55, 73, 233, 0.1) !important;
+    color: #3749e9 !important;
 }
 
-.input-label{
-    color: var(--gray, #BFC0C1);
+.input-label {
+    color: var(--gray, #bfc0c1);
     /* Body Style Small */
     font-size: 16px !important;
     font-style: normal !important;
@@ -129,11 +165,11 @@ const openFileInput = () => {
     line-height: 26px !important; /* 162.5% */
 }
 
-.star{
-    color: var(--candy-red, #FF6262);
+.star {
+    color: var(--candy-red, #ff6262);
 }
 
-.semi-label{
+.semi-label {
     color: var(--graphite, #282828) !important;
     font-size: 20px !important;
     font-style: normal !important;
@@ -141,7 +177,7 @@ const openFileInput = () => {
     line-height: 32px !important; /* 160% */
 }
 
-.drag-text{
+.drag-text {
     color: var(--secondary, #565660);
     font-size: 16px !important;
     font-style: normal !important;
@@ -149,7 +185,7 @@ const openFileInput = () => {
     line-height: 24px !important; /* 150% */
 }
 
-.upload-card{
+.upload-card {
     width: 100%;
     background: #e3e3e3;
     box-shadow: none !important;
@@ -159,11 +195,11 @@ const openFileInput = () => {
     text-transform: capitalize;
 }
 
-.cloud{
+.cloud {
     text-align: center;
 }
 
-.span-text{
+.span-text {
     color: #000 !important;
     font-size: 40px !important;
     font-style: normal !important;
@@ -181,11 +217,11 @@ const openFileInput = () => {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
 
-.textcolor{
+.textcolor {
     color: #fff;
 }
 
-.classname{
+.classname {
     color: #000;
     font-size: 36px;
     font-style: normal;

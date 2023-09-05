@@ -4,7 +4,8 @@ import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import BookReviewDetails from "./components/BookReviewDetails.vue";
-
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 let props = defineProps();
 
 let columns = [
@@ -84,7 +85,7 @@ const items = ref([
 
 const isDiability = ref(false);
 const isEditDiability = ref(false);
-
+let isDialogVisible = ref(false);
 //## truncatedText
 let truncatedText = (text) => {
     if (text) {
@@ -95,6 +96,14 @@ let truncatedText = (text) => {
         }
     }
 };
+const showDetail = () => {
+    isDialogVisible.value = !isDialogVisible.value;
+};
+const deleteReview = () => {
+    isConfirmedDialog({
+        denyButtonText: "Set Inactive",
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -104,24 +113,41 @@ let truncatedText = (text) => {
                 <VCol cols="12" sm="12" lg="12">
                     <section>
                         <VCard>
-                            <VCardText class="d-flex flex-wrap gap-4">
+                            <VCardText
+                                class="d-flex flex-wrap gap-4 align-center"
+                            >
                                 <!-- 👉 Export button -->
+                                <!-- 👉 Search  -->
                                 <VSpacer />
-                                <div class="app-user-search-filter d-flex justify-end align-center">
-                                    <div class="d-flex flex-row flex-end gap-2">
-                                        <!-- 👉 Search  -->
 
-                                        <!-- 👉 Add User button -->
-                                        <VBtn class="tiggie-btn">
-                                            <Link
-                                                :href="route('pathways.create')"
-                                                class="text-white"
-                                            >
-                                                Delete
-                                            </Link>
-                                        </VBtn>
-                                        <BookReviewDetails />
-                                    </div>
+                                <div class="search-field">
+                                    <VTextField
+                                        @keyup.enter="searchItems"
+                                        placeholder="Search Reviews"
+                                        density="compact"
+                                        class="pr-2"
+                                        variant="solo"
+                                    />
+                                </div>
+                                <div
+                                    class="app-user-search-filter d-flex justify-end align-center gap-4"
+                                >
+                                    <SelectBox
+                                        :datas="[
+                                            'Name',
+                                            'Date Sticker',
+                                            'Rewards Issue',
+                                            'Status',
+                                        ]"
+                                        placeholder="Sort By"
+                                        density="compact"
+                                        variant="solo"
+                                    />
+                                    <!-- 👉 Add Announcement button -->
+                                    <VBtn class="tiggie-btn"> Delete </VBtn>
+                                    <BookReviewDetails
+                                        :isDialogVisible="isDialogVisible"
+                                    />
                                 </div>
                             </VCardText>
                             <VDivider />
@@ -136,6 +162,7 @@ let truncatedText = (text) => {
                                     enabled: false,
                                 }"
                                 :pagination-options="{ enabled: true }"
+                                v-on:row-click="showDetail()"
                             >
                                 <template #table-row="dataProps">
                                     <div
@@ -152,10 +179,16 @@ let truncatedText = (text) => {
                                             dataProps.column.field == 'action'
                                         "
                                     >
-                                        <VIcon
-                                            icon="mdi-trash-can-outline"
-                                            size="21"
-                                        />
+                                        <VBtn
+                                            variant="text"
+                                            class="text-secondary"
+                                            @click="deleteReview"
+                                        >
+                                            <VIcon
+                                                icon="mdi-trash-can-outline"
+                                                size="21"
+                                            />
+                                        </VBtn>
                                     </div>
                                 </template>
                             </vue-good-table>
@@ -172,5 +205,9 @@ let truncatedText = (text) => {
 <style scoped>
 .custom-progress {
     width: 70%;
+}
+:deep(.role-data-table .vgt-left-align) {
+    vertical-align: middle !important;
+    cursor: pointer;
 }
 </style>

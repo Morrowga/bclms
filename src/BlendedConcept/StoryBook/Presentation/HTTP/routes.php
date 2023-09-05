@@ -24,6 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Route::get('/games', [GameController::class, 'index'])->name('games.index');
     // Route::get('/books', [BookController::class, 'index'])->name('books.index');
     Route::get('/teacher_storybook', [TeacherStorybookController::class, 'index'])->name('teacher_storybook.index');
+    Route::get('/teacher_storybook/edit', [TeacherStorybookController::class, 'edit'])->name('teacher_storybook.edit');
     Route::get('/teacher_storybook/show', [TeacherStorybookController::class, 'show'])->name('teacher_storybook.show');
     Route::get('/teacher_storybook/assign_student', [TeacherStorybookController::class, 'assign_student'])->name('teacher_storybook.assign_student');
 

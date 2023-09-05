@@ -8,6 +8,7 @@ import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import DefaultBtn from "@mainRoot/components/Buttons/DefaultBtn.vue";
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 // import Edit from "./Edit.vue";
 let props = defineProps();
 
@@ -101,6 +102,14 @@ const selectionChanged = (data) => {
 const goRoute = (route) => {
     router.get(route);
 };
+const deleteItem = () => {
+    isConfirmedDialog({
+        denyButtonText: "Set Inactive",
+        onConfirm: () => {
+            // alert("good to go");
+        },
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -110,24 +119,32 @@ const goRoute = (route) => {
                 <VCol cols="12" sm="12" lg="12">
                     <section>
                         <VCard>
-                            <VCardText class="d-flex flex-wrap gap-4">
+                            <VCardText
+                                class="d-flex flex-wrap gap-4 align-center"
+                            >
                                 <!-- 👉 Export button -->
 
                                 <VSpacer />
-                                <VSpacer />
-                                <VSpacer />
-                                <VTextField
-                                    placeholder="Search Users"
-                                    density="compact"
-                                    style="width: 200px"
-                                />
+
+                                <div class="search-field">
+                                    <VTextField
+                                        placeholder="Search Users"
+                                        density="compact"
+                                        variant="solo"
+                                    />
+                                </div>
 
                                 <div class="d-flex">
                                     <div
                                         class="app-user-search-filter d-flex align-center justify-end gap-3"
                                     >
                                         <selectBox
-                                            :datas="[]"
+                                            :datas="[
+                                                'Name',
+                                                'Discription',
+                                                'Disability',
+                                                'Status',
+                                            ]"
                                             placeholder="Sort By"
                                             density="compact"
                                             variant="solo"
@@ -205,7 +222,9 @@ const goRoute = (route) => {
                                                         >Edit</VListItemTitle
                                                     >
                                                 </VListItem>
-                                                <VListItem @click="() => {}">
+                                                <VListItem
+                                                    @click="deleteItem()"
+                                                >
                                                     <VListItemTitle
                                                         >Delete</VListItemTitle
                                                     >

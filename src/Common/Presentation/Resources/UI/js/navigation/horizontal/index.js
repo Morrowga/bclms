@@ -108,13 +108,7 @@ export default [
         route_name: 'org_view_teacher_student',
         access_module: "access_orgusers",
     },
-    {
-        title: 'Reports',
-        url: `/reports`,
-        icon: { icon: 'mdi-file-chart-outline' },
-        route_name: 'reports',
-        access_module: "access_reports",
-    },
+    
     {
         title: 'Subscriptions',
         url: "/",
@@ -134,8 +128,8 @@ export default [
         children: [
             { title: 'Users', url: '/users', icon: { icon: 'mdi-account-group' }, route_name: 'users', access_module: "access_user" },
             { title: 'Student', url: `${PREFIX}/students`, icon: { icon: 'mdi-account-group-outline' }, route_name: 'students', access_module: "access_student" },
-            { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
             { title: 'Roles', url: '/roles', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'roles', access_module: "access_role" },
+            { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
         ],
     },
 
@@ -149,6 +143,13 @@ export default [
             { title: 'Survey Results', url: '/survey_results', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'survey_results', access_module: "access_surveyResults", },
             { title: 'Profilling Surveys', url: '/profilling_survey', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'profilling_survey', access_module: "access_profillingSurveys", },
         ],
+    },
+    {
+        title: 'Reports',
+        url: `/reports`,
+        icon: { icon: 'mdi-file-chart-outline' },
+        route_name: 'reports',
+        access_module: "access_reports",
     },
     // {
     //     title: 'Libraries',

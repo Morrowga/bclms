@@ -13,9 +13,7 @@
 
             <br/>
             <p class='text-center'>
-
                 <a href="{{ url()->previous() }}" class="btn btn-default"><i class="fa fa-reply"></i> {{ trans('laravel-h5p.content.cancel') }}</a>
-
             </p>
         </div>
 
@@ -57,9 +55,16 @@
 {{ Html::script($script) }}
 @endforeach
 <script>
-   H5P.externalDispatcher.on('xAPI', function (event) {
-  console.log(event.data.statement);
-});
+    function handleSubmit(event) {
+       console.log('Hello World Par kwar')
+    }
+
+    var submitButton = document.getElementById('h5p-interactive-video-endscreen-submit-button');
+    // var submitButton = document.querySelector('.h5p-content');
+    if (submitButton) { // Check if the element exists
+        submitButton.addEventListener('click', handleSubmit);
+    }
+
 </script>
 @endpush
 

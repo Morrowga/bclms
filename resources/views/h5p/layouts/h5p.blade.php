@@ -72,7 +72,7 @@
 
     <body>
 
-        <div  id="app" 
+        <div  id="app"
               @if (Route::has('welcome'))
               class="flex-center position-ref full-height"
               @endif

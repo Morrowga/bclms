@@ -2,32 +2,44 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
+import AddProfillingSurvey from "./components/AddProfillingSurvey.vue";
 import { ref } from "vue";
 import { usePage, useForm } from "@inertiajs/vue3";
-
+import { SuccessDialog } from "@actions/useSuccess";
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
 let tab = ref(false);
+let isSurveryAdd = ref(false);
 const checkUserRole = () => {
     return user_role.value == "BC Super Admin" || user_role.value == "BC Staff";
+};
+const openDialog = () => {
+    isSurveryAdd.value = !isSurveryAdd.value;
+};
+const handleSubmit = () => {
+    SuccessDialog({ title: "You've successfully added question" });
 };
 </script>
 <template>
     <AdminLayout>
         <VContainer :fluid="checkUserRole()">
             <v-row>
-                <v-col cols="12" md="12">
-                    <h1
-                        class="text-h3 font-weight-bold mb-4"
-                        style="color: #000"
-                    >
-                        Profilling Survey
-                    </h1>
-                    <span class="text-subtitle-1"
-                        >Answer these questions to identify the best educational
-                        pathway for the student's unique needs and
-                        abilities.</span
-                    >
+                <v-col
+                    cols="12"
+                    md="12"
+                    class="d-flex justify-space-between align-center"
+                >
+                    <div>
+                        <h1 class="tiggie-title mb-4">Profilling Survey</h1>
+                        <span class="text-subtitle-1"
+                            >Answer these questions to identify the best
+                            educational pathway for the student's unique needs
+                            and abilities.</span
+                        >
+                    </div>
+                    <div>
+                        <VBtn @click="openDialog">Add New</VBtn>
+                    </div>
                 </v-col>
                 <v-col cols="12" md="12">
                     <span class="text-h5 font-weight-bold" style="color: #000"
@@ -230,13 +242,20 @@ const checkUserRole = () => {
                 </v-col>
                 <br />
                 <v-col cols="12">
-                    <div class="d-flex justify-center" style="gap: 10px">
-                        <SecondaryBtn title="Cancel" :route="route('view_students.index')" />
+                    <!-- <div class="d-flex justify-center" style="gap: 10px">
+                        <SecondaryBtn
+                            title="Cancel"
+                            :route="route('view_students.index')"
+                        />
                         <PrimaryBtn title="Submit" />
-                    </div>
+                    </div> -->
                 </v-col>
             </v-row>
         </VContainer>
+        <AddProfillingSurvey
+            v-model:isDialogVisible="isSurveryAdd"
+            @submit="handleSubmit"
+        />
     </AdminLayout>
 </template>
 <style scoped></style>

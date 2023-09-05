@@ -33,7 +33,6 @@ ns.Editor = function (library, defaultParams, replace, iframeLoaded) {
     'allow': "fullscreen"
   });
 
-  console.log("hello")
   // The DOM element is often used directly
   var iframe = $iframe.get(0);
 

@@ -3,7 +3,8 @@ import ImageUpload from "@Composables/ImageUpload.vue";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
-import { toastAlert } from "@Composables/useToastAlert";
+import { SuccessDialog } from "@actions/useSuccess";
+
 const isFormValid = ref(false);
 const refForm = ref();
 const isDialogVisible = ref(false);
@@ -25,9 +26,7 @@ let handleUpdate = (id) => {
         if (valid) {
             form.post(route(`${props?.tenant}students.update`, { id: id }), {
                 onSuccess: (status) => {
-                    toastAlert({
-                        title: props.flash?.successMessage,
-                    });
+                    SuccessDialog({ title: props.flash?.successMessage });
                     isDialogVisible.value = false;
                 },
             });
@@ -49,7 +48,14 @@ onUpdated(() => {
 <template>
     <VDialog v-model="isDialogVisible" max-width="900" persistent>
         <template #activator="{ props }">
-            <VBtn v-bind="props" density="compact" icon="mdi-pencil" class="ml-2" color="secondary" variant="text">
+            <VBtn
+                v-bind="props"
+                density="compact"
+                icon="mdi-pencil"
+                class="ml-2"
+                color="secondary"
+                variant="text"
+            >
             </VBtn>
         </template>
         <VCard>
@@ -61,43 +67,96 @@ onUpdated(() => {
                     Updating user details will receive a privacy audit.
                 </span>
             </VCardSubtitle>
-            <VForm ref="refForm" v-model="isFormValid" @submit.prevent="handleUpdate(props.student.id)">
-                <DialogCloseBtn variant="text" size="small" @click="isDialogVisible = false" />
+            <VForm
+                ref="refForm"
+                v-model="isFormValid"
+                @submit.prevent="handleUpdate(props.student.id)"
+            >
+                <DialogCloseBtn
+                    variant="text"
+                    size="small"
+                    @click="isDialogVisible = false"
+                />
                 <VCardText>
                     <VRow>
                         <VCol cols="6">
                             <VRow>
                                 <VCol cols="12">
-                                    <VTextField label="Name" v-model="form.name" class="w-100" :rules="[requiredValidator]"
-                                        :error-messages="form?.errors?.name" />
+                                    <VTextField
+                                        label="Name"
+                                        v-model="form.name"
+                                        class="w-100"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="form?.errors?.name"
+                                    />
                                 </VCol>
                                 <VCol cols="12">
-                                    <VTextField type="text" label="Nick Name" v-model="form.nickname" class="w-100"
-                                        :rules="[requiredValidator]" :error-messages="form?.errors?.nickname" />
+                                    <VTextField
+                                        type="text"
+                                        label="Nick Name"
+                                        v-model="form.nickname"
+                                        class="w-100"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="form?.errors?.nickname"
+                                    />
                                 </VCol>
                                 <VCol cols="12">
-                                    <VTextField type="text" label="Student Code" v-model="form.student_code" class="w-100"
-                                        :rules="[requiredValidator]" :error-messages="form?.errors?.student_code" />
+                                    <VTextField
+                                        type="text"
+                                        label="Student Code"
+                                        v-model="form.student_code"
+                                        class="w-100"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="
+                                            form?.errors?.student_code
+                                        "
+                                    />
                                 </VCol>
                                 <VCol cols="12">
-                                    <VTextField type="text" label="Description" v-model="form.description" class="w-100"
-                                        :rules="[requiredValidator]" :error-messages="form?.errors?.description" />
+                                    <VTextField
+                                        type="text"
+                                        label="Description"
+                                        v-model="form.description"
+                                        class="w-100"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="
+                                            form?.errors?.description
+                                        "
+                                    />
                                 </VCol>
                                 <VCol cols="12">
-                                    <VTextField type="text" label="Grade" v-model="form.grade" class="w-100"
-                                        :rules="[requiredValidator]" :error-messages="form?.errors?.grade" />
+                                    <VTextField
+                                        type="text"
+                                        label="Grade"
+                                        v-model="form.grade"
+                                        class="w-100"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="form?.errors?.grade"
+                                    />
                                 </VCol>
                                 <VCol cols="12">
-                                    <AppDateTimePicker :rules="[requiredValidator]" v-model="form.dob" label="Dob" />
+                                    <AppDateTimePicker
+                                        :rules="[requiredValidator]"
+                                        v-model="form.dob"
+                                        label="Dob"
+                                    />
                                 </VCol>
                             </VRow>
                         </VCol>
                         <VCol cols="6">
-                            <ImageUpload v-model="form.image" :old_img="form.image" />
+                            <ImageUpload
+                                v-model="form.image"
+                                :old_img="form.image"
+                            />
                         </VCol>
                         <VCol cols="12" class="d-flex justify-center">
                             <VBtn type="submit" class="me-3"> Submit </VBtn>
-                            <VBtn type="reset" variant="outlined" color="secondary" @click="isDialogVisible = false">
+                            <VBtn
+                                type="reset"
+                                variant="outlined"
+                                color="secondary"
+                                @click="isDialogVisible = false"
+                            >
                                 Cancel
                             </VBtn>
                         </VCol>
