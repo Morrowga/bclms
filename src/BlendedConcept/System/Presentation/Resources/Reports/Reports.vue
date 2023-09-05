@@ -38,7 +38,10 @@ onMounted(() => {
             <VRow>
                 <VCol cols="12">
                     <span
-                        v-if="user_role == 'BC Super Admin'"
+                        v-if="
+                            user_role == 'BC Super Admin' ||
+                            user_role == 'BC Staff'
+                        "
                         class="tiggie-title"
                         >Export Data</span
                     >
