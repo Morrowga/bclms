@@ -56,10 +56,10 @@ const toggleDialog = (id) => {
                 <span class="subheading">{{ subtitle }}</span>
             </div>
         </div>
-        <!-- <swiper :slides-per-view="3" :space-between="10"> -->
-            <!-- <swiper-slide v-for="data in datas" :key="data.image"> -->
+        <swiper :slides-per-view="3" :space-between="10">
+            <swiper-slide v-for="data in datas" :key="data.image">
                 <div style="position: relative" v-for="data in datas" :key="data.image">
-                    <v-card 
+                    <v-card
                         class="ma-4"
                         height="200"
                         style="position: relative; z-index: 1"
@@ -81,8 +81,8 @@ const toggleDialog = (id) => {
                     </v-card>
                     <p class="font-weight-bold text-center">{{ data.title }}</p>
                 </div>
-            <!-- </swiper-slide> -->
-        <!-- </swiper> -->
+            </swiper-slide>
+        </swiper>
     </div>
 </template>
 
