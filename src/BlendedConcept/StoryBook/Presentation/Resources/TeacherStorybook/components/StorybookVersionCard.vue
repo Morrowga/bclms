@@ -1,5 +1,6 @@
 <script setup>
 import { isConfirmedDialog } from "@actions/useConfirm";
+import { router } from "@inertiajs/core";
 
 let onFormSubmit = () => {
     isConfirmedDialog({ title: "Are you sure want to delete it." });
@@ -13,7 +14,7 @@ let onFormSubmit = () => {
                 <v-menu activator="parent">
                     <v-list>
                         <v-list-item>
-                            <v-list-item-title>Edit</v-list-item-title>
+                            <v-list-item-title class="v-list-edit" @click="router.get(route('teacher_storybook.edit'))">Edit</v-list-item-title>
                         </v-list-item>
                         <v-list-item @click="onFormSubmit">
                             <v-list-item-title>Delete</v-list-item-title>
@@ -56,6 +57,9 @@ let onFormSubmit = () => {
     color: #fff !important;
 }
 
+.v-list-edit{
+    cursor: pointer !important;
+}
 ::v-deep .dotbtn {
     width: 28px !important;
     height: 28px !important;

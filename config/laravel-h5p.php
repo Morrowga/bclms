@@ -24,7 +24,7 @@ return [
     'H5P_DISABLE_AGGREGATION' => false,
 
     // Content screen setting
-    'h5p_show_display_option' => true,
+    'h5p_show_display_option' => false,
     'h5p_frame' => true,
     'h5p_export' => true,
     'h5p_embed' => true,

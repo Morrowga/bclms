@@ -11,6 +11,11 @@ class TeacherStorybookController
         return Inertia::render(config('route.teacher_storybook.index'));
     }
 
+    public function edit()
+    {
+        return Inertia::render(config('route.teacher_storybook.edit'));
+    }
+
     public function show()
     {
         return Inertia::render(config('route.teacher_storybook.show'));
