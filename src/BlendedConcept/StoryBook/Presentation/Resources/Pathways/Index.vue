@@ -3,7 +3,8 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
 let props = defineProps();
 
 //## start datatable section
@@ -103,6 +104,17 @@ let truncatedText = (text) => {
             return text?.substring(0, 30) + "...";
         }
     }
+};
+const deletePathway = () => {
+    isConfirmedDialog({
+        title: "You won't be able to revert it!",
+        denyButtonText: "Yes, delete it!",
+        onConfirm: () => {
+            SuccessDialog({
+                title: "You have successfully deleted pathway!",
+            });
+        },
+    });
 };
 </script>
 <template>
@@ -241,8 +253,8 @@ let truncatedText = (text) => {
                                                 </VListItem>
                                                 <VListItem
                                                     @click="
-                                                        deleteOrganization(
-                                                            props.row.id
+                                                        deletePathway(
+                                                            dataProps.row.id
                                                         )
                                                     "
                                                 >

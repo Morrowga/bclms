@@ -14,7 +14,6 @@ const props = defineProps({
     },
 });
 
-
 let datas = [
     {
         id: 1,
@@ -58,7 +57,7 @@ const toggleDialog = (id) => {
         </div>
         <swiper :slides-per-view="3" :space-between="10">
             <swiper-slide v-for="data in datas" :key="data.image">
-                <div style="position: relative" v-for="data in datas" :key="data.image">
+                <div style="position: relative">
                     <v-card
                         class="ma-4"
                         height="200"
@@ -68,9 +67,12 @@ const toggleDialog = (id) => {
                         <div
                             class="d-flex fill-height align-center justify-center"
                         >
-                            <img class="bg-white fit-img-2" :draggable="true"
-                            @dragstart="startDrag(index)"
-                            :src="data.image" />
+                            <img
+                                class="bg-white fit-img-2"
+                                :draggable="true"
+                                @dragstart="startDrag(index)"
+                                :src="data.image"
+                            />
                         </div>
                         <v-scale-transition class="full-icon">
                             <!-- <v-icon
