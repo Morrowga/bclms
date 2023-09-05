@@ -25,6 +25,7 @@
 @endsection
 
 @push( 'h5p-header-script' )
+
 {{--    core styles       --}}
 @foreach($settings['core']['styles'] as $style)
 {{ Html::style($style) }}
@@ -38,7 +39,14 @@
 @push( 'h5p-footer-script' )
 <script type="text/javascript">
     H5PIntegration = {!! json_encode($settings) !!};
+
 </script>
+
+
+{{-- custom script  --}}
+
+{{-- end custom script  --}}
+
 
 {{--    core script       --}}
 @foreach($settings['core']['scripts'] as $script)
@@ -48,5 +56,10 @@
 @foreach($settings['loadedJs'] as $script)
 {{ Html::script($script) }}
 @endforeach
-
+<script>
+   H5P.externalDispatcher.on('xAPI', function (event) {
+  console.log(event.data.statement);
+});
+</script>
 @endpush
+

@@ -276,7 +276,7 @@ const isDialogVisible = ref(true);
 </template>
 
 <style scoped>
-::v-deep .tiggie-label-custome {
+:deep(.tiggie-label-custome) {
     color: #282828 !important;
     font-size: 20px !important;
     font-style: normal !important;
@@ -284,7 +284,7 @@ const isDialogVisible = ref(true);
     line-height: 20px !important;
 }
 
-::v-deep .v-radio {
+:deep(.v-radio) {
     font-size: 16px;
     /* Adjust the font size as needed */
     width: 32px;

@@ -31,9 +31,7 @@ let onFormSubmit = () => {
 
         <div class="my-3 mx-2">
             <Link :href="route('teacher_storybook.assign_student')">
-                <v-btn class="manage-btn" variant="flat" color="#FF8015" rounded
-                    >Manage Assignment to Students</v-btn
-                >
+            <v-btn class="manage-btn" variant="flat" color="#FF8015" rounded>Manage Assignment to Students</v-btn>
             </Link>
         </div>
     </v-card>
@@ -56,12 +54,14 @@ let onFormSubmit = () => {
     color: #fff !important;
 }
 
-::v-deep .dotbtn {
+:deep(.dotbtn) {
     width: 28px !important;
     height: 28px !important;
 }
 
-::v-deep .manage-btn > span.v-btn__content {
+
+
+:deep(.manage-btn > span.v-btn__content) {
     font-size: 13px !important;
 }
 </style>

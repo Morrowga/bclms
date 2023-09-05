@@ -2,7 +2,7 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import { computed, defineProps } from "vue";
+import { computed } from "vue";
 let props = defineProps([
     "flash",
     "auth",

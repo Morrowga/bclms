@@ -116,7 +116,7 @@ const openFileInput = () => {
 }
 
 
-::v-deep #input-162 {
+:deep(#input-162) {
     border-radius: 100px !important;
 }
 </style>
