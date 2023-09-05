@@ -71,17 +71,7 @@ let onFormSubmit = () => {
                                     rows="3"
                                 />
                             </VCol>
-                            <VCol cols="5">
-                                <VLabel class="tiggie-label required"
-                                    >Announcement by</VLabel
-                                >
-                                <VTextField
-                                    class="blue-outline-field"
-                                    variant="plain"
-                                    placeholder="Type here ...."
-                                    density="compact"
-                                />
-                            </VCol>
+
                             <VCol cols="5">
                                 <VLabel class="tiggie-label required"
                                     >Announcement to</VLabel
