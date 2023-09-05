@@ -234,7 +234,7 @@ const form = useForm({
 
 <style scoped>
 /* .img-header {
-   
+
 } */
 .faded-image {
     position: relative;
@@ -312,7 +312,9 @@ const form = useForm({
 .v-input__control {
     height: auto !important;
 }
-.v-text-field ::v-deep input {
+
+
+:deep(.v-text-field input) {
     color: var(--graphite, #282828) !important;
     font-size: 35px !important;
     font-style: normal !important;
@@ -322,6 +324,7 @@ const form = useForm({
     padding-top: 0;
     padding-bottom: 0;
 }
+
 .delete-chip {
     background: rgb(109, 120, 141);
     border-radius: 50%;

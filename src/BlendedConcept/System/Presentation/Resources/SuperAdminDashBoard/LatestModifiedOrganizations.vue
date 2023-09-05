@@ -245,11 +245,5 @@ let selectedRole = ref("");
     /* Adjust the border radius as needed */
 }
 
-// ::v-deep .v-select .v-field--variant-outlined
-// {
-//     border: 1px solid var(--line, #E5E5E5);
-//     background: var(--surface, #F6F6F6);
-//     border-radius:100px;
-//     outline: none !important;
-// }
+
 </style>

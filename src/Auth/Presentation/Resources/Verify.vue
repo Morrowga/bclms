@@ -9,7 +9,6 @@ import authV2VerifyEmailIllustrationDark from "@images/pages/auth-v2-verify-emai
 import authV2VerifyEmailIllustrationLight from "@images/pages/auth-v2-verify-email-illustration-light.png";
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { themeConfig } from "@themeConfig";
-import { defineProps } from "vue";
 import { router } from "@inertiajs/core";
 
 const authV1ThemeVerifyEmailMask = useGenerateImageVariant(
