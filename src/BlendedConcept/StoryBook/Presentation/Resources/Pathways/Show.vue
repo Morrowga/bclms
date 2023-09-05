@@ -50,7 +50,16 @@ const savePathway = () => {
                     <SampleStorybookSlider />
                 </VCol>
                 <VCol>
-                    <VBtn color="primary" @click="showBook">Add Books</VBtn>
+                    <div class="d-flex justify-space-between align-center">
+                        <VBtn color="primary" @click="showBook">Add Books</VBtn>
+                        <div class="search-field">
+                            <v-text-field
+                                density="compact"
+                                placeholder="Search book"
+                                variant="solo"
+                            ></v-text-field>
+                        </div>
+                    </div>
                 </VCol>
                 <VCol cols="12">
                     <AddBook v-if="isShowBook" />
