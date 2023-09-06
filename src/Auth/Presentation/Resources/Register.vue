@@ -39,7 +39,66 @@ let props = defineProps(["ErrorMessage"]);
  <SystemErrorAlert :sytemErrorMessage="sytemErrorMessage" v-if="sytemErrorMessage"/>
 
   <VDivider></VDivider>
-  <div class="regiser-image">
+
+  <div class="text-center mt-10">
+        <p class="ruddy-bold signup-title">Sign Up For B2C Account</p>
+       <VRow class="mt-10">
+            <VCol cols="4">
+            </VCol>
+            <VCol cols="4" class="text-left">
+                <VTextField class="mt-3 custom-label-color"
+                    label="Name *"
+                    placeholder=""
+                    density="compact"
+                    variant="solo"
+                />
+                <VTextField class="mt-5 custom-label-color"
+                    label="Email *"
+                    placeholder=""
+                    density="compact"
+                    variant="solo"
+                />
+                <VTextField class="mt-5 custom-label-color"
+                    label="Contact Number *"
+                    placeholder=""
+                    density="compact"
+                    variant="solo"
+                />
+                <VTextField class="mt-5 custom-label-color"
+                    label="Password *"
+                    placeholder=""
+                    density="compact"
+                    variant="solo"
+                    :type="isPasswordVisible ? 'text' : 'password'"
+                    :append-inner-icon="
+                    isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
+                    "
+                    @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                />
+                <VTextField class="mt-5 custom-label-color"
+                    label="Confirm Password *"
+                    placeholder=""
+                    :type="isPasswordVisible ? 'text' : 'password'"
+                    :append-inner-icon="
+                    isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
+                    "
+                    @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                    density="compact"
+                    variant="solo"
+                />
+                <div class="mt-5">
+                    <v-checkbox label="I agree to the terms and services"></v-checkbox>
+                </div>
+                <VBtn block @click="router.get(route('registerplan'))" variant="flat" class="primary mt-5" rounded>
+                    Sign up
+                </VBtn>
+            </VCol>
+            <VCol cols="4">
+            </VCol>
+       </VRow>
+  </div>
+
+  <!-- <div class="regiser-image">
     <div style="max-width: 1024px; margin-inline: auto">
 
       <VRow class="d-flex justify-center" style="padding-top: 100px">
@@ -76,7 +135,6 @@ let props = defineProps(["ErrorMessage"]);
                   />
                 </VCol>
 
-                <!-- login instead -->
                 <VCol cols="9" class="d-flex mx-auto">
                   <VCheckbox v-model="agreed" class="primary" />
                   <Vlabel class="text-justify pt-3 pl-3 primary">
@@ -109,16 +167,31 @@ let props = defineProps(["ErrorMessage"]);
         </VCol>
       </VRow>
     </div>
-  </div>
+  </div> -->
 </template>
 
 
 <style lang="scss">
 @use "@styles/@core/template/pages/page-auth.scss";
 .regiser-image {
-  background: url("/public/images/signupnew.png") 100% no-repeat;
+//   background: url("/public/images/signupnew.png") 100% no-repeat;
   height: 100vh;
   background-size: cover;
+}
+
+.signup-title{
+    color: var(--Text, #161616);
+    /* H3 Ruddy */
+    font-size: 30px !important;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 52px; /* 130% */
+    text-transform: capitalize;
+}
+
+.custom-label-color .v-label {
+  color: #000; /* Change the label color to red */
+  font-size: 15px !important;
 }
 // .primary {
 //   color: #001a8f !important;

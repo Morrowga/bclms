@@ -181,6 +181,7 @@ const pages = {
     //authnication route :🧑
     "Auth/Presentation/Resources/Login": import("../../src/Auth/Presentation/Resources/Login.vue"),
     "Auth/Presentation/Resources/Register": import("../../src/Auth/Presentation/Resources/Register.vue"),
+    "Auth/Presentation/Resources/Plan": import("../../src/Auth/Presentation/Resources/Plan.vue"),
     "Auth/Presentation/Resources/Verify": import("../../src/Auth/Presentation/Resources/Verify.vue"),
     "Auth/Presentation/Resources/UserProfile": import('../../src/Auth/Presentation/Resources/UserProfile.vue'),
 

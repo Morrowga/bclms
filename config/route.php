@@ -160,6 +160,7 @@ return [
     'login' => 'Auth/Presentation/Resources/Login',
     'verify' => 'Auth/Presentation/Resources/Verify',
     'register' => 'Auth/Presentation/Resources/Register',
+    'registerplan' => 'Auth/Presentation/Resources/Plan',
     'userprofile' => 'Auth/Presentation/Resources/UserProfile',
     'students' => 'BlendedConcept/Student/Presentation/Resources/Student/Index',
     'teachers' => 'BlendedConcept/Teacher/Presentation/Resources/Teacher/Index',
