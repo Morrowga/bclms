@@ -16,6 +16,7 @@ class VerifyCsrfToken extends Middleware
         'admin/h5p/ajax',
         'admin/h5p/ajax/*',
         'admin/h5p/*',
-        'bc/admin/*'
+        'bc/admin/*',
+        'bc/*'
     ];
 }

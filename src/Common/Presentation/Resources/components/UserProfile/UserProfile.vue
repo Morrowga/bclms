@@ -9,13 +9,27 @@ let page = usePage();
 const userData = computed(() => page.props.auth);
 let user_role = computed(() => page.props.user_info.user_role.name);
 const profileRoute = ref(route("userprofile"));
+/***
+ *  implementation logout for both multitant and b2c user
+ *
+ */
 const logout = () => {
     const PREFIX =
-        localStorage.getItem("tenant") != ""
+        (localStorage.getItem("tenant") != "" || Object.is(localStorage.getItem('tenant',null)))
             ? `/${localStorage.getItem("tenant")}`
             : "";
     localStorage.removeItem("menu_title");
-    router.post(`${PREFIX}/logout`);
+
+    if(localStorage.getItem("tenant") != "" || Object.is(localStorage.getItem('tenant',null)))
+    {
+        router.post('/logout');
+    }
+
+    else
+    {
+        router.post(`${PREFIX}/logout`);
+    }
+
 };
 const dynamicProfileLink = () => {
     console.log(user_role.value);
