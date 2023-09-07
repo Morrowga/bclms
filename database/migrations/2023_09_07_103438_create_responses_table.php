@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('storybook_assignments', function (Blueprint $table) {
+        Schema::create('responses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('storybook_version_id')->references('id')->on('storybook_versions');
-            $table->foreignId('student_id')->references('student_id')->on('students');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('question_id')->nullable()->references('id')->on('questions')->cascadeOnDelete();
+            $table->dateTime('response_datetime');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('storybook_assignments');
+        Schema::dropIfExists('responses');
     }
 };

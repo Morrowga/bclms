@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('themes', function (Blueprint $table) {
+        Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->longText('description')->nullable();
+            $table->foreignId('survey_id')->nullable()->references('id')->on('surveys')->cascadeOnDelete();
             $table->timestamps();
-            $table->softDeletes();
+            $table->enum('question_type', ['SINGLE_CHOICE', 'MULTIPLE_RESPONSE', 'RATING']);
+            $table->string('question');
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('themes');
+        Schema::dropIfExists('questions');
     }
 };

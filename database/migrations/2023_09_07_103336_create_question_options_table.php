@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('classroom_teachers', function (Blueprint $table) {
-            $table->foreignId('classroom_id')->nullable()->references('id')->on('classrooms')->cascadeOnDelete();
-            $table->foreignId('teacher_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
+        Schema::create('question_options', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('question_id')->nullable()->references('id')->on('questions')->cascadeOnDelete();
+            $table->string('content');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classroom_teachers');
+        Schema::dropIfExists('question_options');
     }
 };

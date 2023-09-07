@@ -15,9 +15,7 @@ return new class extends Migration
     {
         Schema::create('b2c_students', function (Blueprint $table) {
             $table->foreignId('student_id')->nullable()->references('student_id')->on('students')->cascadeOnDelete();
-            $table->foreignId('b2c_user_id')->nullable()->references('id')->on('b2c_users')->cascadeOnDelete();
-
-            $table->softDeletes();
+            $table->foreignId('b2c_user_id')->nullable()->references('b2c_user_id')->on('b2c_users')->cascadeOnDelete();
         });
     }
 
