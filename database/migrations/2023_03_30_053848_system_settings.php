@@ -14,14 +14,17 @@ return new class extends Migration
     public function up()
     {
 
-        Schema::create('site_settings', function (Blueprint $table) {
+        Schema::create('system_settings', function (Blueprint $table) {
             $table->id();
             $table->string('site_name');
             $table->string('ssl')->nullable();
-            $table->string('timezone');
-            $table->string('locale');
+            $table->string('site_time_zone');
+            $table->string('site_locale');
             $table->string('email');
             $table->string('contact_number');
+            $table->string('url');
+            $table->string('website_logo')->nullable();
+            $table->string('website_favicon')->nullable();
             $table->timestamps();
         });
     }
