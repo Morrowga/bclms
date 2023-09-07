@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('stripe_status')->nullable();
             $table->decimal('stripe_price', 15, 2)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

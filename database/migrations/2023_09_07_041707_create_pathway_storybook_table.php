@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('pathway_id')->nullable()->references('id')->on('pathways')->cascadeOnDelete();
             $table->foreignId('storybook_id')->nullable()->references('id')->on('storybooks')->cascadeOnDelete();
             $table->integer('sequence')->nullable();
+            $table->softDeletes();
         });
     }
 

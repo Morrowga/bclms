@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('student_id')->nullable()->references('student_id')->on('students')->cascadeOnDelete();
             $table->foreignId('pathway_id')->nullable()->references('id')->on('pathways')->cascadeOnDelete();
             $table->string('progress')->nullable();
+            $table->softDeletes();
         });
     }
 

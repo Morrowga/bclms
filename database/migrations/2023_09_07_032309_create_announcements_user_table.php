@@ -21,6 +21,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('announcements')->onDelete('cascade');
             $table->boolean('has_clear');
+            $table->softDeletes();
         });
     }
 

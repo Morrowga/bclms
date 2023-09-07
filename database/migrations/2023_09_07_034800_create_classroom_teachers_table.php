@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('classroom_teachers', function (Blueprint $table) {
-            $table->foreignId('classroom_id')->nullable()->references('id')->on('classrooms')->cascadeOnDelete();
+            $table->foreignId('classroom_id')
+            ->nullable()->references('id')->on('classrooms')->cascadeOnDelete();
             $table->foreignId('teacher_id')->nullable()->references('id')->on('b2b_users')->cascadeOnDelete();
         });
     }

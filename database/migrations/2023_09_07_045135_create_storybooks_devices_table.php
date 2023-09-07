@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('storybooks_devices', function (Blueprint $table) {
             $table->foreignId('storybook_id')->nullable()->references('id')->on('storybooks')->cascadeOnDelete();
             $table->foreignId('device_id')->nullable()->references('id')->on('devices')->cascadeOnDelete();
+            $table->softDeletes();
+
         });
     }
 
