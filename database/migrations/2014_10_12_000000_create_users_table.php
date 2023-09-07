@@ -15,21 +15,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('organization_id')->nullable()
+            $table->unsignedBigInteger('role_id')->nullable()
                 ->references('id')
-                ->on('organizations');
-            $table->string('name');
-            $table->date('dob')->nullable();
+                ->on('roles')->onDelete('cascade');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->string('email')->unique()->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('contact_number')->nullable();
-            $table->integer('storage_limit')->nullable();
-            $table->tinyInteger('is_active')->nullable(); //
-            $table->integer('stripe_id')->nullable();
-            $table->string('pm_brand')->nullable();
-            $table->string('pm_last_four')->nullable();
-            $table->dateTime('trial_end_at')->nullable();
+            $table->enum('status', ['ACTIVE', 'PENDING', 'INACTIVE']);
+            $table->dateTime('email_verification_send_on');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('student_records', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->nullable()->references('id')->on('students')->cascadeOnDelete();
+            $table->foreignId('student_id')->nullable()->references('student_id')->on('students')->cascadeOnDelete();
             $table->foreignId('storybook_id')->nullable()->references('id')->on('storybooks')->cascadeOnDelete();
             $table->integer('progress')->nullable();
             $table->integer('final_score')->nullable();

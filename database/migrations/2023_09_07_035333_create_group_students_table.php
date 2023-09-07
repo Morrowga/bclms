@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('classroom_student', function (Blueprint $table) {
-            $table->foreignId('classroom_id')->nullable()->references('id')->on('classrooms')->cascadeOnDelete();
+        Schema::create('group_students', function (Blueprint $table) {
+            $table->foreignId('classroom_group_id')->nullable()->references('id')->on('classroom_groups')->cascadeOnDelete();
             $table->foreignId('student_id')->nullable()->references('student_id')->on('students')->cascadeOnDelete();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classroom_student_pivot');
+        Schema::dropIfExists('group_students');
     }
 };

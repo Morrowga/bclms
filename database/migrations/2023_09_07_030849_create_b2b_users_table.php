@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('announcements', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('author_id')->nullable()
+        Schema::create('b2b_users', function (Blueprint $table) {
+            $table->bigIncrements('b2b_user_id');
+            $table->unsignedBigInteger('user_id')->nullable()
                 ->references('id')
                 ->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('target_role_id')->nullable()
+            $table->unsignedBigInteger('organization_id')->nullable()
                 ->references('id')
-                ->on('roles')->onDelete('cascade');
-            $table->string('icon')->nullable();
-            $table->string('message')->nullable();
+                ->on('organizations')->onDelete('cascade');
+            $table->float('allocated_storage_limit');
+            $table->boolean('has_full_library_access');
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('announcements');
+        Schema::dropIfExists('b2b_users');
     }
 };

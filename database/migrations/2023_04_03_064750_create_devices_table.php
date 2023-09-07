@@ -16,10 +16,9 @@ return new class extends Migration
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('brand')->nullable();
             $table->longText('description')->nullable();
+            $table->enum('status', ['ACTIVE', 'INACTIVE']);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

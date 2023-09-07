@@ -15,14 +15,15 @@ return new class extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('plan_id')->nullable()->references('id')->on('plans')->cascadeOnDelete();
+            $table->foreignId('current_subscription_id')->nullable()->references('id')->on('subscriptions')->cascadeOnDelete();
+            $table->foreignId('org_admin_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
             $table->string('name')->nullable();
-            $table->longText('description')->nullable();
-            $table->string('type')->nullable();
-            $table->string('contact_person')->nullable();
+            $table->string('contact_name')->nullable();
             $table->string('contact_email')->nullable();
             $table->string('contact_number')->nullable();
             $table->unsignedBigInteger('tenant_id')->nullable();
+            $table->string('logo')->nullable();
+            $table->enum('status', ['ACTIVE', 'INACTIVE']);
             $table->timestamps();
             $table->softDeletes();
         });

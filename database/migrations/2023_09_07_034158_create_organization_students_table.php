@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('classroom_student', function (Blueprint $table) {
-            $table->foreignId('classroom_id')->nullable()->references('id')->on('classrooms')->cascadeOnDelete();
+        Schema::create('organization_students', function (Blueprint $table) {
             $table->foreignId('student_id')->nullable()->references('student_id')->on('students')->cascadeOnDelete();
+            $table->foreignId('organization_id')->nullable()->references('id')->on('organizations')->cascadeOnDelete();
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classroom_student_pivot');
+        Schema::dropIfExists('organization_students');
     }
 };

@@ -14,19 +14,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('student_id');
             $table->foreignId('organization_id')->nullable()->references('id')->on('organizations')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('device_id')->nullable()->references('id')->on('devices')->cascadeOnDelete();
+            $table->string('gender');
+            $table->string('dob')->nullable();
+            $table->string('education_level')->nullable();
+            $table->integer('num_gold_coins')->default(0);
+            $table->integer('num_silver_coins')->default(0);
             $table->string('student_code')->nullable();
-            $table->string('name')->nullable();
-            $table->string('nickname')->nullable();
-            $table->longText('description')->nullable();
-            $table->date('dob')->nullable();
-            $table->string('grade')->nullable();
-            $table->unsignedBigInteger('star_earn')->nullable();
-            $table->unsignedBigInteger('coin_earn')->nullable();
+            $table->float('total_time_spent');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

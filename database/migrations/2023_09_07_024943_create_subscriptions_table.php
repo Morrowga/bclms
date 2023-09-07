@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('storybooks', function (Blueprint $table) {
+        Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->longText('description')->nullable();
-            $table->string('thumbnail_img')->nullable();
-            $table->integer('num_gold_coins')->default(0);
-            $table->integer('num_silver_coins')->default(0);
-            $table->boolean('is_free');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->date('payment_date');
+            $table->enum('payment_status', ['PAID', 'UNPAID']);
+            $table->string('stripe_status')->nullable();
+            $table->decimal('stripe_price', 15, 2)->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('storybooks');
+        Schema::dropIfExists('subscriptions');
     }
 };

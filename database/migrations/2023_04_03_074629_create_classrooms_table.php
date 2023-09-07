@@ -16,11 +16,10 @@ return new class extends Migration
         Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('organization_id')->nullable()->references('id')->on('organizations')->cascadeOnDelete();
-            $table->foreignId('teacher_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
             $table->string('name')->nullable();
-            $table->string('venue')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('classroom_photo')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

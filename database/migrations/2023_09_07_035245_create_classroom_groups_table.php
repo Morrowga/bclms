@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('storybooks', function (Blueprint $table) {
+        Schema::create('classroom_groups', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('classroom_id')->nullable()->references('id')->on('classrooms')->cascadeOnDelete();
             $table->string('name');
-            $table->longText('description')->nullable();
-            $table->string('thumbnail_img')->nullable();
-            $table->integer('num_gold_coins')->default(0);
-            $table->integer('num_silver_coins')->default(0);
-            $table->boolean('is_free');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('storybooks');
+        Schema::dropIfExists('classroom_groups');
     }
 };

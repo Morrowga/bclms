@@ -13,17 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('announcements', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('author_id')->nullable()
+        Schema::create('announcements_user', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->nullable()
                 ->references('id')
                 ->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('target_role_id')->nullable()
+            $table->unsignedBigInteger('announcement_id')->nullable()
                 ->references('id')
-                ->on('roles')->onDelete('cascade');
-            $table->string('icon')->nullable();
-            $table->string('message')->nullable();
-            $table->timestamps();
+                ->on('announcements')->onDelete('cascade');
+            $table->boolean('has_clear');
         });
     }
 
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('announcements');
+        Schema::dropIfExists('announcements_user');
     }
 };
