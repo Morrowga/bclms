@@ -145,7 +145,7 @@ const openMenu = () => {
         </template>
         <!-- :point_right: Customizer -->
         <!-- 👉 Customizer -->
-        <TheCustomizer />
+        <!-- <TheCustomizer /> -->
     </HorizontalNavLayout>
 </template>
 

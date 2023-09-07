@@ -275,7 +275,7 @@ import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 </template>
 
 <style scoped>
-::v-deep .tiggie-label-custome {
+:deep(.tiggie-label-custome) {
     color: #282828 !important;
     font-size: 20px !important;
     font-style: normal !important;
@@ -283,7 +283,7 @@ import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
     line-height: 20px !important;
 }
 
-::v-deep .v-radio {
+:deep(.v-radio) {
     font-size: 16px;
     /* Adjust the font size as needed */
     width: 32px;

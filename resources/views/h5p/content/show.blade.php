@@ -23,6 +23,7 @@
 @endsection
 
 @push( 'h5p-header-script' )
+
 {{--    core styles       --}}
 @foreach($settings['core']['styles'] as $style)
 {{ Html::style($style) }}
@@ -36,7 +37,14 @@
 @push( 'h5p-footer-script' )
 <script type="text/javascript">
     H5PIntegration = {!! json_encode($settings) !!};
+
 </script>
+
+
+{{-- custom script  --}}
+
+{{-- end custom script  --}}
+
 
 {{--    core script       --}}
 @foreach($settings['core']['scripts'] as $script)
@@ -59,3 +67,4 @@
 
 </script>
 @endpush
+

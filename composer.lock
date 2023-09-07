@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fde7a33168b81579bee359989ed91ccb",
+    "content-hash": "a3ca424f90aeb6bf6b38f2ba2f365599",
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
@@ -1381,16 +1381,16 @@
         },
         {
             "name": "hareom284/laravel-h5p",
-            "version": "dev-main",
+            "version": "v1.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/22HMM/laravel-h5p-beta.git",
-                "reference": "a121105475fed0c38bdba00711e57cecc01589e0"
+                "reference": "2609780fd09f9567fa00748cdf12c177a0443033"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/22HMM/laravel-h5p-beta/zipball/a121105475fed0c38bdba00711e57cecc01589e0",
-                "reference": "a121105475fed0c38bdba00711e57cecc01589e0",
+                "url": "https://api.github.com/repos/22HMM/laravel-h5p-beta/zipball/2609780fd09f9567fa00748cdf12c177a0443033",
+                "reference": "2609780fd09f9567fa00748cdf12c177a0443033",
                 "shasum": ""
             },
             "require": {
@@ -1405,7 +1405,6 @@
                 "mockery/mockery": "^1.6",
                 "phpunit/phpunit": "^10.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -1436,7 +1435,7 @@
                 "issues": "https://github.com/22HMM/laravel-h5p-beta/issues",
                 "source": "https://github.com/22HMM/laravel-h5p-beta/tree/main"
             },
-            "time": "2023-09-05T03:46:13+00:00"
+            "time": "2023-09-05T04:12:33+00:00"
         },
         {
             "name": "inertiajs/inertia-laravel",

@@ -3,7 +3,6 @@ import { VForm } from "vuetify/components";
 import { themeConfig } from "@themeConfig";
 import { requiredValidator, emailValidator } from "@validators";
 import { Link, useForm } from "@inertiajs/vue3";
-import { defineProps } from "vue";
 import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 const isPasswordVisible = ref(false);

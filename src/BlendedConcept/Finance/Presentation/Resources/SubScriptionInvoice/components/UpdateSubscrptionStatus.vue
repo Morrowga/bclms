@@ -12,7 +12,7 @@ const savePlan = () => {
 </script>
 
 <template>
-    <VDialog v-model="isDialogVisible" width="500">
+    <VDialog v-model="isDialogVisible" width="500" persistent>
         <!-- Activator -->
         <template #activator="{ props }">
             <VListItemTitle v-bind="props">Update</VListItemTitle>
