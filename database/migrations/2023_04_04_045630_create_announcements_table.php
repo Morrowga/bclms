@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('author_id')->nullable()
+            $table->foreignId('author_id')->nullable()
                 ->references('id')
                 ->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('target_role_id')->nullable()
+            $table->foreignId('target_role_id')->nullable()
                 ->references('id')
                 ->on('roles')->onDelete('cascade');
             $table->string('icon')->nullable();
-            $table->string('message')->nullable();
+            $table->longText('message')->nullable();
             $table->timestamps();
         });
     }
