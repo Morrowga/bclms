@@ -13,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('storybook_versions', function (Blueprint $table) {
+        Schema::create('stickers', function (Blueprint $table) {
             $table->id();
-            $table->integer('storybook_id');
-            $table->foreignId('teacher_id')->nullable()->references('id')->on('users');
+            $table->string('file_src')->nullable();
             $table->string('name');
             $table->longText('description')->nullable();
+            $table->integer('gold_coins_needed')->default(0);
+            $table->integer('silver_coins_needed')->default(0);
+            $table->enum('status', ['ACTIVE', 'INACTIVE']);
+            $table->enum('rarity', ['COMMON', 'RARE', 'SUPERRARE', 'EPIC', 'LEGENDARY']);
             $table->timestamps();
         });
     }
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('storybook_versions');
+        Schema::dropIfExists('stickers');
     }
 };
