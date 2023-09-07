@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('disability_types_devices', function (Blueprint $table) {
-            $table->foreignId('id')->nullable()->references('disability_type_id')->on('disability_types')->cascadeOnDelete();
+            $table->foreignId('disability_type_id')->nullable()->references('id')->on('disability_types')->cascadeOnDelete();
             $table->foreignId('device_id')->nullable()->references('id')->on('devices')->cascadeOnDelete();
         });
     }
