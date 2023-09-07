@@ -14,8 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->bigIncrements('student_id');
-            $table->foreignId('organization_id')->nullable()->references('id')->on('organizations')->cascadeOnDelete();
+            $table->id('student_id');
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('device_id')->nullable()->references('id')->on('devices')->cascadeOnDelete();
             $table->string('gender');
@@ -24,7 +23,7 @@ return new class extends Migration
             $table->integer('num_gold_coins')->default(0);
             $table->integer('num_silver_coins')->default(0);
             $table->string('student_code')->nullable();
-            $table->float('total_time_spent');
+            $table->decimal('total_time_spent',10,2);
             $table->timestamps();
         });
     }

@@ -14,16 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('b2b_users', function (Blueprint $table) {
-            $table->bigIncrements('b2b_user_id');
-            $table->unsignedBigInteger('user_id')->nullable()
+            $table->id('b2b_user_id');
+            $table->foreignId('user_id')->nullable()
                 ->references('id')
                 ->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('organization_id')->nullable()
+            $table->foreignId('organization_id')->nullable()
                 ->references('id')
                 ->on('organizations')->onDelete('cascade');
-            $table->float('allocated_storage_limit');
+            $table->decimal('allocated_storage_limit',10,1);
             $table->boolean('has_full_library_access');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

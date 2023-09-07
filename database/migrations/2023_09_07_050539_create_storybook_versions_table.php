@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('storybook_id');
             $table->foreignId('teacher_id')->nullable()->references('id')->on('users');
             $table->string('name');
-            $table->string('description');
+            $table->longText('description');
             $table->timestamps();
         });
     }
