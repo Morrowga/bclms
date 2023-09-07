@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('storybook_assignments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('storybook_version_id')->references('id')->on('storybook_versions');
-            $table->foreignId('student_id')->references('id')->on('students');
+            $table->foreignId('student_id')->references('student_id')->on('students');
             $table->timestamps();
         });
     }
