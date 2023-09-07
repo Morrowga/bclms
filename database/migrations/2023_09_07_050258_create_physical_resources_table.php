@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('storybook_id')->references('id')->on('storybooks');
             $table->string('file_src')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

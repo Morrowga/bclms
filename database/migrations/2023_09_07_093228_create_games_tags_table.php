@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('games_tags', function (Blueprint $table) {
             $table->foreignId('game_id')->nullable()->references('id')->on('games')->cascadeOnDelete();
             $table->foreignId('tag_id')->nullable()->references('id')->on('tags')->cascadeOnDelete();
+
         });
     }
 

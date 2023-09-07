@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('question_id')->nullable()->references('id')->on('questions')->cascadeOnDelete();
             $table->string('content');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

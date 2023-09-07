@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('pathway_disability_types', function (Blueprint $table) {
             $table->foreignId('pathway_id')->nullable()->references('id')->on('pathways')->cascadeOnDelete();
             $table->foreignId('disability_type_id')->nullable()->references('id')->on('disability_types')->cascadeOnDelete();
+            $table->softDeletes();
         });
     }
 

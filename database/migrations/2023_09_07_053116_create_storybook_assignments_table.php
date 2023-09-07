@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('storybook_version_id')->references('id')->on('storybook_versions');
             $table->foreignId('student_id')->references('student_id')->on('students');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

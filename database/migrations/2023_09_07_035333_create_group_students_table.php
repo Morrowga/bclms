@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('group_students', function (Blueprint $table) {
             $table->foreignId('classroom_group_id')->nullable()->references('id')->on('classroom_groups')->cascadeOnDelete();
             $table->foreignId('student_id')->nullable()->references('student_id')->on('students')->cascadeOnDelete();
+
+            $table->softDeletes();
         });
     }
 

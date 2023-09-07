@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('student_code')->nullable();
             $table->decimal('total_time_spent',10,2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

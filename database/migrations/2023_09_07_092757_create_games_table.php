@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('num_gole_coins')->default(0);
             $table->integer('num_silver_coins')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

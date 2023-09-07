@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('plan_id')->nullable()
                 ->references('id')
                 ->on('plans')->onDelete('cascade');
+            $table->softDeletes();
         });
     }
 

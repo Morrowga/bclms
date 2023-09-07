@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('classroom_id')->nullable()->references('id')->on('classrooms')->cascadeOnDelete();
             $table->string('name');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

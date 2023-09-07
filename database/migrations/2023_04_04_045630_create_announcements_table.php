@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('icon')->nullable();
             $table->longText('message')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

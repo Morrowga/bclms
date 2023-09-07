@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('num_silver_coins')->default(0);
             $table->boolean('need_complete_in_order');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
