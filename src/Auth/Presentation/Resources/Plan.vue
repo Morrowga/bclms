@@ -73,7 +73,7 @@ let props = defineProps(["ErrorMessage"]);
         <thead>
             <tr>
             <th>
-                <div class="th-width">
+                <div class="th-emtpy-width">
 
                 </div>
             </th>
@@ -113,34 +113,130 @@ let props = defineProps(["ErrorMessage"]);
         </thead>
         <tbody>
             <tr class="text-left">
-            <td>1</td>
-            <td>2</td>
-            <td>2</td>
-            <td>13</td>
+                <td>Free Student Profile</td>
+                <td>1 Student</td>
+                <td>1 Student</td>
+                <td>1 Student</td>
+                <td>1 Student</td>
             </tr>
             <tr class="text-left">
-            <td>25</td>
-            <td>2</td>
-            <td>6</td>
-            <td>654</td>
+                <td>Additional Student Profile</td>
+                <td>
+                    <VIcon icon="mdi-close"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
             </tr>
             <tr class="text-left">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+                <td>Storage Space</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>1GB</td>
+                <td>5GB</td>
             </tr>
             <tr class="text-left">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+                <td>Free Library Access</td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
             </tr>
             <tr class="text-left">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+                <td>Personalization</td>
+                <td>
+                    <VIcon icon="mdi-close"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-close"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+            </tr>
+            <tr class="text-left">
+                <td>Customization</td>
+                <td>
+                    <VIcon icon="mdi-close"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-close"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-close"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+            </tr>
+            <tr class="text-left">
+                <td>Full Library Access</td>
+                <td>
+                    <VIcon icon="mdi-close"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+            </tr>
+            <tr class="text-left">
+                <td>Concument Access</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+            </tr>
+            <tr class="text-left">
+                <td>Weekly Learning Progress Report</td>
+                <td>
+                    <VIcon icon="mdi-close" size="lg"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+            </tr>
+            <tr class="text-left">
+                <td>Dedicated Student Report</td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
+                <td>
+                    <VIcon icon="mdi-check"></VIcon>
+                </td>
             </tr>
         </tbody>
         </table>
@@ -188,6 +284,7 @@ let props = defineProps(["ErrorMessage"]);
   border: 1px solid #38678f;
   margin: 50px auto;
   background: white;
+  box-shadow: 0px 2px 10px 0px rgba(76, 78, 100, 0.22);
 }
 
 .heavyTable > thead > tr > th {
@@ -198,8 +295,32 @@ let props = defineProps(["ErrorMessage"]);
     background: #fff !important;
 }
 
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .heavyTable > tbody > tr:nth-child(odd) {
+   background: #BFC0C1 !important;
+}
+
+.heavyTable > tbody > tr > td:nth-child(1) {
+   width: 35vh;
+}
+
+
+.heavyTable > tbody > tr > td {
+    border: 1px solid rgb(0,0,0,0.2) !important;
+    padding: 10px;
+}
+
 .th-width{
     width: 100px;
+    padding: 10px !important;
+    height: 300px;
+}
+
+.td-width{
+    width: 50px;
     padding: 10px !important;
     height: 300px;
 }
