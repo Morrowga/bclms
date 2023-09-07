@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('storybook_versions', function (Blueprint $table) {
+        Schema::create('sub_learning_types', function (Blueprint $table) {
             $table->id();
-            $table->integer('storybook_id');
-            $table->foreignId('teacher_id')->nullable()->references('id')->on('users');
+            $table->foreignId('learning_need_id')->nullable()->references('id')->on('learning_needs')->cascadeOnDelete();
             $table->string('name');
-            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('storybook_versions');
+        Schema::dropIfExists('sub_learning_types');
     }
 };

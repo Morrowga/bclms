@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('storybook_versions', function (Blueprint $table) {
+        Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->integer('storybook_id');
-            $table->foreignId('teacher_id')->nullable()->references('id')->on('users');
             $table->string('name');
             $table->longText('description')->nullable();
+            $table->string('game_file')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->integer('num_gole_coins')->default(0);
+            $table->integer('num_silver_coins')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('storybook_versions');
+        Schema::dropIfExists('games');
     }
 };
