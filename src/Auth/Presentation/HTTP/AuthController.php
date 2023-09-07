@@ -54,6 +54,18 @@ class AuthController extends Controller
         }
     }
 
+    public function planPage()
+    {
+        try {
+            // Render the login page using the Inertia.js framework
+            return Inertia::render(config('route.registerplan'));
+        } catch (\Exception $exception) {
+            return redirect()->route('login')->with([
+                'sytemErrorMessage' => $exception->getMessage(),
+            ]);
+        }
+    }
+
     /**
      * Handle the login request.
      *

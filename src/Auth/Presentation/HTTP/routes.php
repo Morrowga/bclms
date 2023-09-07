@@ -17,6 +17,7 @@ Route::group([
      */
     Route::get('login', [AuthController::class, 'loginPage'])->name('login');
 
+    Route::get('register-plan', [AuthController::class, 'planPage'])->name('registerplan');
     /**
      * Handle the login request.
      * POST /login
