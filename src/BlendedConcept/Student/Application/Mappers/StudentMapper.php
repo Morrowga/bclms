@@ -12,16 +12,15 @@ class StudentMapper
     {
         return new Student(
             id: $student_id,
-            organization_id: $request->organization_id,
+            user_id: $request->user_id,
             device_id: $request->device_id,
-            student_code: $request->student_code,
-            name: $request->name,
-            nickname: $request->nickname,
-            description: $request->description,
+            gender: $request->gender,
             dob: $request->dob,
-            grade: $request->grade,
-            star_earn: $request->star_earn,
-            coin_earn: $request->coin_earn,
+            education_level: $request->education_level,
+            num_gold_coins: $request->num_gold_coins,
+            num_silver_coins: $request->num_silver_coins,
+            student_code: $request->student_code,
+            total_time_spent: $request->total_time_spent,
         );
     }
 
@@ -34,16 +33,15 @@ class StudentMapper
         }
 
         //set organization_id according to auth's organization_id
-        $StudentEloquent->organization_id = auth()->user()->organization_id;
+        $StudentEloquent->user_id = auth()->user()->user_id;
         $StudentEloquent->device_id = $student->device_id;
-        $StudentEloquent->student_code = $student->student_code;
-        $StudentEloquent->name = $student->name;
-        $StudentEloquent->nickname = $student->nickname;
-        $StudentEloquent->description = $student->description;
+        $StudentEloquent->gender = $student->gender;
         $StudentEloquent->dob = $student->dob;
-        $StudentEloquent->grade = $student->grade;
-        $StudentEloquent->star_earn = $student->star_earn;
-        $StudentEloquent->coin_earn = $student->coin_earn;
+        $StudentEloquent->education_level = $student->education_level;
+        $StudentEloquent->num_gold_coins = $student->num_gold_coins;
+        $StudentEloquent->num_silver_coins = $student->num_silver_coins;
+        $StudentEloquent->student_code = $student->student_code;
+        $StudentEloquent->total_time_spent = $student->total_time_spent;
 
         return $StudentEloquent;
     }

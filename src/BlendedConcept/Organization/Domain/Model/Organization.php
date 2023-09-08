@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\Organization\Domain\Model;
 
 use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
 use Src\BlendedConcept\Finance\Domain\Model\Entities\Plan;
+use Src\BlendedConcept\Finance\Domain\Model\Subscription;
 use Src\BlendedConcept\Student\Domain\Model\Student;
 use Src\BlendedConcept\Teacher\Domain\Model\Teacher;
 use Src\Common\Domain\AggregateRoot;
@@ -12,17 +13,16 @@ class Organization extends AggregateRoot
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly ?int $plan_id,
+        public readonly ?int $curr_subscription_id,
+        public readonly ?string $org_admin_id,
         public readonly ?string $name,
-        public readonly ?string $description,
-        public readonly ?string $type,
-        public readonly ?string $contact_person,
+        public readonly ?string $contact_name,
         public readonly ?string $contact_email,
         public readonly ?string $contact_number,
-        public readonly Plan $plan,
-        // public readonly ?Teacher $teacher,
-        // public readonly ?ClassRoom $classRoom,
-        // public readonly ?Student $student,
+        public readonly ?string $sub_domain,
+        public readonly ?string $logo,
+        public readonly ?string $status,
+        public readonly Subscription $subscription,
 
     ) {
     }
@@ -31,17 +31,16 @@ class Organization extends AggregateRoot
     {
         return [
             'id' => $this->id,
-            'plan_id' => $this->plan_id,
+            'curr_subscription_id' => $this->curr_subscription_id,
+            'org_admin_id' => $this->org_admin_id,
             'name' => $this->name,
-            'description' => $this->description,
-            'type' => $this->type,
-            'contact_person' => $this->contact_person,
+            'contact_name' => $this->contact_name,
             'contact_email' => $this->contact_email,
             'contact_number' => $this->contact_number,
-            'plan' => $this->plan,
-            // 'teacher' => $this->teacher ?? null,
-            // 'classRoom' => $this->classRoom ?? null,
-            // 'student' => $this->student ?? null
+            'sub_domain' => $this->sub_domain,
+            'logo' => $this->logo,
+            'status' => $this->status ?? null,
+            'subscription' => $this->subscription
         ];
     }
 }

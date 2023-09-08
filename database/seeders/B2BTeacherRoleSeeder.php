@@ -16,22 +16,20 @@ class B2BTeacherRoleSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'B2b Teacher',
-                'organization_id' => null,
-                'email_verified_at' => now(),
-                'dob' => now(),
-                'contact_number' => '1234567890',
-                'storage_limit' => 100,
-                'is_active' => true,
+                'role_id' => 4,
+                'first_name' => 'B2b',
+                'last_name' => 'Teacher',
                 'email' => 'b2bTeacher@mail.com',
-                'password' => 'password',
+                'password' => bcrypt('password'),
+                'contact_number' => '1234567890',
+                'status' => 'ACTIVE',
+                'email_verification_send_on' => now(),
+                'profile_pic' => "images/profile/profilefive.png",
             ]
         ];
 
         foreach ($users as $user) {
             $userCreate = UserEloquentModel::create($user);
-
-            $userCreate->roles()->sync([4]);
         }
     }
 }

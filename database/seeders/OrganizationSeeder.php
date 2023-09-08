@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 
 class OrganizationSeeder extends Seeder
 {
@@ -16,35 +17,39 @@ class OrganizationSeeder extends Seeder
      */
     public function run()
     {
-        $planData = [
-            'name' => 'default plan',
-            'description' => 'This is the description for the default plan.',
-            'price' => 9.99,
-            'payment_period' => 'monthly',
-            'allocated_storage' => 10,
-            'teacher_license' => true,
-            'student_license' => true,
+        $subscriptionData = [
+            'start_date' => now(),
+            'end_date' => now(),
+            'payment_date' => now(),
+            'payment_status' => 'PAID',
+            'stripe_status' => null,
+            'stripe_price'  => null
         ];
 
-        $plan = PlanEloquentModel::create($planData);
+        $subscription = SubscriptionEloquentModel::create($subscriptionData);
+
         $organizationData = [
             [
-                'plan_id' => $plan->id,
-                'name' => 'hmm',
-                'description' => 'This is the description for Organization 1.',
-                'type' => 'Type 1',
-                'contact_person' => 'Hmm ',
-                'contact_email' => 'hmm@gmail.com',
-                'contact_number' => '1234567890',
+                'curr_subscription_id' => $subscription->id,
+                'org_admin_id' => 1,
+                'name' => 'organization one',
+                'contact_name' => 'org one',
+                'contact_email' => 'orgone@mail.com',
+                'contact_number' => "973434533",
+                'sub_domain' => 'orgone',
+                'logo' => null,
+                'status' => 'ACTIVE',
             ],
             [
-                'plan_id' => $plan->id,
-                'name' => 'hostmm',
-                'description' => 'This is the description for Organization 2.',
-                'type' => 'Type 2',
-                'contact_person' => 'Host Admin',
-                'contact_email' => 'hostadmin@gmail.com',
-                'contact_number' => '0987654321',
+                'curr_subscription_id' => $subscription->id,
+                'org_admin_id' =>1,
+                'name' => 'organization two',
+                'contact_name' => 'org two',
+                'contact_email' => 'orgtwo@mail.com',
+                'contact_number' => "973434533",
+                'sub_domain' => 'orgtwo',
+                'logo' => null,
+                'status' => 'INACTIVE',
             ],
         ];
 

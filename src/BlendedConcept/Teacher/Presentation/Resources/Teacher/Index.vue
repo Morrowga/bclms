@@ -145,7 +145,7 @@ watch(serverPerPage, function (value) {
                                         color="secondary"
                                         variant="text"
                                         v-if="
-                                            props.row.roles[0].name !==
+                                            props.row.roles.name !==
                                             'BC Super Admin'
                                         "
                                         @click="deleteUser(props.row.id)"

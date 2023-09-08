@@ -105,11 +105,11 @@ class SecurityRepository implements SecurityRepositoryInterface
 
         // Add filters to the query
         if (isset($filters['name'])) {
-            $query->where('name', 'like', '%'.$filters['name'].'%');
+            $query->where('name', 'like', '%' . $filters['name'] . '%');
         }
 
         if (isset($filters['email'])) {
-            $query->where('email', 'like', '%'.$filters['email'].'%');
+            $query->where('email', 'like', '%' . $filters['email'] . '%');
         }
 
         if (isset($filters['role'])) {
@@ -193,8 +193,8 @@ class SecurityRepository implements SecurityRepositoryInterface
 
     public function getUserForDashBoard()
     {
-        $users = UserEloquentModel::with('roles')->latest()->take(5)->get();
-        $organizations = OrganizationEloquentModel::with('plan')->latest()->take(5)->get();
+        $users = UserEloquentModel::with('role')->latest()->take(5)->get();
+        $organizations = OrganizationEloquentModel::latest()->take(5)->get();
 
         return [$users, $organizations];
     }

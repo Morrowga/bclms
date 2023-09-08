@@ -6,11 +6,14 @@ use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
 use Src\BlendedConcept\Organization\Application\Mappers\OrganizationMapper;
 use Src\BlendedConcept\Finance\Application\Mappers\PlanMapper;
+use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
+use Src\BlendedConcept\Finance\Domain\Model\Subscription;
 use Src\BlendedConcept\Organization\Domain\Model\Organization;
 use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\Organization\Domain\Resources\OrganizationResource;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
 
 class OrganizationRepository implements OrganizationRepositoryInterface
@@ -24,7 +27,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
     public function getOrganizations($filters = [])
     {
-        $paginate_organizations = OrganizationResource::collection(OrganizationEloquentModel::filter($filters)->with('plan')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $paginate_organizations = OrganizationResource::collection(OrganizationEloquentModel::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
         $default_organizations = OrganizationEloquentModel::get();
 
         return [
@@ -46,13 +49,13 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         try {
 
             //insert data to plan tables
-            $planEloquent = PlanMapper::toEloquent($organization->plan);
-            $planEloquent->save();
+            $subscriptionEloquent = SubscriptionMapper::toEloquent($organization->subscription);
+            $subscriptionEloquent->save();
 
             //insert data into organization
 
             $organizationEloquent = OrganizationMapper::toEloquent($organization);
-            $organizationEloquent->plan_id = $planEloquent->id;
+            $organizationEloquent->plan_id = $subscriptionEloquent->id;
             $organizationEloquent->save();
 
             // Upload the organization's image if provided
@@ -84,12 +87,12 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         try {
             $organizationDataArray = $organizationData->toArray();
 
-            $planArray = $organizationData->plan->toArray();
+            $subscriptionArray = $organizationData->subscription->toArray();
 
-            $planEloquent = PlanEloquentModel::query()->findOrFail($organizationData->plan_id);
-            $planEloquent->fill($planArray);
-            $planEloquent->id = $organizationData->plan_id;
-            $planEloquent->save();
+            $subscriptionEloquent = SubscriptionEloquentModel::query()->findOrFail($organizationData->curr_subscription_id);
+            $subscriptionEloquent->fill($subscriptionArray);
+            $subscriptionEloquent->id = $organizationData->curr_subscription_id;
+            $subscriptionEloquent->save();
             $organizationEloquent = OrganizationEloquentModel::query()->findOrFail($organizationData->id);
             $organizationEloquent->fill($organizationDataArray);
             $organizationEloquent->save();

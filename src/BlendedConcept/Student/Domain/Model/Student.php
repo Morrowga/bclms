@@ -7,17 +7,16 @@ use Src\Common\Domain\AggregateRoot;
 class Student extends AggregateRoot implements \JsonSerializable
 {
     public function __construct(
-        public readonly ?int $id,
-        public readonly ?int $organization_id,
-        public readonly ?int $device_id,
-        public readonly ?string $student_code,
-        public readonly ?string $name,
-        public readonly ?string $nickname,
-        public readonly ?string $description,
-        public readonly ?string $dob,
-        public readonly ?string $grade,
-        public readonly ?string $star_earn,
-        public readonly ?string $coin_earn,
+        public readonly int $id,
+        public readonly int $user_id,
+        public readonly int $device_id,
+        public readonly string $gender,
+        public readonly string $dob,
+        public readonly string $education_level,
+        public readonly int $num_gold_coins,
+        public readonly int $num_silver_coins,
+        public readonly int $student_code,
+        public readonly float $total_time_spent
 
     ) {
     }
@@ -26,16 +25,15 @@ class Student extends AggregateRoot implements \JsonSerializable
     {
         return [
             'id' => $this->id,
-            'organization_id' => $this->organization_id,
+            'user_id' => $this->user_id,
             'device_id' => $this->device_id,
-            'student_code' => $this->student_code,
-            'name' => $this->name,
-            'nickname' => $this->nickname,
-            'description' => $this->description,
+            'gender' => $this->gender,
             'dob' => $this->dob,
-            'grade' => $this->grade,
-            'star_earn' => $this->star_earn,
-            'coin_earn' => $this->coin_earn,
+            'education_level' => $this->education_level,
+            'num_gold_coins' => $this->num_gold_coins,
+            'num_silver_coins' => $this->num_silver_coins,
+            'student_code' => $this->student_code,
+            'total_time_spent' => $this->total_time_spent,
         ];
     }
 }

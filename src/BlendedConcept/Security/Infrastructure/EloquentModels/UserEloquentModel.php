@@ -12,7 +12,8 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyEmail
 {
     use HasFactory, Notifiable, InteractsWithMedia;
@@ -62,9 +63,9 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
         return $remainingSpace;
     }
 
-    public function roles()
+    public function role() : HasOne
     {
-        return $this->belongsToMany(RoleEloquentModel::class, 'role_user', 'user_id', 'role_id');
+        return $this->hasOne(RoleEloquentModel::class,'id','role_id');
     }
 
     // hased password
@@ -76,14 +77,14 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
         }
     }
 
-    public function permissions()
+    public function permissions() : BelongsToMany
     {
-        return $this->hasManyThrough(PermissionEloquentModel::class, RoleEloquentModel::class);
+        return $this->belongsToMany(PermissionEloquentModel::class, 'permission_role', 'role_id', 'permission_id');
     }
 
     public function hasPermission($permission)
     {
-        $role = auth()->user()->roles[0]->id;
+        $role = auth()->user()->role->id;
         $user_role = RoleEloquentModel::find($role);
 
         return $user_role->permissions->where('name', $permission)->first() ? true : false;

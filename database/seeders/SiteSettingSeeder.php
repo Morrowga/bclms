@@ -15,11 +15,15 @@ class SiteSettingSeeder extends Seeder
     public function run()
     {
         SiteSettingEloquentModel::insert([
-            'site_name' => 'BC LMS',
-            'timezone' => 'UTC',
-            'locale' => 'locale',
-            'email' => 'hareom284@gmail.com',
-            'contact_number' => '+959951613400',
+            'site_name'  => 'Tiggie Kids',
+            'ssl' => '',
+            'site_time_zone' => 'UTC',
+            'site_locale' => 'locale',
+            'email' => 'admin@tiggiekid.com',
+            'contact_number' => '+6512345678',
+            'url' => 'https://tiggiekid.com',
+            'website_logo' => '',
+            'website_favicon' => ''
         ]);
     }
 }

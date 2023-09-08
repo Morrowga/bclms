@@ -15,25 +15,38 @@ class SuperAdminSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
+
+        /**
+         * Get the ID of the super admin role.
+         *
+         * This function retrieves the ID of the super admin role by querying the database for a role with the specified name
+         * (usually configured in the 'userrole.bcsuperadmin' configuration). It then extracts the ID of the first matching
+         * role using the 'pluck' method.
+         *
+         * @return int|null The ID of the super admin role if found, or null if no matching role is found.
+         * author @hareom284
+         */
+
+
+        $super_admin_roles_id = RoleEloquentModel::where('name', config('userrole.bcsuperadmin'))
+            ->pluck('id')
+            ->first();
+
         $data = [
             'id' => 1,
-            'organization_id' => null,
-            'name' => 'Super Admin',
-            'dob' => Carbon::now(),
+            'role_id' => $super_admin_roles_id,
+            'first_name' => 'Super',
+            'last_name' => 'Admin',
             'email' => 'superadmin@mail.com',
             'password' => bcrypt('password'),
-            'contact_number' => '09951613400',
-            'storage_limit' => '0',
-            'is_active' => 1,
-            'trial_end_at' => Carbon::now(),
-            'email_verified_at' => Carbon::now(),
-            'remember_token' => null,
+            'contact_number' => '9951613400',
+            'status' => 'ACTIVE',
+            'email_verification_send_on' => Carbon::now(),
+            'profile_pic' => "images/profile/profilefive.png",
         ];
-
         $user = UserEloquentModel::create($data);
-
-        $user->roles()->sync(['1']);
     }
 }

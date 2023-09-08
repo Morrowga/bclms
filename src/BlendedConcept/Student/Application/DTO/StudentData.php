@@ -8,16 +8,15 @@ class StudentData
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly ?int $organization_id,
+        public readonly ?int $user_id,
         public readonly ?int $device_id,
-        public readonly ?string $student_code,
-        public readonly ?string $name,
-        public readonly ?string $nickname,
-        public readonly ?string $description,
+        public readonly ?string $gender,
         public readonly ?string $dob,
-        public readonly ?string $grade,
-        public readonly ?string $star_earn,
-        public readonly ?string $coin_earn,
+        public readonly ?string $education_level,
+        public readonly ?string $num_gold_coins,
+        public readonly ?string $num_silver_coins,
+        public readonly ?string $student_code,
+        public readonly ?string $total_time_spent,
     ) {
     }
 
@@ -26,16 +25,15 @@ class StudentData
 
         return new self(
             id: $student_id,
-            organization_id: $request->organization_id,
+            user_id: $request->user_id,
             device_id: $request->device_id,
-            student_code: $request->student_code,
-            name: $request->name,
-            nickname: $request->nickname,
-            description: $request->description,
+            gender: $request->gender,
             dob: $request->dob,
-            grade: $request->grade,
-            star_earn: $request->star_earn,
-            coin_earn: $request->coin_earn,
+            education_level: $request->education_level,
+            num_gold_coins: $request->num_gold_coins,
+            num_silver_coins: $request->num_silver_coins,
+            student_code: $request->student_code,
+            total_time_spent: $request->total_time_spent,
         );
     }
 
@@ -43,16 +41,15 @@ class StudentData
     {
         return [
             'id' => $this->id,
-            'organization_id' => auth()->user()->organization_id,
+            'user_id' => $this->user_id,
             'device_id' => $this->device_id,
-            'student_code' => $this->student_code,
-            'name' => $this->name,
-            'nickname' => $this->nickname,
-            'description' => $this->description,
+            'gender' => $this->gender,
             'dob' => $this->dob,
-            'grade' => $this->grade,
-            'star_earn' => $this->star_earn,
-            'coin_earn' => $this->coin_earn,
+            'education_level' => $this->education_level,
+            'num_gold_coins' => $this->num_gold_coins,
+            'num_silver_coins' => $this->num_silver_coins,
+            'student_code' => $this->student_code,
+            'total_time_spent' => $this->total_time_spent,
         ];
     }
 }

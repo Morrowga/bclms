@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('password')->nullable();
-            $table->integer('contact_number')->nullable();
+            $table->bigInteger('contact_number')->nullable();
             $table->enum('status', ['ACTIVE', 'PENDING', 'INACTIVE']);
             $table->dateTime('email_verification_send_on');
             $table->string('profile_pic')->nullable();

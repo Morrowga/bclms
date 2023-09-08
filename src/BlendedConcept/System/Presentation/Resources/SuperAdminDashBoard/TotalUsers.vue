@@ -11,7 +11,7 @@ let props = defineProps(["users"]);
 let columns = [
     {
         label: "USER",
-        field: "name",
+        field: "user",
         sortable: false,
     },
     {
@@ -131,18 +131,10 @@ let selectedRole = ref("");
                                     :image="avatar4"
                                 />
                             </template>
-
-                            <!-- 👉 Title and Subtitle -->
-                            <VListItemTitle
-                                class="text-sm font-weight-semibold mb-1"
-                            >
-                                {{ dataProps.row.user }}
-                            </VListItemTitle>
-
                             <VListItemSubtitle
                                 class="text-xs text-no-wrap d-flex align-center"
                             >
-                                <span> {{ dataProps.row.email }}</span>
+                                <span> {{ dataProps.row.first_name  }} {{ dataProps.row.last_name }}</span>
                             </VListItemSubtitle>
                         </VListItem>
                     </div>
@@ -151,7 +143,7 @@ let selectedRole = ref("");
                         class="flex flex-nowrap"
                     >
                         <VChip size="small" color="primary">
-                            {{ dataProps.row?.roles[0]?.name }}
+                            {{ dataProps.row?.role.name }}
                         </VChip>
                     </div>
                     <div

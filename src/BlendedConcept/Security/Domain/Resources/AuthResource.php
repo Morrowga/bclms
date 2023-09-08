@@ -22,11 +22,11 @@ class AuthResource extends JsonResource
 
         return [
             'id' => $this->id ?? '',
-            'name' => $this->name ?? '',
+            'name' => $this->first_name ? $this->first_name.' '.$this->last_name : " ",
             'email' => $this->email ?? '',
-            'roles' => $this->roles ?? '',
+            'roles' => $this->role ?? "" ,
             'image' => $image,
-            'permissions' => $this->roles ? new AuthPermissionResource($this->roles()->with('permissions')->first()) : '',
+            'permissions' => $this->role ? new AuthPermissionResource(auth()->user()) : '',
         ];
     }
 }

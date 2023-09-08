@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 
 class OrganizationEloquentModel extends Model implements HasMedia
 {
@@ -23,40 +24,27 @@ class OrganizationEloquentModel extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'id',
-        'plan_id',
+        'curr_subscription_id',
+        'org_admin_id',
         'name',
-        'description',
-        'type',
-        'contact_person',
+        'contact_name',
         'contact_email',
         'contact_number',
+        'sub_domain',
+        'logo',
+        'status',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
-    public array $rules = [
-        'plan_id' => 'required',
-        'name' => 'required| string| max:255',
-        'description' => 'nullable |string',
-        'type' => 'nullable',
-        'contact_person' => 'required',
-        'contact_email' => 'required ',
-        'contact_number',
-    ];
 
     public function getImageAttribute()
     {
         return $this->getMedia('image');
     }
-
     public function plan()
     {
-        return $this->belongsTo(PlanEloquentModel::class, 'plan_id', 'id');
+        return $this->belongsTo(SubscriptionEloquentModel::class, 'curr_subscription_id', 'id');
     }
-
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
