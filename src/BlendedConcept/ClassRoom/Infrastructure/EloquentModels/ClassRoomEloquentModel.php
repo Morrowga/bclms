@@ -35,6 +35,8 @@ class ClassRoomEloquentModel extends Model
         return $this->belongsToMany(StudentEloquentModel::class, 'classroom_student', 'classroom_id', 'student_id');
     }
 
+
+
     public function teacher()
     {
         return $this->belongsTo(UserEloquentModel::class, 'teacher_id', 'id');

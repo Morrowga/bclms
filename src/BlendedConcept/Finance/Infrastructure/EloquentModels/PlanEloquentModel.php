@@ -6,46 +6,25 @@ namespace Src\BlendedConcept\Finance\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
-class PlanEloquentModel extends Model implements HasMedia
+
+class PlanEloquentModel extends Model
 {
-    use HasFactory, Notifiable, InteractsWithMedia;
+    use HasFactory;
 
     protected $table = 'plans';
 
-    // for images
-    protected $appends = [
-        'image',
-    ];
 
     protected $fillable = [
         'id',
-        'stripe_id',
         'name',
-        'description',
+        'storage_limit',
+        'num_student_license',
+        'allow_customisation',
+        'allow_personalisation',
+        'status',
         'price',
         'payment_period',
-        'allocated_storage',
-        'teacher_license',
-        'student_license',
-        'is_hidden',
     ];
 
-    public function getImageAttribute()
-    {
-        return $this->getMedia('image');
-    }
-
-    public function scopeFilter($query, $filters)
-    {
-        $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
-        });
-        $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('name', 'like', '%' . $search . '%');
-        });
-    }
 }
