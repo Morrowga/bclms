@@ -30,7 +30,7 @@ class AuthService
          */
         if ($user) {
             //this check verify email or not
-            if (! $user->email_verified_at) {
+            if (! $user->email_verification_send_on) {
                 $error = 'Please Verify your email';
 
                 return ['errorMessage' => $error, 'isCheck' => false];

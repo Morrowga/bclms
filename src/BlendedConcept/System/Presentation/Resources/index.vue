@@ -27,6 +27,7 @@ let form = useForm({});
 let notifications = ref([]);
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
+console.log(user_role,"testing 23")
 let reactiveNoti = computed(() => page.props.notifications?.data);
 let watchNoti = watch(reactiveNoti, (value) => {
     getNotifications();

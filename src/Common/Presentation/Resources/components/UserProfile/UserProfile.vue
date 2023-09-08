@@ -97,7 +97,7 @@ const dynamicProfileLink = () => {
                             {{ userData?.data?.name }}
                         </VListItemTitle>
                         <VListItemSubtitle>{{
-                            userData?.data?.roles?.[0]?.name
+                            userData?.data?.roles?.name
                         }}</VListItemSubtitle>
                     </VListItem>
 
