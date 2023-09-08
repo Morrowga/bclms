@@ -199,6 +199,8 @@ const pages = {
 
     "BlendedConcept/System/Presentation/Resources/Announcements/Create": import('../../src/BlendedConcept/System/Presentation/Resources/Announcements/Create.vue'),
 
+    "BlendedConcept/System/Presentation/Resources/Announcements/Edit": import('../../src/BlendedConcept/System/Presentation/Resources/Announcements/Edit.vue'),
+
 
 
 

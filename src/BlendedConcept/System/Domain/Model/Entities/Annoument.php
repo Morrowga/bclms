@@ -11,23 +11,22 @@ class Annoument extends Entity
     public function __construct(
         public readonly ?int $id,
         public readonly string $title,
+        public readonly string $icon,
         public readonly string $message,
-        public readonly ?int $created_by,
-        public readonly ?int $trigger_on,
-        public readonly ?int $send_to,
+        public readonly ?int $target_role_id,
+        public readonly ?int $author_id,
     ) {
     }
 
     public function toArray(): array
     {
         return [
-
             'id' => $this->id,
             'title' => $this->title,
+            'icon' => $this->icon,
             'message' => $this->message,
-            'created_by' => $this->created_by,
-            'trigger_on' => $this->trigger_on,
-            'send_to' => $this->send_to,
+            'target_role_id' => $this->target_role_id,
+            'author_id' => $this->author_id,
         ];
     }
 }

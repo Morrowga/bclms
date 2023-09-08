@@ -21,7 +21,6 @@ class SiteSettingData
 
     public static function fromRequest(Request $request, $setting_id = null): SiteSettingData
     {
-
         return new self(
             id: $setting_id,
             site_name: $request->site_name,

@@ -22,6 +22,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('roles')->onDelete('cascade');
             $table->string('icon')->nullable();
+            $table->string('title')->nullable();
             $table->longText('message')->nullable();
             $table->timestamps();
             $table->softDeletes();

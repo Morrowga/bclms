@@ -16,7 +16,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     //get all announcements
     public function getAnnouncements($filters = [])
     {
-        $announcements = AnnouncementResource::collection(AnnouncementEloquentModel::filter($filters)->with(['created_by', 'send_to'])->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $announcements = AnnouncementResource::collection(AnnouncementEloquentModel::filter($filters)->with(['author_id', 'target_role_id'])->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
 
         return $announcements;
     }
@@ -24,11 +24,18 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     // create announcement
     public function createAnnouncement($request)
     {
-        $create_by_user = OrganizationEloquentModel::find($request->created_by);
-        $receive_user = UserEloquentModel::find($request->send_to);
+        $create_by_user = OrganizationEloquentModel::find($request->author_id);
+        $receive_user = UserEloquentModel::find($request->target_role_id);
         $receive_user->notify(new BcNotification(['message' => $request->title, 'from' => $create_by_user->name, 'to' => $receive_user->name, 'type' => $request->type ?? '']));
         $announmentEloquent = AnnounmentMapper::toEloquent($request);
         $announmentEloquent->save();
+    }
+
+    public function showAnnouncement($id)
+    {
+        $announcement = new AnnouncementResource(AnnouncementEloquentModel::where('id', $id)->with(['author_id', 'target_role_id'])->first());
+
+        return $announcement;
     }
 
     //update announcement
@@ -36,8 +43,8 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     {
         $announcementArray = $annountment->toArray();
         $announemtEloquent = AnnouncementEloquentModel::query()->find($annountment->id);
-        $create_by_user = OrganizationEloquentModel::find($annountment->created_by);
-        $receive_user = UserEloquentModel::find($annountment->send_to);
+        $create_by_user = OrganizationEloquentModel::find($annountment->author_id);
+        $receive_user = UserEloquentModel::find($annountment->target_role_id);
         $receive_user->notify(new BcNotification(['message' => $annountment->title, 'from' => $create_by_user->name, 'to' => $receive_user->name, 'type' => $annountment->type ?? '']));
         $announemtEloquent->fill($announcementArray);
         $announemtEloquent->save();

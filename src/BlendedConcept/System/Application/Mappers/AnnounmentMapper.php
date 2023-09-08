@@ -14,10 +14,10 @@ class AnnounmentMapper
         return new Annoument(
             id: $announcement_id,
             title: $request->title,
+            icon: $request->icon,
             message: $request->message,
-            created_by: $request->created_by,
-            trigger_on: $request->trigger_on,
-            send_to: $request->send_to,
+            target_role_id: $request->target_role_id,
+            author_id: $request->author_id,
         );
     }
 
@@ -30,10 +30,10 @@ class AnnounmentMapper
         }
 
         $AnnounmettEloquent->title = $annoument->title;
+        $AnnounmettEloquent->icon = $annoument->icon;
         $AnnounmettEloquent->message = $annoument->message;
-        $AnnounmettEloquent->created_by = $annoument->created_by;
-        $AnnounmettEloquent->trigger_on = $annoument->trigger_on;
-        $AnnounmettEloquent->send_to = $annoument->send_to;
+        $AnnounmettEloquent->target_role_id = $annoument->target_role_id;
+        $AnnounmettEloquent->author_id = $annoument->author_id;
 
         return $AnnounmettEloquent;
     }
