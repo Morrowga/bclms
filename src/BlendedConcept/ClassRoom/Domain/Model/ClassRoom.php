@@ -8,11 +8,10 @@ class ClassRoom extends AggregateRoot
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly ?int $organization_id,
-        public readonly ?int $teacher_id,
-        public readonly ?string $name,
-        public readonly ?string $venue,
-        public readonly ?array $students,
+        public readonly int $organization_id,
+        public readonly int $name,
+        public readonly string $description,
+        public readonly string $classroom_photo,
     ) {
     }
 
@@ -21,10 +20,9 @@ class ClassRoom extends AggregateRoot
         return [
             'id' => $this->id,
             'organization_id' => $this->organization_id,
-            'teacher_id' => $this->teacher_id,
             'name' => $this->name,
-            'venue' => $this->venue,
-            'students' => $this->students,
+            'description' => $this->description,
+            'classroom_photo' => $this->classroom_photo,
         ];
     }
 }
