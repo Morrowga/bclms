@@ -12,36 +12,50 @@ const isDialogVisible = ref(false);
 let refForm = ref();
 
 let flash = computed(() => usePage().props.flash);
-
+const props = defineProps({
+    organization: {
+        type: Object,
+        required: true,
+    },
+});
 let form = useForm({
-    name: "Blended Concept",
-    contact_person: "Jordan Stevenson",
+    name: "",
+    contact_name: "",
     contact_email: "",
     contact_number: "",
-    price: "",
-    teacher_license: "",
-    allocated_storage: "",
-    payment_period: "",
-    // payment_type: "card",
+    org_admin_name: "",
+    org_admin_contact_number: "",
+    login_email: "",
     image: "",
+    _method: "PUT",
 });
 
 // submit create form
 let handleSubmit = () => {
-    SuccessDialog({ title: "You've successfully created organization" });
+    // SuccessDialog({ title: "You've successfully created organization" });
 
-    // refForm.value?.validate().then(({ valid }) => {
-    //     if (valid) {
-    //         form.post(route("organizations.store"), {
-    //             onSuccess: () => {
-    //                 SuccessDialog({title:flash?.successMessage})
-    //                 isDialogVisible.value = false;
-    //             },
-    //             onError: (error) => { },
-    //         });
-    //     }
-    // });
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("organizations.update", props.organization.id), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.successMessage });
+                },
+                onError: (error) => {},
+            });
+        }
+    });
 };
+onMounted(() => {
+    form.name = props.organization?.name;
+    form.contact_name = props.organization?.contact_name;
+    form.contact_email = props.organization?.contact_email;
+    form.contact_number = props.organization?.contact_number;
+    form.org_admin_name = props.organization?.org_admin?.first_name;
+    form.org_admin_contact_number =
+        props.organization?.org_admin?.contact_number;
+    form.login_email = props.organization?.org_admin?.email;
+    form.image = props.organization?.image?.[0]?.original_url;
+});
 </script>
 
 <template>
@@ -68,6 +82,7 @@ let handleSubmit = () => {
                                             density="compact"
                                             v-model="form.name"
                                             class="w-100"
+                                            placeholder="Type here ..."
                                             :rules="[requiredValidator]"
                                             :error-messages="form?.errors?.name"
                                         />
@@ -78,11 +93,12 @@ let handleSubmit = () => {
                                         >
                                         <VTextField
                                             density="compact"
-                                            v-model="form.contact_person"
+                                            placeholder="Type here ..."
+                                            v-model="form.contact_name"
                                             class="w-100"
                                             :rules="[requiredValidator]"
                                             :error-messages="
-                                                form?.errors?.contact_person
+                                                form?.errors?.contact_name
                                             "
                                         />
                                     </VCol>
@@ -92,6 +108,7 @@ let handleSubmit = () => {
                                         >
                                         <VTextField
                                             density="compact"
+                                            placeholder="Type here ..."
                                             v-model="form.contact_email"
                                             class="w-100"
                                             :rules="[
@@ -109,6 +126,7 @@ let handleSubmit = () => {
                                         >
                                         <VTextField
                                             density="compact"
+                                            placeholder="Type here ..."
                                             v-model="form.contact_number"
                                             class="w-100"
                                             :rules="[requiredValidator]"
@@ -132,10 +150,11 @@ let handleSubmit = () => {
                                         >
                                         <VTextField
                                             density="compact"
-                                            v-model="form.teacher_license"
+                                            placeholder="Type here ..."
+                                            v-model="form.org_admin_name"
                                             class="w-100"
                                             :error-messages="
-                                                form?.errors?.teacher_license
+                                                form?.errors?.org_admin_name
                                             "
                                             :rules="[requiredValidator]"
                                         />
@@ -148,11 +167,15 @@ let handleSubmit = () => {
 
                                         <VTextField
                                             density="compact"
-                                            v-model="form.allocated_storage"
+                                            placeholder="Type here ..."
+                                            v-model="
+                                                form.org_admin_contact_number
+                                            "
                                             class="w-100"
                                             :rules="[requiredValidator]"
                                             :error-messages="
-                                                form?.errors?.allocated_storage
+                                                form?.errors
+                                                    ?.org_admin_contact_number
                                             "
                                         />
                                     </VCol>
@@ -164,24 +187,12 @@ let handleSubmit = () => {
                                         <VTextField
                                             type="email"
                                             density="compact"
-                                            v-model="form.price"
+                                            placeholder="Type here ..."
+                                            v-model="form.login_email"
                                             class="w-100"
                                             :rules="[requiredValidator]"
                                             :error-messages="
-                                                form?.errors?.price
-                                            "
-                                        />
-                                    </VCol>
-                                    <VCol cols="12">
-                                        <VLabel class="tiggie-label required"
-                                            >Login Password</VLabel
-                                        >
-                                        <VTextField
-                                            density="compact"
-                                            v-model="form.payment_period"
-                                            class="w-100"
-                                            :error-messages="
-                                                form?.errors?.payment_period
+                                                form?.errors?.login_email
                                             "
                                         />
                                     </VCol>
@@ -190,7 +201,10 @@ let handleSubmit = () => {
                             <VCol cols="12" md="6" class="pt-5">
                                 <span class="tiggie-title">Logo</span>
                                 <br />
-                                <ImageUpload v-model="form.image" />
+                                <ImageUpload
+                                    v-model="form.image"
+                                    :old_img="form.image"
+                                />
                             </VCol>
                             <VCol
                                 cols="12"
@@ -215,7 +229,7 @@ let handleSubmit = () => {
                                     height="50"
                                     width="200"
                                 >
-                                    Finish
+                                    Update
                                 </VBtn>
                             </VCol>
                         </VRow>

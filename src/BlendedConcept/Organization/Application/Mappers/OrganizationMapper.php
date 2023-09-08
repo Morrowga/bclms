@@ -3,27 +3,16 @@
 namespace Src\BlendedConcept\Organization\Application\Mappers;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
+use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
 use Src\BlendedConcept\Organization\Domain\Model\Organization;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
-use Src\BlendedConcept\Teacher\Application\Mappers\TeacherMapper;
+
 
 class OrganizationMapper
 {
     public static function fromRequest(Request $request, $organization_id = null): Organization
     {
 
-        $subscriptionItems = $request->only(
-            [
-                'start_date',
-                'end_date',
-                'payment_date',
-                'payment_status',
-                'stripe_status',
-                'stripe_price'
-            ]
-        );
         return new Organization(
             id: $organization_id,
             curr_subscription_id: $request->curr_subscription_id,
@@ -35,6 +24,7 @@ class OrganizationMapper
             sub_domain: $request->sub_domain,
             logo: $request->logo,
             status: $request->status,
+
         );
     }
 
@@ -55,7 +45,7 @@ class OrganizationMapper
         $organizatonEloquent->contact_number = $organization->contact_number;
         $organizatonEloquent->sub_domain = $organization->sub_domain;
         $organizatonEloquent->logo = $organization->logo;
-        $organizatonEloquent->status = $organization->status;
+        $organizatonEloquent->status = $organization->status ?? 'ACTIVE';
 
         return $organizatonEloquent;
     }

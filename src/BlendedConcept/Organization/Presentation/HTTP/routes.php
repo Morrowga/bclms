@@ -8,12 +8,8 @@ use Src\BlendedConcept\Organization\Presentation\HTTP\SubscribtionInvoiceControl
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::get('organizations', [OrganizationController::class, 'index'])->name('organizations.index');
-    Route::get('/organizations/edit', [OrganizationController::class, 'edit'])->name('organizations.test.edit');
-    Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
-    Route::get('/organizations/show', [OrganizationController::class, 'show'])->name('organizations.show');
-    // Route::resource('plans', PlanController::class);
 
+    Route::resource('organizations', OrganizationController::class);
 
 
     Route::get('/org_view_teacher_student', [OrganizationTeacherStudentController::class, 'index'])->name('org_view_teacher_student.index');

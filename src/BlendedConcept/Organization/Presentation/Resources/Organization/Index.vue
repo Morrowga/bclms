@@ -23,18 +23,6 @@ serverPage.value = ref(props.organizations.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 
-const deleteOrganization = (id) => {
-    isConfirmedDialog({
-        title: "You won't be able to revert this!",
-        denyButtonText: "Yes,delete it!",
-        onConfirm: () => {
-            router.delete(`${route_name}/${id}`, {
-                onSuccess: () => {},
-            });
-        },
-    });
-};
-
 const roles = [
     "Name",
     "Teacher Usage",
@@ -90,10 +78,19 @@ watch(serverPerPage, function (value) {
 });
 let selectionChanged = () => {};
 let selectedRole = ref("");
-// const deleteOrganization = () => {
-// SuccessDialog({title:"Organization has been deleted"})
-
-// }
+const deleteOrganization = (id) => {
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,delete it!",
+        onConfirm: () => {
+            router.delete(route("organizations.destroy", id), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.successMessage });
+                },
+            });
+        },
+    });
+};
 </script>
 
 <template>
@@ -118,6 +115,8 @@ let selectedRole = ref("");
                             placeholder="Search User ..."
                             density="compact"
                             variant="solo"
+                            @keyup.enter="searchItems"
+                            v-model="serverParams.search"
                         />
                     </div>
 
@@ -231,7 +230,8 @@ let selectedRole = ref("");
                                             () =>
                                                 router.get(
                                                     route(
-                                                        'organizations.test.edit'
+                                                        'organizations.edit',
+                                                        props.row.id
                                                     )
                                                 )
                                         "
