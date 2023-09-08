@@ -91,6 +91,13 @@ const deleteOrganization = (id) => {
         },
     });
 };
+// watch(selectedRole, (newValue) => {
+//     onColumnFilter({
+//         columnFilters: {
+//             need_help_order: newValue,
+//         },
+//     });
+// });
 </script>
 
 <template>
