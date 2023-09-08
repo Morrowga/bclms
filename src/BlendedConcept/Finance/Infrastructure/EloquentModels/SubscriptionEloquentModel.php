@@ -8,23 +8,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class PlanEloquentModel extends Model
+class SubscriptionEloquentModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'plans';
-
+    protected $table = 'subscriptions';
 
     protected $fillable = [
         'id',
-        'name',
-        'storage_limit',
-        'num_student_license',
-        'allow_customisation',
-        'allow_personalisation',
-        'status',
-        'price',
-        'payment_period',
+        'start_date',
+        'end_date',
+        'payment_date',
+        'payment_status',
+        'stripe_status',
+        'stripe_price'
     ];
+
 
 }

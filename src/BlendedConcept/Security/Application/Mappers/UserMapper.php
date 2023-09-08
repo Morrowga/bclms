@@ -11,21 +11,15 @@ class UserMapper
     public static function fromRequest(Request $request, $user_id = null): User
     {
         return new User(
-
-            id : $user_id,
-            name : $request->name,
-            email : $request->email,
-            organization_id  : $request->organization_id,
-            email_verified_at : $request->email_verified_at,
-            dob : $request->dob,
-            contact_number  : $request->contact_number,
-            storage_limit : $request->storage_limit,
-            password  : $request->password,
-            is_active : $request->is_active,
-            stripe_id : $request->stripe_id,
-            pm_brand : $request->pm_brand,
-            pm_last_four : $request->pm_last_four,
-            trial_end_at : $request->trial_end_at,
+            id: $user_id,
+            first_name: $request->first_name,
+            last_name: $request->last_name,
+            email: $request->email,
+            password: $request->password,
+            email_verification_send_on: $request->email_verification_send_on,
+            contact_number: $request->contact_number,
+            status: $request->status,
+            profile_pic: $request->profile_pic,
         );
     }
 
@@ -36,19 +30,14 @@ class UserMapper
         if ($user->id) {
             $UserEloquent = UserEloquentModel::query()->findOrFail($user->id);
         }
-        $UserEloquent->name = $user->name;
+        $UserEloquent->first_name = $user->first_name;
+        $UserEloquent->last_name = $user->last_name;
         $UserEloquent->email = $user->email;
-        $UserEloquent->organization_id = $user->organization_id;
-        $UserEloquent->email_verified_at = $user->email_verified_at;
-        $UserEloquent->dob = $user->dob;
-        $UserEloquent->contact_number = $user->contact_number;
-        $UserEloquent->storage_limit = $user->storage_limit;
         $UserEloquent->password = $user->password;
-        $UserEloquent->is_active = $user->is_active;
-        $UserEloquent->stripe_id = $user->stripe_id;
-        $UserEloquent->pm_brand = $user->pm_brand;
-        $UserEloquent->pm_last_four = $user->pm_last_four;
-        $UserEloquent->trial_end_at = $user->trial_end_at;
+        $UserEloquent->email_verification_send_on = $user->email_verification_send_on;
+        $UserEloquent->contact_number = $user->contact_number;
+        $UserEloquent->status = $user->status;
+        $UserEloquent->profile_pic = $user->profile_pic;
 
         return $UserEloquent;
     }

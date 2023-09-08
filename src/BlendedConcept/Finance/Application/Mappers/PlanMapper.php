@@ -12,15 +12,14 @@ class PlanMapper
     {
         return new Plan(
             id: $plan_id,
-            stripe_id: $request->stripe_id,
-            name: 'Default Plan',
-            description: $request->description,
+            name: $request->name,
+            storage_limit: $request->storage_limit,
+            num_student_license: $request->num_student_license,
+            allow_customisation: $request->allow_customisation,
+            allow_personalisation: $request->allow_personalisation,
+            status: $request->status,
             price: $request->price,
             payment_period: $request->payment_period,
-            allocated_storage: $request->storage,
-            teacher_license: $request->teacher_license,
-            student_license: $request->student_license,
-            is_hidden: $request->is_hidden
         );
     }
 
@@ -36,15 +35,14 @@ class PlanMapper
     {
         return new Plan(
             id: $plan->id,
-            stripe_id: $plan->stripe_id,
             name: $plan->name,
-            description: $plan->description,
+            storage_limit: $plan->storage_limit,
+            num_student_license: $plan->num_student_license,
+            allow_customisation: $plan->allow_customisation,
+            allow_personalisation: $plan->allow_personalisation,
+            status: $plan->status,
             price: $plan->price,
             payment_period: $plan->payment_period,
-            allocated_storage: $plan->allocated_storage,
-            teacher_license: $plan->teacher_license,
-            student_license: $plan->student_license,
-            is_hidden: $plan->is_hidden
         );
     }
 
@@ -55,16 +53,14 @@ class PlanMapper
         if ($plan->id) {
             $planEloquent = PlanEloquentModel::query()->findOrFail($plan->id);
         }
-
-        $planEloquent->stripe_id = $plan->stripe_id;
         $planEloquent->name = $plan->name;
-        $planEloquent->description = $plan->description;
+        $planEloquent->storage_limit = $plan->storage_limit;
+        $planEloquent->num_student_license = $plan->num_student_license;
+        $planEloquent->allow_customisation = $plan->allow_customisation;
+        $planEloquent->allow_personalisation = $plan->allow_personalisation;
+        $planEloquent->status = $plan->status;
         $planEloquent->price = $plan->price;
         $planEloquent->payment_period = $plan->payment_period;
-        $planEloquent->allocated_storage = $plan->allocated_storage;
-        $planEloquent->teacher_license = $plan->teacher_license;
-        $planEloquent->student_license = $plan->student_license;
-        $planEloquent->is_hidden = $plan->is_hidden;
 
         return $planEloquent;
     }

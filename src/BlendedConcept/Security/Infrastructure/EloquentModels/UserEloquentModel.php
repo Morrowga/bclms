@@ -26,18 +26,16 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
 
     protected $fillable = [
         'name',
-        'organization_id',
-        'email_verified_at',
-        'dob',
-        'contact_number',
+        'role_id',
+        'first_name',
+        'last_name',
+        'email',
         'storage_limit',
         'password',
-        'is_active',
-        'stripe_id',
-        'pm_brand',
-        'pm_last_four',
-        'trial_end_at',
-        'email',
+        'contact_number',
+        'status',
+        'email_verification_send_on',
+        'profile_pic',
     ];
 
     protected $hidden = [
@@ -46,7 +44,7 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verification_send_on' => 'datetime',
     ];
 
     public function getImageAttribute()

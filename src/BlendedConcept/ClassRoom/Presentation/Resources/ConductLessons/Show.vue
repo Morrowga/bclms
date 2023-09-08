@@ -17,7 +17,14 @@ import SelectStudent from "./components/SelectStudent.vue";
                 <v-spacer></v-spacer>
             </div>
             <div class="book-panels">
-                <v-img src="/images/rectangle.png" />
+                <div class="mt-10">
+                    <iframe
+                    src="http://bc-lms.test/admin/h5p/h5p/19/edit"
+                    frameborder="0"
+                    scrolling="auto"
+                    class="h5p-width"
+                    ></iframe>
+                </div>
                 <br />
                 <div class="d-flex">
                     <v-btn class="mr-2 text-white" color="#EF5350"
@@ -40,5 +47,10 @@ import SelectStudent from "./components/SelectStudent.vue";
     font-style: unset !important;
     font-weight: unset !important;
     text-transform: unset !important;
+}
+
+.h5p-width{
+    width: 100%;
+    height: 1500px;
 }
 </style>

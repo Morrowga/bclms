@@ -54,6 +54,7 @@ class AnnouncementController extends Controller
 
     public function create()
     {
+
         return Inertia::render(config('route.announment.create'));
     }
 

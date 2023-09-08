@@ -2,37 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Src\BlendedConcept\Classroom\Infrastructure\EloquentModels;
+namespace Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
-class ClassroomEloquentModel extends Model implements HasMedia
+class LearningNeedEloquentModel extends Model
 {
-    use HasFactory, Notifiable, InteractsWithMedia;
+    use HasFactory;
 
-    protected $table = 'classrooms';
-
-    // for images
-    protected $appends = [
-        'classroom_photo',
-    ];
+    protected $table = 'learning_needs';
 
     protected $fillable = [
         'id',
-        'organisation_id',
         'name',
         'description',
-        'classroom_photo',
     ];
-
-    public function getImageAttribute()
-    {
-        return $this->getMedia('classroom_photo');
-    }
 
     public function scopeFilter($query, $filters)
     {

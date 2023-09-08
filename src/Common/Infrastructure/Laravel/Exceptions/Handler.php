@@ -47,6 +47,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Exception $e) {
+            // dd($e->getMessage());
             $this->sendEmail($e);
         });
     }

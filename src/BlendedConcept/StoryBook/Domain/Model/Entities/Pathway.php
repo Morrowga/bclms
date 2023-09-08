@@ -1,19 +1,18 @@
 <?php
 
-namespace Src\BlendedConcept\StoryBook\Domain\Model;
+namespace Src\BlendedConcept\StoryBook\Domain\Model\Entities;
 
-use Src\Common\Domain\AggregateRoot;
+use Src\Common\Domain\Entity;
 
-class StoryBook extends AggregateRoot
+class LearningNeed extends Entity
 {
     public function __construct(
         public readonly ?int $id,
         public readonly string $name,
         public readonly string $description,
-        public readonly string $thumbnail_img,
         public readonly int $num_gold_coins,
         public readonly int $num_silver_coins,
-        public readonly bool $is_free,
+        public readonly bool $need_complete_in_order,
     ) {
     }
 
@@ -23,10 +22,9 @@ class StoryBook extends AggregateRoot
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'thumbnail_img' => $this->thumbnail_img,
             'num_gold_coins' => $this->num_gold_coins,
             'num_silver_coins' => $this->num_silver_coins,
-            'is_free' => $this->is_free,
+            'need_complete_in_order' => $this->need_complete_in_order,
         ];
     }
 }
