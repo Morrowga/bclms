@@ -9,6 +9,9 @@ interface AnnouncementRepositoryInterface
     //get all announcements
     public function getAnnouncements($filters);
 
+    //show announcement
+    public function showAnnouncement($id);
+
     //create announcements
     public function createAnnouncement($request);
 

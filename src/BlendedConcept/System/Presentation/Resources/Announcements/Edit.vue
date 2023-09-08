@@ -3,18 +3,20 @@ import { ref,watch } from "vue";
 import { useForm,usePage } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
-let props = defineProps(['organizations']);
+let props = defineProps(['organizations', 'announcement']);
 let author_id = computed(() => usePage().props.auth.data.id);
 console.log(author_id.value);
 const showDialog = ref(false);
 const icon = ref('');
 const searchIcon = ref('');
-const chosenIcon = ref('emoticon-happy-outline');
+const announcement = props.announcement.data
+const chosenIcon = ref(announcement.icon);
+console.log(chosenIcon.value);
 const form = useForm({
-  title: "",
-  icon: "",
-  message: "",
-  target_role_id: "",
+  title: announcement.title,
+  icon: announcement.icon,
+  message: announcement.message,
+  target_role_id: announcement.target_role_id,
   author_id: author_id.value,
 });
 
@@ -1237,9 +1239,9 @@ watch(searchIcon, (newSearchIcon) => {
 let description = ref("");
 
 let onFormSubmit = () => {
-    form.post(route("announcements.store"), {
+    form.put(route("announcements.update", announcement.id), {
     onSuccess: () => {
-        SuccessDialog({ title: "You've successfully posted announcement" });
+        SuccessDialog({ title: "You've successfully updated announcement" });
     },
     onError: (error) => {
     //   form.setError("email", error?.email);
@@ -1298,7 +1300,7 @@ let onFormSubmit = () => {
                                    <div @click="showDialog = true">
                                     <VSelect class="center-prepend-icon"
                                         :v-model="form.icon"
-                                        :prepend-inner-icon="'mdi-' + chosenIcon"
+                                        :prepend-inner-icon="form.icon"
                                         v-bind="attrs"
                                         v-on="on"
                                         color="deep-purple"

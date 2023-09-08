@@ -13,21 +13,21 @@ class AnnouncementEloquentModel extends Model
     protected $table = 'announcements';
 
     protected $fillable = [
+        'icon',
         'title',
         'message',
-        'created_by',
-        'trigger_on',
-        'send_to',
+        'target_role_id',
+        'author_id',
     ];
 
-    public function created_by()
+    public function author_id()
     {
-        return $this->belongsTo(OrganizationEloquentModel::class, 'created_by', 'id');
+        return $this->belongsTo(OrganizationEloquentModel::class, 'author_id', 'id');
     }
 
-    public function send_to()
+    public function target_role_id()
     {
-        return $this->belongsTo(UserEloquentModel::class, 'send_to', 'id');
+        return $this->belongsTo(UserEloquentModel::class, 'target_role_id', 'id');
     }
 
     public function scopeFilter($query, $filters)

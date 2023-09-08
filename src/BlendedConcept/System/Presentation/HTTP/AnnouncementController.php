@@ -3,21 +3,22 @@
 namespace Src\BlendedConcept\System\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserList;
+use Symfony\Component\HttpFoundation\Response;
+use Src\Common\Infrastructure\Laravel\Controller;
+use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
+use Src\BlendedConcept\System\Domain\Services\AnnounmnetService;
+use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
 use Src\BlendedConcept\System\Application\Policies\AnnouncementPolicy;
 use Src\BlendedConcept\System\Application\Requests\StoreAnnouncementRequest;
+use Src\BlendedConcept\System\Application\UseCases\Queries\ShowAnnouncement;
 use Src\BlendedConcept\System\Application\Requests\UpdateAnnouncementRequest;
-use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
-use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
-use Src\BlendedConcept\System\Application\UseCases\Commands\DeleteAnnounmentCommand;
-use Src\BlendedConcept\System\Application\UseCases\Commands\StoreAnnounmentCommand;
-use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateAnnounmentCommand;
-use Src\BlendedConcept\System\Application\UseCases\Queries\GetAnnounmetAllWithPagination;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserList;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganizationList;
-use Src\BlendedConcept\System\Domain\Services\AnnounmnetService;
+use Src\BlendedConcept\System\Application\UseCases\Commands\StoreAnnounmentCommand;
+use Src\BlendedConcept\System\Application\UseCases\Commands\DeleteAnnounmentCommand;
+use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateAnnounmentCommand;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
-use Src\Common\Infrastructure\Laravel\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetAnnounmetAllWithPagination;
 
 class AnnouncementController extends Controller
 {
@@ -41,6 +42,7 @@ class AnnouncementController extends Controller
 
             // Get announcements with pagination
             $announcements = (new GetAnnounmetAllWithPagination($filters))->handle();
+
             // Render Inertia view
             return Inertia::render(config('route.announment.index'), [
                 'announcements' => $announcements,
@@ -55,7 +57,11 @@ class AnnouncementController extends Controller
     public function create()
     {
 
-        return Inertia::render(config('route.announment.create'));
+        $organizations = (new GetOrganizationList())->handle();
+
+        return Inertia::render(config('route.announment.create'), [
+            'organizations' => $organizations,
+        ]);
     }
 
     /**
@@ -91,6 +97,19 @@ class AnnouncementController extends Controller
         return redirect()->route('announcements.index')->with('successMessage', 'Announcement created Successfully!');
     }
 
+    public function edit($id)
+    {
+
+        $announcement = (new ShowAnnouncement($id))->handle();
+
+        $organizations = (new GetOrganizationList())->handle();
+
+        return Inertia::render(config('route.announment.edit'), [
+            'organizations' => $organizations,
+            'announcement' => $announcement
+        ]);
+    }
+
     /**
      * Update an announcement.
      *
@@ -104,14 +123,13 @@ class AnnouncementController extends Controller
 
         /**
          * Validate the request.
-         */
+        */
         $request->validated();
 
         /**
          * Try to update the announcement.
          */
         try {
-
             $announcement = AnnounmentData::fromRequest($request, $announcement->id);
             $updateAnnounmentCommand = (new UpdateAnnounmentCommand($announcement));
             $updateAnnounmentCommand->execute();

@@ -22,13 +22,14 @@ class UpdateAnnouncementRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'created_by' => [
+            'icon' => [
+                'required',
+                'string',
+            ],
+            'author_id' => [
                 'required',
             ],
-            'send_to' => [
-                'required',
-            ],
-            'type' => [
+            'target_role_id' => [
                 'required',
             ],
         ];

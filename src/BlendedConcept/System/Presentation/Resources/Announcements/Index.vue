@@ -3,8 +3,9 @@ import Create from "./Create.vue";
 // import Edit from "./Edit.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-
+import { isConfirmedDialog } from "@actions/useConfirm";
 import deleteItem from "@Composables/useDeleteItem.js";
 import {
     serverParams,
@@ -25,6 +26,7 @@ let props = defineProps([
     "organizations",
 ]);
 let currentAnnouncement = ref();
+console.log(props.announcements)
 const isAddNewAnnouncementDrawerVisible = ref(false);
 const isEditAnnouncementDrawerVisible = ref(false);
 serverPage.value = ref(props.announcements.meta.current_page ?? 1);
@@ -33,10 +35,6 @@ serverPerPage.value = ref(10);
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
 
-//## start delete announcement and delete in database
-const deleteAnnouncement = (id) => {
-    deleteItem(id, "announcements");
-};
 //## end delete announcement and delete in database
 
 //start datatable section
@@ -53,12 +51,22 @@ let columns = [
     },
     {
         label: "Announcement by",
-        field: "created_by",
+        field: "author_id",
         sortable: false,
     },
     {
         label: "Announment to",
-        field: "send_to",
+        field: "target_role_id",
+        sortable: false,
+    },
+    {
+        label: "Announment Icon",
+        field: "icon",
+        sortable: false,
+    },
+      {
+        label: "Action",
+        field: "action",
         sortable: false,
     },
 ];
@@ -80,6 +88,18 @@ watch(serverPerPage, function (value) {
 
 const checkUserRole = () => {
     return user_role.value == "BC Super Admin" || user_role.value == "BC Staff";
+};
+
+const deleteAnnouncement = (id) => {
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,delete it!",
+        onConfirm: () => {
+            router.delete('announcements/' + id, {
+                onSuccess: () => {},
+            });
+        },
+    });
 };
 </script>
 
@@ -154,21 +174,63 @@ const checkUserRole = () => {
                                 }}</span>
                             </div>
                             <div
-                                v-if="props.column.field == 'created_by'"
+                                v-if="props.column.field == 'author_id'"
                                 class="flex flex-wrap"
                             >
                                 <span>{{
-                                    truncatedText(props.row.created_by.name)
+                                    truncatedText(props.row.author_id.name)
                                 }}</span>
                             </div>
                             <div
-                                v-if="props.column.field == 'send_to'"
+                                v-if="props.column.field == 'target_role_id'"
                                 class="flex flex-wrap"
                             >
                                 <span>{{
-                                    truncatedText(props.row.send_to.name)
+                                    truncatedText(props.row.target_role_id.name)
                                 }}</span>
                             </div>
+                            <div
+                                v-if="props.column.field == 'icon'"
+                                class="flex flex-wrap"
+                            >
+                                <span class="text-center">
+                                    <VIcon :icon="props.row.icon"></VIcon>
+                                </span>
+                            </div>
+                            <div v-if="props.column.field == 'action'">
+                            <VMenu location="end">
+                                <template #activator="{ props }">
+                                    <VIcon
+                                        v-bind="props"
+                                        size="24"
+                                        icon="mdi-dots-horizontal"
+                                        color="black"
+                                        class="mt-n4"
+                                    />
+                                </template>
+                                <VList>
+                                    <VListItem
+                                        @click="
+                                            () =>
+                                                router.get(
+                                                    route(
+                                                        'announcements.edit',props.row.id
+                                                    )
+                                                )
+                                        "
+                                    >
+                                        <VListItemTitle>Edit</VListItemTitle>
+                                    </VListItem>
+                                    <VListItem
+                                        @click="
+                                            deleteAnnouncement(props.row.id)
+                                        "
+                                    >
+                                        <VListItemTitle>Delete</VListItemTitle>
+                                    </VListItem>
+                                </VList>
+                            </VMenu>
+                        </div>
                         </template>
                         <template #pagination-bottom>
                             <VRow class="pa-4">

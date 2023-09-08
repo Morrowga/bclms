@@ -148,6 +148,7 @@ return [
     'announment' => [
         'index' => 'BlendedConcept/System/Presentation/Resources/Announcements/Index',
         'create' => 'BlendedConcept/System/Presentation/Resources/Announcements/Create',
+        'edit' => 'BlendedConcept/System/Presentation/Resources/Announcements/Edit',
     ],
 
     'settings' => 'BlendedConcept/System/Presentation/Resources/Settings/Index',
