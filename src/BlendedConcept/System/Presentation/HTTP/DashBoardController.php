@@ -30,7 +30,7 @@ class DashBoardController extends Controller
          *  Assigns the current user role based on
          *  the retrieved role from the authenticated user.
          */
-        $current_user_role = auth()->user()->roles()->first()->name;
+        $current_user_role = auth()->user()->role->name;
         $user = Auth::user();
 
         $orgainzations_users = (new GetUserForAdminDashBoard())->handle();

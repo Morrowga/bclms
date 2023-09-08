@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-
+use Illuminate\Database\Eloquent\Relations\HasOne;
 class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyEmail
 {
     use HasFactory, Notifiable, InteractsWithMedia;
@@ -62,9 +62,9 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
         return $remainingSpace;
     }
 
-    public function roles()
+    public function role() : HasOne
     {
-        return $this->belongsToMany(RoleEloquentModel::class, 'role_user', 'user_id', 'role_id');
+        return $this->hasOne(RoleEloquentModel::class,'id','role_id');
     }
 
     // hased password

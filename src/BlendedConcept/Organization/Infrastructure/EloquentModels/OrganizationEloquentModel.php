@@ -35,15 +35,7 @@ class OrganizationEloquentModel extends Model implements HasMedia
         'status',
     ];
 
-    // public array $rules = [
-    //     'plan_id' => 'required',
-    //     'name' => 'required| string| max:255',
-    //     'description' => 'nullable |string',
-    //     'type' => 'nullable',
-    //     'contact_person' => 'required',
-    //     'contact_email' => 'required ',
-    //     'contact_number',
-    // ];
+
 
     public function getImageAttribute()
     {

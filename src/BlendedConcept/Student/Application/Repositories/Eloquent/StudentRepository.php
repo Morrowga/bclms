@@ -25,7 +25,7 @@ class StudentRepository implements StudentRepositoryInterface
             StudentEloquentModel::with('media')
                 ->filter($filters)
                 ->orderBy('id', 'desc')
-                ->where('organization_id', auth()->user()->organization_id)
+                // ->where('organization_id', auth()->user()->organization_id)
                 ->paginate($filters['perPage'] ?? 10)
         );
         $default_students = StudentEloquentModel::latest()->take(5)->get();

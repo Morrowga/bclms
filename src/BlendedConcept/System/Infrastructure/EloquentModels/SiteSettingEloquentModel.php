@@ -12,20 +12,18 @@ class SiteSettingEloquentModel extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
-    protected $table = 'site_settings';
-
-    // for images
-    protected $appends = [
-        'image',
-    ];
+    protected $table = 'system_settings';
 
     protected $fillable = [
         'site_name',
         'ssl',
-        'timezone',
-        'locale',
+        'site_time_zone',
+        'site_locale',
         'email',
         'contact_number',
+        'url',
+        'website_logo',
+        'website_favicon'
     ];
 
     public function getImageAttribute()

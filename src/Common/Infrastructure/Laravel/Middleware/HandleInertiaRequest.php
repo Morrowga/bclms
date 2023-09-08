@@ -45,7 +45,7 @@ class HandleInertiaRequest extends Middleware
             'tenant' => tenant('id') ? 'c.' : '',
             'user_info' => [
                 'user_detail' => Auth::check() == true ? Auth::user() : ' ',
-                'user_role' => Auth::check() == true ? Auth::user()->roles()->first() : ' ',
+                'user_role' => Auth::check() == true ? Auth::user()->role()->first() : ' ',
             ],
             'notifications' => getNotifications() != null ? getNotifications()['notifications'] : null,
             'unreadNotificationsCount' => getNotifications() != null ? getNotifications()['unread'] : 0,
