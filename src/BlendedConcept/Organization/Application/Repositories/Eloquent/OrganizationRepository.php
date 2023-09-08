@@ -24,7 +24,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
     public function getOrganizations($filters = [])
     {
-        $paginate_organizations = OrganizationResource::collection(OrganizationEloquentModel::filter($filters)->with('plan')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $paginate_organizations = OrganizationResource::collection(OrganizationEloquentModel::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
         $default_organizations = OrganizationEloquentModel::get();
 
         return [

@@ -11,35 +11,20 @@ use Src\BlendedConcept\Teacher\Application\Mappers\TeacherMapper;
 
 class OrganizationMapper
 {
-    public static function fromRequest(Request $request, $organizaton_id = null): Organization
+    public static function fromRequest(Request $request, $organization_id = null): Organization
     {
-        $planitems = $request->only(
-            [
-                'stripe_id',
-                'name',
-                'description',
-                'price',
-                'payment_period',
-                'allocated_storage',
-                'teacher_license',
-                'student_license',
-                'is_hidden',
-            ]
-        );
 
         return new Organization(
-            id: $organizaton_id,
-            plan_id: $request->plan_id,
+            id: $organization_id,
+            curr_subscription_id: $request->curr_subscription_id,
+            org_admin_id: $request->org_admin_id,
             name: $request->name,
-            description: $request->description,
-            type: $request->type,
-            contact_person: $request->contact_person,
+            contact_name: $request->contact_name,
             contact_email: $request->contact_email,
             contact_number: $request->contact_number,
-            plan: PlanMapper::fromArray($planitems),
-            // teacher: TeacherMapper::fromRequest($request),
-            // classRoom: ClassRoomMapper::fromRequest($request),
-            // student: StudentMapper::fromRequest($request)
+            sub_domain: $request->sub_domain,
+            logo: $request->logo,
+            status: $request->status,
         );
     }
 
@@ -52,13 +37,15 @@ class OrganizationMapper
         }
 
         $organizatonEloquent->id = $organization->id;
-        $organizatonEloquent->plan_id = $organization->plan_id;
+        $organizatonEloquent->curr_subscription_id = $organization->curr_subscription_id;
+        $organizatonEloquent->org_admin_id = $organization->org_admin_id;
         $organizatonEloquent->name = $organization->name;
-        $organizatonEloquent->description = $organization->description;
-        $organizatonEloquent->type = $organization->type;
-        $organizatonEloquent->contact_person = $organization->contact_person;
+        $organizatonEloquent->contact_name = $organization->contact_name;
         $organizatonEloquent->contact_email = $organization->contact_email;
         $organizatonEloquent->contact_number = $organization->contact_number;
+        $organizatonEloquent->sub_domain = $organization->sub_domain;
+        $organizatonEloquent->logo = $organization->logo;
+        $organizatonEloquent->status = $organization->status;
 
         return $organizatonEloquent;
     }
