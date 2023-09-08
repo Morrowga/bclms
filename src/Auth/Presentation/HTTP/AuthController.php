@@ -87,7 +87,7 @@ class AuthController extends Controller
              *
              *  */
 
-            dd($request->all());
+            // dd($request->all());
             $isAuthenticated = $this->authservices->login($request);
 
             /***
