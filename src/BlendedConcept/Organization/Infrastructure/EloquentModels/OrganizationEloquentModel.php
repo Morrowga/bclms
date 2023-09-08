@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 
 class OrganizationEloquentModel extends Model implements HasMedia
 {
@@ -48,7 +49,10 @@ class OrganizationEloquentModel extends Model implements HasMedia
     {
         return $this->getMedia('image');
     }
-
+    public function plan()
+    {
+        return $this->belongsTo(SubscriptionEloquentModel::class, 'curr_subscription_id', 'id');
+    }
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {

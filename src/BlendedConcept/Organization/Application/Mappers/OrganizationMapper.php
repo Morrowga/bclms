@@ -14,6 +14,16 @@ class OrganizationMapper
     public static function fromRequest(Request $request, $organization_id = null): Organization
     {
 
+        $subscriptionItems = $request->only(
+            [
+                'start_date',
+                'end_date',
+                'payment_date',
+                'payment_status',
+                'stripe_status',
+                'stripe_price'
+            ]
+        );
         return new Organization(
             id: $organization_id,
             curr_subscription_id: $request->curr_subscription_id,
