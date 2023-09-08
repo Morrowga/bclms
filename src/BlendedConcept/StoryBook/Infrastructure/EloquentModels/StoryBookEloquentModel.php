@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\BlendedConcept\Classroom\Infrastructure\EloquentModels;
+namespace Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,28 +10,30 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class ClassroomEloquentModel extends Model implements HasMedia
+class StoryBookEloquentModel extends Model implements HasMedia
 {
     use HasFactory, Notifiable, InteractsWithMedia;
 
-    protected $table = 'classrooms';
+    protected $table = 'storybooks';
 
     // for images
     protected $appends = [
-        'classroom_photo',
+        'thumbnail_img',
     ];
 
     protected $fillable = [
         'id',
-        'organisation_id',
         'name',
         'description',
-        'classroom_photo',
+        'thumbnail_img',
+        'num_gold_coins',
+        'num_silver_coins',
+        'is_free',
     ];
 
     public function getImageAttribute()
     {
-        return $this->getMedia('classroom_photo');
+        return $this->getMedia('thumbnail_img');
     }
 
     public function scopeFilter($query, $filters)

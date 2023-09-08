@@ -8,11 +8,10 @@ class ClassRoomData
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly ?int $organization_id,
-        public readonly ?int $teacher_id,
-        public readonly ?string $name,
-        public readonly ?string $venue,
-        public readonly ?array $students,
+        public readonly int $organization_id,
+        public readonly string $name,
+        public readonly string $description,
+        public readonly string $classroom_photo,
 
     ) {
     }
@@ -23,9 +22,8 @@ class ClassRoomData
             id: $classroom_id,
             organization_id: $request->organization_id,
             name: $request->name,
-            teacher_id: $request->teacher_id,
-            venue: $request->venue,
-            students : $request->students
+            description: $request->description,
+            classroom_photo: $request->classroom_photo,
         );
     }
 
@@ -34,10 +32,9 @@ class ClassRoomData
         return [
             'id' => $this->id,
             'organization_id' => auth()->user()->organization_id,
-            'teacher_id' => $this->teacher_id,
             'name' => $this->name,
-            'venue' => $this->venue,
-            'students' => $this->students,
+            'description' => $this->description,
+            'classroom_photo' => $this->classroom_photo,
         ];
     }
 }

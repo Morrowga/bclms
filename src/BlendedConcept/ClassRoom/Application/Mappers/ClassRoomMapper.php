@@ -14,9 +14,8 @@ class ClassRoomMapper
             id: $classroom_id,
             organization_id: $request->organization_id,
             name: $request->name,
-            teacher_id: $request->teacher_id,
-            venue: $request->venue,
-            students: $request->students
+            description: $request->description,
+            classroom_photo: $request->classroom_photo,
         );
     }
 
@@ -30,8 +29,8 @@ class ClassRoomMapper
         $classRoomEloquent->id = $classRoom->id;
         $classRoomEloquent->organization_id = auth()->user()->organization_id;
         $classRoomEloquent->name = $classRoom->name;
-        $classRoomEloquent->teacher_id = $classRoom->teacher_id;
-        $classRoomEloquent->venue = $classRoom->venue;
+        $classRoomEloquent->description = $classRoom->description;
+        $classRoomEloquent->classroom_photo = $classRoom->classroom_photo;
 
         return $classRoomEloquent;
     }
