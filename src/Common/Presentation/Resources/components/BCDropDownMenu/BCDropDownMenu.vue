@@ -24,7 +24,6 @@ defineOptions({ name: "HorizontalNavGroup" });
 
 const auth = computed(() => usePage().props.auth);
 
-console.log(auth.value)
 
 const isGroupActive = ref(false);
 let isLinkActive = (currentRoute) => {

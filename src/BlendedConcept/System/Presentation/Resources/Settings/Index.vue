@@ -10,161 +10,21 @@ import {
     requiredValidator,
     integerValidator,
 } from "@validators";
-const timezone = [
-    "Pacific/Honolulu",
-    "Pacific/Honolulu",
-    "America/Anchorage",
-    "Pacific/Midway",
-    "Pacific/Honolulu",
-    "America/Los_Angeles",
-    "America/Denver",
-    "America/Chicago",
-    "America/New_York",
-    "America/Halifax",
-    "America/Santo_Domingo",
-    "America/Caracas",
-    "America/Manaus",
-    "America/Santiago",
-    "America/St_Johns",
-    "America/Godthab",
-    "America/Argentina/Buenos_Aires",
-    "Atlantic/South_Georgia",
-    "Atlantic/Azores",
-    "Africa/Casablanca",
-    "Europe/London",
-    "Europe/Berlin",
-    "Europe/Paris",
-    "Europe/Madrid",
-    "Africa/Lagos",
-    "Europe/Istanbul",
-    "Europe/Kiev",
-    "Asia/Jerusalem",
-    "Asia/Riyadh",
-    "Asia/Baghdad",
-    "Asia/Tehran",
-    "Asia/Muscat",
-    "Asia/Baku",
-    "Asia/Yekaterinburg",
-    "Asia/Karachi",
-    "Asia/Kolkata",
-    "Asia/Kathmandu",
-    "Asia/Dhaka",
-    "Asia/Bangkok",
-    "Asia/Hong_Kong",
-    "Asia/Shanghai",
-    "Asia/Tokyo",
-    "Australia/Brisbane",
-    "Australia/Adelaide",
-    "Australia/Sydney",
-    "Pacific/Auckland",
-];
-const locales = [
-    "af",
-    "ar",
-    "az",
-    "be",
-    "bg",
-    "bn",
-    "bs",
-    "ca",
-    "cs",
-    "cy",
-    "da",
-    "de",
-    "el",
-    "en",
-    "eo",
-    "es",
-    "et",
-    "eu",
-    "fa",
-    "fi",
-    "fr",
-    "ga",
-    "gl",
-    "gu",
-    "he",
-    "hi",
-    "hr",
-    "ht",
-    "hu",
-    "hy",
-    "id",
-    "is",
-    "it",
-    "ja",
-    "ka",
-    "kk",
-    "km",
-    "kn",
-    "ko",
-    "ku",
-    "ky",
-    "lb",
-    "lo",
-    "lt",
-    "lv",
-    "mg",
-    "mk",
-    "ml",
-    "mn",
-    "mr",
-    "ms",
-    "mt",
-    "nb",
-    "ne",
-    "nl",
-    "nn",
-    "no",
-    "oc",
-    "or",
-    "pa",
-    "pl",
-    "ps",
-    "pt",
-    "ro",
-    "ru",
-    "si",
-    "sk",
-    "sl",
-    "sq",
-    "sr",
-    "sv",
-    "sw",
-    "ta",
-    "te",
-    "tg",
-    "th",
-    "tk",
-    "tr",
-    "tt",
-    "ug",
-    "uk",
-    "ur",
-    "uz",
-    "vi",
-    "xh",
-    "yi",
-    "yo",
-    "zh",
-    "zu",
-];
+
 
 let props = defineProps(["setting"]);
 let page = usePage();
-
-console.log(props.setting);
 
 let form = useForm({
     site_name: props?.setting?.site_name,
     ssl: props?.setting?.ssl ?? "",
     fav_icon: "",
     site_logo: "",
-    timezone: props?.setting?.timezone,
-    locale: props?.setting?.locale,
+    site_time_zone: props?.setting?.site_time_zone,
+    site_locale: props?.setting?.site_locale,
     email: props?.setting?.email,
-    contact_number: props?.setting?.contact_number ?? "",
-    url: "",
+    contact_number: props?.setting?.contact_number,
+    url: props?.setting?.url,
     sub_domain: "",
 });
 
@@ -196,33 +56,31 @@ function handleUpdateSite() {
                                     v-model="form.site_name"
                                     :rules="[requiredValidator]"
                                     :error-messages="form?.errors?.site_name"
-                                    class=""
+
                                 />
                             </VCol>
                             <VCol cols="8">
                                 <VLabel class="tiggie-label">SSL</VLabel>
-                                <VTextField v-model="form.ssl" class="" />
+                                <VTextField v-model="form.ssl"  />
                             </VCol>
                             <VCol cols="8">
                                 <VLabel class="tiggie-label"
                                     >Site Time Zone</VLabel
                                 >
-                                <VSelect
-                                    :items="timezone"
-                                    v-model="form.timezone"
-                                    :error-messages="form?.errors?.timezone"
-                                    class=""
+                                <VTextField
+                                    v-model="form.site_time_zone"
+                                    :error-messages="form?.errors?.site_time_zone"
+
                                 />
                             </VCol>
                             <VCol cols="8">
                                 <VLabel class="tiggie-label"
                                     >Site Locale</VLabel
                                 >
-                                <VSelect
-                                    :items="locales"
-                                    v-model="form.locale"
-                                    :error-messages="form?.errors?.locale"
-                                    class=""
+                                <VTextField
+                                    v-model="form.site_locale"
+                                    :error-messages="form?.errors?.site_locale"
+
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -232,7 +90,7 @@ function handleUpdateSite() {
                                     v-model="form.email"
                                     :rules="[emailValidator]"
                                     :error-messages="form?.errors?.email"
-                                    class=""
+
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -243,7 +101,6 @@ function handleUpdateSite() {
                                     type="number"
                                     v-model="form.contact_number"
                                     :rules="[requiredValidator]"
-                                    class=""
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -251,7 +108,7 @@ function handleUpdateSite() {
                                 <VTextField
                                     v-model="form.url"
                                     :rules="[requiredValidator]"
-                                    class=""
+
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -259,7 +116,7 @@ function handleUpdateSite() {
                                 <VTextField
                                     v-model="form.sub_domain"
                                     :rules="[requiredValidator]"
-                                    class=""
+
                                 />
                             </VCol>
                         </VRow>
