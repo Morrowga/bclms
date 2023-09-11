@@ -20,7 +20,7 @@ class SiteSettingSeeder extends Seeder
             'site_time_zone' => 'UTC',
             'site_locale' => 'locale',
             'email' => 'admin@tiggiekid.com',
-            'contact_number' => '+6512345678',
+            'contact_number' => '6512345678',
             'url' => 'https://tiggiekid.com',
             'website_logo' => '',
             'website_favicon' => ''
