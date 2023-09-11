@@ -16,8 +16,8 @@ class AnnounmentMapper
             title: $request->title,
             icon: $request->icon,
             message: $request->message,
-            target_role_id: $request->target_role_id,
-            author_id: $request->author_id,
+            by: $request->by,
+            to: $request->to,
         );
     }
 
@@ -32,8 +32,8 @@ class AnnounmentMapper
         $AnnounmettEloquent->title = $annoument->title;
         $AnnounmettEloquent->icon = $annoument->icon;
         $AnnounmettEloquent->message = $annoument->message;
-        $AnnounmettEloquent->target_role_id = $annoument->target_role_id;
-        $AnnounmettEloquent->author_id = $annoument->author_id;
+        $AnnounmettEloquent->by = $annoument->by;
+        $AnnounmettEloquent->to = $annoument->to;
 
         return $AnnounmettEloquent;
     }

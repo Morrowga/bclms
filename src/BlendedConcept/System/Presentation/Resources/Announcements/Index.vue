@@ -103,7 +103,7 @@ const deleteAnnouncement = (id) => {
 };
 </script>
 
-<template>
+<template> 
     <AdminLayout>
         <VContainer :fluid="checkUserRole()">
             <h1 class="tiggie-title mb-4">Announcements</h1>

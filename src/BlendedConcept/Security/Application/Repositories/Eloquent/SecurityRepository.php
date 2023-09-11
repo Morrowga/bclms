@@ -44,6 +44,28 @@ class SecurityRepository implements SecurityRepositoryInterface
         return $users;
     }
 
+    public function getB2bTeachers($filters = [])
+    {
+        //set roles
+        $users = UserResource::collection(UserEloquentModel::filter($filters)
+            ->where('role_id', 4)
+            ->orderBy('id', 'desc')
+            ->get());
+
+        return $users;
+    }
+
+    public function getB2CUsers($filters = [])
+    {
+        //set roles
+        $users = UserResource::collection(UserEloquentModel::filter($filters)
+            ->where('role_id', 3)
+            ->orderBy('id', 'desc')
+            ->get());
+
+        return $users;
+    }
+
     //get only user name
     public function getUsersName()
     {

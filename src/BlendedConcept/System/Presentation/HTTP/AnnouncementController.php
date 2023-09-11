@@ -12,8 +12,10 @@ use Src\BlendedConcept\System\Application\Policies\AnnouncementPolicy;
 use Src\BlendedConcept\System\Application\Requests\StoreAnnouncementRequest;
 use Src\BlendedConcept\System\Application\UseCases\Queries\ShowAnnouncement;
 use Src\BlendedConcept\System\Application\Requests\UpdateAnnouncementRequest;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetB2CUsers;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserList;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganizationList;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetB2BTeachers;
 use Src\BlendedConcept\System\Application\UseCases\Commands\StoreAnnounmentCommand;
 use Src\BlendedConcept\System\Application\UseCases\Commands\DeleteAnnounmentCommand;
 use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateAnnounmentCommand;
@@ -57,10 +59,13 @@ class AnnouncementController extends Controller
     public function create()
     {
 
+        $teachers = (new GetB2BTeachers())->handle();
+        $b2cUsers = (new GetB2CUsers())->handle();
         $organizations = (new GetOrganizationList())->handle();
-
         return Inertia::render(config('route.announment.create'), [
             'organizations' => $organizations,
+            'teachers' => $teachers,
+            'b2cUsers' => $b2cUsers,
         ]);
     }
 
