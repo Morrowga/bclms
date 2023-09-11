@@ -54,9 +54,6 @@ let goLink = (item) => {
 //         ? true
 //         : false;
 // };
-onMounted(() => {
-    console.log(auth.value.data.permissions);
-});
 </script>
 <template>
     <div class="text-center">
