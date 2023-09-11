@@ -78,11 +78,6 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
         }
     }
 
-    public function permissions(): BelongsToMany
-    {
-        return $this->belongsToMany(PermissionEloquentModel::class, 'permission_role', 'role_id', 'permission_id');
-    }
-
     public function hasPermission($permission)
     {
         $role = auth()->user()->role->id;

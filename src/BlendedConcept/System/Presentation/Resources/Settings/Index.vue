@@ -27,6 +27,7 @@ let form = useForm({
     url: props?.setting?.url,
     sub_domain: "",
 });
+console.log(form)
 
 function handleUpdateSite() {
     form.post(route("updateSetting"), {
