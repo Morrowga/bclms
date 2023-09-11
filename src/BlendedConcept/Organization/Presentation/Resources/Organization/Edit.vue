@@ -130,6 +130,7 @@ onMounted(() => {
                                             v-model="form.contact_number"
                                             class="w-100"
                                             :rules="[requiredValidator]"
+                                            type="number"
                                             :error-messages="
                                                 form?.errors?.contact_number
                                             "
@@ -173,6 +174,7 @@ onMounted(() => {
                                             "
                                             class="w-100"
                                             :rules="[requiredValidator]"
+                                            type="number"
                                             :error-messages="
                                                 form?.errors
                                                     ?.org_admin_contact_number

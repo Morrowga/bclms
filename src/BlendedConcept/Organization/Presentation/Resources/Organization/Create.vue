@@ -111,6 +111,7 @@ let handleSubmit = () => {
                                         <VTextField
                                             density="compact"
                                             placeholder="Type here ..."
+                                            type="number"
                                             v-model="form.contact_number"
                                             class="w-100"
                                             :rules="[requiredValidator]"
@@ -156,6 +157,7 @@ let handleSubmit = () => {
                                                 form.org_admin_contact_number
                                             "
                                             class="w-100"
+                                            type="number"
                                             :rules="[requiredValidator]"
                                             :error-messages="
                                                 form?.errors
