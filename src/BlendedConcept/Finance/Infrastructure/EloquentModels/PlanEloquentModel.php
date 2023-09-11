@@ -18,10 +18,15 @@ class PlanEloquentModel extends Model
     protected $fillable = [
         'id',
         'name',
+        'description',
         'storage_limit',
-        'num_student_license',
+        'num_student_profiles',
         'allow_customisation',
         'allow_personalisation',
+        'full_library_access',
+        'concurrent_access',
+        'weekly_learning_report',
+        'dedicated_student_report',
         'status',
         'price',
         'payment_period',
@@ -52,5 +57,10 @@ class PlanEloquentModel extends Model
     public const STATUS = [
         "active" => "ACTIVE",
         "inactive" => "INACTIVE",
+    ];
+
+    public const PAYMENTPERIOD = [
+        "active" => "MONTHLY",
+        "inactive" => "YEARLY",
     ];
 }

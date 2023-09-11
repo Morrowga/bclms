@@ -16,7 +16,7 @@ class StorePlanRequest extends FormRequest
         return [
             'name' => ['string', 'required'],
             'storage_limit' => ['required'],
-            'num_student_license' => ['required'],
+            'num_student_profiles' => ['required'],
             'price' => ['required'],
             'storage_limit' => ['required']
 

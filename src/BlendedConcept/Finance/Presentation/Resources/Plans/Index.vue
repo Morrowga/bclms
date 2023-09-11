@@ -4,7 +4,7 @@ import ActivePlan from "./planstypes/ActivePlan.vue";
 import InactivePlan from "./planstypes/InactivePlan.vue";
 import { router } from "@inertiajs/core";
 import { onColumnFilter } from "@Composables/useServerSideDatable.js";
-let props = defineProps(["plans"]);
+let props = defineProps(["plans", "flash"]);
 let tabName = ref("active");
 const isActiveTab = (tabNameEnter) => {
     return tabName.value == tabNameEnter
@@ -80,10 +80,13 @@ onMounted(() => {
             </VRow>
             <VRow>
                 <VCol cols="12" sm="12" lg="12" v-if="tabName == 'active'">
-                    <ActivePlan :active_plans="props.plans" />
+                    <ActivePlan :active_plans="props.plans" :flash="flash" />
                 </VCol>
                 <VCol cols="12" sm="12" lg="12" v-if="tabName == 'inactive'">
-                    <InactivePlan :inactive_plans="props.plans" />
+                    <InactivePlan
+                        :inactive_plans="props.plans"
+                        :flash="flash"
+                    />
                 </VCol>
             </VRow>
         </VContainer>

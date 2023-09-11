@@ -6,20 +6,24 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 
 let flash = computed(() => usePage().props.flash);
+let props = defineProps(["plan"]);
 const isFormValid = ref(false);
 let refForm = ref();
 let form = useForm({
     name: "",
     description: "",
     price: 0,
-    num_student_license: 0,
+    num_student_profiles: 0,
     storage_limit: 0,
     allow_customisation: false,
     allow_personalisation: false,
-    allow_full_library_access: false,
-    allow_concurrent_access: false,
-    allow_weekly_learning_report: false,
-    allow_dedicated_student_report: false,
+    full_library_access: false,
+    concurrent_access: false,
+    weekly_learning_report: false,
+    dedicated_student_report: false,
+    status: "",
+    payment_period: "MONTHLY",
+    _method: "PUT",
 });
 
 // submit create form
@@ -41,22 +45,28 @@ onMounted(() => {
     form.name = props.plan?.name;
     form.description = props.plan?.description;
     form.price = props.plan?.price;
-    form.num_student_license = props.plan?.num_student_license;
+    form.num_student_profiles = props.plan?.num_student_profiles;
     form.storage_limit = props.plan?.storage_limit;
-    form.allow_customisation = props.plan?.allow_customisation;
-    form.allow_personalisation = props.plan?.allow_personalisation;
-    form.allow_full_library_access = props.plan?.allow_full_library_access;
-    form.allow_concurrent_access = props.plan?.allow_concurrent_access;
-    form.allow_weekly_learning_report =
-        props.plan?.allow_weekly_learning_report;
-    form.allow_dedicated_student_report =
-        props.plan?.allow_dedicated_student_report;
+    form.allow_customisation = props.plan?.allow_customisation ? true : false;
+    form.allow_personalisation = props.plan?.allow_personalisation
+        ? true
+        : false;
+    form.full_library_access = props.plan?.full_library_access ? true : false;
+    form.concurrent_access = props.plan?.concurrent_access ? true : false;
+    form.weekly_learning_report = props.plan?.weekly_learning_report
+        ? true
+        : false;
+    form.dedicated_student_report = props.plan?.dedicated_student_report
+        ? true
+        : false;
+    form.status = props.plan?.status;
 });
 </script>
 <template>
     <AdminLayout>
         <VContainer>
             <VForm
+                ref="refForm"
                 class="mt-6"
                 v-model="isFormValid"
                 @submit.prevent="handleSubmit"
@@ -121,10 +131,10 @@ onMounted(() => {
                                     placeholder="Type here.."
                                     density="compact"
                                     type="number"
-                                    v-model="form.num_student_license"
+                                    v-model="form.num_student_profiles"
                                     :rules="[requiredValidator]"
                                     :error-messages="
-                                        form?.errors?.num_student_license
+                                        form?.errors?.num_student_profiles
                                     "
                                 />
                             </VCol>
@@ -168,9 +178,7 @@ onMounted(() => {
                                             >Full Library Access
                                         </VLabel>
                                         <VSwitch
-                                            v-model="
-                                                form.allow_full_library_access
-                                            "
+                                            v-model="form.full_library_access"
                                             inset
                                         />
                                     </VCol>
@@ -179,9 +187,7 @@ onMounted(() => {
                                             >Concurrent Access</VLabel
                                         >
                                         <VSwitch
-                                            v-model="
-                                                form.allow_concurrent_access
-                                            "
+                                            v-model="form.concurrent_access"
                                             inset
                                         />
                                     </VCol>
@@ -191,7 +197,7 @@ onMounted(() => {
                                         </VLabel>
                                         <VSwitch
                                             v-model="
-                                                form.allow_weekly_learning_report
+                                                form.weekly_learning_report
                                             "
                                             inset
                                         />
@@ -202,7 +208,7 @@ onMounted(() => {
                                         >
                                         <VSwitch
                                             v-model="
-                                                form.allow_dedicated_student_report
+                                                form.dedicated_student_report
                                             "
                                             inset
                                         />

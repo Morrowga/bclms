@@ -45,7 +45,7 @@ class PlanRepository implements PlanRepositoryInterface
 
         try {
 
-            //insert data into organization
+            //insert data into plan
 
             $planEloquent = PlanMapper::toEloquent($plan);
             $planEloquent->save();
@@ -57,7 +57,7 @@ class PlanRepository implements PlanRepositoryInterface
         DB::commit();
     }
 
-    //  update organization
+    //  update plan
     public function updatePlan(PlanData $planData)
     {
 
@@ -67,6 +67,21 @@ class PlanRepository implements PlanRepositoryInterface
             $planDataArray = $planData->toArray();
             $planEloquent = PlanEloquentModel::query()->findOrFail($planData->id);
             $planEloquent->fill($planDataArray);
+            $planEloquent->update();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            dd($error);
+        }
+
+        DB::commit();
+    }
+    //  update plan
+    public function changeStatus($request, $planEloquent)
+    {
+        DB::beginTransaction();
+
+        try {
+            $planEloquent->status = $request->status;
             $planEloquent->update();
         } catch (\Exception $error) {
             DB::rollBack();

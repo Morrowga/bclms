@@ -15,7 +15,7 @@ import {
 } from "@Composables/useServerSideDatable.js";
 // import avatar4 from "@images/avatars/avatar-4.png";
 
-let props = defineProps(["active_plans"]);
+let props = defineProps(["active_plans", "flash"]);
 
 let columns = [
     {
@@ -25,7 +25,7 @@ let columns = [
     },
     {
         label: "Plan Name",
-        field: "plan_name",
+        field: "name",
         sortable: false,
     },
     {
@@ -40,12 +40,12 @@ let columns = [
     },
     {
         label: "No. of Students",
-        field: "no_students",
+        field: "num_student_profiles",
         sortable: false,
     },
     {
         label: "Storage Space",
-        field: "storage_space",
+        field: "storage_limit",
         sortable: false,
     },
     {
@@ -104,7 +104,10 @@ let options = ref({
     perPageDropdown: [10, 20, 50, 100],
     dropdownAllowAll: false,
 });
-
+let form = useForm({
+    status: "INACTIVE",
+    _method: "PUT",
+});
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
@@ -116,8 +119,14 @@ const deletePlan = () => {
     SuccessDialog({ title: "Subscription plan deleted" });
 };
 
-const setInactive = () => {
-    SuccessDialog({ title: "Subscription plan has been set inactivated" });
+const setInactive = (id) => {
+    form.post(route("plans.change_status", id), {
+        onSuccess: () => {
+            SuccessDialog({ title: props.flash?.successMessage });
+            loadItems();
+        },
+        onError: (error) => {},
+    });
 };
 </script>
 <template>
@@ -178,12 +187,20 @@ const setInactive = () => {
                             <VList>
                                 <VListItem
                                     @click="
-                                        () => router.get(route('plans.edit'))
+                                        () =>
+                                            router.get(
+                                                route(
+                                                    'plans.edit',
+                                                    dataProps.row.id
+                                                )
+                                            )
                                     "
                                 >
                                     <VListItemTitle>Edit</VListItemTitle>
                                 </VListItem>
-                                <VListItem @click="setInactive">
+                                <VListItem
+                                    @click="setInactive(dataProps.row.id)"
+                                >
                                     <VListItemTitle
                                         >Set Inactive</VListItemTitle
                                     >
