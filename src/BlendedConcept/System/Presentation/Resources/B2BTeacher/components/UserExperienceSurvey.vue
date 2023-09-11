@@ -232,26 +232,9 @@ import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
             <VCardActions>
                 <VRow justify="center">
                     <VCol cols="3">
-                        <!-- <VBtn
-                            color="cancle"
-                            variant="flat"
-                            rounded
-                            height="50"
-                            class="pl-16 pr-16"
-                        >
-                            Cancel
-                        </VBtn> -->
                         <SecondaryBtn title="Cancel" />
                     </VCol>
                     <VCol cols="3">
-                        <!-- <VBtn
-                            variant="flat"
-                            rounded
-                            height="50"
-                            class="pl-16 pr-16"
-                        >
-                            Submit
-                        </VBtn> -->
                         <PrimaryBtn title="Submit" />
                     </VCol>
                 </VRow>

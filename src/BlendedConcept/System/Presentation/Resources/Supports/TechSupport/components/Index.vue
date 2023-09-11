@@ -1,6 +1,20 @@
 <script setup>
 const isDialogVisible = ref(false)
 import {  useForm } from "@inertiajs/vue3";
+
+const form = useForm({
+    user_id : "",
+    question : "",
+    response : ""
+});
+
+
+const handleSubmit = () => {
+    form.post(route('techsupports'),function(){
+
+    })
+}
+
 </script>
 
 <template>
