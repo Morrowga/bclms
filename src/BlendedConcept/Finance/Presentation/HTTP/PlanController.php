@@ -8,7 +8,10 @@ use Src\BlendedConcept\FInance\Application\DTO\PlanData;
 use Src\BlendedConcept\Finance\Application\Mappers\PlanMapper;
 
 use Src\BlendedConcept\Finance\Application\Policies\PlanPolicy;
+use Src\BlendedConcept\Finance\Application\Requests\ChangeStatusPlanRequest;
 use Src\BlendedConcept\Finance\Application\Requests\StorePlanRequest;
+use Src\BlendedConcept\Finance\Application\UseCases\Commands\Plans\ChangeStatusCommand;
+use Src\BlendedConcept\Finance\Application\UseCases\Commands\Plans\DeletePlanCommand;
 use Src\BlendedConcept\Finance\Application\UseCases\Queries\Plans\GetPlanWithPagination;
 use Src\BlendedConcept\Finance\Application\UseCases\Commands\Plans\StorePlanCommand;
 use Src\BlendedConcept\Finance\Application\UseCases\Commands\Plans\UpdatePlanCommand;
@@ -43,9 +46,10 @@ class PlanController
     }
     public function store(StorePlanRequest $request)
     {
+        // Abort if the user is not authorized to create organizations
+        // abort_if(authorize('create', PlanPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
-            // Abort if the user is not authorized to create organizations
-            abort_if(authorize('create', PlanPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             // Validate the request data
             $request->validated();
@@ -65,13 +69,20 @@ class PlanController
 
     public function update(StorePlanRequest $request, PlanEloquentModel $plan)
     {
-        abort_if(authorize('edit', PlanPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('edit', PlanPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $updatePlan = PlanData::fromRequest($request, $plan);
-        $updatePlancommand = (new UpdatePlanCommand($updatePlan));
-        $updatePlancommand->execute();
-
-        return redirect()->route('plans.index')->with('successMessage', 'Plan Updated Successfully!');
+        try {
+            $updatePlan = PlanData::fromRequest($request, $plan);
+            $updatePlancommand = (new UpdatePlanCommand($updatePlan));
+            $updatePlancommand->execute();
+            return redirect()->route('plans.index')->with('successMessage', 'Plan Updated Successfully!');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('plans.index')
+                ->with([
+                    'systemErrorMessage' => $e->getMessage(),
+                ]);
+        }
     }
     public function planfororg()
     {
@@ -83,9 +94,43 @@ class PlanController
         return Inertia::render(config('route.plans.show'));
     }
 
-    public function edit()
+    public function edit(PlanEloquentModel $plan)
     {
-        // dd('hello');
-        return Inertia::render(config('route.plans.edit'));
+
+        return Inertia::render(config('route.plans.edit'), [
+            'plan' => $plan,
+        ]);
+    }
+
+    public function destroy(PlanEloquentModel $plan)
+    {
+        // abort_if(authorize('destroy', PlanPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            $deletePlan = (new DeletePlanCommand($plan));
+            $deletePlan->execute();
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('plans.index')
+                ->with([
+                    'systemErrorMessage' => $e->getMessage(),
+                ]);
+        }
+    }
+    public function changeStatus(ChangeStatusPlanRequest $request, PlanEloquentModel $plan)
+    {
+        // abort_if(authorize('edit', PlanPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        try {
+            $updatePlancommand = (new ChangeStatusCommand($request, $plan));
+            $updatePlancommand->execute();
+            $message = $request->status == 'ACTIVE' ? 'activated' : 'inactived';
+            return redirect()->route('plans.index')->with('successMessage', "Subscription plan has been set $message");
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('plans.index')
+                ->with([
+                    'systemErrorMessage' => $e->getMessage(),
+                ]);
+        }
     }
 }

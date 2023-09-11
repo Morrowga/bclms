@@ -13,20 +13,20 @@ let form = useForm({
     name: "",
     description: "",
     price: 0,
-    num_student_license: 0,
+    num_student_profiles: 0,
     storage_limit: 0,
     allow_customisation: false,
     allow_personalisation: false,
-    allow_full_library_access: false,
-    allow_concurrent_access: false,
-    allow_weekly_learning_report: false,
-    allow_dedicated_student_report: false,
+    full_library_access: false,
+    concurrent_access: false,
+    weekly_learning_report: false,
+    dedicated_student_report: false,
+    status: "ACTIVE",
+    payment_period: "MONTHLY",
 });
 
 // submit create form
 let handleSubmit = () => {
-    // SuccessDialog({ title: "You've successfully created organization" });
-
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
             form.post(route("plans.store"), {
@@ -44,6 +44,7 @@ let handleSubmit = () => {
         <VContainer>
             <VForm
                 class="mt-6"
+                ref="refForm"
                 v-model="isFormValid"
                 @submit.prevent="handleSubmit"
             >
@@ -107,10 +108,10 @@ let handleSubmit = () => {
                                     placeholder="Type here.."
                                     density="compact"
                                     type="number"
-                                    v-model="form.num_student_license"
+                                    v-model="form.num_student_profiles"
                                     :rules="[requiredValidator]"
                                     :error-messages="
-                                        form?.errors?.num_student_license
+                                        form?.errors?.num_student_profiles
                                     "
                                 />
                             </VCol>
@@ -154,9 +155,7 @@ let handleSubmit = () => {
                                             >Full Library Access
                                         </VLabel>
                                         <VSwitch
-                                            v-model="
-                                                form.allow_full_library_access
-                                            "
+                                            v-model="form.full_library_access"
                                             inset
                                         />
                                     </VCol>
@@ -165,9 +164,7 @@ let handleSubmit = () => {
                                             >Concurrent Access</VLabel
                                         >
                                         <VSwitch
-                                            v-model="
-                                                form.allow_concurrent_access
-                                            "
+                                            v-model="form.concurrent_access"
                                             inset
                                         />
                                     </VCol>
@@ -177,7 +174,7 @@ let handleSubmit = () => {
                                         </VLabel>
                                         <VSwitch
                                             v-model="
-                                                form.allow_weekly_learning_report
+                                                form.weekly_learning_report
                                             "
                                             inset
                                         />
@@ -188,7 +185,7 @@ let handleSubmit = () => {
                                         >
                                         <VSwitch
                                             v-model="
-                                                form.allow_dedicated_student_report
+                                                form.dedicated_student_report
                                             "
                                             inset
                                         />

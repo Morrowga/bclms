@@ -11,6 +11,6 @@ interface PlanRepositoryInterface
     public function getActivePlans($filters);
     public function getInactivePlans($filters);
     public function createPlan(Plan $plan);
-
     public function updatePlan(PlanData $planData);
+    public function changeStatus($request, $plan);
 }

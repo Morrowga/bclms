@@ -14,11 +14,12 @@ import {
     onPerPageChange,
     serverPage,
     serverPerPage,
+    loadItems,
 } from "@Composables/useServerSideDatable.js";
 // import avatar4 from "@images/avatars/avatar-4.png";
 // let permissions = computed(() => usePage().props.auth.data.permissions);
 
-let props = defineProps(["inactive_plans"]);
+let props = defineProps(["inactive_plans", "flash"]);
 
 const actions = ref([
     {
@@ -38,7 +39,7 @@ let columns = [
     },
     {
         label: "Plan Name",
-        field: "plan_name",
+        field: "name",
         sortable: false,
     },
     {
@@ -53,12 +54,12 @@ let columns = [
     },
     {
         label: "No. of Students",
-        field: "no_students",
+        field: "num_student_profiles",
         sortable: false,
     },
     {
         label: "Storage Space",
-        field: "storage_space",
+        field: "storage_limit",
         sortable: false,
     },
     {
@@ -89,6 +90,10 @@ let options = ref({
     perPageDropdown: [10, 20, 50, 100],
     dropdownAllowAll: false,
 });
+let form = useForm({
+    status: "ACTIVE",
+    _method: "PUT",
+});
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
@@ -99,8 +104,18 @@ const selectionChanged = (data) => {
 const deletePlan = () => {
     SuccessDialog({ title: "Subscription plan deleted" });
 };
-const setActive = () => {
-    SuccessDialog({ title: "Subscription plan has been set activated" });
+const setActive = (id) => {
+    form.post(route("plans.change_status", id), {
+        onSuccess: () => {
+            SuccessDialog({ title: props.flash?.successMessage });
+            onColumnFilter({
+                columnFilters: {
+                    status: "inactive",
+                },
+            });
+        },
+        onError: (error) => {},
+    });
 };
 </script>
 <template>
@@ -166,7 +181,7 @@ const setActive = () => {
                                 >
                                     <VListItemTitle>Edit</VListItemTitle>
                                 </VListItem>
-                                <VListItem @click="setActive">
+                                <VListItem @click="setActive(dataProps.row.id)">
                                     <VListItemTitle>Set Active</VListItemTitle>
                                 </VListItem>
                             </VList>
