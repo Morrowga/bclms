@@ -3,9 +3,10 @@ import { ref,watch } from "vue";
 import { router } from "@inertiajs/core";
 import { usePage } from "@inertiajs/vue3";
 const auth = computed(() => usePage().props.auth);
-let props = defineProps(['items']);
+let props = defineProps(['items', 'modelValue']);
 const search = ref('');
 const selectedItems = ref([]);
+const emit = defineEmits(["update:modelValue"]);
 
 const isAllSelected = computed(() => selectedItems.value.length === filteredItems.value.length);
 const filteredItems = computed(() => {
@@ -16,16 +17,17 @@ const filteredItems = computed(() => {
 function toggleSelectAll() {
   if (!isAllSelected.value) {
     // If "Select All" is checked, select all items
-    selectedItems.value = filteredItems.value.slice(); // Copy all items to selectedItems
+    selectedItems.value = [...filteredItems.value]; // Copy all items to selectedItems
   } else {
     // If "Select All" is unchecked, clear the selection
     selectedItems.value = [];
   }
+
+  // Emit the updated selectedItems to the parent component
+  emit("update:modelValue", selectedItems.value);
 }
 
 function filterItems() {
-  // Update the filtered items based on the search term
-  // You can add more advanced filtering logic here if needed
   const searchTerm = search.value.toLowerCase().trim();
   filteredItems.value = props.items.filter(item => item.name.toLowerCase().includes(searchTerm));
 }
@@ -39,7 +41,8 @@ function filterItems() {
         multiple
         item-title="name"
         item-value="id"
-        v-model="selectedItems"
+        :modelValue="props.modelValue"
+        @update:modelValue="$emit('update:modelValue', $event)"
     >
         <template v-slot:prepend-item>
         <v-text-field

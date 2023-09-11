@@ -24,6 +24,8 @@ Route::group(['middleware' => ['auth']], function () {
     // announcement
     Route::resource('announcements', AnnouncementController::class);
 
+    Route::get('announcements/b2bteacher-by-org/{id}', [AnnouncementController::class, 'getB2bTeachers'])->name('announcements.getb2bteachersbyorg');
+
     Route::get('settings', [SettingController::class, 'index'])->name('settings');
 
     Route::get('libraries', [LibraryController::class, 'index'])->name('libraries');

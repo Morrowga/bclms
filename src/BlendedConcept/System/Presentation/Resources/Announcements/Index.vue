@@ -103,7 +103,7 @@ const deleteAnnouncement = (id) => {
 };
 </script>
 
-<template> 
+<template>
     <AdminLayout>
         <VContainer :fluid="checkUserRole()">
             <h1 class="tiggie-title mb-4">Announcements</h1>
@@ -157,7 +157,7 @@ const deleteAnnouncement = (id) => {
                             >
                                 <div class="d-flex flex-row gap-2">
                                     <img
-                                        src="/images/icons/award-02.svg"
+                                    src="/images/icons/award-02.svg"
                                         class="user-profile-image"
                                     />
                                     <span class="pt-1">{{

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Security\Infrastructure\EloquentModels;
 
+use Hash;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class B2bUserEloquentModel extends Authenticatable
 {
@@ -20,4 +23,9 @@ class B2bUserEloquentModel extends Authenticatable
         'allocated_storage_limit',
         'has_full_library_access',
     ];
+
+    public function users()
+    {
+        return $this->belongsTo(UserEloquentModel::class , 'user_id');
+    }
 }
