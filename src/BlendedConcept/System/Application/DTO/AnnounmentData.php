@@ -11,8 +11,8 @@ class AnnounmentData
         public readonly string $title,
         public readonly string $icon,
         public readonly string $message,
-        public readonly ?int $target_role_id,
-        public readonly ?int $author_id,
+        public readonly string $by,
+        public readonly string $to,
 
     ) {
     }
@@ -24,8 +24,8 @@ class AnnounmentData
             title : $request->title,
             icon : $request->icon,
             message: $request->message,
-            target_role_id: $request->target_role_id,
-            author_id: $request->author_id,
+            by: $request->by,
+            to: $request->to,
         );
     }
 
@@ -36,8 +36,8 @@ class AnnounmentData
             'title' => $this->title,
             'icon' => $this->icon,
             'message' => $this->message,
-            'target_role_id' => $this->target_role_id,
-            'author_id' => $this->author_id,
+            'by' => $this->by,
+            'to' => $this->to,
         ];
     }
 }

@@ -90,6 +90,7 @@ class PermissionRoleTableSeeder extends Seeder
                     [
                         'access_surveyResults',
                         'access_userSurveys',
+                        'access_profillingSurveys',
                         'access_surveys',
                         'access_storybook',
                         'access_games',

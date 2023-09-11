@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('techsupports', [TechnicalSupportController::class, 'techsupports'])->name('techsupports');
 
-    Route::post('techsupports',[TechnicalSupportController::class,'askSupportQuestion'])->name('techsupports');
+    Route::post('techsupports', [TechnicalSupportController::class, 'askSupportQuestion'])->name('techsupports');
 
     /***
      * This route handles system-related notifications.

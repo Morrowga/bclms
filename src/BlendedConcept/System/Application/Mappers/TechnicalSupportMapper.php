@@ -33,6 +33,7 @@ class TechnicalSupportMapper
         $technicalSupportEloquent->has_responsed = $technicalSupport->has_responsed;
         $technicalSupportEloquent->question = $technicalSupport->question;
         $technicalSupportEloquent->response = $technicalSupport->response;
+
         return $technicalSupportEloquent;
     }
 }

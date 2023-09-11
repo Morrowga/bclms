@@ -44,15 +44,30 @@ class SecurityRepository implements SecurityRepositoryInterface
         return $users;
     }
 
-    /**
-     * Get an array of full names for all users.
-     *
-     * Note we are using laravel accessor feature where
-     *
-     * we have implement a function on the EloquentModel
-     *
-     * @return array The array of full names.
-     */
+    public function getB2bTeachers($filters = [])
+    {
+        //set roles
+        $users = UserResource::collection(UserEloquentModel::filter($filters)
+            ->where('role_id', 4)
+            ->orderBy('id', 'desc')
+            ->with('')
+            ->get());
+
+        return $users;
+    }
+
+    public function getB2CUsers($filters = [])
+    {
+        //set roles
+        $users = UserResource::collection(UserEloquentModel::filter($filters)
+            ->where('role_id', 3)
+            ->orderBy('id', 'desc')
+            ->get());
+
+        return $users;
+    }
+
+    //get only user name
     public function getUsersName()
     {
         $users = UserEloquentModel::get();

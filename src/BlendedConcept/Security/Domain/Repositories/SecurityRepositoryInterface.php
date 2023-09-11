@@ -17,6 +17,12 @@ interface SecurityRepositoryInterface
     // get user
     public function getUsers($filters = []);
 
+    //get users by role
+    public function getB2bTeachers($filters = []);
+
+    //get b2c users
+    public function getB2cUsers($filters = []);
+
     // get only user name
     public function getUsersName();
 

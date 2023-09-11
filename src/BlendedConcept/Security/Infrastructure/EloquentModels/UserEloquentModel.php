@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Security\Infrastructure\EloquentModels;
 
+use B2cUserEloquent;
 use Hash;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -104,6 +106,16 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     public function getFullNameAttribute()
     {
         return $this->first_name.' '.$this->last_name;
+    }
+
+    public function b2bUser()
+    {
+        return $this->belongsTo(B2cUserEloquent::class, 'user_id');
+    }
+
+    public function b2cUser()
+    {
+        return $this->belongsTo(B2bUserEloquent::class, 'user_id');
     }
 
     public function organization()

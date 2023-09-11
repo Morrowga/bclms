@@ -15,13 +15,15 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('author_id')->nullable()
-                ->references('id')
-                ->on('users')->onDelete('cascade');
-            $table->foreignId('target_role_id')->nullable()
-                ->references('id')
-                ->on('roles')->onDelete('cascade');
+            // $table->foreignId('author_id')->nullable()
+            //     ->references('id')
+            //     ->on('users')->onDelete('cascade');
+            // $table->foreignId('target_role_id')->nullable()
+            //     ->references('id')
+            //     ->on('roles')->onDelete('cascade');
             $table->string('icon')->nullable();
+            $table->string('by');
+            $table->string('to');
             $table->string('title')->nullable();
             $table->longText('message')->nullable();
             $table->timestamps();

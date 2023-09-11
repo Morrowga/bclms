@@ -41,22 +41,6 @@ let goLink = (item) => {
     }
 };
 
-// let hiddenByPermissionOne = (item) => {
-//     console.log(auth?.value?.data?.permissions);
-//     !auth?.value?.data?.permissions?.includes(item?.access_module) &&
-//     item?.access_module != "access_dashboard"
-//         ? true
-//         : false;
-// };
-// let hiddenByPermission = (sitem, item) => {
-//     !auth?.value?.data?.permissions?.includes(sitem?.access_module) &&
-//     item?.access_module != "access_dashboard"
-//         ? true
-//         : false;
-// };
-onMounted(() => {
-    // console.log(auth.value.data.permissions);
-});
 </script>
 <template>
     <div class="text-center">

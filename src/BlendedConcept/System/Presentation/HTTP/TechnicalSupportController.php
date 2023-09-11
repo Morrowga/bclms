@@ -3,9 +3,9 @@
 namespace Src\BlendedConcept\System\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Src\BlendedConcept\System\Domain\Model\Entities\TechnicalSupport;
-use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\System\Application\Requests\QuestionTechnicalSupportRequest;
+use Src\Common\Infrastructure\Laravel\Controller;
+
 class TechnicalSupportController extends Controller
 {
     public function index()

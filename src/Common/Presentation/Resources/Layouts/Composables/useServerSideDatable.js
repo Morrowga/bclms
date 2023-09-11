@@ -46,6 +46,7 @@ watch(serverPerPage, function (value) {
 let onColumnFilter = (params) => {
     updateParams(params);
     serverParams.value.page = 1;
+    serverParams.value.search = "";
     loadItems();
 };
 

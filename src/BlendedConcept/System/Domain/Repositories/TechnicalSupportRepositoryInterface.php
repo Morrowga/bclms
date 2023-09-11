@@ -7,6 +7,4 @@ interface TechnicalSupportRepositoryInterface
     public function askSupportQuestion();
 
     public function answerSupportQuestion();
-
-
 }

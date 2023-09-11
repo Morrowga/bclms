@@ -10,12 +10,12 @@ use Src\BlendedConcept\System\Application\Repositories\Eloquent\NotificationRepo
 use Src\BlendedConcept\System\Application\Repositories\Eloquent\PageBuilderRepository;
 use Src\BlendedConcept\System\Application\Repositories\Eloquent\PlanRepository;
 use Src\BlendedConcept\System\Application\Repositories\Eloquent\SettingRepository;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\TechnicalSupportRepository;
 use Src\BlendedConcept\System\Domain\Repositories\AnnouncementRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\NotificationRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
 use Src\BlendedConcept\System\Domain\Repositories\PlanRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\SettingRepositoryInterface;
-use Src\BlendedConcept\System\Application\Repositories\Eloquent\TechnicalSupportRepository;
 use Src\BlendedConcept\System\Domain\Repositories\TechnicalSupportRepositoryInterface;
 
 class SystemServiceProvider extends ServiceProvider

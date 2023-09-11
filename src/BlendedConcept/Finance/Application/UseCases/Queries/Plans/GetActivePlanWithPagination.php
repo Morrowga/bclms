@@ -1,11 +1,11 @@
 <?php
 
-namespace Src\BlendedConcept\Finance\Application\UseCases\Queries;
+namespace Src\BlendedConcept\Finance\Application\UseCases\Queries\Plans;
 
 use Src\BlendedConcept\Finance\Domain\Repositories\PlanRepositoryInterface;
 use Src\Common\Domain\QueryInterface;
 
-class GetOrganizationWithPagination implements QueryInterface
+class GetActivePlanWithPagination implements QueryInterface
 {
     private PlanRepositoryInterface $repository;
 
@@ -17,6 +17,6 @@ class GetOrganizationWithPagination implements QueryInterface
 
     public function handle()
     {
-        return $this->repository->getPlans($this->filters);
+        return $this->repository->getActivePlans($this->filters);
     }
 }

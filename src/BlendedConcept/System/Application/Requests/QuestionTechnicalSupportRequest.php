@@ -15,10 +15,10 @@ class QuestionTechnicalSupportRequest extends FormRequest
     {
         return [
             'user_id' => [
-                'required','integer'
+                'required', 'integer',
             ],
             'question' => [
-                'required','string'
+                'required', 'string',
             ],
         ];
     }
