@@ -5,7 +5,7 @@ namespace Src\BlendedConcept\Security\Application\UseCases\Queries\Roles;
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
 use Src\Common\Domain\QueryInterface;
 
-class GetRolewithPagniation implements QueryInterface
+class GetRoleWithPagniation implements QueryInterface
 {
     private SecurityRepositoryInterface $repository;
 

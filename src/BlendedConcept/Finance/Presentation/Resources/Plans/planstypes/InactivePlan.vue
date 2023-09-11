@@ -6,11 +6,19 @@ import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 import { SuccessDialog } from "@actions/useSuccess";
-
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
 // import avatar4 from "@images/avatars/avatar-4.png";
 // let permissions = computed(() => usePage().props.auth.data.permissions);
 
-let props = defineProps();
+let props = defineProps(["inactive_plans"]);
 
 const actions = ref([
     {
@@ -59,18 +67,8 @@ let columns = [
         sortable: false,
     },
 ];
-
-let rows = [
-    {
-        id: 1,
-        plan_name: "Basic Plan",
-        description: "Allow access to basic features",
-        price: "$4.99",
-        no_students: 1,
-        storage_space: "1GB",
-    },
-];
-
+serverPage.value = ref(props.inactive_plans.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
 const items = ["Foo", "Bar"];
 
 //## truncatedText
@@ -83,7 +81,17 @@ let truncatedText = (text) => {
         }
     }
 };
-
+let options = ref({
+    enabled: true,
+    mode: "pages",
+    perPage: props.inactive_plans?.meta?.per_page,
+    setCurrentPage: props?.inactive_plans?.meta?.current_page,
+    perPageDropdown: [10, 20, 50, 100],
+    dropdownAllowAll: false,
+});
+watch(serverPerPage, function (value) {
+    onPerPageChange(value);
+});
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
@@ -97,13 +105,13 @@ const setActive = () => {
 </script>
 <template>
     <section>
-        <h3 class="mb-4 pppangram-bold inactive-plan-title">Inactive Plans</h3>
         <VCard>
             <VCardText class="d-flex flex-wrap gap-4">
                 <!-- 👉 Export button -->
                 <div class="search-field">
                     <VTextField
-                        v-model="searchItem"
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
                         density="compact"
                         placeholder="Search Subscription Plans"
                         variant="solo"
@@ -116,14 +124,18 @@ const setActive = () => {
 
             <vue-good-table
                 class="role-data-table"
-                styleClass="vgt-table"
-                v-on:selected-rows-change="selectionChanged"
+                mode="remote"
+                @column-filter="onColumnFilter"
+                :totalRows="props.inactive_plans.meta.total"
+                :selected-rows-change="selectionChanged"
+                styleClass="vgt-table "
+                :pagination-options="options"
+                :rows="props.inactive_plans.data"
                 :columns="columns"
-                :rows="rows"
                 :select-options="{
                     enabled: true,
+                    selectOnCheckboxOnly: true,
                 }"
-                :pagination-options="{ enabled: true }"
             >
                 <template #table-row="dataProps">
                     <div v-if="dataProps.column.field === 'user'">
@@ -160,6 +172,41 @@ const setActive = () => {
                             </VList>
                         </VMenu>
                     </div>
+                </template>
+                <template #pagination-bottom>
+                    <VRow class="pa-4">
+                        <VCol cols="12" class="d-flex justify-space-between">
+                            <span>
+                                Showing
+                                {{ props.inactive_plans.meta.from }} to
+                                {{ props.inactive_plans.meta.to }} of
+                                {{ props.inactive_plans.meta.total }}
+                                entries
+                            </span>
+                            <div class="d-flex">
+                                <div class="d-flex align-center">
+                                    <span class="me-2">Show</span>
+                                    <VSelect
+                                        v-model="serverPerPage"
+                                        density="compact"
+                                        :items="options.perPageDropdown"
+                                    >
+                                    </VSelect>
+                                </div>
+                                <VPagination
+                                    v-model="serverPage"
+                                    size="small"
+                                    :total-visible="5"
+                                    :length="
+                                        props.inactive_plans.meta.last_page
+                                    "
+                                    @next="onPageChange"
+                                    @prev="onPageChange"
+                                    @click="onPageChange"
+                                />
+                            </div>
+                        </VCol>
+                    </VRow>
                 </template>
             </vue-good-table>
 

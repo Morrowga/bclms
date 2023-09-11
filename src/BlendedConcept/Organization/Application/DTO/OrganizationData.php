@@ -21,34 +21,24 @@ class OrganizationData
         public readonly ?string $sub_domain,
         public readonly ?string $logo,
         public readonly ?string $status,
-        public readonly Subscription $subscription
+
     ) {
     }
 
     public static function fromRequest(Request $request, $organizaton): OrganizationData
     {
-        $subscriptionItems = $request->only(
-            [
-                'start_date',
-                'end_date',
-                'payment_date',
-                'payment_status',
-                'stripe_status',
-                'stripe_price'
-            ]
-        );
         return new self(
             id: $organizaton->id,
             curr_subscription_id: $organizaton->curr_subscription_id,
-            org_admin_id: $request->org_admin_id,
+            org_admin_id: $organizaton->org_admin_id,
             name: $request->name,
             contact_name: $request->contact_name,
             contact_email: $request->contact_email,
             contact_number: $request->contact_number,
             sub_domain: $request->sub_domain,
             logo: $request->logo,
-            status: $request->status,
-            subscription: SubscriptionMapper::fromArray($subscriptionItems)
+            status: $request->status ?? $organizaton->status,
+
         );
     }
 
@@ -65,7 +55,7 @@ class OrganizationData
             'sub_domain' => $this->sub_domain,
             'logo' => $this->logo,
             'status' => $this->status,
-            'subscription' => $this->subscription
+
         ];
     }
 }

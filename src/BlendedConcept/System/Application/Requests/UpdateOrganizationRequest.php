@@ -21,8 +21,17 @@ class UpdateOrganizationRequest extends FormRequest
             'contact_email' => [
                 'required',
                 'email',
-                'unique:organizations,contact_email,'.request()->route('organization')->id,
+                'unique:organizations,contact_email,' . request()->route('organization')->id,
             ],
+            'org_admin_contact_number' => [
+
+                'required',
+            ],
+            'login_email' => [
+                'required',
+                'email',
+                'unique:users,email,' . request()->route('organization')->org_admin_id,
+            ]
         ];
     }
 }

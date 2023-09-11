@@ -1,10 +1,10 @@
 <?php
 
-namespace Src\BlendedConcept\Security\Domain\Resources;
+namespace Src\BlendedConcept\Finance\Domain\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AuthPermissionResource extends JsonResource
+class PlanResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,6 +14,6 @@ class AuthPermissionResource extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->role->permissions->pluck('name');
+        return parent::toArray($request);
     }
 }

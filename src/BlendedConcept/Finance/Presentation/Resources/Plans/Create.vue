@@ -2,26 +2,51 @@
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
-
+import { requiredValidator } from "@validators";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+import { usePage } from "@inertiajs/vue3";
 
+let flash = computed(() => usePage().props.flash);
+const isFormValid = ref(false);
+let refForm = ref();
 let form = useForm({
-    isCustomization: false,
-    isPresentation: false,
-    isFullAccess: false,
-    isConcurrentAccess: false,
-    isWeeklyLearningReport: false,
-    isDedicatedStudentReport: false,
+    name: "",
+    description: "",
+    price: 0,
+    num_student_license: 0,
+    storage_limit: 0,
+    allow_customisation: false,
+    allow_personalisation: false,
+    allow_full_library_access: false,
+    allow_concurrent_access: false,
+    allow_weekly_learning_report: false,
+    allow_dedicated_student_report: false,
 });
 
-let onFormSubmit = () => {
-    SuccessDialog({ title: "Subscription plan added" });
+// submit create form
+let handleSubmit = () => {
+    // SuccessDialog({ title: "You've successfully created organization" });
+
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("plans.store"), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.successMessage });
+                },
+                onError: (error) => {},
+            });
+        }
+    });
 };
 </script>
 <template>
     <AdminLayout>
         <VContainer>
-            <VForm class="mt-6" @submit.prevent="onFormSubmit">
+            <VForm
+                class="mt-6"
+                v-model="isFormValid"
+                @submit.prevent="handleSubmit"
+            >
                 <VRow justify="space-around" :gutter="10">
                     <VCol cols="6">
                         <span class="tiggie-title margin-buttom-18">
@@ -39,6 +64,9 @@ let onFormSubmit = () => {
                                 <VTextField
                                     placeholder="Type here.."
                                     density="compact"
+                                    v-model="form.name"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.name"
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -48,6 +76,9 @@ let onFormSubmit = () => {
                                 <VTextField
                                     placeholder="Type here..."
                                     density="compact"
+                                    v-model="form.description"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.description"
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -57,6 +88,10 @@ let onFormSubmit = () => {
                                 <VTextField
                                     placeholder="Type here..."
                                     density="compact"
+                                    type="number"
+                                    v-model="form.price"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.price"
                                 />
                             </VCol>
                         </VRow>
@@ -71,6 +106,12 @@ let onFormSubmit = () => {
                                 <VTextField
                                     placeholder="Type here.."
                                     density="compact"
+                                    type="number"
+                                    v-model="form.num_student_license"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="
+                                        form?.errors?.num_student_license
+                                    "
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -81,6 +122,11 @@ let onFormSubmit = () => {
                                     placeholder="Type here..."
                                     density="compact"
                                     suffix="GB"
+                                    v-model="form.storage_limit"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="
+                                        form?.errors?.storage_limit
+                                    "
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -90,7 +136,7 @@ let onFormSubmit = () => {
                                             >Customization
                                         </VLabel>
                                         <VSwitch
-                                            v-model="form.isCustomization"
+                                            v-model="form.allow_customisation"
                                             inset
                                         />
                                     </VCol>
@@ -99,7 +145,7 @@ let onFormSubmit = () => {
                                             >Personalization</VLabel
                                         >
                                         <VSwitch
-                                            v-model="form.isPresentation"
+                                            v-model="form.allow_personalisation"
                                             inset
                                         />
                                     </VCol>
@@ -108,7 +154,9 @@ let onFormSubmit = () => {
                                             >Full Library Access
                                         </VLabel>
                                         <VSwitch
-                                            v-model="form.isFullAccess"
+                                            v-model="
+                                                form.allow_full_library_access
+                                            "
                                             inset
                                         />
                                     </VCol>
@@ -117,7 +165,9 @@ let onFormSubmit = () => {
                                             >Concurrent Access</VLabel
                                         >
                                         <VSwitch
-                                            v-model="form.isConcurrentAccess"
+                                            v-model="
+                                                form.allow_concurrent_access
+                                            "
                                             inset
                                         />
                                     </VCol>
@@ -127,7 +177,7 @@ let onFormSubmit = () => {
                                         </VLabel>
                                         <VSwitch
                                             v-model="
-                                                form.isWeeklyLearningReport
+                                                form.allow_weekly_learning_report
                                             "
                                             inset
                                         />
@@ -138,7 +188,7 @@ let onFormSubmit = () => {
                                         >
                                         <VSwitch
                                             v-model="
-                                                form.isDedicatedStudentReport
+                                                form.allow_dedicated_student_report
                                             "
                                             inset
                                         />

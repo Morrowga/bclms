@@ -231,7 +231,7 @@ watch(serverPerPage, function (value) {
                                 <div class="">
                                     <div v-if="props.row.isOrganization">
                                         <Link
-                                            :href="route('organizations.show')"
+                                            :href="route('organizations.show',{id : 1})"
                                         >
                                             <span
                                                 style="cursor: pointer"
@@ -253,9 +253,9 @@ watch(serverPerPage, function (value) {
                                                 src="/images/defaults/avator.png"
                                                 class="user-profile-image"
                                             />
-                                            <span>{{
-                                                props.row.organization
-                                            }}</span>
+                                            <span>
+                                                {{props.row.organization}}
+                                            </span>
                                         </Link>
                                     </div>
                                 </div>
@@ -324,11 +324,6 @@ watch(serverPerPage, function (value) {
 .user-data-table table.vgt-table td {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
-
-// .user-data-table table.vgt-table thead th {
-//     background: rgb(var(--v-theme-surface)) !important;
-//     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
-// }
 
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));

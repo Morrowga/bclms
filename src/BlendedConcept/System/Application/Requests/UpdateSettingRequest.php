@@ -14,21 +14,23 @@ class UpdateSettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'site_name' => [
+            "site_name" => [
                 'required',
             ],
-            'timezone' => [
-                'required',
+            "site_time_zone" => [
+                'required'
             ],
-            'locale' => [
-                'required',
+            "site_locale" => [
+                'required'
             ],
-            'email' => [
-                'required',
-                'email',
+            "email" => [
+                'required'
             ],
-            'contact_number' => [
-                'required',
+            "contact_number" => [
+                'required','numeric'
+            ],
+            "url" => [
+                'required'
             ],
         ];
     }

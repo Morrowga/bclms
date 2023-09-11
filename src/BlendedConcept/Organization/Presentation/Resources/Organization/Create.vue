@@ -12,35 +12,33 @@ const isDialogVisible = ref(false);
 let refForm = ref();
 
 let flash = computed(() => usePage().props.flash);
-
+let isPasswordVisible = ref(false);
 let form = useForm({
     name: "",
-    contact_person: "",
+    contact_name: "",
     contact_email: "",
     contact_number: "",
-    price: "",
-    teacher_license: "",
-    allocated_storage: "",
-    payment_period: "",
-    // payment_type: "card",
+    org_admin_name: "",
+    org_admin_contact_number: "",
+    login_email: "",
+    login_password: "",
     image: "",
 });
 
 // submit create form
 let handleSubmit = () => {
-    SuccessDialog({ title: "You've successfully created organization" });
+    // SuccessDialog({ title: "You've successfully created organization" });
 
-    // refForm.value?.validate().then(({ valid }) => {
-    //     if (valid) {
-    //         form.post(route("organizations.store"), {
-    //             onSuccess: () => {
-    //                 SuccessDialog({title:flash?.successMessage})
-    //                 isDialogVisible.value = false;
-    //             },
-    //             onError: (error) => { },
-    //         });
-    //     }
-    // });
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("organizations.store"), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.successMessage });
+                },
+                onError: (error) => {},
+            });
+        }
+    });
 };
 </script>
 
@@ -80,11 +78,11 @@ let handleSubmit = () => {
                                         <VTextField
                                             density="compact"
                                             placeholder="Type here ..."
-                                            v-model="form.contact_person"
+                                            v-model="form.contact_name"
                                             class="w-100"
                                             :rules="[requiredValidator]"
                                             :error-messages="
-                                                form?.errors?.contact_person
+                                                form?.errors?.contact_name
                                             "
                                         />
                                     </VCol>
@@ -113,6 +111,7 @@ let handleSubmit = () => {
                                         <VTextField
                                             density="compact"
                                             placeholder="Type here ..."
+                                            type="number"
                                             v-model="form.contact_number"
                                             class="w-100"
                                             :rules="[requiredValidator]"
@@ -137,10 +136,10 @@ let handleSubmit = () => {
                                         <VTextField
                                             density="compact"
                                             placeholder="Type here ..."
-                                            v-model="form.teacher_license"
+                                            v-model="form.org_admin_name"
                                             class="w-100"
                                             :error-messages="
-                                                form?.errors?.teacher_license
+                                                form?.errors?.org_admin_name
                                             "
                                             :rules="[requiredValidator]"
                                         />
@@ -154,11 +153,15 @@ let handleSubmit = () => {
                                         <VTextField
                                             density="compact"
                                             placeholder="Type here ..."
-                                            v-model="form.allocated_storage"
+                                            v-model="
+                                                form.org_admin_contact_number
+                                            "
                                             class="w-100"
+                                            type="number"
                                             :rules="[requiredValidator]"
                                             :error-messages="
-                                                form?.errors?.allocated_storage
+                                                form?.errors
+                                                    ?.org_admin_contact_number
                                             "
                                         />
                                     </VCol>
@@ -171,11 +174,11 @@ let handleSubmit = () => {
                                             type="email"
                                             density="compact"
                                             placeholder="Type here ..."
-                                            v-model="form.price"
+                                            v-model="form.login_email"
                                             class="w-100"
                                             :rules="[requiredValidator]"
                                             :error-messages="
-                                                form?.errors?.price
+                                                form?.errors?.login_email
                                             "
                                         />
                                     </VCol>
@@ -184,12 +187,25 @@ let handleSubmit = () => {
                                             >Login Password</VLabel
                                         >
                                         <VTextField
+                                            v-model="form.login_password"
+                                            :rules="[requiredValidator]"
                                             density="compact"
-                                            placeholder="Type here ..."
-                                            v-model="form.payment_period"
-                                            class="w-100"
+                                            :type="
+                                                isPasswordVisible
+                                                    ? 'text'
+                                                    : 'password'
+                                            "
                                             :error-messages="
-                                                form?.errors?.payment_period
+                                                form?.errors?.login_password
+                                            "
+                                            :append-inner-icon="
+                                                isPasswordVisible
+                                                    ? 'mdi-eye-off-outline'
+                                                    : 'mdi-eye-outline'
+                                            "
+                                            @click:append-inner="
+                                                isPasswordVisible =
+                                                    !isPasswordVisible
                                             "
                                         />
                                     </VCol>

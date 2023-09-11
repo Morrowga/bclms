@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('role_id')->nullable()
                 ->references('id')
                 ->on('roles')->onDelete('cascade');
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('email')->unique();
             $table->string('password')->nullable();
             $table->bigInteger('contact_number')->nullable();

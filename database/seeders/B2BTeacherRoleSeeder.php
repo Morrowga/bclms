@@ -19,7 +19,7 @@ class B2BTeacherRoleSeeder extends Seeder
                 'role_id' => 4,
                 'first_name' => 'B2b',
                 'last_name' => 'Teacher',
-                'email' => 'b2bTeacher@mail.com',
+                'email' => 'b2bteacher@mail.com',
                 'password' => bcrypt('password'),
                 'contact_number' => '1234567890',
                 'status' => 'ACTIVE',

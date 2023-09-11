@@ -11,8 +11,10 @@ use Src\BlendedConcept\System\Application\Requests\UpdateOrganizationRequest;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
 use Src\BlendedConcept\Organization\Application\Mappers\OrganizationMapper;
+use Src\BlendedConcept\Organization\Application\UseCases\Commands\DeleteOrganizationCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\StoreOrganizationCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\UpdateOrganizationCommand;
+use Src\BlendedConcept\Organization\Domain\Services\OrganizationService;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
 use Stancl\Tenancy\Database\Models\Domain;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +22,11 @@ use Symfony\Component\HttpFoundation\Response;
 class OrganizationController extends Controller
 {
 
-
+    protected OrganizationService $organizationService;
+    public function __construct(OrganizationService $organizationService)
+    {
+        $this->organizationService = $organizationService;
+    }
     public function index()
     {
         // Authorize user to view organization
@@ -31,6 +37,8 @@ class OrganizationController extends Controller
 
             // Get filters from the request
             $filters = request()->only(['page', 'search', 'perPage']);
+
+            //quick create org admin
 
             // Get organizations with pagination using the provided filters
             $organizations = (new GetOrganizationWithPagination($filters))->handle();
@@ -56,9 +64,9 @@ class OrganizationController extends Controller
         return Inertia::render(config('route.organizations.create'));
     }
 
-    public function edit()
+    public function edit(OrganizationEloquentModel $organization)
     {
-        $organization = OrganizationEloquentModel::find(1);
+        $organization->load('org_admin');
 
         // return "hello";
 
@@ -86,7 +94,8 @@ class OrganizationController extends Controller
 
             // Validate the request data
             $request->validated();
-
+            $quickOrgAdminCreate = $this->organizationService->createQuickOrgAdmin($request);
+            $request['org_admin_id'] = $quickOrgAdminCreate->id;
             $newOrganizaton = OrganizationMapper::fromRequest($request);
             $saveOrganizaton = (new StoreOrganizationCommand($newOrganizaton));
             $saveOrganizaton->execute();
@@ -105,7 +114,7 @@ class OrganizationController extends Controller
     {
         abort_if(authorize('edit', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
+        $quickOrgAdminCreate = $this->organizationService->updateQuickOrgAdmin($organization, $request);
         $updateOrganization = OrganizationData::fromRequest($request, $organization);
         $updateOrganizationcommand = (new updateOrganizationCommand($updateOrganization));
         $updateOrganizationcommand->execute();
@@ -121,11 +130,11 @@ class OrganizationController extends Controller
     public function destroy(OrganizationEloquentModel $organization)
     {
         abort_if(authorize('destroy', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $tenant = Tenant::get();
-        dd($tenant->id);
-        Domain::where('tenant_id', $tenant->id)->delete();
-        $tenant->delete();
-        $organization->delete();
+        // $tenant = Tenant::get();
+        // Domain::where('tenant_id', $tenant->id)->delete();
+        // $tenant->delete();
+        $deleteOrganization = (new DeleteOrganizationCommand($organization));
+        $deleteOrganization->execute();
         return redirect()->route('organizations.index')->with('successMessage', 'Organizations Deleted Successfully!');
     }
 }

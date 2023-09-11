@@ -22,7 +22,7 @@ class Organization extends AggregateRoot
         public readonly ?string $sub_domain,
         public readonly ?string $logo,
         public readonly ?string $status,
-        public readonly Subscription $subscription,
+
 
     ) {
     }
@@ -40,7 +40,7 @@ class Organization extends AggregateRoot
             'sub_domain' => $this->sub_domain,
             'logo' => $this->logo,
             'status' => $this->status ?? null,
-            'subscription' => $this->subscription
+
         ];
     }
 }

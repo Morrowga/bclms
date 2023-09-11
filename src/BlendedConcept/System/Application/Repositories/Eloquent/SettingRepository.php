@@ -40,7 +40,6 @@ class SettingRepository implements SettingRepositoryInterface
 
     public function getSetting()
     {
-
         return SiteSettingEloquentModel::first();
     }
 }

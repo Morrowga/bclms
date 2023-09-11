@@ -44,23 +44,24 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      */
     public function createOrganization(Organization $organization)
     {
+
         DB::beginTransaction();
 
         try {
 
-            //insert data to plan tables
-            $subscriptionEloquent = SubscriptionMapper::toEloquent($organization->subscription);
-            $subscriptionEloquent->save();
-
             //insert data into organization
 
             $organizationEloquent = OrganizationMapper::toEloquent($organization);
-            $organizationEloquent->plan_id = $subscriptionEloquent->id;
+            $organizationEloquent->curr_subscription_id = 1;
             $organizationEloquent->save();
 
             // Upload the organization's image if provided
             if (request()->hasFile('image') && request()->file('image')->isValid()) {
                 $organizationEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_organization');
+            }
+            if ($organizationEloquent->getMedia('image')->isNotEmpty()) {
+                $organizationEloquent->logo = $organizationEloquent->getMedia('image')[0]->original_url;
+                $organizationEloquent->update();
             }
 
             //this will create subdomain
@@ -86,16 +87,9 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
         try {
             $organizationDataArray = $organizationData->toArray();
-
-            $subscriptionArray = $organizationData->subscription->toArray();
-
-            $subscriptionEloquent = SubscriptionEloquentModel::query()->findOrFail($organizationData->curr_subscription_id);
-            $subscriptionEloquent->fill($subscriptionArray);
-            $subscriptionEloquent->id = $organizationData->curr_subscription_id;
-            $subscriptionEloquent->save();
             $organizationEloquent = OrganizationEloquentModel::query()->findOrFail($organizationData->id);
             $organizationEloquent->fill($organizationDataArray);
-            $organizationEloquent->save();
+            $organizationEloquent->update();
 
             //  delete image if reupload or insert if does not exit
             if (request()->hasFile('image') && request()->file('image')->isValid()) {
@@ -109,6 +103,10 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
                     $organizationEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_organization');
                 }
+            }
+            if ($organizationEloquent->getMedia('image')->isNotEmpty()) {
+                $organizationEloquent->logo = $organizationEloquent->getMedia('image')[0]->original_url;
+                $organizationEloquent->update();
             }
         } catch (\Exception $error) {
             DB::rollBack();

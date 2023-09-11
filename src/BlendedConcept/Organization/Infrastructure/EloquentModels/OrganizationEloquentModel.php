@@ -11,6 +11,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class OrganizationEloquentModel extends Model implements HasMedia
 {
@@ -41,9 +42,13 @@ class OrganizationEloquentModel extends Model implements HasMedia
     {
         return $this->getMedia('image');
     }
-    public function plan()
+    public function subscription()
     {
         return $this->belongsTo(SubscriptionEloquentModel::class, 'curr_subscription_id', 'id');
+    }
+    public function org_admin()
+    {
+        return $this->belongsTo(UserEloquentModel::class, 'org_admin_id', 'id');
     }
     public function scopeFilter($query, $filters)
     {
