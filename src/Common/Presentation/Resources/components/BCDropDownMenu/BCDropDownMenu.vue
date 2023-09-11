@@ -24,7 +24,6 @@ defineOptions({ name: "HorizontalNavGroup" });
 
 const auth = computed(() => usePage().props.auth);
 
-
 const isGroupActive = ref(false);
 let isLinkActive = (currentRoute) => {
     return route()?.current()?.includes(currentRoute);
@@ -55,6 +54,9 @@ let goLink = (item) => {
 //         ? true
 //         : false;
 // };
+onMounted(() => {
+    console.log(auth.value.data.permissions);
+});
 </script>
 <template>
     <div class="text-center">

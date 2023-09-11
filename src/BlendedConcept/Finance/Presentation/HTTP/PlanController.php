@@ -3,12 +3,15 @@
 namespace Src\BlendedConcept\Finance\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRoleWithPagniation;
 
 class PlanController
 {
     public function index()
     {
 
+        $filters = request()->only(['page', 'search', 'perPage']);
+        $plans = (new GetRoleWithPagniation($filters))->handle($filters);
         return Inertia::render(config('route.plans.index'));
     }
 

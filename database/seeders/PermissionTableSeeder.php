@@ -360,6 +360,11 @@ class PermissionTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'description' => 'Users can access orgClassroom and their configurations within the application.'
             ],
+            [
+                'name' => 'access_profillingSurveys',
+                'guard_name' => 'web',
+                'description' => 'Users can access profilling surveys and their configurations within the application.'
+            ],
         ];
         foreach ($permissions as $permission) {
             PermissionEloquentModel::create($permission);
