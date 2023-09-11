@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace Src\BlendedConcept\Security\Infrastructure\EloquentModels;
 
 use Hash;
+use B2cUserEloquent;
+use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 
 class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyEmail
 {
@@ -100,6 +101,16 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
                 $query->where('name', 'like', '%' . $role . '%');
             });
         });
+    }
+
+    public function b2bUser()
+    {
+        return $this->belongsTo(B2cUserEloquent::class , 'user_id');
+    }
+
+    public function b2cUser()
+    {
+        return $this->belongsTo(B2bUserEloquent::class , 'user_id');
     }
 
     public function organization()

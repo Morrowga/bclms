@@ -50,6 +50,7 @@ class SecurityRepository implements SecurityRepositoryInterface
         $users = UserResource::collection(UserEloquentModel::filter($filters)
             ->where('role_id', 4)
             ->orderBy('id', 'desc')
+            ->with('')
             ->get());
 
         return $users;

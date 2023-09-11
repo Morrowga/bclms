@@ -5,7 +5,7 @@ import { usePage } from "@inertiajs/vue3";
 const auth = computed(() => usePage().props.auth);
 let props = defineProps(['items']);
 const search = ref('');
-const selectedItems = ref(['Select Groups']);
+const selectedItems = ref([]);
 
 const isAllSelected = computed(() => selectedItems.value.length === filteredItems.value.length);
 const filteredItems = computed(() => {
