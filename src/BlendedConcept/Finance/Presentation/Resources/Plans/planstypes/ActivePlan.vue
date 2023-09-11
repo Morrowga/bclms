@@ -123,7 +123,11 @@ const setInactive = (id) => {
     form.post(route("plans.change_status", id), {
         onSuccess: () => {
             SuccessDialog({ title: props.flash?.successMessage });
-            loadItems();
+            onColumnFilter({
+                columnFilters: {
+                    status: "active",
+                },
+            });
         },
         onError: (error) => {},
     });
