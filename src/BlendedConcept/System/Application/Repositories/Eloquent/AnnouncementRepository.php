@@ -16,7 +16,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     //get all announcements
     public function getAnnouncements($filters = [])
     {
-        $announcements = AnnouncementResource::collection(AnnouncementEloquentModel::filter($filters)->with(['author_id', 'target_role_id'])->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $announcements = AnnouncementResource::collection(AnnouncementEloquentModel::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
 
         return $announcements;
     }
@@ -33,7 +33,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
 
     public function showAnnouncement($id)
     {
-        $announcement = new AnnouncementResource(AnnouncementEloquentModel::where('id', $id)->with(['author_id', 'target_role_id'])->first());
+        $announcement = new AnnouncementResource(AnnouncementEloquentModel::where('id', $id)->first());
 
         return $announcement;
     }

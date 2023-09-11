@@ -3,20 +3,117 @@ import { ref,watch } from "vue";
 import { useForm,usePage } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
-let props = defineProps(['organizations']);
-let author_id = computed(() => usePage().props.auth.data.id);
-console.log(author_id.value);
-const showDialog = ref(false);
-const icon = ref('');
-const searchIcon = ref('');
-const chosenIcon = ref('emoticon-happy-outline');
+import MultiSelectBox from "@mainRoot/components/MultiSelectBox/MultiSelectBox.vue";
+let props = defineProps(['organizations', 'b2cUsers', 'teachers']);
+
+
+let groupSelectBox = [
+    "Super Admin",
+    "BC Staff",
+    "Organisation Admin"
+]
+const tos = ref([
+    'BC Staff',
+    'Organization Admin',
+    'Organization Teacher',
+    'B2C Users',
+])
+
+const visibleToSelectBox = ref(true);
+const visibleToOrganizationSelectBox = ref(true);
+const visibleToB2CUserSelectBox = ref(true);
+const visibleToTeacherSelectBox = ref(true);
+
+const handleBox = ref(null)
+
 const form = useForm({
   title: "",
   icon: "",
   message: "",
-  target_role_id: "",
-  author_id: author_id.value,
+  to: "",
+  by: "Select Group",
 });
+
+
+watch(form, function (value) {
+    if(value.by != 'Select Group'){
+        visibleToSelectBox.value = false;
+    }
+
+    if(value.to == 'All'){
+        visibleToOrganizationSelectBox.value = false
+        visibleToB2CUserSelectBox.value = false
+        visibleToTeacherSelectBox.value = false
+    } else if(value.to == 'Organization Admin'){
+        visibleToOrganizationSelectBox.value = false
+        visibleToB2CUserSelectBox.value = true
+        visibleToTeacherSelectBox.value = true
+    } else if(value.to == 'Organization Teacher'){
+        visibleToOrganizationSelectBox.value = true
+        visibleToB2CUserSelectBox.value = true
+        visibleToTeacherSelectBox.value = false
+    } else if(value.to == 'B2C Users'){
+        visibleToOrganizationSelectBox.value = true
+        visibleToB2CUserSelectBox.value = false
+        visibleToTeacherSelectBox.value = true
+    }
+});
+
+// watch(form, function (value) {
+//     if(value.by != 'Select Group'){
+//         visibleToSelectBox.value = false;
+//     }
+// });
+
+const org_array = ref([])
+for (let i = 0; i < props.organizations.length; i++) {
+    org_array.value.push({
+        'id': props.organizations[i].id,
+        'name': props.organizations[i].name
+    })
+}
+
+const org_teacher_array = ref([])
+for (let i = 0; i < props.teachers.data.length; i++) {
+    org_teacher_array.value.push({
+        'id': props.teachers.data[i].id,
+        'name': props.teachers.data[i].first_name + ' ' + props.teachers.data[i].last_name
+    })
+}
+
+const b2c_users_array = ref([])
+for (let i = 0; i < props.b2cUsers.data.length; i++) {
+    b2c_users_array.value.push({
+        'id': props.b2cUsers.data[i].id,
+        'name': props.b2cUsers.data[i].first_name + ' ' + props.b2cUsers.data[i].last_name
+    })
+}
+
+const selectedValues =  ref([])
+const toSelect = ref(null)
+
+// let author_id = computed(() => usePage().props.auth.data.roles.name);
+const showDialog = ref(false);
+const icon = ref('');
+const searchIcon = ref('');
+const chosenIcon = ref('emoticon-happy-outline');
+
+
+const isAllSelected = computed(() => form.to.length === tos.value.length);
+
+function toggleSelectAll() {
+  if (!isAllSelected.value) {
+    // If "Select All" is checked, select all options including "All"
+    form.to = 'All';
+  } else {
+    // If "Select All" is unchecked, clear the selection
+    form.to = '';
+  }
+  if (toSelect.value) {
+    console.log('sadsd');
+    toSelect.value.isActive = false;
+  }
+}
 
 const allIcons = ref([
   "account",
@@ -1234,7 +1331,6 @@ watch(searchIcon, (newSearchIcon) => {
     allIcons.value = filteredIcons; // Replace with filtered icons
   }
 });
-let description = ref("");
 
 let onFormSubmit = () => {
     form.post(route("announcements.store"), {
@@ -1367,20 +1463,67 @@ let onFormSubmit = () => {
                                 />
                             </VCol>
 
-                            <VCol cols="5">
+                            <VCol cols="6">
+                                <VLabel class="tiggie-label required"
+                                    >Announcement By</VLabel
+                                >
+                                <VSelect
+                                    v-model="form.by"
+                                    class="blue-outline-field"
+                                    variant="plain"
+                                    :items="groupSelectBox"
+                                    density="compact"
+                                    placeholder="Select a group"
+                                ></VSelect>
+                            </VCol>
+                            <VCol cols="6" :hidden="visibleToSelectBox">
                                 <VLabel class="tiggie-label required"
                                     >Announcement to</VLabel
                                 >
                                 <VSelect
-                                    v-model="form.target_role_id"
+                                    :ref="toSelect"
                                     class="blue-outline-field"
                                     variant="plain"
-                                    :items="props.organizations"
-                                    item-title="name"
-                                    item-value="id"
                                     density="compact"
-                                    placeholder="Select a group"
-                                />
+                                    v-model="form.to"
+                                    :items="tos"
+                                >
+                                    <template v-slot:prepend-item>
+                                        <v-list-item
+                                            title="Select All"
+                                            @click="toggleSelectAll"
+                                        >
+                                        <template v-slot:prepend>
+                                            <v-checkbox-btn :input-value="isAllSelected"></v-checkbox-btn>
+                                        </template>
+                                        </v-list-item>
+                                        <v-divider class="mt-2"></v-divider>
+                                    </template>
+                                </VSelect>
+                            </VCol>
+                            <VCol cols="6" :hidden="visibleToOrganizationSelectBox">
+                            </VCol>
+                            <VCol cols="6" :hidden="visibleToOrganizationSelectBox">
+                                <VLabel class="tiggie-label required"
+                                    >Announcement to Organisations</VLabel
+                                >
+                               <MultiSelectBox :items="org_array" />
+                            </VCol>
+                            <VCol cols="6" :hidden="visibleToTeacherSelectBox">
+                            </VCol>
+                            <VCol cols="6" :hidden="visibleToTeacherSelectBox">
+                                <VLabel class="tiggie-label required"
+                                    >Announcement to Organisations Teachers</VLabel
+                                >
+                                <MultiSelectBox :items="org_teacher_array" />
+                            </VCol>
+                            <VCol cols="6" :hidden="visibleToB2CUserSelectBox">
+                            </VCol>
+                            <VCol cols="6" :hidden="visibleToB2CUserSelectBox">
+                                  <VLabel class="tiggie-label required"
+                                    >Announcement to B2C User[s]</VLabel
+                                >
+                                <MultiSelectBox :items="b2c_users_array" />
                             </VCol>
                         </VRow>
                     </VCol>
@@ -1414,6 +1557,10 @@ let onFormSubmit = () => {
 }
 :deep(.v-field__input) {
     padding: 0 !important;
+}
+
+.select-search{
+    padding: 10px !important;
 }
 .searchcard-icon{
     padding: 10px;

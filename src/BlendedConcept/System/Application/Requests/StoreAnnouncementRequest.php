@@ -22,10 +22,10 @@ class StoreAnnouncementRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'author_id' => [
+            'by' => [
                 'required',
             ],
-            'target_role_id' => [
+            'to' => [
                 'required',
             ],
         ];
