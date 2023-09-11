@@ -93,6 +93,7 @@ class DashBoardController extends Controller
 
         return Inertia::render(config('route.profiles.org-teacher'));
     }
+
     public function editOrgTeacherProfile()
     {
 

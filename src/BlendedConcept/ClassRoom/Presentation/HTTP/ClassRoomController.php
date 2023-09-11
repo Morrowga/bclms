@@ -3,15 +3,15 @@
 namespace Src\BlendedConcept\ClassRoom\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomData;
+use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
 use Src\BlendedConcept\ClassRoom\Application\Requests\storeClassRoomRequest;
 use Src\BlendedConcept\ClassRoom\Application\Requests\updateClassRoomRequest;
+use Src\BlendedConcept\ClassRoom\Application\UseCases\Commands\StoreClassRoomCommand;
+use Src\BlendedConcept\ClassRoom\Application\UseCases\Commands\UpdateClassRoomCommand;
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetClassRoomWithPagination;
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetStudents;
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetTeachers;
-use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomData;
-use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
-use Src\BlendedConcept\ClassRoom\Application\UseCases\Commands\StoreClassRoomCommand;
-use Src\BlendedConcept\ClassRoom\Application\UseCases\Commands\UpdateClassRoomCommand;
 use Src\BlendedConcept\ClassRoom\Domain\Policies\ClassRoomPolicy;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
 use Src\Common\Infrastructure\Laravel\Controller;
@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ClassRoomController extends Controller
 {
-
     /***
      *  @params null
      *
@@ -58,6 +57,7 @@ class ClassRoomController extends Controller
             return Inertia::render(config('route.showCopy'));
         } catch (\Exception $e) {
             dd($e->getMessage());
+
             return redirect()->route('c.classrooms.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
@@ -68,6 +68,7 @@ class ClassRoomController extends Controller
             return Inertia::render(config('route.editCopy'));
         } catch (\Exception $e) {
             dd($e->getMessage());
+
             return redirect()->route('c.classrooms.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
@@ -78,10 +79,10 @@ class ClassRoomController extends Controller
             return Inertia::render(config('route.createCopy'));
         } catch (\Exception $e) {
             dd($e->getMessage());
+
             return redirect()->route('c.classrooms.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
-
 
     /**
      * Store a new user.
@@ -104,6 +105,7 @@ class ClassRoomController extends Controller
             return redirect()->route('c.classrooms.index')->with('successMessage', 'ClassRoom created successfully!');
         } catch (\Exception $e) {
             dd($e->getMessage());
+
             // Handle the exception, log the error, or display a user-friendly error message.
             return redirect()->route('c.classrooms.index')->with('sytemErrorMessage', $e->getMessage());
         }
@@ -135,14 +137,17 @@ class ClassRoomController extends Controller
 
         return Inertia::render(config('route.org-teacher-classroom.index'));
     }
+
     public function orgTeacherShow()
     {
         return Inertia::render(config('route.org-teacher-classroom.show'));
     }
+
     public function orgTeacherEdit()
     {
         return Inertia::render(config('route.org-teacher-classroom.edit'));
     }
+
     public function orgTeacherCreate()
     {
         return Inertia::render(config('route.org-teacher-classroom.create'));
@@ -152,6 +157,7 @@ class ClassRoomController extends Controller
     {
         return Inertia::render(config('route.org-teacher-classroom.add-group'));
     }
+
     public function orgTeacherEditGroup()
     {
         return Inertia::render(config('route.org-teacher-classroom.edit-group'));

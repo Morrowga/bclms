@@ -3,26 +3,24 @@
 namespace Src\BlendedConcept\System\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Symfony\Component\HttpFoundation\Response;
-use Src\Common\Infrastructure\Laravel\Controller;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserList;
 use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
-use Src\BlendedConcept\System\Domain\Services\AnnounmnetService;
 use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
 use Src\BlendedConcept\System\Application\Policies\AnnouncementPolicy;
 use Src\BlendedConcept\System\Application\Requests\StoreAnnouncementRequest;
-use Src\BlendedConcept\System\Application\UseCases\Queries\ShowAnnouncement;
 use Src\BlendedConcept\System\Application\Requests\UpdateAnnouncementRequest;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserList;
-use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganizationList;
-use Src\BlendedConcept\System\Application\UseCases\Commands\StoreAnnounmentCommand;
 use Src\BlendedConcept\System\Application\UseCases\Commands\DeleteAnnounmentCommand;
+use Src\BlendedConcept\System\Application\UseCases\Commands\StoreAnnounmentCommand;
 use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateAnnounmentCommand;
-use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetAnnounmetAllWithPagination;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganizationList;
+use Src\BlendedConcept\System\Application\UseCases\Queries\ShowAnnouncement;
+use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
+use Src\Common\Infrastructure\Laravel\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class AnnouncementController extends Controller
 {
-
     //get all announcements
     public function index()
     {
@@ -106,7 +104,7 @@ class AnnouncementController extends Controller
 
         return Inertia::render(config('route.announment.edit'), [
             'organizations' => $organizations,
-            'announcement' => $announcement
+            'announcement' => $announcement,
         ]);
     }
 
@@ -123,7 +121,7 @@ class AnnouncementController extends Controller
 
         /**
          * Validate the request.
-        */
+         */
         $request->validated();
 
         /**

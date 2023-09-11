@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\StoryBook\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\StoryBook\Application\DTO\PhysicalResourceData;
 
 class PhysicalResourceData
 {
@@ -13,7 +12,6 @@ class PhysicalResourceData
         public readonly string $file_src,
     ) {
     }
-
 
     public static function fromRequest(Request $request, $physical_resource_id): PhysicalResourceData
     {

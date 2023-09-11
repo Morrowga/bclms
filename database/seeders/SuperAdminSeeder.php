@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
@@ -15,7 +14,6 @@ class SuperAdminSeeder extends Seeder
      *
      * @return void
      */
-
     public function run()
     {
 
@@ -29,8 +27,6 @@ class SuperAdminSeeder extends Seeder
          * @return int|null The ID of the super admin role if found, or null if no matching role is found.
          * author @hareom284
          */
-
-
         $super_admin_roles_id = RoleEloquentModel::where('name', config('userrole.bcsuperadmin'))
             ->pluck('id')
             ->first();
@@ -45,7 +41,7 @@ class SuperAdminSeeder extends Seeder
             'contact_number' => '9951613400',
             'status' => 'ACTIVE',
             'email_verification_send_on' => Carbon::now(),
-            'profile_pic' => "images/profile/profilefive.png",
+            'profile_pic' => 'images/profile/profilefive.png',
         ];
         $user = UserEloquentModel::create($data);
     }

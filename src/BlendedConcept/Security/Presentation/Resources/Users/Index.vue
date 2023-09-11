@@ -3,7 +3,7 @@ import Create from "./Create.vue";
 import Edit from "./Edit.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
-import { computed, defineProps } from "vue";
+import { computed } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import IconOutlineBtn from "@mainRoot/components/Buttons/IconOutlineBtn.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
@@ -33,7 +33,6 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 let currentPermission = ref();
 serverPage.value = ref(props.users.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
-console.log(props.users, "hello testing");
 
 const deleteUser = (id) => {
     deleteItem(id, "users");
@@ -102,6 +101,7 @@ const setInactive = () => {
         denyButtonText: "Set Inactive",
     });
 };
+
 </script>
 
 <template>
@@ -147,14 +147,7 @@ const setInactive = () => {
                                 density="compact"
                                 variant="outlined"
                             />
-                            <!-- 👉 Add User button -->
-                            <!-- <Create
-                                :organizations="organizations"
-                                :roles="roles_name"
-                                :flash="flash"
-                                v-if="permissions.includes('create_user')"
-                            /> -->
-                            <ImportUser />
+                            <ImportUser :organizations="props.organizations" />
                         </div>
                     </div>
                 </VCardText>

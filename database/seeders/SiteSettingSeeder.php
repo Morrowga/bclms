@@ -15,7 +15,7 @@ class SiteSettingSeeder extends Seeder
     public function run()
     {
         SiteSettingEloquentModel::insert([
-            'site_name'  => 'Tiggie Kids',
+            'site_name' => 'Tiggie Kids',
             'ssl' => '',
             'site_time_zone' => 'UTC',
             'site_locale' => 'locale',
@@ -23,7 +23,7 @@ class SiteSettingSeeder extends Seeder
             'contact_number' => '6512345678',
             'url' => 'https://tiggiekid.com',
             'website_logo' => '',
-            'website_favicon' => ''
+            'website_favicon' => '',
         ]);
     }
 }

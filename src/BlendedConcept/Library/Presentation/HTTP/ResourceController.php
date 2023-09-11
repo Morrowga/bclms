@@ -22,5 +22,4 @@ class ResourceController extends Controller
             return redirect()->route('c.classrooms.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
-
 }

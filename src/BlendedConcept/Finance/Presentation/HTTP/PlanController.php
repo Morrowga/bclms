@@ -12,6 +12,7 @@ class PlanController
 
         $filters = request()->only(['page', 'search', 'perPage']);
         $plans = (new GetRoleWithPagniation($filters))->handle($filters);
+
         return Inertia::render(config('route.plans.index'));
     }
 

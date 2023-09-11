@@ -22,15 +22,15 @@ class Plan extends Entity
     public function toArray(): array
     {
         return [
-            "id" => $this->id,
-            "name" => $this->name,
-            "storage_limit" => $this->storage_limit,
-            "num_student_license" => $this->num_student_license,
-            "allow_customisation" => $this->allow_customisation,
-            "allow_personalisation" => $this->allow_personalisation,
-            "status" => $this->status,
-            "price" => $this->price,
-            "payment_period" => $this->payment_period,
+            'id' => $this->id,
+            'name' => $this->name,
+            'storage_limit' => $this->storage_limit,
+            'num_student_license' => $this->num_student_license,
+            'allow_customisation' => $this->allow_customisation,
+            'allow_personalisation' => $this->allow_personalisation,
+            'status' => $this->status,
+            'price' => $this->price,
+            'payment_period' => $this->payment_period,
         ];
     }
 }

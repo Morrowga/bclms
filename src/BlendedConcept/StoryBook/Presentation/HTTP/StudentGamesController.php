@@ -13,7 +13,7 @@ class StudentGamesController extends Controller
         try {
             return Inertia::render(config('route.student-games'));
         } catch (Exception $e) {
-            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
@@ -22,7 +22,7 @@ class StudentGamesController extends Controller
         try {
             return Inertia::render(config('route.game-show'));
         } catch (Exception $e) {
-            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 }

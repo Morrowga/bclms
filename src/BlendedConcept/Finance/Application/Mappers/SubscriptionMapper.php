@@ -55,6 +55,7 @@ class SubscriptionMapper
         $subscriptionEloquent->payment_status = $subscription->payment_status;
         $subscriptionEloquent->stripe_status = $subscription->stripe_status;
         $subscriptionEloquent->stripe_price = $subscription->stripe_price;
+
         return $subscriptionEloquent;
     }
 }

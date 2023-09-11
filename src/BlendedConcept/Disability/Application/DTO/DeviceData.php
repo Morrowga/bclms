@@ -44,7 +44,7 @@ class DeviceData
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->descripton
+            'description' => $this->descripton,
         ];
     }
 }

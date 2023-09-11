@@ -128,7 +128,7 @@ return [
 
         'student-edit' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/EditStudent',
         'student-create' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/CreateStudent',
-        'student-show' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail'
+        'student-show' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail',
     ],
 
     //teacher profile view
@@ -156,6 +156,7 @@ return [
 
     'support' => [
         'index' => 'BlendedConcept/System/Presentation/Resources/Supports/Index',
+        'techsupport' => 'BlendedConcept/System/Presentation/Resources/Supports/TechSupport/Index',
     ],
 
     'login' => 'Auth/Presentation/Resources/Login',
@@ -194,21 +195,20 @@ return [
     'be-lucky' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BeLucky',
     'buy-sticker' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BuySticker',
 
-
     'listofteacher' => [
-        'index' => 'BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index'
+        'index' => 'BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index',
     ],
 
     'profiles' => [
-        'org-teacher' => 'Common/Presentation/Resources/components/UserProfile/OrgTeacherProfile'
+        'org-teacher' => 'Common/Presentation/Resources/components/UserProfile/OrgTeacherProfile',
     ],
     'edit-profiles' => [
-        'org-teacher' => 'Common/Presentation/Resources/components/EditProfiles/OrgTeacherEditProfile'
+        'org-teacher' => 'Common/Presentation/Resources/components/EditProfiles/OrgTeacherEditProfile',
     ],
     'reports' => [
-        'reports' => 'BlendedConcept/System/Presentation/Resources/Reports/Reports'
+        'reports' => 'BlendedConcept/System/Presentation/Resources/Reports/Reports',
     ],
 
     //resource
-    'resource' => 'BlendedConcept/Library/Presentation/Resources/Resource/Index'
+    'resource' => 'BlendedConcept/Library/Presentation/Resources/Resource/Index',
 ];

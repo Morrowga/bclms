@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Src\BlendedConcept\Organization\Presentation\HTTP\OrganizationController;
-use Src\BlendedConcept\Organization\Presentation\HTTP\OrganizationTeacherStudentController;
 use Src\BlendedConcept\Finance\Presentation\HTTP\PlanController;
 use Src\BlendedConcept\Finance\Presentation\HTTP\SubscribtionInvoiceController;
 

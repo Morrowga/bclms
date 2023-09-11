@@ -23,7 +23,7 @@ class Student extends AggregateRoot implements \JsonSerializable
             'name' => $this->name,
             'playlist_photo' => $this->playlist_photo,
             'student_id' => $this->student_id,
-            'teacher_id' => $this->teacher_id
+            'teacher_id' => $this->teacher_id,
         ];
     }
 }

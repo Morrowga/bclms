@@ -18,7 +18,7 @@ class DisabilityType extends AggregateRoot
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description
+            'description' => $this->description,
         ];
     }
 }

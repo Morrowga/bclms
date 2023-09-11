@@ -65,7 +65,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_plan',
                         'access_pagebuilder',
                         'access_system',
-                        'access_subscriber'
+                        'access_subscriber',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
@@ -79,7 +79,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_resources',
                         'access_viewStudents',
                         'access_reports',
-                        'access_playlists'
+                        'access_playlists',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
@@ -117,7 +117,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'create_announcement',
                         'access_plan',
                         'access_pagebuilder',
-                        'access_library'
+                        'access_library',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
@@ -131,7 +131,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_viewStudents',
                         'access_teacherStorybook',
                         'access_playlists',
-                        'acccess_orgClassroom'
+                        'acccess_orgClassroom',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
@@ -151,7 +151,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'delete_classroom',
                         'edit_classroom',
                         'create_classroom',
-                        'access_classroom'
+                        'access_classroom',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
@@ -162,7 +162,7 @@ class PermissionRoleTableSeeder extends Seeder
                     [
                         'access_studentRewards',
                         'access_studentGames',
-                        'access_studentStorybook'
+                        'access_studentStorybook',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);

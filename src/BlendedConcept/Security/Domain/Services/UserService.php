@@ -2,14 +2,12 @@
 
 namespace Src\BlendedConcept\Security\Domain\Services;
 
-
-use Src\BlendedConcept\Security\Application\Requests\updateUserPasswordRequest;
 use Illuminate\Support\Facades\Hash;
+use Src\BlendedConcept\Security\Application\Requests\updateUserPasswordRequest;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class UserService
 {
-
     public function changePassword(updateUserPasswordRequest $request)
     {
         $user = auth()->user();

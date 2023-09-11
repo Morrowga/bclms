@@ -3,10 +3,6 @@
 namespace Src\BlendedConcept\Organization\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Finance\Application\Mappers\PlanMapper;
-use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
-use Src\BlendedConcept\Finance\Domain\Model\Entities\Plan;
-use Src\BlendedConcept\Finance\Domain\Model\Subscription;
 
 class OrganizationData
 {

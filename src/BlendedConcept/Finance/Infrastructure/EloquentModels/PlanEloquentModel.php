@@ -7,13 +7,11 @@ namespace Src\BlendedConcept\Finance\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 class PlanEloquentModel extends Model
 {
     use HasFactory;
 
     protected $table = 'plans';
-
 
     protected $fillable = [
         'id',
@@ -26,5 +24,4 @@ class PlanEloquentModel extends Model
         'price',
         'payment_period',
     ];
-
 }

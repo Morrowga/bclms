@@ -118,6 +118,7 @@ class AuthController extends Controller
         } catch (\Exception $e) {
 
             dd($e->getMessage());
+
             // Handle the exception gracefully, such as displaying a generic error message
             return redirect()->route('login')->with('sytemErrorMessage', $e->getMessage());
         }

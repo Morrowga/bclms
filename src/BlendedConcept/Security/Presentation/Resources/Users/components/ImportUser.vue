@@ -1,14 +1,13 @@
 <script setup>
-import { ref } from "vue";
+import { ref,defineProps } from "vue";
 import ImportUserTypeData from "./ImportUserTypeData.vue";
 
 const isDialogVisible = ref(false);
-const items = [
-    "Blended Concepted",
-    "Blended Center",
-    "Bentlee School of Hope",
-    "Korbbe Collibe Home",
-];
+
+const props = defineProps(['organizations']);
+
+// organization name change data format to arrary data types
+const items = [...props.organizations]
 
 const selectedOrganization = ref(null);
 const showSecondSelect = ref(false);

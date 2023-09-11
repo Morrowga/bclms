@@ -4,18 +4,18 @@ namespace Src\BlendedConcept\Security\Presentation\HTTP;
 
 use Inertia\Inertia;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\GetOrganizatonName;
-use Src\BlendedConcept\Security\Application\Policies\UserPolicy;
-use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
-use Src\BlendedConcept\Security\Application\Requests\UpdateUserRequest;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRoleName;
-use Src\BlendedConcept\Security\Application\Requests\updateUserPasswordRequest;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserName;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUsersWithPagination;
 use Src\BlendedConcept\Security\Application\DTO\UserData;
 use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
+use Src\BlendedConcept\Security\Application\Policies\UserPolicy;
+use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
+use Src\BlendedConcept\Security\Application\Requests\updateUserPasswordRequest;
+use Src\BlendedConcept\Security\Application\Requests\UpdateUserRequest;
+use Src\BlendedConcept\Security\Application\UseCases\Commands\User\DelectUserCommand;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\User\StoreUserCommand;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\User\UpdateUserCommand;
-use Src\BlendedConcept\Security\Application\UseCases\Commands\User\DelectUserCommand;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRoleName;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserName;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUsersWithPagination;
 use Src\BlendedConcept\Security\Domain\Services\UserService;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\Common\Infrastructure\Laravel\Controller;
@@ -38,7 +38,6 @@ class UserController extends Controller
      */
     public function index()
     {
-
 
         abort_if(authorize('view', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -65,6 +64,8 @@ class UserController extends Controller
                 'organizations' => $oragnization_name,
             ]);
         } catch (\Exception $e) {
+            dd($e->getMessage());
+
             return redirect()->route('users.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }

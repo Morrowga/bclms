@@ -3,15 +3,15 @@
 namespace Src\BlendedConcept\Security\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Src\BlendedConcept\Security\Application\DTO\PermissionData;
+use Src\BlendedConcept\Security\Application\Mappers\PermissionMapper;
 use Src\BlendedConcept\Security\Application\Policies\PermissionPolicy;
 use Src\BlendedConcept\Security\Application\Requests\StorepermissionRequest;
 use Src\BlendedConcept\Security\Application\Requests\UpdatepermissionRequest;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Permissions\GetPermissionwithPagination;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
-use Src\BlendedConcept\Security\Application\DTO\PermissionData;
-use Src\BlendedConcept\Security\Application\Mappers\PermissionMapper;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\Permission\StorePermissionCommand;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\Permission\UpdatePermissionCommand;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Permissions\GetPermissionwithPagination;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -80,7 +80,6 @@ class PermissionController extends Controller
         abort_if(authorize('edit', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
-
             // Validate the request data
             $request->validated();
 
@@ -90,7 +89,6 @@ class PermissionController extends Controller
 
             $updatePermission = (new UpdatePermissionCommand($updatePermission));
             $updatePermission->execute();
-
 
             // Redirect the user to the index page with a success message
             return redirect()->route('permissions.index')->with('successMessage', 'Permission updated Successfully!');

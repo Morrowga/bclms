@@ -7,17 +7,16 @@ namespace Src\BlendedConcept\Security\Infrastructure\EloquentModels;
 use Hash;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyEmail
 {
-    use HasFactory, Notifiable, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, Notifiable;
 
     protected $table = 'users';
 
@@ -89,17 +88,22 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->orWhere('name', 'like', '%' . $search . '%')
-                ->orWhere('email', 'like', '%' . $search . '%');
+            $query->orWhere('name', 'like', '%'.$search.'%')
+                ->orWhere('email', 'like', '%'.$search.'%');
         });
         $query->when($filters['roles'] ?? false, function ($query, $role) {
             $query->whereHas('roles', function ($query) use ($role) {
-                $query->where('name', 'like', '%' . $role . '%');
+                $query->where('name', 'like', '%'.$role.'%');
             });
         });
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function organization()

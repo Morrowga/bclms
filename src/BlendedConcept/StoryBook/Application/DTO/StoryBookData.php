@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\StoryBook\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookData;
 
 class StoryBookData
 {
@@ -39,7 +38,7 @@ class StoryBookData
             'description' => $this->description,
             'thumbnail_img' => $this->classroom_photo,
             'num_gold_coins' => $request->num_gold_coins,
-            'num_silver_coins'=> $request->num_silver_coins,
+            'num_silver_coins' => $request->num_silver_coins,
             'is_free' => $request->is_free,
         ];
     }

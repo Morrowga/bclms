@@ -15,7 +15,6 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
 
-
         $permissions = [
             [
                 'name' => 'create_permission',
@@ -278,92 +277,92 @@ class PermissionTableSeeder extends Seeder
             [
                 'name' => 'access_pathways',
                 'guard_name' => 'web',
-                'description' => 'Users can access pathways and their configurations within the application.'
+                'description' => 'Users can access pathways and their configurations within the application.',
             ],
             [
                 'name' => 'access_rewards',
                 'guard_name' => 'web',
-                'description' => 'Users can access rewards and their configurations within the application.'
+                'description' => 'Users can access rewards and their configurations within the application.',
             ],
             [
                 'name' => 'access_mainSubscription',
                 'guard_name' => 'web',
-                'description' => 'Users can access mainSubscription and their configurations within the application.'
+                'description' => 'Users can access mainSubscription and their configurations within the application.',
             ],
             [
                 'name' => 'access_subscription',
                 'guard_name' => 'web',
-                'description' => 'Users can access subscription and their configurations within the application.'
+                'description' => 'Users can access subscription and their configurations within the application.',
             ],
             [
                 'name' => 'access_surveys',
                 'guard_name' => 'web',
-                'description' => 'Users can access surveys and their configurations within the application.'
+                'description' => 'Users can access surveys and their configurations within the application.',
             ],
             [
                 'name' => 'access_userSurveys',
                 'guard_name' => 'web',
-                'description' => 'Users can access userSurveys and their configurations within the application.'
+                'description' => 'Users can access userSurveys and their configurations within the application.',
             ],
             [
                 'name' => 'access_surveyResults',
                 'guard_name' => 'web',
-                'description' => 'Users can access surveyResults and their configurations within the application.'
+                'description' => 'Users can access surveyResults and their configurations within the application.',
             ],
             [
                 'name' => 'access_orgusers',
                 'guard_name' => 'web',
-                'description' => 'Users can access orgusers and their configurations within the application.'
+                'description' => 'Users can access orgusers and their configurations within the application.',
             ],
             [
                 'name' => 'access_teacherStorybook',
                 'guard_name' => 'web',
-                'description' => 'Users can access teacherStorybook and their configurations within the application.'
+                'description' => 'Users can access teacherStorybook and their configurations within the application.',
             ],
             [
                 'name' => 'access_viewStudents',
                 'guard_name' => 'web',
-                'description' => 'Users can access viewStudents and their configurations within the application.'
+                'description' => 'Users can access viewStudents and their configurations within the application.',
             ],
             [
                 'name' => 'access_reports',
                 'guard_name' => 'web',
-                'description' => 'Users can access reports and their configurations within the application.'
+                'description' => 'Users can access reports and their configurations within the application.',
             ],
             [
                 'name' => 'access_playlists',
                 'guard_name' => 'web',
-                'description' => 'Users can access playlists and their configurations within the application.'
+                'description' => 'Users can access playlists and their configurations within the application.',
             ],
             [
                 'name' => 'access_studentStorybook',
                 'guard_name' => 'web',
-                'description' => 'Users can access studentStorybook and their configurations within the application.'
+                'description' => 'Users can access studentStorybook and their configurations within the application.',
             ],
             [
                 'name' => 'access_studentGames',
                 'guard_name' => 'web',
-                'description' => 'Users can access studentGames and their configurations within the application.'
+                'description' => 'Users can access studentGames and their configurations within the application.',
             ],
             [
                 'name' => 'access_studentRewards',
                 'guard_name' => 'web',
-                'description' => 'Users can access studentRewards and their configurations within the application.'
+                'description' => 'Users can access studentRewards and their configurations within the application.',
             ],
             [
                 'name' => 'access_resources',
                 'guard_name' => 'web',
-                'description' => 'Users can access resources and their configurations within the application.'
+                'description' => 'Users can access resources and their configurations within the application.',
             ],
             [
                 'name' => 'access_orgClassroom',
                 'guard_name' => 'web',
-                'description' => 'Users can access orgClassroom and their configurations within the application.'
+                'description' => 'Users can access orgClassroom and their configurations within the application.',
             ],
             [
                 'name' => 'access_profillingSurveys',
                 'guard_name' => 'web',
-                'description' => 'Users can access profilling surveys and their configurations within the application.'
+                'description' => 'Users can access profilling surveys and their configurations within the application.',
             ],
         ];
         foreach ($permissions as $permission) {

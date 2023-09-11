@@ -23,7 +23,7 @@ class SiteSettingEloquentModel extends Model implements HasMedia
         'contact_number',
         'url',
         'website_logo',
-        'website_favicon'
+        'website_favicon',
     ];
 
     public function getImageAttribute()

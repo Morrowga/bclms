@@ -23,7 +23,6 @@ class SiteSettingMapper
         );
     }
 
-
     public static function toEloquent(SiteSetting $siteSetting): SiteSettingEloquentModel
     {
         $siteSettingEloquent = new SiteSettingEloquentModel();
@@ -39,6 +38,7 @@ class SiteSettingMapper
         $siteSettingEloquent->contact_number = $siteSetting->contact_number;
         $siteSettingEloquent->website_logo = $siteSetting->website_logo;
         $siteSettingEloquent->website_favicon = $siteSetting->website_favicon;
+
         return $siteSettingEloquent;
     }
 }

@@ -3,23 +3,22 @@
 namespace Src\BlendedConcept\Security\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Src\BlendedConcept\Security\Application\DTO\RoleData;
+use Src\BlendedConcept\Security\Application\Mappers\RoleMapper;
 use Src\BlendedConcept\Security\Application\Policies\RolePolicy;
 use Src\BlendedConcept\Security\Application\Requests\StoreRoleRequest;
 use Src\BlendedConcept\Security\Application\Requests\UpdateRoleRequest;
+use Src\BlendedConcept\Security\Application\UseCases\Commands\Role\StoreRoleCommand;
+use Src\BlendedConcept\Security\Application\UseCases\Commands\Role\UpdateRoleCommand;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Permissions\GetPermissionwithPagination;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRoleName;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Roles\GetRolewithPagniation;
-use Src\BlendedConcept\Security\Application\DTO\RoleData;
-use Src\BlendedConcept\Security\Application\Mappers\RoleMapper;
-use Src\BlendedConcept\Security\Application\UseCases\Commands\Role\StoreRoleCommand;
-use Src\BlendedConcept\Security\Application\UseCases\Commands\Role\UpdateRoleCommand;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class RoleController extends Controller
 {
-
     public function index()
     {
         // $this->authorize('view', RoleEloquentModel::class);
@@ -55,12 +54,12 @@ class RoleController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-
     public function create()
     {
         try {
 
             $permissions = (new GetPermissionwithPagination([]))->handle();
+
             return Inertia::render(config('route.roles-create'), [
                 'permissions' => $permissions['default_permissions'],
             ]);
@@ -68,26 +67,28 @@ class RoleController extends Controller
             return redirect()->route('roles.create')->with('sytemErrorMessage', $e->getMessage());
         }
     }
+
     public function edit(RoleEloquentModel $role)
     {
         try {
             $permissions = (new GetPermissionwithPagination([]))->handle();
+
             return Inertia::render(config('route.roles-edit'), [
                 'permissions' => $permissions['default_permissions'],
                 'role' => $role,
-                'exists_permissions' => $role->permissions()->pluck('id')
+                'exists_permissions' => $role->permissions()->pluck('id'),
             ]);
         } catch (\Exception $e) {
             return redirect()->route('roles.create')->with('sytemErrorMessage', $e->getMessage());
         }
     }
+
     public function store(StoreRoleRequest $request)
     {
         // Check if the user is authorized to create roles
 
         abort_if(authorize('create', RolePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
-
 
             // Validate the incoming request data based on the specified rules in StoreRoleRequest
             $request->validated();
@@ -96,6 +97,7 @@ class RoleController extends Controller
             $newRole = RoleMapper::fromRequest($request);
             $createNewRole = (new StoreRoleCommand($newRole));
             $createNewRole->execute();
+
             // Redirect the user to the index page for roles with a success message
             return redirect()->route('roles.index')->with('successMessage', 'Roles created Successfully!');
         } catch (\Exception $e) {

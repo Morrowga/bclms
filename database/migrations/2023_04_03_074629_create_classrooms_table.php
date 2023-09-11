@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('organization_id')
-            ->nullable()
-            ->references('id')
-            ->on('organizations')
-            ->cascadeOnDelete();
+                ->nullable()
+                ->references('id')
+                ->on('organizations')
+                ->cascadeOnDelete();
             $table->string('name')->nullable();
             $table->longText('description')->nullable();
             $table->string('classroom_photo')->nullable();

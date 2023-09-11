@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\ClassRoom\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomGroupData;
 
 class ClassRoomGroupData
 {

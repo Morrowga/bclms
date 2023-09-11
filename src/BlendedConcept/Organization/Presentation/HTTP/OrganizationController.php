@@ -3,30 +3,31 @@
 namespace Src\BlendedConcept\Organization\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Src\BlendedConcept\Organization\Application\UseCases\Queries\GetOrganizationWithPagination;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\System\Application\Policies\OrganizationPolicy;
-use Src\BlendedConcept\System\Application\Requests\StoreOrganizationRequest;
-use Src\BlendedConcept\System\Application\Requests\UpdateOrganizationRequest;
-use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
 use Src\BlendedConcept\Organization\Application\Mappers\OrganizationMapper;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\DeleteOrganizationCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\StoreOrganizationCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\UpdateOrganizationCommand;
+use Src\BlendedConcept\Organization\Application\UseCases\Queries\GetOrganizationWithPagination;
 use Src\BlendedConcept\Organization\Domain\Services\OrganizationService;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
+use Src\BlendedConcept\System\Application\Policies\OrganizationPolicy;
+use Src\BlendedConcept\System\Application\Requests\StoreOrganizationRequest;
+use Src\BlendedConcept\System\Application\Requests\UpdateOrganizationRequest;
+use Src\Common\Infrastructure\Laravel\Controller;
 use Stancl\Tenancy\Database\Models\Domain;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrganizationController extends Controller
 {
-
     protected OrganizationService $organizationService;
+
     public function __construct(OrganizationService $organizationService)
     {
         $this->organizationService = $organizationService;
     }
+
     public function index()
     {
         // Authorize user to view organization
@@ -135,6 +136,7 @@ class OrganizationController extends Controller
         // $tenant->delete();
         $deleteOrganization = (new DeleteOrganizationCommand($organization));
         $deleteOrganization->execute();
+
         return redirect()->route('organizations.index')->with('successMessage', 'Organizations Deleted Successfully!');
     }
 }

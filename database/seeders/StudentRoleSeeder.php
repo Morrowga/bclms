@@ -25,7 +25,7 @@ class StudentRoleSeeder extends Seeder
                 'is_active' => true,
                 'email' => 'studentone@mail.com',
                 'password' => 'password',
-            ]
+            ],
         ];
 
         foreach ($users as $user) {

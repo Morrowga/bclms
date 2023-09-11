@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class StoryBookEloquentModel extends Model implements HasMedia
 {
-    use HasFactory, Notifiable, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, Notifiable;
 
     protected $table = 'storybooks';
 
@@ -39,10 +39,10 @@ class StoryBookEloquentModel extends Model implements HasMedia
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('name', 'like', '%' . $search . '%');
+            $query->where('name', 'like', '%'.$search.'%');
         });
     }
 }

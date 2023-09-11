@@ -10,14 +10,17 @@ class OrganizationTeacherStudentController
     {
         return Inertia::render(config('route.org_view_teacher_student.index'));
     }
+
     public function showTeacher()
     {
         return Inertia::render(config('route.org_view_teacher_student.teacher-show'));
     }
+
     public function editTeacher()
     {
         return Inertia::render(config('route.org_view_teacher_student.teacher-edit'));
     }
+
     public function createTeacher()
     {
         return Inertia::render(config('route.org_view_teacher_student.teacher-create'));
@@ -27,10 +30,12 @@ class OrganizationTeacherStudentController
     {
         return Inertia::render(config('route.org_view_teacher_student.student-show'));
     }
+
     public function editStudent()
     {
         return Inertia::render(config('route.org_view_teacher_student.student-edit'));
     }
+
     public function createStudent()
     {
         return Inertia::render(config('route.org_view_teacher_student.student-create'));

@@ -2,11 +2,6 @@
 
 namespace Src\BlendedConcept\Organization\Domain\Model;
 
-use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
-use Src\BlendedConcept\Finance\Domain\Model\Entities\Plan;
-use Src\BlendedConcept\Finance\Domain\Model\Subscription;
-use Src\BlendedConcept\Student\Domain\Model\Student;
-use Src\BlendedConcept\Teacher\Domain\Model\Teacher;
 use Src\Common\Domain\AggregateRoot;
 
 class Organization extends AggregateRoot
@@ -22,7 +17,6 @@ class Organization extends AggregateRoot
         public readonly ?string $sub_domain,
         public readonly ?string $logo,
         public readonly ?string $status,
-
 
     ) {
     }

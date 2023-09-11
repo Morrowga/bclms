@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Src\BlendedConcept\System\Presentation\HTTP\AnnouncementController;
-use Src\BlendedConcept\System\Presentation\HTTP\Controllers\Admin\AdminProfileController;
 use Src\BlendedConcept\System\Presentation\HTTP\DashBoardController;
 use Src\BlendedConcept\System\Presentation\HTTP\LibraryController;
 use Src\BlendedConcept\System\Presentation\HTTP\NotificationController;
@@ -35,6 +34,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('supports', [TechnicalSupportController::class, 'index'])->name('supports');
 
+    Route::get('techsupports', [TechnicalSupportController::class, 'techsupports'])->name('techsupports');
+
+    Route::post('techsupports',[TechnicalSupportController::class,'askSupportQuestion'])->name('techsupports');
+
     /***
      * This route handles system-related notifications.
      *
@@ -64,18 +67,19 @@ Route::group(['middleware' => ['auth']], function () {
 
     //reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+
 });
 
 Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
 
     // handle pagebuilder asset requests
-    Route::any(config('pagebuilder.general.assets_url') . '{any}', [DashBoardController::class, 'getAssertUrl'])
+    Route::any(config('pagebuilder.general.assets_url').'{any}', [DashBoardController::class, 'getAssertUrl'])
         ->where('any', '.*');
 
     // handle all website manager requests
     if (config('pagebuilder.website_manager.use_website_manager')) {
 
-        Route::any(config('pagebuilder.website_manager.url') . '{any}', [DashBoardController::class, 'websiteManagerUrl'])->where('any', '.*');
+        Route::any(config('pagebuilder.website_manager.url').'{any}', [DashBoardController::class, 'websiteManagerUrl'])->where('any', '.*');
     }
 
     // pass all remaining requests to the LaravelPageBuilder router
@@ -88,5 +92,5 @@ Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
 });
 
 // handle requests to retrieve uploaded file
-Route::any(config('pagebuilder.general.uploads_url') . '{any}', [DashBoardController::class, 'uploadsUrl'])
+Route::any(config('pagebuilder.general.uploads_url').'{any}', [DashBoardController::class, 'uploadsUrl'])
     ->where('any', '.*');

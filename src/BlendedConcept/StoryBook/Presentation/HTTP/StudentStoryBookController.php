@@ -15,7 +15,7 @@ class StudentStoryBookController extends Controller
             // Get the filters from the request, or initialize an empty array if they are not present
             return Inertia::render(config('route.storybooks'));
         } catch (Exception $e) {
-            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
@@ -26,7 +26,7 @@ class StudentStoryBookController extends Controller
             // Get the filters from the request, or initialize an empty array if they are not present
             return Inertia::render(config('route.storybook-show'));
         } catch (Exception $e) {
-            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
@@ -37,7 +37,7 @@ class StudentStoryBookController extends Controller
             // Get the filters from the request, or initialize an empty array if they are not present
             return Inertia::render(config('route.storybook-pathway'));
         } catch (Exception $e) {
-            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 }

@@ -7,7 +7,6 @@ namespace Src\BlendedConcept\Finance\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 class SubscriptionEloquentModel extends Model
 {
     use HasFactory;
@@ -21,8 +20,6 @@ class SubscriptionEloquentModel extends Model
         'payment_date',
         'payment_status',
         'stripe_status',
-        'stripe_price'
+        'stripe_price',
     ];
-
-
 }

@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class PhysicalResourceEloquentModel extends Model implements HasMedia
 {
-    use HasFactory, Notifiable, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, Notifiable;
 
     protected $table = 'physical_resources';
 

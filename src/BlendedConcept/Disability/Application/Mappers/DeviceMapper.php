@@ -28,6 +28,7 @@ class DisabilityTypeMapper
         $DeviceEloquent->name = $device->name;
         $DeviceEloquent->description = $device->description;
         $DeviceEloquent->status = $device->status;
+
         return $DeviceEloquent;
     }
 }

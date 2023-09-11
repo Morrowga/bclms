@@ -3,14 +3,14 @@
 namespace Src\BlendedConcept\Student\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
-use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
 use Src\BlendedConcept\Student\Application\DTO\StudentData;
 use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
 use Src\BlendedConcept\Student\Application\Requests\storeStudentRequest;
 use Src\BlendedConcept\Student\Application\Requests\updateStudentRequest;
 use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreStudentCommand;
 use Src\BlendedConcept\Student\Application\UseCases\Commands\UpdateStudentCommand;
+use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
+use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
 use Src\BlendedConcept\Student\Domain\Services\StudentService;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\Common\Infrastructure\Laravel\Controller;
@@ -93,7 +93,6 @@ class StudentController extends Controller
     {
         abort_if(authorize('edit', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
-
 
             $updateStudent = StudentData::fromRequest($request, $student->id);
             $updateStudent = (new UpdateStudentCommand($updateStudent));

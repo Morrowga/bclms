@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('num_gold_coins')->default(0);
             $table->integer('num_silver_coins')->default(0);
             $table->string('student_code')->nullable();
-            $table->decimal('total_time_spent',10,2);
+            $table->decimal('total_time_spent', 10, 2);
             $table->timestamps();
             $table->softDeletes();
         });

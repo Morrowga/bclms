@@ -15,6 +15,8 @@ use Src\BlendedConcept\System\Domain\Repositories\NotificationRepositoryInterfac
 use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
 use Src\BlendedConcept\System\Domain\Repositories\PlanRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\SettingRepositoryInterface;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\TechnicalSupportRepository;
+use Src\BlendedConcept\System\Domain\Repositories\TechnicalSupportRepositoryInterface;
 
 class SystemServiceProvider extends ServiceProvider
 {
@@ -49,6 +51,11 @@ class SystemServiceProvider extends ServiceProvider
         $this->app->bind(
             SettingRepositoryInterface::class,
             SettingRepository::class
+        );
+
+        $this->app->bind(
+            TechnicalSupportRepositoryInterface::class,
+            TechnicalSupportRepository::class
         );
     }
 }

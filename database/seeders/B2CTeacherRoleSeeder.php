@@ -24,8 +24,8 @@ class B2CTeacherRoleSeeder extends Seeder
                 'contact_number' => '1234567890',
                 'status' => 'ACTIVE',
                 'email_verification_send_on' => now(),
-                'profile_pic' => "images/profile/profilefive.png",
-            ]
+                'profile_pic' => 'images/profile/profilefive.png',
+            ],
 
         ];
 

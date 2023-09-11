@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Src\BlendedConcept\Survey\Presentation\HTTP\ProfillingSurveyController;
 use Src\BlendedConcept\Survey\Presentation\HTTP\SurveyResultController;
 use Src\BlendedConcept\Survey\Presentation\HTTP\UserExperienceSurveyController;
-use Src\BlendedConcept\Survey\Presentation\HTTP\ProfillingSurveyController;
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('userexperiencesurvey', UserExperienceSurveyController::class);

@@ -2,7 +2,6 @@
 
 namespace Src\BlendedConcept\Security\Application\UseCases\Commands\User;
 
-use Src\BlendedConcept\Security\Domain\Model\User;
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
 use Src\Common\Domain\CommandInterface;
 

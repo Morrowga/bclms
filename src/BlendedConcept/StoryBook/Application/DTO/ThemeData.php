@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\StoryBook\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\StoryBook\Application\DTO\ThemeData;
 
 class ThemeData
 {
@@ -13,7 +12,6 @@ class ThemeData
         public readonly ?string $description,
     ) {
     }
-
 
     public static function fromRequest(Request $request, $theme_id): ThemeData
     {

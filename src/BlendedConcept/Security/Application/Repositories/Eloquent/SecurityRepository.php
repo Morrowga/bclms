@@ -37,17 +37,27 @@ class SecurityRepository implements SecurityRepositoryInterface
     {
         //set roles
         $users = UserResource::collection(UserEloquentModel::filter($filters)
-            ->with('roles')
+            ->with('role')
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
 
         return $users;
     }
 
-    //get only user name
+    /**
+     * Get an array of full names for all users.
+     *
+     * Note we are using laravel accessor feature where
+     *
+     * we have implement a function on the EloquentModel
+     *
+     * @return array The array of full names.
+     */
     public function getUsersName()
     {
-        $user_names = UserEloquentModel::pluck('name');
+        $users = UserEloquentModel::get();
+
+        $user_names = $users->pluck('full_name');
 
         return $user_names;
     }
@@ -98,6 +108,7 @@ class SecurityRepository implements SecurityRepositoryInterface
         $user = UserEloquentModel::query()->findOrFail($user_id);
         $user->delete();
     }
+
     //user filter
     public function filter($filters = [])
     {
@@ -105,11 +116,11 @@ class SecurityRepository implements SecurityRepositoryInterface
 
         // Add filters to the query
         if (isset($filters['name'])) {
-            $query->where('name', 'like', '%' . $filters['name'] . '%');
+            $query->where('name', 'like', '%'.$filters['name'].'%');
         }
 
         if (isset($filters['email'])) {
-            $query->where('email', 'like', '%' . $filters['email'] . '%');
+            $query->where('email', 'like', '%'.$filters['email'].'%');
         }
 
         if (isset($filters['role'])) {

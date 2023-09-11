@@ -20,7 +20,7 @@ class Device extends AggregateRoot
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'status' => $this->status
+            'status' => $this->status,
         ];
     }
 }

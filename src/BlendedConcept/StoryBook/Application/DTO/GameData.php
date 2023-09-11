@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\StoryBook\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\StoryBook\Application\DTO\GameData;
 
 class GameData
 {
@@ -17,7 +16,6 @@ class GameData
         public readonly int $num_silver_coins,
     ) {
     }
-
 
     public static function fromRequest(Request $request, $game_id): GameData
     {

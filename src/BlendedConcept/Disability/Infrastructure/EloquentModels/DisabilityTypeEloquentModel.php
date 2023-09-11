@@ -6,7 +6,6 @@ namespace Src\BlendedConcept\Disability\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Model;
 
-
 class DisabilityTypeEloquentModel extends Model
 {
     protected $table = 'disability_types';
@@ -20,7 +19,7 @@ class DisabilityTypeEloquentModel extends Model
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
     }
 }

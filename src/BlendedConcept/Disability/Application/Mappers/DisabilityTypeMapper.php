@@ -27,6 +27,7 @@ class DisabilityTypeMapper
         }
         $DisabilityTypeEloquent->name = $disabilityType->name;
         $DisabilityTypeEloquent->description = $disabilityType->description;
+
         return $DisabilityTypeEloquent;
     }
 }

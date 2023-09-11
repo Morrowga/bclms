@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('organization_id')->nullable()
                 ->references('id')
                 ->on('organizations')->onDelete('cascade');
-            $table->decimal('allocated_storage_limit',10,1);
+            $table->decimal('allocated_storage_limit', 10, 1);
             $table->boolean('has_full_library_access');
             $table->timestamps();
             $table->softDeletes();

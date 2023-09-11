@@ -54,15 +54,15 @@ class SiteSettingData
     public function toArray(): array
     {
         return [
-            "id" => $this->id,
-            "site_name" => $this->site_name,
-            "ssl" => $this->ssl,
-            "site_time_zone" => $this->site_time_zone,
-            "site_locale" => $this->site_locale,
-            "email" => $this->email,
-            "contact_number" => $this->contact_number,
-            "website_logo" => $this->website_logo,
-            "website_favicon" => $this->website_favicon
+            'id' => $this->id,
+            'site_name' => $this->site_name,
+            'ssl' => $this->ssl,
+            'site_time_zone' => $this->site_time_zone,
+            'site_locale' => $this->site_locale,
+            'email' => $this->email,
+            'contact_number' => $this->contact_number,
+            'website_logo' => $this->website_logo,
+            'website_favicon' => $this->website_favicon,
         ];
     }
 }

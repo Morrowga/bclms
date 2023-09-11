@@ -18,7 +18,6 @@ class UserData
         public readonly string $status,
         public readonly string $profile_pic,
 
-
     ) {
     }
 
@@ -56,15 +55,15 @@ class UserData
     public function toArray(): array
     {
         return [
-            "id" => $this->id,
-            "first_name" => $this->first_name,
-            "last_name" => $this->last_name,
-            "email" => $this->email,
-            "password" => $this->password,
-            "email_verification_send_on" => $this->email_verification_send_on,
-            "contact_number" => $this->contact_number,
-            "status" => $this->status,
-            "profile_pic" => $this->profile_pic,
+            'id' => $this->id,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
+            'password' => $this->password,
+            'email_verification_send_on' => $this->email_verification_send_on,
+            'contact_number' => $this->contact_number,
+            'status' => $this->status,
+            'profile_pic' => $this->profile_pic,
         ];
     }
 }

@@ -55,7 +55,7 @@ let goLink = (item) => {
 //         : false;
 // };
 onMounted(() => {
-    console.log(auth.value.data.permissions);
+    // console.log(auth.value.data.permissions);
 });
 </script>
 <template>

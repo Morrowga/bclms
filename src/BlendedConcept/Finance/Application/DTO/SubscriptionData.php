@@ -47,13 +47,13 @@ class SubscriptionData
     public function toArray(): array
     {
         return [
-            "id" => $this->id,
-            "start_date" => $this->start_date,
-            "end_date" => $this->end_date,
-            "payment_date" => $this->payment_date,
-            "payment_status" => $this->payment_status,
-            "stripe_status" => $this->stripe_status,
-            "stripe_price" => $this->stripe_price
+            'id' => $this->id,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'payment_date' => $this->payment_date,
+            'payment_status' => $this->payment_status,
+            'stripe_status' => $this->stripe_status,
+            'stripe_price' => $this->stripe_price,
 
         ];
     }

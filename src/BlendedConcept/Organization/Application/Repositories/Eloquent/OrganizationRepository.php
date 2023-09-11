@@ -5,24 +5,26 @@ namespace Src\BlendedConcept\Organization\Application\Repositories\Eloquent;
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
 use Src\BlendedConcept\Organization\Application\Mappers\OrganizationMapper;
-use Src\BlendedConcept\Finance\Application\Mappers\PlanMapper;
-use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
-use Src\BlendedConcept\Finance\Domain\Model\Subscription;
 use Src\BlendedConcept\Organization\Domain\Model\Organization;
 use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\Organization\Domain\Resources\OrganizationResource;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
 
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
     public function getOrganizationNameId()
     {
-        $organizations = OrganizationEloquentModel::get();
+        $organizations = OrganizationEloquentModel::pluck('name');
 
         return $organizations;
+    }
+
+    public function getOrganizationNameWithCount()
+    {
+        $organizaitonNameWithCount = OrganizationEloquentModel::all();
+
+        return $organizaitonNameWithCount;
     }
 
     public function getOrganizations($filters = [])
@@ -70,7 +72,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 'organization_id' => $organizationEloquent->id,
             ]);
 
-            $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
+            $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());

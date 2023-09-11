@@ -47,6 +47,7 @@ class TeacherController extends Controller
 
             // Retrieve user names
             $users_name = (new GetUserName())->handle();
+
             // Render the Inertia view with the obtained data
             return Inertia::render(config('route.teachers'), [
                 'users' => $users,
@@ -74,6 +75,7 @@ class TeacherController extends Controller
             return redirect()->route('c.teachers.index')->with('successMessage', 'User created successfully!');
         } catch (\Exception $e) {
             dd($e->getMessage());
+
             // Handle the exception, log the error, or display a user-friendly error message.
             return redirect()->route('c.teachers.index')->with('sytemErrorMessage', $e->getMessage());
         }
@@ -105,6 +107,7 @@ class TeacherController extends Controller
     {
         return Inertia::render(config('route.viewteacher.editteacher'));
     }
+
     public function listofteacher()
     {
         return Inertia::render(config('route.listofteacher.index'));

@@ -214,6 +214,8 @@ const pages = {
     //support
 
     "BlendedConcept/System/Presentation/Resources/Supports/Index" : import("../../src/BlendedConcept/System/Presentation/Resources/Supports/Index.vue"),
+    //techsupport
+    "BlendedConcept/System/Presentation/Resources/Supports/TechSupport/Index" : import("../../src/BlendedConcept/System/Presentation/Resources/Supports/TechSupport/Index.vue"),
 
 
     //students crud

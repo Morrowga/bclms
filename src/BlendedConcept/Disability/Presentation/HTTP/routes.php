@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-use Src\BlendedConcept\Disability\Presentation\HTTP\DisabilityDeviceController;
 use Src\BlendedConcept\Disability\Presentation\HTTP\AccessibilityDeviceController;
+use Src\BlendedConcept\Disability\Presentation\HTTP\DisabilityDeviceController;
 use Src\BlendedConcept\Disability\Presentation\HTTP\SetAccessibilityController;
 
 Route::group(['middleware' => ['auth']], function () {

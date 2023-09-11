@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('b2c_users', function (Blueprint $table) {
             $table->bigIncrements('b2c_user_id');
             $table->foreignId('user_id')->nullable()
-                 ->references('id')
-                 ->on('users')->onDelete('cascade');
+                ->references('id')
+                ->on('users')->onDelete('cascade');
             $table->foreignId('current_subscription_id')->nullable()
-                  ->references('id')
-                  ->on('subscriptions')->onDelete('cascade');
+                ->references('id')
+                ->on('subscriptions')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

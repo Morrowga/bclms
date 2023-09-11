@@ -187,6 +187,7 @@ return [
          */
         Barryvdh\Debugbar\ServiceProvider::class,
         Src\Common\Infrastructure\Laravel\Providers\TenancyServiceProvider::class, //multi tetant
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         // Hareom284\LaravelH5p\LaravelH5pServiceProvider::class,
 
         /*
@@ -227,7 +228,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
     ])->toArray(),
 

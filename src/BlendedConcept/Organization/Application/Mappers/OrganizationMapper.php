@@ -3,10 +3,8 @@
 namespace Src\BlendedConcept\Organization\Application\Mappers;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
 use Src\BlendedConcept\Organization\Domain\Model\Organization;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-
 
 class OrganizationMapper
 {

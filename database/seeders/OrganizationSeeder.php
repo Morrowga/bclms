@@ -3,10 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
 
 class OrganizationSeeder extends Seeder
 {
@@ -23,7 +22,7 @@ class OrganizationSeeder extends Seeder
             'payment_date' => now(),
             'payment_status' => 'PAID',
             'stripe_status' => null,
-            'stripe_price'  => null
+            'stripe_price' => null,
         ];
 
         $subscription = SubscriptionEloquentModel::create($subscriptionData);
@@ -35,18 +34,18 @@ class OrganizationSeeder extends Seeder
                 'name' => 'organization one',
                 'contact_name' => 'org one',
                 'contact_email' => 'orgone@mail.com',
-                'contact_number' => "973434533",
+                'contact_number' => '973434533',
                 'sub_domain' => 'orgone',
                 'logo' => null,
                 'status' => 'ACTIVE',
             ],
             [
                 'curr_subscription_id' => $subscription->id,
-                'org_admin_id' =>1,
+                'org_admin_id' => 1,
                 'name' => 'organization two',
                 'contact_name' => 'org two',
                 'contact_email' => 'orgtwo@mail.com',
-                'contact_number' => "973434533",
+                'contact_number' => '973434533',
                 'sub_domain' => 'orgtwo',
                 'logo' => null,
                 'status' => 'INACTIVE',
@@ -62,7 +61,7 @@ class OrganizationSeeder extends Seeder
                 'organization_id' => $organizationModel->id,
             ]);
 
-            $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
+            $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
         }
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Src\BlendedConcept\Organization\Application\UseCases\Commands;
 
-use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
 use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\Common\Domain\CommandInterface;
