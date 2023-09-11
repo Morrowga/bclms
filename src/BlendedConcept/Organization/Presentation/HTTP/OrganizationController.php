@@ -130,9 +130,9 @@ class OrganizationController extends Controller
     public function destroy(OrganizationEloquentModel $organization)
     {
         abort_if(authorize('destroy', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $tenant = Tenant::get();
-        Domain::where('tenant_id', $tenant->id)->delete();
-        $tenant->delete();
+        // $tenant = Tenant::get();
+        // Domain::where('tenant_id', $tenant->id)->delete();
+        // $tenant->delete();
         $deleteOrganization = (new DeleteOrganizationCommand($organization));
         $deleteOrganization->execute();
         return redirect()->route('organizations.index')->with('successMessage', 'Organizations Deleted Successfully!');
