@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class StudentData
 {
     public function __construct(
-        public readonly ?int $id,
+        public readonly ?int $student_id,
         public readonly ?int $user_id,
         public readonly ?int $device_id,
         public readonly ?string $gender,
@@ -24,7 +24,7 @@ class StudentData
     {
 
         return new self(
-            id: $student_id,
+            student_id: $student_id,
             user_id: $request->user_id,
             device_id: $request->device_id,
             gender: $request->gender,
@@ -40,7 +40,7 @@ class StudentData
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
+            'student_id' => $this->student_id,
             'user_id' => $this->user_id,
             'device_id' => $this->device_id,
             'gender' => $this->gender,

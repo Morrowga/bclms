@@ -11,7 +11,7 @@ class StudentMapper
     public static function fromRequest(Request $request, $student_id = null): Student
     {
         return new Student(
-            id: $student_id,
+            student_id: $student_id,
             user_id: $request->user_id,
             device_id: $request->device_id,
             gender: $request->gender,
@@ -28,8 +28,8 @@ class StudentMapper
     {
         $StudentEloquent = new StudentEloquentModel();
 
-        if ($student->id) {
-            $StudentEloquent = StudentEloquentModel::query()->findOrFail($student->id);
+        if ($student->student_id) {
+            $StudentEloquent = StudentEloquentModel::query()->findOrFail($student->student_id);
         }
 
         //set organization_id according to auth's organization_id

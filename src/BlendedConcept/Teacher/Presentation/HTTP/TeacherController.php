@@ -2,6 +2,7 @@
 
 namespace Src\BlendedConcept\Teacher\Presentation\HTTP;
 
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserName;
@@ -10,6 +11,7 @@ use Src\BlendedConcept\Teacher\Application\Requests\UpdateTeacherRequest;
 use Src\BlendedConcept\Teacher\Application\UseCases\Queries\GetTeachersWithPagination;
 use Src\BlendedConcept\Teacher\Domain\Policies\TeacherPolicy;
 use Src\BlendedConcept\Teacher\Domain\Services\TeacherService;
+use Src\Common\Application\Imports\UserImport;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -111,5 +113,29 @@ class TeacherController extends Controller
     public function listofteacher()
     {
         return Inertia::render(config('route.listofteacher.index'));
+    }
+
+    public function import_excel(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $import = new UserImport;
+            $import->import($request->file('file'));
+            if ($import->failures()->count() > 0) {
+                $errorRows = [];
+                $currentRow = null;
+                foreach ($import->failures() as $failure) {
+                    $currentRow = $failure->row();
+                    if ($currentRow == $failure->row()) {
+                        if (!in_array($failure->values(), $errorRows)) {
+                            array_push($errorRows, $failure->values());
+                        }
+                    }
+                }
+                return redirect()->back()->with('export_errors', $errorRows)->with('successMessage', 'Import Successfully!');
+            }
+            return back();
+        } else {
+            return redirect()->back()->with('systemError', 'You need to import excel file');
+        }
     }
 }
