@@ -8,7 +8,6 @@ use Src\BlendedConcept\Finance\Domain\Repositories\SubscriptionRepositoryInterfa
 use Src\BlendedConcept\Finance\Domain\Resources\SubscriptionResource;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2bSubscriptionEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloquentModel;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 
 class SubscriptionRepository implements SubscriptionRepositoryInterface
@@ -23,6 +22,7 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
     public function getB2cSubscriptions($filters)
     {
         $subscriptions = SubscriptionResource::collection(SubscriptionEloquentModel::filter($filters)->with('organization', 'b2c_subscription')->whereDoesntHave('organization')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+
         return $subscriptions;
     }
 
@@ -50,6 +50,7 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
 
         DB::commit();
     }
+
     public function updateB2cSubscription(SubscriptionData $subscriptionData)
     {
         DB::beginTransaction();

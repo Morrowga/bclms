@@ -2,8 +2,8 @@
 
 namespace Src\BlendedConcept\System\Domain\Repositories;
 
-use Src\BlendedConcept\System\Domain\Model\Entities\TechnicalSupport;
 use Src\BlendedConcept\System\Application\DTO\TechnicalSupportData;
+use Src\BlendedConcept\System\Domain\Model\Entities\TechnicalSupport;
 
 interface TechnicalSupportRepositoryInterface
 {

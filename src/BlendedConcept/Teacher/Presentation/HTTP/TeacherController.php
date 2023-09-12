@@ -131,13 +131,15 @@ class TeacherController extends Controller
                 foreach ($import->failures() as $failure) {
                     $currentRow = $failure->row();
                     if ($currentRow == $failure->row()) {
-                        if (!in_array($failure->values(), $errorRows)) {
+                        if (! in_array($failure->values(), $errorRows)) {
                             array_push($errorRows, $failure->values());
                         }
                     }
                 }
+
                 return redirect()->back()->with('export_errors', $errorRows)->with('successMessage', 'Import Successfully!');
             }
+
             return back();
         } else {
             return redirect()->back()->with('systemError', 'You need to import excel file');

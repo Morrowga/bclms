@@ -23,7 +23,6 @@ class AnnounmentMapper
         );
     }
 
-
     public static function toEloquent(Annoument $annoument): AnnouncementEloquentModel
     {
         $AnnounmettEloquent = new AnnouncementEloquentModel();

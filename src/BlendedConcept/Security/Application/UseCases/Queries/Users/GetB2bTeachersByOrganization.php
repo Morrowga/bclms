@@ -11,8 +11,7 @@ class GetB2bTeachersByOrganization implements QueryInterface
 
     public function __construct(
         private readonly int $id
-    )
-    {
+    ) {
         $this->repository = app()->make(SecurityRepositoryInterface::class);
     }
 

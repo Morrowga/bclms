@@ -4,7 +4,6 @@ namespace Src\BlendedConcept\FInance\Application\DTO;
 
 use Illuminate\Http\Request;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2bSubscriptionEloquentModel;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 
 class B2bSubscriptionData
 {

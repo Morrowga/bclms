@@ -2,8 +2,9 @@
 
 namespace Src\BlendedConcept\System\Application\UseCases\Queries;
 
-use Src\Common\Domain\QueryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\TechnicalSupportRepositoryInterface;
+use Src\Common\Domain\QueryInterface;
+
 class getTechnicalSupportQueries implements QueryInterface
 {
     private TechnicalSupportRepositoryInterface $repository;

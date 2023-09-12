@@ -3,10 +3,8 @@
 namespace Tests\Feature\Authi;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 /**
@@ -30,7 +28,6 @@ use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 //         'password' => '',
 //     ];
 //     $response = $this->post('/b2cstore', $data);
-
 
 //     $response->assertSessionHasErrors(['password']);
 
@@ -73,7 +70,6 @@ test('unique_b2c_register_email', function () {
 
     $response->assertSessionHasErrors('email');
 });
-
 
 /**
  *  check empty email on login

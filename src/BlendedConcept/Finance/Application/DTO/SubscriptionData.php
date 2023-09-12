@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\FInance\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Finance\Domain\Model\Entities\B2bSubscription;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 
 class SubscriptionData
@@ -66,7 +65,7 @@ class SubscriptionData
             'stripe_price' => $this->stripe_price,
             'b2b_subscription' => $this->b2b_subscription,
             'plan_id' => $this->plan_id,
-            'user_id' => $this->user_id
+            'user_id' => $this->user_id,
         ];
     }
 }

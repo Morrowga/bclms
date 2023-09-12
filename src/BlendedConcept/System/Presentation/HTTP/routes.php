@@ -42,8 +42,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::put('techsupports/{support_ticket}', [TechnicalSupportController::class, 'answerSupportQuestion'])->name('answerSupportQuestion');
 
-
-    Route::delete('techsupports/{support_ticket}',[TechnicalSupportController::class,'deleteSupportQuestion'])->name('deleteSupportQuestion');
+    Route::delete('techsupports/{support_ticket}', [TechnicalSupportController::class, 'deleteSupportQuestion'])->name('deleteSupportQuestion');
 
     /***
      * This route handles system-related notifications.

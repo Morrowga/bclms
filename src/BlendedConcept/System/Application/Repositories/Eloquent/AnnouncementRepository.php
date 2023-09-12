@@ -2,21 +2,19 @@
 
 namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
-use Illuminate\Http\Request;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
-use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
-use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
-use Src\BlendedConcept\System\Domain\Resources\AnnouncementResource;
-use Src\BlendedConcept\System\Domain\Model\Entities\AnnouncementToB2B;
 use Src\BlendedConcept\System\Application\Mappers\AnnouncementToB2BMapper;
 use Src\BlendedConcept\System\Application\Mappers\AnnouncementToB2CMapper;
 use Src\BlendedConcept\System\Application\Mappers\AnnouncementToBcStaffMapper;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
 use Src\BlendedConcept\System\Domain\Repositories\AnnouncementRepositoryInterface;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
+use Src\BlendedConcept\System\Domain\Resources\AnnouncementResource;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
 
 class AnnouncementRepository implements AnnouncementRepositoryInterface
 {
@@ -41,12 +39,12 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $userArray = json_decode($request->users, true);
 
         if ($orgArray > 0) {
-            foreach($orgArray as $orgId){
+            foreach ($orgArray as $orgId) {
                 $orgAdmin = B2bUserEloquentModel::where('user_id', $orgId)->first();
                 $requestContent = [
-                    "announcement_id" => (int)$announcement_id, // Ensure announcement_id is an integer
-                    "to_b2b_id" => (int)$orgAdmin->b2b_user_id, // Ensure to_b2b_id is an integer
-                    "is_cleared" => true
+                    'announcement_id' => (int) $announcement_id, // Ensure announcement_id is an integer
+                    'to_b2b_id' => (int) $orgAdmin->b2b_user_id, // Ensure to_b2b_id is an integer
+                    'is_cleared' => true,
                 ];
 
                 $announcementToB2B = AnnouncementToB2BMapper::fromRequest($requestContent);
@@ -58,26 +56,26 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
             }
         }
         if ($userArray > 0) {
-            foreach($userArray as $userId){
+            foreach ($userArray as $userId) {
                 $userType = $this->checkUserType($userId);
-                if($userType['type'] == 'b2c'){
+                if ($userType['type'] == 'b2c') {
                     $requestContent = [
-                        "announcement_id" => (int)$announcement_id,
-                        "to_b2c_id" => (int)$userType['id'],
-                        "is_cleared" => true
+                        'announcement_id' => (int) $announcement_id,
+                        'to_b2c_id' => (int) $userType['id'],
+                        'is_cleared' => true,
                     ];
-                    $announmentToB2C= AnnouncementToB2CMapper::fromRequest($requestContent);
+                    $announmentToB2C = AnnouncementToB2CMapper::fromRequest($requestContent);
 
                     $announmentB2CEloquent = AnnouncementToB2CMapper::toEloquent($announmentToB2C);
                     $announmentB2CEloquent->save();
 
                     $receiver = UserEloquentModel::find($userId);
                     $receiver->notify(new BcNotification(['message' => $request->title, 'from' => $request->by, 'to' => $receiver->full_name, 'type' => $request->type ?? '']));
-                } else if($userType['type'] == 'b2b') {
+                } elseif ($userType['type'] == 'b2b') {
                     $requestContent = [
-                        "announcement_id" => (int)$announcement_id, // Ensure announcement_id is an integer
-                        "to_b2b_id" => (int)$userType['id'],                 // Ensure to_b2b_id is an integer
-                        "is_cleared" => true
+                        'announcement_id' => (int) $announcement_id, // Ensure announcement_id is an integer
+                        'to_b2b_id' => (int) $userType['id'],                 // Ensure to_b2b_id is an integer
+                        'is_cleared' => true,
                     ];
                     $announcementToB2B = AnnouncementToB2BMapper::fromRequest($requestContent);
 
@@ -86,11 +84,11 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
 
                     $receiver = UserEloquentModel::find($userId);
                     $receiver->notify(new BcNotification(['message' => $request->title, 'from' => $request->by, 'to' => $receiver->full_name, 'type' => $request->type ?? '']));
-                } else if($userType['type'] == 'bcstaff'){
+                } elseif ($userType['type'] == 'bcstaff') {
                     $requestContent = [
-                        "announcement_id" => (int)$announcement_id, // Ensure announcement_id is an integer
-                        "to_bc_staff_user_id" => (int)$userType['id'],                 // Ensure to_b2b_id is an integer
-                        "is_cleared" => true
+                        'announcement_id' => (int) $announcement_id, // Ensure announcement_id is an integer
+                        'to_bc_staff_user_id' => (int) $userType['id'],                 // Ensure to_b2b_id is an integer
+                        'is_cleared' => true,
                     ];
                     $announcementToBcStaff = AnnouncementToBcStaffMapper::fromRequest($requestContent);
 
@@ -105,29 +103,31 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     }
 
     //check user type
-    private function checkUserType($id) {
+    private function checkUserType($id)
+    {
         $b2c = B2cUserEloquentModel::where('user_id', $id)->with('users')->first();
-        if (!empty($b2c)) {
+        if (! empty($b2c)) {
             return [
-                "type" => "b2c",
-                "id" => $b2c->b2c_user_id,
+                'type' => 'b2c',
+                'id' => $b2c->b2c_user_id,
             ]; // b2c type
         }
 
         $b2b = B2bUserEloquentModel::where('user_id', $id)->with('users')->first();
-        if (!empty($b2b)) {
+        if (! empty($b2b)) {
             return [
-                "type" => "b2b",
-                "id" => $b2b->b2b_user_id,
+                'type' => 'b2b',
+                'id' => $b2b->b2b_user_id,
             ]; // b2b type
         }
 
         $bcstaff = UserEloquentModel::find($id);
-        if (!empty($bcstaff)) {
+        if (! empty($bcstaff)) {
             return [
-                "type" => "bcstaff",
-                "id" => $bcstaff->id,
+                'type' => 'bcstaff',
+                'id' => $bcstaff->id,
             ]; // bcstaff type
+
             return 3; // bcstaff type
         }
 
@@ -151,21 +151,21 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $announemtEloquent->fill($announcementArray);
         $announemtEloquent->save();
 
-        foreach($announemtEloquent->announcement_to_b2c_user as $b2cUser){
+        foreach ($announemtEloquent->announcement_to_b2c_user as $b2cUser) {
             $b2cEloquent = B2cUserEloquentModel::where('b2c_user_id', $b2cUser->to_b2c_id)->with('users')->first();
-            if(!empty($b2cEloquent)){
+            if (! empty($b2cEloquent)) {
                 $b2cEloquent->users->notify(new BcNotification(['message' => $annountment->title, 'from' => $announcement->to, 'to' => $b2cEloquent->users->full_name, 'type' => $annountment->type ?? '']));
             }
         }
-        foreach($announemtEloquent->announcement_to_b2b_user as $b2bUser){
+        foreach ($announemtEloquent->announcement_to_b2b_user as $b2bUser) {
             $b2bEloquent = B2bUserEloquentModel::where('b2b_user_id', $b2bUser->to_b2b_id)->with('users')->first();
-            if(!empty($b2bEloquent)){
+            if (! empty($b2bEloquent)) {
                 $b2bEloquent->users->notify(new BcNotification(['message' => $annountment->title, 'from' => $announcement->to, 'to' => $b2bEloquent->users->full_name, 'type' => $annountment->type ?? '']));
             }
         }
-        foreach($announemtEloquent->announcement_to_bcstaff_user as $bcStaff){
+        foreach ($announemtEloquent->announcement_to_bcstaff_user as $bcStaff) {
             $bcStaffEloquent = UserEloquentModel::find($bcStaff->to_bc_staff_id);
-            if(!empty($bcStaffEloquent)){
+            if (! empty($bcStaffEloquent)) {
                 $bcStaffEloquent->notify(new BcNotification(['message' => $annountment->title, 'from' => $announcement->to, 'to' => $bcStaffEloquent->full_name, 'type' => $annountment->type ?? '']));
             }
         }

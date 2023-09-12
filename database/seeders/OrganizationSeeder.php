@@ -62,7 +62,7 @@ class OrganizationSeeder extends Seeder
                 'organization_id' => $organizationModel->id,
             ]);
 
-            $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
+            $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
         }
     }
 }

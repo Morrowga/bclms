@@ -24,7 +24,7 @@ class B2bSubscription extends Entity
             'receipt_image' => $this->receipt_image,
             'storage_limit' => $this->storage_limit,
             'num_teacher_license' => $this->num_teacher_license,
-            'num_student_license' => $this->num_student_license
+            'num_student_license' => $this->num_student_license,
         ];
     }
 }

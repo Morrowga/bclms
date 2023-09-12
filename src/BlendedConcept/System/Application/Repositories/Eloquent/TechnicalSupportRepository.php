@@ -2,12 +2,13 @@
 
 namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
+use Src\BlendedConcept\System\Application\DTO\TechnicalSupportData;
 use Src\BlendedConcept\System\Application\Mappers\TechnicalSupportMapper;
 use Src\BlendedConcept\System\Domain\Model\Entities\TechnicalSupport;
 use Src\BlendedConcept\System\Domain\Repositories\TechnicalSupportRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Resources\TechnicalSupportResource;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\TechnicalSupportEloquentModel;
-use Src\BlendedConcept\System\Application\DTO\TechnicalSupportData;
+
 class TechnicalSupportRepository implements TechnicalSupportRepositoryInterface
 {
     /**
@@ -34,30 +35,24 @@ class TechnicalSupportRepository implements TechnicalSupportRepositoryInterface
 
     }
 
-
     public function getSupportQuestion($filters = [])
     {
 
-       /*****
-        * check if the user_role is superadmin or bc_staff then show all the user list
-        * or show
-        */
-        if(auth()->user()->role->name == config('userrole.bcsuperadmin') || auth()->user()->role->name == config('userorle.bcstaff'))
-        {
+        /*****
+         * check if the user_role is superadmin or bc_staff then show all the user list
+         * or show
+         */
+        if (auth()->user()->role->name == config('userrole.bcsuperadmin') || auth()->user()->role->name == config('userorle.bcstaff')) {
 
-            $technicalSupport = TechnicalSupportResource::collection(TechnicalSupportEloquentModel
-                                                    ::with(['user'])
-                                                    ->filter($filters)
-                                                    ->paginate($filters['perPage'] ?? 10));
+            $technicalSupport = TechnicalSupportResource::collection(TechnicalSupportEloquentModel::with(['user'])
+                                                        ->filter($filters)
+                                                        ->paginate($filters['perPage'] ?? 10));
 
-        }
-        else
-        {
-            $technicalSupport = TechnicalSupportResource::collection(TechnicalSupportEloquentModel::
-            where("user_id",auth()->user()->id)
-            ->with(['user'])
-            ->filter($filters)
-            ->paginate($filters['perPage'] ?? 10));
+        } else {
+            $technicalSupport = TechnicalSupportResource::collection(TechnicalSupportEloquentModel::where('user_id', auth()->user()->id)
+                ->with(['user'])
+                ->filter($filters)
+                ->paginate($filters['perPage'] ?? 10));
 
         }
 
@@ -68,10 +63,7 @@ class TechnicalSupportRepository implements TechnicalSupportRepositoryInterface
     public function answerSupportQuestion(TechnicalSupportData $technicalSupportData)
     {
 
-
-
     }
-
 
     public function deleteSupportQuestion($support)
     {

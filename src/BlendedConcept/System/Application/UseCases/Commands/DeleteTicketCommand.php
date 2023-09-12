@@ -2,10 +2,9 @@
 
 namespace Src\BlendedConcept\System\Application\UseCases\Commands;
 
-use Src\BlendedConcept\System\Domain\Model\Entities\TechnicalSupport;
 use Src\BlendedConcept\System\Domain\Repositories\TechnicalSupportRepositoryInterface;
-use Src\Common\Domain\CommandInterface;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\TechnicalSupportEloquentModel;
+use Src\Common\Domain\CommandInterface;
 
 class DeleteTicketCommand implements CommandInterface
 {
