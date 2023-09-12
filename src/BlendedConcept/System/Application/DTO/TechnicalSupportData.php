@@ -11,7 +11,7 @@ class TechnicalSupportData
         public readonly ?int $id,
         public readonly int $user_id,
         public readonly string $date,
-        public readonly string $has_responsed,
+        public readonly string $has_responded,
         public readonly string $question,
         public readonly ?string $response,
 
@@ -24,7 +24,7 @@ class TechnicalSupportData
             id : $support_id,
             user_id : $request->user_id,
             date : $request->date,
-            has_responsed : $request->has_responsed,
+            has_responded : $request->has_responded,
             question : $request->question,
             response : $request->response
         );
@@ -36,7 +36,7 @@ class TechnicalSupportData
             id : $support->id,
             user_id : $support->user_id,
             date : $support->date,
-            has_responsed : $support->has_responsed,
+            has_responded : $support->has_responded,
             question : $support->question,
             response : $support->response
         );
@@ -48,7 +48,7 @@ class TechnicalSupportData
             'id' => $this->id,
             'user_id' => $this->user_id,
             'date' => $this->date,
-            'has_responsed' => $this->has_responsed,
+            'has_responded' => $this->has_responded,
             'question' => $this->question,
             'response' => $this->response,
         ];

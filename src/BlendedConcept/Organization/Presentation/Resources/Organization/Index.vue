@@ -91,13 +91,7 @@ const deleteOrganization = (id) => {
         },
     });
 };
-// watch(selectedRole, (newValue) => {
-//     onColumnFilter({
-//         columnFilters: {
-//             need_help_order: newValue,
-//         },
-//     });
-// });
+
 </script>
 
 <template>
@@ -319,10 +313,7 @@ const deleteOrganization = (id) => {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
 
-// .user-data-table table.vgt-table thead  {
-//     background: rgb(var(--v-theme-surface)) !important;
-//     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
-// }
+
 
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));

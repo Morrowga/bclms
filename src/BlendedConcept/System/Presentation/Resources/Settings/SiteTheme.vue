@@ -96,129 +96,73 @@ const updateTheme = () => {
                         <!-- 👉 Skin -->
                         <h6 class="tiggie-text fw-500">Skins</h6>
                         <VRadioGroup v-model="skin" inline>
-                            <VRadio
-                                v-for="[key, val] in Object.entries(Skins)"
-                                :key="key"
-                                :label="key"
-                                :value="val"
-                            />
+                            <VRadio v-for="[key, val] in Object.entries(Skins)" :key="key" :label="key" :value="val" />
                         </VRadioGroup>
 
                         <!-- 👉 Theme -->
                         <h6 class="mt-3 tiggie-text">Theme</h6>
                         <VRadioGroup v-model="theme" inline>
-                            <VRadio
-                                v-for="themeOption in [
-                                    'system',
-                                    'light',
-                                    'dark',
-                                ]"
-                                :key="themeOption"
-                                :label="themeOption"
-                                :value="themeOption"
-                                class="text-capitalize"
-                            />
+                            <VRadio v-for="themeOption in [
+                                'system',
+                                'light',
+                                'dark',
+                            ]" :key="themeOption" :label="themeOption" :value="themeOption"
+                                class="text-capitalize" />
                         </VRadioGroup>
 
                         <!-- 👉 Primary color -->
                         <h6 class="mt-3 tiggie-text">Primary Color</h6>
                         <div class="d-flex gap-x-4 mt-2">
-                            <div
-                                v-for="(color, index) in colors"
-                                :key="color"
-                                style="
-                                    width: 2.5rem;
-                                    height: 2.5rem;
-                                    border-radius: 0.5rem;
-                                    transition: all 0.25s ease;
-                                "
-                                :style="{
-                                    backgroundColor: getBoxColor(
-                                        initialThemeColors[color],
-                                        index
-                                    ),
-                                }"
-                                class="cursor-pointer d-flex align-center justify-center"
-                                :class="{
-                                    'elevation-4':
-                                        vuetifyTheme.current.value.colors
+                            <div v-for="(color, index) in colors" :key="color"
+                            style="width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;transition: all 0.25s ease;"
+                            :style="{backgroundColor: getBoxColor( initialThemeColors[color],index),}"
+                            class="cursor-pointer d-flex align-center justify-center"
+                            :class="{'elevation-4':vuetifyTheme.current.value.colors.primary === getBoxColor(initialThemeColors[color], index ),}"
+                            @click="setPrimaryColor(getBoxColor(initialThemeColors[color],index))">
+                            <VFadeTransition>
+                                    <VIcon v-show="vuetifyTheme.current.value.colors
                                             .primary ===
                                         getBoxColor(
                                             initialThemeColors[color],
                                             index
-                                        ),
-                                }"
-                                @click="
-                                    setPrimaryColor(
-                                        getBoxColor(
-                                            initialThemeColors[color],
-                                            index
                                         )
-                                    )
-                                "
-                            >
-                                <VFadeTransition>
-                                    <VIcon
-                                        v-show="
-                                            vuetifyTheme.current.value.colors
-                                                .primary ===
-                                            getBoxColor(
-                                                initialThemeColors[color],
-                                                index
-                                            )
-                                        "
-                                        icon="mdi-check"
-                                        color="white"
-                                    />
-                                </VFadeTransition>
+                                        " icon="mdi-check" color="white" />
+                            </VFadeTransition>
                             </div>
                         </div>
                         <h6 class="mt-3 tiggie-text">Secondary Color</h6>
                         <div class="d-flex gap-x-4 mt-2">
-                            <div
-                                v-for="(color, index) in secondaryColors"
-                                :key="color"
-                                style="
+                            <div v-for="(color, index) in secondaryColors" :key="color" style="
                                     width: 2.5rem;
                                     height: 2.5rem;
                                     border-radius: 0.5rem;
                                     transition: all 0.25s ease;
-                                "
-                                :style="{
+                                " :style="{
                                     backgroundColor: color,
-                                }"
-                                class="cursor-pointer d-flex align-center justify-center"
-                                :class="{
-                                    'elevation-4':
-                                        vuetifyTheme.current.value.colors
+                                }" class="cursor-pointer d-flex align-center justify-center" :class="{
+    'elevation-4':
+        vuetifyTheme.current.value.colors
+            .primary ===
+        getBoxColor(
+            initialThemeColors[color],
+            index
+        ),
+}" @click="
+    setPrimaryColor(
+        getBoxColor(
+            initialThemeColors[color],
+            index
+        )
+    )
+    ">
+                                <VFadeTransition>
+                                    <VIcon v-show="vuetifyTheme.current.value.colors
                                             .primary ===
                                         getBoxColor(
                                             initialThemeColors[color],
                                             index
-                                        ),
-                                }"
-                                @click="
-                                    setPrimaryColor(
-                                        getBoxColor(
-                                            initialThemeColors[color],
-                                            index
                                         )
-                                    )
-                                "
-                            >
-                                <VFadeTransition>
-                                    <VIcon
-                                        v-show="
-                                            vuetifyTheme.current.value.colors
-                                                .primary ===
-                                            getBoxColor(
-                                                initialThemeColors[color],
-                                                index
-                                            )
-                                        "
-                                        icon="mdi-check"
-                                        color="white"
-                                    />
+                                        " icon="mdi-check" color="white" />
                                 </VFadeTransition>
                             </div>
                         </div>
@@ -229,57 +173,35 @@ const updateTheme = () => {
                         <!-- 👉 Content Width -->
                         <h6 class="text-base tiggie-text">Content width</h6>
                         <VRadioGroup v-model="appContentWidth" inline>
-                            <VRadio
-                                v-for="[key, val] in Object.entries(
-                                    ContentWidth
-                                )"
-                                :key="key"
-                                :label="key"
-                                :value="val"
-                            />
+                            <VRadio v-for="[key, val] in Object.entries(
+                                ContentWidth
+                            )" :key="key" :label="key" :value="val" />
                         </VRadioGroup>
                         <!-- 👉 Navbar Type -->
                         <h6 class="mt-3 tiggie-text">
                             {{
                                 appContentLayoutNav ===
                                 AppContentLayoutNav.Vertical
-                                    ? "Navbar"
-                                    : "Header"
+                                ? "Navbar"
+                                : "Header"
                             }}
                             Type
                         </h6>
                         <VRadioGroup v-model="navbarType" inline>
-                            <VRadio
-                                v-for="[key, val] in headerValues"
-                                :key="key"
-                                :label="key"
-                                :value="val"
-                            />
+                            <VRadio v-for="[key, val] in headerValues" :key="key" :label="key" :value="val" />
                         </VRadioGroup>
                         <!-- 👉 Footer Type -->
                         <h6 class="mt-3 tiggie-text">Footer Type</h6>
                         <VRadioGroup v-model="footerType" inline>
-                            <VRadio
-                                v-for="[key, val] in Object.entries(FooterType)"
-                                :key="key"
-                                :label="key"
-                                :value="val"
-                            />
+                            <VRadio v-for="[key, val] in Object.entries(FooterType)" :key="key" :label="key" :value="val" />
                         </VRadioGroup>
                         <!-- 👉 Navbar blur -->
                         <div class="d-flex align-center justify-space-between">
-                            <VLabel
-                                for="customizer-navbar-blur"
-                                class="text-high-emphasis"
-                            >
+                            <VLabel for="customizer-navbar-blur" class="text-high-emphasis">
                                 Navbar Blur
                             </VLabel>
                             <div>
-                                <VSwitch
-                                    id="customizer-navbar-blur"
-                                    v-model="isNavbarBlurEnabled"
-                                    class="ms-2"
-                                />
+                                <VSwitch id="customizer-navbar-blur" v-model="isNavbarBlurEnabled" class="ms-2" />
                             </div>
                         </div>
                     </CustomizerSection>
@@ -287,31 +209,19 @@ const updateTheme = () => {
                         <!-- 👉 Menu Type -->
                         <h6 class="text-base tiggie-text">Menu Type</h6>
                         <VRadioGroup v-model="appContentLayoutNav" inline>
-                            <VRadio
-                                v-for="[key, val] in Object.entries(
-                                    AppContentLayoutNav
-                                )"
-                                :key="key"
-                                :label="key"
-                                :value="val"
-                            />
+                            <VRadio v-for="[key, val] in Object.entries(
+                                AppContentLayoutNav
+                            )" :key="key" :label="key" :value="val" />
                         </VRadioGroup>
                     </CustomizerSection>
                     <CustomizerSection title="Misc">
                         <!-- 👉 RTL -->
                         <div class="d-flex align-center justify-space-between">
-                            <VLabel
-                                for="customizer-rtl"
-                                class="text-high-emphasis"
-                            >
+                            <VLabel for="customizer-rtl" class="text-high-emphasis">
                                 RTL
                             </VLabel>
                             <div>
-                                <VSwitch
-                                    id="customizer-rtl"
-                                    v-model="isAppRtl"
-                                    class="ms-2"
-                                />
+                                <VSwitch id="customizer-rtl" v-model="isAppRtl" class="ms-2" />
                             </div>
                         </div>
                     </CustomizerSection>
@@ -319,13 +229,7 @@ const updateTheme = () => {
             </VRow>
             <VRow justify="center">
                 <VCol cols="4" justify="center" class="ml-2">
-                    <VBtn
-                        type="button"
-                        @click="updateTheme()"
-                        class="tiggie-btn text-white"
-                        height="50"
-                        width="200"
-                    >
+                    <VBtn type="button" @click="updateTheme()" class="tiggie-btn text-white" height="50" width="200">
                         Set Theme
                     </VBtn>
                 </VCol>
