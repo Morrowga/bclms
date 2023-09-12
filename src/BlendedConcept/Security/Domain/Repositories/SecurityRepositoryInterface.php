@@ -18,10 +18,16 @@ interface SecurityRepositoryInterface
     public function getUsers($filters = []);
 
     //get users by role
-    public function getB2bTeachers($filters = []);
+    public function getB2bTeachers();
 
     //get b2c users
-    public function getB2cUsers($filters = []);
+    public function getB2cUsers();
+
+    //bcstaff
+    public function getBcStaff($filters = []);
+
+    //b2bteacherbyorganization
+    public function getB2bTeachersByOrganization($id);
 
     // get only user name
     public function getUsersName();
