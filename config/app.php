@@ -199,6 +199,8 @@ return [
         \Src\BlendedConcept\Student\Application\Providers\StudentServiceProvider::class,
         \Src\BlendedConcept\ClassRoom\Application\Providers\ClassRoomServiceProvider::class,
         \Src\BlendedConcept\Teacher\Application\Providers\TeacherServiceProvider::class,
+        \Src\BlendedConcept\Finance\Application\Providers\PlanServiceProvider::class,
+        \Src\BlendedConcept\Finance\Application\Providers\SubscriptionServiceProvider::class,
 
         /*
          * Domain Routes Service Providers...

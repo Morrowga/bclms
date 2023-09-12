@@ -2,32 +2,40 @@
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-import UpdateSubscrptionStatus from "./components/UpdateSubscrptionStatus.vue";
+import UpdateB2bSubscription from "./components/UpdateB2bSubscription.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-
-let props = defineProps();
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
+const props = defineProps(["subscriptions", "flash"]);
 
 //## start datatable section
 let columns = [
     {
         label: "Organization Name",
-        field: "user",
+        field: "org_name",
         sortable: false,
     },
     {
         label: "Teachers",
-        field: "teachers",
+        field: "num_teacher_license",
         sortable: false,
     },
     {
         label: "Students",
-        field: "students",
+        field: "num_student_license",
         sortable: false,
     },
     {
         label: "Storage",
-        field: "storage",
+        field: "storage_limit",
         sortable: false,
     },
     {
@@ -42,7 +50,7 @@ let columns = [
     },
     {
         label: "Status",
-        field: "status",
+        field: "stripe_status",
         sortable: false,
     },
     {
@@ -52,50 +60,8 @@ let columns = [
     },
 ];
 
-let rows = [
-    {
-        user: "Blended Concept",
-        teachers: 1,
-        students: 1,
-        storage: "10GB",
-        start_date: "02/07/23",
-        end_date: "02/08/23",
-        plan: 1,
-        status: 1,
-    },
-    {
-        user: "Blended Concept",
-        teachers: 1,
-        students: 1,
-        storage: "10GB",
-        start_date: "02/07/23",
-        end_date: "02/08/23",
-        plan: 0,
-        status: 0,
-    },
-    {
-        user: "Blended Concept",
-        teachers: 1,
-        students: 1,
-        storage: "10GB",
-        start_date: "02/07/23",
-        end_date: "02/08/23",
-        plan: 1,
-        status: 1,
-    },
-    {
-        user: "Blended Concept",
-        teachers: 1,
-        students: 1,
-        storage: "10GB",
-        start_date: "02/07/23",
-        end_date: "02/08/23",
-        plan: 0,
-        status: 1,
-    },
-];
-
-const items = ["Foo", "Bar"];
+serverPage.value = ref(props.subscriptions.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
 
 //## truncatedText
 let truncatedText = (text) => {
@@ -107,7 +73,23 @@ let truncatedText = (text) => {
         }
     }
 };
+let options = ref({
+    enabled: true,
+    mode: "pages",
+    perPage: props.subscriptions?.meta?.per_page,
+    setCurrentPage: props?.subscriptions?.meta?.current_page,
+    perPageDropdown: [10, 20, 50, 100],
+    dropdownAllowAll: false,
+});
+let form = useForm({
+    status: "INACTIVE",
+    _method: "PUT",
+});
+watch(serverPerPage, function (value) {
+    onPerPageChange(value);
+});
 
+const items = ["Foo", "Bar"];
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
@@ -151,38 +133,40 @@ const getInvoice = () => {
             <vue-good-table
                 class="role-data-table"
                 styleClass="vgt-table"
-                v-on:selected-rows-change="selectionChanged"
+                @column-filter="onColumnFilter"
+                :totalRows="props.subscriptions.meta.total"
+                :selected-rows-change="selectionChanged"
+                :pagination-options="options"
+                :rows="props.subscriptions.data"
                 :columns="columns"
-                :rows="rows"
                 :select-options="{
                     enabled: true,
-                }"
-                :pagination-options="{
-                    enabled: true,
+                    selectOnCheckboxOnly: true,
                 }"
             >
                 <template #table-row="dataProps">
-                    <div v-if="dataProps.column.field == 'plan'">
-                        <div class="d-flex flex-row align-center gap-2">
-                            <span
-                                v-if="dataProps.row.plan"
-                                class="d-flex flex-row justify-center align-center gap-2"
-                            >
-                                <img src="/images/icons/freeplan.svg" />
-                                <span>free plan</span>
-                            </span>
-                            <span
-                                v-else
-                                class="d-flex flex-row align-center gap-2"
-                            >
-                                <img src="/images/icons/proplan.svg" />
-                                <span>pro plan</span>
-                            </span>
-                            <span>{{ dataProps.column.field }}</span>
-                        </div>
+                    <div v-if="dataProps.column.field == 'org_name'">
+                        <span>{{ dataProps.row?.organization?.name }}</span>
                     </div>
-                    <div v-if="dataProps.column.field == 'status'">
-                        <div v-if="dataProps.row.status">
+                    <div v-if="dataProps.column.field == 'num_student_license'">
+                        <span>{{
+                            dataProps.row?.b2b_subscription
+                                ?.num_student_license ?? 0
+                        }}</span>
+                    </div>
+                    <div v-if="dataProps.column.field == 'num_teacher_license'">
+                        <span>{{
+                            dataProps.row?.b2b_subscription
+                                ?.num_teacher_license ?? 0
+                        }}</span>
+                    </div>
+                    <div v-if="dataProps.column.field == 'storage_limit'">
+                        <span>{{
+                            dataProps.row?.b2b_subscription?.storage_limit ?? 0
+                        }}</span>
+                    </div>
+                    <div v-if="dataProps.column.field == 'stripe_status'">
+                        <div v-if="dataProps.row.stripe_status == 'ACTIVE'">
                             <VChip color="success"> Active </VChip>
                         </div>
                         <div v-else>
@@ -201,17 +185,12 @@ const getInvoice = () => {
                                 />
                             </template>
                             <VList>
-                                <VListItem
-                                    @click="
-                                        () =>
-                                            router.get(
-                                                route('organizations.show', {
-                                                    id: props.row.id,
-                                                })
-                                            )
-                                    "
-                                >
-                                    <UpdateSubscrptionStatus />
+                                <VListItem @click="() => {}">
+                                    <UpdateB2bSubscription
+                                        :key="dataProps.row.id"
+                                        :subscription="dataProps.row"
+                                        :flash="props.flash"
+                                    />
                                 </VListItem>
                                 <VListItem @click="getInvoice()">
                                     <VListItemTitle>Get Invoice</VListItemTitle>
@@ -219,6 +198,39 @@ const getInvoice = () => {
                             </VList>
                         </VMenu>
                     </div>
+                </template>
+                <template #pagination-bottom>
+                    <VRow class="pa-4">
+                        <VCol cols="12" class="d-flex justify-space-between">
+                            <span>
+                                Showing
+                                {{ props.subscriptions.meta.from }} to
+                                {{ props.subscriptions.meta.to }} of
+                                {{ props.subscriptions.meta.total }}
+                                entries
+                            </span>
+                            <div class="d-flex">
+                                <div class="d-flex align-center">
+                                    <span class="me-2">Show</span>
+                                    <VSelect
+                                        v-model="serverPerPage"
+                                        density="compact"
+                                        :items="options.perPageDropdown"
+                                    >
+                                    </VSelect>
+                                </div>
+                                <VPagination
+                                    v-model="serverPage"
+                                    size="small"
+                                    :total-visible="5"
+                                    :length="props.subscriptions.meta.last_page"
+                                    @next="onPageChange"
+                                    @prev="onPageChange"
+                                    @click="onPageChange"
+                                />
+                            </div>
+                        </VCol>
+                    </VRow>
                 </template>
             </vue-good-table>
 

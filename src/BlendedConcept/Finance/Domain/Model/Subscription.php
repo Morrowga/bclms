@@ -8,10 +8,10 @@ class Subscription extends AggregateRoot
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly string $start_date,
-        public readonly string $end_date,
-        public readonly string $payment_date,
-        public readonly string $payment_status,
+        public readonly ?string $start_date,
+        public readonly ?string $end_date,
+        public readonly ?string $payment_date,
+        public readonly ?string $payment_status,
         public readonly ?string $stripe_status,
         public readonly ?string $stripe_price,
     ) {
@@ -27,7 +27,6 @@ class Subscription extends AggregateRoot
             'payment_status' => $this->payment_status,
             'stripe_status' => $this->stripe_status,
             'stripe_price' => $this->stripe_price,
-
         ];
     }
 }
