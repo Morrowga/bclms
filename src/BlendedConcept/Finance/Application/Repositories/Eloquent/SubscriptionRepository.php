@@ -52,24 +52,24 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
     }
     public function updateB2cSubscription(SubscriptionData $subscriptionData)
     {
-        // DB::beginTransaction();
+        DB::beginTransaction();
 
-        // try {
-        $subscriptionDataArray = $subscriptionData->toArray();
+        try {
+            $subscriptionDataArray = $subscriptionData->toArray();
 
-        $subscriptionEloquent = SubscriptionEloquentModel::query()->findOrFail($subscriptionData->id);
-        $subscriptionEloquent->fill($subscriptionDataArray);
-        $subscriptionEloquent->update();
-        $b2bSubscriptionEloquent = new B2cSubscriptionEloquentModel();
-        $b2bSubscriptionEloquent->subscription_id = $subscriptionEloquent->id;
-        $b2bSubscriptionEloquent->plan_id = $subscriptionData->plan_id;
-        $b2bSubscriptionEloquent->user_id = $subscriptionData->user_id;
-        $b2bSubscriptionEloquent->save();
-        // } catch (\Exception $error) {
-        //     DB::rollBack();
-        //     dd($error);
-        // }
+            $subscriptionEloquent = SubscriptionEloquentModel::query()->findOrFail($subscriptionData->id);
+            $subscriptionEloquent->fill($subscriptionDataArray);
+            $subscriptionEloquent->update();
+            $b2bSubscriptionEloquent = new B2cSubscriptionEloquentModel();
+            $b2bSubscriptionEloquent->subscription_id = $subscriptionEloquent->id;
+            $b2bSubscriptionEloquent->plan_id = $subscriptionData->plan_id;
+            $b2bSubscriptionEloquent->user_id = $subscriptionData->user_id;
+            $b2bSubscriptionEloquent->save();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            dd($error);
+        }
 
-        // DB::commit();
+        DB::commit();
     }
 }
