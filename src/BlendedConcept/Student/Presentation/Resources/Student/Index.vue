@@ -210,7 +210,7 @@ watch(serverPerPage, function (value) {
                         :selected-rows-change="selectionChanged"
                         styleClass="vgt-table "
                         :pagination-options="options"
-                        :rows="rows"
+                        :rows="props.students.data"
                         :columns="columns"
                         :select-options="{
                             enabled: true,
