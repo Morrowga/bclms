@@ -2,7 +2,7 @@
 import { ref, defineEmits } from "vue";
 import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
 import { SuccessDialog } from "@actions/useSuccess";
-
+import { useForm } from "@inertiajs/vue3";
 const isDialogVisible = ref(false);
 let props = defineProps(["type"]);
 const emit = defineEmits();
@@ -15,7 +15,11 @@ const items = [
 const uploadedImages = ref([]);
 const fileInput = ref(null);
 
-console.log(props.type);
+const form = useForm({
+  organization_id : "",
+  file:"",
+  type:"",
+})
 
 const handleDrop = (event) => {
     event.preventDefault();
@@ -33,30 +37,10 @@ const handleDrop = (event) => {
 };
 
 const importUser = () => {
-    // isDialogVisible.value = false;
     console.log(uploadedImages.value);
-    // emit("closeDialog");
-    // SuccessDialog({ title: "You have successfully imported users" });
+
 };
-// const openFileInput = () => {
-//   fileInput.value.click();
-// };
 
-// const handleFileUpload = (event) => {
-//   const files = event.target.files;
-
-//   if (files.length > 0) {
-//     for (const file of files) {
-//         uploadedImages.value.push({
-//         file: file,
-//         src: URL.createObjectURL(file),
-//         name: file.name
-//       });
-//     }
-//   }
-
-//   fileInput.value.value = '';
-// };
 
 const removeUploadedItem = (index) => {
     uploadedImages.value.splice(index, 1);
@@ -91,7 +75,7 @@ const removeUploadedItem = (index) => {
                     size="30px"
                 />
             </VCardTitle>
-            <ImageUpload data_type="user" />
+            <ImageUpload data_type="user" v-model="form.file" />
 
             <VCardActions
                 class="d-flex justify-space-between gap-5 ml-7 mr-7 mt-5"

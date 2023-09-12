@@ -6,6 +6,7 @@ import { staticPrimaryColor } from "@/plugins/vuetify/theme";
 import { useThemeConfig } from "@core/composable/useThemeConfig";
 import { RouteTransitions, Skins } from "@core/enums";
 import { SuccessDialog } from "@actions/useSuccess";
+import { Link, useForm } from "@inertiajs/vue3";
 
 import {
     AppContentLayoutNav,
@@ -31,6 +32,17 @@ const {
     isLessThanOverlayNavBreakpoint,
 } = useThemeConfig();
 
+
+const form = useForm({
+    "skins": "",
+    "themes": "",
+    "primary_color": "",
+    "secondary_color": "",
+    "content_with": "",
+    "header_type": "",
+    "footer_type": "",
+    "menu_type": ""
+});
 // 👉 Primary Color
 const vuetifyTheme = useTheme();
 
@@ -106,28 +118,47 @@ const updateTheme = () => {
                                 'system',
                                 'light',
                                 'dark',
-                            ]" :key="themeOption" :label="themeOption" :value="themeOption"
-                                class="text-capitalize" />
+                            ]" :key="themeOption" :label="themeOption" :value="themeOption" class="text-capitalize" />
                         </VRadioGroup>
 
                         <!-- 👉 Primary color -->
                         <h6 class="mt-3 tiggie-text">Primary Color</h6>
                         <div class="d-flex gap-x-4 mt-2">
-                            <div v-for="(color, index) in colors" :key="color"
-                            style="width: 2.5rem; height: 2.5rem; border-radius: 0.5rem;transition: all 0.25s ease;"
-                            :style="{backgroundColor: getBoxColor( initialThemeColors[color],index),}"
-                            class="cursor-pointer d-flex align-center justify-center"
-                            :class="{'elevation-4':vuetifyTheme.current.value.colors.primary === getBoxColor(initialThemeColors[color], index ),}"
-                            @click="setPrimaryColor(getBoxColor(initialThemeColors[color],index))">
-                            <VFadeTransition>
+                            <div v-for="(color, index) in colors" :key="color" style="
+                                    width: 2.5rem;
+                                    height: 2.5rem;
+                                    border-radius: 0.5rem;
+                                    transition: all 0.25s ease;
+                                " :style="{
+                                    backgroundColor: getBoxColor(
+                                        initialThemeColors[color],
+                                        index
+                                    ),
+                                }" class="cursor-pointer d-flex align-center justify-center" :class="{
+    'elevation-4':
+        vuetifyTheme.current.value.colors
+            .primary ===
+        getBoxColor(
+            initialThemeColors[color],
+            index
+        ),
+}" @click="
+    setPrimaryColor(
+        getBoxColor(
+            initialThemeColors[color],
+            index
+        )
+    )
+    ">
+                                <VFadeTransition>
                                     <VIcon v-show="vuetifyTheme.current.value.colors
-                                            .primary ===
+                                        .primary ===
                                         getBoxColor(
                                             initialThemeColors[color],
                                             index
                                         )
                                         " icon="mdi-check" color="white" />
-                            </VFadeTransition>
+                                </VFadeTransition>
                             </div>
                         </div>
                         <h6 class="mt-3 tiggie-text">Secondary Color</h6>
@@ -157,7 +188,7 @@ const updateTheme = () => {
     ">
                                 <VFadeTransition>
                                     <VIcon v-show="vuetifyTheme.current.value.colors
-                                            .primary ===
+                                        .primary ===
                                         getBoxColor(
                                             initialThemeColors[color],
                                             index
