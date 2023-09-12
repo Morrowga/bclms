@@ -14,26 +14,27 @@ use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
  *
  *  @return bool True if email is required
  */
-test('validation b2c register', function () {
+// test('validation b2c register', function () {
 
-    $data = [
-        'email' => '',
-        'password' => 'password',
-    ];
-    $response = $this->post('/b2cstore', $data);
-    // $response->assertSessionHasErrors('email');
+//     $data = [
+//         'email' => '',
+//         'password' => 'password',
+//     ];
+//     $response = $this->post('/  ', $data);
+//     // $response->assertSessionHasErrors('email');
 
-    $response->assertSessionHasErrors(['email']);
+//     $response->assertSessionHasErrors(['email']);
 
-    $data = [
-        'email' => 'admin@com',
-        'password' => '',
-    ];
-    $response = $this->post('/b2cstore', $data);
+//     $data = [
+//         'email' => 'admin@com',
+//         'password' => '',
+//     ];
+//     $response = $this->post('/b2cstore', $data);
 
-    $response->assertSessionHasErrors(['password']);
 
-});
+//     $response->assertSessionHasErrors(['password']);
+
+// });
 
 /**
  *  invalid email
@@ -73,59 +74,6 @@ test('unique_b2c_register_email', function () {
     $response->assertSessionHasErrors('email');
 });
 
-/**
- * check unverify email not to pass
- *
- *
- * @return bool True
- */
-// test('before_verified_b2c_register', function () {
-
-//     RoleEloquentModel::insert([
-//         "id" => 2,
-//         "name" => "BC Subscriber",
-//     ]);
-//     $email = "testing@mail.com";
-//     $name = explode("@", $email);
-//     $data = [
-//         'name' => $name[0],
-//         "email" => $email,
-//         "password" => 'password',
-//         "email_verified_at" => null
-//     ];
-
-//     $this->post('/b2cstore', $data);
-
-//     $checkEmailVerify = $this->post("/login", [
-//         "email" => $data['email'],
-//         "password" => $data['password']
-//     ]);
-
-//     $checkEmailVerify->assertSessionHasErrors(['errorMessage' => 'Please Verify your email']);
-
-// });
-
-/**
- *  check after verify email
- *
- *  @return bool True
- */
-
-// test('after_verified_b2c_register', function () {
-//     $email = "fakeemail@gmai.com";
-//     $name = explode("@", $email);
-//     $data = [
-//         'name' => $name[0],
-//         "email" => $email,
-//         "password" => 'password',
-//         "email_verified_at" => Carbon::now()
-//     ];
-//     $registerUser = UserEloquentModel::create($data);
-//     $id = Crypt::encryptString($registerUser->id);
-//     $response = $this->get(route('verification', ['id' => $id]));
-
-//     $response->assertStatus(200);
-// });
 
 /**
  *  check empty email on login

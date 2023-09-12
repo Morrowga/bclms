@@ -2,7 +2,8 @@
 import { ref, defineEmits } from "vue";
 import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
 import { SuccessDialog } from "@actions/useSuccess";
-
+import { useForm,usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/core";
 const isDialogVisible = ref(false);
 let props = defineProps(["type"]);
 const emit = defineEmits();
@@ -15,7 +16,13 @@ const items = [
 const uploadedImages = ref([]);
 const fileInput = ref(null);
 
-console.log(props.type);
+let export_errors = computed(() => usePage().props.export_errors);
+
+const form = useForm({
+  organization_id : 1,
+  file:"",
+  type:"teacher",
+})
 
 const handleDrop = (event) => {
     event.preventDefault();
@@ -33,34 +40,36 @@ const handleDrop = (event) => {
 };
 
 const importUser = () => {
-    // isDialogVisible.value = false;
-    console.log(uploadedImages.value);
-    // emit("closeDialog");
-    // SuccessDialog({ title: "You have successfully imported users" });
+
+    form.post(route('teachers.import'),{
+        onSuccess : (response) => {
+            console.log(response)
+            if (export_errors.value && export_errors.value?.length > 0) {
+              const data = export_errors.value;
+              console.log(data,"okay par")
+            //   const fileName = "FailToImportStudent";
+            //   const exportType = exportFromJSON.types.csv;
+            //   if (data) exportFromJSON({ data, fileName, exportType });
+              return;
+            }
+
+        },
+        onError : (error)=> {
+            console.log(error,"not okay par")
+        }
+    })
+
 };
-// const openFileInput = () => {
-//   fileInput.value.click();
-// };
 
-// const handleFileUpload = (event) => {
-//   const files = event.target.files;
-
-//   if (files.length > 0) {
-//     for (const file of files) {
-//         uploadedImages.value.push({
-//         file: file,
-//         src: URL.createObjectURL(file),
-//         name: file.name
-//       });
-//     }
-//   }
-
-//   fileInput.value.value = '';
-// };
 
 const removeUploadedItem = (index) => {
     uploadedImages.value.splice(index, 1);
 };
+
+const handleImport = () =>
+{
+    alert("okay par")
+}
 </script>
 
 <template>
@@ -91,7 +100,7 @@ const removeUploadedItem = (index) => {
                     size="30px"
                 />
             </VCardTitle>
-            <ImageUpload data_type="user" />
+            <ImageUpload data_type="user" v-model="form.file" />
 
             <VCardActions
                 class="d-flex justify-space-between gap-5 ml-7 mr-7 mt-5"
@@ -110,7 +119,7 @@ const removeUploadedItem = (index) => {
                     variant="flat"
                     width="164px"
                     height="51px"
-                    @click="importUser()"
+                    @click="importUser"
                 >
                     <span class="text-light">Upload</span>
                 </VBtn>

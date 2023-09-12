@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             OrganizationAdminSeeder::class,
             B2BTeacherRoleSeeder::class,
             BCStaffRoleSeeder::class,
-            // StudentRoleSeeder::class
+            StudentRoleSeeder::class
         ]);
     }
 }

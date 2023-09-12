@@ -2,12 +2,37 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import { computed, defineProps } from "vue";
-import Swal from "sweetalert2";
-import avatar4 from "@images/avatars/avatar-4.png";
-import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-import { isConfirmedDialog } from "@actions/useConfirm";
+import { ref, defineProps } from "vue";
 import AnswerSupport from "./components/Index.vue"
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
+
+let options = ref({
+    enabled: true,
+    mode: "pages",
+    perPage: props.technicalSupportList?.meta?.per_page,
+    setCurrentPage: props?.technicalSupportList?.meta?.current_page,
+    perPageDropdown: [10, 20, 50, 100],
+    dropdownAllowAll: false,
+});
+
+serverPage.value = ref(props.technicalSupportList.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
+
+
+watch(serverPerPage, function (value) {
+    onPerPageChange(value);
+});
+
+const props = defineProps(['technicalSupportList']);
+
 
 </script>
 <template>
@@ -15,18 +40,14 @@ import AnswerSupport from "./components/Index.vue"
         <VContainer style="width: 80%; margin: 0 auto">
             <VRow justify="space-around">
                 <VCol cols="6">
-                    <h1 class="tiggie-teacher-title">Technical Support  </h1>
+                    <h1 class="tiggie-teacher-title">Technical Support </h1>
                 </VCol>
                 <VCol cols="6" class="text-end">
-                    <AnswerSupport/>
+                    <AnswerSupport />
                 </VCol>
                 <VCol cols="12">
-                    <VTextField
-                        placeholder="Search ..."
-                        append-inner-icon=""
-                        density="compact"
-                        rounded
-                    >
+                    <VTextField placeholder="Search ..." append-inner-icon="" density="compact" rounded
+                        @keyup.enter="searchItems" v-model="serverParams.search">
                         <template #append-inner>
                             <VIcon icon="mdi-magnify" size="30" />
                         </template>
@@ -42,14 +63,13 @@ import AnswerSupport from "./components/Index.vue"
                         </VCol>
                         <VCol cols="3">
                             <VLabel class="tiggie-label">
-                                 Answer
+                                Answer
                             </VLabel>
                         </VCol>
                         <VCol cols="3">
                             <VLabel class="tiggie-label">
-                                 Date
-                                </VLabel
-                            >
+                                Date
+                            </VLabel>
                             <VIcon icon="mdi-menu-down"></VIcon>
                         </VCol>
 
@@ -60,34 +80,42 @@ import AnswerSupport from "./components/Index.vue"
                             <VIcon icon="mdi-menu-down"></VIcon>
                         </VCol>
                     </VRow>
-                    <VRow
-                        class="bg-line mx-1 rounded pa-1 my-2"
-                        align="center">
+                    <VRow class="bg-line mx-1 rounded pa-1 my-2"
+                        v-for="(technicalSupportIndex, index) in props.technicalSupportList.data"
+                        :key="technicalSupportIndex.id" align="center">
 
                         <VCol cols="3">
                             <span>
-                                The computer is saying ‘press any key’ but i’m struggling to find it
+                                {{ technicalSupportIndex.question }}
                             </span>
                         </VCol>
                         <VCol cols="3">
-                            <span class="">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna al
+                            <span>
+                                {{
+                                    technicalSupportIndex.response ?? "-"
+                                }}
                             </span>
+
                         </VCol>
                         <VCol cols="3">
-                            <p class="tiggie-p">10/1/2023</p>
+                            <p class="tiggie-p">
+                                {{ technicalSupportIndex.date }}
+                            </p>
                         </VCol>
 
                         <VCol cols="3">
-                           <VChip color="success">Active</VChip>
+                            <VChip color="success">Active</VChip>
                         </VCol>
                     </VRow>
                     <VRow justify="center" align="center">
                         <VPagination
-                            v-model="currentPage"
-                            variant="outlined"
-                            :length="5"
-                        />
+                        v-model="serverPage"
+                        size="small"
+                        :total-visible="5"
+                        :length="props.technicalSupportList.meta.last_page"
+                        @next="onPageChange"
+                        @prev="onPageChange"
+                        @click="onPageChange" variant="outlined" />
                     </VRow>
                 </VCol>
             </VRow>
@@ -105,10 +133,10 @@ import AnswerSupport from "./components/Index.vue"
 }
 
 .table-header-tech-support {
-height: 46px !important;
-border-radius: 14px !important;
-border: 1px solid  #E5E5E5 !important;
-background: #F6F6F6 !important;
+    height: 46px !important;
+    border-radius: 14px !important;
+    border: 1px solid #E5E5E5 !important;
+    background: #F6F6F6 !important;
 
 }
 </style>

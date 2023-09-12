@@ -11,9 +11,9 @@ class TechnicalSupport extends Entity
     public function __construct(
 
         public readonly ?int $id,
-        public readonly int $user_id,
-        public readonly string $date,
-        public readonly string $has_responsed,
+        public readonly ?int $user_id,
+        public readonly ?string $date,
+        public readonly ?string $has_responded,
         public readonly string $question,
         public readonly ?string $response,
     ) {
@@ -25,7 +25,7 @@ class TechnicalSupport extends Entity
             'id' => $this->id,
             'user_id' => $this->user_id,
             'date' => $this->date,
-            'has_responsed' => $this->has_responsed,
+            'has_responded' => $this->has_responded,
             'question' => $this->question,
             'response' => $this->response,
         ];

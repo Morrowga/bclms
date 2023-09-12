@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
             $table->date('date');
             $table->boolean('has_responded');
-            $table->string('question');
-            $table->string('response');
+            $table->longText('question');
+            $table->longText('response')->nullable();
             $table->timestamps();
         });
     }

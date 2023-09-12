@@ -7,6 +7,7 @@ namespace Src\BlendedConcept\Student\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 
 class StudentEloquentModel extends Model implements HasMedia
 {
@@ -18,7 +19,7 @@ class StudentEloquentModel extends Model implements HasMedia
     protected $appends = [
         'image',
     ];
-
+    protected $primaryKey = 'student_id';
     protected $fillable = [
         'user_id',
         'device_id',
@@ -40,10 +41,15 @@ class StudentEloquentModel extends Model implements HasMedia
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->orWhere('name', 'like', '%'.$search.'%');
+            $query->orWhere('name', 'like', '%' . $search . '%');
         });
+    }
+
+    public function b2cUsers()
+    {
+        return $this->belongsToMany(B2cUserEloquentModel::class, 'b2c_students', 'student_id', 'b2c_user_id');
     }
 }

@@ -53,6 +53,8 @@ class HandleInertiaRequest extends Middleware
             'site_settings' => SiteSettingEloquentModel::find(1) ?? '',
             'site_logo' => SiteSettingEloquentModel::find(1)->getFirstMedia('site_logo')->original_url ?? '',
             'fav_icon' => SiteSettingEloquentModel::find(1)->getFirstMedia('fav_icon')->original_url ?? '',
+            // import error handling as csv format
+            'export_errors' => fn () => $request->session()->get('export_errors') ?? null
 
         ]);
     }
