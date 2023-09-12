@@ -51,17 +51,12 @@ let columns = [
     },
     {
         label: "Announcement by",
-        field: "author_id",
+        field: "by",
         sortable: false,
     },
     {
         label: "Announment to",
-        field: "target_role_id",
-        sortable: false,
-    },
-    {
-        label: "Announment Icon",
-        field: "icon",
+        field: "to",
         sortable: false,
     },
       {
@@ -156,10 +151,11 @@ const deleteAnnouncement = (id) => {
                                 class="flex flex-wrap"
                             >
                                 <div class="d-flex flex-row gap-2">
-                                    <img
+                                    <VIcon class="icon-column" :icon="props.row.icon"></VIcon>
+                                    <!-- <img
                                     src="/images/icons/award-02.svg"
                                         class="user-profile-image"
-                                    />
+                                    /> -->
                                     <span class="pt-1">{{
                                         props.row.title
                                     }}</span>
@@ -174,29 +170,29 @@ const deleteAnnouncement = (id) => {
                                 }}</span>
                             </div>
                             <div
-                                v-if="props.column.field == 'author_id'"
+                                v-if="props.column.field == 'by'"
                                 class="flex flex-wrap"
                             >
                                 <span>{{
-                                    truncatedText(props.row.author_id.name)
+                                    truncatedText(props.row.by)
                                 }}</span>
                             </div>
                             <div
-                                v-if="props.column.field == 'target_role_id'"
+                                v-if="props.column.field == 'to'"
                                 class="flex flex-wrap"
                             >
                                 <span>{{
-                                    truncatedText(props.row.target_role_id.name)
+                                    truncatedText(props.row.to)
                                 }}</span>
                             </div>
-                            <div
+                            <!-- <div
                                 v-if="props.column.field == 'icon'"
                                 class="flex flex-wrap"
                             >
                                 <span class="text-center">
                                     <VIcon :icon="props.row.icon"></VIcon>
                                 </span>
-                            </div>
+                            </div> -->
                             <div v-if="props.column.field == 'action'">
                             <VMenu location="end">
                                 <template #activator="{ props }">
@@ -302,5 +298,16 @@ const deleteAnnouncement = (id) => {
 
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
+
+.icon-column{
+    // border-radius: 64px;
+    display: flex;
+    width: 30px !important;
+    height: 30px !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
 }
 </style>

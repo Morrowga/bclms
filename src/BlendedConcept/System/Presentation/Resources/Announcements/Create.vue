@@ -28,12 +28,12 @@ const visibleToTeacherSelectBox = ref(true);
 const visibleToBcStaffSelectBox = ref(true);
 const visibleToB2bTeacherList = ref(true);
 
-const organization_user_ids = ref([]);
-const b2c_user_ids = ref([]);
-const b2b_teacher_ids = ref([]);
-const bc_staff_ids = ref([]);
-const b2bteacherbyorg_ids = ref([]);
-const orglist = ref([]);
+let organization_user_ids = ref([]);
+let b2c_user_ids = ref([]);
+let b2b_teacher_ids = ref([]);
+let bc_staff_ids = ref([]);
+let b2bteacherbyorg_ids = ref([]);
+let orglist = ref([]);
 
 const form = useForm({
   title: "",
@@ -1380,28 +1380,26 @@ watch(searchIcon, (newSearchIcon) => {
 
 let onFormSubmit = () => {
     for (let i = 0; i < organization_user_ids.value.length; i++) {
-        form.org.push(organization_user_ids.value[i].id)
+        form.org.push(organization_user_ids.value[i])
     }
     for (let i = 0; i < b2bteacherbyorg_ids.value.length; i++) {
-        if(!form.users.includes(b2bteacherbyorg_ids.value[i].id)){
-            form.users.push(b2bteacherbyorg_ids.value[i].id)
-        }
+        form.users.push(b2bteacherbyorg_ids.value[i])
     }
     for (let i = 0; i < b2b_teacher_ids.value.length; i++) {
-        if(!form.users.includes(b2b_teacher_ids.value[i].id)){
-            form.users.push(b2b_teacher_ids.value[i].id)
-        }
+        form.users.push(b2b_teacher_ids.value[i])
     }
+
     for (let i = 0; i < bc_staff_ids.value.length; i++) {
-        if(!form.users.includes(bc_staff_ids.value[i].id)){
-            form.users.push(bc_staff_ids.value[i].id)
-        }
+        form.users.push(bc_staff_ids.value[i])
     }
+    console.log(bc_staff_ids.value);
+
      for (let i = 0; i < b2c_user_ids.value.length; i++) {
-        if(!form.users.includes(b2c_user_ids.value[i].id)){
-            form.users.push(b2c_user_ids.value[i].id)
-        }
+        form.users.push(b2c_user_ids.value[i])
     }
+
+    form.users = JSON.stringify(form.users)
+    form.org = JSON.stringify(form.org)
 
     let toArray = [];
     organization_user_ids.value.length > 0 ? toArray.push('Organizations Admins') : '';
@@ -1412,15 +1410,33 @@ let onFormSubmit = () => {
     form.to = toArray.join(', ')
 
     console.log(form);
-//     form.post(route("announcements.store"), {
-//     onSuccess: () => {
-//         SuccessDialog({ title: "You've successfully posted announcement" });
-//     },
-//     onError: (error) => {
-//     //   form.setError("email", error?.email);
-//     //   form.setError("password", error?.password);
-//     },
-//   });
+    // refForm.value?.resetValidation();
+    form.post(route("announcements.store"), {
+    onSuccess: () => {
+        form.reset();
+        form.org = [];
+        form.users = [];
+        organization_user_ids.value = [];
+        b2c_user_ids.value = [];
+        b2b_teacher_ids.value = [];
+        bc_staff_ids.value = [];
+        b2bteacherbyorg_ids.value = [];
+
+        visibleToSelectBox.value = true;
+        visibleToOriginizationList.value = true;
+        visibleToOrganizationSelectBox.value = true
+        visibleToB2CUserSelectBox.value = true
+        visibleToTeacherSelectBox.value = true
+        visibleToBcStaffSelectBox.value = true
+        visibleToB2bTeacherList.value = true
+    // refForm.value?.reset();
+        SuccessDialog({ title: "You've successfully posted announcement" });
+    },
+    onError: (error) => {
+    //   form.setError("email", error?.email);
+    //   form.setError("password", error?.password);
+    },
+  });
 };
 
 let getTeacherByOrganization = (id) => {
