@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id('student_id');
+            $table->bigIncrements('student_id');
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('device_id')->nullable()->references('id')->on('devices')->cascadeOnDelete();
             $table->string('gender');
