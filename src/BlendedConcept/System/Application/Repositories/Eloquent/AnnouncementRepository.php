@@ -145,12 +145,30 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     public function updateAnnouncement(AnnounmentData $annountment)
     {
         $announcementArray = $annountment->toArray();
-        $announemtEloquent = AnnouncementEloquentModel::query()->find($annountment->id);
-        $create_by_user = OrganizationEloquentModel::find($annountment->author_id);
-        $receive_user = UserEloquentModel::find($annountment->target_role_id);
-        $receive_user->notify(new BcNotification(['message' => $annountment->title, 'from' => $create_by_user->name, 'to' => $receive_user->name, 'type' => $annountment->type ?? '']));
+        $announemtEloquent = AnnouncementEloquentModel::query()->with(['announcement_to_b2c_user', 'announcement_to_b2b_user', 'announcement_to_bcstaff_user'])->find($annountment->id);
+        $create_by_user = OrganizationEloquentModel::find($annountment->to);
+        // $receive_user = UserEloquentModel::find($annountment->by);
         $announemtEloquent->fill($announcementArray);
         $announemtEloquent->save();
+
+        foreach($announemtEloquent->announcement_to_b2c_user as $b2cUser){
+            $b2cEloquent = B2cUserEloquentModel::where('b2c_user_id', $b2cUser->to_b2c_id)->with('users')->first();
+            if(!empty($b2cEloquent)){
+                $b2cEloquent->users->notify(new BcNotification(['message' => $annountment->title, 'from' => $announcement->to, 'to' => $b2cEloquent->users->full_name, 'type' => $annountment->type ?? '']));
+            }
+        }
+        foreach($announemtEloquent->announcement_to_b2b_user as $b2bUser){
+            $b2bEloquent = B2bUserEloquentModel::where('b2b_user_id', $b2bUser->to_b2b_id)->with('users')->first();
+            if(!empty($b2bEloquent)){
+                $b2bEloquent->users->notify(new BcNotification(['message' => $annountment->title, 'from' => $announcement->to, 'to' => $b2bEloquent->users->full_name, 'type' => $annountment->type ?? '']));
+            }
+        }
+        foreach($announemtEloquent->announcement_to_bcstaff_user as $bcStaff){
+            $bcStaffEloquent = UserEloquentModel::find($bcStaff->to_bc_staff_id);
+            if(!empty($bcStaffEloquent)){
+                $bcStaffEloquent->notify(new BcNotification(['message' => $annountment->title, 'from' => $announcement->to, 'to' => $bcStaffEloquent->full_name, 'type' => $annountment->type ?? '']));
+            }
+        }
     }
 
     public function delete(int $annountment_id): void

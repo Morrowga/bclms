@@ -20,127 +20,127 @@ const tos = ref([
     'B2C Users',
 ])
 
-const visibleToSelectBox = ref(true);
-const visibleToOriginizationList = ref(true);
-const visibleToOrganizationSelectBox = ref(true);
-const visibleToB2CUserSelectBox = ref(true);
-const visibleToTeacherSelectBox = ref(true);
-const visibleToBcStaffSelectBox = ref(true);
-const visibleToB2bTeacherList = ref(true);
+// const visibleToSelectBox = ref(true);
+// const visibleToOriginizationList = ref(true);
+// const visibleToOrganizationSelectBox = ref(true);
+// const visibleToB2CUserSelectBox = ref(true);
+// const visibleToTeacherSelectBox = ref(true);
+// const visibleToBcStaffSelectBox = ref(true);
+// const visibleToB2bTeacherList = ref(true);
 
-let organization_user_ids = ref([]);
-let b2c_user_ids = ref([]);
-let b2b_teacher_ids = ref([]);
-let bc_staff_ids = ref([]);
-let b2bteacherbyorg_ids = ref([]);
-let orglist = ref([]);
-console.log(props.announcement.data.to);
+// let organization_user_ids = ref([]);
+// let b2c_user_ids = ref([]);
+// let b2b_teacher_ids = ref([]);
+// let bc_staff_ids = ref([]);
+// let b2bteacherbyorg_ids = ref([]);
+// let orglist = ref([]);
+console.log(props.announcement.data.icon);
 const form = useForm({
-  title: "",
-  icon: "",
-  message: "",
+  title: props.announcement.data.title,
+  icon: props.announcement.data.icon,
+  message: props.announcement.data.message,
   to: props.announcement.data.to,
   by: props.announcement.data.by,
-  org: [],
-  users: []
+//   org: [],
+//   users: []
 });
 
-if(props.announcement.data.by === 'Organisation Admin'){
-    visibleToOriginizationList.value = false
-    visibleToB2bTeacherList.value = false
-} else {
-    visibleToSelectBox.value = false
-}
+// if(props.announcement.data.by === 'Organisation Admin'){
+//     visibleToOriginizationList.value = false
+//     visibleToB2bTeacherList.value = false
+// } else {
+//     visibleToSelectBox.value = false
+// }
 
 
-watch(() => form.by, (newValue, oldValue) => {
-    if(newValue != 'Select Group'){
-        if(newValue == 'Organisation Admin'){
-            visibleToOriginizationList.value = false
-            visibleToB2bTeacherList.value = false
-            visibleToSelectBox.value = true
-            visibleToOrganizationSelectBox.value = true
-            visibleToB2CUserSelectBox.value = true
-            visibleToTeacherSelectBox.value = true
-            visibleToBcStaffSelectBox.value = true
-        } else {
-            visibleToSelectBox.value = false;
-            visibleToOriginizationList.value = true
-            visibleToB2bTeacherList.value = true
-            visibleToOrganizationSelectBox.value = true
-            visibleToB2CUserSelectBox.value = true
-            visibleToTeacherSelectBox.value = true
-            visibleToBcStaffSelectBox.value = true
-        }
-    }
-});
+// watch(() => form.by, (newValue, oldValue) => {
+//     if(newValue != 'Select Group'){
+//         if(newValue == 'Organisation Admin'){
+//             visibleToOriginizationList.value = false
+//             visibleToB2bTeacherList.value = false
+//             visibleToSelectBox.value = true
+//             visibleToOrganizationSelectBox.value = true
+//             visibleToB2CUserSelectBox.value = true
+//             visibleToTeacherSelectBox.value = true
+//             visibleToBcStaffSelectBox.value = true
+//         } else {
+//             visibleToSelectBox.value = false;
+//             visibleToOriginizationList.value = true
+//             visibleToB2bTeacherList.value = true
+//             visibleToOrganizationSelectBox.value = true
+//             visibleToB2CUserSelectBox.value = true
+//             visibleToTeacherSelectBox.value = true
+//             visibleToBcStaffSelectBox.value = true
+//         }
+//     }
+// });
 
-watch(orglist, (newValue, oldValue) => {
-    console.log(newValue);
-    getTeacherByOrganization(newValue);
-})
+// watch(orglist, (newValue, oldValue) => {
+//     console.log(newValue);
+//     getTeacherByOrganization(newValue);
+// })
 
-watch(() => form.to, (newValue, oldValue) => {
-       if(newValue == 'All'){
-            visibleToOrganizationSelectBox.value = false
-            visibleToB2CUserSelectBox.value = false
-            visibleToTeacherSelectBox.value = false
-            visibleToBcStaffSelectBox.value = false
-        } else if(newValue == 'Organization Admin'){
-            visibleToOrganizationSelectBox.value = false
-            visibleToB2CUserSelectBox.value = true
-            visibleToTeacherSelectBox.value = true
-            visibleToBcStaffSelectBox.value = true
-        } else if(newValue == 'Organization Teacher'){
-            visibleToOrganizationSelectBox.value = true
-            visibleToB2CUserSelectBox.value = true
-            visibleToTeacherSelectBox.value = false
-            visibleToBcStaffSelectBox.value = true
-        } else if(newValue == 'B2C Users'){
-            visibleToOrganizationSelectBox.value = true
-            visibleToB2CUserSelectBox.value = false
-            visibleToTeacherSelectBox.value = true
-            visibleToBcStaffSelectBox.value = true
-        } else if(newValue == 'BC Staff') {
-            visibleToOrganizationSelectBox.value = true
-            visibleToB2CUserSelectBox.value = true
-            visibleToTeacherSelectBox.value = true
-            visibleToBcStaffSelectBox.value = false
-        }
-});
+// watch(() => form.to, (newValue, oldValue) => {
+//        if(newValue == 'All'){
+//             visibleToOrganizationSelectBox.value = false
+//             visibleToB2CUserSelectBox.value = false
+//             visibleToTeacherSelectBox.value = false
+//             visibleToBcStaffSelectBox.value = false
+//         } else if(newValue == 'Organization Admin'){
+//             visibleToOrganizationSelectBox.value = false
+//             visibleToB2CUserSelectBox.value = true
+//             visibleToTeacherSelectBox.value = true
+//             visibleToBcStaffSelectBox.value = true
+//         } else if(newValue == 'Organization Teacher'){
+//             visibleToOrganizationSelectBox.value = true
+//             visibleToB2CUserSelectBox.value = true
+//             visibleToTeacherSelectBox.value = false
+//             visibleToBcStaffSelectBox.value = true
+//         } else if(newValue == 'B2C Users'){
+//             visibleToOrganizationSelectBox.value = true
+//             visibleToB2CUserSelectBox.value = false
+//             visibleToTeacherSelectBox.value = true
+//             visibleToBcStaffSelectBox.value = true
+//         } else if(newValue == 'BC Staff') {
+//             visibleToOrganizationSelectBox.value = true
+//             visibleToB2CUserSelectBox.value = true
+//             visibleToTeacherSelectBox.value = true
+//             visibleToBcStaffSelectBox.value = false
+//         }
+// });
 
-const org_array = ref([])
-for (let i = 0; i < props.organizations.length; i++) {
-    org_array.value.push({
-        'id': props.organizations[i].id,
-        'name': props.organizations[i].name
-    })
-}
-const org_teacher_array = ref([])
-for (let i = 0; i < props.teachers.data.length; i++) {
-    org_teacher_array.value.push({
-        'id': props.teachers.data[i].id,
-        'name': props.teachers.data[i].first_name + ' ' + props.teachers.data[i].last_name
-    })
-}
+// const org_array = ref([])
+// for (let i = 0; i < props.organizations.length; i++) {
+//     org_array.value.push({
+//         'id': props.organizations[i].id,
+//         'name': props.organizations[i].name
+//     })
+// }
+// const org_teacher_array = ref([])
+// for (let i = 0; i < props.teachers.data.length; i++) {
+//     org_teacher_array.value.push({
+//         'id': props.teachers.data[i].id,
+//         'name': props.teachers.data[i].first_name + ' ' + props.teachers.data[i].last_name
+//     })
+// }
 
-const b2c_users_array = ref([])
-for (let i = 0; i < props.b2cUsers.data.length; i++) {
-    b2c_users_array.value.push({
-        'id': props.b2cUsers.data[i].id,
-        'name': props.b2cUsers.data[i].first_name + ' ' + props.b2cUsers.data[i].last_name
-    })
-}
+// const b2c_users_array = ref([])
+// for (let i = 0; i < props.b2cUsers.data.length; i++) {
+//     b2c_users_array.value.push({
+//         'id': props.b2cUsers.data[i].id,
+//         'name': props.b2cUsers.data[i].first_name + ' ' + props.b2cUsers.data[i].last_name
+//     })
+// }
 
-const bc_staff_array = ref([])
-for (let i = 0; i < props.bcStaff.data.length; i++) {
-    bc_staff_array.value.push({
-        'id': props.bcStaff.data[i].id,
-        'name': props.bcStaff.data[i].first_name + ' ' + props.bcStaff.data[i].last_name
-    })
-}
+// const bc_staff_array = ref([])
+// for (let i = 0; i < props.bcStaff.data.length; i++) {
+//     bc_staff_array.value.push({
+//         'id': props.bcStaff.data[i].id,
+//         'name': props.bcStaff.data[i].first_name + ' ' + props.bcStaff.data[i].last_name
+//     })
+// }
 
-const b2bteacherbyorg = ref([]);
+// const b2bteacherbyorg = ref([]);
 
 
 
@@ -150,23 +150,23 @@ const toSelect = ref(null)
 const showDialog = ref(false);
 const icon = ref('');
 const searchIcon = ref('');
-const chosenIcon = ref('emoticon-happy-outline');
+const chosenIcon = ref(props.announcement.data.icon);
 
 
 const isAllSelected = computed(() => form.to.length === tos.value.length);
 
-function toggleSelectAll() {
-  if (!isAllSelected.value) {
-    // If "Select All" is checked, select all options including "All"
-    form.to = 'All';
-  } else {
-    // If "Select All" is unchecked, clear the selection
-    form.to = '';
-  }
-  if (toSelect.value) {
-    toSelect.value.isActive = false;
-  }
-}
+// function toggleSelectAll() {
+//   if (!isAllSelected.value) {
+//     // If "Select All" is checked, select all options including "All"
+//     form.to = 'All';
+//   } else {
+//     // If "Select All" is unchecked, clear the selection
+//     form.to = '';
+//   }
+//   if (toSelect.value) {
+//     toSelect.value.isActive = false;
+//   }
+// }
 
 const allIcons = ref([
   "account",
@@ -770,9 +770,9 @@ const allIcons = ref([
 
 const saveIcon = (selectedIcon) => {
     icon.value = 'mdi-' + selectedIcon;
-    chosenIcon.value = selectedIcon;
+    console.log(icon.value);
+    chosenIcon.value = icon.value;
     form.icon = icon.value;
-    console.log(chosenIcon.value);
     showDialog.value = false;
 };
 
@@ -1386,58 +1386,58 @@ watch(searchIcon, (newSearchIcon) => {
 });
 
 let onFormSubmit = () => {
-    for (let i = 0; i < organization_user_ids.value.length; i++) {
-        form.org.push(organization_user_ids.value[i])
-    }
-    for (let i = 0; i < b2bteacherbyorg_ids.value.length; i++) {
-        form.users.push(b2bteacherbyorg_ids.value[i])
-    }
-    for (let i = 0; i < b2b_teacher_ids.value.length; i++) {
-        form.users.push(b2b_teacher_ids.value[i])
-    }
+    // for (let i = 0; i < organization_user_ids.value.length; i++) {
+    //     form.org.push(organization_user_ids.value[i])
+    // }
+    // for (let i = 0; i < b2bteacherbyorg_ids.value.length; i++) {
+    //     form.users.push(b2bteacherbyorg_ids.value[i])
+    // }
+    // for (let i = 0; i < b2b_teacher_ids.value.length; i++) {
+    //     form.users.push(b2b_teacher_ids.value[i])
+    // }
 
-    for (let i = 0; i < bc_staff_ids.value.length; i++) {
-        form.users.push(bc_staff_ids.value[i])
-    }
-    console.log(bc_staff_ids.value);
+    // for (let i = 0; i < bc_staff_ids.value.length; i++) {
+    //     form.users.push(bc_staff_ids.value[i])
+    // }
+    // console.log(bc_staff_ids.value);
 
-     for (let i = 0; i < b2c_user_ids.value.length; i++) {
-        form.users.push(b2c_user_ids.value[i])
-    }
+    //  for (let i = 0; i < b2c_user_ids.value.length; i++) {
+    //     form.users.push(b2c_user_ids.value[i])
+    // }
 
-    form.users = JSON.stringify(form.users)
-    form.org = JSON.stringify(form.org)
+    // form.users = JSON.stringify(form.users)
+    // form.org = JSON.stringify(form.org)
 
-    let toArray = [];
-    organization_user_ids.value.length > 0 ? toArray.push('Organizations Admins') : '';
-    b2c_user_ids.value.length > 0 ? toArray.push('B2C Users') : '';
-    b2b_teacher_ids.value.length > 0 ? toArray.push('B2B Teachers') : '';
-    b2bteacherbyorg_ids.value.length > 0 ? toArray.push('B2B Teachers') : '';
-    bc_staff_ids.value.length > 0 ? toArray.push('BC Staff') : '';
-    form.to = toArray.join(', ')
+    // let toArray = [];
+    // organization_user_ids.value.length > 0 ? toArray.push('Organizations Admins') : '';
+    // b2c_user_ids.value.length > 0 ? toArray.push('B2C Users') : '';
+    // b2b_teacher_ids.value.length > 0 ? toArray.push('B2B Teachers') : '';
+    // b2bteacherbyorg_ids.value.length > 0 ? toArray.push('B2B Teachers') : '';
+    // bc_staff_ids.value.length > 0 ? toArray.push('BC Staff') : '';
+    // form.to = toArray.join(', ')
 
     console.log(form);
     // refForm.value?.resetValidation();
-    form.post(route("announcements.store"), {
+    form.put(route("announcements.update", props.announcement.data.id), {
     onSuccess: () => {
         form.reset();
-        form.org = [];
-        form.users = [];
-        organization_user_ids.value = [];
-        b2c_user_ids.value = [];
-        b2b_teacher_ids.value = [];
-        bc_staff_ids.value = [];
-        b2bteacherbyorg_ids.value = [];
+        // form.org = [];
+        // form.users = [];
+        // organization_user_ids.value = [];
+        // b2c_user_ids.value = [];
+        // b2b_teacher_ids.value = [];
+        // bc_staff_ids.value = [];
+        // b2bteacherbyorg_ids.value = [];
 
-        visibleToSelectBox.value = true;
-        visibleToOriginizationList.value = true;
-        visibleToOrganizationSelectBox.value = true
-        visibleToB2CUserSelectBox.value = true
-        visibleToTeacherSelectBox.value = true
-        visibleToBcStaffSelectBox.value = true
-        visibleToB2bTeacherList.value = true
+        // visibleToSelectBox.value = true;
+        // visibleToOriginizationList.value = true;
+        // visibleToOrganizationSelectBox.value = true
+        // visibleToB2CUserSelectBox.value = true
+        // visibleToTeacherSelectBox.value = true
+        // visibleToBcStaffSelectBox.value = true
+        // visibleToB2bTeacherList.value = true
     // refForm.value?.reset();
-        SuccessDialog({ title: "You've successfully posted announcement" });
+        SuccessDialog({ title: "You've successfully updated announcement" });
     },
     onError: (error) => {
     //   form.setError("email", error?.email);
@@ -1446,22 +1446,22 @@ let onFormSubmit = () => {
   });
 };
 
-let getTeacherByOrganization = (id) => {
-    axios
-        .get(
-            route("announcements.getb2bteachersbyorg", id)
-        )
-        .then((res) => {
-            b2bteacherbyorg.value = [];
-            for (let i = 0; i < res.data.length; i++) {
-                b2bteacherbyorg.value.push({
-                    'id': res.data[i].id,
-                    'name': res.data[i].first_name + ' ' + res.data[i].last_name
-                })
-            }
+// let getTeacherByOrganization = (id) => {
+//     axios
+//         .get(
+//             route("announcements.getb2bteachersbyorg", id)
+//         )
+//         .then((res) => {
+//             b2bteacherbyorg.value = [];
+//             for (let i = 0; i < res.data.length; i++) {
+//                 b2bteacherbyorg.value.push({
+//                     'id': res.data[i].id,
+//                     'name': res.data[i].first_name + ' ' + res.data[i].last_name
+//                 })
+//             }
 
-        });
-}
+//         });
+// }
 </script>
 <template>
     <AdminLayout>
@@ -1513,7 +1513,7 @@ let getTeacherByOrganization = (id) => {
                                    <div @click="showDialog = true">
                                     <VSelect class="center-prepend-icon"
                                         :v-model="form.icon"
-                                        :prepend-inner-icon="'mdi-' + chosenIcon"
+                                        :prepend-inner-icon="chosenIcon"
                                         v-bind="attrs"
                                         v-on="on"
                                         color="deep-purple"
@@ -1582,7 +1582,7 @@ let getTeacherByOrganization = (id) => {
                                 />
                             </VCol>
 
-                            <VCol cols="6">
+                            <!-- <VCol cols="6">
                                 <VLabel class="tiggie-label required"
                                     >Announcement By</VLabel
                                 >
@@ -1681,7 +1681,7 @@ let getTeacherByOrganization = (id) => {
                                     >Announcement to B2B Teacherss</VLabel
                                 >
                                 <MultiSelectBox :items="b2bteacherbyorg" v-model="b2bteacherbyorg_ids"/>
-                            </VCol>
+                            </VCol> -->
                         </VRow>
                     </VCol>
                     <VCol
@@ -1697,7 +1697,7 @@ let getTeacherByOrganization = (id) => {
                             </VBtn>
                         </Link>
                         <VBtn type="submit" class="" height="50" width="250">
-                            Post
+                            Update
                         </VBtn>
                     </VCol>
                 </VRow>
