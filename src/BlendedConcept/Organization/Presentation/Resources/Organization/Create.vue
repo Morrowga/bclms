@@ -22,6 +22,12 @@ let form = useForm({
     org_admin_contact_number: "",
     login_email: "",
     login_password: "",
+    start_date: "",
+    end_date: "",
+    payment_date: "",
+    payment_status: "UNPAID",
+    stripe_status: "",
+    stripe_price: 0,
     image: "",
 });
 

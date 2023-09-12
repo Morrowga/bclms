@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->date('payment_date');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->date('payment_date')->nullable();
             $table->enum('payment_status', ['PAID', 'UNPAID']);
             $table->string('stripe_status')->nullable();
             $table->decimal('stripe_price', 15, 2)->nullable();

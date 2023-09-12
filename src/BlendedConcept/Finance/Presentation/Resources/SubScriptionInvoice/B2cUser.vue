@@ -6,7 +6,16 @@ import UpdateSubscrptionStatus from "./components/UpdateSubscrptionStatus.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 
-let props = defineProps();
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
+const props = defineProps(["subscriptions", "flash"]);
 
 //## start datatable section
 let columns = [
@@ -41,42 +50,9 @@ let columns = [
         sortable: false,
     },
 ];
+serverPage.value = ref(props.subscriptions.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
 
-let rows = [
-    {
-        user: "Jordan Stevenson",
-        start_date: "02/07/23",
-        end_date: "02/08/23",
-        plan: 1,
-        status: 1,
-    },
-    {
-        user: "Jordan Stevenson",
-        start_date: "02/07/23",
-        end_date: "02/08/23",
-        plan: 0,
-        status: 0,
-    },
-    {
-        user: "Jordan Stevenson",
-        start_date: "02/07/23",
-        end_date: "02/08/23",
-        plan: 1,
-        status: 1,
-    },
-    {
-        user: "Jordan Stevenson",
-        start_date: "02/07/23",
-        end_date: "02/08/23",
-        plan: 0,
-        status: 1,
-    },
-];
-
-const items = ["Foo", "Bar"];
-const getInvoice = () => {
-    SuccessDialog({ title: "You have successfully downloaded invoice" });
-};
 //## truncatedText
 let truncatedText = (text) => {
     if (text) {
@@ -87,9 +63,31 @@ let truncatedText = (text) => {
         }
     }
 };
+let options = ref({
+    enabled: true,
+    mode: "pages",
+    perPage: props.subscriptions?.meta?.per_page,
+    setCurrentPage: props?.subscriptions?.meta?.current_page,
+    perPageDropdown: [10, 20, 50, 100],
+    dropdownAllowAll: false,
+});
+let form = useForm({
+    status: "INACTIVE",
+    _method: "PUT",
+});
+watch(serverPerPage, function (value) {
+    onPerPageChange(value);
+});
+const getInvoice = () => {
+    SuccessDialog({ title: "You have successfully downloaded invoice" });
+};
 
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
+};
+
+const fullName = (user) => {
+    return (user?.first_name ?? "") + " " + (user?.last_name ?? "");
 };
 </script>
 <template>
@@ -133,13 +131,16 @@ const selectionChanged = (data) => {
             <vue-good-table
                 class="role-data-table"
                 styleClass="vgt-table"
-                v-on:selected-rows-change="selectionChanged"
+                @column-filter="onColumnFilter"
+                :totalRows="props.subscriptions.meta.total"
+                :selected-rows-change="selectionChanged"
+                :pagination-options="options"
+                :rows="props.subscriptions.data"
                 :columns="columns"
-                :rows="rows"
                 :select-options="{
                     enabled: true,
+                    selectOnCheckboxOnly: true,
                 }"
-                :pagination-options="{ enabled: true }"
             >
                 <template #table-row="dataProps">
                     <div v-if="dataProps.column.field === 'user'">
@@ -148,30 +149,18 @@ const selectionChanged = (data) => {
                                 src="/images/defaults/avator.png"
                                 class="user-profile-image"
                             />
-                            <span>Jordan Stevenson</span>
+                            <span>{{
+                                fullName(dataProps.row.b2c_subscription?.user)
+                            }}</span>
                         </div>
                     </div>
                     <div v-if="dataProps.column.field == 'plan'">
-                        <div class="d-flex flex-row align-center gap-2">
-                            <span
-                                v-if="dataProps.row.plan"
-                                class="d-flex flex-row justify-center align-center gap-2"
-                            >
-                                <img src="/images/icons/freeplan.svg" />
-                                <span>free plan</span>
-                            </span>
-                            <span
-                                v-else
-                                class="d-flex flex-row align-center gap-2"
-                            >
-                                <img src="/images/icons/proplan.svg" />
-                                <span>pro plan</span>
-                            </span>
-                            <span>{{ dataProps.column.field }}</span>
-                        </div>
+                        <span>{{
+                            dataProps.row.b2c_subscription?.plan?.name
+                        }}</span>
                     </div>
                     <div v-if="dataProps.column.field == 'status'">
-                        <div v-if="dataProps.row.status">
+                        <div v-if="dataProps.row.stripe_status == 'ACTIVE'">
                             <VChip color="success"> Active </VChip>
                         </div>
                         <div v-else>
@@ -190,17 +179,11 @@ const selectionChanged = (data) => {
                                 />
                             </template>
                             <VList>
-                                <VListItem
-                                    @click="
-                                        () =>
-                                            router.get(
-                                                route('organizations.show', {
-                                                    id: props.row.id,
-                                                })
-                                            )
-                                    "
-                                >
-                                    <UpdateSubscrptionStatus />
+                                <VListItem @click="() => {}">
+                                    <UpdateSubscrptionStatus
+                                        :subscription="dataProps.row"
+                                        :key="dataProps.row.id"
+                                    />
                                 </VListItem>
                                 <VListItem @click="getInvoice()">
                                     <VListItemTitle>Get Invoice</VListItemTitle>
@@ -208,6 +191,39 @@ const selectionChanged = (data) => {
                             </VList>
                         </VMenu>
                     </div>
+                </template>
+                <template #pagination-bottom>
+                    <VRow class="pa-4">
+                        <VCol cols="12" class="d-flex justify-space-between">
+                            <span>
+                                Showing
+                                {{ props.subscriptions.meta.from }} to
+                                {{ props.subscriptions.meta.to }} of
+                                {{ props.subscriptions.meta.total }}
+                                entries
+                            </span>
+                            <div class="d-flex">
+                                <div class="d-flex align-center">
+                                    <span class="me-2">Show</span>
+                                    <VSelect
+                                        v-model="serverPerPage"
+                                        density="compact"
+                                        :items="options.perPageDropdown"
+                                    >
+                                    </VSelect>
+                                </div>
+                                <VPagination
+                                    v-model="serverPage"
+                                    size="small"
+                                    :total-visible="5"
+                                    :length="props.subscriptions.meta.last_page"
+                                    @next="onPageChange"
+                                    @prev="onPageChange"
+                                    @click="onPageChange"
+                                />
+                            </div>
+                        </VCol>
+                    </VRow>
                 </template>
             </vue-good-table>
 

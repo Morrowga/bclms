@@ -25,11 +25,12 @@ class OrganizationSeeder extends Seeder
             'stripe_price' => null,
         ];
 
-        $subscription = SubscriptionEloquentModel::create($subscriptionData);
+        $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
+        $subscriptionTwo = SubscriptionEloquentModel::create($subscriptionData);
 
         $organizationData = [
             [
-                'curr_subscription_id' => $subscription->id,
+                'curr_subscription_id' => $subscriptionOne->id,
                 'org_admin_id' => 1,
                 'name' => 'organization one',
                 'contact_name' => 'org one',
@@ -40,7 +41,7 @@ class OrganizationSeeder extends Seeder
                 'status' => 'ACTIVE',
             ],
             [
-                'curr_subscription_id' => $subscription->id,
+                'curr_subscription_id' => $subscriptionTwo->id,
                 'org_admin_id' => 1,
                 'name' => 'organization two',
                 'contact_name' => 'org two',
@@ -61,7 +62,7 @@ class OrganizationSeeder extends Seeder
                 'organization_id' => $organizationModel->id,
             ]);
 
-            $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
+            $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
         }
     }
 }

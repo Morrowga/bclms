@@ -55,36 +55,10 @@ let columns = [
     },
 ];
 
-// let rows = [
-//     {
-//         id: 1,
-//         plan_name: "Basic Plan",
-//         description: "Allow access to basic features",
-//         price: "$4.99",
-//         no_students: 1,
-//         storage_space: "1GB",
-//     },
-//     {
-//         id: 2,
-//         plan_name: "Medium Plan",
-//         description: "Allow access to more features",
-//         price: "$8.99",
-//         no_students: 2,
-//         storage_space: "5GB",
-//     },
-//     {
-//         id: 3,
-//         plan_name: "Premium Pro Plan",
-//         description: "Allow access to all features",
-//         price: "$10.99",
-//         no_students: 5,
-//         storage_space: "20GB",
-//     },
-// ];
+const items = ["Foo", "Bar"];
+
 serverPage.value = ref(props.active_plans.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
-
-const items = ["Foo", "Bar"];
 
 //## truncatedText
 let truncatedText = (text) => {

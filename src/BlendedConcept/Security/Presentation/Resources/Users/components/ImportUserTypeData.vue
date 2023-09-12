@@ -33,9 +33,10 @@ const handleDrop = (event) => {
 };
 
 const importUser = () => {
-    isDialogVisible.value = false;
-    emit("closeDialog");
-    SuccessDialog({ title: "You have successfully imported users" });
+    // isDialogVisible.value = false;
+    console.log(uploadedImages.value);
+    // emit("closeDialog");
+    // SuccessDialog({ title: "You have successfully imported users" });
 };
 // const openFileInput = () => {
 //   fileInput.value.click();

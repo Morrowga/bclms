@@ -9,6 +9,7 @@ use Src\BlendedConcept\Finance\Application\Mappers\PlanMapper;
 use Src\BlendedConcept\Finance\Application\Policies\PlanPolicy;
 use Src\BlendedConcept\Finance\Application\Requests\ChangeStatusPlanRequest;
 use Src\BlendedConcept\Finance\Application\Requests\StorePlanRequest;
+use Src\BlendedConcept\Finance\Application\Requests\UpdatePlanRequest;
 use Src\BlendedConcept\Finance\Application\UseCases\Commands\Plans\ChangeStatusCommand;
 use Src\BlendedConcept\Finance\Application\UseCases\Commands\Plans\DeletePlanCommand;
 use Src\BlendedConcept\Finance\Application\UseCases\Commands\Plans\StorePlanCommand;
@@ -68,7 +69,7 @@ class PlanController
         }
     }
 
-    public function update(StorePlanRequest $request, PlanEloquentModel $plan)
+    public function update(UpdatePlanRequest $request, PlanEloquentModel $plan)
     {
         // abort_if(authorize('edit', PlanPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

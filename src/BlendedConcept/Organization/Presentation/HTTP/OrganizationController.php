@@ -3,6 +3,7 @@
 namespace Src\BlendedConcept\Organization\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
 use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
 use Src\BlendedConcept\Organization\Application\Mappers\OrganizationMapper;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\DeleteOrganizationCommand;
@@ -98,7 +99,8 @@ class OrganizationController extends Controller
             $quickOrgAdminCreate = $this->organizationService->createQuickOrgAdmin($request);
             $request['org_admin_id'] = $quickOrgAdminCreate->id;
             $newOrganizaton = OrganizationMapper::fromRequest($request);
-            $saveOrganizaton = (new StoreOrganizationCommand($newOrganizaton));
+            $newSubscription = SubscriptionMapper::fromRequest($request);
+            $saveOrganizaton = (new StoreOrganizationCommand($newOrganizaton, $newSubscription));
             $saveOrganizaton->execute();
 
             return redirect()->route('organizations.index')->with('successMessage', 'Organizations Created Successfully!');
