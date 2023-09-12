@@ -11,6 +11,7 @@ use Src\BlendedConcept\Teacher\Application\Requests\UpdateTeacherRequest;
 use Src\BlendedConcept\Teacher\Application\UseCases\Queries\GetTeachersWithPagination;
 use Src\BlendedConcept\Teacher\Domain\Policies\TeacherPolicy;
 use Src\BlendedConcept\Teacher\Domain\Services\TeacherService;
+use Src\Common\Application\Imports\StudentImport;
 use Src\Common\Application\Imports\UserImport;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -118,7 +119,11 @@ class TeacherController extends Controller
     public function import_excel(Request $request)
     {
         if ($request->hasFile('file')) {
-            $import = new UserImport;
+            if ($request->type == 'teacher') {
+                $import = new UserImport($request);
+            } else {
+                $import = new StudentImport;
+            }
             $import->import($request->file('file'));
             if ($import->failures()->count() > 0) {
                 $errorRows = [];

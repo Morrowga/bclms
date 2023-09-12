@@ -15,6 +15,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
@@ -26,6 +27,12 @@ class UserImport implements ToCollection, WithHeadingRow, WithValidation, SkipsO
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
+
+    protected $request;
+    public function __construct($request)
+    {
+        $this->request = $request;
+    }
     public function collection(Collection $rows)
     {
         // dd($rows);
@@ -41,24 +48,12 @@ class UserImport implements ToCollection, WithHeadingRow, WithValidation, SkipsO
                     "role_id" => 2,
                 ];
                 $userEloquenet =  UserEloquentModel::create($create_data);
-                $planEloquent = PlanEloquentModel::find(1);
-                $subscriptionData = [
-                    'start_date' => now(),
-                    'end_date' => now(),
-                    'payment_date' => now(),
-                    'payment_status' => 'PAID',
-                    'stripe_status' => "ACTIVE",
-                    'stripe_price' =>  $planEloquent->price,
-                ];
-                $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
-                B2cUserEloquentModel::create([
+
+                B2bUserEloquentModel::create([
                     "user_id" => $userEloquenet->id,
-                    "current_subscription_id" => $subscriptionOne->id,
-                ]);
-                B2cSubscriptionEloquentModel::create([
-                    "subscription_id" => $subscriptionOne->id,
-                    "user_id" => $userEloquenet->id,
-                    "plan_id" => $planEloquent->id
+                    "organization_id" => $this->request->organization_id,
+                    "allocated_storage_limit" => 0,
+                    "has_full_library_access" => false
                 ]);
             }
             DB::commit();
