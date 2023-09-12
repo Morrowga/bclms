@@ -17,7 +17,9 @@ const filteredItems = computed(() => {
 function toggleSelectAll() {
   if (!isAllSelected.value) {
     // If "Select All" is checked, select all items
-    selectedItems.value = [...filteredItems.value]; // Copy all items to selectedItems
+    for (let i = 0; i < filteredItems.value.length; i++) {
+        pushUniqueID(selectedItems.value,filteredItems.value[i].id)
+    }
   } else {
     // If "Select All" is unchecked, clear the selection
     selectedItems.value = [];
@@ -25,6 +27,18 @@ function toggleSelectAll() {
 
   // Emit the updated selectedItems to the parent component
   emit("update:modelValue", selectedItems.value);
+}
+
+function pushUniqueID(arr, id) {
+  if (!arr.includes(id)) {
+    arr.push(id);
+  }
+}
+
+function emitValue(newValue){
+    selectedItems.value = newValue; // Update the local value
+    console.log(selectedItems.value)
+    emit("update:modelValue", selectedItems.value);
 }
 
 function filterItems() {
@@ -42,7 +56,7 @@ function filterItems() {
         item-title="name"
         item-value="id"
         :modelValue="props.modelValue"
-        @update:modelValue="$emit('update:modelValue', $event)"
+        @update:modelValue="emitValue($event)"
     >
         <template v-slot:prepend-item>
         <v-text-field

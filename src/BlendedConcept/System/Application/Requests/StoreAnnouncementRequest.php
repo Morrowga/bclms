@@ -28,6 +28,12 @@ class StoreAnnouncementRequest extends FormRequest
             'to' => [
                 'required',
             ],
+            'org' => [
+                'required',
+            ],
+            'users' => [
+                'required',
+            ],
         ];
     }
 }

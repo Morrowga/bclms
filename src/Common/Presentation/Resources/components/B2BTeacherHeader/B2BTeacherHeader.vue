@@ -41,6 +41,7 @@ let toggle = () => {
         <HorizontalNav :nav-items="navItems" />
 
         <VSpacer />
+        
         <NavBarNotifications class="me-3" />
 
         <UserProfile v-if="!is_drawer" class="d-none d-md-flex pe-3" />

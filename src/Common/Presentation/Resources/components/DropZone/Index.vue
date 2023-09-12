@@ -1,18 +1,20 @@
 <script setup>
 
-import { defineProps,ref } from 'vue';
+import { defineProps,ref,defineEmits } from 'vue';
 
 const uploadedImages = ref([]);
 
 const props = defineProps(['data_type'])
 
-console.log(props)
 
+let emit = defineEmits("update:modelValue");
 const handleDrop = (event) => {
     event.preventDefault();
     const files = event.dataTransfer.files;
 
     if (files.length > 0) {
+
+      emit("update:modelValue", event.dataTransfer.files[0]);
         for (const file of files) {
             uploadedImages.value.push({
                 file: file,
@@ -24,6 +26,7 @@ const handleDrop = (event) => {
 };
 
 const removeUploadedItem = (index) => {
+    emit("update:modelValue", null);
     uploadedImages.value.splice(index, 1);
 }
 
@@ -78,7 +81,7 @@ const removeUploadedItem = (index) => {
                     </div>
                 </div>
             </div>
-            <!-- <input type="file" ref="fileInput" style="display: none" @change="handleFileUpload"> -->
+            <input type="file" ref="fileInput" style="display: none" @change="handleFileUpload">
         </div>
     </VCardText>
 </template>

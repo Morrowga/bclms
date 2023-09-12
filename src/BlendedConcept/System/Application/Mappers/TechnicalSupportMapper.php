@@ -15,7 +15,7 @@ class TechnicalSupportMapper
             id : $support_id,
             user_id : $request->user_id,
             date : $request->date,
-            has_responsed : $request->has_responsed,
+            has_responded : $request->has_responded,
             question : $request->question,
             response : $request->response
         );
@@ -30,7 +30,7 @@ class TechnicalSupportMapper
         }
         $technicalSupportEloquent->user_id = $technicalSupport->user_id;
         $technicalSupportEloquent->date = $technicalSupport->date;
-        $technicalSupportEloquent->has_responsed = $technicalSupport->has_responsed;
+        $technicalSupportEloquent->has_responded = $technicalSupport->has_responded;
         $technicalSupportEloquent->question = $technicalSupport->question;
         $technicalSupportEloquent->response = $technicalSupport->response;
 

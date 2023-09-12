@@ -85,10 +85,11 @@ class AnnouncementController extends Controller
         abort_if(authorize('create', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
-
             $request->validated();
             //Creates a new announcement object from the request data.
             $newAnnoument = AnnounmentMapper::fromRequest($request);
+
+            // return $newAnnoument;
             // Creates a new StoreAnnounmentCommand object and executes it.
             $storeAnnounmentCommand = new StoreAnnounmentCommand($newAnnoument);
             $storeAnnounmentCommand->execute();
@@ -110,12 +111,18 @@ class AnnouncementController extends Controller
     {
 
         $announcement = (new ShowAnnouncement($id))->handle();
-
         $organizations = (new GetOrganizationList())->handle();
+        $teachers = (new GetB2BTeachers())->handle();
+        $b2cUsers = (new GetB2CUsers())->handle();
+        $bcStaff = (new GetBcStaff())->handle();
+        $organizations = (new GetOrganizations())->handle();
 
         return Inertia::render(config('route.announment.edit'), [
             'organizations' => $organizations,
             'announcement' => $announcement,
+            'teachers' => $teachers,
+            'b2cUsers' => $b2cUsers,
+            'bcStaff' => $bcStaff
         ]);
     }
 

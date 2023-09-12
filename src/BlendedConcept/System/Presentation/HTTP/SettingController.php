@@ -59,6 +59,7 @@ class SettingController extends Controller
 
     public function updateSiteTheme()
     {
+
         return Inertia::render(config('route.site_theme'));
     }
 }

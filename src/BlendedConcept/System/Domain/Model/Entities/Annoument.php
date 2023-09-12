@@ -15,6 +15,8 @@ class Annoument extends Entity
         public readonly string $message,
         public readonly string $by,
         public readonly string $to,
+        public readonly ?string $org,
+        public readonly ?string $users,
     ) {
     }
 
@@ -27,6 +29,8 @@ class Annoument extends Entity
             'message' => $this->message,
             'by' => $this->by,
             'to' => $this->to,
+            'org' => $this->org,
+            'users' => $this->users
         ];
     }
 }

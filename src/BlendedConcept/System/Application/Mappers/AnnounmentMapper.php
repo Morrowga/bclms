@@ -18,8 +18,11 @@ class AnnounmentMapper
             message: $request->message,
             by: $request->by,
             to: $request->to,
+            org: $request->org,
+            users: $request->users,
         );
     }
+
 
     public static function toEloquent(Annoument $annoument): AnnouncementEloquentModel
     {
