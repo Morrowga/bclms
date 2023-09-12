@@ -12,16 +12,12 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloquentModel;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
-class UserImport implements ToCollection, WithHeadingRow, WithValidation, SkipsOnFailure, SkipsOnError
+class UserImport implements ToCollection, WithHeadingRow, WithValidation,
 {
-    use Importable, SkipsFailures, SkipsErrors;
+    use Importable;
     /**
      * @param array $row
      *
