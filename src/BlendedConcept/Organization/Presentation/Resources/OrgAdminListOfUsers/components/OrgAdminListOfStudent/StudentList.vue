@@ -2,6 +2,7 @@
 import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+let props = defineProps(['students']);
 </script>
 <template>
     <VContainer>
