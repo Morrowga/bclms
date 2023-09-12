@@ -122,16 +122,17 @@ class TeacherController extends Controller
             if ($request->type == 'teacher') {
                 $import = new UserImport($request);
             } else {
-                $import = new StudentImport;
+                $import = new StudentImport($request);
             }
             $import->import($request->file('file'));
             if ($import->failures()->count() > 0) {
+                dd($import->failures());
                 $errorRows = [];
                 $currentRow = null;
                 foreach ($import->failures() as $failure) {
                     $currentRow = $failure->row();
                     if ($currentRow == $failure->row()) {
-                        if (! in_array($failure->values(), $errorRows)) {
+                        if (!in_array($failure->values(), $errorRows)) {
                             array_push($errorRows, $failure->values());
                         }
                     }

@@ -2,7 +2,7 @@
 import Create from "./Create.vue";
 import Edit from "./Edit.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { usePage } from "@inertiajs/vue3";
+import { usePage, useForm } from "@inertiajs/vue3";
 import { computed } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import IconOutlineBtn from "@mainRoot/components/Buttons/IconOutlineBtn.vue";
@@ -10,7 +10,7 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import ImportUser from "./components/ImportUser.vue";
 import { router } from "@inertiajs/core";
 import { isConfirmedDialog } from "@actions/useConfirm";
-
+import exportFromJSON from "export-from-json";
 import {
     serverParams,
     onColumnFilter,
@@ -31,6 +31,7 @@ let flash = computed(() => usePage().props.flash);
 let users = computed(() => usePage().props.auth.data.users);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 let currentPermission = ref();
+const form = useForm({});
 serverPage.value = ref(props.users.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
 
@@ -101,7 +102,14 @@ const setInactive = () => {
         denyButtonText: "Set Inactive",
     });
 };
-
+const exportUser = () => {
+    const array = props.users.data;
+    let data = array.map(({ image, media, role, ...rest }) => rest);
+    const fileName = "Export Teachers";
+    const exportType = exportFromJSON.types.csv;
+    if (data) exportFromJSON({ data, fileName, exportType });
+    return;
+};
 </script>
 
 <template>
@@ -116,6 +124,7 @@ const setInactive = () => {
                         variant="tonal"
                         color="primary"
                         prepend-icon="mdi-tray-arrow-up"
+                        @click="exportUser()"
                     >
                         Export
                     </VBtn>

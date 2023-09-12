@@ -22,7 +22,7 @@ let export_errors = computed(() => usePage().props.export_errors);
 const form = useForm({
     organization_id: 1,
     file: "",
-    type: "teacher",
+    type: "student",
 });
 
 const handleDrop = (event) => {
