@@ -3,6 +3,8 @@
 namespace Src\BlendedConcept\Organization\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
+use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
+use Src\BlendedConcept\Finance\Domain\Model\Subscription;
 use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
 use Src\BlendedConcept\Organization\Application\Mappers\OrganizationMapper;
 use Src\BlendedConcept\Organization\Domain\Model\Organization;
@@ -44,7 +46,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      * @param  Organization  $organization The organization object containing the necessary information.
      * @return void
      */
-    public function createOrganization(Organization $organization)
+    public function createOrganization(Organization $organization, Subscription $subscription)
     {
 
         DB::beginTransaction();
@@ -52,9 +54,10 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         try {
 
             //insert data into organization
-
+            $subscriptionEloquent = SubscriptionMapper::toEloquent($subscription);
+            $subscriptionEloquent->save();
             $organizationEloquent = OrganizationMapper::toEloquent($organization);
-            $organizationEloquent->curr_subscription_id = 1;
+            $organizationEloquent->curr_subscription_id = $subscriptionEloquent->id;
             $organizationEloquent->save();
 
             // Upload the organization's image if provided
@@ -72,7 +75,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 'organization_id' => $organizationEloquent->id,
             ]);
 
-            $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
+            $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());

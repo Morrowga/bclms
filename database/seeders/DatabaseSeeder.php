@@ -15,13 +15,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            DefaultPlanSeeder::class,
             PermissionTableSeeder::class,
             PermissionRoleTableSeeder::class,
             SuperAdminSeeder::class,
             PageBuilderSeeder::class,
             SiteSettingSeeder::class,
-            OrganizationSeeder::class,
             B2CTeacherRoleSeeder::class,
+            OrganizationSeeder::class,
             OrganizationAdminSeeder::class,
             B2BTeacherRoleSeeder::class,
             BCStaffRoleSeeder::class,

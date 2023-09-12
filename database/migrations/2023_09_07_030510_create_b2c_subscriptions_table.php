@@ -20,10 +20,10 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()
                 ->references('id')
                 ->on('users')->onDelete('cascade');
-            $table->timestamps();
             $table->foreignId('plan_id')->nullable()
                 ->references('id')
                 ->on('plans')->onDelete('cascade');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

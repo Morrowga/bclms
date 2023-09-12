@@ -24,6 +24,7 @@ return new class extends Migration
             $table->float('storage_limit');
             $table->integer('num_teacher_license');
             $table->integer('num_student_license');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

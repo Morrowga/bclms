@@ -14,4 +14,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/plans/{plan}/change_status', [PlanController::class, 'changeStatus'])->name('plans.change_status');
 
     Route::get('subscribptioninvoice', [SubscribtionInvoiceController::class, 'index'])->name('subscription_invoice');
+    Route::put('subscribptioninvoice/{subscription}/update/b2b', [SubscribtionInvoiceController::class, 'updateB2b'])->name('subscription_invoice.updateb2b');
+    Route::put('subscribptioninvoice/{subscription}/update/b2c', [SubscribtionInvoiceController::class, 'updateB2c'])->name('subscription_invoice.updateb2c');
 });
