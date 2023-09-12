@@ -15,9 +15,9 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
-class UserImport implements ToCollection, WithHeadingRow, WithValidation,
+class UserImport implements ToCollection, WithHeadingRow, WithValidation, SkipsOnFailure, SkipsOnError
 {
-    use Importable;
+    use Importable, SkipsFailures, SkipsErrors;
     /**
      * @param array $row
      *
