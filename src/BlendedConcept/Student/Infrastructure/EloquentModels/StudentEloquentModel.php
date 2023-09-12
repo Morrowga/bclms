@@ -52,4 +52,8 @@ class StudentEloquentModel extends Model implements HasMedia
     {
         return $this->belongsToMany(B2cUserEloquentModel::class, 'b2c_students', 'student_id', 'b2c_user_id');
     }
+    public function organizations()
+    {
+        return $this->belongsToMany(B2cUserEloquentModel::class, 'organization_students', 'student_id', 'organization_id');
+    }
 }

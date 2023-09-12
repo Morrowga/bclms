@@ -25,6 +25,11 @@ class StudentImport implements ToCollection, WithHeadingRow, WithValidation, Ski
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
+    protected $request;
+    public function __construct($request)
+    {
+        $this->request = $request;
+    }
     public function collection(Collection $rows)
     {
         // dd($rows);
@@ -46,6 +51,7 @@ class StudentImport implements ToCollection, WithHeadingRow, WithValidation, Ski
                     "education_level" => $row['education'],
                 ];
                 $studentEloquent = StudentEloquentModel::create($create_student);
+                $studentEloquent->organizations()->sync([$this->request->organization_id]);
             }
             DB::commit();
         } catch (\Exception $e) {

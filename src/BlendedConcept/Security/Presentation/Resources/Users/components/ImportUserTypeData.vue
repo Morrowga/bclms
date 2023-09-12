@@ -2,8 +2,9 @@
 import { ref, defineEmits } from "vue";
 import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
 import { SuccessDialog } from "@actions/useSuccess";
-import { useForm,usePage } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
+import exportFromJSON from "export-from-json";
 const isDialogVisible = ref(false);
 let props = defineProps(["type"]);
 const emit = defineEmits();
@@ -19,10 +20,10 @@ const fileInput = ref(null);
 let export_errors = computed(() => usePage().props.export_errors);
 
 const form = useForm({
-  organization_id : 1,
-  file:"",
-  type:"teacher",
-})
+    organization_id: 1,
+    file: "",
+    type: "teacher",
+});
 
 const handleDrop = (event) => {
     event.preventDefault();
@@ -40,36 +41,30 @@ const handleDrop = (event) => {
 };
 
 const importUser = () => {
-
-    form.post(route('teachers.import'),{
-        onSuccess : (response) => {
-            console.log(response)
+    form.post(route("teachers.import"), {
+        onSuccess: (response) => {
+            console.log(response);
             if (export_errors.value && export_errors.value?.length > 0) {
-              const data = export_errors.value;
-              console.log(data,"okay par")
-            //   const fileName = "FailToImportStudent";
-            //   const exportType = exportFromJSON.types.csv;
-            //   if (data) exportFromJSON({ data, fileName, exportType });
-              return;
+                const data = export_errors.value;
+                const fileName = "FailToImportStudent";
+                const exportType = exportFromJSON.types.csv;
+                if (data) exportFromJSON({ data, fileName, exportType });
+                return;
             }
-
         },
-        onError : (error)=> {
-            console.log(error,"not okay par")
-        }
-    })
-
+        onError: (error) => {
+            console.log(error, "not okay par");
+        },
+    });
 };
-
 
 const removeUploadedItem = (index) => {
     uploadedImages.value.splice(index, 1);
 };
 
-const handleImport = () =>
-{
-    alert("okay par")
-}
+const handleImport = () => {
+    alert("okay par");
+};
 </script>
 
 <template>

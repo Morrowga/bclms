@@ -2518,6 +2518,11 @@ execa@^5.1.1:
     signal-exit "^3.0.3"
     strip-final-newline "^2.0.0"
 
+export-from-json@^1.7.3:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/export-from-json/-/export-from-json-1.7.3.tgz#b67f42c9a492e5513ef2a8f7f856ed3531a80c67"
+  integrity sha512-Xg0L0saYz+CBz2MnaZvSEAHr17hWtHAfFWXw/frllG9t6aijuQukiU40ElOeM9nDTrtQPhLJMLN0q8lo897FYg==
+
 extract-comments@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/extract-comments/-/extract-comments-1.1.0.tgz#b90bca033a056bd69b8ba1c6b6b120fc2ee95c18"
