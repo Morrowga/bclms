@@ -4,7 +4,7 @@ import { usePage } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-
+import exportFromJSON from "export-from-json";
 let props = defineProps([
     "students",
     "flash",
@@ -25,9 +25,6 @@ let flash = computed(() => usePage().props.flash);
 serverPage.value = ref(props.students.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
 let permissions = computed(() => usePage().props.auth.data.permissions);
-import Create from "./Create.vue";
-import Edit from "./Edit.vue";
-
 const deleteStudent = (id) => {
     deleteItem(id, "students");
 };
@@ -55,65 +52,6 @@ let columns = [
     },
 ];
 
-let rows = [
-    {
-        name: "Tan Wei Jie",
-        email: "susanna.Lind57@gmail.com",
-        type: "Organization",
-        organization: "Blended Concept",
-        isOrganization: true,
-    },
-    {
-        name: "Farhan Lim Mei Ling",
-        email: "estelle.Bailey10@gmail.com",
-        type: "Organization",
-        organization: "Anderson Liew",
-        isOrganization: false,
-    },
-    {
-        name: "Tan Wei Jie",
-        email: "susanna.Lind57@gmail.com",
-        type: "Organization",
-        organization: "Phoon Kai Ming",
-        isOrganization: false,
-    },
-    {
-        name: "Tan Wei Jie",
-        email: "susanna.Lind57@gmail.com",
-        type: "Organization",
-        organization: "Phoon Kai Ming",
-        isOrganization: false,
-    },
-    {
-        name: "Tan Wei Jie",
-        email: "susanna.Lind57@gmail.com",
-        type: "Organization",
-        organization: "Phoon Kai Ming",
-        isOrganization: false,
-    },
-    {
-        name: "Tan Wei Jie",
-        email: "susanna.Lind57@gmail.com",
-        type: "Organization",
-        organization: "Phoon Kai Ming",
-        isOrganization: false,
-    },
-    {
-        name: "Tan Wei Jie",
-        email: "susanna.Lind57@gmail.com",
-        type: "Organization",
-        organization: "Phoon Kai Ming",
-        isOrganization: false,
-    },
-    {
-        name: "Tan Wei Jie",
-        email: "susanna.Lind57@gmail.com",
-        type: "Organization",
-        organization: "Phoon Kai Ming",
-        isOrganization: false,
-    },
-];
-
 let options = ref({
     enabled: true,
     mode: "pages",
@@ -123,28 +61,22 @@ let options = ref({
     dropdownAllowAll: false,
 });
 
-const items = ref([
-    {
-        title: "name",
-        value: "Name",
-    },
-    {
-        title: "Type",
-        value: "type",
-    },
-    {
-        title: "Organization's Parent",
-        value: "organazation_parent",
-    },
-    {
-        title: "Parent's Email",
-        value: "parent_email",
-    },
-]);
-
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
+const fullName = (user) => {
+    return (user?.first_name ?? "") + " " + (user?.last_name ?? "");
+};
+const exportUser = () => {
+    const array = props.students.data;
+    let data = array.map(
+        ({ image, media, organizations, user, deleted_at, ...rest }) => rest
+    );
+    const fileName = "Export Students";
+    const exportType = exportFromJSON.types.csv;
+    if (data) exportFromJSON({ data, fileName, exportType });
+    return;
+};
 </script>
 
 <template>
@@ -164,6 +96,7 @@ watch(serverPerPage, function (value) {
                             variant="tonal"
                             color="primary"
                             prepend-icon="mdi-tray-arrow-up"
+                            @click="exportUser()"
                         >
                             Export
                         </VBtn>
@@ -224,20 +157,46 @@ watch(serverPerPage, function (value) {
                                         src="/images/defaults/avator.png"
                                         class="user-profile-image"
                                     />
-                                    <span>{{ props.row.name }}</span>
+                                    <span>{{ fullName(props.row?.user) }}</span>
+                                </div>
+                            </div>
+                            <div v-if="props.column.field == 'email'">
+                                <div class="d-flex flex-row gap-2">
+                                    <span>{{
+                                        props.row?.organizations?.[0]
+                                            ?.contact_email ?? "-"
+                                    }}</span>
+                                </div>
+                            </div>
+                            <div v-if="props.column.field == 'type'">
+                                <div v-if="props.row.organizations.length > 0">
+                                    <span>Organization</span>
+                                </div>
+                                <div v-else>
+                                    <span>BC</span>
                                 </div>
                             </div>
                             <div v-if="props.column.field == 'organization'">
                                 <div class="">
-                                    <div v-if="props.row.isOrganization">
+                                    <div
+                                        v-if="
+                                            props.row.organizations.length > 0
+                                        "
+                                    >
                                         <Link
-                                            :href="route('organizations.show',{id : 1})"
+                                            :href="
+                                                route('organizations.show', {
+                                                    id: props.row
+                                                        .organizations?.[0]?.id,
+                                                })
+                                            "
                                         >
                                             <span
                                                 style="cursor: pointer"
                                                 class="text-default-color"
                                                 >{{
-                                                    props.row.organization
+                                                    props.row.organizations?.[0]
+                                                        ?.name ?? "-"
                                                 }}</span
                                             >
                                         </Link>
@@ -254,7 +213,7 @@ watch(serverPerPage, function (value) {
                                                 class="user-profile-image"
                                             />
                                             <span>
-                                                {{props.row.organization}}
+                                                {{ props.row.organization }}
                                             </span>
                                         </Link>
                                     </div>

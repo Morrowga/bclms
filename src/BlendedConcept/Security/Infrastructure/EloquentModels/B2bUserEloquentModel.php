@@ -6,6 +6,7 @@ namespace Src\BlendedConcept\Security\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 
 class B2bUserEloquentModel extends Authenticatable
 {
