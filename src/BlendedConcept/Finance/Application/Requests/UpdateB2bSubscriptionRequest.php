@@ -16,7 +16,7 @@ class UpdateB2bSubscriptionRequest extends FormRequest
         return [
             'start_date' => ['required'],
             'end_date' => ['required'],
-            'b2b_subscription' => ['required']
+            'b2b_subscription' => ['required'],
         ];
     }
 }

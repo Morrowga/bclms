@@ -5,11 +5,6 @@ declare(strict_types=1);
 namespace Src\BlendedConcept\System\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Model;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementToB2BEloquentModel;
-use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementToB2CEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementToBcStaffEloquentModel;
 
 class AnnouncementEloquentModel extends Model
 {
@@ -32,11 +27,11 @@ class AnnouncementEloquentModel extends Model
     {
         return $this->hasMany(AnnouncementToB2CEloquentModel::class, 'announcement_id', 'id');
     }
+
     public function announcement_to_bcstaff_user()
     {
         return $this->hasMany(AnnouncementToBcStaffEloquentModel::class, 'announcement_id', 'id');
     }
-
 
     public function scopeFilter($query, $filters)
     {

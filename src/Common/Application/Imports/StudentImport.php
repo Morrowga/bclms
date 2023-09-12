@@ -4,25 +4,23 @@ namespace Src\Common\Application\Imports;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
-class StudentImport implements ToCollection, WithHeadingRow, WithValidation, SkipsOnFailure, SkipsOnError
+class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithHeadingRow, WithValidation
 {
-    use Importable, SkipsFailures, SkipsErrors;
+    use Importable, SkipsErrors, SkipsFailures;
+
     /**
-     * @param array $row
-     *
+     * @param  array  $row
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function collection(Collection $rows)
@@ -33,17 +31,17 @@ class StudentImport implements ToCollection, WithHeadingRow, WithValidation, Ski
         try {
             foreach ($rows as $row) {
                 $create_data = [
-                    "first_name" => $row['first_name'],
-                    "last_name" => $row['last_name'],
-                    "contact_number" => $row['dob'],
-                    "email" => $row['email'],
-                    "role_id" => 6
+                    'first_name' => $row['first_name'],
+                    'last_name' => $row['last_name'],
+                    'contact_number' => $row['dob'],
+                    'email' => $row['email'],
+                    'role_id' => 6,
                 ];
                 $userEloquent = UserEloquentModel::create($create_data);
                 $create_student = [
-                    "user_id" => $userEloquent->id,
-                    "gender" => $row['gender'],
-                    "education_level" => $row['education'],
+                    'user_id' => $userEloquent->id,
+                    'gender' => $row['gender'],
+                    'education_level' => $row['education'],
                 ];
                 $studentEloquent = StudentEloquentModel::create($create_student);
             }
@@ -53,6 +51,7 @@ class StudentImport implements ToCollection, WithHeadingRow, WithValidation, Ski
             DB::rollBack();
         }
     }
+
     public function rules(): array
     {
         return [

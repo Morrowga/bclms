@@ -32,10 +32,10 @@ class StudentRoleSeeder extends Seeder
         foreach ($users as $user) {
             $userCreate = UserEloquentModel::create($user);
             $studentData = [
-                "user_id" => $userCreate->id,
-                "dob" => now(),
-                "gender" => "Male",
-                "education_level" => "G1",
+                'user_id' => $userCreate->id,
+                'dob' => now(),
+                'gender' => 'Male',
+                'education_level' => 'G1',
             ];
             $studentCreate = StudentEloquentModel::create($studentData);
         }

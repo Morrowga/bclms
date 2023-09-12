@@ -30,7 +30,7 @@ class Annoument extends Entity
             'by' => $this->by,
             'to' => $this->to,
             'org' => $this->org,
-            'users' => $this->users
+            'users' => $this->users,
         ];
     }
 }

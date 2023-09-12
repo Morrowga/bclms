@@ -7,7 +7,7 @@ namespace Src\BlendedConcept\Finance\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class B2bSubscriptionEloquentModel  extends Model
+class B2bSubscriptionEloquentModel extends Model
 {
     use HasFactory;
 
@@ -19,6 +19,6 @@ class B2bSubscriptionEloquentModel  extends Model
         'receipt_image',
         'storage_limit',
         'num_teacher_license',
-        'num_student_license'
+        'num_student_license',
     ];
 }

@@ -30,10 +30,11 @@ class SubscribtionInvoiceController
 
             return Inertia::render(config('route.subscriptioninvoice.index'), [
                 'b2b_subscriptions' => $b2b_subscriptions,
-                'b2c_subscriptions' => $b2c_subscriptions
+                'b2c_subscriptions' => $b2c_subscriptions,
             ]);
         } catch (\Exception $e) {
             dd($e);
+
             return redirect()
                 ->route('subscription_invoice')
                 ->with([
@@ -52,6 +53,7 @@ class SubscribtionInvoiceController
             return redirect()->route('subscription_invoice')->with('successMessage', 'Subscription Updated Successfully!');
         } catch (\Exception $e) {
             dd($e);
+
             return redirect()
                 ->route('subscription_invoice')
                 ->with([
@@ -71,6 +73,7 @@ class SubscribtionInvoiceController
             return redirect()->route('subscription_invoice')->with('successMessage', 'Subscription Updated Successfully!');
         } catch (\Exception $e) {
             dd($e);
+
             return redirect()
                 ->route('subscription_invoice')
                 ->with([

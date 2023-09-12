@@ -5,17 +5,13 @@ declare(strict_types=1);
 namespace Src\BlendedConcept\Security\Infrastructure\EloquentModels;
 
 use Hash;
-use B2cUserEloquent;
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
+use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 
 class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyEmail
@@ -112,12 +108,12 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
 
     public function b2bUser()
     {
-        return $this->belongsTo(B2cUserEloquentModel::class , 'user_id');
+        return $this->belongsTo(B2cUserEloquentModel::class, 'user_id');
     }
 
     public function b2cUser()
     {
-        return $this->belongsTo(B2bUserEloquentModel::class , 'user_id');
+        return $this->belongsTo(B2bUserEloquentModel::class, 'user_id');
     }
 
     public function organization()

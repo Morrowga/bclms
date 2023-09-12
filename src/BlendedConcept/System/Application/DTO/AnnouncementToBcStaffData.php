@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\System\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\System\Application\DTO\AnnouncementToBcStaffData;
 
 class AnnouncementToBcStaffData
 {

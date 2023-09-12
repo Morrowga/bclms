@@ -16,6 +16,7 @@ class OrganizationService
         $userEloquent->email_verification_send_on = now();
         $userEloquent->role_id = 5;
         $userEloquent->save();
+
         return $userEloquent;
     }
 

@@ -17,7 +17,7 @@ class UpdateB2cSubscriptionRequest extends FormRequest
             'start_date' => ['required'],
             'end_date' => ['required'],
             'user_id' => ['required'],
-            'plan_id' => ['required']
+            'plan_id' => ['required'],
         ];
     }
 }

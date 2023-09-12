@@ -2,13 +2,12 @@
 
 namespace Src\BlendedConcept\System\Application\Mappers;
 
-use Illuminate\Http\Request;
 use Src\BlendedConcept\System\Domain\Model\Entities\AnnouncementToB2B;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementToB2BEloquentModel;
 
 class AnnouncementToB2BMapper
 {
-    public static function fromRequest(Array $request, $announcement_b2b_id = null): AnnouncementToB2B
+    public static function fromRequest(array $request, $announcement_b2b_id = null): AnnouncementToB2B
     {
 
         return new AnnouncementToB2B(
@@ -18,7 +17,6 @@ class AnnouncementToB2BMapper
             is_cleared: $request['is_cleared'],
         );
     }
-
 
     public static function toEloquent(AnnouncementToB2B $announcementToB2B): AnnouncementToB2BEloquentModel
     {

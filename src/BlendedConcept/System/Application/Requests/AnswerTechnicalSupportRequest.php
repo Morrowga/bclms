@@ -15,8 +15,8 @@ class AnswerTechnicalSupportRequest extends FormRequest
     {
         return [
             'response' => [
-                'required'
-            ]
+                'required',
+            ],
         ];
     }
 }

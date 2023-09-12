@@ -4,25 +4,25 @@ namespace Src\BlendedConcept\Security\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Src\BlendedConcept\Security\Domain\Model\User;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Security\Application\DTO\PermissionData;
 use Src\BlendedConcept\Security\Application\DTO\RoleData;
 use Src\BlendedConcept\Security\Application\DTO\UserData;
-use Src\BlendedConcept\Security\Domain\Model\Entities\Role;
-use Src\BlendedConcept\Security\Domain\Resources\RoleResource;
-use Src\BlendedConcept\Security\Domain\Resources\UserResource;
-use Src\BlendedConcept\Security\Application\DTO\PermissionData;
+use Src\BlendedConcept\Security\Application\Mappers\PermissionMapper;
 use Src\BlendedConcept\Security\Application\Mappers\RoleMapper;
 use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
 use Src\BlendedConcept\Security\Domain\Model\Entities\Permission;
-use Src\BlendedConcept\Security\Domain\Resources\PermissionResource;
-use Src\BlendedConcept\Security\Application\Mappers\PermissionMapper;
+use Src\BlendedConcept\Security\Domain\Model\Entities\Role;
+use Src\BlendedConcept\Security\Domain\Model\User;
 use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Security\Domain\Resources\PermissionResource;
+use Src\BlendedConcept\Security\Domain\Resources\RoleResource;
+use Src\BlendedConcept\Security\Domain\Resources\UserResource;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class SecurityRepository implements SecurityRepositoryInterface
 {
@@ -50,31 +50,32 @@ class SecurityRepository implements SecurityRepositoryInterface
     {
         //set roles
         $b2bteachers = B2bUserEloquentModel::with('users')
-        ->whereHas('users', function ($query) {
-            $query->where('role_id', 4);
-        })
-        ->orderBy('b2b_user_id', 'desc')->get();
+            ->whereHas('users', function ($query) {
+                $query->where('role_id', 4);
+            })
+            ->orderBy('b2b_user_id', 'desc')->get();
 
         return UserResource::collection($b2bteachers->pluck('users')->flatten());
     }
 
-    public function getB2bTeachersByOrganization($id){
-         $b2bteachers = B2bUserEloquentModel::with('users')
-         ->where('organization_id', $id)
-         ->whereHas('users', function ($query) {
-             $query->where('role_id', 4);
-         })
-         ->orderBy('b2b_user_id', 'desc')->get();
+    public function getB2bTeachersByOrganization($id)
+    {
+        $b2bteachers = B2bUserEloquentModel::with('users')
+            ->where('organization_id', $id)
+            ->whereHas('users', function ($query) {
+                $query->where('role_id', 4);
+            })
+            ->orderBy('b2b_user_id', 'desc')->get();
 
-         return UserResource::collection($b2bteachers->pluck('users')->flatten());
+        return UserResource::collection($b2bteachers->pluck('users')->flatten());
     }
 
     public function getB2CUsers()
     {
         //set roles
         $b2cUsers = B2cUserEloquentModel::with('users')
-        ->whereHas('users')
-        ->orderBy('b2c_user_id', 'desc')->get();
+            ->whereHas('users')
+            ->orderBy('b2c_user_id', 'desc')->get();
 
         return UserResource::collection($b2cUsers->pluck('users')->flatten());
     }
@@ -83,10 +84,10 @@ class SecurityRepository implements SecurityRepositoryInterface
     {
         //set roles
         $users = UserResource::collection(UserEloquentModel::filter($filters)
-        ->with('role')
-        ->where('role_id', 3)
-        ->orderBy('id', 'desc')
-        ->get());
+            ->with('role')
+            ->where('role_id', 3)
+            ->orderBy('id', 'desc')
+            ->get());
 
         return $users;
     }

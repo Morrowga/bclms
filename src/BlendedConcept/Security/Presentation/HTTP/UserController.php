@@ -19,7 +19,6 @@ use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserName;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUsersWithPagination;
 use Src\BlendedConcept\Security\Domain\Services\UserService;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\Common\Application\Imports\UserImport;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
 

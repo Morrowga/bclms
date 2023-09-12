@@ -2,13 +2,12 @@
 
 namespace Src\BlendedConcept\System\Application\Mappers;
 
-use Illuminate\Http\Request;
 use Src\BlendedConcept\System\Domain\Model\Entities\AnnouncementToBcStaff;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementToBcStaffEloquentModel;
 
 class AnnouncementToBcStaffMapper
 {
-    public static function fromRequest(Array $request, $announcement_bc_staff_id = null): AnnouncementToBcStaff
+    public static function fromRequest(array $request, $announcement_bc_staff_id = null): AnnouncementToBcStaff
     {
 
         return new AnnouncementToBcStaff(
@@ -18,7 +17,6 @@ class AnnouncementToBcStaffMapper
             is_cleared: $request['is_cleared'],
         );
     }
-
 
     public static function toEloquent(AnnouncementToBcStaff $announcementToBcStaff): AnnouncementToBcStaffEloquentModel
     {
