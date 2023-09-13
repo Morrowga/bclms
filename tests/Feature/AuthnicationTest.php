@@ -7,20 +7,6 @@ use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
-/**
- *  require
- *
- *  @return bool True if email is required
- */
-// test('validation b2c register', function () {
-
-//     $data = [
-//         'email' => '',
-//         'password' => 'password',
-//     ];
-//     $response = $this->post('/  ', $data);
-//     // $response->assertSessionHasErrors('email');
-
 //     $response->assertSessionHasErrors(['email']);
 
 //     $data = [
