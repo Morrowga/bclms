@@ -178,7 +178,7 @@ test('form update as organization with superadmin role', function () {
         ]
     );
 
-    $postData = $this->post('/organizations', []);
+    $postData = $this->put("/organizations/$organizatonData->id", []);
     $postData->assertSessionHasErrors(['name', 'contact_email', 'org_admin_name', 'org_admin_contact_number', 'login_email']);
 });
 
@@ -217,6 +217,6 @@ test('delete organization', function () {
         'logo' => null,
         'status' => 'ACTIVE',
     ]);
-    $deletePost = $this->delete("/organization/{$organizatonData->id}");
+    $deletePost = $this->delete("/organizations/{$organizatonData->id}");
     $deletePost->assertStatus(302);
 });
