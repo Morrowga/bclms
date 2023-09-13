@@ -57,13 +57,13 @@ test('unique_b2c_register_email', function () {
     $email = 'superadmin@mail.com';
     $name = explode('@', $email);
     $data = [
-        'name' => $name[0],
+        'first_name' => $name[0],
         'email' => $email,
         'password' => 'password',
     ];
     $existingUser = UserEloquentModel::create($data);
     $response = $this->post('/b2cstore', [
-        'name' => $existingUser->name,
+        'first_name' => $existingUser->first_name,
         'email' => $existingUser->email,
         'password' => 'password',
     ]);
@@ -113,10 +113,11 @@ test('invalid_login_email', function () {
  */
 test('mismatch_login_password', function () {
     $data = [
-        'name' => 'Admin',
+        'first_name' => 'Admin',
+        'last_name' => 'One',
         'email' => 'admin@admin.com',
         'password' => 'password',
-        'email_verified_at' => Carbon::now(),
+        'email_verification_send_on' => Carbon::now(),
     ];
     $existingUser = UserEloquentModel::create($data);
 
@@ -138,10 +139,11 @@ test('mismatch_login_password', function () {
  */
 test('match_login_password', function () {
     $data = [
-        'name' => 'Admin',
+        'first_name' => 'Admin',
+        'last_name' => 'Test',
         'email' => 'admin@testing.com',
         'password' => 'password',
-        'email_verified_at' => Carbon::now(),
+        'email_verification_send_on' => Carbon::now(),
 
     ];
     $existingUser = UserEloquentModel::create($data);
