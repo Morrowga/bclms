@@ -4,6 +4,11 @@ import { useForm,usePage } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import axios from "axios";
+import {
+    emailValidator,
+    requiredValidator,
+    integerValidator,
+} from "@validators";
 import MultiSelectBox from "@mainRoot/components/MultiSelectBox/MultiSelectBox.vue";
 let props = defineProps(['organizations', 'b2cUsers', 'teachers', 'bcStaff']);
 
@@ -1409,7 +1414,6 @@ let onFormSubmit = () => {
     bc_staff_ids.value.length > 0 ? toArray.push('BC Staff') : '';
     form.to = toArray.join(', ')
 
-    console.log(form);
     // refForm.value?.resetValidation();
     form.post(route("announcements.store"), {
     onSuccess: () => {
@@ -1459,7 +1463,7 @@ let getTeacherByOrganization = (id) => {
 <template>
     <AdminLayout>
         <VContainer>
-            <VForm class="mt-6" @submit.prevent="onFormSubmit">
+            <VForm class="mt-6" ref="refForm" @submit.prevent="onFormSubmit">
                 <!-- <VRow>
                     <VCol cols="8">
                         <span class="tiggie-title margin-buttom-18"
@@ -1489,6 +1493,7 @@ let getTeacherByOrganization = (id) => {
                                     variant="plain"
                                     placeholder="Type here..."
                                     density="compact"
+                                    :rules="[requiredValidator]" :error-messages="form?.errors?.title"
                                 />
                             </VCol>
                             <VCol cols="2">
@@ -1511,6 +1516,7 @@ let getTeacherByOrganization = (id) => {
                                         v-on="on"
                                         color="deep-purple"
                                         readonly
+                                        :rules="[requiredValidator]" :error-messages="form?.errors?.icon"
                                     >
                                     </VSelect>
                                    </div>
@@ -1572,6 +1578,7 @@ let getTeacherByOrganization = (id) => {
                                     v-model="form.message"
                                     auto-grow
                                     rows="3"
+                                    :rules="[requiredValidator]" :error-messages="form?.errors?.message"
                                 />
                             </VCol>
 
@@ -1586,6 +1593,7 @@ let getTeacherByOrganization = (id) => {
                                     :items="groupSelectBox"
                                     density="compact"
                                     placeholder="Select a group"
+                                    :rules="[requiredValidator]" :error-messages="form?.errors?.by"
                                 ></VSelect>
                                 <div :hidden="visibleToOriginizationList">
                                     <VSelect
@@ -1623,6 +1631,7 @@ let getTeacherByOrganization = (id) => {
                                     density="compact"
                                     v-model="form.to"
                                     :items="tos"
+                                    :rules="[requiredValidator]" :error-messages="form?.errors?.to"
                                 >
                                     <template v-slot:prepend-item>
                                         <v-list-item

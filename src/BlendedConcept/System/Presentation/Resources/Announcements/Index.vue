@@ -59,11 +59,11 @@ let columns = [
         field: "to",
         sortable: false,
     },
-      {
-        label: "Action",
-        field: "action",
-        sortable: false,
-    },
+    //   {
+    //     label: "Action",
+    //     field: "action",
+    //     sortable: false,
+    // },
 ];
 
 //## options for datatable
@@ -193,40 +193,40 @@ const deleteAnnouncement = (id) => {
                                     <VIcon :icon="props.row.icon"></VIcon>
                                 </span>
                             </div> -->
-                            <div v-if="props.column.field == 'action'">
-                            <VMenu location="end">
-                                <template #activator="{ props }">
-                                    <VIcon
-                                        v-bind="props"
-                                        size="24"
-                                        icon="mdi-dots-horizontal"
-                                        color="black"
-                                        class="mt-n4"
-                                    />
-                                </template>
-                                <VList>
-                                    <VListItem
-                                        @click="
-                                            () =>
-                                                router.get(
-                                                    route(
-                                                        'announcements.edit',props.row.id
+                            <!-- <div v-if="props.column.field == 'action'">
+                                <VMenu location="end">
+                                    <template #activator="{ props }">
+                                        <VIcon
+                                            v-bind="props"
+                                            size="24"
+                                            icon="mdi-dots-horizontal"
+                                            color="black"
+                                            class="mt-n4"
+                                        />
+                                    </template>
+                                    <VList>
+                                        <VListItem
+                                            @click="
+                                                () =>
+                                                    router.get(
+                                                        route(
+                                                            'announcements.edit',props.row.id
+                                                        )
                                                     )
-                                                )
-                                        "
-                                    >
-                                        <VListItemTitle>Edit</VListItemTitle>
-                                    </VListItem>
-                                    <VListItem
-                                        @click="
-                                            deleteAnnouncement(props.row.id)
-                                        "
-                                    >
-                                        <VListItemTitle>Delete</VListItemTitle>
-                                    </VListItem>
-                                </VList>
-                            </VMenu>
-                        </div>
+                                            "
+                                        >
+                                            <VListItemTitle>Edit</VListItemTitle>
+                                        </VListItem>
+                                        <VListItem
+                                            @click="
+                                                deleteAnnouncement(props.row.id)
+                                            "
+                                        >
+                                            <VListItemTitle>Delete</VListItemTitle>
+                                        </VListItem>
+                                    </VList>
+                                </VMenu>
+                            </div> -->
                         </template>
                         <template #pagination-bottom>
                             <VRow class="pa-4">
