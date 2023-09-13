@@ -75,7 +75,7 @@ test("other roles can't access  user module", function () {
         'email' => 'testinguser@gmail.com',
         'password' => 'password',
         'role_id' => 2,
-        'email_verified_at' => Carbon::now(),
+        'email_verified_send_on' => Carbon::now(),
     ]);
 
 
@@ -93,7 +93,7 @@ test("other roles can't access  user module", function () {
             'password' => 'password',
             'dob' => Carbon::now(),
             'is_active' => 1,
-            'email_verified_at' => Carbon::now(),
+            'email_verified_send_on' => Carbon::now(),
         ]);
 
         $otherUser->assertStatus(403);
