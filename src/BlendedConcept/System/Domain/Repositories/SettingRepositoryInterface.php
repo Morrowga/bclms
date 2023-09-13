@@ -12,4 +12,6 @@ interface SettingRepositoryInterface
     public function getSetting();
 
     public function updateSiteTheme(SiteThemData $siteThemData);
+
+    public function getSiteTheme();
 }

@@ -12,7 +12,8 @@ use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Src\BlendedConcept\System\Application\Requests\updateSiteThemeRequest;
 use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateSiteThemeCommand;
-
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetSiteThemeQuery;
+use Src\BlendedConcept\System\Application\DTO\SiteThemData;
 class SettingController extends Controller
 {
     /**
@@ -62,13 +63,15 @@ class SettingController extends Controller
     public function updateSiteTheme()
     {
 
-        return Inertia::render(config('route.site_theme'));
+        $site_theme = (new GetSiteThemeQuery)->handle();
+
+        return Inertia::render(config('route.site_theme'),compact('site_theme'));
     }
 
     public function updatetheme(updateSiteThemeRequest $request)
     {
         try {
-            $system_theme = SiteSettingData::fromRequest($request);
+            $system_theme = SiteThemData::fromRequest($request);
             $update_system_theme = new UpdateSiteThemeCommand($system_theme);
             $update_system_theme->execute();
 
