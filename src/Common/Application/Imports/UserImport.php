@@ -42,6 +42,7 @@ class UserImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithHead
                     'last_name' => $row['last_name'],
                     'email' => $row['work_email'],
                     'contact_number' => $row['contact_number'],
+                    'password' => 'password',
                     'role_id' => 2,
                 ];
                 $userEloquenet = UserEloquentModel::create($create_data);
