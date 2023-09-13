@@ -126,7 +126,6 @@ class TeacherController extends Controller
             }
             $import->import($request->file('file'));
             if ($import->failures()->count() > 0) {
-                dd($import->failures());
                 $errorRows = [];
                 $currentRow = null;
                 foreach ($import->failures() as $failure) {

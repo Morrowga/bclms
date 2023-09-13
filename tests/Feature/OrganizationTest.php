@@ -217,6 +217,6 @@ test('delete organization', function () {
         'logo' => null,
         'status' => 'ACTIVE',
     ]);
-    $organizatonData->delete();
-    $organizatonData->assertStatus(302);
+    $deletePost = $this->delete("/organization/{$organizatonData->id}");
+    $deletePost->assertStatus(302);
 });
