@@ -10,7 +10,9 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
 class OrganizationEloquentModel extends Model implements HasMedia
 {
@@ -49,14 +51,21 @@ class OrganizationEloquentModel extends Model implements HasMedia
     {
         return $this->belongsTo(UserEloquentModel::class, 'org_admin_id', 'id');
     }
-
+    public function teachers()
+    {
+        return $this->hasMany(B2bUserEloquentModel::class, 'organization_id', 'id');
+    }
+    public function students()
+    {
+        return $this->belongsToMany(StudentEloquentModel::class, 'organization_students', 'organization_id', 'student_id');
+    }
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('name', 'like', '%'.$search.'%');
+            $query->where('name', 'like', '%' . $search . '%');
         });
     }
 }
