@@ -11,6 +11,7 @@ import ImportUser from "./components/ImportUser.vue";
 import { router } from "@inertiajs/core";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import exportFromJSON from "export-from-json";
+import { SuccessDialog } from "@actions/useSuccess";
 import {
     serverParams,
     onColumnFilter,
@@ -31,14 +32,16 @@ let flash = computed(() => usePage().props.flash);
 let users = computed(() => usePage().props.auth.data.users);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 let currentPermission = ref();
-const form = useForm({});
 serverPage.value = ref(props.users.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
 
 const deleteUser = (id) => {
     deleteItem(id, "users");
 };
-
+const form = useForm({
+    status: "",
+    _method: "PUT",
+});
 const items = ref([
     {
         title: "Edit",
@@ -97,9 +100,21 @@ watch(serverPerPage, function (value) {
 const viewInfoRow = (id) => {
     router.get(route("users.show", { id: id }));
 };
-const setInactive = () => {
+const setInactive = (status, id) => {
+    if (status == "ACTIVE") {
+        form.status = "INACTIVE";
+    } else {
+        form.status = "ACTIVE";
+    }
     isConfirmedDialog({
         denyButtonText: "Set Inactive",
+        onConfirm: () => {
+            form.post(route("users.change_status", id), {
+                onSuccess: () => {
+                    SuccessDialog({ title: props.flash?.successMessage });
+                },
+            });
+        },
     });
 };
 const exportUser = () => {
@@ -208,11 +223,14 @@ const exportUser = () => {
                             v-if="props.column.field == 'status'"
                             class="flex flex-wrap"
                         >
-                            <VChip color="success"> Active </VChip>
-
-                            <VChip color="warning" v-if="true == false">
-                                Active
+                            <VChip
+                                color="success"
+                                v-if="props.row.status == 'ACTIVE'"
+                            >
+                                ACTIVE
                             </VChip>
+
+                            <VChip color="warning" v-else> INACTIVE </VChip>
                         </div>
                         <div v-if="props.column.field == 'action'">
                             <VMenu location="end">
@@ -226,10 +244,19 @@ const exportUser = () => {
                                     />
                                 </template>
                                 <VList>
-                                    <VListItem @click="setInactive()">
-                                        <VListItemTitle
-                                            >Set Inactive</VListItemTitle
-                                        >
+                                    <VListItem
+                                        @click="
+                                            setInactive(
+                                                props.row.status,
+                                                props.row.id
+                                            )
+                                        "
+                                    >
+                                        <VListItemTitle>{{
+                                            props.row.status == "ACTIVE"
+                                                ? "Set Inactive"
+                                                : "Set Active"
+                                        }}</VListItemTitle>
                                     </VListItem>
                                 </VList>
                             </VMenu>

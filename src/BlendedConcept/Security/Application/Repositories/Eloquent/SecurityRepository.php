@@ -3,6 +3,7 @@
 namespace Src\BlendedConcept\Security\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\Security\Application\DTO\PermissionData;
@@ -156,11 +157,11 @@ class SecurityRepository implements SecurityRepositoryInterface
 
         // Add filters to the query
         if (isset($filters['name'])) {
-            $query->where('name', 'like', '%'.$filters['name'].'%');
+            $query->where('name', 'like', '%' . $filters['name'] . '%');
         }
 
         if (isset($filters['email'])) {
-            $query->where('email', 'like', '%'.$filters['email'].'%');
+            $query->where('email', 'like', '%' . $filters['email'] . '%');
         }
 
         if (isset($filters['role'])) {
@@ -263,5 +264,21 @@ class SecurityRepository implements SecurityRepositoryInterface
         }
 
         return false;
+    }
+
+    //  update plan
+    public function changeStatus($request, $userEloquent)
+    {
+
+        DB::beginTransaction();
+
+        try {
+            $userEloquent->status = $request->status;
+            $userEloquent->update();
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            dd($error);
+        }
     }
 }
