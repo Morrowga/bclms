@@ -71,6 +71,7 @@ class SettingController extends Controller
             $system_theme = SiteSettingData::fromRequest($request);
             $update_system_theme = new UpdateSiteThemeCommand($system_theme);
             $update_system_theme->execute();
+
         } catch (\Exception $error) {
             dd($error->getMessage());
         }

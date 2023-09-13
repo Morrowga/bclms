@@ -35,7 +35,7 @@ test('invalid_b2c_register_email', function () {
  *  @return bool True
  */
 test('unique_b2c_register_email', function () {
-    $email = 'superadmin@mail.com';
+    $email = 'testuser@mail.com';
     $name = explode('@', $email);
     $data = [
         'first_name' => $name[0],
@@ -49,6 +49,8 @@ test('unique_b2c_register_email', function () {
         'password' => 'password',
     ]);
 
+
+    // dd($response);
     $response->assertSessionHasErrors('email');
 });
 

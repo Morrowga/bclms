@@ -41,6 +41,7 @@ const form = useForm({
   header_type: "",
   footer_type: "",
   menu_type: "",
+  _method : "PUT"
 });
 // 👉 Primary Color
 const vuetifyTheme = useTheme();
@@ -84,6 +85,10 @@ const headerValues = computed(() => {
   return entries;
 });
 const updateTheme = () => {
+
+    form.post(route('updatetheme'),{
+
+    })
   SuccessDialog({
     title: "You have successfully updated site theme",
   });
