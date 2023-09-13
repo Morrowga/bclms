@@ -20,7 +20,6 @@ class StoreOrganizationRequest extends FormRequest
                 'required',
             ],
             'org_admin_contact_number' => [
-
                 'required',
             ],
             'login_email' => [

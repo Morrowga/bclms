@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
+//     $data = [
+//         'email' => 'admin@com',
+//         'password' => '',
+//     ];
+//     $response = $this->post('/b2cstore', $data);
 
 
 /**
