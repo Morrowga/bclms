@@ -59,7 +59,7 @@ test('unique_b2c_register_email', function () {
  *
  *  @return  bool True
  */
-test('bland login email or password', function () {
+test('blank login email or password', function () {
     $data = [
         'email' => '',
         'password' => 'password',
