@@ -40,12 +40,13 @@ test('page builder access with other roles ', function () {
     Auth::logout();
 
     $user = UserEloquentModel::create([
-        'name' => 'testing',
+        'role_id' => 2,
+        'first_name' => 'testing',
+        'last_name' => 'user',
         'email' => 'testing@gmail.com',
         'password' => 'password',
     ]);
 
-    $user->roles()->sync(2);
 
     if (Auth::attempt(['email' => 'testing@gmail.com', 'password' => 'password'])) {
 

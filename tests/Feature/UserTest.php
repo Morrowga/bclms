@@ -78,7 +78,6 @@ test("other roles can't access  user module", function () {
         'email_verified_at' => Carbon::now(),
     ]);
 
-    // $user->roles()->sync(2);
 
     if (Auth::attempt(['email' => 'testinguser@gmail.com', 'password' => 'password'])) {
         $response = $this->get('/users');
