@@ -11,7 +11,7 @@ class UpdateSiteThemeCommand implements CommandInterface
     private SettingRepositoryInterface $repository;
 
     public function __construct(
-        private readonly SiteSettingData $siteSettingData
+        private readonly  $siteSettingData
 
     ) {
         $this->repository = app()->make(SettingRepositoryInterface::class);
@@ -19,6 +19,6 @@ class UpdateSiteThemeCommand implements CommandInterface
 
     public function execute()
     {
-        return $this->repository->updateSetting($this->siteSettingData);
+        return $this->repository->updateSiteTheme($this->siteSettingData);
     }
 }
