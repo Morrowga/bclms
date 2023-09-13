@@ -2,7 +2,7 @@
 import Create from "./Create.vue";
 import Edit from "./Edit.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { usePage } from "@inertiajs/vue3";
+import { usePage, useForm } from "@inertiajs/vue3";
 import { computed } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import IconOutlineBtn from "@mainRoot/components/Buttons/IconOutlineBtn.vue";
@@ -10,7 +10,8 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import ImportUser from "./components/ImportUser.vue";
 import { router } from "@inertiajs/core";
 import { isConfirmedDialog } from "@actions/useConfirm";
-
+import exportFromJSON from "export-from-json";
+import { SuccessDialog } from "@actions/useSuccess";
 import {
     serverParams,
     onColumnFilter,
@@ -37,7 +38,10 @@ serverPerPage.value = ref(10);
 const deleteUser = (id) => {
     deleteItem(id, "users");
 };
-
+const form = useForm({
+    status: "",
+    _method: "PUT",
+});
 const items = ref([
     {
         title: "Edit",
@@ -96,12 +100,31 @@ watch(serverPerPage, function (value) {
 const viewInfoRow = (id) => {
     router.get(route("users.show", { id: id }));
 };
-const setInactive = () => {
+const setInactive = (status, id) => {
+    if (status == "ACTIVE") {
+        form.status = "INACTIVE";
+    } else {
+        form.status = "ACTIVE";
+    }
     isConfirmedDialog({
         denyButtonText: "Set Inactive",
+        onConfirm: () => {
+            form.post(route("users.change_status", id), {
+                onSuccess: () => {
+                    SuccessDialog({ title: props.flash?.successMessage });
+                },
+            });
+        },
     });
 };
-
+const exportUser = () => {
+    const array = props.users.data;
+    let data = array.map(({ image, media, role, ...rest }) => rest);
+    const fileName = "Export Teachers";
+    const exportType = exportFromJSON.types.csv;
+    if (data) exportFromJSON({ data, fileName, exportType });
+    return;
+};
 </script>
 
 <template>
@@ -116,6 +139,7 @@ const setInactive = () => {
                         variant="tonal"
                         color="primary"
                         prepend-icon="mdi-tray-arrow-up"
+                        @click="exportUser()"
                     >
                         Export
                     </VBtn>
@@ -199,11 +223,14 @@ const setInactive = () => {
                             v-if="props.column.field == 'status'"
                             class="flex flex-wrap"
                         >
-                            <VChip color="success"> Active </VChip>
-
-                            <VChip color="warning" v-if="true == false">
-                                Active
+                            <VChip
+                                color="success"
+                                v-if="props.row.status == 'ACTIVE'"
+                            >
+                                ACTIVE
                             </VChip>
+
+                            <VChip color="warning" v-else> INACTIVE </VChip>
                         </div>
                         <div v-if="props.column.field == 'action'">
                             <VMenu location="end">
@@ -217,10 +244,19 @@ const setInactive = () => {
                                     />
                                 </template>
                                 <VList>
-                                    <VListItem @click="setInactive()">
-                                        <VListItemTitle
-                                            >Set Inactive</VListItemTitle
-                                        >
+                                    <VListItem
+                                        @click="
+                                            setInactive(
+                                                props.row.status,
+                                                props.row.id
+                                            )
+                                        "
+                                    >
+                                        <VListItemTitle>{{
+                                            props.row.status == "ACTIVE"
+                                                ? "Set Inactive"
+                                                : "Set Active"
+                                        }}</VListItemTitle>
                                     </VListItem>
                                 </VList>
                             </VMenu>

@@ -69,4 +69,6 @@ interface SecurityRepositoryInterface
     public function getUserForDashBoard();
 
     public function changepassword($request);
+
+    public function changeStatus($request, $user);
 }

@@ -5,7 +5,8 @@ namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 use Src\BlendedConcept\System\Application\DTO\SiteSettingData;
 use Src\BlendedConcept\System\Domain\Repositories\SettingRepositoryInterface;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\SiteSettingEloquentModel;
-
+use Src\BlendedConcept\System\Application\DTO\SiteThemData;
+use Src\BlendedConcept\System\Infrastructure\EloquentModels\SystemThemeEloquentModel;
 class SettingRepository implements SettingRepositoryInterface
 {
     /**
@@ -41,5 +42,13 @@ class SettingRepository implements SettingRepositoryInterface
     public function getSetting()
     {
         return SiteSettingEloquentModel::first();
+    }
+
+    public function updateSiteTheme(SiteThemData $siteThemData)
+    {
+          $siteThemDataArray = $siteThemData->toArray();
+          $siteEloquent = SystemThemeEloquentModel::query()->first();
+          $siteEloquent->fill($siteThemDataArray);
+          $siteEloquent->save();
     }
 }

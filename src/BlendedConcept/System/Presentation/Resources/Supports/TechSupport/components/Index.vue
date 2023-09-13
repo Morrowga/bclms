@@ -19,7 +19,7 @@ const refForm = ref();
 const handleSubmit = () => {
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
-            form.post(route('techsupports'), {
+            form.post(route('techsupport'), {
                 onSuccess: () => {
                     isDialogVisible.value = false;
                     form.reset();

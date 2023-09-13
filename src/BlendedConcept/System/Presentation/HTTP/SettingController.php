@@ -10,6 +10,7 @@ use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateSiteSettingCom
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetSiteSetting;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Src\BlendedConcept\System\Application\Requests\updateSiteThemeRequest;
 
 class SettingController extends Controller
 {
@@ -61,5 +62,10 @@ class SettingController extends Controller
     {
 
         return Inertia::render(config('route.site_theme'));
+    }
+
+    public function updatetheme(updateSiteThemeRequest $request)
+    {
+
     }
 }

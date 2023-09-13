@@ -11,6 +11,7 @@ use Src\BlendedConcept\Security\Application\Policies\UserPolicy;
 use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
 use Src\BlendedConcept\Security\Application\Requests\updateUserPasswordRequest;
 use Src\BlendedConcept\Security\Application\Requests\UpdateUserRequest;
+use Src\BlendedConcept\Security\Application\UseCases\Commands\User\ChangeStatusCommand;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\User\DelectUserCommand;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\User\StoreUserCommand;
 use Src\BlendedConcept\Security\Application\UseCases\Commands\User\UpdateUserCommand;
@@ -142,6 +143,25 @@ class UserController extends Controller
         } catch (\Exception $error) {
 
             dd('something was wrong', $error->getMessage());
+        }
+    }
+
+    public function changeStatus(Request $request, UserEloquentModel $user)
+    {
+        // abort_if(authorize('edit', PlanPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        try {
+            $updateUserCommand = (new ChangeStatusCommand($request, $user));
+            $updateUserCommand->execute();
+            $message = $request->status == 'ACTIVE' ? 'activated' : 'inactived';
+
+            return redirect()->route('users.index')->with('successMessage', "User has been set $message");
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('plans.index')
+                ->with([
+                    'systemErrorMessage' => $e->getMessage(),
+                ]);
         }
     }
 }

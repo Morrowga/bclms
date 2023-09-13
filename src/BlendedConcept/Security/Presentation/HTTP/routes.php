@@ -11,4 +11,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
+
+    Route::put('/users/{user}/change_status', [UserController::class, 'changeStatus'])->name('users.change_status');
 });
