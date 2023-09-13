@@ -39,11 +39,11 @@ test('without other role not access organization  ', function () {
     Auth::logout();
     $user = UserEloquentModel::create([
         'name' => 'testing',
+        'role_id' => 3,
         'email' => 'testinguser@gmail.com',
         'password' => 'password',
         'email_verified_at' => Carbon::now(),
     ]);
-    $user->roles()->sync(3);
 
     if (Auth::attempt(['email' => 'testinguser@gmail.com', 'password' => 'password'])) {
         $reponse = $this->get('/organizations');
