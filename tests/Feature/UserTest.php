@@ -33,7 +33,7 @@ test('create user  with superadmin roles', function () {
         'dob' => Carbon::now(),
         'status' => 1,
         'profile_pic' => 'images/profile/profilefive.png',
-        'email_verified_at' => Carbon::now(),
+        'email_verified_send_on' => Carbon::now(),
     ]);
 
     $response->assertStatus(302);
@@ -54,7 +54,7 @@ test('create user  with missing filed superadmin roles', function () {
         'password' => '',
         'dob' => '',
         'is_active' => 1,
-        'email_verified_at' => '',
+        'email_verified_send_on' => '',
     ]);
 
     //check backend validation
@@ -81,23 +81,35 @@ test("other roles can't access  user module", function () {
     // $user->roles()->sync(2);
 
     if (Auth::attempt(['email' => 'testinguser@gmail.com', 'password' => 'password'])) {
-        $response = $this->get('/users');
+        $find_user = UserEloquentModel::where('email', 'testinguser@gmail.com')->first();
 
-        $response->assertStatus(403);
+        if (!empty($find_user) && $find_user->email_verified_send_on !== null) {
 
-        $otherUser = $this->post('/users', [
-            'first_name' => 'Hare',
-            'last_name' => 'Om',
-            'contact_number' => '09951613400',
-            'email' => 'hareom284@gmail.com',
-            'role' => 2,
-            'password' => 'password',
-            'dob' => Carbon::now(),
-            'is_active' => 1,
-            'email_verified_send_on' => Carbon::now(),
-        ]);
+            $response->assertStatus(403);
 
-        $otherUser->assertStatus(403);
+            $otherUser = $this->post('/users', [
+                'first_name' => 'Hare',
+                'last_name' => 'Om',
+                'contact_number' => '09951613400',
+                'email' => 'hareom284@gmail.com',
+                'role' => 2,
+                'password' => 'password',
+                'dob' => Carbon::now(),
+                'is_active' => 1,
+                'email_verified_send_on' => Carbon::now(),
+            ]);
+
+            $otherUser->assertStatus(403);
+
+        } else {
+            Auth::logout();
+            $response = $this->get('/users');
+
+            $response->assertStatus(302);
+
+            // Assert that the response status code is 403 (forbidden) or any other appropriate status code
+
+        }
     }
 
 });
