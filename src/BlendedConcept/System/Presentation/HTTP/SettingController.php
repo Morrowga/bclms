@@ -11,6 +11,7 @@ use Src\BlendedConcept\System\Application\UseCases\Queries\GetSiteSetting;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Src\BlendedConcept\System\Application\Requests\updateSiteThemeRequest;
+use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateSiteThemeCommand;
 
 class SettingController extends Controller
 {
@@ -66,6 +67,12 @@ class SettingController extends Controller
 
     public function updatetheme(updateSiteThemeRequest $request)
     {
-
+        try {
+            $system_theme = SiteSettingData::fromRequest($request);
+            $update_system_theme = new UpdateSiteThemeCommand($system_theme);
+            $update_system_theme->execute();
+        } catch (\Exception $error) {
+            dd($error->getMessage());
+        }
     }
 }

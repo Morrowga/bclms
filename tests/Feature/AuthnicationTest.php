@@ -7,17 +7,12 @@ use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
-//     $response->assertSessionHasErrors(['email']);
-
 //     $data = [
 //         'email' => 'admin@com',
 //         'password' => '',
 //     ];
 //     $response = $this->post('/b2cstore', $data);
 
-//     $response->assertSessionHasErrors(['password']);
-
-// });
 
 /**
  *  invalid email
@@ -111,6 +106,9 @@ test('mismatch_login_password', function () {
         'email' => $existingUser->email,
         'password' => Hash::make('passwords'),
     ]);
+
+
+    // dd($response);
 
     $response->assertInertia(function (AssertableInertia $page) {
         $props = $page->toArray();
