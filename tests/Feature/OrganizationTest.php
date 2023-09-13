@@ -84,7 +84,7 @@ test('form submit as organization with superadmin role', function () {
     $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
     $postData = $this->post('/organizations', [
         'curr_subscription_id' => $subscriptionOne->id,
-        'org_admin_id' => 1,
+        'org_admin_id' => $user->id,
         'name' => 'organization one',
         'contact_name' => 'org one',
         'contact_email' => 'orgone@mail.com',
@@ -99,11 +99,15 @@ test('form submit as organization with superadmin role', function () {
     $this->assertDatabaseHas(
         'organizations',
         [
-            'title' => 'organization name',
-            'icon' => 'mdi-alert',
-            'message' => 'message here',
-            'by' => 'Super Admin',
-            'to' => 'B2B Teachers,B2C Users, Organisation Admin',
+            'curr_subscription_id' => $subscriptionOne->id,
+            'org_admin_id' => $user->id,
+            'name' => 'organization one',
+            'contact_name' => 'org one',
+            'contact_email' => 'orgone@mail.com',
+            'contact_number' => '973434533',
+            'sub_domain' => 'orgone',
+            'logo' => null,
+            'status' => 'ACTIVE',
         ]
     );
 
