@@ -1,8 +1,10 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
+use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
@@ -18,7 +20,7 @@ beforeEach(function () {
     ]);
 });
 
-test('superadmin create organization', function () {
+test('superadmin create organizagion', function () {
 
     $this->assertTrue(Auth::check());
 
@@ -38,12 +40,14 @@ test('without other role not access organization  ', function () {
 
     Auth::logout();
     $user = UserEloquentModel::create([
-        'name' => 'testing',
+        'first_name' => 'testing',
+        'last_name' => 'testing',
         'email' => 'testinguser@gmail.com',
         'password' => 'password',
+        'contact_number' => '234234324324',
+        'role_id' => 6,
         'email_verified_at' => Carbon::now(),
     ]);
-    $user->roles()->sync(3);
 
     if (Auth::attempt(['email' => 'testinguser@gmail.com', 'password' => 'password'])) {
         $reponse = $this->get('/organizations');
@@ -59,16 +63,35 @@ test('form submit as organization with superadmin role', function () {
 
     $response = $this->get('/organizations');
     $response->assertStatus(200);
+    $user = UserEloquentModel::create([
+        'first_name' => 'testing',
+        'last_name' => 'testing',
+        'email' => 'testinguser@gmail.com',
+        'password' => 'password',
+        'contact_number' => '234234324324',
+        'role_id' => 1,
+        'email_verified_at' => Carbon::now(),
+    ]);
+    $subscriptionData = [
+        'start_date' => now(),
+        'end_date' => now(),
+        'payment_date' => now(),
+        'payment_status' => 'PAID',
+        'stripe_status' => null,
+        'stripe_price' => null,
+    ];
 
+    $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
     $postData = $this->post('/organizations', [
-        'name' => 'oranization name',
-        'contact_person' => 'Zaw Zaw Win',
-        'contact_email' => 'zawzawwin@gmail.com',
-        'contact_number' => '09951613400',
-        'price' => 100,
-        'payment_period' => 10,
-        'allocated_storage' => '100GB',
-        'teacher_license' => 'mm',
+        'curr_subscription_id' => $subscriptionOne->id,
+        'org_admin_id' => 1,
+        'name' => 'organization one',
+        'contact_name' => 'org one',
+        'contact_email' => 'orgone@mail.com',
+        'contact_number' => '973434533',
+        'sub_domain' => 'orgone',
+        'logo' => null,
+        'status' => 'ACTIVE',
     ]);
 
     $postData->assertStatus(302);
@@ -76,24 +99,14 @@ test('form submit as organization with superadmin role', function () {
     $this->assertDatabaseHas(
         'organizations',
         [
-            'name' => 'oranization name',
-            'contact_person' => 'Zaw Zaw Win',
-            'contact_email' => 'zawzawwin@gmail.com',
-            'contact_number' => '09951613400',
-        ]
-    );
-
-    $this->assertDatabaseHas(
-        'plans',
-        [
-            'name' => 'oranization name',
-            'price' => '100.00',
-            'payment_period' => '10',
-            'allocated_storage' => '100GB',
-            'teacher_license' => 'mm',
+            'title' => 'organization name',
+            'icon' => 'mdi-alert',
+            'message' => 'message here',
+            'by' => 'Super Admin',
+            'to' => 'B2B Teachers,B2C Users, Organisation Admin',
         ]
     );
 
     $postData = $this->post('/organizations', []);
-    $postData->assertSessionHasErrors(['name', 'contact_email']);
+    $postData->assertSessionHasErrors(['title', 'icon', 'message', 'by', 'to']);
 });
