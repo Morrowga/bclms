@@ -34,11 +34,13 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('updateSiteTheme', [SettingController::class, 'updateSiteTheme'])->name('updateSiteTheme');
 
+    Route::post("updatetheme",[SettingController::class,'updatetheme'])->name('updatetheme');
+
     Route::get('supports', [TechnicalSupportController::class, 'index'])->name('supports');
 
     Route::get('techsupports', [TechnicalSupportController::class, 'techsupports'])->name('techsupports');
 
-    // Route::post('techsupports', [TechnicalSupportController::class, 'askSupportQuestion'])->name('techsupports');
+    Route::post('techsupports', [TechnicalSupportController::class, 'askSupportQuestion'])->name('techsupport');
 
     Route::put('techsupports/{support_ticket}', [TechnicalSupportController::class, 'answerSupportQuestion'])->name('answerSupportQuestion');
 
