@@ -24,19 +24,22 @@ test('only superadmin can access sitesetting and add settings', function () {
     $response->assertStatus(200);
 
     $postData = $this->post('/settings', [
-        'site_name' => 'bclms',
-        'timezone' => 'UTC',
-        'ssl' => 'test',
-        'locale' => 'mm',
-        'email' => 'hareom284@gmail.com',
-        'contact_number' => '09951613400',
+        'site_name' => 'Tiggie Kids',
+        'ssl' => '',
+        'site_time_zone' => 'UTC',
+        'site_locale' => 'locale',
+        'email' => 'admin@tiggiekid.com',
+        'contact_number' => '6512345678',
+        'url' => 'https://tiggiekid.com',
+        'website_logo' => '',
+        'website_favicon' => '',
     ]);
 
     $postData->assertStatus(200);
     $this->assertDatabaseHas('site_settings', [
-        'site_name' => 'bclms',
-        'timezone' => 'UTC', ]);
-
+        'site_name' => 'Tiggie Kids',
+        'site_time_zone' => 'UTC',
+    ]);
 });
 
 test('without login access site setting and other role', function () {
@@ -46,13 +49,13 @@ test('without login access site setting and other role', function () {
     $response->assertRedirect('/login');
 
     $user = UserEloquentModel::create([
-        'name' => 'testing',
+        'first_name' => 'testing',
+        'last_name' => 'user',
+        'role_id' => 2,
         'email' => 'testinguser@gmail.com',
         'password' => 'password',
         'email_verified_at' => Carbon::now(),
     ]);
-
-    $user->roles()->sync(2);
 
     if (Auth::attempt(['email' => 'testinguser@gmail.com', 'password' => 'password'])) {
         $checkOtherRoles = $this->get('/settings');

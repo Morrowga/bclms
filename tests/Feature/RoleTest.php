@@ -76,13 +76,15 @@ test('create role with other roles', function () {
     Auth::logout();
 
     $user = UserEloquentModel::create([
-        'name' => 'testing',
+        'first_name' => 'testing',
+        'last_name' => 'testing',
         'email' => 'testinguser@gmail.com',
         'password' => 'password',
+        'role_id' => 2,
         'email_verified_at' => Carbon::now(),
     ]);
 
-    $user->roles()->sync(2);
+    // $user->roles()->sync(2);
 
     if (Auth::attempt(['email' => 'testinguser@gmail.com', 'password' => 'password'])) {
         $selectIds = PermissionEloquentModel::pluck('id');
