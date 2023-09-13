@@ -44,6 +44,11 @@ class SettingRepository implements SettingRepositoryInterface
         return SiteSettingEloquentModel::first();
     }
 
+    public function getSiteTheme()
+    {
+          return SystemThemeEloquentModel::first();
+    }
+
     public function updateSiteTheme(SiteThemData $siteThemData)
     {
           $siteThemDataArray = $siteThemData->toArray();

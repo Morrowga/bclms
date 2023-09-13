@@ -34,7 +34,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('updateSiteTheme', [SettingController::class, 'updateSiteTheme'])->name('updateSiteTheme');
 
-    Route::post("updatetheme",[SettingController::class,'updatetheme'])->name('updatetheme');
+    Route::put("updatetheme/{system_themes}",[SettingController::class,'updatetheme'])->name('updatetheme');
 
     Route::get('supports', [TechnicalSupportController::class, 'index'])->name('supports');
 

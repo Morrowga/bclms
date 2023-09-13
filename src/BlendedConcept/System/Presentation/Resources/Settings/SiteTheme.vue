@@ -32,15 +32,18 @@ const {
   isLessThanOverlayNavBreakpoint,
 } = useThemeConfig();
 
+const props = defineProps(["site_theme"]);
+
+
 const form = useForm({
-  skins: "",
-  themes: "",
-  primary_color: "",
-  secondary_color: "",
-  content_with: "",
-  header_type: "",
-  footer_type: "",
-  menu_type: "",
+  skins:props.site_theme.skins,
+  themes:props.site_theme.themes ,
+  primary_color: props.site_theme.primary_color,
+  secondary_color: props.site_theme.secondary_color,
+  content_with: props.site_theme.content_with,
+  header_type: props.site_theme.header_type,
+  footer_type: props.site_theme.footer_type,
+  menu_type: props.site_theme.menu_type,
   _method : "PUT"
 });
 // 👉 Primary Color
@@ -74,6 +77,8 @@ const setPrimaryColor = (color) => {
   localStorage.setItem(`${themeConfig.app.title}-initial-loader-color`, color);
 };
 
+
+
 const getBoxColor = (color, index) => (index ? color : staticPrimaryColor);
 const { width: windowWidth } = useWindowSize();
 
@@ -85,9 +90,14 @@ const headerValues = computed(() => {
   return entries;
 });
 const updateTheme = () => {
-
-    form.post(route('updatetheme'),{
-
+    console.log(form,"hello world");
+    form.post(route('updatetheme',1),{
+        onSuccess : (response) => {
+            console.log(response)
+        },
+        onError : (error) => {
+            console.log(error)
+        }
     })
   SuccessDialog({
     title: "You have successfully updated site theme",
@@ -106,7 +116,7 @@ const updateTheme = () => {
           <CustomizerSection title="Theming" :divider="false">
             <!-- 👉 Skin -->
             <h6 class="tiggie-text fw-500">Skins</h6>
-            <VRadioGroup v-model="form.skin" inline>
+            <VRadioGroup v-model="form.skins" inline>
               <VRadio
                 v-for="[key, val] in Object.entries(Skins)"
                 :key="key"
@@ -117,7 +127,7 @@ const updateTheme = () => {
 
             <!-- 👉 Theme -->
             <h6 class="mt-3 tiggie-text">Theme</h6>
-            <VRadioGroup v-model="form.theme" inline>
+            <VRadioGroup v-model="form.themes" inline>
               <VRadio
                 v-for="themeOption in ['system', 'light', 'dark']"
                 :key="themeOption"
@@ -236,7 +246,7 @@ const updateTheme = () => {
             </VRadioGroup>
             <!-- 👉 Footer Type -->
             <h6 class="mt-3 tiggie-text">Footer Type</h6>
-            <VRadioGroup v-model="form.header_type" inline>
+            <VRadioGroup v-model="form.footer_type" inline>
               <VRadio
                 v-for="[key, val] in Object.entries(FooterType)"
                 :key="key"
