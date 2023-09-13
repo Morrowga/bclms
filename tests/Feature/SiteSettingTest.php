@@ -36,7 +36,7 @@ test('only superadmin can access sitesetting and add settings', function () {
     ]);
 
     $postData->assertStatus(200);
-    $this->assertDatabaseHas('site_settings', [
+    $this->assertDatabaseHas('system_settings', [
         'site_name' => 'Tiggie Kids',
         'site_time_zone' => 'UTC',
     ]);
