@@ -41,18 +41,21 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         if ($orgArray > 0) {
             foreach ($orgArray as $orgId) {
                 $orgAdmin = B2bUserEloquentModel::where('user_id', $orgId)->first();
-                $requestContent = [
-                    'announcement_id' => (int) $announcement_id, // Ensure announcement_id is an integer
-                    'to_b2b_id' => (int) $orgAdmin->b2b_user_id, // Ensure to_b2b_id is an integer
-                    'is_cleared' => true,
-                ];
+                if(!empty($orgAdmin)){
+                    dd($orgAdmin);
+                    $requestContent = [
+                        'announcement_id' => (int) $announcement_id, // Ensure announcement_id is an integer
+                        'to_b2b_id' => (int) $orgAdmin->b2b_user_id, // Ensure to_b2b_id is an integer
+                        'is_cleared' => true,
+                    ];
 
-                $announcementToB2B = AnnouncementToB2BMapper::fromRequest($requestContent);
+                    $announcementToB2B = AnnouncementToB2BMapper::fromRequest($requestContent);
 
-                $announmentB2BEloquent = AnnouncementToB2BMapper::toEloquent($announcementToB2B);
-                $announmentB2BEloquent->save();
+                    $announmentB2BEloquent = AnnouncementToB2BMapper::toEloquent($announcementToB2B);
+                    $announmentB2BEloquent->save();
 
-                $orgAdmin->users->notify(new BcNotification(['message' => $request->title, 'from' => $request->by, 'to' => $orgAdmin->users->full_name, 'type' => $request->type ?? '']));
+                    $orgAdmin->users->notify(new BcNotification(['message' => $request->title, 'from' => $request->by, 'to' => $orgAdmin->users->full_name, 'type' => $request->type ?? '']));
+                }
             }
         }
         if ($userArray > 0) {
