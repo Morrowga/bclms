@@ -1,50 +1,28 @@
 <script setup>
 import { ref, defineProps } from "vue";
-import ImportUserTypeData from "./ImportUserTypeData.vue";
+import ImportUserTypeData from "./ImportUserDialog.vue";
 
 const isDialogVisible = ref(false);
 
-const props = defineProps(["organizations"]);
+const props = defineProps(["organization"]);
 
 // organization name change data format to arrary data types
-const items = [...props.organizations];
 
-const selectedOrganization = ref(null);
 const showSecondSelect = ref(false);
 const secondSelectItems = ref([
-    { display: "2 Teachers", value: "teacher" },
-    { display: "2 Students", value: "student" },
+    {
+        display: `${props.organization.teachers_count} Teachers`,
+        value: "teacher",
+    },
+    {
+        display: `${props.organization.students_count} Students`,
+        value: "student",
+    },
 ]);
 const selectedValueForSecondSelect = ref(null);
 
 const selectedType = ref(null);
-const organization_name = ref("");
-watch(selectedOrganization, (newValue) => {
-    if (newValue) {
-        showSecondSelect.value = true;
-        let mutateSecondItem = items.map((organization) => {
-            if (organization.id == newValue) {
-                organization_name.value = organization.name;
-                return [
-                    {
-                        display: `${organization.teachers_count} Teachers`,
-                        value: "teacher",
-                    },
-                    {
-                        display: `${organization.students_count} Students`,
-                        value: "student",
-                    },
-                ];
-            } else {
-                return [];
-            }
-        });
-        secondSelectItems.value = [...mutateSecondItem[0]];
-    } else {
-        showSecondSelect.value = false;
-        selectedValueForSecondSelect.value = null;
-    }
-});
+const organization_name = ref(props.organization.name);
 
 watch(selectedValueForSecondSelect, () => {
     if (selectedValueForSecondSelect.value) {
@@ -60,7 +38,9 @@ watch(selectedValueForSecondSelect, () => {
         <!-- Activator -->
         <template #activator="{ props }">
             <VBtn v-bind="props" height="40" density="compact">
-                <span class="text-uppercase text-white"> Import </span>
+                <span class="text-uppercase text-white" color="#555555">
+                    Import User
+                </span>
             </VBtn>
         </template>
 
@@ -92,19 +72,8 @@ watch(selectedValueForSecondSelect, () => {
                     </div>
                 </div>
                 <VSelect
-                    class="mt-3"
-                    density="compact"
-                    :items="items"
-                    v-if="!showSecondSelect"
-                    v-model="selectedOrganization"
-                    item-title="name"
-                    item-value="id"
-                    placeholder="Select organization to import users for"
-                />
-                <VSelect
                     class="mt-3 second-select-box"
                     density="compact"
-                    v-if="showSecondSelect"
                     :items="secondSelectItems"
                     item-title="display"
                     item-value="value"
@@ -129,7 +98,7 @@ watch(selectedValueForSecondSelect, () => {
                 </VBtn>
                 <ImportUserTypeData
                     :type="selectedType"
-                    :organization_id="selectedOrganization"
+                    :organization_id="props.organization.id"
                     @closeDialog="isDialogVisible = false"
                 />
             </VCardActions>
