@@ -3,6 +3,9 @@ import { themeConfig } from '@themeConfig'
 
 export const staticPrimaryColor = '#4066E4'
 
+
+// console.log(localStorage.getItem("site_theme"),"FUCKINDD")
+
 const theme = {
   defaultTheme: resolveVuetifyTheme(),
   themes: {

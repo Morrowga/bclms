@@ -8,12 +8,13 @@ import { RouteTransitions, Skins } from '@core/enums'
 import { AppContentLayoutNav, ContentWidth, FooterType, NavbarType } from '@layouts/enums'
 
 
-// const site_themes = JSON.parse(localStorage.getItem("site_theme"));
 
-// console.log(site_themes);
+var themsCustomize = JSON.parse(localStorage.getItem("site_theme"));
 
-// localStorage.setItem("Blended Concept-skin",site_themes.skins);
-// console.log(site_themes,"adsffsdsdfdfdfff")
+console.log(themsCustomize,"what the fuck")
+
+console.log(Skins.Default)
+
 export const { themeConfig, layoutConfig } = defineThemeConfig({
 
   app: {
@@ -21,12 +22,12 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
     // ❗ if you have SVG logo and want it to adapt according to theme color, you have to apply color as `color: rgb(var(--v-global-theme-primary))`
     logo: h('div', { innerHTML: logo, style: 'line-height:0; color: rgb(var(--v-global-theme-primary))' }),
     contentWidth: ContentWidth.Boxed,
-    contentLayoutNav: AppContentLayoutNav.Horizontal,
+    contentLayoutNav: themsCustomize?.menu_type ?? AppContentLayoutNav.Horizontal,
     overlayNavFromBreakpoint: breakpointsVuetify.md + 16,
     enableI18n: false,
-    theme: 'light',
+    theme: themsCustomize?.themes ?? 'light',
     isRtl: false,
-    skin: Skins.Default,
+    skin:themsCustomize?.skins ?? 'default',
     routeTransition: RouteTransitions.Fade,
     iconRenderer: VIcon,
   },

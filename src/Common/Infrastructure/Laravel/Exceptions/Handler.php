@@ -50,6 +50,8 @@ class Handler extends ExceptionHandler
             // dd($e->getMessage());
             $this->sendEmail($e);
         });
+
+
     }
 
     /**
