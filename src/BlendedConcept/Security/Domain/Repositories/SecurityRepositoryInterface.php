@@ -71,4 +71,6 @@ interface SecurityRepositoryInterface
     public function changepassword($request);
 
     public function changeStatus($request, $user);
+
+    public function getUserListCount();
 }
