@@ -63,6 +63,17 @@ class OrganizationAdminSeeder extends Seeder
                 'email_verification_send_on' => now(),
                 'profile_pic' => 'images/profile/profilefive.png',
             ],
+            [
+                'role_id' => 5,
+                'first_name' => 'Org',
+                'last_name' => 'Two',
+                'email' => 'orgtwo@mail.com',
+                'password' => bcrypt('password'),
+                'contact_number' => '1234567890',
+                'status' => 'ACTIVE',
+                'email_verification_send_on' => now(),
+                'profile_pic' => 'images/profile/profilefive.png',
+            ],
         ];
 
         foreach ($users as $user) {
@@ -95,7 +106,7 @@ class OrganizationAdminSeeder extends Seeder
             ],
             [
                 'curr_subscription_id' => $subscriptionTwo->id,
-                'org_admin_id' => 1,
+                'org_admin_id' => 10,
                 'name' => 'organization two',
                 'contact_name' => 'org two',
                 'contact_email' => 'orgtwo@mail.com',
@@ -119,6 +130,7 @@ class OrganizationAdminSeeder extends Seeder
         }
 
         $orgUserFetch = UserEloquentModel::where('role_id', 5)->get();
+
         foreach($orgUserFetch as $org){
             B2bUserEloquentModel::create([
                 'user_id' => $org->id,
