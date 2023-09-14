@@ -280,4 +280,23 @@ class SecurityRepository implements SecurityRepositoryInterface
             dd($error);
         }
     }
+
+
+    public function getUserListCount()
+    {
+        $organization_count = OrganizationEloquentModel::count();
+
+        $b2csubscriper_count = UserEloquentModel::whereHas('role', function ($query) {
+            $query->where('name', config('userrole.bcscubscriber'));
+        })->count();
+
+        $user_count = UserEloquentModel::count();
+
+        return [
+            "organization_count" => $organization_count,
+            "b2csubscriper_count" => $b2csubscriper_count,
+            "user_count" => $user_count
+        ];
+
+    }
 }

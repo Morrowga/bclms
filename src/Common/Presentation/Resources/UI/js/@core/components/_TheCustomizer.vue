@@ -31,7 +31,7 @@ const {
 // 👉 Primary Color
 const vuetifyTheme = useTheme();
 
-// const vuetifyThemesName = Object.keys(vuetifyTheme.themes.value)
+const vuetifyThemesName = Object.keys(vuetifyTheme.themes.value)
 const initialThemeColors = JSON.parse(
   JSON.stringify(vuetifyTheme.current.value.colors)
 );

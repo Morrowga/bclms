@@ -1,14 +1,19 @@
 import { breakpointsVuetify } from '@vueuse/core'
 import { VIcon } from 'vuetify/components'
 
-
-
 // ❗ Logo SVG must be imported with ?raw suffix
 import logo from '@images/logo.svg?raw'
 import { defineThemeConfig } from '@core'
 import { RouteTransitions, Skins } from '@core/enums'
 import { AppContentLayoutNav, ContentWidth, FooterType, NavbarType } from '@layouts/enums'
-console.log(AppContentLayoutNav)
+
+
+// const site_themes = JSON.parse(localStorage.getItem("site_theme"));
+
+// console.log(site_themes);
+
+// localStorage.setItem("Blended Concept-skin",site_themes.skins);
+// console.log(site_themes,"adsffsdsdfdfdfff")
 export const { themeConfig, layoutConfig } = defineThemeConfig({
 
   app: {
@@ -19,7 +24,7 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
     contentLayoutNav: AppContentLayoutNav.Horizontal,
     overlayNavFromBreakpoint: breakpointsVuetify.md + 16,
     enableI18n: false,
-    theme: 'system',
+    theme: 'light',
     isRtl: false,
     skin: Skins.Default,
     routeTransition: RouteTransitions.Fade,
