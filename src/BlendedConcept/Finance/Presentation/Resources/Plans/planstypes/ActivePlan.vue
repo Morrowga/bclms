@@ -106,6 +106,9 @@ const setInactive = (id) => {
         onError: (error) => {},
     });
 };
+const showInfo = (value) => {
+    router.get(route("plans.show", value.row.id));
+};
 </script>
 <template>
     <section>
@@ -140,6 +143,7 @@ const setInactive = (id) => {
                     enabled: true,
                     selectOnCheckboxOnly: true,
                 }"
+                @row-click="showInfo"
             >
                 <template #table-row="dataProps">
                     <div v-if="dataProps.column.field === 'user'">

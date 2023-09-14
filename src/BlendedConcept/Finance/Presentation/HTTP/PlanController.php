@@ -93,9 +93,11 @@ class PlanController
         return Inertia::render(config('route.plans.planorg'));
     }
 
-    public function show()
+    public function show(PlanEloquentModel $plan)
     {
-        return Inertia::render(config('route.plans.show'));
+        return Inertia::render(config('route.plans.show'), [
+            'plan' => $plan
+        ]);
     }
 
     public function edit(PlanEloquentModel $plan)

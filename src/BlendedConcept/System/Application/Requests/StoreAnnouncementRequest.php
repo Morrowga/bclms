@@ -37,4 +37,13 @@ class StoreAnnouncementRequest extends FormRequest
             ],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'title' => 'Title is required',
+            'message' => 'Message is required',
+            'icon' => 'Icon is required',
+        ];
+    }
 }

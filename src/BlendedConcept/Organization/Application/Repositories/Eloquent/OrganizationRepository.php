@@ -31,7 +31,8 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
     public function getOrganizations($filters = [])
     {
-        $paginate_organizations = OrganizationResource::collection(OrganizationEloquentModel::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $paginate_organizations = OrganizationResource::collection(OrganizationEloquentModel::filter($filters)->with(['org_admin', 'subscription.b2b_subscription'])->withCount('teachers', 'students')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+
         $default_organizations = OrganizationEloquentModel::get();
 
         return [
@@ -75,7 +76,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 'organization_id' => $organizationEloquent->id,
             ]);
 
-            $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
+            $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());

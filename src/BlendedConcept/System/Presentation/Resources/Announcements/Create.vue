@@ -110,7 +110,7 @@ watch(() => form.to, (newValue, oldValue) => {
 const org_array = ref([])
 for (let i = 0; i < props.organizations.length; i++) {
     org_array.value.push({
-        'id': props.organizations[i].id,
+        'id': props.organizations[i].org_admin_id,
         'name': props.organizations[i].name
     })
 }
@@ -1403,6 +1403,9 @@ let onFormSubmit = () => {
         form.users.push(b2c_user_ids.value[i])
     }
 
+    let originalOrgArray = form.org;
+    let  originalUserArray = form.users;
+
     form.users = JSON.stringify(form.users)
     form.org = JSON.stringify(form.org)
 
@@ -1417,28 +1420,14 @@ let onFormSubmit = () => {
     // refForm.value?.resetValidation();
     form.post(route("announcements.store"), {
     onSuccess: () => {
-        form.reset();
-        form.org = [];
-        form.users = [];
-        organization_user_ids.value = [];
-        b2c_user_ids.value = [];
-        b2b_teacher_ids.value = [];
-        bc_staff_ids.value = [];
-        b2bteacherbyorg_ids.value = [];
-
-        visibleToSelectBox.value = true;
-        visibleToOriginizationList.value = true;
-        visibleToOrganizationSelectBox.value = true
-        visibleToB2CUserSelectBox.value = true
-        visibleToTeacherSelectBox.value = true
-        visibleToBcStaffSelectBox.value = true
-        visibleToB2bTeacherList.value = true
-    // refForm.value?.reset();
         SuccessDialog({ title: "You've successfully posted announcement" });
     },
     onError: (error) => {
-    //   form.setError("email", error?.email);
-    //   form.setError("password", error?.password);
+        form.org = originalOrgArray
+        form.users = originalUserArray
+      form.setError("title", error?.title);
+      form.setError("icon", error?.icon);
+      form.setError("message", error?.message);
     },
   });
 };

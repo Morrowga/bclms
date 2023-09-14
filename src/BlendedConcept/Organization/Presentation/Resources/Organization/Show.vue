@@ -4,9 +4,62 @@ import { ref, defineProps, computed } from "vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
-
+import { SuccessDialog } from "@actions/useSuccess";
+import { router } from "@inertiajs/core";
+let flash = computed(() => usePage().props.flash);
+const props = defineProps({
+    organization: {
+        type: Object,
+        required: true,
+    },
+});
 const deleteOrganization = () => {
-    isConfirmedDialog({ title: "Are you sure want to delete it." });
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,delete it!",
+        onConfirm: () => {
+            router.delete(
+                route("organizations.destroy", props.organization.id),
+                {
+                    onSuccess: () => {
+                        SuccessDialog({ title: flash?.successMessage });
+                    },
+                }
+            );
+        },
+    });
+};
+const setImage = (organization) => {
+    return (
+        organization?.image?.[0]?.original_url ??
+        "/images/defaults/organization_logo.png"
+    );
+};
+
+const fullName = (organization) => {
+    return (
+        (organization.org_admin?.first_name ?? "") +
+        " " +
+        (organization.org_admin?.last_name ?? "")
+    );
+};
+const maxTeacher = (organization) => {
+    return (
+        organization?.subscription?.b2b_subscription?.num_teacher_license ?? 0
+    );
+};
+const maxStudent = (organization) => {
+    return (
+        organization?.subscription?.b2b_subscription?.num_student_license ?? 0
+    );
+};
+const maxStorage = (organization) => {
+    return (
+        organization?.subscription?.b2b_subscription?.storage_limit * 1000 ?? 0
+    );
+};
+const getPrice = (organization) => {
+    return organization?.subscription?.stripe_price * 1000 ?? 0;
 };
 </script>
 <template>
@@ -22,19 +75,28 @@ const deleteOrganization = () => {
                         </VCol>
                         <VCol cols="10">
                             <h4 class="tiggie-label pb-3">Organisation Name</h4>
-                            <p class="tiggie-p">Blended Concept</p>
+                            <p class="tiggie-p">
+                                {{ props.organization.name }}
+                            </p>
                         </VCol>
                         <VCol cols="10">
                             <h4 class="tiggie-label pb-3">Contact Name</h4>
-                            <p class="tiggie-p">Jordan Steveson</p>
-                        </VCol>
+                            <p class="tiggie-p">
+                                {{ props.organization.contact_name }}
+                            </p></VCol
+                        >
+
                         <VCol cols="10">
                             <h4 class="tiggie-label pb-3">Contact Email</h4>
-                            <p class="tiggie-p">susanna.lind57@gmail.com</p>
+                            <p class="tiggie-p">
+                                {{ props.organization.contact_email }}
+                            </p>
                         </VCol>
                         <VCol cols="10">
                             <h4 class="tiggie-label pb-3">Contact Number</h4>
-                            <p class="tiggie-p">95159746</p>
+                            <p class="tiggie-p">
+                                {{ props.organization.contact_number }}
+                            </p>
                         </VCol>
                     </VRow>
                 </VCol>
@@ -45,7 +107,7 @@ const deleteOrganization = () => {
                         </VCol>
                         <VCol cols="10">
                             <VImg
-                                src="/images/defaults/organization_logo.png"
+                                :src="setImage(props.organization)"
                                 width="234px"
                                 height="256px"
                             />
@@ -63,19 +125,28 @@ const deleteOrganization = () => {
                         </VCol>
                         <VCol cols="10">
                             <h4 class="tiggie-label pb-3">
-                                Organization Admin Name
+                                props.Organization Admin Name
                             </h4>
-                            <p class="tiggie-p">Jordan Stevenson</p>
+                            <p class="tiggie-p">
+                                {{ fullName(props.organization) }}
+                            </p>
                         </VCol>
                         <VCol cols="10">
                             <h4 class="tiggie-label pb-3">
                                 Organisation Admin Contact Number
                             </h4>
-                            <p class="tiggie-p">98561483</p>
+                            <p class="tiggie-p">
+                                {{
+                                    props.organization?.org_admin
+                                        ?.contact_number
+                                }}
+                            </p>
                         </VCol>
                         <VCol cols="10">
                             <h4 class="tiggie-label pb-3">Login Email</h4>
-                            <p class="tiggie-p">estelle.Bailey10@gmail.com</p>
+                            <p class="tiggie-p">
+                                {{ props.organization?.org_admin?.email }}
+                            </p>
                         </VCol>
                         <VCol cols="10">
                             <h4 class="tiggie-label pb-3">Password</h4>
@@ -95,8 +166,18 @@ const deleteOrganization = () => {
                                         No of Teachers
                                     </h1>
                                     <p class="ml-2">
-                                        <span class="text-warning"> 8 </span>
-                                        <span>/10</span>
+                                        <span class="text-warning">
+                                            {{
+                                                props.organization
+                                                    ?.teachers_count
+                                            }}
+                                        </span>
+                                        <span
+                                            >/
+                                            {{
+                                                maxTeacher(props.organization)
+                                            }}</span
+                                        >
                                     </p>
                                 </VCol>
                                 <VCol cols="6">
@@ -105,9 +186,15 @@ const deleteOrganization = () => {
                                     </h1>
                                     <p class="ml-2">
                                         <span class="text-success">
-                                            324.3 MB
+                                            321 MB
                                         </span>
-                                        <span>/1GB</span>
+                                        <span
+                                            >/
+                                            {{
+                                                maxStorage($props.organization)
+                                            }}
+                                            GB</span
+                                        >
                                     </p>
                                 </VCol>
                                 <VCol cols="6">
@@ -115,14 +202,25 @@ const deleteOrganization = () => {
                                         No of Students
                                     </h1>
                                     <p class="ml-2">
-                                        <span class="text-warning"> 82 </span>
-                                        <span>/100</span>
+                                        <span class="text-warning">
+                                            {{
+                                                props.organization
+                                                    ?.students_count
+                                            }}
+                                        </span>
+                                        <span
+                                            >/{{
+                                                maxStudent(props.organization)
+                                            }}</span
+                                        >
                                     </p>
                                 </VCol>
                                 <VCol cols="6">
                                     <h1 class="tiggie-label pb-3">Price</h1>
                                     <p class="ml-2">
-                                        <span>$100</span>
+                                        <span>{{
+                                            getPrice(props.organization)
+                                        }}</span>
                                     </p>
                                 </VCol>
                                 <VCol cols="6">
@@ -137,18 +235,18 @@ const deleteOrganization = () => {
             </VRow>
             <VRow justify="center">
                 <VCol cols="4">
-                    <VBtn
-                        class="text-dark pl-16 pr-16"
-                        color="gray"
-                        width="250"
+                    <Link
+                        :href="route('organizations.index')"
+                        class="text-dark"
                     >
-                        <Link
-                            :href="route('organizations.index')"
-                            class="text-dark"
+                        <VBtn
+                            class="text-dark pl-16 pr-16"
+                            color="gray"
+                            width="250"
                         >
                             Back
-                        </Link>
-                    </VBtn>
+                        </VBtn>
+                    </Link>
                 </VCol>
                 <VCol cols="4">
                     <VBtn
@@ -160,18 +258,18 @@ const deleteOrganization = () => {
                     >
                 </VCol>
                 <VCol cols="4">
-                    <VBtn
-                        class="text-dark pl-16 pr-16"
-                        color="primary"
-                        width="250"
+                    <Link
+                        :href="route('organizations.edit', 1)"
+                        class="text-white"
                     >
-                        <Link
-                            :href="route('organizations.test.edit')"
-                            class="text-white"
+                        <VBtn
+                            class="text-white pl-16 pr-16"
+                            color="primary"
+                            width="250"
                         >
                             Edit
-                        </Link>
-                    </VBtn>
+                        </VBtn>
+                    </Link>
                 </VCol>
             </VRow>
         </VContainer>

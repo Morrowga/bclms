@@ -91,7 +91,25 @@ const deleteOrganization = (id) => {
         },
     });
 };
-
+const showInfo = (value) => {
+    router.get(route("organizations.show", value.row.id));
+};
+const maxTeacher = (organization) => {
+    return (
+        organization?.subscription?.b2b_subscription?.num_teacher_license ?? 0
+    );
+};
+const maxStudent = (organization) => {
+    return (
+        organization?.subscription?.b2b_subscription?.num_student_license ?? 0
+    );
+};
+const maxStorage = (organization) => {
+    return organization?.subscription?.b2b_subscription?.storage_limit ?? 0;
+};
+const getPrice = (organization) => {
+    return organization?.subscription?.stripe_price * 1000 ?? 0;
+};
 </script>
 
 <template>
@@ -163,19 +181,11 @@ const deleteOrganization = (id) => {
                         enabled: true,
                         selectOnCheckboxOnly: true,
                     }"
+                    @row-click="showInfo"
                 >
                     <template #table-row="props">
                         <div v-if="props.column.field == 'name'">
-                            <Link
-                                class="text-secondary"
-                                :href="
-                                    route('organizations.show', {
-                                        id: props.row.id,
-                                    })
-                                "
-                            >
-                                <span>{{ props.row?.name }}</span>
-                            </Link>
+                            <span>{{ props.row?.name }}</span>
                         </div>
                         <div v-if="props.column.field == 'plan'">
                             <span>{{ props.row?.plan?.name }}</span>
@@ -183,30 +193,41 @@ const deleteOrganization = (id) => {
                         <div v-if="props.column.field == 'teacher_usage'">
                             <VProgressLinear
                                 color="yellow-darken-2"
-                                model-value="80"
+                                :model-value="props.row?.teachers_count"
+                                :max="maxTeacher(props.row)"
                                 :height="8"
                             ></VProgressLinear>
-                            <span><span class="text-warning">8 </span>/10</span>
+                            <span
+                                ><span class="text-warning"
+                                    >{{ props.row?.teachers_count }} </span
+                                >/{{ maxTeacher(props.row) }}</span
+                            >
                         </div>
                         <div v-if="props.column.field == 'student_usage'">
                             <VProgressLinear
                                 color="yellow-darken-2"
-                                model-value="80"
+                                :model-value="props.row?.student_count"
+                                :max="maxStudent(props.row)"
                                 :height="8"
                             ></VProgressLinear>
                             <span
-                                ><span class="text-warning">82 </span>/100</span
+                                ><span class="text-warning"
+                                    >{{ props.row?.students_count }} </span
+                                >/{{ maxStudent(props.row) }}</span
                             >
                         </div>
                         <div v-if="props.column.field == 'storage_usage'">
                             <VProgressLinear
                                 color="green"
-                                model-value="80"
+                                :model-value="321"
+                                :max="maxStorage(props.row)"
                                 :height="8"
                             ></VProgressLinear>
                             <span
-                                ><span class="text-green">321 MD </span
-                                >/1GB</span
+                                ><span class="text-green">321 MB </span>/{{
+                                    maxStorage(props.row)
+                                }}
+                                GB</span
                             >
                         </div>
                         <div v-if="props.column.field == 'status'">
@@ -312,8 +333,6 @@ const deleteOrganization = (id) => {
 .user-data-table table.vgt-table td {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
-
-
 
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
