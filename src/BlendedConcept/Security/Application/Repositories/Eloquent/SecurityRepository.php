@@ -40,10 +40,9 @@ class SecurityRepository implements SecurityRepositoryInterface
     {
         //set roles
         $users = UserResource::collection(UserEloquentModel::filter($filters)
-            ->with('role')
+            ->with('role', 'b2bUser')
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
-
         return $users;
     }
 

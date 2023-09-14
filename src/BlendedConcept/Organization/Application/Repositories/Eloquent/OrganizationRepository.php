@@ -24,7 +24,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
     public function getOrganizationNameWithCount()
     {
-        $organizaitonNameWithCount = OrganizationEloquentModel::all();
+        $organizaitonNameWithCount = OrganizationEloquentModel::withCount('teachers', 'students')->get();
 
         return $organizaitonNameWithCount;
     }

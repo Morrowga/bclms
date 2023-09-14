@@ -88,36 +88,31 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->orWhere('name', 'like', '%'.$search.'%')
-                ->orWhere('email', 'like', '%'.$search.'%');
+            $query->orWhere('name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%');
         });
         $query->when($filters['roles'] ?? false, function ($query, $role) {
             $query->whereHas('roles', function ($query) use ($role) {
-                $query->where('name', 'like', '%'.$role.'%');
+                $query->where('name', 'like', '%' . $role . '%');
             });
         });
     }
 
     public function getFullNameAttribute()
     {
-        return $this->first_name.' '.$this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function b2bUser()
     {
-        return $this->belongsTo(B2cUserEloquentModel::class, 'user_id');
+        return $this->belongsTo(B2bUserEloquentModel::class, 'id', 'user_id')->with('organization');
     }
 
     public function b2cUser()
     {
-        return $this->belongsTo(B2bUserEloquentModel::class, 'user_id');
-    }
-
-    public function organization()
-    {
-        return $this->belongsTo(OrganizationEloquentModel::class, 'organization_id');
+        return $this->belongsTo(B2cUserEloquentModel::class, 'user_id');
     }
 }

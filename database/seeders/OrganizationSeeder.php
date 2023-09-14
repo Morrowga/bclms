@@ -31,7 +31,7 @@ class OrganizationSeeder extends Seeder
         $organizationData = [
             [
                 'curr_subscription_id' => $subscriptionOne->id,
-                'org_admin_id' => 1,
+                'org_admin_id' => 5,
                 'name' => 'organization one',
                 'contact_name' => 'org one',
                 'contact_email' => 'orgone@mail.com',
@@ -42,7 +42,7 @@ class OrganizationSeeder extends Seeder
             ],
             [
                 'curr_subscription_id' => $subscriptionTwo->id,
-                'org_admin_id' => 1,
+                'org_admin_id' => 6,
                 'name' => 'organization two',
                 'contact_name' => 'org two',
                 'contact_email' => 'orgtwo@mail.com',
@@ -62,7 +62,7 @@ class OrganizationSeeder extends Seeder
                 'organization_id' => $organizationModel->id,
             ]);
 
-            $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
+            $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
         }
     }
 }
