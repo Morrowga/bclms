@@ -7,7 +7,7 @@ import { useThemeConfig } from "@core/composable/useThemeConfig";
 import { RouteTransitions, Skins } from "@core/enums";
 import { SuccessDialog } from "@actions/useSuccess";
 import { Link, useForm } from "@inertiajs/vue3";
-
+import {watch} from "vue";
 import {
   AppContentLayoutNav,
   ContentWidth,
@@ -15,8 +15,8 @@ import {
   NavbarType,
 } from "@layouts/enums";
 import { themeConfig } from "@themeConfig";
-
 const isNavDrawerOpen = ref(false);
+
 const {
   theme,
   skin,
@@ -34,17 +34,16 @@ const {
 
 const props = defineProps(["site_theme"]);
 
-
 const form = useForm({
-  skins:props.site_theme.skins,
-  themes:props.site_theme.themes ,
+  skins: props.site_theme.skins,
+  themes: props.site_theme.themes,
   primary_color: props.site_theme.primary_color,
   secondary_color: props.site_theme.secondary_color,
   content_with: props.site_theme.content_with,
   header_type: props.site_theme.header_type,
   footer_type: props.site_theme.footer_type,
   menu_type: props.site_theme.menu_type,
-  _method : "PUT"
+  _method: "PUT",
 });
 // 👉 Primary Color
 const vuetifyTheme = useTheme();
@@ -66,9 +65,10 @@ const secondaryColors = [
   "#BFC0C1",
 ];
 
+
 const setPrimaryColor = (color) => {
   const currentThemeName = vuetifyTheme.name.value;
-  form.primary_color = color;
+
   vuetifyTheme.themes.value[currentThemeName].colors.primary = color;
   localStorage.setItem(
     `${themeConfig.app.title}-${currentThemeName}ThemePrimaryColor`,
@@ -78,31 +78,24 @@ const setPrimaryColor = (color) => {
 };
 
 
-
 const getBoxColor = (color, index) => (index ? color : staticPrimaryColor);
 const { width: windowWidth } = useWindowSize();
 
-const headerValues = computed(() => {
-  const entries = Object.entries(NavbarType);
-  if (appContentLayoutNav.value === AppContentLayoutNav.Horizontal)
-    return entries.filter(([_, val]) => val !== NavbarType.Hidden);
 
-  return entries;
-});
 const updateTheme = () => {
-    console.log(form,"hello world");
-    form.post(route('updatetheme',1),{
-        onSuccess : (response) => {
-            console.log(response)
-        },
-        onError : (error) => {
-            console.log(error)
-        }
-    })
-  SuccessDialog({
-    title: "You have successfully updated site theme",
+  form.post(route("updatetheme", 1), {
+    onSuccess: (response) => {
+      SuccessDialog({
+        title: "You have successfully updated site theme",
+      });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
   });
 };
+
+
 </script>
 <template>
   <AdminLayout>

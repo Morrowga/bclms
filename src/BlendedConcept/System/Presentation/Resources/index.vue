@@ -20,6 +20,7 @@ let props = defineProps([
     "orgainzations_users",
     "tenant",
     "students",
+    'UserCount'
 ]);
 
 const isAlertVisible = ref(true);
@@ -130,6 +131,7 @@ onMounted(() => {
 
         <div v-if="current_user_role == 'BC Super Admin'">
             <SuperAdminDashboard
+                :usercount="props.UserCount"
                 :orgainzations_users="props.orgainzations_users"
             >
             </SuperAdminDashboard>
