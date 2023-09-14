@@ -6,7 +6,7 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import exportFromJSON from "export-from-json";
 const isDialogVisible = ref(false);
-let props = defineProps(["type"]);
+let props = defineProps(["type", "organization_id"]);
 const emit = defineEmits();
 const items = [
     "Blended Concepted",
@@ -20,9 +20,9 @@ const fileInput = ref(null);
 let export_errors = computed(() => usePage().props.export_errors);
 
 const form = useForm({
-    organization_id: 1,
+    organization_id: props.organization_id,
     file: "",
-    type: "student",
+    type: props.type,
 });
 
 const handleDrop = (event) => {
@@ -65,6 +65,10 @@ const removeUploadedItem = (index) => {
 const handleImport = () => {
     alert("okay par");
 };
+onUpdated(() => {
+    form.organization_id = props.organization_id;
+    form.type = props.type;
+});
 </script>
 
 <template>

@@ -26,4 +26,9 @@ class B2bUserEloquentModel extends Authenticatable
     {
         return $this->belongsTo(UserEloquentModel::class, 'user_id');
     }
+
+    public function organization()
+    {
+        return $this->hasOne(OrganizationEloquentModel::class, 'id', 'organization_id');
+    }
 }
