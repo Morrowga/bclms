@@ -41,8 +41,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         if ($orgArray > 0) {
             foreach ($orgArray as $orgId) {
                 $orgAdmin = B2bUserEloquentModel::where('user_id', $orgId)->first();
-                if(!empty($orgAdmin)){
-                    dd($orgAdmin);
+                // if(!empty($orgAdmin)){
                     $requestContent = [
                         'announcement_id' => (int) $announcement_id, // Ensure announcement_id is an integer
                         'to_b2b_id' => (int) $orgAdmin->b2b_user_id, // Ensure to_b2b_id is an integer
@@ -55,7 +54,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
                     $announmentB2BEloquent->save();
 
                     $orgAdmin->users->notify(new BcNotification(['message' => $request->title, 'from' => $request->by, 'to' => $orgAdmin->users->full_name, 'type' => $request->type ?? '']));
-                }
+                // }
             }
         }
         if ($userArray > 0) {
