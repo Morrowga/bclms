@@ -33,7 +33,7 @@ let tab = ref(false);
 
                 <div class="mt-10">
                     <iframe
-                    src="http://bc-lms.test/admin/h5p/h5p/19/edit"
+                    src="https://bc.dev.leaptech.sg/admin/h5p/h5p/1/edit"
                     frameborder="0"
                     scrolling="auto"
                     class="h5p-width"
