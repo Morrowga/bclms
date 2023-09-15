@@ -6,6 +6,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
 import { router } from "@inertiajs/core";
+import ImportUser from "./components/ImportUser.vue";
 let flash = computed(() => usePage().props.flash);
 const props = defineProps({
     organization: {
@@ -224,9 +225,9 @@ const getPrice = (organization) => {
                                     </p>
                                 </VCol>
                                 <VCol cols="6">
-                                    <VBtn class="text-white" color="#565660">
-                                        Import Users
-                                    </VBtn>
+                                    <ImportUser
+                                        :organization="props.organization"
+                                    />
                                 </VCol>
                             </VRow>
                         </VCol>

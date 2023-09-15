@@ -1,12 +1,9 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
@@ -122,7 +119,7 @@ test('form update as plan with superadmin role', function () {
 
     $response = $this->get('/plans');
     $response->assertStatus(200);
-    $planData =  [
+    $planData = [
         'name' => 'Free',
         'description' => '$$0/month',
         'storage_limit' => null,
@@ -179,7 +176,7 @@ test('form update as plan with superadmin role', function () {
 });
 
 test('activate plan status', function () {
-    $planData =  [
+    $planData = [
         'name' => 'Free',
         'description' => '$$0/month',
         'storage_limit' => null,
@@ -196,13 +193,13 @@ test('activate plan status', function () {
     ];
     $planEloquent = PlanEloquentModel::create($planData);
     $updateData = $this->put("/plans/$planEloquent->id/change_status", [
-        "status" => "ACTIVE"
+        'status' => 'ACTIVE',
     ]);
     $updateData->assertStatus(302);
 });
 
 test('inactivate plan status', function () {
-    $planData =  [
+    $planData = [
         'name' => 'Free',
         'description' => '$$0/month',
         'storage_limit' => null,
@@ -219,7 +216,7 @@ test('inactivate plan status', function () {
     ];
     $planEloquent = PlanEloquentModel::create($planData);
     $updateData = $this->put("/plans/$planEloquent->id/change_status", [
-        "status" => "INACTIVE"
+        'status' => 'INACTIVE',
     ]);
     $updateData->assertStatus(302);
 });

@@ -26,13 +26,8 @@ const deleteTeacher = () => {
                 <v-col cols="6">
                     <v-text class="teacherprofile-title">Profile</v-text>
                     <div class="d-flex justify-space-between mt-10">
-                        <h1
-                            class="tiggie-label"
-                            style="font-size: 20px !important"
-                        >
-                            Personal Details
-                        </h1>
-                        <div class="d-flex align-center" style="gap: 10px">
+                        <h1 class="tiggie-label fs-20">Personal Details</h1>
+                        <div class="d-flex align-center gap-10">
                             <v-btn variant="flat" rounded color="teal">
                                 <Link
                                     :href="

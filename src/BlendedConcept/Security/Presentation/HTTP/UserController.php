@@ -5,7 +5,6 @@ namespace Src\BlendedConcept\Security\Presentation\HTTP;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\GetOrganizationWithCount;
-use Src\BlendedConcept\Organization\Application\UseCases\Queries\GetOrganizatonName;
 use Src\BlendedConcept\Security\Application\DTO\UserData;
 use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
 use Src\BlendedConcept\Security\Application\Policies\UserPolicy;

@@ -18,19 +18,14 @@ const saveStudent = () => {
 </script>
 <template>
     <AdminLayout>
-        <VContainer style="width: 80%; margin: 0 auto">
+        <VContainer class="width-80">
             <v-row>
                 <v-col cols="12" md="6">
                     <v-img src="/images/student_pf.png" />
                 </v-col>
                 <v-col cols="12" md="6" class="pa-5">
                     <div class="d-flex justify-space-between align-center">
-                        <h1
-                            class="tiggie-sub-subtitle"
-                            style="font-size: 40px !important"
-                        >
-                            Students
-                        </h1>
+                        <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
                     </div>
                     <v-row>
                         <v-col cols="12" class="mt-10">

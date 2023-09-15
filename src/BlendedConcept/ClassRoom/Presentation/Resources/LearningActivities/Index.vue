@@ -7,18 +7,13 @@ let tab = ref(false);
 </script>
 <template>
     <AdminLayout>
-        <VContainer style="width: 80%; margin: 0 auto">
+        <VContainer class="width-80">
             <v-row>
                 <v-col cols="12" md="6">
                     <v-img src="/images/imgbook.png" />
                 </v-col>
                 <v-col cols="12" md="6">
-                    <h1
-                        class="tiggie-sub-subtitle ml-10"
-                        style="font-size: 40px !important"
-                    >
-                        Toy Story 2
-                    </h1>
+                    <h1 class="tiggie-sub-subtitle ml-10 fs-40">Toy Story 2</h1>
                     <p class="text-subtitle-1">
                         When Woody is kidnapped by a greedy toy collector and is
                         nowhere to be found, Buzz and his friends set out to

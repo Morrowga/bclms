@@ -203,9 +203,7 @@ onUpdated(() => {
                                                             label="Module"
                                                             density="compact"
                                                             @click="selectAll"
-                                                            style="
-                                                                font-weight: bold;
-                                                            "
+                                                            class="font-weight-bold"
                                                         >
                                                             <template
                                                                 #label="{
@@ -250,9 +248,7 @@ onUpdated(() => {
                                                         "
                                                         :label="item.name"
                                                         density="compact"
-                                                        style="
-                                                            font-weight: bold;
-                                                        "
+                                                        class="font-weight-bold"
                                                     >
                                                         <template
                                                             #label="{ label }"
@@ -285,9 +281,7 @@ onUpdated(() => {
                                                                     permission.name
                                                                 "
                                                                 density="compact"
-                                                                style="
-                                                                    font-weight: bold;
-                                                                "
+                                                                class="font-weight-bold"
                                                             >
                                                                 <template
                                                                     #label="{

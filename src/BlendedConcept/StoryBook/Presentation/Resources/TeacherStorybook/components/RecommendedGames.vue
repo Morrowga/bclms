@@ -9,10 +9,9 @@ import CreateStorybookVersion from "./CreateStorybookVersion.vue";
         </div>
         <div class="body-sec">
             <div
-                class="d-flex justify-start justify-md-center align-center"
-                style="gap: 10px; flex-wrap: wrap"
+                class="d-flex justify-start justify-md-center align-center gap-10 f-wrap"
             >
-                <div v-for="item in 3" :key="item" style="width: 290px">
+                <div v-for="item in 3" :key="item" class="width-290">
                     <RecommendedGameCard />
                 </div>
             </div>

@@ -7,10 +7,7 @@
 
         <v-card-text class="text-center">
             <div class="text-center">
-                <span
-                    class="text-subtitle-2 font-weight-bold"
-                    style="color: #000"
-                >
+                <span class="text-subtitle-2 font-weight-bold t-black">
                     Penguin Rush
                 </span>
                 <br />

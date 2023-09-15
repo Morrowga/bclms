@@ -59,7 +59,7 @@ const addGroup = () => {
                 </v-col>
             </v-row>
             <br />
-            <div class="d-flex justify-center" style="gap: 10px">
+            <div class="d-flex justify-center gap-10">
                 <SecondaryBtn
                     title="Cancel"
                     :route="route('org-teacher-classroom.show')"

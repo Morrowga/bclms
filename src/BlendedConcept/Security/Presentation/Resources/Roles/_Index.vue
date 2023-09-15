@@ -129,8 +129,7 @@ watch(serverPerPage, function (value) {
                         </div>
                         <div
                             v-if="dataProps.column.field == 'permission'"
-                            class="flex flex-wrap"
-                            style="max-width: 600px"
+                            class="flex flex-wrap max-w-600"
                         >
                             <v-chip
                                 v-for="permission in dataProps.row.permissions"

@@ -14,9 +14,8 @@ class SiteSettingEloquentModel extends Model implements HasMedia
 
     protected $table = 'system_settings';
 
-
     protected $append = [
-        'image'
+        'image',
     ];
 
     protected $fillable = [

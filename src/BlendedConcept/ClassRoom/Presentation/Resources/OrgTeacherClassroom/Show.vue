@@ -153,10 +153,7 @@ const deleteGroup = () => {
                                 >
                             </VCol>
                             <VCol cols="6" class="text-end">
-                                <div
-                                    class="d-flex justify-end"
-                                    style="gap: 10px"
-                                >
+                                <div class="d-flex justify-end gap-10">
                                     <v-btn
                                         variant="flat"
                                         rounded
@@ -271,10 +268,7 @@ const deleteGroup = () => {
                                 >
                             </VCol>
                             <VCol cols="6" class="text-end">
-                                <div
-                                    class="d-flex justify-end"
-                                    style="gap: 10px"
-                                >
+                                <div class="d-flex justify-end gap-10">
                                     <v-btn
                                         variant="flat"
                                         rounded

@@ -158,3 +158,9 @@ const items = ref([
         </VCard>
     </VDialog>
 </template>
+<style scoped>
+.e-survey-border {
+    border-radius: 5px;
+    border: 1px dashed rgba(40, 40, 40, 0.5);
+}
+</style>

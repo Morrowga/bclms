@@ -59,11 +59,10 @@ const toggleDialog = (id) => {
             >
                 <div>
                     <v-card
-                        class="ma-4"
+                        class="ma-4 pos-rel"
                         height="250"
                         width="400"
                         @click="toggle"
-                        style="position: relative"
                         :color="isSelected ? 'primary' : 'grey-lighten-3'"
                     >
                         <div
@@ -139,5 +138,8 @@ const toggleDialog = (id) => {
     bottom: 0;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+.pos-rel {
+    position: relative !important;
 }
 </style>

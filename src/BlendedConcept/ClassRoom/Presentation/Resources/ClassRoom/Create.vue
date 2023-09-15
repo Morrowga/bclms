@@ -69,7 +69,7 @@ const createClassroom = () => {
                         <input
                             type="file"
                             ref="fileInput"
-                            style="display: none"
+                            class="d-none"
                             @change="handleFileUpload"
                         />
                     </VCol>

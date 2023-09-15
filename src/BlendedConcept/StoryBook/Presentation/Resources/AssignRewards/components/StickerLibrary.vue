@@ -64,13 +64,12 @@ const toggleDialog = (id) => {
                 :key="data.image"
                 v-slot="{ isSelected, toggle }"
             >
-                <div style="position: relative">
+                <div class="ps-relative">
                     <v-card
-                        class="ma-4"
                         height="200"
                         width="350"
                         @click="toggle"
-                        style="position: relative"
+                        class="ma-4 ps-relative"
                     >
                         <div
                             class="d-flex fill-height align-center justify-center"

@@ -20,10 +20,11 @@ const site_theme = site_themes.value.system_themes
 
 
 // set Site Theme to localstorage @harom284
-localStorage.setItem("site_theme",JSON.stringify(site_themes.value));
-// console.log(site_theme,"sddd")
-localStorage.setItem("Blended Concept-skin","light");
-localStorage.setItem("Blended Concept-theme","light");
+// console.log(site_themes.value)
+localStorage.setItem("site_theme",JSON.stringify(site_theme));
+// console.log(site_theme,site_theme,"sddd")
+// localStorage.setItem("Blended Concept-skin",site_theme?.skins ?? 'light');
+// localStorage.setItem("Blended Concept-theme",site_theme?.themes ?? 'light');
 // localStorage.setItem("Blended Concept-initial-loader-bg","dark");
 // localStorage.setItem("Blended Concept-navbarBlur","dark");
 // localStorage.setItem("Tiggie Kids-initial-loader-color","dark");

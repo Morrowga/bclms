@@ -47,7 +47,7 @@ const props = defineProps({
                 <div class="d-flex align-center">
                     <img
                         src="/images/profile/profiletwo.png"
-                        style="width: 50px; height: 50px"
+                        class="width-high-50"
                     />
                     <div class="">
                         <h5>Customer</h5>
@@ -68,3 +68,9 @@ const props = defineProps({
         </VCard>
     </VDialog>
 </template>
+<style scoped>
+.width-high {
+    width: 50px !important;
+    height: 50px !important;
+}
+</style>

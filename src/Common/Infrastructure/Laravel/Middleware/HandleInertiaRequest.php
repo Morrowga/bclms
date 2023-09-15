@@ -8,6 +8,7 @@ use Inertia\Middleware;
 use Src\BlendedConcept\Security\Domain\Resources\AuthResource;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\SiteSettingEloquentModel;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\SystemThemeEloquentModel;
+
 class HandleInertiaRequest extends Middleware
 {
     /**

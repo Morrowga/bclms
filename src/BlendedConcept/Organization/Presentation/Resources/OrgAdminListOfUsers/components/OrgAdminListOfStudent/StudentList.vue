@@ -2,7 +2,7 @@
 import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-let props = defineProps(['students']);
+let props = defineProps(["students"]);
 </script>
 <template>
     <VContainer>
@@ -23,7 +23,7 @@ let props = defineProps(['students']);
                                     icon="mdi-magnify"
                                     size="26px"
                                     height="26px"
-                                    style="position: absolute; right: 10px"
+                                    class="abs-right"
                                 >
                                 </VIcon>
                             </template>
@@ -81,5 +81,9 @@ let props = defineProps(['students']);
     border: 1px solid #e5e5e5 !important;
     padding: 8px 16px 8px 20px !important;
     background: #f6f6f6 !important;
+}
+.abs-right {
+    position: absolute !important;
+    right: 10px !important;
 }
 </style>

@@ -8,14 +8,9 @@ let selectedRole = null;
 </script>
 <template>
     <AdminLayout>
-        <VContainer style="width: 80%; margin: 0 auto">
+        <VContainer class="width-80">
             <div class="d-flex justify-space-between align-center mb-10">
-                <h1
-                    class="tiggie-sub-subtitle"
-                    style="font-size: 40px !important"
-                >
-                    Students
-                </h1>
+                <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
 
                 <Link :href="route('view_students.create')">
                     <v-btn
@@ -42,8 +37,7 @@ let selectedRole = null;
                 </div>
                 <div class="d-flex">
                     <div
-                        class="app-user-search-filter d-flex align-center justify-end gap-3"
-                        style="width: 200px"
+                        class="app-user-search-filter d-flex align-center justify-end gap-3 width-200"
                     >
                         <selectBox
                             placeholder="Sort By"

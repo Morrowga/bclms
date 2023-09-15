@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue"
+import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { SuccessDialog } from '@actions/useSuccess';
 import SurveyAdd from "../components/SurveyAdd.vue"
@@ -107,11 +107,22 @@ const handleSettingModalSubmit = (data) => {
                 <VCol cols="6" class="text-end">
                     <VRow no-gutters>
                         <VCol cols="12" class="">
-                            <VBtn color="secondary" text-color="white" variant="tonal" @click="isUserProfileEdit = true"
-                                height="50" class="mr-4">
+                            <VBtn
+                                color="secondary"
+                                text-color="white"
+                                variant="tonal"
+                                @click="isUserProfileEdit = true"
+                                height="50"
+                                class="mr-4"
+                            >
                                 <span class="text-dark">Back</span>
                             </VBtn>
-                            <VBtn color="success" height="50" class="" @click="isSurveySetting = true">
+                            <VBtn
+                                color="success"
+                                height="50"
+                                class=""
+                                @click="isSurveySetting = true"
+                            >
                                 <span class="text-white">Save</span>
                             </VBtn>
                         </VCol>
@@ -180,12 +191,12 @@ const handleSettingModalSubmit = (data) => {
             <VRow justify="center">
                 <VCol cols="4" class="text-center">
                     <VBtn
-                    color="primary" icon="mdi-plus-thick"
-                    @click="isSurveryAdd = true"
+                        color="primary"
+                        icon="mdi-plus-thick"
+                        @click="isSurveryAdd = true"
                     />
                 </VCol>
             </VRow>
-
         </VContainer>
     </AdminLayout>
 
@@ -205,4 +216,7 @@ const handleSettingModalSubmit = (data) => {
     font-weight: 700 !important;
     text-transform: capitalize !important;
 } */
+.align-text-left {
+    text-align: left !important;
+}
 </style>

@@ -9,19 +9,12 @@ import EditTeacherStorage from "./EditTeacherStorage.vue";
             <VCol cols="4" class="teacher-profile">
                 <img
                     src="/images/teacherimg.png"
-                    class="tggie-student-img"
-                    style="width: 150px; height: 150px"
+                    class="tggie-student-img storage-img"
                 />
             </VCol>
             <VCol cols="8" class="allocated-storage">
                 <div class="d-flex align-center justify-space-between">
-                    <p
-                        class="tiggie-teacher-label"
-                        style="
-                            font-size: 24px !important;
-                            color: #000 !important;
-                        "
-                    >
+                    <p class="tiggie-teacher-label fs-24 t-black">
                         Allocated Storage:200 MB
                     </p>
                     <!-- <div class="d-flex">
@@ -63,3 +56,9 @@ import EditTeacherStorage from "./EditTeacherStorage.vue";
         </VRow>
     </VCard>
 </template>
+<style scoped>
+.storage-img {
+    width: 150px;
+    height: 150px;
+}
+</style>

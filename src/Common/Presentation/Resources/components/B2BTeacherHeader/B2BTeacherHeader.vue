@@ -25,7 +25,7 @@ let toggle = () => {
 };
 </script>
 <template>
-    <v-app-bar elevation="0" style="padding: 0 50px">
+    <v-app-bar elevation="0" class="app-bar-style-padd">
         <!-- mobile side navigation -->
         <v-app-bar-nav-icon
             variant="text"
@@ -41,7 +41,7 @@ let toggle = () => {
         <HorizontalNav :nav-items="navItems" />
 
         <VSpacer />
-        
+
         <NavBarNotifications class="me-3" />
 
         <UserProfile v-if="!is_drawer" class="d-none d-md-flex pe-3" />
@@ -56,5 +56,8 @@ let toggle = () => {
     object-fit: contain;
     height: 62px;
     margin-top: 11px;
+}
+.app-bar-style-padd {
+    padding: 0 50px !important;
 }
 </style>

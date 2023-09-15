@@ -171,7 +171,7 @@ const deletePathway = () => {
                                         v-if="dataProps.column.field == 'name'"
                                     >
                                         <Link
-                                            style="color: #000"
+                                            class="t-black"
                                             :href="
                                                 route('pathways.show', {
                                                     id: 1,

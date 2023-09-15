@@ -96,7 +96,7 @@ class PlanController
     public function show(PlanEloquentModel $plan)
     {
         return Inertia::render(config('route.plans.show'), [
-            'plan' => $plan
+            'plan' => $plan,
         ]);
     }
 

@@ -42,10 +42,10 @@ const handleSubmit = () => {
                     </div>
                 </v-col>
                 <v-col cols="12" md="12">
-                    <span class="text-h5 font-weight-bold" style="color: #000"
+                    <span class="text-h5 font-weight-bold t-black"
                         >Question 1:</span
                     >
-                    <span class="text-h6" style="color: #000">
+                    <span class="text-h6 t-black">
                         Which of the following categories best describes the
                         type of special needs that the student may have? (Please
                         select all that apply) *</span
@@ -101,10 +101,10 @@ const handleSubmit = () => {
                 </v-col>
                 <br />
                 <v-col cols="12" md="12">
-                    <span class="text-h5 font-weight-bold" style="color: #000"
+                    <span class="text-h5 font-weight-bold t-black"
                         >Question 2:</span
                     >
-                    <span class="text-h6" style="color: #000">
+                    <span class="text-h6 t-black">
                         How would you rate the student's overall level of
                         independence in daily activities? (Choose one option)
                         *</span
@@ -141,10 +141,10 @@ const handleSubmit = () => {
                 </v-col>
                 <br />
                 <v-col cols="12" md="12">
-                    <span class="text-h5 font-weight-bold" style="color: #000"
+                    <span class="text-h5 font-weight-bold t-black"
                         >Question 3:</span
                     >
-                    <span class="text-h6" style="color: #000">
+                    <span class="text-h6 t-black">
                         In the academic setting, what specific challenges does
                         the student face due to their special needs? (Please
                         select all that apply) *</span
@@ -203,10 +203,10 @@ const handleSubmit = () => {
                 </v-col>
                 <br />
                 <v-col cols="12" md="12">
-                    <span class="text-h5 font-weight-bold" style="color: #000"
+                    <span class="text-h5 font-weight-bold t-black"
                         >Question 4:</span
                     >
-                    <span class="text-h6" style="color: #000">
+                    <span class="text-h6 t-black">
                         How does the student respond to changes in their routine
                         or unexpected situations? (Choose one option) *</span
                     >
@@ -241,15 +241,7 @@ const handleSubmit = () => {
                     </v-row>
                 </v-col>
                 <br />
-                <v-col cols="12">
-                    <!-- <div class="d-flex justify-center" style="gap: 10px">
-                        <SecondaryBtn
-                            title="Cancel"
-                            :route="route('view_students.index')"
-                        />
-                        <PrimaryBtn title="Submit" />
-                    </div> -->
-                </v-col>
+                <v-col cols="12"> </v-col>
             </v-row>
         </VContainer>
         <AddProfillingSurvey

@@ -16,10 +16,10 @@ let tab = ref(false);
 </script>
 <template>
     <AdminLayout>
-        <VContainer style="width: 80%; margin: 0 auto">
+        <VContainer class="width-80">
             <v-row>
                 <v-col cols="12" md="6">
-                    <div style="position: relative">
+                    <div class="ps-relative">
                         <v-img src="/images/imgbook.png" class="main-pic" />
                         <div class="vector-background">
                             <img src="/images/bg.png" />
@@ -29,10 +29,7 @@ let tab = ref(false);
                 <v-col cols="12" md="6">
                     <VRow>
                         <VCol cols="12" md="6">
-                            <h1
-                                class="tiggie-sub-subtitle ml-10"
-                                style="font-size: 40px !important"
-                            >
+                            <h1 class="tiggie-sub-subtitle ml-10 fs-40">
                                 Toy Story 2
                             </h1>
                         </VCol>
@@ -95,27 +92,23 @@ let tab = ref(false);
                     </div>
                 </v-col>
             </v-row>
-            <v-row class="storybook-version" style="margin-top: 100px">
+            <v-row class="storybook-version mtop">
                 <v-col cols="12">
                     <StorybookVersion />
                 </v-col>
             </v-row>
-            <!-- <v-row class="learning-activity" style="margin-top: 100px">
-                <v-col cols="12">
-                    <LearningActivity />
-                </v-col>
-            </v-row> -->
-            <v-row class="recommended-games" style="margin-top: 100px">
+
+            <v-row class="recommended-games mtop">
                 <v-col cols="12">
                     <RecommendedGames />
                 </v-col>
             </v-row>
-            <v-row class="physical" style="margin-top: 100px">
+            <v-row class="physical mtop">
                 <v-col cols="12">
                     <PhysicalResources />
                 </v-col>
             </v-row>
-            <v-row class="recommended-books" style="margin-top: 100px">
+            <v-row class="recommended-books mtop">
                 <v-col cols="12">
                     <RecommendedBooks />
                 </v-col>

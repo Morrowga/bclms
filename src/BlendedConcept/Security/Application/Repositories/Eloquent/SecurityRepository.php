@@ -43,6 +43,7 @@ class SecurityRepository implements SecurityRepositoryInterface
             ->with('role', 'b2bUser')
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
+
         return $users;
     }
 
@@ -156,11 +157,11 @@ class SecurityRepository implements SecurityRepositoryInterface
 
         // Add filters to the query
         if (isset($filters['name'])) {
-            $query->where('name', 'like', '%' . $filters['name'] . '%');
+            $query->where('name', 'like', '%'.$filters['name'].'%');
         }
 
         if (isset($filters['email'])) {
-            $query->where('email', 'like', '%' . $filters['email'] . '%');
+            $query->where('email', 'like', '%'.$filters['email'].'%');
         }
 
         if (isset($filters['role'])) {
@@ -281,7 +282,6 @@ class SecurityRepository implements SecurityRepositoryInterface
         }
     }
 
-
     public function getUserListCount()
     {
         $organization_count = OrganizationEloquentModel::count();
@@ -293,9 +293,9 @@ class SecurityRepository implements SecurityRepositoryInterface
         $user_count = UserEloquentModel::count();
 
         return [
-            "organization_count" => $organization_count,
-            "b2csubscriper_count" => $b2csubscriper_count,
-            "user_count" => $user_count
+            'organization_count' => $organization_count,
+            'b2csubscriper_count' => $b2csubscriper_count,
+            'user_count' => $user_count,
         ];
 
     }

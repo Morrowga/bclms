@@ -56,11 +56,7 @@ const submitReview = () => {
                             >
                             </VTextarea>
                         </VCol>
-                        <VCol
-                            cols="12"
-                            class="d-flex justify-center"
-                            style="gap: 10px"
-                        >
+                        <VCol cols="12" class="d-flex justify-center gap-10">
                             <SecondaryBtn title="Cancel" />
                             <PrimaryBtn
                                 title="Submit"

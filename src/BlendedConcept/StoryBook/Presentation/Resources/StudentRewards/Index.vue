@@ -33,7 +33,7 @@ const toggleBar = () => {
     <StudentLayout class="section-bg">
         <div class="storereward">
             <img
-                style="width: 214px; height: 234px"
+                class="reward-img"
                 src="/images/store.gif"
                 @click="() => router.get(route('reward-store'))"
                 alt=""
@@ -178,5 +178,9 @@ const toggleBar = () => {
     top: 100px;
     bottom: 0;
     z-index: 1;
+}
+.reward-img {
+    width: 214px;
+    height: 234px;
 }
 </style>

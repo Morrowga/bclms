@@ -152,8 +152,7 @@ const handleSubmit = ({ title }) => {
                         <template #table-row="dataProps">
                             <div
                                 v-if="dataProps.column.field == 'sub_learning'"
-                                class="flex flex-wrap"
-                                style="max-width: 600px"
+                                class="flex flex-wrap max-w-600"
                             >
                                 <v-chip
                                     v-for="sublearn in dataProps.row

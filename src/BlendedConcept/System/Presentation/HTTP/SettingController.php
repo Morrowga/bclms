@@ -4,16 +4,17 @@ namespace Src\BlendedConcept\System\Presentation\HTTP;
 
 use Inertia\Inertia;
 use Src\BlendedConcept\System\Application\DTO\SiteSettingData;
+use Src\BlendedConcept\System\Application\DTO\SiteThemData;
 use Src\BlendedConcept\System\Application\Policies\SettingPolicy;
 use Src\BlendedConcept\System\Application\Requests\UpdateSettingRequest;
+use Src\BlendedConcept\System\Application\Requests\updateSiteThemeRequest;
 use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateSiteSettingCommand;
+use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateSiteThemeCommand;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetSiteSetting;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetSiteThemeQuery;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Src\BlendedConcept\System\Application\Requests\updateSiteThemeRequest;
-use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateSiteThemeCommand;
-use Src\BlendedConcept\System\Application\UseCases\Queries\GetSiteThemeQuery;
-use Src\BlendedConcept\System\Application\DTO\SiteThemData;
+
 class SettingController extends Controller
 {
     /**
@@ -65,7 +66,7 @@ class SettingController extends Controller
 
         $site_theme = (new GetSiteThemeQuery)->handle();
 
-        return Inertia::render(config('route.site_theme'),compact('site_theme'));
+        return Inertia::render(config('route.site_theme'), compact('site_theme'));
     }
 
     public function updatetheme(updateSiteThemeRequest $request)
