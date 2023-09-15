@@ -8,10 +8,7 @@
             <v-card-text>
                 <v-row class="pt-4">
                     <v-col cols="12" class="d-flex justify-center pt-4">
-                        <img
-                            src="/images/chart.png"
-                            style="width: 700px; height: auto"
-                        />
+                        <img src="/images/chart.png" class="width-700-h-auto" />
                     </v-col>
                 </v-row>
             </v-card-text>

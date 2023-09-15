@@ -76,7 +76,7 @@ const form = useForm({
                 <v-card-text class="px-10 py-0 pb-5">
                     <div class="paragraph">
                         <v-textarea
-                            style="max-width: 650px"
+                            class="max-w-600"
                             variant="outlined"
                             v-model="form.description"
                         ></v-textarea>
@@ -92,7 +92,7 @@ const form = useForm({
                         ><br />
                         <div class="d-flex">
                             <v-chip-group>
-                                <div style="position: relative">
+                                <div class="ps-relative">
                                     <v-chip size="small"
                                         >Social Awareness</v-chip
                                     >
@@ -100,13 +100,13 @@ const form = useForm({
                                         <span>-</span>
                                     </div>
                                 </div>
-                                <div style="position: relative">
+                                <div class="ps-relative">
                                     <v-chip size="small">Self Awareness</v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>
                                 </div>
-                                <div style="position: relative">
+                                <div class="ps-relative">
                                     <v-chip size="small"
                                         >Responsible Decision Making</v-chip
                                     >
@@ -114,7 +114,7 @@ const form = useForm({
                                         <span>-</span>
                                     </div>
                                 </div>
-                                <div style="position: relative">
+                                <div class="ps-relative">
                                     <v-chip size="small">Mobility</v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
@@ -134,7 +134,7 @@ const form = useForm({
                         ><br />
                         <div class="d-flex">
                             <v-chip-group>
-                                <div style="position: relative">
+                                <div class="ps-relative">
                                     <v-chip size="small">
                                         Social Skills
                                     </v-chip>
@@ -142,7 +142,7 @@ const form = useForm({
                                         <span>-</span>
                                     </div>
                                 </div>
-                                <div style="position: relative">
+                                <div class="ps-relative">
                                     <v-chip size="small"> Life Skills </v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
@@ -164,13 +164,13 @@ const form = useForm({
                         ><br />
                         <div class="d-flex">
                             <v-chip-group>
-                                <div style="position: relative">
+                                <div class="ps-relative">
                                     <v-chip size="small"> Dyspraxia </v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>
                                 </div>
-                                <div style="position: relative">
+                                <div class="ps-relative">
                                     <v-chip size="small">
                                         Hyperactive Disorder
                                     </v-chip>
@@ -194,19 +194,19 @@ const form = useForm({
                         ><br />
                         <div class="d-flex">
                             <v-chip-group>
-                                <div style="position: relative">
+                                <div class="ps-relative">
                                     <v-chip size="small">Mouse/Keyboard</v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>
                                 </div>
-                                <div style="position: relative">
+                                <div class="ps-relative">
                                     <v-chip size="small">Switch-Single</v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>
                                 </div>
-                                <div style="position: relative">
+                                <div class="ps-relative">
                                     <v-chip size="small">Switch-Double</v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
@@ -312,7 +312,6 @@ const form = useForm({
 .v-input__control {
     height: auto !important;
 }
-
 
 :deep(.v-text-field input) {
     color: var(--graphite, #282828) !important;

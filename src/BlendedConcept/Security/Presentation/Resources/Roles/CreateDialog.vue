@@ -178,9 +178,7 @@ let saveRole = () => {
                                                             label="Module"
                                                             density="compact"
                                                             @click="selectAll"
-                                                            style="
-                                                                font-weight: bold;
-                                                            "
+                                                            class="font-weight-bold"
                                                         >
                                                             <template
                                                                 #label="{
@@ -224,9 +222,7 @@ let saveRole = () => {
                                                         "
                                                         :label="item.name"
                                                         density="compact"
-                                                        style="
-                                                            font-weight: bold;
-                                                        "
+                                                        class="font-weight-bold"
                                                     >
                                                         <template
                                                             #label="{ label }"
@@ -259,9 +255,7 @@ let saveRole = () => {
                                                                     permission.name
                                                                 "
                                                                 density="compact"
-                                                                style="
-                                                                    font-weight: bold;
-                                                                "
+                                                                class="font-weight-bold"
                                                             >
                                                                 <template
                                                                     #label="{

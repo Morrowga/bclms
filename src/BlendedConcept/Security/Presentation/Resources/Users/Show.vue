@@ -56,10 +56,10 @@ const setInactive = () => {
                             >
                             <p class="tiggie-p ml-4">95159746</p>
                         </VCol>
-                        <VCol cols="12" style="visibility: hidden">
+                        <VCol cols="12" class="vs-hidden">
                             <Link
                                 :href="route('organizations.show')"
-                                style="cursor: pointer"
+                                class="cu-pointer"
                             >
                                 <VLabel class="tiggie-label"
                                     >Organisation Name</VLabel
@@ -90,17 +90,13 @@ const setInactive = () => {
                     <VRow>
                         <VCol cols="12">
                             <h4
-                                class="tiggie-show-title pr-10 margin-buttom-18"
-                                style="visibility: hidden"
+                                class="tiggie-show-title pr-10 margin-buttom-18 vs-hidden"
                             >
                                 User Particulars
                             </h4>
                         </VCol>
                         <VCol cols="12">
-                            <img
-                                src="/images/defaults/avator.png"
-                                style="visibility: hidden"
-                            />
+                            <img src="/images/defaults/avator.png vs-hidden" />
                         </VCol>
                         <VCol cols="12">
                             <VLabel class="tiggie-label">User Role</VLabel>
@@ -142,17 +138,13 @@ const setInactive = () => {
                     <VRow>
                         <VCol cols="12">
                             <h4
-                                class="tiggie-show-title pr-10 margin-buttom-18"
-                                style="visibility: hidden"
+                                class="tiggie-show-title pr-10 margin-buttom-18 vs-hidden"
                             >
                                 User Particulars
                             </h4>
                         </VCol>
                         <VCol cols="12">
-                            <img
-                                src="/images/defaults/avator.png"
-                                style="visibility: hidden"
-                            />
+                            <img src="/images/defaults/avator.png vs-hidden" />
                         </VCol>
                         <VCol cols="12">
                             <VLabel class="tiggie-label"

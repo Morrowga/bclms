@@ -11,12 +11,8 @@ let model = ref(false);
         </div>
         <div class="body-sec">
             <div
-                class="d-flex justify-start justify-md-center align-center"
-                style="gap: 10px; flex-wrap: wrap"
+                class="d-flex justify-start justify-md-center align-center gap-10 f-wrap"
             >
-                <!-- <div v-for="item in 3" :key="item" style="width: 290px">
-                    <TeacherStorybookCard />
-                </div> -->
                 <v-slide-group
                     v-model="model"
                     center-active

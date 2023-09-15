@@ -21,7 +21,7 @@ const createPlaylist = () => {
                     <VImg
                         src="/images/defaults/uploadimage.png"
                         width="100%"
-                        style="border: 3px solid #565660"
+                        class="playlist-border"
                     />
                 </VCol>
 
@@ -67,3 +67,8 @@ const createPlaylist = () => {
         </VContainer>
     </AdminLayout>
 </template>
+<style scoped>
+.playlist-border {
+    border: 3px solid #565660 !important;
+}
+</style>

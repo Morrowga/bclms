@@ -24,7 +24,7 @@ const props = defineProps({
                     @click="router.get(route('teacher_storybook.show'))"
                     v-bind="props"
                 >
-                    <v-card-title style="position: relative">
+                    <v-card-title class="ps-relative">
                         <v-img src="/images/image4.png" />
                         <div class="chip-page" v-if="is_chip">
                             <div class="chip-content">14 pages</div>
@@ -113,17 +113,14 @@ const props = defineProps({
     z-index: 10;
 }
 
-
-.checkbox-position
-{
+.checkbox-position {
     position: absolute;
-    top:4px;
+    top: 4px;
     right: 10px;
     padding: initial;
     color: #282828;
 }
-.chip
-{
-    background-color: #FfFfFf !important;
+.chip {
+    background-color: #ffffff !important;
 }
 </style>

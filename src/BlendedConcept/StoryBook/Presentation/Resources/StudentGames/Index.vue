@@ -10,7 +10,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 <template>
     <StudentLayout>
-        <section style="min-height: 100vh">
+        <section class="vh-m-100">
             <VContainer class="mb-3">
                 <VRow>
                     <VCol cols="4">

@@ -26,10 +26,7 @@ import TeacherStorageField from "./components/TeacherStorageField.vue";
                 <div
                     class="d-flex justify-space-between align-center mt-3 pt-3"
                 >
-                    <h1
-                        class="tiggie-teacher-subtitle"
-                        style="font-size: 30px !important"
-                    >
+                    <h1 class="tiggie-teacher-subtitle fs-30">
                         Total Storage Usage
                     </h1>
                     <div class="tiggie-subtitle">
@@ -70,9 +67,7 @@ import TeacherStorageField from "./components/TeacherStorageField.vue";
                                 color="primary"
                                 class="mr-2"
                             />
-                            <span style="color: #000"
-                                >Organization Resources</span
-                            >
+                            <span class="t-black">Organization Resources</span>
                         </div>
                     </VCol>
                     <VCol cols="3">
@@ -82,7 +77,7 @@ import TeacherStorageField from "./components/TeacherStorageField.vue";
                                 color="teal"
                                 class="mr-2"
                             />
-                            <span style="color: #000">Teacher Resources</span>
+                            <span class="t-black">Teacher Resources</span>
                         </div>
                     </VCol>
                     <VCol cols="4">
@@ -92,7 +87,7 @@ import TeacherStorageField from "./components/TeacherStorageField.vue";
                                 color="sun-yellow"
                                 class="mr-2"
                             />
-                            <span style="color: #000"
+                            <span class="t-black"
                                 >Allocated to teachers but not in use</span
                             >
                         </div>

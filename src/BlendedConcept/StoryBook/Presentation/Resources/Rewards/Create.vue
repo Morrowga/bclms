@@ -5,7 +5,7 @@ import { emailValidator, requiredValidator } from "@validators";
 import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import {SuccessDialog} from '@actions/useSuccess';
+import { SuccessDialog } from "@actions/useSuccess";
 
 const isFormValid = ref(false);
 const isDialogVisible = ref(false);
@@ -28,7 +28,7 @@ let form = useForm({
 
 // submit create form
 let handleSubmit = () => {
-SuccessDialog({title:"You've successfully created organization"})
+    SuccessDialog({ title: "You've successfully created organization" });
 
     // refForm.value?.validate().then(({ valid }) => {
     //     if (valid) {
@@ -44,63 +44,105 @@ SuccessDialog({title:"You've successfully created organization"})
 };
 </script>
 
-
 <template>
     <AdminLayout>
-        <div class="d-flex justify-end" style="width: 100vw !important;">
-            <VForm ref="refForm" v-model="isFormValid" @submit.prevent="handleSubmit">
-              <VContainer>
-                <VRow justify="center">
-                    <VCol cols="6">
-                        <span class="text-xl tiggie-title">Reward Particulars</span>
-                        <VRow class="pt-5">
-                            <VCol cols="8">
-                                <VLabel class="tiggie-label">Name</VLabel>
-                                <VTextField density="compact"
-                                placeholder="Type here ..."
-                                v-model="form.name" class="w-100" :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.name" />
-                            </VCol>
-                            <VCol cols="8">
-                                <VLabel class="tiggie-label">Stars Required</VLabel>
-                                <VTextField density="compact"
-                                placeholder="Type here ..."
-                                v-model="form.name" class="w-100" :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.name" />
-                            </VCol>
-                            <VCol cols="8">
-                                <VLabel class="tiggie-label">Rarity</VLabel>
-                                <VSelect :items="items" rounded="50%" density="compact" />
-                            </VCol>
-                            <VCol cols="8">
-                                <VLabel class="tiggie-label">Description</VLabel>
-                                <VTextField density="compact"
-                                placeholder="Type here ..."
-                                v-model="form.name" class="w-100" :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.name" />
-                            </VCol>
-                        </VRow>
-                    </VCol>
-                    <VCol cols="6" class="pt-5">
-                        <span class="tiggie-title">Sticker</span>
-                        <br />
-                        <ImageUpload v-model="form.image" />
-                    </VCol>
-                   <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
-                        <Link :href="route('organizations.index')" class="text-black">
-                           <VBtn color="gray" height="50" class="" width="300">
-                            Cancel
-                          </VBtn>
-                        </Link>
-                    <VBtn type="submit" class="" height="50" width="300"> Finish </VBtn>
-                </VCol>
-                </VRow>
+        <div class="d-flex justify-end vw-100">
+            <VForm
+                ref="refForm"
+                v-model="isFormValid"
+                @submit.prevent="handleSubmit"
+            >
+                <VContainer>
+                    <VRow justify="center">
+                        <VCol cols="6">
+                            <span class="text-xl tiggie-title"
+                                >Reward Particulars</span
+                            >
+                            <VRow class="pt-5">
+                                <VCol cols="8">
+                                    <VLabel class="tiggie-label">Name</VLabel>
+                                    <VTextField
+                                        density="compact"
+                                        placeholder="Type here ..."
+                                        v-model="form.name"
+                                        class="w-100"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="form?.errors?.name"
+                                    />
+                                </VCol>
+                                <VCol cols="8">
+                                    <VLabel class="tiggie-label"
+                                        >Stars Required</VLabel
+                                    >
+                                    <VTextField
+                                        density="compact"
+                                        placeholder="Type here ..."
+                                        v-model="form.name"
+                                        class="w-100"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="form?.errors?.name"
+                                    />
+                                </VCol>
+                                <VCol cols="8">
+                                    <VLabel class="tiggie-label">Rarity</VLabel>
+                                    <VSelect
+                                        :items="items"
+                                        rounded="50%"
+                                        density="compact"
+                                    />
+                                </VCol>
+                                <VCol cols="8">
+                                    <VLabel class="tiggie-label"
+                                        >Description</VLabel
+                                    >
+                                    <VTextField
+                                        density="compact"
+                                        placeholder="Type here ..."
+                                        v-model="form.name"
+                                        class="w-100"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="form?.errors?.name"
+                                    />
+                                </VCol>
+                            </VRow>
+                        </VCol>
+                        <VCol cols="6" class="pt-5">
+                            <span class="tiggie-title">Sticker</span>
+                            <br />
+                            <ImageUpload v-model="form.image" />
+                        </VCol>
+                        <VCol
+                            cols="12"
+                            class="d-flex flex-wrap justify-center gap-10"
+                        >
+                            <Link
+                                :href="route('organizations.index')"
+                                class="text-black"
+                            >
+                                <VBtn
+                                    color="gray"
+                                    height="50"
+                                    class=""
+                                    width="300"
+                                >
+                                    Cancel
+                                </VBtn>
+                            </Link>
+                            <VBtn
+                                type="submit"
+                                class=""
+                                height="50"
+                                width="300"
+                            >
+                                Finish
+                            </VBtn>
+                        </VCol>
+                    </VRow>
                 </VContainer>
             </VForm>
         </div>
     </AdminLayout>
 </template>
-
 
 <style scoped>
 .logo-position {

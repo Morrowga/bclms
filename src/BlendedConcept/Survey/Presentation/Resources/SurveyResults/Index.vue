@@ -144,8 +144,7 @@ const deleteItem = () => {
                                 <VSpacer />
 
                                 <div
-                                    class="app-user-search-filter d-flex align-center justify-end gap-3"
-                                    style="width: 20%"
+                                    class="app-user-search-filter d-flex align-center justify-end gap-3 width-20"
                                 >
                                     <selectBox
                                         :datas="[

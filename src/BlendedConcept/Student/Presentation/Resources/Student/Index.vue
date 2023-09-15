@@ -114,8 +114,7 @@ const exportUser = () => {
 
                         <div class="d-flex">
                             <div
-                                class="app-user-search-filter d-flex align-center justify-end gap-3"
-                                style="width: 200px"
+                                class="app-user-search-filter d-flex align-center justify-end gap-3 width-200"
                             >
                                 <selectBox
                                     placeholder="Sort By"
@@ -192,8 +191,7 @@ const exportUser = () => {
                                             "
                                         >
                                             <span
-                                                style="cursor: pointer"
-                                                class="text-default-color"
+                                                class="text-default-color cu-pointer"
                                                 >{{
                                                     props.row.organizations?.[0]
                                                         ?.name ?? "-"

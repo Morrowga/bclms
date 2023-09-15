@@ -5,7 +5,7 @@ let is_chip = ref(true);
 </script>
 <template>
     <v-card min-width="275">
-        <v-card-title style="position: relative">
+        <v-card-title class="ps-relative">
             <v-img src="/images/image4.png" />
             <div class="chip-page" v-if="is_chip">
                 <div class="chip-content">5 storybooks</div>

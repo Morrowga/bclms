@@ -42,9 +42,7 @@ const submitReview = () => {
                     <v-form>
                         <v-row>
                             <v-col cols="12">
-                                <v-label
-                                    class="font-weight-bold"
-                                    style="color: #000"
+                                <v-label class="font-weight-bold t-black"
                                     >Name</v-label
                                 >
                                 <v-text-field
@@ -54,9 +52,7 @@ const submitReview = () => {
                                 />
                             </v-col>
                             <v-col cols="12">
-                                <v-label
-                                    class="font-weight-bold"
-                                    style="color: #000"
+                                <v-label class="font-weight-bold t-black"
                                     >Description</v-label
                                 >
                                 <v-text-field
@@ -67,8 +63,7 @@ const submitReview = () => {
                             </v-col>
                             <v-col cols="12">
                                 <div
-                                    class="d-flex justify-center align-center"
-                                    style="gap: 10px"
+                                    class="d-flex justify-center align-center gap-10"
                                 >
                                     <SecondaryBtn
                                         title="Cancel"

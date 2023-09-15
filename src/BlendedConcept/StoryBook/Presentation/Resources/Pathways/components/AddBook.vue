@@ -57,11 +57,10 @@ const toggleDialog = (id) => {
         </div>
         <swiper :slides-per-view="3" :space-between="10">
             <swiper-slide v-for="data in datas" :key="data.image">
-                <div style="position: relative">
+                <div class="ps-relative">
                     <v-card
-                        class="ma-4"
+                        class="ma-4 container-style"
                         height="200"
-                        style="position: relative; z-index: 1"
                         :color="'primary'"
                     >
                         <div
@@ -146,5 +145,9 @@ const toggleDialog = (id) => {
     bottom: 0;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+.container-style {
+    position: relative !important;
+    z-index: 1 !important;
 }
 </style>

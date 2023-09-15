@@ -11,7 +11,7 @@ let props = defineProps({
 </script>
 
 <template>
-    <section class="section-student-home" style="min-height: 86.8vh">
+    <section class="section-student-home vh-m-86">
         <VRow>
             <VCol cols="12" lg="3" md="6">
                 <VFadeTransition>

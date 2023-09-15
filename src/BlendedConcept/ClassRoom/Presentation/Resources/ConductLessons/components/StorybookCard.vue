@@ -6,7 +6,7 @@ import GreenChip from "@mainRoot/components/GreenChip/GreenChip.vue";
 </script>
 <template>
     <v-card>
-        <v-card-title style="position: relative">
+        <v-card-title class="storybook-pos">
             <v-img src="/images/image4.png" />
             <div class="chip-page" v-if="is_chip">
                 <div class="chip-content">14 pages</div>
@@ -68,5 +68,8 @@ import GreenChip from "@mainRoot/components/GreenChip/GreenChip.vue";
     white-space: nowrap;
     padding-left: 12px;
     padding-right: 12px;
+}
+.storybook-pos {
+    position: relative !important;
 }
 </style>

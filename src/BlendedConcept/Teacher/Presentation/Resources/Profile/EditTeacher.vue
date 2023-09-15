@@ -1,14 +1,13 @@
 <script setup>
-import { ref } from "vue"
-import {Link} from "@inertiajs/vue3"
+import { ref } from "vue";
+import { Link } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 
 const studentEditInfo = ref({
     name: "Harry's",
-    email: 'tyler.covington@work.sg',
-    contact_number: '95123456'
+    email: "tyler.covington@work.sg",
+    contact_number: "95123456",
 });
-
 </script>
 <template>
     <AdminLayout>
@@ -20,7 +19,7 @@ const studentEditInfo = ref({
                 <VCol cols="6">
                     <VText class="teacherprofile-title">Profile</VText>
                     <div class="d-flex justify-space-between mt-10 pb-10">
-                        <h1 class="tiggie-label" style="font-size:20px !important">Personal Details</h1>
+                        <h1 class="tiggie-label fs-20">Personal Details</h1>
                     </div>
                     <VRow>
                         <VCol cols="12" class="py-2">
@@ -28,35 +27,56 @@ const studentEditInfo = ref({
                                 FullName
                                 <span class="text-candy-red">*</span>
                             </VLabel>
-                            <VTextField placeholder="" v-model="studentEditInfo.name" />
+                            <VTextField
+                                placeholder=""
+                                v-model="studentEditInfo.name"
+                            />
                         </VCol>
                         <VCol cols="12" class="py-2">
                             <VLabel class="tiggie-small-label">
                                 Work Email
                                 <span class="text-candy-red">*</span>
                             </VLabel>
-                            <VTextField placeholder="" v-model="studentEditInfo.email" />
+                            <VTextField
+                                placeholder=""
+                                v-model="studentEditInfo.email"
+                            />
                         </VCol>
                         <VCol cols="12" class="py-2">
                             <VLabel class="tiggie-small-label">
                                 Contact Number
                                 <span class="text-candy-red">*</span>
                             </VLabel>
-                            <VTextField placeholder="" v-model="studentEditInfo.contact_number" />
+                            <VTextField
+                                placeholder=""
+                                v-model="studentEditInfo.contact_number"
+                            />
                         </VCol>
                     </VRow>
                 </VCol>
             </VRow>
             <VRow justify="center">
                 <VCol cols="2">
-                    <VBtn color="#e9eff0" variant="flat" rounded height="50" class="pl-16 pr-16">
+                    <VBtn
+                        color="#e9eff0"
+                        variant="flat"
+                        rounded
+                        height="50"
+                        class="pl-16 pr-16"
+                    >
                         <Link :href="route('viewteacher')" class="text-black">
-                        <span class="text-primary">Cancel</span>
+                            <span class="text-primary">Cancel</span>
                         </Link>
                     </VBtn>
                 </VCol>
                 <VCol cols="2">
-                    <VBtn color="primary" variant="flat" rounded height="50" class="pl-16 pr-16">
+                    <VBtn
+                        color="primary"
+                        variant="flat"
+                        rounded
+                        height="50"
+                        class="pl-16 pr-16"
+                    >
                         <span class="text-white">Submit</span>
                     </VBtn>
                 </VCol>
@@ -64,7 +84,6 @@ const studentEditInfo = ref({
         </VContainer>
     </AdminLayout>
 </template>
-
 
 <style scoped>
 .teacherprofile-title {

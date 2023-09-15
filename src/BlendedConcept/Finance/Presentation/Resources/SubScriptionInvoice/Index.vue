@@ -19,10 +19,7 @@ const activeTab = (tabNameEnter) => {
             <h1 class="tiggie-title mb-4">Subscription</h1>
             <VRow>
                 <VCol cols="12" md="8">
-                    <div
-                        class="d-flex align-center flex-wrap"
-                        style="gap: 10px"
-                    >
+                    <div class="d-flex align-center flex-wrap gap-10">
                         <VBtn
                             variant="flat"
                             rounded

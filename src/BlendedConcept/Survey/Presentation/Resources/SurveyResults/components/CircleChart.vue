@@ -53,12 +53,7 @@ let barwidth = 100;
                                     >
                                         <td>{{ item.data }}</td>
                                         <td>
-                                            <div
-                                                style="
-                                                    width: 100px;
-                                                    height: 30px;
-                                                "
-                                            >
+                                            <div class="circle-chart">
                                                 <v-progress-linear
                                                     :color="item.color"
                                                     v-model="barwidth"
@@ -76,4 +71,9 @@ let barwidth = 100;
         </v-card>
     </div>
 </template>
-<style scoped></style>
+<style scoped>
+.circle-chart {
+    width: 100px;
+    height: 30px;
+}
+</style>

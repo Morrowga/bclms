@@ -124,12 +124,11 @@ const selectionChanged = (data) => {
                 <template #table-row="dataProps">
                     <div
                         v-if="dataProps.column.field == 'name'"
-                        class="d-flex flex-nowrap align-center"
-                        style="gap: 10px"
+                        class="d-flex flex-nowrap align-center gap-10"
                     >
                         <img
                             :src="dataProps.row.image"
-                            style="width: 60px; height: 60px"
+                            class="assign-std-width-high"
                         />
                         <span>{{ dataProps.row.name }}</span>
                     </div>
@@ -233,5 +232,9 @@ const selectionChanged = (data) => {
     font-weight: 700 !important;
     line-height: 52px !important; /* 130% */
     text-transform: capitalize !important;
+}
+.assign-std-width-high {
+    width: 60px;
+    height: 60px;
 }
 </style>

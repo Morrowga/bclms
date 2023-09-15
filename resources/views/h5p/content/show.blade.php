@@ -1,5 +1,41 @@
 @extends(config('laravel-h5p.layout'))
+<style>
+    .h5p-video-wrapper {
+        position: relative;
+        width: 640px;
+        /* Adjust this according to your video's dimensions */
+    }
 
+    video {
+        width: 100%;
+        height: auto;
+    }
+
+    .timeline {
+        width: 100%;
+        background-color: #ccc;
+        height: 5px;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .thumbnails {
+        display: none;
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .thumbnail {
+        display: inline-block;
+        width: 50px;
+        /* Adjust the width of thumbnails as needed */
+        margin: 5px;
+        cursor: pointer;
+    }
+</style>
 @section('h5p')
     <div class="container-fluid">
 
@@ -53,6 +89,7 @@
     @foreach ($settings['loadedJs'] as $script)
         {{ Html::script($script) }}
     @endforeach
+    <script defer></script>
     <script>
         function handleSubmit(event) {
             console.log('Hello World Par kwar')

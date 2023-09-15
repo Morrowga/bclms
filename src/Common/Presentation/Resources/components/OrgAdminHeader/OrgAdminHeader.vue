@@ -25,7 +25,7 @@ let toggle = () => {
 };
 </script>
 <template>
-    <v-app-bar elevation="0" style="padding: 0 171px">
+    <v-app-bar elevation="0" class="head-padding">
         <!-- mobile side navigation -->
         <v-app-bar-nav-icon
             variant="text"
@@ -55,5 +55,8 @@ let toggle = () => {
     object-fit: contain;
     height: 62px;
     margin-top: 11px;
+}
+.head-padding {
+    padding: 0 171px !important;
 }
 </style>

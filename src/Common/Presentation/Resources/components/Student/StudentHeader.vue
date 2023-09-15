@@ -52,10 +52,7 @@ const openStdMenu = () => {
 };
 </script>
 <template>
-    <v-app-bar
-        elevation="0"
-        style="background: #000 !important; padding: 0 40px"
-    >
+    <v-app-bar elevation="0" class="std-head-bar">
         <!-- mobile side navigation -->
         <StudentProfile
             class="d-flex pe-3"
@@ -93,7 +90,7 @@ const openStdMenu = () => {
         <div class="ml-5 mt-1">
             <span class="header-coin-text ruddy-bold">Coins</span>
             <div>
-                <v-chip style="padding: 0 !important; margin: 0 !important">
+                <v-chip class="pa-0 ma-0">
                     <img src="/images/chipcoin.png" width="16" height="16" />
                     <span class="header-coin-chip ml-1 ruddy-bold">47</span>
                     <img
@@ -128,5 +125,9 @@ const openStdMenu = () => {
     object-fit: contain;
     height: 62px;
     margin-top: 11px;
+}
+.std-head-bar {
+    background: #000 !important;
+    padding: 0 40px;
 }
 </style>

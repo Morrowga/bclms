@@ -3,7 +3,7 @@ import { ref } from "vue";
 let page = ref(1);
 </script>
 <template>
-    <div class="text-center" style="width: 65%">
+    <div class="text-center width-65">
         <v-container>
             <v-row justify="center">
                 <v-col cols="8">
