@@ -122,7 +122,7 @@ class OrganizationAdminSeeder extends Seeder
             $organizationModel = OrganizationEloquentModel::create($data);
 
             $subdomain = Tenant::create([
-                'id' => $organizationModel->name,
+                'id' => $organizationModel->sub_domain,
                 'organization_id' => $organizationModel->id,
             ]);
 

@@ -1,12 +1,19 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3"
-import {
-    emailValidator,
-    requiredValidator,
-    integerValidator,
-} from "@validators";
-
 const props = defineProps({
+    form: {
+        type: Object
+    },
+    userData: {
+        type: Object,
+        required: false,
+        default: () => ({
+            currentpassword: "",
+            updatedpassword: "",
+            passwordConfirmation: ""
+
+        }),
+    },
     isDialogVisible: {
         type: Boolean,
         required: true,
@@ -18,20 +25,25 @@ const emit = defineEmits([
     'update:isDialogVisible',
 ])
 
+const userData = ref(structuredClone(toRaw(props.userData)))
+const isUseAsBillingAddress = ref(false)
+
+watch(props, () => {
+    userData.value = structuredClone(toRaw(props.userData))
+})
 let form = useForm({
-    required: false,
-    repeat: false,
-    user_type: null,
-    appear_on: null,
-    start_date: null,
-    end_date: null,
+    isRequired: false,
+    isReport: false,
+
 })
 
 const onFormSubmit = () => {
-    emit('submit', form)
+    // emit('submit', userData.value)
+    emit('submit', { title: "Password Changed Successfully" })
 }
 
 const onFormReset = () => {
+    userData.value = structuredClone(toRaw(props.userData))
     emit('update:isDialogVisible', false)
 }
 
@@ -39,42 +51,15 @@ const dialogVisibleUpdate = val => {
     emit('update:isDialogVisible', val)
 }
 
-const userTypes = ref([
+const items = ref([
     {
-        title: 'All',
-        value: 'All',
+        title: 'Edit',
+        value: 'edit',
     },
     {
-        title: 'BC Staff',
-        value: 'BC Staff',
-    },
-    {
-        title: 'Org Teacher',
-        value: 'Org Teacher',
-    },
-    {
-        title: 'B2C User',
-        value: 'B2C User',
-    },
-])
-
-const appearOn = ref([
-    {
-        title: 'Log In',
-        value: 'Log In',
-    },
-    {
-        title: 'Log Out',
-        value: 'Log Out',
-    },
-    {
-        title: 'Book End',
-        value: 'Book End',
-    },
-    {
-        title: 'Game End',
-        value: 'Game End',
-    },
+        title: 'Delete',
+        value: 'delete',
+    }
 ])
 </script>
 
@@ -98,30 +83,30 @@ const appearOn = ref([
                         <VRow justify="center">
 
                             <VCol cols="6" md="6">
-                                <VLabel class="tiggie-label">Set User Type</VLabel>
-                                <VSelect :items="userTypes" v-model="form.user_type" :rules="[requiredValidator]"  :error-messages="form?.errors?.user_type" placeholder="Select User Types" rounded="50%" density="compact" />
+                                <VLabel class="tiggie-label">Set Users Type</VLabel>
+                                <VSelect :items="items" rounded="50%" density="compact" />
                             </VCol>
                             <VCol cols="6" md="6">
                                 <VLabel class="tiggie-label">Survery Start Date</VLabel>
-                                <AppDateTimePicker placeholder="Select Start Date" :rules="[requiredValidator]"  :error-messages="form?.errors?.start_date"  v-model="form.start_date" density="compact" />
+                                <AppDateTimePicker v-model="date" density="compact" />
 
                             </VCol>
                             <VCol cols="6" md="6">
                                 <VLabel class="tiggie-label">Appear On</VLabel>
-                                <VSelect :items="appearOn" placeholder="Select Frequency" :rules="[requiredValidator]"  :error-messages="form?.errors?.appear_on"  v-model="form.appear_on" rounded="50%" density="compact" />
+                                <VSelect :items="items" rounded="50%" density="compact" />
                             </VCol>
                             <VCol cols="6" md="6">
                                 <VLabel class="tiggie-label">Survey End Date</VLabel>
-                            <AppDateTimePicker placeholder="Select End Date" v-model="form.end_date" :rules="[requiredValidator]"  :error-messages="form?.errors?.end_date"  density="compact" />
+                                <AppDateTimePicker v-model="date" density="compact" />
                             </VCol>
                             <!-- 👉 Contact -->
                             <VCol cols="3" md="3">
                                 <VLabel class="tiggie-label">Required</VLabel>
-                                <VSwitch v-model="form.required" inset />
+                                <VSwitch v-model="form.isReport" inset />
                             </VCol>
                             <VCol cols="3" md="3">
                                 <VLabel class="tiggie-label">Repeat</VLabel>
-                                <VSwitch v-model="form.repeat" inset />
+                                <VSwitch v-model="form.isRequired" inset />
                             </VCol>
                             <VCol cols="6"></VCol>
 

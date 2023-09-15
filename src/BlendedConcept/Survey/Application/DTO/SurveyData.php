@@ -1,10 +1,11 @@
 <?php
 
-namespace Src\BlendedConcept\Survey\Domain\Model;
+namespace Src\BlendedConcept\Survey\Application\DTO;
 
-use Src\Common\Domain\AggregateRoot;
+use Illuminate\Http\Request;
+use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
 
-class Survey extends AggregateRoot
+class SurveyData
 {
     public function __construct(
         public readonly ?int $id,
@@ -21,6 +22,23 @@ class Survey extends AggregateRoot
     ) {
     }
 
+    public static function fromRequest(Request $request, $survey): SurveyData
+    {
+        return new self(
+            id: $survey->id,
+            title: $request->title,
+            description: $request->description,
+            type: $request->type,
+            user_type: $request->user_type,
+            appear_on: $request->appear_on,
+            start_date: $request->start_date,
+            end_date: $request->end_date,
+            requried: $request->required,
+            repeat: $request->repeat,
+
+        );
+    }
+
     public function toArray(): array
     {
         return [
@@ -32,8 +50,8 @@ class Survey extends AggregateRoot
             'appear_on' => $this->appear_on,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'required' => $this->required,
-            'repeat' => $this->repeat,
+            'requried'=> $this->required,
+            'repeat'=> $this->repeat,
         ];
     }
 }

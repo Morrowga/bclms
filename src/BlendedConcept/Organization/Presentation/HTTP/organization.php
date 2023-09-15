@@ -33,7 +33,6 @@ Route::middleware([
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
-
     Route::get('login', [AuthController::class, 'loginPage'])->name('login');
     Route::post('login', function (StoreLoginRequest $request) {
         $user = UserEloquentModel::query()->where('email', $request->email)->first();
