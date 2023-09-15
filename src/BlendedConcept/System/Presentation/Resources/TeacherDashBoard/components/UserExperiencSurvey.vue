@@ -18,25 +18,18 @@ const isDialogVisible = ref(true);
             />
 
             <VCardTitle class="">
-                <h1 class="tiggie-label" style="font-size: 40px !important">
-                    User Experience Survey
-                </h1>
+                <h1 class="tiggie-label fs-40">User Experience Survey</h1>
             </VCardTitle>
 
             <VCardText>
-                <h4
-                    class="tiggie-label mt-16 mb-10"
-                    style="font-size: 24px !important"
-                >
+                <h4 class="tiggie-label mt-16 mb-10 fs-24">
                     How would you rate your overall satisfaction with TiggieKids
                     on a scale of 1 to 5? <span class="text-candy-red">*</span>
                 </h4>
 
                 <VRow class="mt-10" align="center">
                     <VCol cols="3">
-                        <VLabel
-                            class="tiggie-label-custome"
-                            style="font-size: 20px !important"
+                        <VLabel class="tiggie-label-custome fs-20"
                             >Not satisfied at all
                         </VLabel>
                     </VCol>
@@ -44,9 +37,7 @@ const isDialogVisible = ref(true);
                         <VRow>
                             <VCol cols="2">
                                 <div class="d-flex flex-column justify-center">
-                                    <VLabel
-                                        class="tiggie-label-custome"
-                                        style="font-size: 20px !important"
+                                    <VLabel class="tiggie-label-custome fs-20"
                                         >1</VLabel
                                     >
                                     <VRadio value="1" size="20" />
@@ -54,9 +45,7 @@ const isDialogVisible = ref(true);
                             </VCol>
                             <VCol cols="2">
                                 <div class="d-flex flex-column justify-center">
-                                    <VLabel
-                                        class="tiggie-label-custome"
-                                        style="font-size: 20px !important"
+                                    <VLabel class="tiggie-label-custome fs-20"
                                         >2</VLabel
                                     >
                                     <VRadio value="1" size="20" />
@@ -64,9 +53,7 @@ const isDialogVisible = ref(true);
                             </VCol>
                             <VCol cols="2">
                                 <div class="d-flex flex-column justify-center">
-                                    <VLabel
-                                        class="tiggie-label-custome"
-                                        style="font-size: 20px !important"
+                                    <VLabel class="tiggie-label-custome fs-20"
                                         >3</VLabel
                                     >
                                     <VRadio value="1" size="20" />
@@ -74,9 +61,7 @@ const isDialogVisible = ref(true);
                             </VCol>
                             <VCol cols="2">
                                 <div class="d-flex flex-column justify-center">
-                                    <VLabel
-                                        class="tiggie-label-custome"
-                                        style="font-size: 20px !important"
+                                    <VLabel class="tiggie-label-custome fs-20"
                                         >4</VLabel
                                     >
                                     <VRadio value="1" size="20" />
@@ -84,9 +69,7 @@ const isDialogVisible = ref(true);
                             </VCol>
                             <VCol cols="2">
                                 <div class="d-flex flex-column justify-center">
-                                    <VLabel
-                                        class="tiggie-label-custome"
-                                        style="font-size: 20px !important"
+                                    <VLabel class="tiggie-label-custome fs-20"
                                         >5</VLabel
                                     >
                                     <VRadio value="1" size="20" />
@@ -95,9 +78,7 @@ const isDialogVisible = ref(true);
                         </VRow>
                     </VCol>
                     <VCol cols="2">
-                        <VLabel
-                            class="tiggie-label-custome"
-                            style="font-size: 20px !important"
+                        <VLabel class="tiggie-label-custome 20"
                             >Extremely Satisfied
                         </VLabel>
                     </VCol>
@@ -105,10 +86,7 @@ const isDialogVisible = ref(true);
             </VCardText>
 
             <VCardText>
-                <h4
-                    class="tiggie-label mt-16 mb-10"
-                    style="font-size: 24px !important"
-                >
+                <h4 class="tiggie-label mt-16 mb-10 fs-24">
                     What is the main reason for your score?
                     <span class="text-candy-red">*</span>
                 </h4>
@@ -120,10 +98,7 @@ const isDialogVisible = ref(true);
             </VCardText>
 
             <VCardText>
-                <h4
-                    class="tiggie-label mt-16 mb-5"
-                    style="font-size: 24px !important"
-                >
+                <h4 class="tiggie-label mt-16 mb-5 fs-24">
                     What is the main reason for your score?
                     <span class="text-candy-red">*</span>
                 </h4>
@@ -149,20 +124,14 @@ const isDialogVisible = ref(true);
             </VCardText>
 
             <VCardText>
-                <h4
-                    class="tiggie-label mt-16"
-                    style="font-size: 24px !important"
-                >
+                <h4 class="tiggie-label mt-16 fs-24">
                     How likely are you to recommend TiggieKids to a friend or
                     colleague? <span class="text-candy-red">*</span>
                 </h4>
 
                 <VRow class="mt-10" align="center">
                     <VCol cols="3">
-                        <VLabel
-                            class="tiggie-label-custome"
-                            style="font-size: 20px !important"
-                        >
+                        <VLabel class="tiggie-label-custome fs-20">
                             Not likely at all
                         </VLabel>
                     </VCol>
@@ -170,9 +139,7 @@ const isDialogVisible = ref(true);
                         <VRow>
                             <VCol cols="2">
                                 <div class="d-flex flex-column justify-center">
-                                    <VLabel
-                                        class="tiggie-label-custome"
-                                        style="font-size: 20px !important"
+                                    <VLabel class="tiggie-label-custome fs-20"
                                         >1</VLabel
                                     >
                                     <VRadio value="1" size="20" />
@@ -180,9 +147,7 @@ const isDialogVisible = ref(true);
                             </VCol>
                             <VCol cols="2">
                                 <div class="d-flex flex-column justify-center">
-                                    <VLabel
-                                        class="tiggie-label-custome"
-                                        style="font-size: 20px !important"
+                                    <VLabel class="tiggie-label-custome fs-20"
                                         >2</VLabel
                                     >
                                     <VRadio value="1" size="20" />
@@ -190,9 +155,7 @@ const isDialogVisible = ref(true);
                             </VCol>
                             <VCol cols="2">
                                 <div class="d-flex flex-column justify-center">
-                                    <VLabel
-                                        class="tiggie-label-custome"
-                                        style="font-size: 20px !important"
+                                    <VLabel class="tiggie-label-custome fs-20"
                                         >3</VLabel
                                     >
                                     <VRadio value="1" size="20" />
@@ -200,9 +163,7 @@ const isDialogVisible = ref(true);
                             </VCol>
                             <VCol cols="2">
                                 <div class="d-flex flex-column justify-center">
-                                    <VLabel
-                                        class="tiggie-label-custome"
-                                        style="font-size: 20px !important"
+                                    <VLabel class="tiggie-label-custome fs-20"
                                         >4</VLabel
                                     >
                                     <VRadio value="1" size="20" />
@@ -210,9 +171,7 @@ const isDialogVisible = ref(true);
                             </VCol>
                             <VCol cols="2">
                                 <div class="d-flex flex-column justify-center">
-                                    <VLabel
-                                        class="tiggie-label-custome"
-                                        style="font-size: 20px !important"
+                                    <VLabel class="tiggie-label-custome fs-20"
                                         >5</VLabel
                                     >
                                     <VRadio value="1" size="20" />
@@ -221,10 +180,7 @@ const isDialogVisible = ref(true);
                         </VRow>
                     </VCol>
                     <VCol cols="2">
-                        <VLabel
-                            class="tiggie-label-custome"
-                            style="font-size: 20px !important"
-                        >
+                        <VLabel class="tiggie-label-custome fs-20">
                             Extremely Likely
                         </VLabel>
                     </VCol>
@@ -232,10 +188,7 @@ const isDialogVisible = ref(true);
             </VCardText>
 
             <VCardText>
-                <h4
-                    class="tiggie-label mt-16 mb-10"
-                    style="font-size: 24px !important"
-                >
+                <h4 class="tiggie-label mt-16 mb-10 fs-24">
                     What is the main reason for your score?
                     <span class="text-candy-red">*</span>
                 </h4>

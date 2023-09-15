@@ -100,11 +100,7 @@ const deletePlaylist = () => {
 
                                 <VCardItem>
                                     <VCardTitle
-                                        class="text-center tiggie-teacher-p"
-                                        style="
-                                            color: #282828 !important;
-                                            font-weight: 700 !important;
-                                        "
+                                        class="text-center tiggie-teacher-p influcencing"
                                         >Influencing The Influencer
                                     </VCardTitle>
                                 </VCardItem>
@@ -186,5 +182,9 @@ const deletePlaylist = () => {
     background: rgba(22, 22, 22, 0.8);
     /* Shadown 2 */
     backdrop-filter: blur(10px);
+}
+.influcencing {
+    color: #282828 !important;
+    font-weight: 700 !important;
 }
 </style>

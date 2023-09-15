@@ -55,16 +55,8 @@ const toggleDialog = (id) => {
         </div>
         <swiper :slides-per-view="3" :space-between="10">
             <swiper-slide v-for="data in datas" :key="data.image">
-                <div style="position: relative">
-                    <p
-                        class="font-weight-bold text-right"
-                        style="
-                            position: absolute;
-                            top: -9px;
-                            right: 7px;
-                            z-index: 3;
-                        "
-                    >
+                <div class="ps-relative">
+                    <p class="font-weight-bold text-right storybook-ps">
                         <VIcon
                             icon="mdi-minus-circle"
                             size="20"
@@ -74,27 +66,20 @@ const toggleDialog = (id) => {
                     </p>
 
                     <p
-                        class="font-weight-bold text-right text-white"
-                        style="
-                            position: absolute;
-                            top: 6px;
-                            left: 21px;
-                            z-index: 3;
-                        "
+                        class="font-weight-bold text-right text-white storybook-ps-2"
                     >
                         <VBtn
                             color="#fff"
                             icon="dd"
                             size="x-small"
-                            style="border: 3px solid #000 !important"
+                            class="black-border"
                         >
                             <span class="text-dark">1</span>
                         </VBtn>
                     </p>
                     <v-card
-                        class="ma-4"
+                        class="ma-4 ps-index"
                         height="200"
-                        style="position: relative; z-index: 1"
                         :color="'primary'"
                     >
                         <div
@@ -174,5 +159,21 @@ const toggleDialog = (id) => {
     bottom: 0;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+.storybook-ps {
+    position: absolute !important;
+    top: -9px !important;
+    right: 7px !important;
+    z-index: 3 !important;
+}
+.storybook-ps-2 {
+    position: absolute !important;
+    top: 6px !important;
+    left: 21px !important;
+    z-index: 3 !important;
+}
+.ps-index {
+    position: relative !important;
+    z-index: 1 !important;
 }
 </style>

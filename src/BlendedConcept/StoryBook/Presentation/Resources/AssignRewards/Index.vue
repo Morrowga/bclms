@@ -96,7 +96,7 @@ const goRoute = (route) => {
                                 <VTextField
                                     placeholder="Search Users"
                                     density="compact"
-                                    style="width: 200px"
+                                    class="w-200"
                                 />
 
                                 <div class="d-flex">
@@ -230,5 +230,8 @@ const goRoute = (route) => {
 
 .v-card:not(.on-hover) {
     opacity: 1;
+}
+.w-200 {
+    width: 200px !important;
 }
 </style>

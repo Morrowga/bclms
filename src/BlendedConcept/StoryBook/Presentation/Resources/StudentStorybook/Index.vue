@@ -14,32 +14,56 @@ const activeTab = (name) => {
 </script>
 <template>
     <StudentLayout>
-        <section style="min-height: 100vh">
+        <section class="vh-m-100">
             <v-navigation-drawer floating permanent class="story-sidebar">
-                <div @click="activeTab('assigned')" :class="{ 'inside-div': active === 'assigned' }" class="mt-5">
+                <div
+                    @click="activeTab('assigned')"
+                    :class="{ 'inside-div': active === 'assigned' }"
+                    class="mt-5"
+                >
                     <div class="vlis" value="home">
                         <div class="d-flex justify-center mt-1">
-                            <img src="/images/bookicon.png" class="icon-sidebar" alt="" />
+                            <img
+                                src="/images/bookicon.png"
+                                class="icon-sidebar"
+                                alt=""
+                            />
                         </div>
                         <p class="text-center sidebartext pppangram-medium">
                             Assigned
                         </p>
                     </div>
                 </div>
-                <div @click="activeTab('pathway')" :class="{ 'inside-div': active === 'pathway' }" class="mt-5">
+                <div
+                    @click="activeTab('pathway')"
+                    :class="{ 'inside-div': active === 'pathway' }"
+                    class="mt-5"
+                >
                     <div class="vlis" value="home">
                         <div class="d-flex justify-center mt-1">
-                            <img src="/images/pathicon.png" class="icon-sidebar" alt="" />
+                            <img
+                                src="/images/pathicon.png"
+                                class="icon-sidebar"
+                                alt=""
+                            />
                         </div>
                         <p class="text-center sidebartext pppangram-medium">
                             Path Way
                         </p>
                     </div>
                 </div>
-                <div @click="activeTab('playlist')" :class="{ 'inside-div': active === 'playlist' }" class="mt-5">
+                <div
+                    @click="activeTab('playlist')"
+                    :class="{ 'inside-div': active === 'playlist' }"
+                    class="mt-5"
+                >
                     <div class="vlis" value="home">
                         <div class="d-flex justify-center mt-1">
-                            <img src="/images/play-square.png" class="icon-sidebar" alt="" />
+                            <img
+                                src="/images/play-square.png"
+                                class="icon-sidebar"
+                                alt=""
+                            />
                         </div>
                         <p class="text-center sidebartext pppangram-medium">
                             Playlist
@@ -51,11 +75,21 @@ const activeTab = (name) => {
                 <VRow>
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
-                            <v-img src="/images/21.jpg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/21.jpg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" @click="() =>
-                                        router.get(route('storybooks.show'))
-                                    " class="playButton" alt="" />
+                                <img
+                                    src="/images/Play Button.png"
+                                    @click="
+                                        () =>
+                                            router.get(route('storybooks.show'))
+                                    "
+                                    class="playButton"
+                                    alt=""
+                                />
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -64,23 +98,40 @@ const activeTab = (name) => {
                                             <span class="chipText">1</span>
                                         </div>
                                         <div class="text-center mt-2">
-                                            <img src="/images/Gold Coin.png" width="30" height="30" alt="" />
+                                            <img
+                                                src="/images/Gold Coin.png"
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
                                         </div>
                                     </v-chip>
                                 </div>
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">It's Ok to Lose</span>
+                            <span class="bookname ruddy-bold"
+                                >It's Ok to Lose</span
+                            >
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
-                            <v-img src="/images/3.jpg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/3.jpg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" @click="() =>
-                                        router.get(route('storybooks.show'))
-                                    " class="playButton" alt="" />
+                                <img
+                                    src="/images/Play Button.png"
+                                    @click="
+                                        () =>
+                                            router.get(route('storybooks.show'))
+                                    "
+                                    class="playButton"
+                                    alt=""
+                                />
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -89,23 +140,40 @@ const activeTab = (name) => {
                                             <span class="chipText">1</span>
                                         </div>
                                         <div class="text-center mt-2">
-                                            <img src="/images/Gold Coin.png" width="30" height="30" alt="" />
+                                            <img
+                                                src="/images/Gold Coin.png"
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
                                         </div>
                                     </v-chip>
                                 </div>
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">Jack And The Beanstalk</span>
+                            <span class="bookname ruddy-bold"
+                                >Jack And The Beanstalk</span
+                            >
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
-                            <v-img src="/images/sample2.png" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/sample2.png"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" @click="() =>
-                                        router.get(route('storybooks.show'))
-                                    " class="playButton" alt="" />
+                                <img
+                                    src="/images/Play Button.png"
+                                    @click="
+                                        () =>
+                                            router.get(route('storybooks.show'))
+                                    "
+                                    class="playButton"
+                                    alt=""
+                                />
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -114,23 +182,40 @@ const activeTab = (name) => {
                                             <span class="chipText">1</span>
                                         </div>
                                         <div class="text-center mt-2">
-                                            <img src="/images/Gold Coin.png" width="30" height="30" alt="" />
+                                            <img
+                                                src="/images/Gold Coin.png"
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
                                         </div>
                                     </v-chip>
                                 </div>
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">Denver The River</span>
+                            <span class="bookname ruddy-bold"
+                                >Denver The River</span
+                            >
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
-                            <v-img src="/images/1.webp" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/1.webp"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" @click="() =>
-                                        router.get(route('storybooks.show'))
-                                    " class="playButton" alt="" />
+                                <img
+                                    src="/images/Play Button.png"
+                                    @click="
+                                        () =>
+                                            router.get(route('storybooks.show'))
+                                    "
+                                    class="playButton"
+                                    alt=""
+                                />
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -139,23 +224,40 @@ const activeTab = (name) => {
                                             <span class="chipText">1</span>
                                         </div>
                                         <div class="text-center mt-2">
-                                            <img src="/images/Gold Coin.png" width="30" height="30" alt="" />
+                                            <img
+                                                src="/images/Gold Coin.png"
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
                                         </div>
                                     </v-chip>
                                 </div>
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">I Am Able To Shine</span>
+                            <span class="bookname ruddy-bold"
+                                >I Am Able To Shine</span
+                            >
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
-                            <v-img src="/images/2.jpg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/2.jpg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" @click="() =>
-                                        router.get(route('storybooks.show'))
-                                    " class="playButton" alt="" />
+                                <img
+                                    src="/images/Play Button.png"
+                                    @click="
+                                        () =>
+                                            router.get(route('storybooks.show'))
+                                    "
+                                    class="playButton"
+                                    alt=""
+                                />
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -164,23 +266,40 @@ const activeTab = (name) => {
                                             <span class="chipText">1</span>
                                         </div>
                                         <div class="text-center mt-2">
-                                            <img src="/images/Gold Coin.png" width="30" height="30" alt="" />
+                                            <img
+                                                src="/images/Gold Coin.png"
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
                                         </div>
                                     </v-chip>
                                 </div>
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">"Ohana Means Family</span>
+                            <span class="bookname ruddy-bold"
+                                >"Ohana Means Family</span
+                            >
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
-                            <v-img src="/images/storybook.png" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/storybook.png"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" @click="() =>
-                                        router.get(route('storybooks.show'))
-                                    " class="playButton" alt="" />
+                                <img
+                                    src="/images/Play Button.png"
+                                    @click="
+                                        () =>
+                                            router.get(route('storybooks.show'))
+                                    "
+                                    class="playButton"
+                                    alt=""
+                                />
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -189,38 +308,61 @@ const activeTab = (name) => {
                                             <span class="chipText">1</span>
                                         </div>
                                         <div class="text-center mt-2">
-                                            <img src="/images/Gold Coin.png" width="30" height="30" alt="" />
+                                            <img
+                                                src="/images/Gold Coin.png"
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
                                         </div>
                                     </v-chip>
                                 </div>
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">A Walk On The Thundra</span>
+                            <span class="bookname ruddy-bold"
+                                >A Walk On The Thundra</span
+                            >
                         </div>
                     </VCol>
                 </VRow>
             </VContainer>
             <VContainer class="mb-3" v-if="active === 'pathway'">
                 <div class="d-flex justify-center">
-                    <img src="images/Pathway Card.png" @click="() => router.get(route('storybooks.pathway'))"
-                        class="pathwayimg" alt="" />
+                    <img
+                        src="images/Pathway Card.png"
+                        @click="() => router.get(route('storybooks.pathway'))"
+                        class="pathwayimg"
+                        alt=""
+                    />
                 </div>
             </VContainer>
             <VContainer class="mb-3" v-if="active === 'playlist'">
                 <div class="text-center d-flex justify-center">
                     <div class="title-chip">
-                        <span class="title-chip-text ruddy-bold">Self-Love (3 Books)</span>
+                        <span class="title-chip-text ruddy-bold"
+                            >Self-Love (3 Books)</span
+                        >
                     </div>
                 </div>
                 <VRow class="mt-5">
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
-                            <v-img src="/images/21.jpg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/21.jpg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" @click="() =>
-                                        router.get(route('storybooks.show'))
-                                    " class="playButton" alt="" />
+                                <img
+                                    src="/images/Play Button.png"
+                                    @click="
+                                        () =>
+                                            router.get(route('storybooks.show'))
+                                    "
+                                    class="playButton"
+                                    alt=""
+                                />
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -229,23 +371,40 @@ const activeTab = (name) => {
                                             <span class="chipText">1</span>
                                         </div>
                                         <div class="text-center mt-2">
-                                            <img src="/images/Gold Coin.png" width="30" height="30" alt="" />
+                                            <img
+                                                src="/images/Gold Coin.png"
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
                                         </div>
                                     </v-chip>
                                 </div>
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">It's Ok To Lose</span>
+                            <span class="bookname ruddy-bold"
+                                >It's Ok To Lose</span
+                            >
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
-                            <v-img src="/images/3.jpg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/3.jpg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" @click="() =>
-                                        router.get(route('storybooks.show'))
-                                    " class="playButton" alt="" />
+                                <img
+                                    src="/images/Play Button.png"
+                                    @click="
+                                        () =>
+                                            router.get(route('storybooks.show'))
+                                    "
+                                    class="playButton"
+                                    alt=""
+                                />
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -254,23 +413,40 @@ const activeTab = (name) => {
                                             <span class="chipText">1</span>
                                         </div>
                                         <div class="text-center mt-2">
-                                            <img src="/images/Gold Coin.png" width="30" height="30" alt="" />
+                                            <img
+                                                src="/images/Gold Coin.png"
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
                                         </div>
                                     </v-chip>
                                 </div>
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">Jack And The Beanstalk</span>
+                            <span class="bookname ruddy-bold"
+                                >Jack And The Beanstalk</span
+                            >
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
-                            <v-img src="/images/sample2.png" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/sample2.png"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" @click="() =>
-                                        router.get(route('storybooks.show'))
-                                    " class="playButton" alt="" />
+                                <img
+                                    src="/images/Play Button.png"
+                                    @click="
+                                        () =>
+                                            router.get(route('storybooks.show'))
+                                    "
+                                    class="playButton"
+                                    alt=""
+                                />
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -279,30 +455,49 @@ const activeTab = (name) => {
                                             <span class="chipText">1</span>
                                         </div>
                                         <div class="text-center mt-2">
-                                            <img src="/images/Gold Coin.png" width="30" height="30" alt="" />
+                                            <img
+                                                src="/images/Gold Coin.png"
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
                                         </div>
                                     </v-chip>
                                 </div>
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">Denver The River</span>
+                            <span class="bookname ruddy-bold"
+                                >Denver The River</span
+                            >
                         </div>
                     </VCol>
                 </VRow>
                 <div class="text-center d-flex justify-center mt-5">
                     <div class="title-chip">
-                        <span class="title-chip-text ruddy-bold">Bravery (2 Books)</span>
+                        <span class="title-chip-text ruddy-bold"
+                            >Bravery (2 Books)</span
+                        >
                     </div>
                 </div>
                 <VRow class="mt-5">
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
-                            <v-img src="/images/21.jpg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/21.jpg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" @click="() =>
-                                        router.get(route('storybooks.show'))
-                                    " class="playButton" alt="" />
+                                <img
+                                    src="/images/Play Button.png"
+                                    @click="
+                                        () =>
+                                            router.get(route('storybooks.show'))
+                                    "
+                                    class="playButton"
+                                    alt=""
+                                />
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -311,23 +506,40 @@ const activeTab = (name) => {
                                             <span class="chipText">1</span>
                                         </div>
                                         <div class="text-center mt-2">
-                                            <img src="/images/Gold Coin.png" width="30" height="30" alt="" />
+                                            <img
+                                                src="/images/Gold Coin.png"
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
                                         </div>
                                     </v-chip>
                                 </div>
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">It's Ok To Lose</span>
+                            <span class="bookname ruddy-bold"
+                                >It's Ok To Lose</span
+                            >
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
-                            <v-img src="/images/3.jpg" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/3.jpg"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" @click="() =>
-                                        router.get(route('storybooks.show'))
-                                    " class="playButton" alt="" />
+                                <img
+                                    src="/images/Play Button.png"
+                                    @click="
+                                        () =>
+                                            router.get(route('storybooks.show'))
+                                    "
+                                    class="playButton"
+                                    alt=""
+                                />
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -336,23 +548,40 @@ const activeTab = (name) => {
                                             <span class="chipText">1</span>
                                         </div>
                                         <div class="text-center mt-2">
-                                            <img src="/images/Gold Coin.png" width="30" height="30" alt="" />
+                                            <img
+                                                src="/images/Gold Coin.png"
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
                                         </div>
                                     </v-chip>
                                 </div>
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">Jack And The Beanstalk</span>
+                            <span class="bookname ruddy-bold"
+                                >Jack And The Beanstalk</span
+                            >
                         </div>
                     </VCol>
                     <VCol cols="12" sm="6" md="4" lg="4">
                         <VCard class="card-story">
-                            <v-img src="/images/sample2.png" class="showimg" cover></v-img>
+                            <v-img
+                                src="/images/sample2.png"
+                                class="showimg"
+                                cover
+                            ></v-img>
                             <div class="d-flex justify-center">
-                                <img src="/images/Play Button.png" @click="() =>
-                                        router.get(route('storybooks.show'))
-                                    " class="playButton" alt="" />
+                                <img
+                                    src="/images/Play Button.png"
+                                    @click="
+                                        () =>
+                                            router.get(route('storybooks.show'))
+                                    "
+                                    class="playButton"
+                                    alt=""
+                                />
                             </div>
                             <div class="d-flex justify-center">
                                 <div class="goldCoin">
@@ -361,14 +590,21 @@ const activeTab = (name) => {
                                             <span class="chipText">1</span>
                                         </div>
                                         <div class="text-center mt-2">
-                                            <img src="/images/Gold Coin.png" width="30" height="30" alt="" />
+                                            <img
+                                                src="/images/Gold Coin.png"
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
                                         </div>
                                     </v-chip>
                                 </div>
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">Denver The River</span>
+                            <span class="bookname ruddy-bold"
+                                >Denver The River</span
+                            >
                         </div>
                     </VCol>
                 </VRow>

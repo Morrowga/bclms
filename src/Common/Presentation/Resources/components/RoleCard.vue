@@ -47,7 +47,7 @@ const props = defineProps({
                         <!-- custom width and height for UI -->
                         <div
                             v-if="avatars.length == 0"
-                            style="height: 45px; width: 45px"
+                            class="avatar-size"
                         ></div>
                     </div>
                 </div>
@@ -79,5 +79,9 @@ const props = defineProps({
     font-style: normal !important;
     font-weight: 500 !important;
     line-height: 38px !important; /* 158.333% */
+}
+.avatar-size {
+    height: 45px;
+    width: 45px;
 }
 </style>

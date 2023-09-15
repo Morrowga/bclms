@@ -10,176 +10,131 @@ import B2BRegister from "./B2BRegister.vue";
 let organization = ref(false);
 let isAlertVisible = ref(true);
 const items = [
-  "California",
-  "Colorado",
-  "Florida",
-  "Georgia",
-  "Texas",
-  "Wyoming",
+    "California",
+    "Colorado",
+    "Florida",
+    "Georgia",
+    "Texas",
+    "Wyoming",
 ];
 const isPasswordVisible = ref(false);
 let agreed = ref("");
 let props = defineProps(["ErrorMessage"]);
 </script>
 
-
 <template>
-  <div class="layout-navbar">
-    <div
-      class="navbar-content-container d-flex justify-space-between px-10 py-5"
-    >
-      <h1 class="text-h5 font-weight-bold leading-normal text-capitalize">
-        {{ themeConfig.app.title }}
-      </h1>
-      <VBtn color="primary" class="b-0 text-white">
-        <Link :href="route('login')" class="text-white"> Login </Link>
-      </VBtn>
-    </div>
-  </div>
- <SystemErrorAlert :sytemErrorMessage="sytemErrorMessage" v-if="sytemErrorMessage"/>
-
-  <VDivider></VDivider>
-
-  <div class="text-center mt-10">
-        <p class="ruddy-bold signup-title">Sign Up For B2C Account</p>
-       <VRow class="mt-10">
-            <VCol cols="4">
-            </VCol>
-            <VCol cols="4" class="text-left">
-                <VTextField class="mt-3 custom-label-color"
-                    label="Name *"
-                    placeholder=""
-                    density="compact"
-                    variant="solo"
-                />
-                <VTextField class="mt-5 custom-label-color"
-                    label="Email *"
-                    placeholder=""
-                    density="compact"
-                    variant="solo"
-                />
-                <VTextField class="mt-5 custom-label-color"
-                    label="Contact Number *"
-                    placeholder=""
-                    density="compact"
-                    variant="solo"
-                />
-                <VTextField class="mt-5 custom-label-color"
-                    label="Password *"
-                    placeholder=""
-                    density="compact"
-                    variant="solo"
-                    :type="isPasswordVisible ? 'text' : 'password'"
-                    :append-inner-icon="
-                    isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
-                    "
-                    @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                />
-                <VTextField class="mt-5 custom-label-color"
-                    label="Confirm Password *"
-                    placeholder=""
-                    :type="isPasswordVisible ? 'text' : 'password'"
-                    :append-inner-icon="
-                    isPasswordVisible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
-                    "
-                    @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                    density="compact"
-                    variant="solo"
-                />
-                <div class="mt-5">
-                    <v-checkbox label="I agree to the terms and services"></v-checkbox>
-                </div>
-                <VBtn block @click="router.get(route('registerplan'))" variant="flat" class="primary mt-5" rounded>
-                    Sign up
+    <div>
+        <div class="layout-navbar">
+            <div
+                class="navbar-content-container d-flex justify-space-between px-10 py-5"
+            >
+                <h1
+                    class="text-h5 font-weight-bold leading-normal text-capitalize"
+                >
+                    {{ themeConfig.app.title }}
+                </h1>
+                <VBtn color="primary" class="b-0 text-white">
+                    <Link :href="route('login')" class="text-white">
+                        Login
+                    </Link>
                 </VBtn>
-            </VCol>
-            <VCol cols="4">
-            </VCol>
-       </VRow>
-  </div>
+            </div>
+        </div>
+        <SystemErrorAlert
+            :sytemErrorMessage="sytemErrorMessage"
+            v-if="sytemErrorMessage"
+        />
 
-  <!-- <div class="regiser-image">
-    <div style="max-width: 1024px; margin-inline: auto">
+        <VDivider></VDivider>
 
-      <VRow class="d-flex justify-center" style="padding-top: 100px">
-        <VCol lg="6" md="6" sm="12" class="text-center">
-          <div class="auth-card" max-width="448">
-            <VCardText class="pt-2">
-              <h1 class="mb-1 pb-3 text-center primary">
-                Are you signing up under
-              </h1>
-              <h1 class="text-center primary">an Organization account?</h1>
-            </VCardText>
-
-            <VCardText>
-              <VRow class="">
-                <VCol cols="12" class="">
-                  <VRadioGroup
-                    v-model="organization"
-                    inline
-                    class="border-dashed pl-14 w-50 mx-auto"
-                    style="border: 3px solid #5271ff; border-radius: 10px"
-                  >
-                    <VRadio label="Yes" class="primary" value="on" />
-                    <VRadio label="No" class="primary" value="off" />
-                  </VRadioGroup>
+        <div class="text-center mt-10">
+            <p class="ruddy-bold signup-title">Sign Up For B2C Account</p>
+            <VRow class="mt-10">
+                <VCol cols="4"> </VCol>
+                <VCol cols="4" class="text-left">
+                    <VTextField
+                        class="mt-3 custom-label-color"
+                        label="Name *"
+                        placeholder=""
+                        density="compact"
+                        variant="solo"
+                    />
+                    <VTextField
+                        class="mt-5 custom-label-color"
+                        label="Email *"
+                        placeholder=""
+                        density="compact"
+                        variant="solo"
+                    />
+                    <VTextField
+                        class="mt-5 custom-label-color"
+                        label="Contact Number *"
+                        placeholder=""
+                        density="compact"
+                        variant="solo"
+                    />
+                    <VTextField
+                        class="mt-5 custom-label-color"
+                        label="Password *"
+                        placeholder=""
+                        density="compact"
+                        variant="solo"
+                        :type="isPasswordVisible ? 'text' : 'password'"
+                        :append-inner-icon="
+                            isPasswordVisible
+                                ? 'mdi-eye-off-outline'
+                                : 'mdi-eye-outline'
+                        "
+                        @click:append-inner="
+                            isPasswordVisible = !isPasswordVisible
+                        "
+                    />
+                    <VTextField
+                        class="mt-5 custom-label-color"
+                        label="Confirm Password *"
+                        placeholder=""
+                        :type="isPasswordVisible ? 'text' : 'password'"
+                        :append-inner-icon="
+                            isPasswordVisible
+                                ? 'mdi-eye-off-outline'
+                                : 'mdi-eye-outline'
+                        "
+                        @click:append-inner="
+                            isPasswordVisible = !isPasswordVisible
+                        "
+                        density="compact"
+                        variant="solo"
+                    />
+                    <div class="mt-5">
+                        <v-checkbox
+                            label="I agree to the terms and services"
+                        ></v-checkbox>
+                    </div>
+                    <VBtn
+                        block
+                        @click="router.get(route('registerplan'))"
+                        variant="flat"
+                        class="primary mt-5"
+                        rounded
+                    >
+                        Sign up
+                    </VBtn>
                 </VCol>
-                <VCol v-if="organization == 'on'">
-                  <h2 class="text-center pb-3 primary">
-                    Please Select Organization
-                  </h2>
-                  <VAutocomplete
-                    variant="outlined"
-                    :items="items"
-                    class="w-75 mx-auto"
-                  />
-                </VCol>
-
-                <VCol cols="9" class="d-flex mx-auto">
-                  <VCheckbox v-model="agreed" class="primary" />
-                  <Vlabel class="text-justify pt-3 pl-3 primary">
-                    Yes! I would like to receive udpates, special offers, and
-                    other information from Ed+
-                  </Vlabel>
-                </VCol>
-              </VRow>
-            </VCardText>
-          </div>
-        </VCol>
-        <VCol md="6" lg="6" sm="12" v-if="organization">
-          <B2BRegister
-            :errorMessage="ErrorMessage"
-            v-if="organization == 'on'"
-            :class="
-              organization == 'on'
-                ? 'animate__animated animate__backInRight animate__delay-0.1s'
-                : 'text-clip'
-            "
-          />
-          <B2CRegister
-            v-if="organization == 'off'"
-            :class="
-              organization == 'off'
-                ? 'animate__animated animate__backInRight animate__delay-0.1s'
-                : 'text-clip'
-            "
-          />
-        </VCol>
-      </VRow>
+                <VCol cols="4"> </VCol>
+            </VRow>
+        </div>
     </div>
-  </div> -->
 </template>
-
 
 <style lang="scss">
 @use "@styles/@core/template/pages/page-auth.scss";
 .regiser-image {
-//   background: url("/public/images/signupnew.png") 100% no-repeat;
-  height: 100vh;
-  background-size: cover;
+    //   background: url("/public/images/signupnew.png") 100% no-repeat;
+    height: 100vh;
+    background-size: cover;
 }
 
-.signup-title{
+.signup-title {
     color: var(--Text, #161616);
     /* H3 Ruddy */
     font-size: 30px !important;
@@ -190,11 +145,10 @@ let props = defineProps(["ErrorMessage"]);
 }
 
 .custom-label-color .v-label {
-  color: #000; /* Change the label color to red */
-  font-size: 15px !important;
+    color: #000; /* Change the label color to red */
+    font-size: 15px !important;
 }
 // .primary {
 //   color: #001a8f !important;
 // }
-
 </style>

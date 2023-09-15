@@ -6,7 +6,7 @@ import StoryBookSliderCard from "./StoryBookSliderCard.vue";
 <template>
     <v-slide-group v-model="model" center-active show-arrows mandatory>
         <v-slide-group-item v-for="data in 8" :key="data">
-            <div style="max-width: 275px" class="mx-4">
+            <div class="mx-4 card-container">
                 <StoryBookSliderCard />
             </div>
         </v-slide-group-item>
@@ -56,5 +56,8 @@ import StoryBookSliderCard from "./StoryBookSliderCard.vue";
 
 .head-button {
     align-self: flex-end;
+}
+.card-container {
+    max-width: 275px !important;
 }
 </style>

@@ -6,18 +6,15 @@ let selectedValue = ref("");
 </script>
 <template>
     <AdminLayout>
-        <VContainer style="width: 80%; margin: 0 auto">
+        <VContainer class="width-80">
             <v-row>
                 <v-col cols="12">
-                    <h1
-                        class="text-h3 font-weight-bold mb-4"
-                        style="color: #000"
-                    >
+                    <h1 class="text-h3 font-weight-bold mb-4 t-black">
                         Set Accessibility Device
                     </h1>
                 </v-col>
                 <v-col cols="12" md="4">
-                    <v-label class="font-weight-bold" style="color: #000"
+                    <v-label class="font-weight-bold t-black"
                         >Select Accessibility Device</v-label
                     >
                     <v-select
@@ -42,4 +39,8 @@ let selectedValue = ref("");
         </VContainer>
     </AdminLayout>
 </template>
-<style></style>
+<style>
+.t-black {
+    color: #000 !important;
+}
+</style>

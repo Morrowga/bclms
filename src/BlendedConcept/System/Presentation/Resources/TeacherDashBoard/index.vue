@@ -3,7 +3,6 @@ import StudentProfile from "./components/StudentProfile.vue";
 import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue";
 import UserExperiencSurvey from "./components/UserExperiencSurvey.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-
 </script>
 
 <template>
@@ -23,12 +22,7 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
             /> -->
             <VRow align="center">
                 <VCol cols="6">
-                    <h1
-                        class="tiggie-sub-subtitle"
-                        style="font-size: 40px !important"
-                    >
-                        Students
-                    </h1>
+                    <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
                 </VCol>
                 <VCol cols="3">
                     <VTextField

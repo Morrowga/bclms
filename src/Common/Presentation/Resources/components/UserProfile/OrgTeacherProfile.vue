@@ -12,12 +12,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                 <VCol cols="6">
                     <VText class="teacherprofile-title">Profile</VText>
                     <div class="d-flex justify-space-between mt-10">
-                        <h1
-                            class="tiggie-label"
-                            style="font-size: 20px !important"
-                        >
-                            Personal Details
-                        </h1>
+                        <h1 class="tiggie-label fs-20">Personal Details</h1>
                         <VBtn variant="flat" rounded color="teal">
                             <Link
                                 :href="route('edit-profiles.org-teacher')"

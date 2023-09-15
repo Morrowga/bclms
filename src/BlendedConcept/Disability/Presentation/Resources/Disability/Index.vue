@@ -28,10 +28,7 @@ const activeTab = (tabNameEnter) => {
 
             <VRow>
                 <VCol cols="12">
-                    <div
-                        class="d-flex align-center flex-wrap"
-                        style="gap: 10px"
-                    >
+                    <div class="d-flex align-center flex-wrap gap-10">
                         <VBtn
                             variant="flat"
                             rounded

@@ -10,11 +10,11 @@ const changeTab = (tabName) => {
 </script>
 <template>
     <AdminLayout>
-        <VContainer style="width: 80%; margin: 0 auto">
+        <VContainer class="width-80">
             <div class="mb-10">
                 <v-row>
                     <VCol cols="12" md="6">
-                        <div class="d-flex align-center" style="gap: 10px">
+                        <div class="d-flex align-center">
                             <VBtn
                                 variant="flat"
                                 rounded
@@ -50,8 +50,7 @@ const changeTab = (tabName) => {
                     <VCol cols="12" md="6" class="d-flex justify-end">
                         <div
                             v-if="tab == 'student'"
-                            class="d-flex justify-end"
-                            style="gap: 10px"
+                            class="d-flex justify-end gap-10"
                         >
                             <Link
                                 :href="
@@ -83,8 +82,7 @@ const changeTab = (tabName) => {
                         </div>
                         <div
                             v-if="tab == 'teacher'"
-                            class="d-flex justify-end"
-                            style="gap: 10px"
+                            class="d-flex justify-end gap-10"
                         >
                             <Link :href="route('listoforgteacher')">
                                 <VBtn

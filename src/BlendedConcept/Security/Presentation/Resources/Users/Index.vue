@@ -194,7 +194,7 @@ const fullName = (user) => {
                     <template #table-row="props">
                         <div
                             v-if="props.column.field == 'name'"
-                            style="cursor: pointer"
+                            class="cu-pointer"
                             @click="viewInfoRow(props.row.id)"
                         >
                             <div class="d-flex flex-row gap-2">

@@ -48,10 +48,7 @@ onMounted(() => {
                     <span v-else class="report-text ruddy-bold">Reports</span>
                 </VCol>
                 <VCol cols="12">
-                    <div
-                        class="d-flex align-center flex-wrap"
-                        style="gap: 10px"
-                    >
+                    <div class="d-flex align-center flex-wrap gap-10">
                         <VBtn
                             v-if="
                                 user_role == 'Organization Admin' ||

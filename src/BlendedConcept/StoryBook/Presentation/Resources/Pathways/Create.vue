@@ -168,20 +168,8 @@ const removeUploadedItem = (index) => {
                         <VCol cols="12" sm="6" md="6" class="py-4">
                             <h1 class="tiggie-title required">Current Flow</h1>
                             <VCardText>
-                                <p
-                                    class="pppangram-bold ml-5"
-                                    style="
-                                        color: #000;
-                                        font-size: 20px !important;
-                                    "
-                                >
-                                    <strong
-                                        style="
-                                            color: #4066e4;
-                                            font-size: 20px !important;
-                                        "
-                                        >2</strong
-                                    >
+                                <p class="pppangram-bold ml-5 fs-20 t-black">
+                                    <strong class="fs-20 l-blue">2</strong>
                                     {{ type }} Remaining
                                 </p>
                                 <div class="mt-3">
@@ -235,7 +223,6 @@ const removeUploadedItem = (index) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <input type="file" ref="fileInput" style="display: none" @change="handleFileUpload"> -->
                                 </div>
                             </VCardText>
                         </VCol>
@@ -271,9 +258,8 @@ const removeUploadedItem = (index) => {
                                 class="card-container"
                             >
                                 <v-card
-                                    class="ma-4"
+                                    class="ma-4 container-style"
                                     height="200"
-                                    style="position: relative; z-index: 1"
                                     :color="'primary'"
                                 >
                                     <div
@@ -445,5 +431,9 @@ const removeUploadedItem = (index) => {
     line-height: 42px;
     /* 140% */
     text-transform: capitalize;
+}
+.container-style {
+    position: relative !important;
+    z-index: 1 !important;
 }
 </style>

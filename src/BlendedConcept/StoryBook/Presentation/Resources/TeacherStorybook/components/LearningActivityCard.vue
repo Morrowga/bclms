@@ -4,7 +4,7 @@ import { router } from "@inertiajs/core";
 <template>
     <v-card @click="router.get(route('add_customisation.create'))">
         <v-card-title>
-            <div class="d-flex align-center" style="gap: 10px">
+            <div class="d-flex align-center gap-10">
                 <img src="/images/h5p.png" class="h5p-logo" />
                 <span>Guess The Answer</span>
             </div>
@@ -13,7 +13,7 @@ import { router } from "@inertiajs/core";
             <v-img src="/images/learning.png" />
         </v-card-subtitle>
         <v-card-text class="text-center">
-            <div class="d-flex align-center" style="gap: 10px">
+            <div class="d-flex align-center gap-10">
                 <v-btn size="small">Base</v-btn>
                 <v-btn size="small" color="#17CAB6" class="text-white"
                     >01:02</v-btn
@@ -21,10 +21,7 @@ import { router } from "@inertiajs/core";
             </div>
             <br />
             <div class="text-center">
-                <span
-                    class="text-subtitle-2 font-weight-bold"
-                    style="color: #000"
-                >
+                <span class="text-subtitle-2 font-weight-bold t-black">
                     Guess The Scene
                 </span>
                 <br />

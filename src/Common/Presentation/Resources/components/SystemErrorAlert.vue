@@ -10,12 +10,11 @@ let props = defineProps(["sytemErrorMessage"]);
         density="compact"
         type="error"
         closable
-        class="mt-4 mb-4"
+        class="mt-4 mb-4 alert-padding"
         close-label="Close Alert"
-        style="padding: 6px 16px"
     >
         <template #text>
-            <span style="font-size:24px:"> System Error </span>
+            <span class="fs-24"> System Error </span>
             <br />
             <span>
                 {{ props.sytemErrorMessage }}
@@ -37,5 +36,8 @@ let props = defineProps(["sytemErrorMessage"]);
     font-weight: 400;
     line-height: 21px;
     letter-spacing: 0.15px;
+}
+.alert-padding {
+    padding: 6px 16px;
 }
 </style>

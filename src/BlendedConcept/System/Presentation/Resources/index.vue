@@ -20,7 +20,7 @@ let props = defineProps([
     "orgainzations_users",
     "tenant",
     "students",
-    'UserCount'
+    "UserCount",
 ]);
 
 const isAlertVisible = ref(true);
@@ -28,7 +28,7 @@ let form = useForm({});
 let notifications = ref([]);
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
-console.log(user_role,"testing 23")
+console.log(user_role, "testing 23");
 let reactiveNoti = computed(() => page.props.notifications?.data);
 let watchNoti = watch(reactiveNoti, (value) => {
     getNotifications();
@@ -98,31 +98,6 @@ onMounted(() => {
                 text="New storybook “Toy Story” has been added"
             />
         </VContainer>
-        <!-- <VContainer v-if="!forbiddenRole()" :fluid="checkUserRole()">
-            <VAlert
-                v-for="item in notifications"
-                :key="item.id"
-                variant="tonal"
-                density="compact"
-                :type="item.data.type"
-                v-model="isAlertVisible"
-                closable
-                class="mb-2"
-                close-label="Close Alert"
-            >
-                <template #text>
-                    <span style="font-size:24px:">{{ item?.data?.type }}</span>
-                    <br />
-                    <span>{{ item.data.message }}</span>
-                </template>
-                <template #close>
-                    <v-btn
-                        icon="mdi-close"
-                        @click="removeNotification(item.id)"
-                    ></v-btn>
-                </template>
-            </VAlert>
-        </VContainer> -->
 
         <!--
             Check current_user_role and redirect to that

@@ -115,10 +115,7 @@ const items = ref([
                             <VCol cols="12" md="12">
                                 <VBtn
                                     variant="outlined"
-                                    style="
-                                        border-radius: 5px;
-                                        border: 1px dashed rgba(40, 40, 40, 0.5);
-                                    "
+                                    class="a-survey-border"
                                     block
                                 >
                                     <span class="tiggie-p">
@@ -157,3 +154,9 @@ const items = ref([
         </VCard>
     </VDialog>
 </template>
+<style scoped>
+.a-survey-border {
+    border-radius: 5px !important;
+    border: 1px dashed rgba(40, 40, 40, 0.5) !important;
+}
+</style>

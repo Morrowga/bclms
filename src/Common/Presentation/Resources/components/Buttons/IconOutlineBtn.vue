@@ -27,7 +27,7 @@ let clicked = () => {
 
 <template>
     <v-btn variant="outlined" :color="color" @click="clicked">
-        <VIcon :icon="icon" size="20" style="transform: rotate(270deg)"></VIcon>
+        <VIcon :icon="icon" size="20" class="transform-icon"></VIcon>
         <span class="pl-4 text-primary">{{ title }}</span>
     </v-btn>
 </template>

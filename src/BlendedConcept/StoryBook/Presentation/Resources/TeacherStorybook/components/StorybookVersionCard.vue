@@ -14,7 +14,13 @@ let onFormSubmit = () => {
                 <v-menu activator="parent">
                     <v-list>
                         <v-list-item>
-                            <v-list-item-title class="v-list-edit" @click="router.get(route('teacher_storybook.edit'))">Edit</v-list-item-title>
+                            <v-list-item-title
+                                class="v-list-edit"
+                                @click="
+                                    router.get(route('teacher_storybook.edit'))
+                                "
+                                >Edit</v-list-item-title
+                            >
                         </v-list-item>
                         <v-list-item @click="onFormSubmit">
                             <v-list-item-title>Delete</v-list-item-title>
@@ -25,14 +31,16 @@ let onFormSubmit = () => {
             <v-img src="/images/image1.png" />
         </v-card-title>
         <v-card-text class="text-center">
-            <p class="text-subtitle-2" style="color: #000">Toy Story 1</p>
+            <p class="text-subtitle-2 t-black">Toy Story 1</p>
 
             <span class="text-subtitle-1 font-weight-bold">Original Copy</span>
         </v-card-text>
 
         <div class="my-3 mx-2">
             <Link :href="route('teacher_storybook.assign_student')">
-            <v-btn class="manage-btn" variant="flat" color="#FF8015" rounded>Manage Assignment to Students</v-btn>
+                <v-btn class="manage-btn" variant="flat" color="#FF8015" rounded
+                    >Manage Assignment to Students</v-btn
+                >
             </Link>
         </div>
     </v-card>
@@ -59,8 +67,6 @@ let onFormSubmit = () => {
     width: 28px !important;
     height: 28px !important;
 }
-
-
 
 :deep(.manage-btn > span.v-btn__content) {
     font-size: 13px !important;

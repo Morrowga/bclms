@@ -23,11 +23,7 @@ let clicked = () => {
 
 <template>
     <v-btn variant="elevated" :color="color" @click="clicked">
-        <VIcon
-            icon="mdi-export"
-            size="20"
-            style="transform: rotate(270deg)"
-        ></VIcon>
+        <VIcon icon="mdi-export" size="20" class="transform-icon"></VIcon>
         <span class="text-white pl-4">{{ title }}</span>
     </v-btn>
 </template>

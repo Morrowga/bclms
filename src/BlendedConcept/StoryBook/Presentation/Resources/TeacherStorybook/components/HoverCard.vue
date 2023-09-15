@@ -6,7 +6,7 @@ import { router } from "@inertiajs/core";
 </script>
 <template>
     <v-card @click="router.get(route('teacher_storybook.show'))">
-        <v-card-title style="position: relative">
+        <v-card-title class="ps-relative">
             <v-img src="/images/image4.png" />
         </v-card-title>
         <v-card-text>
@@ -66,8 +66,7 @@ import { router } from "@inertiajs/core";
     padding-left: 12px;
     padding-right: 12px;
 }
-.chip
-{
-    background-color: #FfFfFf !important;
+.chip {
+    background-color: #ffffff !important;
 }
 </style>

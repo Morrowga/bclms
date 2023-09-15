@@ -112,13 +112,9 @@ const selectionChanged = (data) => {
                 <template #table-row="dataProps">
                     <div
                         v-if="dataProps.column.field == 'name'"
-                        class="d-flex flex-nowrap align-center"
-                        style="gap: 10px"
+                        class="d-flex flex-nowrap align-center gap-20"
                     >
-                        <img
-                            :src="dataProps.row.image"
-                            style="width: 60px; height: 60px"
-                        />
+                        <img :src="dataProps.row.image" class="std-img" />
                         <span>{{ dataProps.row.name }}</span>
                     </div>
                     <div
@@ -212,5 +208,9 @@ const selectionChanged = (data) => {
     white-space: nowrap;
     padding-left: 12px;
     padding-right: 12px;
+}
+.std-img {
+    width: 60px;
+    height: 60px;
 }
 </style>

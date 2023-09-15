@@ -40,7 +40,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                         class="text-center"
                                     >
                                         <StickerDetail
-                                            style="height: 100%"
+                                            class="height-100"
                                             title="SecretAgent Tiggie"
                                             image="/images/stickerb1.png"
                                         />
@@ -53,7 +53,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                         class="text-center"
                                     >
                                         <StickerDetail
-                                            style="height: 100%"
+                                            class="height-100"
                                             title="Warrior Tiggie"
                                             image="/images/stick6.png"
                                         />
@@ -66,7 +66,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                         class="text-center"
                                     >
                                         <StickerDetail
-                                            style="height: 100%"
+                                            class="height-100"
                                             title="Great Work Tiggie"
                                             image="/images/stick4.png"
                                         />
@@ -79,7 +79,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                         class="text-center"
                                     >
                                         <StickerDetail
-                                            style="height: 100%"
+                                            class="height-100"
                                             title="Streak Tiggie"
                                             image="/images/stick1.png"
                                         />
@@ -92,7 +92,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                         class="text-center"
                                     >
                                         <StickerDetail
-                                            style="height: 100%"
+                                            class="height-100"
                                             title="Streak Tiggie"
                                             image="/images/stick3.png"
                                         />
@@ -105,7 +105,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                         class="text-center"
                                     >
                                         <StickerDetail
-                                            style="height: 100%"
+                                            class="height-100"
                                             title="Streak Tiggie"
                                             image="/images/stick5.png"
                                         />
@@ -118,7 +118,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                         class="text-center"
                                     >
                                         <StickerDetail
-                                            style="height: 100%"
+                                            class="height-100"
                                             title="Streak Tiggie"
                                             image="/images/stick7.png"
                                         />

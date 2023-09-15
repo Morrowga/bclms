@@ -6,7 +6,7 @@ let props = defineProps(["icon", "text"]);
 <template>
     <div class="message-list">
         <div class="message-list-item">
-            <div class="d-flex align-center" style="gap: 20px">
+            <div class="d-flex align-center gap-10">
                 <v-icon
                     :icon="props.icon"
                     color="#fff"

@@ -82,9 +82,7 @@ watch(selectedValueForSecondSelect, () => {
                 >
                 <div v-else>
                     <VLabel class="tiggie-label"
-                        ><strong style="color: #4066e4" class="mr-2"
-                            >Originization:</strong
-                        >
+                        ><strong class="mr-2 l-blue">Originization:</strong>
                         {{ organization_name }}</VLabel
                     >
                     <div class="mt-2">

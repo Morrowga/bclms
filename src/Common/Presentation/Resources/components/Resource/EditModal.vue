@@ -2,7 +2,7 @@
 import { router } from "@inertiajs/core";
 
 let props = defineProps(["title", "type"]);
-const isEditDialogVisible = ref(false)
+const isEditDialogVisible = ref(false);
 const selectedImage = ref(null);
 
 const handleFileUpload = (event) => {
@@ -19,73 +19,109 @@ const openFileInput = () => {
 };
 </script>
 <template #activator="{ props }">
-    <v-list-item @click="isEditDialogVisible = true">
-        <v-list-item-title>Edit</v-list-item-title>
-    </v-list-item>
+    <div>
+        <v-list-item @click="isEditDialogVisible = true">
+            <v-list-item-title>Edit</v-list-item-title>
+        </v-list-item>
 
-    <VDialog v-model="isEditDialogVisible" width="1000">
-        <!-- Activator -->
-        <!-- Dialog Content -->
-        <VCard class="rolling-card">
-            <VCardText>
-                <div class="d-flex justify-space-between">
-                    <div>
-                        <span class="ruddy-bold resource-create-title">Edit File</span>
+        <VDialog v-model="isEditDialogVisible" width="1000">
+            <!-- Activator -->
+            <!-- Dialog Content -->
+            <VCard class="rolling-card">
+                <VCardText>
+                    <div class="d-flex justify-space-between">
+                        <div>
+                            <span class="ruddy-bold resource-create-title"
+                                >Edit File</span
+                            >
+                        </div>
+                        <div class="mt-2">
+                            <v-icon @click="isEditDialogVisible = false"
+                                >mdi-close</v-icon
+                            >
+                        </div>
                     </div>
-                    <div class="mt-2">
-                        <v-icon @click="isEditDialogVisible = false">mdi-close</v-icon>
-                    </div>
-                </div>
-                <div class="mt-5">
-                    <div>
-                        <span class="input-label-resource">Filename <span class="star">*</span></span>
-                        <VTextField class="textfield-round" />
-                    </div>
-                    <div class="mt-3">
-                        <VCard class="upload-card-resource" @click="openFileInput">
-                            <v-img v-if="selectedImage" class="image-resource" :src="selectedImage" cover></v-img>
-                            <div v-else class="card-text">
-                                <div class="text-center">
-                                    <div class="d-flex justify-center">
-                                        <img src="/images/Icons.png" width="100">
-                                    </div>
-                                    <div class="mt-2">
-                                        <span class="drag-text">
-                                            Drag your item to upload
-                                        </span>
-                                    </div>
-                                    <div class="mt-2">
-                                        <span class="fade-text">
-                                            PNG, GIF, WebP, MP4 or MP3. Maximum file size 100 Mb.
-                                        </span>
+                    <div class="mt-5">
+                        <div>
+                            <span class="input-label-resource"
+                                >Filename <span class="star">*</span></span
+                            >
+                            <VTextField class="textfield-round" />
+                        </div>
+                        <div class="mt-3">
+                            <VCard
+                                class="upload-card-resource"
+                                @click="openFileInput"
+                            >
+                                <v-img
+                                    v-if="selectedImage"
+                                    class="image-resource"
+                                    :src="selectedImage"
+                                    cover
+                                ></v-img>
+                                <div v-else class="card-text">
+                                    <div class="text-center">
+                                        <div class="d-flex justify-center">
+                                            <img
+                                                src="/images/Icons.png"
+                                                width="100"
+                                            />
+                                        </div>
+                                        <div class="mt-2">
+                                            <span class="drag-text">
+                                                Drag your item to upload
+                                            </span>
+                                        </div>
+                                        <div class="mt-2">
+                                            <span class="fade-text">
+                                                PNG, GIF, WebP, MP4 or MP3.
+                                                Maximum file size 100 Mb.
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
+                            </VCard>
+                            <div>
+                                <input
+                                    type="file"
+                                    ref="fileInput"
+                                    class="d-none"
+                                    @change="handleFileUpload"
+                                />
                             </div>
-                        </VCard>
-                        <div>
-                            <input type="file" ref="fileInput" style="display: none" @change="handleFileUpload">
-                        </div>
-                        <div class="mt-10 d-flex justify-center">
-                            <v-btn varient="flat" color="#F6F6F6" class="cancel pppangram-bold"
-                                @click="isEditDialogVisible = false" width="200" rounded>
-                                Cancel
-                            </v-btn>
-                            <v-btn varient="flat" color="#3749E9" class="textcolor ml-2 pppangram-bold" width="200" rounded>
-                                Save
-                            </v-btn>
+                            <div class="mt-10 d-flex justify-center">
+                                <v-btn
+                                    varient="flat"
+                                    color="#F6F6F6"
+                                    class="cancel pppangram-bold"
+                                    @click="isEditDialogVisible = false"
+                                    width="200"
+                                    rounded
+                                >
+                                    Cancel
+                                </v-btn>
+                                <v-btn
+                                    varient="flat"
+                                    color="#3749E9"
+                                    class="textcolor ml-2 pppangram-bold"
+                                    width="200"
+                                    rounded
+                                >
+                                    Save
+                                </v-btn>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-            </VCardText>
-            <!-- <VCardActions>
+                </VCardText>
+                <!-- <VCardActions>
             <VSpacer />
             <VBtn @click="isDialogVisible = false">
             I accept
             </VBtn>
         </VCardActions> -->
-        </VCard>
-    </VDialog>
+            </VCard>
+        </VDialog>
+    </div>
 </template>
 <style scoped>
 .resource-create-title {
@@ -117,7 +153,6 @@ const openFileInput = () => {
     background: #e3e3e3;
     box-shadow: none !important;
 }
-
 
 :deep(#input-162) {
     border-radius: 100px !important;
