@@ -215,16 +215,9 @@ const fullName = (user) => {
             <!-- <span>{{props.row.role.name}}</span> -->
             <span
                 v-if="
-<<<<<<< HEAD
-                props.row.role.name == userRole.organization_admin ||
-                props.row.role.name == userRole.bcsuperadmin ||
-                props.row.role.name == userRole.bcstaff
-                "
-=======
                   props.row.role.name == userRole.organization_admin ||
                   props.row.role.name == userRole.bcsuperadmin ||
                   props.row.role.name == userRole.bcstaff"
->>>>>>> e7fdeb895465a3f5aa0addbfaf089c57573ccc6d
                 class="mt-2"
             >
                 <img src="/images/icons/bcicons.svg" />
