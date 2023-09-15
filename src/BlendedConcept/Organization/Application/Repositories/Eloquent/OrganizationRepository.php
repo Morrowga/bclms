@@ -69,10 +69,10 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 $organizationEloquent->logo = $organizationEloquent->getMedia('image')[0]->original_url;
                 $organizationEloquent->update();
             }
-
+            // dd($organizationEloquent->sub_domain);
             //this will create subdomain
             $subdomain = Tenant::create([
-                'id' => $organizationEloquent->name,
+                'id' => $organizationEloquent->sub_domain,
                 'organization_id' => $organizationEloquent->id,
             ]);
 

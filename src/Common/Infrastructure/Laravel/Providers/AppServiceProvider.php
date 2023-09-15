@@ -5,15 +5,17 @@ namespace Src\Common\Infrastructure\Laravel\Providers;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
-use Src\Auth\Application\Repositories\Eloquent\AuthRepository;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\System\Application\Repositories\Eloquent\OrganizationRepository;
-use Src\BlendedConcept\System\Domain\Repositories\OrganizationRepositoryInterface;
-use Src\BlendedConcept\User\Application\Repositories\Eloquent\NotificationRepository;
+use Src\Auth\Application\Repositories\Eloquent\AuthRepository;
+use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
+use Src\BlendedConcept\Survey\Domain\Repositories\SurveyRepositoryInterface;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\UserRepository;
 use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
-use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
+use Src\BlendedConcept\Survey\Application\Repositories\Eloquent\SurveyRepository;
+use Src\BlendedConcept\System\Domain\Repositories\OrganizationRepositoryInterface;
+use Src\BlendedConcept\User\Application\Repositories\Eloquent\NotificationRepository;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\OrganizationRepository;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 
 class AppServiceProvider extends ServiceProvider
 {

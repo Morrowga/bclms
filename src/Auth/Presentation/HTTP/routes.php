@@ -1,13 +1,30 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use Src\Auth\Presentation\HTTP\AuthController;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 /**
  * Authentication Routes
  *
  *  23.5.23
  */
+
+//  Route::middleware([
+//     'web',
+//     InitializeTenancyByDomain::class,
+//     PreventAccessFromCentralDomains::class,
+// ])->group(function () {
+//     // dd();
+//     Route::get('login', [AuthController::class, 'loginPage'])->name('login');
+//     // Route::get('/', function () {
+//     //     return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
+//     // });
+// });
+
 Route::group([
     'middleware' => ['guest'],
 ], function () {

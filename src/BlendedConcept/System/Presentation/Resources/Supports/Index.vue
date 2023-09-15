@@ -145,7 +145,7 @@ const onRowClick = (params) => {
                                         variant="solo" />
                                     <SelectBox placeholder="Sort By" :datas="['Name', 'Date', 'Status']" density="compact"
                                         style="width: 150px" />
-                                    <VBtn class="tiggie-btn" @click="">
+                                    <VBtn class="tiggie-btn">
                                         Delete
                                     </VBtn>
                                 </div>
