@@ -77,12 +77,14 @@ class OrganizationRepository implements OrganizationRepositoryInterface
             ]);
 
             $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
+            DB::commit();
+
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());
         }
 
-        DB::commit();
+
     }
 
     //  update organization
@@ -114,11 +116,12 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 $organizationEloquent->logo = $organizationEloquent->getMedia('image')[0]->original_url;
                 $organizationEloquent->update();
             }
+            DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error);
         }
 
-        DB::commit();
+
     }
 }

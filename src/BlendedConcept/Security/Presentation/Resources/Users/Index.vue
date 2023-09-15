@@ -217,8 +217,7 @@ const fullName = (user) => {
                 v-if="
                   props.row.role.name == userRole.organization_admin ||
                   props.row.role.name == userRole.bcsuperadmin ||
-                  props.row.role.name == userRole.bcstaff
-                "
+                  props.row.role.name == userRole.bcstaff"
                 class="mt-2"
               >
                 <img src="/images/icons/bcicons.svg" />
