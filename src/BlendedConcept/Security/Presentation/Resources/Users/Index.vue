@@ -187,210 +187,213 @@ const fullName = (user) => {
           :rows="props.users.data"
           :columns="columns"
         >
-          <template #table-row="props">
+        <template #table-row="props">
             <div
-              v-if="props.column.field == 'name'"
-              style="cursor: pointer"
-              @click="viewInfoRow(props.row.id)"
+            v-if="props.column.field == 'name'"
+            style="cursor: pointer"
+            @click="viewInfoRow(props.row.id)"
             >
-              <div class="d-flex flex-row gap-2">
+            <div class="d-flex flex-row gap-2">
                 <img
-                  src="/images/defaults/avator.png"
-                  class="user-profile-image"
+                src="/images/defaults/avator.png"
+                class="user-profile-image"
                 />
                 <span>{{ fullName(props.row) }}</span>
-              </div>
+            </div>
             </div>
 
             <div v-if="props.column.field == 'orgainzations'">
-              <p class="">
+            <p class="">
                 {{ props.row.b2b_user?.organization?.name }}
-              </p>
+            </p>
             </div>
 
             <div
-              v-if="props.column.field == 'roles'"
-              class="d-flex flex-row gap-2 align-center"
+            v-if="props.column.field == 'roles'"
+            class="d-flex flex-row gap-2 align-center"
             >
-              <!-- <span>{{props.row.role.name}}</span> -->
-              <span
+            <!-- <span>{{props.row.role.name}}</span> -->
+            <span
                 v-if="
-                  props.row.role.name == userRole.organization_admin ||
-                  props.row.role.name == userRole.bcsuperadmin ||
-                  props.row.role.name == userRole.bcstaff
+                props.row.role.name == userRole.organization_admin ||
+                props.row.role.name == userRole.bcsuperadmin ||
+                props.row.role.name == userRole.bcstaff
                 "
                 class="mt-2"
-              >
+            >
                 <img src="/images/icons/bcicons.svg" />
-              </span>
-              <span
+            </span>
+            <span
                 v-else-if="
-                  props.row.role.name == userRole.teacher ||
-                  props.row.role.name == userRole.bcscubscriber
+                props.row.role.name == userRole.teacher ||
+                props.row.role.name == userRole.bcscubscriber
                 "
                 class="mt-2"
-              >
+            >
                 <img src="/images/icons/bcicon.svg" />
-              </span>
-              <span
+            </span>
+            <span
                 v-else-if="props.row.role.name == userRole.student"
                 class="mt-2"
-              >
+            >
                 <img src="/images/icons/student.svg" />
-              </span>
+            </span>
 
-              <span>{{ props.row?.role?.name }}</span>
+            <span>{{ props.row?.role?.name }}</span>
             </div>
             <div v-if="props.column.field == 'status'" class="flex flex-wrap">
-              <VChip color="success" v-if="props.row.status == 'ACTIVE'">
+            <VChip color="success" v-if="props.row.status == 'ACTIVE'">
                 ACTIVE
-              </VChip>
+            </VChip>
 
-              <VChip color="warning" v-else> INACTIVE </VChip>
+            <VChip color="warning" v-else> INACTIVE </VChip>
             </div>
             <div v-if="props.column.field == 'action'">
-              <VMenu location="end">
+            <VMenu location="end">
                 <template #activator="{ props }">
-                  <VIcon
+                <VIcon
                     v-bind="props"
                     size="24"
                     icon="mdi-dots-horizontal"
                     color="black"
                     class="mt-n4"
-                  />
+                />
                 </template>
                 <VList>
-                  <VListItem
+                <VListItem
                     @click="setInactive(props.row.status, props.row.id)"
-                  >
+                >
                     <VListItemTitle>{{
-                      props.row.status == "ACTIVE"
+                    props.row.status == "ACTIVE"
                         ? "Set Inactive"
                         : "Set Active"
                     }}</VListItemTitle>
-                  </VListItem>
+                </VListItem>
                 </VList>
-              </VMenu>
+            </VMenu>
             </div>
-          </template>
-          <template #pagination-bottom>
-            <VRow class="pa-4">
-              <VCol cols="12" class="d-flex justify-space-between">
-                <span
-                  >Showing {{ props.users.meta.from }} to
-                  {{ props.users.meta.to }} of
-                  {{ props.users.meta.total }} entries</span
-                >
-                    <template #table-row="props">
-                        <div
-                            v-if="props.column.field == 'name'"
-                            class="cu-pointer"
-                            @click="viewInfoRow(props.row.id)"
+        </template>
+        <template #pagination-bottom>
+                <VRow class="pa-4">
+                    <VCol cols="12" class="d-flex justify-space-between">
+                        <span
+                        >Showing {{ props.users.meta.from }} to
+                        {{ props.users.meta.to }} of
+                        {{ props.users.meta.total }} entries</span
                         >
-                            <div class="d-flex flex-row gap-2">
-                                <img
-                                    src="/images/defaults/avator.png"
-                                    class="user-profile-image"
-                                />
-                                <span>{{ fullName(props.row) }}</span>
-                            </div>
-                        </div>
-
-                        <div v-if="props.column.field == 'orgainzations'">
-                            <p class="">
-                                {{ props.row.b2b_user?.organization?.name }}
-                            </p>
-                        </div>
-
-                        <div
-                            v-if="props.column.field == 'roles'"
-                            class="d-flex flex-row gap-2 align-center"
-                        >
-                            <img src="/images/icons/bcicons.svg" />
-                            <span>{{ props.row?.role?.name }}</span>
-                        </div>
-                        <div
-                            v-if="props.column.field == 'status'"
-                            class="flex flex-wrap"
-                        >
-                            <VChip
-                                color="success"
-                                v-if="props.row.status == 'ACTIVE'"
-                            >
-                                ACTIVE
-                            </VChip>
-
-                            <VChip color="warning" v-else> INACTIVE </VChip>
-                        </div>
-                        <div v-if="props.column.field == 'action'">
-                            <VMenu location="end">
-                                <template #activator="{ props }">
-                                    <VIcon
-                                        v-bind="props"
-                                        size="24"
-                                        icon="mdi-dots-horizontal"
-                                        color="black"
-                                        class="mt-n4"
-                                    />
-                                </template>
-                                <VList>
-                                    <VListItem
-                                        @click="
-                                            setInactive(
-                                                props.row.status,
-                                                props.row.id
-                                            )
-                                        "
-                                    >
-                                        <VListItemTitle>{{
-                                            props.row.status == "ACTIVE"
-                                                ? "Set Inactive"
-                                                : "Set Active"
-                                        }}</VListItemTitle>
-                                    </VListItem>
-                                </VList>
-                            </VMenu>
-                        </div>
-                    </template>
-                    <template #pagination-bottom>
-                        <VRow class="pa-4">
-                            <VCol
-                                cols="12"
-                                class="d-flex justify-space-between"
-                            >
-                                <span
-                                    >Showing {{ props.users.meta.from }} to
-                                    {{ props.users.meta.to }} of
-                                    {{ props.users.meta.total }} entries</span
+                            <template #table-row="props">
+                                <div
+                                    v-if="props.column.field == 'name'"
+                                    class="cu-pointer"
+                                    @click="viewInfoRow(props.row.id)"
                                 >
-                                <div>
-                                    <div class="d-flex align-center">
-                                        <span class="me-2">Show</span>
-                                        <VSelect
-                                            v-model="serverPerPage"
-                                            density="compact"
-                                            :items="options.perPageDropdown"
-                                        >
-                                        </VSelect>
-                                        <VPagination
-                                            v-model="serverPage"
-                                            size="small"
-                                            :total-visible="5"
-                                            :length="props.users.meta.last_page"
-                                            @next="onPageChange"
-                                            @prev="onPageChange"
-                                            @click="onPageChange"
+                                    <div class="d-flex flex-row gap-2">
+                                        <img
+                                            src="/images/defaults/avator.png"
+                                            class="user-profile-image"
                                         />
+                                        <span>{{ fullName(props.row) }}</span>
                                     </div>
                                 </div>
-                            </VCol>
-                        </VRow>
-                    </template>
-                </vue-good-table>
-                <VDivider />
-            </VCard>
-        </VContainer>
-    </AdminLayout>
+
+                                <div v-if="props.column.field == 'orgainzations'">
+                                    <p class="">
+                                        {{ props.row.b2b_user?.organization?.name }}
+                                    </p>
+                                </div>
+
+                                <div
+                                    v-if="props.column.field == 'roles'"
+                                    class="d-flex flex-row gap-2 align-center"
+                                >
+                                    <img src="/images/icons/bcicons.svg" />
+                                    <span>{{ props.row?.role?.name }}</span>
+                                </div>
+                                <div
+                                    v-if="props.column.field == 'status'"
+                                    class="flex flex-wrap"
+                                >
+                                    <VChip
+                                        color="success"
+                                        v-if="props.row.status == 'ACTIVE'"
+                                    >
+                                        ACTIVE
+                                    </VChip>
+
+                                    <VChip color="warning" v-else> INACTIVE </VChip>
+                                </div>
+                                <div v-if="props.column.field == 'action'">
+                                    <VMenu location="end">
+                                        <template #activator="{ props }">
+                                            <VIcon
+                                                v-bind="props"
+                                                size="24"
+                                                icon="mdi-dots-horizontal"
+                                                color="black"
+                                                class="mt-n4"
+                                            />
+                                        </template>
+                                        <VList>
+                                            <VListItem
+                                                @click="
+                                                    setInactive(
+                                                        props.row.status,
+                                                        props.row.id
+                                                    )
+                                                "
+                                            >
+                                                <VListItemTitle>{{
+                                                    props.row.status == "ACTIVE"
+                                                        ? "Set Inactive"
+                                                        : "Set Active"
+                                                }}</VListItemTitle>
+                                            </VListItem>
+                                        </VList>
+                                    </VMenu>
+                                </div>
+                            </template>
+                            <template #pagination-bottom>
+                                <VRow class="pa-4">
+                                    <VCol
+                                        cols="12"
+                                        class="d-flex justify-space-between"
+                                    >
+                                        <span
+                                            >Showing {{ props.users.meta.from }} to
+                                            {{ props.users.meta.to }} of
+                                            {{ props.users.meta.total }} entries</span
+                                        >
+                                        <div>
+                                            <div class="d-flex align-center">
+                                                <span class="me-2">Show</span>
+                                                <VSelect
+                                                    v-model="serverPerPage"
+                                                    density="compact"
+                                                    :items="options.perPageDropdown"
+                                                >
+                                                </VSelect>
+                                                <VPagination
+                                                    v-model="serverPage"
+                                                    size="small"
+                                                    :total-visible="5"
+                                                    :length="props.users.meta.last_page"
+                                                    @next="onPageChange"
+                                                    @prev="onPageChange"
+                                                    @click="onPageChange"
+                                                />
+                                            </div>
+                                        </div>
+                                    </VCol>
+                                </VRow>
+                            </template>
+                    </VCol>
+                </VRow>
+            </template>
+        </vue-good-table>
+        <VDivider />
+      </VCard>
+    </VContainer>
+  </AdminLayout>
 </template>
 
 <style lang="scss">
