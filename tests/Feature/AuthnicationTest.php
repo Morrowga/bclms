@@ -13,7 +13,6 @@ use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 //     ];
 //     $response = $this->post('/b2cstore', $data);
 
-
 /**
  *  invalid email
  *
@@ -48,7 +47,6 @@ test('unique_b2c_register_email', function () {
         'email' => $existingUser->email,
         'password' => 'password',
     ]);
-
 
     // dd($response);
     $response->assertSessionHasErrors('email');
@@ -108,7 +106,6 @@ test('mismatch_login_password', function () {
         'email' => $existingUser->email,
         'password' => Hash::make('passwords'),
     ]);
-
 
     // dd($response);
 

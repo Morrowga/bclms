@@ -3,11 +3,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class OrganizationAdminSeeder extends Seeder
 {
@@ -131,7 +131,7 @@ class OrganizationAdminSeeder extends Seeder
 
         $orgUserFetch = UserEloquentModel::where('role_id', 5)->get();
 
-        foreach($orgUserFetch as $org){
+        foreach ($orgUserFetch as $org) {
             B2bUserEloquentModel::create([
                 'user_id' => $org->id,
                 'organization_id' => 1,

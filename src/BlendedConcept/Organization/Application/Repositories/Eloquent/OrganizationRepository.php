@@ -76,7 +76,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 'organization_id' => $organizationEloquent->id,
             ]);
 
-            $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
+            $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());

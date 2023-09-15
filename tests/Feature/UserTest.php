@@ -2,8 +2,8 @@
 
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
@@ -86,8 +86,7 @@ test("other roles can't access user module with email verification check", funct
     }
 });
 
-
-test("import excel with super admin role module", function () {
+test('import excel with super admin role module', function () {
     $this->assertTrue(Auth::check());
 
     $excelFile = new UploadedFile(

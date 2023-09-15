@@ -55,7 +55,6 @@ export default defineConfig({
             "@AppRoot": fileURLToPath(new URL("./resources/js", import.meta.url)),
 
             "@Composables": fileURLToPath(new URL("./src/Common/Presentation/Resources/Layouts/Composables", import.meta.url)),
-
             "@Layouts": fileURLToPath(new URL("./src/Common/Presentation/Resources/Layouts", import.meta.url)),
             "@dashboard": fileURLToPath(new URL("./src/Common/Presentation/Resources/Layouts/Dashboard", import.meta.url)),
             '@core-scss': fileURLToPath(new URL('./src/Common/Presentation/Resources/UI/styles/@core', import.meta.url)),
@@ -71,6 +70,7 @@ export default defineConfig({
             'apexcharts': fileURLToPath(new URL('node_modules/apexcharts-clevision', import.meta.url)),
             "@mainRoot": fileURLToPath(new URL("./src/Common/Presentation/Resources/", import.meta.url)),
             "@actions" : fileURLToPath(new URL("./src/Common/Presentation/Resources/components/Actions", import.meta.url)),
+            "@configRole" : fileURLToPath(new URL("./config.js",import.meta.url))
         },
     }
 })

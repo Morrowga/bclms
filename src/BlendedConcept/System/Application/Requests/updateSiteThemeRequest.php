@@ -14,30 +14,30 @@ class updateSiteThemeRequest extends FormRequest
     public function rules()
     {
         return [
-        'skins' => [
-            'required'
-        ],
-        'themes' => [
-            'required'
-        ],
-        'primary_color' => [
-            'required'
-        ],
-        'secondary_color' => [
-            'required'
-        ],
-        'content_with' => [
-            'required'
-        ],
-        'header_type' => [
-            'required'
-        ],
-        'footer_type' => [
-            'required'
-        ],
-        'menu_type' => [
-            'required'
-        ],
+            'skins' => [
+                'required',
+            ],
+            'themes' => [
+                'required',
+            ],
+            'primary_color' => [
+                'required',
+            ],
+            'secondary_color' => [
+                'required',
+            ],
+            'content_with' => [
+                'required',
+            ],
+            'header_type' => [
+                'required',
+            ],
+            'footer_type' => [
+                'required',
+            ],
+            'menu_type' => [
+                'required',
+            ],
         ];
     }
 }

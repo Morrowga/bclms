@@ -1,9 +1,8 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
-use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
+use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
@@ -70,7 +69,7 @@ test('form submit as announcement with superadmin role', function () {
         'by' => 'Super Admin',
         'to' => 'B2B Teachers,B2C Users, Organisation Admin',
         'org' => json_encode([]),
-        'users' => json_encode([2,3,4,5,10,11,12,13,14,15]),
+        'users' => json_encode([2, 3, 4, 5, 10, 11, 12, 13, 14, 15]),
     ]);
 
     $postData->assertStatus(302);

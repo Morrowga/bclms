@@ -47,7 +47,6 @@ test('page builder access with other roles ', function () {
         'password' => 'password',
     ]);
 
-
     if (Auth::attempt(['email' => 'testing@gmail.com', 'password' => 'password'])) {
 
         $response = $this->get('/bc/admin');

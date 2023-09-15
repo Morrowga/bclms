@@ -1,8 +1,8 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
@@ -93,7 +93,7 @@ test('update b2b subscription', function () {
         'role_id' => 1,
         'email_verified_at' => Carbon::now(),
     ];
-    $organizationEloquent =  OrganizationEloquentModel::create($organizationData);
+    $organizationEloquent = OrganizationEloquentModel::create($organizationData);
     $userCreate = UserEloquentModel::create($userData);
     B2bUserEloquentModel::create([
         'user_id' => $userCreate->id,
@@ -107,9 +107,9 @@ test('update b2b subscription', function () {
         'payment_status' => 'PAID',
         'stripe_status' => 'ACTIVE',
         'b2b_subscription' => [
-            "storage_limit" =>  10,
-            "num_teacher_license" =>  10,
-            "num_student_license" => 10,
+            'storage_limit' => 10,
+            'num_teacher_license' => 10,
+            'num_student_license' => 10,
         ],
     ]);
     $updateSubscription->assertStatus(302);
@@ -166,9 +166,9 @@ test('update b2c subscription', function () {
         'payment_status' => 'PAID',
         'stripe_status' => 'ACTIVE',
         'b2b_subscription' => [
-            "storage_limit" =>  10,
-            "num_teacher_license" =>  10,
-            "num_student_license" => 10,
+            'storage_limit' => 10,
+            'num_teacher_license' => 10,
+            'num_student_license' => 10,
         ],
     ]);
     $updateSubscription->assertStatus(302);

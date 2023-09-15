@@ -1,10 +1,8 @@
 <?php
 
-use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Illuminate\Support\Facades\Auth;
 
 beforeEach(function () {
     // Run migrations
@@ -19,7 +17,7 @@ beforeEach(function () {
     ]);
 });
 
-test("import student excel with super admin role module", function () {
+test('import student excel with super admin role module', function () {
     $this->assertTrue(Auth::check());
 
     $excelFile = new UploadedFile(
