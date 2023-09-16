@@ -2,6 +2,7 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
+import { format } from 'date-fns';
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
@@ -11,18 +12,24 @@ import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 
 // import Create from "./Create.vue";
 // import Edit from "./Edit.vue";
-let props = defineProps();
+let props = defineProps(['surveys']);
 
+const formatDate = (dateString) => {
+      // Parse the date string into a Date object
+    const date = new Date(dateString);
+    // Format the date using date-fns
+    return format(date, 'dd/M/yyyy'); // Customize the format string as needed
+}
 //## start datatable section
 let columns = [
     {
         label: "Name",
-        field: "name",
+        field: "title",
         sortable: false,
     },
     {
         label: "User Types",
-        field: "user_types",
+        field: "user_type",
         sortable: false,
     },
     {
@@ -32,7 +39,7 @@ let columns = [
     },
     {
         label: "Date Created",
-        field: "date_created",
+        field: "created_at",
         sortable: false,
     },
     {
@@ -42,70 +49,70 @@ let columns = [
     },
 ];
 
-let rows = [
-    {
-        name: "Happines Survey",
-        user_types: [
-            {
-                name: "Organization Teachers",
-            },
-            {
-                name: "B2C Users",
-            },
-        ],
-        completion_status: "testing",
-        date_created: "20/8/2023",
-    },
-    {
-        name: "Toy Story Feedback Survey",
-        user_types: [
-            {
-                name: "Students",
-            },
-        ],
-        completion_status: "testing",
-        date_created: "20/8/2023",
-    },
-    {
-        name: "Website Experience Survey",
-        user_types: [
-            {
-                name: "Organization Teachers",
-            },
-            {
-                name: "B2C Users",
-            },
-        ],
-        completion_status: "testing",
-        date_created: "20/8/2023",
-    },
-    {
-        name: "Teacher Experience Survey",
-        user_types: [
-            {
-                name: "Organization Teacher",
-            },
-            {
-                name: "B2C Users",
-            },
-        ],
-        completion_status: "testing",
-        date_created: "20/8/2023",
-    },
-    {
-        name: "Food Survey",
-        user_types: [
-            {
-                name: "Organization Teacher",
-            },
-            {
-                name: "B2C Users",
-            },
-        ],
-        completion_status: "testing",
-        date_created: "20/8/2023",
-    },
-];
+// let rows = [
+//     {
+//         name: "Happines Survey",
+//         user_types: [
+//             {
+//                 name: "Organization Teachers",
+//             },
+//             {
+//                 name: "B2C Users",
+//             },
+//         ],
+//         completion_status: "testing",
+//         date_created: "20/8/2023",
+//     },
+//     {
+//         name: "Toy Story Feedback Survey",
+//         user_types: [
+//             {
+//                 name: "Students",
+//             },
+//         ],
+//         completion_status: "testing",
+//         date_created: "20/8/2023",
+//     },
+//     {
+//         name: "Website Experience Survey",
+//         user_types: [
+//             {
+//                 name: "Organization Teachers",
+//             },
+//             {
+//                 name: "B2C Users",
+//             },
+//         ],
+//         completion_status: "testing",
+//         date_created: "20/8/2023",
+//     },
+//     {
+//         name: "Teacher Experience Survey",
+//         user_types: [
+//             {
+//                 name: "Organization Teacher",
+//             },
+//             {
+//                 name: "B2C Users",
+//             },
+//         ],
+//         completion_status: "testing",
+//         date_created: "20/8/2023",
+//     },
+//     {
+//         name: "Food Survey",
+//         user_types: [
+//             {
+//                 name: "Organization Teacher",
+//             },
+//             {
+//                 name: "B2C Users",
+//             },
+//         ],
+//         completion_status: "testing",
+//         date_created: "20/8/2023",
+//     },
+// ];
 
 const items = ref([
     {
@@ -207,7 +214,7 @@ const deleteOrganization = (id) => {
                                 styleClass="vgt-table"
                                 v-on:selected-rows-change="selectionChanged"
                                 :columns="columns"
-                                :rows="rows"
+                                :rows="props.surveys.data"
                                 :select-options="{
                                     enabled: false,
                                 }"
@@ -215,7 +222,7 @@ const deleteOrganization = (id) => {
                             >
                                 <template #table-row="dataProps">
                                     <div
-                                        v-if="dataProps.column.field == 'name'"
+                                        v-if="dataProps.column.field == 'title'"
                                     >
                                         <Link
                                             class="text-secondary"
@@ -226,24 +233,25 @@ const deleteOrganization = (id) => {
                                             "
                                         >
                                             <span>{{
-                                                dataProps.row.name
+                                                dataProps.row.title
                                             }}</span>
                                         </Link>
                                     </div>
                                     <div
                                         v-if="
                                             dataProps.column.field ==
-                                            'user_types'
+                                            'user_type'
                                         "
                                     >
+                                    <!-- v-for="user_type in dataProps.row
+                                                .user_type" -->
+                                            <!-- :key="user_type" -->
                                         <v-chip
-                                            v-for="user_type in dataProps.row
-                                                .user_types"
-                                            :key="user_type.name"
                                             class="ma-2"
                                             color="primary"
                                             size="small"
-                                            >{{ user_type.name }}
+                                            >
+                                            {{dataProps.row.user_type}}
                                         </v-chip>
                                     </div>
                                     <div
@@ -265,7 +273,14 @@ const deleteOrganization = (id) => {
                                         >
                                         Users
                                     </div>
-
+                                    <div
+                                        v-if="
+                                            dataProps.column.field ==
+                                            'created_at'
+                                        "
+                                    >
+                                       {{  formatDate(dataProps.row.created_at) }}
+                                    </div>
                                     <div
                                         v-if="
                                             dataProps.column.field == 'action'

@@ -80,7 +80,7 @@ const handleSettingModalSubmit = (data) => {
     console.log(form);
     form.post(route("userexperiencesurvey.store"), {
         onSuccess: () => {
-            // SuccessDialog({ title: "You've successfully posted announcement" });
+            SuccessDialog({ title: "You've successfully created user experience survey." });
         },
         onError: (error) => {
             form.setError("title", error?.title);

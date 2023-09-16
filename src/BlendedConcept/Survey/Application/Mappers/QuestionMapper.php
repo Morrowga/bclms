@@ -8,14 +8,14 @@ use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\QuestionEloquentMode
 
 class QuestionMapper
 {
-    public static function fromRequest(Request $request, $question_id = null): Question
+    public static function fromRequest(Array $request, $question_id = null): Question
     {
 
         return new Question(
             id: $question_id,
-            survey_id: $request->survey_id,
-            question_type: $request->question_type,
-            question: $request->question,
+            survey_id: $request['survey_id'],
+            question_type: $request['question_type'],
+            question: $request['question'],
         );
     }
 

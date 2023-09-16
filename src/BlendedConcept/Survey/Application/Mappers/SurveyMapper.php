@@ -20,8 +20,9 @@ class SurveyMapper
             appear_on: $request->appear_on,
             start_date: $request->start_date,
             end_date: $request->end_date,
-            requried: $request->required,
+            required: $request->required,
             repeat: $request->repeat,
+            questions: $request->questions
         );
     }
 

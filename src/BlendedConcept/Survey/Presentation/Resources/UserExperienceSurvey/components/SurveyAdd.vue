@@ -52,14 +52,18 @@ const removeOption = (index) => {
 const refForm = ref(null); // Define refForm
 
 const onFormSubmit = () => {
-    emit("submit", form);
-    generateRandomCombination();
-    form.id = randomCombination.value; // Assuming id should be cleared
-    form.question_type = null;
-    form.question = '';
-    options.value = ['']; // Reset options as needed
-    form.options = options.value;
-    emit("update:isDialogVisible", false);
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            emit("submit", form);
+            generateRandomCombination();
+            form.id = randomCombination.value; // Assuming id should be cleared
+            form.question_type = null;
+            form.question = '';
+            options.value = ['']; // Reset options as needed
+            form.options = options.value;
+            emit("update:isDialogVisible", false);
+        }
+    })
 };
 
 const onFormReset = () => {
@@ -72,15 +76,15 @@ const dialogVisibleUpdate = (val) => {
 const items = ref([
     {
         title: "Single Choice",
-        value: "Single Choice",
+        value: "SINGLE_CHOICE",
     },
     {
         title: "Multi Response",
-        value: "Multi Response",
+        value: "MULTIPLE_RESPONSE",
     },
     {
         title: "Rating",
-        value: "Rating",
+        value: "RATING",
     },
 ]);
 </script>
@@ -103,7 +107,7 @@ const items = ref([
 
             <VCardText>
                 <!-- 👉 Form -->
-                <VForm class="mt-6" @submit.prevent="onFormSubmit">
+                <VForm class="mt-6" ref="refForm" @submit.prevent="onFormSubmit">
                     <VContainer>
                         <VRow justify="center">
                             <!-- 👉 Contact -->
@@ -117,6 +121,7 @@ const items = ref([
                                     :items="items"
                                     rounded="50%"
                                     :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.question_type"
                                     placeholder="Select Question Type"
                                     density="compact"
                                 />
@@ -128,6 +133,7 @@ const items = ref([
                                 <VTextarea v-model="form.question"
                                     placeholder="Type here ...."
                                     :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.question"
                                     rows="5"
                                 />
                             </VCol>
@@ -137,6 +143,7 @@ const items = ref([
                                         <VCol cols="10">
                                         <VTextField v-model="options[index]"
                                         :rules="[requiredValidator]"
+                                        :error-messages="form?.errors?.options"
                                         />
                                         </VCol>
                                         <VCol cols="2">
