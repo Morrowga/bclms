@@ -1,55 +1,90 @@
 <script setup>
+import {
+    emailValidator,
+    requiredValidator,
+    integerValidator,
+} from "@validators";
+import axios from "axios";
+import { useForm,usePage } from "@inertiajs/vue3";
 const props = defineProps({
-    form: {
-        type: Object,
-    },
-    userData: {
-        type: Object,
-        required: false,
-        default: () => ({
-            currentpassword: "",
-            updatedpassword: "",
-            passwordConfirmation: "",
-        }),
-    },
     isDialogVisible: {
         type: Boolean,
-        default: false,
+        required: true,
     },
 });
 
 const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
-const userData = ref(structuredClone(toRaw(props.userData)));
-const isUseAsBillingAddress = ref(false);
+const options = ref(['']);
 
-watch(props, () => {
-    userData.value = structuredClone(toRaw(props.userData));
+console.log(options.value);
+
+const randomCombination = ref('');
+
+const generateRandomCombination = () => {
+  const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let result = '';
+
+  for (let i = 0; i < 4; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters.charAt(randomIndex);
+  }
+
+  randomCombination.value = result;
+};
+
+generateRandomCombination()
+
+const form = useForm({
+  id: randomCombination.value,
+  question_type: null,
+  question: "",
+  options: options.value
 });
 
+const addOption = () => {
+  options.value.push('');
+};
+
+const removeOption = (index) => {
+  options.value.splice(index, 1);
+};
+const refForm = ref(null); // Define refForm
+
 const onFormSubmit = () => {
-    // emit('submit', userData.value)
-    emit("submit", { title: "Password Changed Successfully" });
-    emit("update:isDialogVisible", false);
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            emit("submit", form);
+            generateRandomCombination();
+            form.id = randomCombination.value; // Assuming id should be cleared
+            form.question_type = null;
+            form.question = '';
+            options.value = ['']; // Reset options as needed
+            form.options = options.value;
+            emit("update:isDialogVisible", false);
+        }
+    })
 };
 
 const onFormReset = () => {
-    userData.value = structuredClone(toRaw(props.userData));
     emit("update:isDialogVisible", false);
 };
-
 const dialogVisibleUpdate = (val) => {
     emit("update:isDialogVisible", val);
 };
 
 const items = ref([
     {
-        title: "Edit",
-        value: "edit",
+        title: "Single Choice",
+        value: "SINGLE_CHOICE",
     },
     {
-        title: "Delete",
-        value: "delete",
+        title: "Multi Response",
+        value: "MULTIPLE_RESPONSE",
+    },
+    {
+        title: "Rating",
+        value: "RATING",
     },
 ]);
 </script>
@@ -64,9 +99,15 @@ const items = ref([
             <!-- 👉 dialog close btn -->
             <DialogCloseBtn variant="text" size="small" @click="onFormReset" />
 
+            <!-- <VCardItem class="text-left pl-16">
+                <VCardTitle class="te mb-2 tiggie-title">
+                    Add Survey Question
+                </VCardTitle>
+            </VCardItem> -->
+
             <VCardText>
                 <!-- 👉 Form -->
-                <VForm class="mt-6" @submit.prevent="onFormSubmit">
+                <VForm class="mt-6" ref="refForm" @submit.prevent="onFormSubmit">
                     <VContainer>
                         <VRow justify="center">
                             <!-- 👉 Contact -->
@@ -74,9 +115,14 @@ const items = ref([
                                 <VLabel class="tiggie-label"
                                     >Question Type</VLabel
                                 >
+                                <!-- <VTextField /> -->
                                 <VSelect
+                                    v-model="form.question_type"
                                     :items="items"
                                     rounded="50%"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.question_type"
+                                    placeholder="Select Question Type"
                                     density="compact"
                                 />
                             </VCol>
@@ -84,40 +130,40 @@ const items = ref([
                             <!-- 👉 Contact -->
                             <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label">Question</VLabel>
-                                <VTextarea
+                                <VTextarea v-model="form.question"
                                     placeholder="Type here ...."
-                                    v-model="description"
-                                    auto-grow
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.question"
                                     rows="5"
                                 />
                             </VCol>
                             <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label">Options</VLabel>
-                                <VSelect
-                                    :items="items"
-                                    rounded="50%"
-                                    density="compact"
-                                />
-                            </VCol>
-                            <VCol cols="12" md="12">
-                                <VSelect
-                                    :items="items"
-                                    rounded="50%"
-                                    density="compact"
-                                />
-                            </VCol>
-
-                            <VCol cols="12" md="12">
-                                <VBtn
-                                    variant="outlined"
-                                    class="option-border"
-                                    block
-                                >
-                                    <span class="tiggie-p">
-                                        Type to add more options</span
+                                    <VRow v-for="(option, index) in options" :key="index">
+                                        <VCol cols="10">
+                                        <VTextField v-model="options[index]"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="form?.errors?.options"
+                                        />
+                                        </VCol>
+                                        <VCol cols="2">
+                                        <VBtn @click="removeOption(index)">-</VBtn>
+                                        </VCol>
+                                    </VRow>
+                                </VCol>
+                                <VCol cols="12" md="12">
+                                    <VBtn
+                                        variant="outlined"
+                                        style="
+                                        border-radius: 5px;
+                                        border: 1px dashed rgba(40, 40, 40, 0.5);
+                                        "
+                                        block
+                                        @click="addOption"
                                     >
-                                </VBtn>
-                            </VCol>
+                                        <span class="tiggie-p">Type to add more options</span>
+                                    </VBtn>
+                                </VCol>
 
                             <!-- 👉 Submit and Cancel -->
                             <VCol
@@ -150,7 +196,7 @@ const items = ref([
     </VDialog>
 </template>
 <style scoped>
-.option-border {
+.a-survey-border {
     border-radius: 5px !important;
     border: 1px dashed rgba(40, 40, 40, 0.5) !important;
 }

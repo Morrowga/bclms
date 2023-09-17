@@ -110,20 +110,20 @@ class AnnouncementController extends Controller
     public function edit($id)
     {
 
-        $announcement = (new ShowAnnouncement($id))->handle();
-        $organizations = (new GetOrganizationList())->handle();
-        $teachers = (new GetB2BTeachers())->handle();
-        $b2cUsers = (new GetB2CUsers())->handle();
-        $bcStaff = (new GetBcStaff())->handle();
-        $organizations = (new GetOrganizations())->handle();
+        // $announcement = (new ShowAnnouncement($id))->handle();
+        // $organizations = (new GetOrganizationList())->handle();
+        // $teachers = (new GetB2BTeachers())->handle();
+        // $b2cUsers = (new GetB2CUsers())->handle();
+        // $bcStaff = (new GetBcStaff())->handle();
+        // $organizations = (new GetOrganizations())->handle();
 
-        return Inertia::render(config('route.announment.edit'), [
-            'organizations' => $organizations,
-            'announcement' => $announcement,
-            'teachers' => $teachers,
-            'b2cUsers' => $b2cUsers,
-            'bcStaff' => $bcStaff,
-        ]);
+        // return Inertia::render(config('route.announment.edit'), [
+        //     'organizations' => $organizations,
+        //     'announcement' => $announcement,
+        //     'teachers' => $teachers,
+        //     'b2cUsers' => $b2cUsers,
+        //     'bcStaff' => $bcStaff,
+        // ]);
     }
 
     public function getB2bTeachers($orgId)
@@ -142,28 +142,28 @@ class AnnouncementController extends Controller
     public function update(UpdateAnnouncementRequest $request, AnnouncementEloquentModel $announcement)
     {
 
-        abort_if(authorize('edit', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('edit', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        /**
-         * Validate the request.
-         */
-        $request->validated();
+        // /**
+        //  * Validate the request.
+        //  */
+        // $request->validated();
 
-        /**
-         * Try to update the announcement.
-         */
-        try {
-            $announcement = AnnounmentData::fromRequest($request, $announcement->id);
-            $updateAnnounmentCommand = (new UpdateAnnounmentCommand($announcement));
-            $updateAnnounmentCommand->execute();
+        // /**
+        //  * Try to update the announcement.
+        //  */
+        // try {
+        //     $announcement = AnnounmentData::fromRequest($request, $announcement->id);
+        //     $updateAnnounmentCommand = (new UpdateAnnounmentCommand($announcement));
+        //     $updateAnnounmentCommand->execute();
 
-            return redirect()->route('announcements.index')->with('successMessage', 'Announcement updated Successfully!');
-        } catch (\Exception $e) {
-            /**
-             * Catch any exceptions and display an error message.
-             */
-            return redirect()->route('announcements.index')->with('SystemErrorMessage', $e->getMessage());
-        }
+        //     return redirect()->route('announcements.index')->with('successMessage', 'Announcement updated Successfully!');
+        // } catch (\Exception $e) {
+        //     /**
+        //      * Catch any exceptions and display an error message.
+        //      */
+        //     return redirect()->route('announcements.index')->with('SystemErrorMessage', $e->getMessage());
+        // }
     }
 
     /**
@@ -174,7 +174,7 @@ class AnnouncementController extends Controller
      */
     public function destroy(AnnouncementEloquentModel $announcement)
     {
-
+        return $announcement;
         abort_if(authorize('destroy', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**

@@ -11,7 +11,6 @@ class Question extends Entity
         public readonly int $survey_id,
         public readonly string $question_type,
         public readonly string $question,
-
     ) {
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Survey\Application\UseCases\Commands;
+namespace Src\BlendedConcept\Survey\Application\UseCases\Commands\Survey;
 
 use Src\Common\Domain\CommandInterface;
 use Src\BlendedConcept\Survey\Domain\Model\Survey;

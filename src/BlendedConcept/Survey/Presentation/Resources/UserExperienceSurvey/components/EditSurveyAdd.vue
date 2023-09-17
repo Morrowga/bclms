@@ -13,15 +13,6 @@ const props = defineProps({
 const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
 const options = ref(['']);
-// const editFormData = ref(props.form);
-// options.value = props.form.options;
-
-// const form = useForm({
-//   id: editFormData.value.id,
-//   question_type: editFormData.value.question_type,
-//   question: editFormData.value.question,
-//   options: options.value
-// });
 
 const addOption = () => {
     props.form.options.push('');
@@ -57,6 +48,8 @@ const items = ref([
         value: "Rating",
     },
 ]);
+
+
 </script>
 
 <template>
@@ -107,10 +100,10 @@ const items = ref([
                                 <VLabel class="tiggie-label">Options</VLabel>
                                     <VRow v-for="(option, index) in props.form.options" :key="index">
                                         <VCol cols="10">
-                                        <VTextField v-model="props.form.options[index]" />
+                                            <VTextField v-model="props.form.options[index]" />
                                         </VCol>
                                         <VCol cols="2">
-                                        <VBtn @click="removeOption(index)">-</VBtn>
+                                            <VBtn @click="removeOption(index)">-</VBtn>
                                         </VCol>
                                     </VRow>
                                 </VCol>

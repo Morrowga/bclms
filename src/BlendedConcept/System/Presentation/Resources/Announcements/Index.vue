@@ -59,11 +59,11 @@ let columns = [
         field: "to",
         sortable: false,
     },
-    //   {
-    //     label: "Action",
-    //     field: "action",
-    //     sortable: false,
-    // },
+      {
+        label: "Action",
+        field: "action",
+        sortable: false,
+    },
 ];
 
 //## options for datatable
@@ -193,7 +193,7 @@ const deleteAnnouncement = (id) => {
                                     <VIcon :icon="props.row.icon"></VIcon>
                                 </span>
                             </div> -->
-                            <!-- <div v-if="props.column.field == 'action'">
+                            <div v-if="props.column.field == 'action'">
                                 <VMenu location="end">
                                     <template #activator="{ props }">
                                         <VIcon
@@ -226,7 +226,7 @@ const deleteAnnouncement = (id) => {
                                         </VListItem>
                                     </VList>
                                 </VMenu>
-                            </div> -->
+                            </div>
                         </template>
                         <template #pagination-bottom>
                             <VRow class="pa-4">

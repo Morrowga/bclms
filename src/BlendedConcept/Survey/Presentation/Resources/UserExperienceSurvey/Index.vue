@@ -142,10 +142,15 @@ let truncatedText = (text) => {
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
-const deleteOrganization = (id) => {
+const deleteSurvey = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",
-        denyButtonText: "Yes, delete it!",
+        denyButtonText: "Yes,delete it!",
+        onConfirm: () => {
+            router.delete(route("userexperiencesurvey.destroy", id), {
+                onSuccess: () => {},
+            });
+        },
     });
 };
 </script>
@@ -228,11 +233,11 @@ const deleteOrganization = (id) => {
                                             class="text-secondary"
                                             :href="
                                                 route(
-                                                    'userexperiencesurvey.create'
+                                                    'userexperiencesurvey.edit', dataProps.row.id
                                                 )
                                             "
                                         >
-                                            <span>{{
+                                            <span >{{
                                                 dataProps.row.title
                                             }}</span>
                                         </Link>
@@ -299,7 +304,7 @@ const deleteOrganization = (id) => {
                                             <VList>
                                                 <VListItem
                                                     @click="
-                                                        deleteOrganization(
+                                                        deleteSurvey(
                                                             dataProps.row.id
                                                         )
                                                     "

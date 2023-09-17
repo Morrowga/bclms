@@ -10,14 +10,16 @@ let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
 let tab = ref(false);
 let isSurveryAdd = ref(false);
+let addSurveyForm = ref([]);
 const checkUserRole = () => {
     return user_role.value == "BC Super Admin" || user_role.value == "BC Staff";
 };
 const openDialog = () => {
     isSurveryAdd.value = !isSurveryAdd.value;
 };
-const handleSubmit = () => {
-    SuccessDialog({ title: "You've successfully added question" });
+const handleModelSubmit = () => {
+
+    // SuccessDialog({ title: "You've successfully added question" });
 };
 </script>
 <template>
@@ -42,64 +44,62 @@ const handleSubmit = () => {
                     </div>
                 </v-col>
                 <v-col cols="12" md="12">
-                    <span class="text-h5 font-weight-bold t-black"
-                        >Question 1:</span
-                    >
-                    <span class="text-h6 t-black">
-                        Which of the following categories best describes the
-                        type of special needs that the student may have? (Please
-                        select all that apply) *</span
-                    >
-                    <br />
-                    <br />
-
-                    <v-row>
-                        <v-col cols="12" md="4">
-                            <v-checkbox
-                                label="Learning Disabilities (e.g., dyslexia, dysgraphia)"
-                            ></v-checkbox>
-                        </v-col>
-                        <v-col cols="12" md="4">
-                            <v-checkbox
-                                label="Autism Spectrum Disorder (ASD)"
-                            ></v-checkbox>
-                        </v-col>
-                        <v-col cols="12" md="4">
-                            <v-checkbox
-                                label="Attention Deficit Hyperactivity Disorder (ADHD)"
-                            ></v-checkbox>
-                        </v-col>
-                        <v-col cols="12" md="4">
-                            <v-checkbox
-                                label="Intellectual Disabilities"
-                            ></v-checkbox>
-                        </v-col>
-                        <v-col cols="12" md="4">
-                            <v-checkbox
-                                label="Speech and Language Impairments"
-                            ></v-checkbox>
-                        </v-col>
-                        <v-col cols="12" md="4">
-                            <v-checkbox
-                                label="Emotional or Behavioural Disorders"
-                            ></v-checkbox>
-                        </v-col>
-                        <v-col cols="12" md="4">
-                            <v-checkbox
-                                label="Physical Disabilities"
-                            ></v-checkbox>
-                        </v-col>
-                        <v-col cols="12" md="4">
-                            <v-checkbox label="Visual Impairments"></v-checkbox>
-                        </v-col>
-                        <v-col cols="12" md="4">
-                            <v-checkbox
-                                label="Hearing Impairments"
-                            ></v-checkbox>
-                        </v-col>
-                    </v-row>
+                    <div v-if="addSurveyForm.length > 0">
+                        <Vcol cols="12" v-for="(item, i) in addSurveyForm" :key="i">
+                            <VCard style="width:81vw" class="mt-4">
+                                <VCardTitle class="tiggie-subtitle">
+                                    <div class="d-flex justify-space-between">
+                                        <div>
+                                            Question {{ i + 1 }} . {{ item.question_type }}
+                                        </div>
+                                        <div>
+                                            <v-menu>
+                                                <template v-slot:activator="{ props }">
+                                                    <div class="cursor-pointer"
+                                                    v-bind="props"
+                                                    >
+                                                    ...
+                                                    </div>
+                                                </template>
+                                                <v-list>
+                                                    <v-list-item>
+                                                        <v-list-item-title class="px-5 cursor-pointer" @click="openEditSurveyForm(item.id)">Edit</v-list-item-title>
+                                                        <v-spacer></v-spacer>
+                                                        <v-list-item-title class="px-5 mt-2 cursor-pointer" @click="deleteSurveyForm(item.id)">Delete</v-list-item-title>
+                                                    </v-list-item>
+                                                </v-list>
+                                            </v-menu>
+                                        </div>
+                                    </div>
+                                </VCardTitle>
+                                <VCardSubTitle class="pl-4 tiggie-p">
+                                    {{item.question}}
+                                </VCardSubTitle>
+                                <VDivider />
+                                <VCardText>
+                                    <VRow no-gutters justify="start">
+                                        <VCol cols="1">
+                                            <h4 class="tiggie-subtitle">Options</h4>
+                                        </VCol>
+                                        <VCol cols="4" style="text-align: left;" class="mb-10">
+                                            <VList>
+                                                <VListItem v-for="(option, i) in item.options" :key="i">
+                                                    <template #prepend>
+                                                        <VIcon :icon="'mdi-circle-small'" />
+                                                    </template>
+                                                    <VListItemTitle class="tiggie-p">
+                                                        {{ option }}
+                                                    </VListItemTitle>
+                                                </VListItem>
+                                            </VList>
+                                        </VCol>
+                                    </VRow>
+                                </VCardText>
+                            </VCard>
+                        </Vcol>
+                    </div>
                 </v-col>
-                <br />
+                <!-- <br />
                 <v-col cols="12" md="12">
                     <span class="text-h5 font-weight-bold t-black"
                         >Question 2:</span
@@ -241,13 +241,11 @@ const handleSubmit = () => {
                     </v-row>
                 </v-col>
                 <br />
-                <v-col cols="12"> </v-col>
+                <v-col cols="12"> </v-col> -->
             </v-row>
         </VContainer>
-        <AddProfillingSurvey
-            v-model:isDialogVisible="isSurveryAdd"
-            @submit="handleSubmit"
-        />
+        <AddProfillingSurvey v-model:isDialogVisible="isSurveryAdd"
+        @submit="handleModalSubmit" />
     </AdminLayout>
 </template>
 <style scoped></style>

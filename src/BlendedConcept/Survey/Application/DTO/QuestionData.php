@@ -12,6 +12,7 @@ class QuestionData
         public readonly int $survey_id,
         public readonly string $question_type,
         public readonly string $question,
+        public readonly string $options,
 
     ) {
     }
@@ -23,6 +24,7 @@ class QuestionData
             survey_id: $request->survey_id,
             question_type: $request->question_type,
             question: $request->question,
+            options: $request->options
         );
     }
 
@@ -33,6 +35,7 @@ class QuestionData
             'survey_id' => $this->survey_id,
             'question_type' => $this->question_type,
             'question' => $this->question,
+            'options' => $this->options
         ];
     }
 }

@@ -80,7 +80,7 @@ const appearOn = ref([
 
 <template>
     <VDialog :width="$vuetify.display.smAndDown ? 'auto' : 600" :model-value="props.isDialogVisible"
-        @update:model-value="dialogVisibleUpdate">
+        @update:model-value="dialogVisibleUpdate" persistent>
         <VCard class="">
             <!-- 👉 dialog close btn -->
             <DialogCloseBtn variant="text" size="small" @click="onFormReset" />

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import { router } from "@inertiajs/core";
 import { SuccessDialog } from '@actions/useSuccess';
 import SurveyAdd from "../components/SurveyAdd.vue"
 import SurveySetting from "../components/SurveySetting.vue"
@@ -111,7 +112,14 @@ const handleSettingModalSubmit = (data) => {
                                 color="secondary"
                                 text-color="white"
                                 variant="tonal"
-                                @click="isUserProfileEdit = true"
+                                @click="
+                                    () =>
+                                        router.get(
+                                            route(
+                                                'userexperiencesurvey.index'
+                                            )
+                                        )
+                                "
                                 height="50"
                                 class="mr-4"
                             >
