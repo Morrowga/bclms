@@ -123,22 +123,12 @@ const onRowClick = (params) => {
                         <VCard>
                             <VCardText class="d-flex flex-wrap gap-4">
                                 <VSpacer id="helloMarNayTae" />
-                                <div
-                                    class="d-flex justify-end align-center gap-3"
-                                >
-                                    <VTextField
-                                        placeholder="Search Request"
-                                        density="compact"
-                                        class="txt-width"
-                                        variant="solo"
-                                    />
-                                    <SelectBox
-                                        placeholder="Sort By"
-                                        :datas="['Name', 'Date', 'Status']"
-                                        density="compact"
-                                        class="selectbox-width"
-                                    />
-                                    <VBtn class="tiggie-btn" @click="">
+                                <div class="d-flex justify-end align-center gap-3">
+                                    <VTextField placeholder="Search Request" density="compact" style="width: 300px"
+                                        variant="solo" />
+                                    <SelectBox placeholder="Sort By" :datas="['Name', 'Date', 'Status']" density="compact"
+                                        style="width: 150px" />
+                                    <VBtn class="tiggie-btn">
                                         Delete
                                     </VBtn>
                                 </div>

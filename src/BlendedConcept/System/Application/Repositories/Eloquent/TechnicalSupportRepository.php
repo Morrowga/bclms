@@ -45,8 +45,8 @@ class TechnicalSupportRepository implements TechnicalSupportRepositoryInterface
         if (auth()->user()->role->name == config('userrole.bcsuperadmin') || auth()->user()->role->name == config('userorle.bcstaff')) {
 
             $technicalSupport = TechnicalSupportResource::collection(TechnicalSupportEloquentModel::with(['user'])
-                                                        ->filter($filters)
-                                                        ->paginate($filters['perPage'] ?? 10));
+                ->filter($filters)
+                ->paginate($filters['perPage'] ?? 10));
 
         } else {
             $technicalSupport = TechnicalSupportResource::collection(TechnicalSupportEloquentModel::where('user_id', auth()->user()->id)

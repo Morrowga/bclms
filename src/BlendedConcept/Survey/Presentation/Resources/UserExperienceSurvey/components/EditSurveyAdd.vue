@@ -1,17 +1,8 @@
 <script setup>
-import { ref } from "vue";
+import { useForm,usePage } from "@inertiajs/vue3";
 const props = defineProps({
     form: {
         type: Object,
-    },
-    userData: {
-        type: Object,
-        required: false,
-        default: () => ({
-            currentpassword: "",
-            updatedpassword: "",
-            passwordConfirmation: "",
-        }),
     },
     isDialogVisible: {
         type: Boolean,
@@ -21,41 +12,51 @@ const props = defineProps({
 
 const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
-const userData = ref(structuredClone(toRaw(props.userData)));
-const isUseAsBillingAddress = ref(false);
+const options = ref(['']);
+// const editFormData = ref(props.form);
+// options.value = props.form.options;
 
-watch(props, () => {
-    userData.value = structuredClone(toRaw(props.userData));
-});
+// const form = useForm({
+//   id: editFormData.value.id,
+//   question_type: editFormData.value.question_type,
+//   question: editFormData.value.question,
+//   options: options.value
+// });
 
-const onFormSubmit = () => {
-    // emit('submit', userData.value)
-    emit("submit", { title: "Password Changed Successfully" });
+const addOption = () => {
+    props.form.options.push('');
 };
 
-const onFormReset = () => {
-    userData.value = structuredClone(toRaw(props.userData));
+const removeOption = (index) => {
+    props.form.options.splice(index, 1);
+};
+
+const onFormSubmit = () => {
+    emit("submit", props.form);
     emit("update:isDialogVisible", false);
 };
 
+const onFormReset = () => {
+    emit("update:isDialogVisible", false);
+};
 const dialogVisibleUpdate = (val) => {
     emit("update:isDialogVisible", val);
 };
 
 const items = ref([
     {
-        title: "Edit",
-        value: "edit",
+        title: "Single Choice",
+        value: "Single Choice",
     },
     {
-        title: "Delete",
-        value: "delete",
+        title: "Multi Response",
+        value: "Multi Response",
+    },
+    {
+        title: "Rating",
+        value: "Rating",
     },
 ]);
-
-let description = ref(
-    "How do you usually provide feedback about the application? (Please select all that apply)"
-);
 </script>
 
 <template>
@@ -67,6 +68,13 @@ let description = ref(
         <VCard class="">
             <!-- 👉 dialog close btn -->
             <DialogCloseBtn variant="text" size="small" @click="onFormReset" />
+
+            <VCardItem class="text-left pl-16">
+                <VCardTitle class="te mb-2 tiggie-title">
+                    Edit Survey
+                </VCardTitle>
+            </VCardItem>
+
             <VCardText>
                 <!-- 👉 Form -->
                 <VForm class="mt-6" @submit.prevent="onFormSubmit">
@@ -77,9 +85,12 @@ let description = ref(
                                 <VLabel class="tiggie-label"
                                     >Question Type</VLabel
                                 >
+                                <!-- <VTextField /> -->
                                 <VSelect
+                                    v-model="props.form.question_type"
                                     :items="items"
                                     rounded="50%"
+                                    placeholder="Select Question Type"
                                     density="compact"
                                 />
                             </VCol>
@@ -87,36 +98,35 @@ let description = ref(
                             <!-- 👉 Contact -->
                             <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label">Question</VLabel>
-                                <VTextarea
+                                <VTextarea v-model="props.form.question"
                                     placeholder="Type here ...."
-                                    v-model="description"
-                                    auto-grow
                                     rows="5"
                                 />
                             </VCol>
                             <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label">Options</VLabel>
-                                <VSelect
-                                    :items="items"
-                                    rounded="50%"
-                                    density="compact"
-                                />
-                            </VCol>
-                            <VCol cols="12" md="12">
-                                <VSelect
-                                    :items="items"
-                                    rounded="50%"
-                                    density="compact"
-                                />
-                            </VCol>
-
-                            <VCol cols="12" md="12">
-                                <VBtn variant="outlined e-survey-border" block>
-                                    <span class="tiggie-p">
-                                        Type to add more options</span
+                                    <VRow v-for="(option, index) in props.form.options" :key="index">
+                                        <VCol cols="10">
+                                        <VTextField v-model="props.form.options[index]" />
+                                        </VCol>
+                                        <VCol cols="2">
+                                        <VBtn @click="removeOption(index)">-</VBtn>
+                                        </VCol>
+                                    </VRow>
+                                </VCol>
+                                <VCol cols="12" md="12">
+                                    <VBtn
+                                        variant="outlined"
+                                        style="
+                                        border-radius: 5px;
+                                        border: 1px dashed rgba(40, 40, 40, 0.5);
+                                        "
+                                        block
+                                        @click="addOption"
                                     >
-                                </VBtn>
-                            </VCol>
+                                        <span class="tiggie-p">Type to add more options</span>
+                                    </VBtn>
+                                </VCol>
 
                             <!-- 👉 Submit and Cancel -->
                             <VCol

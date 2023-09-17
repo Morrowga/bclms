@@ -7,11 +7,10 @@ use Inertia\Inertia;
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetStudentForAdminDashBoard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetUserForAdminDashBoard;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetSuperAdminListCount;
 use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
 use Src\Common\Infrastructure\Laravel\Controller;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\System\Application\UseCases\Queries\GetSuperAdminListCount;
+
 class DashBoardController extends Controller
 {
     private $pageBuilderInterface;
@@ -39,11 +38,10 @@ class DashBoardController extends Controller
 
         $students = (new GetStudentForAdminDashBoard())->handle();
 
-
         $UserCount = (new GetSuperAdminListCount())->handle();
 
         //here I render it inside
-        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students','UserCount'));
+        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students', 'UserCount'));
     }
 
     /***

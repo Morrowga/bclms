@@ -15,7 +15,7 @@ class RewardController
     public function create()
     {
 
-        return Inertia::render(config('route.reward.show'));
+        return Inertia::render(config('route.reward.create'));
     }
 
     public function show()

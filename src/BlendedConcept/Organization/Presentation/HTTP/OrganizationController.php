@@ -127,8 +127,9 @@ class OrganizationController extends Controller
     public function show(OrganizationEloquentModel $organization)
     {
         $organization->load('org_admin', 'subscription.b2b_subscription')->loadCount('teachers', 'students');
+
         return Inertia::render(config('route.organizations.show'), [
-            "organization" => $organization
+            'organization' => $organization,
         ]);
     }
 

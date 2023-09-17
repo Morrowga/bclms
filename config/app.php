@@ -202,6 +202,7 @@ return [
         \Src\BlendedConcept\Finance\Application\Providers\PlanServiceProvider::class,
         \Src\BlendedConcept\Finance\Application\Providers\SubscriptionServiceProvider::class,
         \Src\BlendedConcept\Disability\Application\Providers\DisabilityTypeServiceProvider::class,
+        \Src\BlendedConcept\Survey\Application\Providers\SurveyServiceProvider::class,
 
         /*
          * Domain Routes Service Providers...

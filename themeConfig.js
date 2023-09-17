@@ -11,17 +11,14 @@ import { AppContentLayoutNav, ContentWidth, FooterType, NavbarType } from '@layo
 
 var themsCustomize = JSON.parse(localStorage.getItem("site_theme"));
 
-
-console.log(Skins.Default)
-
 export const { themeConfig, layoutConfig } = defineThemeConfig({
 
   app: {
     title: 'Blended Concept',
     // ❗ if you have SVG logo and want it to adapt according to theme color, you have to apply color as `color: rgb(var(--v-global-theme-primary))`
     logo: h('div', { innerHTML: logo, style: 'line-height:0; color: rgb(var(--v-global-theme-primary))' }),
-    contentWidth: ContentWidth.Boxed,
-    contentLayoutNav: themsCustomize?.menu_type ?? AppContentLayoutNav.Horizontal,
+    contentWidth: themsCustomize?.content_with ?? ContentWidth.Boxed,
+    contentLayoutNav: AppContentLayoutNav.Horizontal,
     overlayNavFromBreakpoint: breakpointsVuetify.md + 16,
     enableI18n: false,
     theme: themsCustomize?.themes ?? 'light',
@@ -31,10 +28,10 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
     iconRenderer: VIcon,
   },
   navbar: {
-    type: NavbarType.Sticky,
+    type:themsCustomize?.header_type ?? NavbarType.Sticky,
     navbarBlur: true,
   },
-  footer: { type: FooterType.Static },
+  footer: { type: themsCustomize?.footer_type ??  FooterType.Static },
   verticalNav: {
     isVerticalNavCollapsed: false,
     defaultNavItemIconProps: { icon: 'mdi-circle' },

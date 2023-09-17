@@ -51,7 +51,6 @@ class Handler extends ExceptionHandler
             $this->sendEmail($e);
         });
 
-
     }
 
     /**

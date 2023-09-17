@@ -24,10 +24,12 @@ class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithH
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     protected $request;
+
     public function __construct($request)
     {
         $this->request = $request;
     }
+
     public function collection(Collection $rows)
     {
         // dd($rows);

@@ -69,20 +69,22 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 $organizationEloquent->logo = $organizationEloquent->getMedia('image')[0]->original_url;
                 $organizationEloquent->update();
             }
-
+            // dd($organizationEloquent->sub_domain);
             //this will create subdomain
             $subdomain = Tenant::create([
-                'id' => $organizationEloquent->name,
+                'id' => $organizationEloquent->sub_domain,
                 'organization_id' => $organizationEloquent->id,
             ]);
 
-            $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
+            $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
+            DB::commit();
+
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());
         }
 
-        DB::commit();
+
     }
 
     //  update organization
@@ -114,11 +116,12 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 $organizationEloquent->logo = $organizationEloquent->getMedia('image')[0]->original_url;
                 $organizationEloquent->update();
             }
+            DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error);
         }
 
-        DB::commit();
+
     }
 }

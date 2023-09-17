@@ -44,16 +44,6 @@ let columns = [
 
 let rows = props.organization;
 
-//## truncatedText
-let truncatedText = (text) => {
-    if (text) {
-        if (text?.length <= 30) {
-            return text;
-        } else {
-            return text?.substring(0, 30) + "...";
-        }
-    }
-};
 
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
@@ -205,13 +195,7 @@ let selectedRole = ref("");
                             </template>
                             <VList>
                                 <VListItem
-                                    @click="
-                                        () =>
-                                            router.get(
-                                                route('organizations.test.edit')
-                                            )
-                                    "
-                                >
+                                    @click="() => router.get(route('organizations.edit',dataProps.row.id))">
                                     <VListItemTitle>Edit</VListItemTitle>
                                 </VListItem>
                                 <VListItem @click="deleteOrganization()">
