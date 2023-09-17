@@ -1,19 +1,19 @@
 <?php
 
-namespace Src\BlendedConcept\StoryBook\Application\Mappers;
+namespace Src\BlendedConcept\Disability\Application\Mappers;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\StoryBook\Domain\Model\Entities\SubLearningType;
-use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
+use Src\BlendedConcept\Disability\Domain\Model\Entities\SubLearningType;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 
 class SubLearningTypeMapper
 {
     public static function fromRequest(Request $request, $sub_learning_type_id = null): SubLearningType
     {
         return new SubLearningType(
-            id : $sub_learning_type_id,
-            learning_needs_id : $this->learning_needs_id,
-            name : $this->name,
+            id: $sub_learning_type_id,
+            learning_needs_id: $request->learning_needs_id,
+            name: $request->name,
         );
     }
 

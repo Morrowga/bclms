@@ -57,7 +57,7 @@ return [
         'index' => 'BlendedConcept/Finance/Presentation/Resources/SubScriptionInvoice/Index',
     ],
 
-    'disability_device' => [
+    'disability_type' => [
         'index' => 'BlendedConcept/Disability/Presentation/Resources/Disability/Index',
     ],
 

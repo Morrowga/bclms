@@ -9,8 +9,16 @@ import Create from "./LearningCreate.vue";
 import Edit from "./LearningEdit.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
-
-let props = defineProps();
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
+let props = defineProps(["disabilityTypes", "flash"]);
 
 const form = useForm({});
 let user = ref({});
@@ -18,7 +26,7 @@ let user = ref({});
 let columns = [
     {
         label: "Learning Need Type",
-        field: "learning_need",
+        field: "name",
         sortable: false,
     },
     {
@@ -37,46 +45,17 @@ let columns = [
         sortable: false,
     },
 ];
+serverPage.value = ref(props.disabilityTypes.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
 
-let rows = [
-    {
-        learning_need: "Social And Emotional Learning",
-        sub_learning: ["Self Management", "Self Awareness", "Social Awareness"],
-        description:
-            "Specific learning disabilities  that affect reading and language-based skills",
-    },
-    {
-        learning_need: "Daily Learning Skills",
-        sub_learning: ["Self Care", "Mobility", "Community"],
-        description:
-            "Trouble paying attention, controlling impulsive behaviors and overly-active",
-    },
-    {
-        learning_need: "Learning And Literacy",
-        sub_learning: ["Sentence Structure", "Grammer", "Communication"],
-        description: "Affects the ability to understand and learn math facts",
-    },
-    {
-        learning_need: "Numeracy",
-        sub_learning: ["Operation", "Problem Solving", "Data Analysis"],
-        description: "Problem with movement, coordination, language and speech",
-    },
-];
-
-const items = ref([
-    {
-        title: "Edit",
-        value: "edit",
-    },
-    {
-        title: "Delete",
-        value: "delete",
-    },
-]);
-
-const isDiability = ref(false);
-const isEditDiability = ref(false);
-
+let options = ref({
+    enabled: true,
+    mode: "pages",
+    perPage: props.disabilityTypes?.meta?.per_page,
+    setCurrentPage: props?.disabilityTypes?.meta?.current_page,
+    perPageDropdown: [10, 20, 50, 100],
+    dropdownAllowAll: false,
+});
 //## truncatedText
 let truncatedText = (text) => {
     if (text) {
@@ -124,13 +103,7 @@ const handleSubmit = ({ title }) => {
                             <VRow align="center">
                                 <VCol cols="6"></VCol>
                                 <VCol cols="6" class="text-end">
-                                    <VBtn @click="isDiability = true">
-                                        <span
-                                            class="text-uppercase text-white pl-4 pr-4"
-                                        >
-                                            Add
-                                        </span>
-                                    </VBtn>
+                                    <Create />
                                 </VCol>
                             </VRow>
                         </div>
@@ -141,13 +114,16 @@ const handleSubmit = ({ title }) => {
                     <vue-good-table
                         class="role-data-table"
                         styleClass="vgt-table"
-                        v-on:selected-rows-change="selectionChanged"
+                        @column-filter="onColumnFilter"
+                        :totalRows="props.disabilityTypes.meta.total"
+                        :selected-rows-change="selectionChanged"
+                        :pagination-options="options"
+                        :rows="props.disabilityTypes.data"
                         :columns="columns"
-                        :rows="rows"
                         :select-options="{
-                            enabled: false,
+                            enabled: true,
+                            selectOnCheckboxOnly: true,
                         }"
-                        :pagination-options="{ enabled: true }"
                     >
                         <template #table-row="dataProps">
                             <div
@@ -156,12 +132,12 @@ const handleSubmit = ({ title }) => {
                             >
                                 <v-chip
                                     v-for="sublearn in dataProps.row
-                                        .sub_learning"
+                                        .sub_learnings"
                                     :key="sublearn"
                                     class="ma-2"
                                     color="primary"
                                     size="small"
-                                    >{{ sublearn }}</v-chip
+                                    >{{ sublearn.name }}</v-chip
                                 >
                             </div>
                             <div v-if="dataProps.column.field == 'action'">
@@ -176,14 +152,14 @@ const handleSubmit = ({ title }) => {
                                         />
                                     </template>
                                     <VList>
+                                        <Edit
+                                            :disability_type="dataProps.row"
+                                        />
                                         <VListItem
-                                            @click="isEditDiability = true"
+                                            @click="
+                                                deleteItem(dataProps.row.id)
+                                            "
                                         >
-                                            <VListItemTitle
-                                                >Edit</VListItemTitle
-                                            >
-                                        </VListItem>
-                                        <VListItem @click="deleteItem()">
                                             <VListItemTitle
                                                 >Delete</VListItemTitle
                                             >
@@ -192,6 +168,48 @@ const handleSubmit = ({ title }) => {
                                 </VMenu>
                             </div>
                         </template>
+
+                        <template #pagination-bottom>
+                            <VRow class="pa-4">
+                                <VCol
+                                    cols="12"
+                                    class="d-flex justify-space-between"
+                                >
+                                    <span>
+                                        Showing
+                                        {{ props.disabilityTypes.meta.from }}
+                                        to
+                                        {{ props.disabilityTypes.meta.to }}
+                                        of
+                                        {{ props.disabilityTypes.meta.total }}
+                                        entries
+                                    </span>
+                                    <div class="d-flex">
+                                        <div class="d-flex align-center">
+                                            <span class="me-2">Show</span>
+                                            <VSelect
+                                                v-model="serverPerPage"
+                                                density="compact"
+                                                :items="options.perPageDropdown"
+                                            >
+                                            </VSelect>
+                                        </div>
+                                        <VPagination
+                                            v-model="serverPage"
+                                            size="small"
+                                            :total-visible="5"
+                                            :length="
+                                                props.disabilityTypes.meta
+                                                    .last_page
+                                            "
+                                            @next="onPageChange"
+                                            @prev="onPageChange"
+                                            @click="onPageChange"
+                                        />
+                                    </div>
+                                </VCol>
+                            </VRow>
+                        </template>
                     </vue-good-table>
 
                     <VDivider />
@@ -199,18 +217,4 @@ const handleSubmit = ({ title }) => {
             </section>
         </VCol>
     </VRow>
-
-    <Create
-        v-model:isDialogVisible="isDiability"
-        :user-data="user"
-        :form="form"
-        @submit="handleSubmit"
-    />
-
-    <Edit
-        v-model:isDialogVisible="isEditDiability"
-        :user-data="user"
-        :form="form"
-        @submit="handleSubmit"
-    />
 </template>

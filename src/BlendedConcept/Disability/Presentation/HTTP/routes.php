@@ -3,11 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use Src\BlendedConcept\Disability\Presentation\HTTP\AccessibilityDeviceController;
 use Src\BlendedConcept\Disability\Presentation\HTTP\DisabilityDeviceController;
+use Src\BlendedConcept\Disability\Presentation\HTTP\LearningNeedController;
 use Src\BlendedConcept\Disability\Presentation\HTTP\SetAccessibilityController;
+use Src\BlendedConcept\Disability\Presentation\HTTP\ThemeController;
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::resource('disability_device', DisabilityDeviceController::class);
+    Route::resource('disability_type', DisabilityDeviceController::class);
+    Route::resource('disability_themes', ThemeController::class);
+    Route::resource('learning_need', LearningNeedController::class);
     Route::get('/accessibility_device', [AccessibilityDeviceController::class, 'index'])->name('accessibility_device.index');
     Route::get('/accessibility_device/edit', [AccessibilityDeviceController::class, 'edit'])->name('accessibility_device.edit');
     Route::get('/accessibility_device/create', [AccessibilityDeviceController::class, 'create'])->name('accessibility_device.create');

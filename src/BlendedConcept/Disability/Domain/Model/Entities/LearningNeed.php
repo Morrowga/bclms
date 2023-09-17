@@ -1,15 +1,16 @@
 <?php
 
-namespace Src\BlendedConcept\StoryBook\Domain\Model\Entities;
+namespace Src\BlendedConcept\Disability\Domain\Model\Entities;
 
 use Src\Common\Domain\Entity;
 
-class Theme extends Entity
+class LearningNeed extends Entity
 {
     public function __construct(
         public readonly ?int $id,
         public readonly string $name,
-        public readonly ?string $description,
+        public readonly string $description,
+
     ) {
     }
 

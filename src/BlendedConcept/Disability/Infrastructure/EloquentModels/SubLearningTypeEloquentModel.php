@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels;
+namespace Src\BlendedConcept\Disability\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,17 +15,17 @@ class SubLearningTypeEloquentModel extends Model
 
     protected $fillable = [
         'id',
-        'learning_needs_id',
+        'learning_need_id',
         'name',
     ];
 
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('name', 'like', '%'.$search.'%');
+            $query->where('name', 'like', '%' . $search . '%');
         });
     }
 }

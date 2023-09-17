@@ -1,24 +1,24 @@
 <?php
 
-namespace Src\BlendedConcept\StoryBook\Application\DTO;
+namespace Src\BlendedConcept\Disability\Application\DTO;
 
 use Illuminate\Http\Request;
 
-class ThemeData
+class LearningNeedData
 {
     public function __construct(
         public readonly ?int $id,
         public readonly string $name,
-        public readonly ?string $description,
+        public readonly string $description,
     ) {
     }
 
-    public static function fromRequest(Request $request, $theme_id): ThemeData
+    public static function fromRequest(Request $request, $learning_need): LearningNeedData
     {
         return new self(
-            id : $theme_id,
-            name : $this->name,
-            description : $this->description,
+            id: $learning_need->id,
+            name: $request->name,
+            description: $request->description,
         );
     }
 

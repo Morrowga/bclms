@@ -3,9 +3,9 @@
 namespace Src\BlendedConcept\Disability\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Disability\Domain\Model\DisabilityType;
+use Src\BlendedConcept\Disability\Domain\Model\Entities\Theme;
 
-class DisabilityTypeData
+class ThemeData
 {
     public function __construct(
         public readonly ?int $id,
@@ -15,23 +15,23 @@ class DisabilityTypeData
     ) {
     }
 
-    public static function fromRequest(Request $request, $disabilityType): DisabilityTypeData
+    public static function fromRequest(Request $request, $theme): ThemeData
     {
 
         return new self(
-            id: $disabilityType->id,
+            id: $theme->id,
             name: $request->name,
             descripton: $request->description,
 
         );
     }
 
-    public static function fromEloquent(DisabilityType $disabilityType): self
+    public static function fromEloquent(Theme $theme): self
     {
         return new self(
-            id: $disabilityType->id,
-            name: $disabilityType->name,
-            descripton: $disabilityType->description,
+            id: $theme->id,
+            name: $theme->name,
+            descripton: $theme->description,
 
         );
     }
