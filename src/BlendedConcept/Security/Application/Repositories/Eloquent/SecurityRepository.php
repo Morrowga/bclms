@@ -41,6 +41,7 @@ class SecurityRepository implements SecurityRepositoryInterface
         //set roles
         $users = UserResource::collection(UserEloquentModel::filter($filters)
             ->with('role', 'b2bUser')
+            ->whereNot('role_id', 6)
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
         return $users;
@@ -297,6 +298,5 @@ class SecurityRepository implements SecurityRepositoryInterface
             "b2csubscriper_count" => $b2csubscriper_count,
             "user_count" => $user_count
         ];
-
     }
 }

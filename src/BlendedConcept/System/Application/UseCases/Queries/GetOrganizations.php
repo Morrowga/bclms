@@ -9,13 +9,13 @@ class GetOrganizations implements QueryInterface
 {
     private OrganizationRepositoryInterface $repository;
 
-    public function __construct()
+    public function __construct(private readonly array $filters)
     {
         $this->repository = app()->make(OrganizationRepositoryInterface::class);
     }
 
     public function handle()
     {
-        return $this->repository->getOrganizations();
+        return $this->repository->getOrganizations($this->filters);
     }
 }

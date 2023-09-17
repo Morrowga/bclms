@@ -11,7 +11,6 @@ import { AppContentLayoutNav, ContentWidth, FooterType, NavbarType } from '@layo
 
 var themsCustomize = JSON.parse(localStorage.getItem("site_theme"));
 
-console.log(themsCustomize,"what the fuck")
 
 console.log(Skins.Default)
 

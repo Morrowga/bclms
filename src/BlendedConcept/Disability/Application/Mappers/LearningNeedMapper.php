@@ -1,19 +1,19 @@
 <?php
 
-namespace Src\BlendedConcept\StoryBook\Application\Mappers;
+namespace Src\BlendedConcept\Disability\Application\Mappers;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\StoryBook\Domain\Model\Entities\LearningNeed;
-use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\LearningNeedEloquentModel;
+use Src\BlendedConcept\Disability\Domain\Model\Entities\LearningNeed;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\LearningNeedEloquentModel;
 
 class LearningNeedMapper
 {
     public static function fromRequest(Request $request, $learning_need_id = null): LearningNeed
     {
         return new LearningNeed(
-            id : $learning_need_id,
-            name : $this->name,
-            description : $this->description,
+            id: $learning_need_id,
+            name: $request->name,
+            description: $request->description
         );
     }
 

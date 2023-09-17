@@ -1,123 +1,117 @@
 <script setup>
 import { Link } from "@inertiajs/inertia-vue3";
-const props = defineProps({
-    form: {
-        type: Object,
-    },
-    userData: {
-        type: Object,
-        required: false,
-        default: () => ({
-            theme: "",
-            description: "",
-        }),
-    },
-    isDialogVisible: {
-        type: Boolean,
-        required: true,
-    },
+import { useForm } from "@inertiajs/vue3";
+import { SuccessDialog } from "@actions/useSuccess";
+import { requiredValidator } from "@validators";
+const props = defineProps({});
+const form = useForm({
+    name: "",
+    description: "",
 });
-
-const emit = defineEmits(["submit", "update:isDialogVisible"]);
-
-const userData = ref(structuredClone(toRaw(props.userData)));
-const isUseAsBillingAddress = ref(false);
-
-watch(props, () => {
-    userData.value = structuredClone(toRaw(props.userData));
-});
-
-const onFormSubmit = () => {
-    // emit('submit', userData.value)
-    emit("submit", { title: "You have succesfully created a disability type" });
-    emit("update:isDialogVisible", false);
+const isDialogVisible = ref(false);
+const isFormValid = ref(false);
+let refForm = ref();
+let handleSubmit = () => {
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("disability_themes.store"), {
+                onSuccess: () => {
+                    SuccessDialog({ title: props.flash?.successMessage });
+                    isDialogVisible.value = false;
+                },
+                onError: (error) => {},
+            });
+        }
+    });
 };
 
 const onFormReset = () => {
-    userData.value = structuredClone(toRaw(props.userData));
-    emit("update:isDialogVisible", false);
+    isDialogVisible.value = false;
 };
 
-const dialogVisibleUpdate = (val) => {
-    emit("update:isDialogVisible", val);
-};
+const dialogVisibleUpdate = (val) => {};
 </script>
 
 <template>
-    <VDialog
-        :width="$vuetify.display.smAndDown ? 'auto' : 600"
-        :model-value="props.isDialogVisible"
-        @update:model-value="dialogVisibleUpdate"
-    >
-        <VCard class="pa-sm-9 pa-5">
-            <!-- 👉 dialog close btn -->
-            <DialogCloseBtn variant="text" size="small" @click="onFormReset" />
+    <div>
+        <VBtn @click="isDialogVisible = true">
+            <span class="text-uppercase text-white pl-4 pr-4"> Add </span>
+        </VBtn>
+        <VDialog v-model="isDialogVisible" max-width="600">
+            <VCard class="pa-sm-9 pa-5">
+                <!-- 👉 dialog close btn -->
+                <DialogCloseBtn
+                    variant="text"
+                    size="small"
+                    @click="onFormReset"
+                />
 
-            <VCardItem class="text-left">
-                <VCardTitle class="te mb-2 tiggie-title">
-                    Add Theme
-                </VCardTitle>
-            </VCardItem>
+                <VCardItem class="text-left">
+                    <VCardTitle class="te mb-2 tiggie-title">
+                        Add Theme
+                    </VCardTitle>
+                </VCardItem>
 
-            <VCardText>
-                <!-- 👉 Form -->
-                <VForm class="mt-6" @submit.prevent="onFormSubmit">
-                    <VRow>
-                        <!-- 👉 Contact -->
-                        <VCol cols="12" md="12">
-                            <VLabel class="tiggie-label required"
-                                >Theme Name</VLabel
+                <VCardText>
+                    <!-- 👉 Form -->
+                    <VForm
+                        class="mt-6"
+                        ref="refForm"
+                        v-model="isFormValid"
+                        @submit.prevent="handleSubmit"
+                    >
+                        <VRow>
+                            <!-- 👉 Contact -->
+                            <VCol cols="12" md="12">
+                                <VLabel class="tiggie-label">Theme Name</VLabel>
+                                <VTextField
+                                    type="text"
+                                    class="tiggie-resize-input-text"
+                                    v-model="form.name"
+                                    :rules="[requiredValidator]"
+                                />
+                            </VCol>
+
+                            <!-- 👉 Contact -->
+                            <VCol cols="12" md="12">
+                                <VLabel class="tiggie-label"
+                                    >Description</VLabel
+                                >
+                                <VTextarea
+                                    placeholder="Type here ...."
+                                    v-model="form.description"
+                                    auto-grow
+                                    rows="5"
+                                />
+                            </VCol>
+
+                            <!-- 👉 Submit and Cancel -->
+                            <VCol
+                                cols="12"
+                                class="d-flex flex-wrap justify-space-between gap-10 pt-8"
                             >
-                            <VTextField
-                                type="text"
-                                class="tiggie-resize-input-text"
-                                v-model="userData.theme"
-                            />
-                        </VCol>
-
-                        <!-- 👉 Contact -->
-                        <VCol cols="12" md="12">
-                            <VLabel class="tiggie-label">Description</VLabel>
-                            <VTextarea
-                                placeholder="Type here ...."
-                                v-model="userData.description"
-                                auto-grow
-                                rows="5"
-                            />
-                        </VCol>
-
-                        <!-- 👉 Submit and Cancel -->
-                        <VCol
-                            cols="12"
-                            class="d-flex flex-wrap justify-space-between gap-10 pt-8"
-                        >
-                            <!-- <VBtn color="gray" text-color="white" height="58" @click="onFormReset">
-                                <Link :href="route('userprofile')" class="pl-5 pr-5">
+                                <VBtn
+                                    color="gray"
+                                    text-color="white"
+                                    height="58"
+                                    class="pl-16 pr-16"
+                                    @click="onFormReset"
+                                >
                                     Cancel
-                                </Link>
-                            </VBtn>
-                            <VBtn type="submit" color="primary" height="58" class="">
-                                <span class="pl-5 pr-5 text-white">
-                                    Save
-                                </span>
-                            </VBtn> -->
-                            <VBtn
-                                color="gray"
-                                text-color="white"
-                                height="58"
-                                class="pl-16 pr-16"
-                                @click="onFormReset"
-                            >
-                                Cancel
-                            </VBtn>
+                                </VBtn>
 
-                            <VBtn type="submit" height="58" class="pl-16 pr-16">
-                                Submit
-                            </VBtn>
-                        </VCol>
-                    </VRow>
-                </VForm>
-            </VCardText>
-        </VCard>
-    </VDialog>
+                                <VBtn
+                                    type="submit"
+                                    height="58"
+                                    class="pl-16 pr-16"
+                                >
+                                    Submit
+                                </VBtn>
+                            </VCol>
+                        </VRow>
+                    </VForm>
+                </VCardText>
+            </VCard>
+        </VDialog>
+    </div>
 </template>

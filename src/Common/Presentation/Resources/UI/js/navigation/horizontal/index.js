@@ -68,7 +68,7 @@ export default [
         route_name: 'accessibility',
         access_module: "access_accessibility",
         children: [
-            { title: 'Manage Tags', url: '/disability_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'disability_device', access_module: "access_disabilityDevice", },
+            { title: 'Manage Tags', url: '/disability_type', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'disability_type', access_module: "access_disabilityDevice", },
             { title: 'Devices', url: '/accessibility_device', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'accessibility_device', access_module: "access_accessibilityDevice", },
         ]
     },

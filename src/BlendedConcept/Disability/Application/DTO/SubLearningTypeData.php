@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\StoryBook\Application\DTO;
+namespace Src\BlendedConcept\Disability\Application\DTO;
 
 use Illuminate\Http\Request;
 
@@ -13,12 +13,12 @@ class SubLearningTypeData
     ) {
     }
 
-    public static function fromRequest(Request $request, $sub_learning_type_id): SubLearningTypeData
+    public static function fromRequest(Request $request, $sub_learning_type): SubLearningTypeData
     {
         return new self(
-            id : $sub_learning_type_id,
-            learning_needs_id : $this->learning_needs_id,
-            name : $this->name,
+            id: $sub_learning_type->id,
+            learning_needs_id: $request->learning_needs_id,
+            name: $request->name,
         );
     }
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class DisabilityTypeEloquentModel extends Model
 {
     protected $table = 'disability_types';
-
+    protected $primaryKey = "id";
     protected $fillable = [
         'name',
         'description',
@@ -18,8 +18,8 @@ class DisabilityTypeEloquentModel extends Model
 
     public function scopeFilter($query, $filters)
     {
-        $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            $query->where('name', 'like', '%' . $search . '%');
         });
     }
 }
