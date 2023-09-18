@@ -15,7 +15,8 @@ import {
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
 const props = defineProps(["subscriptions", "flash"]);
-
+let page = usePage();
+let user_role = computed(() => page.props.user_info.user_role.name);
 //## start datatable section
 let columns = [
     {
@@ -185,7 +186,10 @@ const getInvoice = () => {
                                 />
                             </template>
                             <VList>
-                                <VListItem @click="() => {}">
+                                <VListItem
+                                    @click="() => {}"
+                                    v-if="user_role == 'BC Superadmin'"
+                                >
                                     <UpdateB2bSubscription
                                         :key="dataProps.row.id"
                                         :subscription="dataProps.row"

@@ -3,7 +3,16 @@ import { defineProps, ref, defineEmits } from "vue";
 
 const uploadedImages = ref([]);
 
-const props = defineProps(["data_type"]);
+const props = defineProps({
+    data_type: {
+        type: String,
+        default: "user",
+    },
+    hide_count: {
+        type: Boolean,
+        default: false,
+    },
+});
 
 let emit = defineEmits("update:modelValue");
 const handleDrop = (event) => {
@@ -28,8 +37,8 @@ const removeUploadedItem = (index) => {
 };
 </script>
 <template>
-    <VCardText>
-        <p class="pppangram-bold ml-5 fs-20 t-black">
+    <VCardText class="pa-0">
+        <p class="pppangram-bold ml-5 fs-20 t-black" :hidden="props.hide_count">
             <strong class="fs-20 l-blue">2</strong>
             {{ type }} Remaining
         </p>

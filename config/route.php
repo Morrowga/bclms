@@ -43,6 +43,7 @@ return [
         'create' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Create',
         'edit' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Edit',
         'show' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Show',
+        'addSubscription' => 'BlendedConcept/Organization/Presentation/Resources/Organization/AddSubscription'
     ],
 
     'plans' => [
@@ -211,4 +212,5 @@ return [
 
     //resource
     'resource' => 'BlendedConcept/Library/Presentation/Resources/Resource/Index',
+
 ];

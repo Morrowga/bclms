@@ -18,6 +18,8 @@ const pages = {
 
     "BlendedConcept/Organization/Presentation/Resources/Organization/Show": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/Show.vue'),
 
+    "BlendedConcept/Organization/Presentation/Resources/Organization/AddSubscription": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/AddSubscription.vue'),
+
 
     /***
      * this below contains plans lists that will used for superadmin

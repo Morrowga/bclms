@@ -3,8 +3,11 @@
 namespace Src\BlendedConcept\Organization\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
+use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
 use Src\BlendedConcept\Finance\Domain\Model\Subscription;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2bSubscriptionEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
 use Src\BlendedConcept\Organization\Application\Mappers\OrganizationMapper;
 use Src\BlendedConcept\Organization\Domain\Model\Organization;
@@ -76,15 +79,12 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 'organization_id' => $organizationEloquent->id,
             ]);
 
-            $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
+            $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
             DB::commit();
-
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());
         }
-
-
     }
 
     //  update organization
@@ -121,7 +121,36 @@ class OrganizationRepository implements OrganizationRepositoryInterface
             DB::rollBack();
             dd($error);
         }
+    }
 
+    public function addOrganizationSubscription(SubscriptionData $subscriptionData)
+    {
+        DB::beginTransaction();
 
+        try {
+            $subscriptionDataArray = $subscriptionData->toArray();
+            $subscriptionEloquent = SubscriptionEloquentModel::query()->findOrFail($subscriptionData->id);
+            $subscriptionEloquent->fill($subscriptionDataArray);
+            $subscriptionEloquent->update();
+            $b2bSubscriptionEloquent = new B2bSubscriptionEloquentModel();
+            $b2bSubscriptionEloquent->subscription_id = $subscriptionEloquent->id;
+            $b2bSubscriptionEloquent->organization_id = $subscriptionDataArray['b2b_subscription']['organization_id'];
+            $b2bSubscriptionEloquent->storage_limit = $subscriptionDataArray['b2b_subscription']['storage_limit'];
+            $b2bSubscriptionEloquent->num_student_license = $subscriptionDataArray['b2b_subscription']['num_student_license'];
+            $b2bSubscriptionEloquent->num_teacher_license = $subscriptionDataArray['b2b_subscription']['num_teacher_license'];
+            $b2bSubscriptionEloquent->save();
+            //  delete image if reupload or insert if does not exit
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+                $b2bSubscriptionEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_payment_receipt');
+            }
+            if ($b2bSubscriptionEloquent->getMedia('image')->isNotEmpty()) {
+                $b2bSubscriptionEloquent->logo = $b2bSubscriptionEloquent->getMedia('image')[0]->original_url;
+                $b2bSubscriptionEloquent->update();
+            }
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            dd($error);
+        }
     }
 }

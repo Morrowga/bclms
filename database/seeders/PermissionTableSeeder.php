@@ -364,6 +364,26 @@ class PermissionTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'description' => 'Users can access profilling surveys and their configurations within the application.',
             ],
+            [
+                'name' => 'access_bcstaffOrganization',
+                'guard_name' => 'web',
+                'description' => 'Users can access bcstaff organization subscription and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_bcstaffOrganization',
+                'guard_name' => 'web',
+                'description' => 'Users can create bcstaff organization subscription surveys and their configurations within the application.',
+            ],
+            [
+                'name' => 'access_bcstaffSubscription',
+                'guard_name' => 'web',
+                'description' => 'Users can access bcstaff Subscription and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_bcstaffSubscription',
+                'guard_name' => 'web',
+                'description' => 'Users can create bcstaff Subscription surveys and their configurations within the application.',
+            ],
         ];
         foreach ($permissions as $permission) {
             PermissionEloquentModel::create($permission);
