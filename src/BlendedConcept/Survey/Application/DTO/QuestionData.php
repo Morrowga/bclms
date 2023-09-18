@@ -34,7 +34,7 @@ class QuestionData
             'survey_id' => $this->survey_id,
             'question_type' => $this->question_type,
             'question' => $this->question,
-            'options' => $this->options
+            'options' => $this->options,
         ];
     }
 }

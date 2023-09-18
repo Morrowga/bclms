@@ -2,22 +2,19 @@
 
 namespace Src\BlendedConcept\Survey\Presentation\HTTP;
 
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Response;
+use Inertia\Inertia;
 use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
 use Src\BlendedConcept\Survey\Application\Mappers\SurveyMapper;
 use Src\BlendedConcept\Survey\Application\Policies\SurveyPolicy;
-use Src\BlendedConcept\Survey\Application\Mappers\QuestionMapper;
 use Src\BlendedConcept\Survey\Application\Requests\StoreSurveyRequest;
-use Src\BlendedConcept\Survey\Application\UseCases\Queries\ShowSurvey;
 use Src\BlendedConcept\Survey\Application\Requests\UpdateSurveyRequest;
-use Src\BlendedConcept\Survey\Application\Requests\StoreQuestionRequest;
-use Src\BlendedConcept\Survey\Application\UseCases\Queries\ShowSurveyData;
-use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
-use Src\BlendedConcept\Survey\Application\UseCases\Commands\Survey\StoreSurveyCommand;
 use Src\BlendedConcept\Survey\Application\UseCases\Commands\Survey\DeleteSurveyCommand;
+use Src\BlendedConcept\Survey\Application\UseCases\Commands\Survey\StoreSurveyCommand;
 use Src\BlendedConcept\Survey\Application\UseCases\Commands\Survey\UpdateSurveyCommand;
 use Src\BlendedConcept\Survey\Application\UseCases\Queries\GetUserExperienceSurveyList;
+use Src\BlendedConcept\Survey\Application\UseCases\Queries\ShowSurvey;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 
 class UserExperienceSurveyController
 {
@@ -33,6 +30,7 @@ class UserExperienceSurveyController
 
             // Get user list
             $surveys = (new GetUserExperienceSurveyList())->handle();
+
             // return $surveys;
             // Render Inertia view
             return Inertia::render(config('route.userexperiencesurvey.index'), [
@@ -49,7 +47,8 @@ class UserExperienceSurveyController
         return Inertia::render(config('route.userexperiencesurvey.create'));
     }
 
-    public function store(StoreSurveyRequest $request){
+    public function store(StoreSurveyRequest $request)
+    {
         // abort_if(authorize('create', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
@@ -81,19 +80,20 @@ class UserExperienceSurveyController
     public function edit($id)
     {
         $survey = (new ShowSurvey($id))->handle();
+
         // dd('hello');
-        return Inertia::render(config('route.userexperiencesurvey.edit'),[
+        return Inertia::render(config('route.userexperiencesurvey.edit'), [
             'survey' => $survey,
         ]);
     }
 
-     /**
+    /**
      * Update an survey.
      *
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateSurveyRequest $request,$survey)
+    public function update(UpdateSurveyRequest $request, $survey)
     {
         // abort_if(authorize('edit', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -119,7 +119,6 @@ class UserExperienceSurveyController
             return redirect()->route('userexperiencesurvey.index')->with('SystemErrorMessage', $e->getMessage());
         }
     }
-
 
     /**
      * Delete an survey.

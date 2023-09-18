@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Survey\Infrastructure\EloquentModels;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\QuestionOptionEloquentModel;
+use Illuminate\Database\Eloquent\Model;
 
 class QuestionEloquentModel extends Model
 {
@@ -25,7 +24,8 @@ class QuestionEloquentModel extends Model
         return $this->hasMany(QuestionOptionEloquentModel::class, 'question_id', 'id');
     }
 
-    public function survey(){
+    public function survey()
+    {
         return $this->belongsTo(SurveyEloquentModel::class, 'survey_id', 'id');
     }
 }

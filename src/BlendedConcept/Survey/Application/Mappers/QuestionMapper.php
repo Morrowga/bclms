@@ -2,13 +2,12 @@
 
 namespace Src\BlendedConcept\Survey\Application\Mappers;
 
-use Illuminate\Http\Request;
 use Src\BlendedConcept\Survey\Domain\Model\Entities\Question;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\QuestionEloquentModel;
 
 class QuestionMapper
 {
-    public static function fromRequest(Array $request, $question_id = null): Question
+    public static function fromRequest(array $request, $question_id = null): Question
     {
 
         return new Question(

@@ -18,7 +18,7 @@ class StoreQuestionRequest extends FormRequest
             'survey_id' => ['required'],
             'question_type' => [
                 'required',
-                Rule::in(['SINGLE_CHOICE', 'MULTIPLE_RESPONSE', 'RATING'])
+                Rule::in(['SINGLE_CHOICE', 'MULTIPLE_RESPONSE', 'RATING']),
             ],
             'question' => ['required', 'string'],
             'options' => ['required', 'string'],

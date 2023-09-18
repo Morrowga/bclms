@@ -2,11 +2,10 @@
 
 namespace Src\BlendedConcept\Survey\Domain\Repositories;
 
-use Src\BlendedConcept\Survey\Domain\Model\Survey;
-use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
 use Src\BlendedConcept\Survey\Application\DTO\QuestionData;
+use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
 use Src\BlendedConcept\Survey\Domain\Model\Entities\Question;
-
+use Src\BlendedConcept\Survey\Domain\Model\Survey;
 
 interface SurveyRepositoryInterface
 {

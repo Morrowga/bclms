@@ -9,7 +9,10 @@ use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEl
 interface DisabilityTypeRepositoryInterface
 {
     public function getDisabilityTypes($filters);
+
     public function createDisability(DisabilityType $disabilityType);
+
     public function updateDisability(DisabilityTypeData $disabilityTypeData);
+
     public function deleteDisability(DisabilityTypeEloquentModel $disabilityType);
 }

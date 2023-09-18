@@ -2,7 +2,6 @@
 
 namespace Src\BlendedConcept\Disability\Application\UseCases\Commands\DisabilityTypes;
 
-use Src\BlendedConcept\Disability\Application\DTO\DisabilityTypeData;
 use Src\BlendedConcept\Disability\Domain\Repositories\DisabilityTypeRepositoryInterface;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\Common\Domain\CommandInterface;

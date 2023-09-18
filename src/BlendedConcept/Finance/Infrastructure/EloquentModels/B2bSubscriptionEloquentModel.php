@@ -14,6 +14,7 @@ class B2bSubscriptionEloquentModel extends Model implements HasMedia
     use HasFactory, InteractsWithMedia;
 
     protected $table = 'b2b_subscriptions';
+
     protected $appends = [
         'image',
     ];
@@ -26,6 +27,7 @@ class B2bSubscriptionEloquentModel extends Model implements HasMedia
         'num_teacher_license',
         'num_student_license',
     ];
+
     public function getImageAttribute()
     {
         return $this->getMedia('image');

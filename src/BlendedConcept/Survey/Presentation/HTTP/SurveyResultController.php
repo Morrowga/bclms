@@ -12,7 +12,8 @@ class SurveyResultController
         $filters = request()->only(['question', 'search', 'perPage']);
 
         $surveyResults = (new GetSurveyResults($filters))->handle();
-        return Inertia::render(config('route.survey_results.index'),[
+
+        return Inertia::render(config('route.survey_results.index'), [
             'surveyResults' => $surveyResults,
         ]);
     }

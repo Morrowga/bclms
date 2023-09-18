@@ -26,7 +26,6 @@ class SurveySeeder extends Seeder
          * @return int|null The ID of the super admin role if found, or null if no matching role is found.
          * author @hareom284
          */
-
         $data = [
             'id' => 1,
             'title' => 'Profiling Survey',

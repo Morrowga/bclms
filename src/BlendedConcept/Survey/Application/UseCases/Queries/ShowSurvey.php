@@ -2,8 +2,8 @@
 
 namespace Src\BlendedConcept\Survey\Application\UseCases\Queries;
 
-use Src\Common\Domain\QueryInterface;
 use Src\BlendedConcept\Survey\Domain\Repositories\SurveyRepositoryInterface;
+use Src\Common\Domain\QueryInterface;
 
 class ShowSurvey implements QueryInterface
 {
