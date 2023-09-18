@@ -89,6 +89,12 @@ return [
             'url' => env('APP_URL').'/storage/sitefavico',
             'visibility' => 'public',
         ],
+        'media_reward' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/reward'),
+            'url' => env('APP_URL').'/storage/reward',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',

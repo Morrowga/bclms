@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\Survey\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
 
 class SurveyData
 {
@@ -50,8 +49,8 @@ class SurveyData
             'appear_on' => $this->appear_on,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'requried'=> $this->required,
-            'repeat'=> $this->repeat,
+            'requried' => $this->required,
+            'repeat' => $this->repeat,
         ];
     }
 }

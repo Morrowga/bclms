@@ -18,5 +18,4 @@ class QuestionEloquentModel extends Model
         'question_type',
         'question',
     ];
-
 }

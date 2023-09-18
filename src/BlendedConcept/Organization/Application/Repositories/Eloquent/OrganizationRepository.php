@@ -84,7 +84,6 @@ class OrganizationRepository implements OrganizationRepositoryInterface
             dd($error->getMessage());
         }
 
-
     }
 
     //  update organization
@@ -121,7 +120,6 @@ class OrganizationRepository implements OrganizationRepositoryInterface
             DB::rollBack();
             dd($error);
         }
-
 
     }
 }

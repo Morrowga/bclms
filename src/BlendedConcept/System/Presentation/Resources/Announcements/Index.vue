@@ -29,6 +29,8 @@ let currentAnnouncement = ref();
 console.log(props.announcements)
 const isAddNewAnnouncementDrawerVisible = ref(false);
 const isEditAnnouncementDrawerVisible = ref(false);
+
+
 serverPage.value = ref(props.announcements.meta.current_page ?? 1);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 serverPerPage.value = ref(10);
@@ -185,48 +187,6 @@ const deleteAnnouncement = (id) => {
                                     truncatedText(props.row.to)
                                 }}</span>
                             </div>
-                            <!-- <div
-                                v-if="props.column.field == 'icon'"
-                                class="flex flex-wrap"
-                            >
-                                <span class="text-center">
-                                    <VIcon :icon="props.row.icon"></VIcon>
-                                </span>
-                            </div> -->
-                            <!-- <div v-if="props.column.field == 'action'">
-                                <VMenu location="end">
-                                    <template #activator="{ props }">
-                                        <VIcon
-                                            v-bind="props"
-                                            size="24"
-                                            icon="mdi-dots-horizontal"
-                                            color="black"
-                                            class="mt-n4"
-                                        />
-                                    </template>
-                                    <VList>
-                                        <VListItem
-                                            @click="
-                                                () =>
-                                                    router.get(
-                                                        route(
-                                                            'announcements.edit',props.row.id
-                                                        )
-                                                    )
-                                            "
-                                        >
-                                            <VListItemTitle>Edit</VListItemTitle>
-                                        </VListItem>
-                                        <VListItem
-                                            @click="
-                                                deleteAnnouncement(props.row.id)
-                                            "
-                                        >
-                                            <VListItemTitle>Delete</VListItemTitle>
-                                        </VListItem>
-                                    </VList>
-                                </VMenu>
-                            </div> -->
                         </template>
                         <template #pagination-bottom>
                             <VRow class="pa-4">

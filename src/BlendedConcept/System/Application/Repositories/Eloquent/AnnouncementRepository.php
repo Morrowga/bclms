@@ -3,19 +3,19 @@
 namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
-use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
-use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
-use Src\BlendedConcept\System\Domain\Resources\AnnouncementResource;
 use Src\BlendedConcept\System\Application\Mappers\AnnouncementToB2BMapper;
 use Src\BlendedConcept\System\Application\Mappers\AnnouncementToB2CMapper;
 use Src\BlendedConcept\System\Application\Mappers\AnnouncementToBcStaffMapper;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
 use Src\BlendedConcept\System\Domain\Repositories\AnnouncementRepositoryInterface;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
+use Src\BlendedConcept\System\Domain\Resources\AnnouncementResource;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
 
 class AnnouncementRepository implements AnnouncementRepositoryInterface
 {
@@ -45,18 +45,18 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
                 foreach ($orgArray as $orgId) {
                     $orgAdmin = B2bUserEloquentModel::where('user_id', $orgId)->first();
                     // if(!empty($orgAdmin)){
-                        $requestContent = [
-                            'announcement_id' => (int) $announcement_id, // Ensure announcement_id is an integer
-                            'to_b2b_id' => (int) $orgAdmin->b2b_user_id, // Ensure to_b2b_id is an integer
-                            'is_cleared' => true,
-                        ];
+                    $requestContent = [
+                        'announcement_id' => (int) $announcement_id, // Ensure announcement_id is an integer
+                        'to_b2b_id' => (int) $orgAdmin->b2b_user_id, // Ensure to_b2b_id is an integer
+                        'is_cleared' => true,
+                    ];
 
-                        $announcementToB2B = AnnouncementToB2BMapper::fromRequest($requestContent);
+                    $announcementToB2B = AnnouncementToB2BMapper::fromRequest($requestContent);
 
-                        $announmentB2BEloquent = AnnouncementToB2BMapper::toEloquent($announcementToB2B);
-                        $announmentB2BEloquent->save();
+                    $announmentB2BEloquent = AnnouncementToB2BMapper::toEloquent($announcementToB2B);
+                    $announmentB2BEloquent->save();
 
-                        $orgAdmin->users->notify(new BcNotification(['message' => $request->title, 'from' => $request->by, 'to' => $orgAdmin->users->full_name, 'type' => $request->type ?? '']));
+                    $orgAdmin->users->notify(new BcNotification(['message' => $request->title, 'from' => $request->by, 'to' => $orgAdmin->users->full_name, 'type' => $request->type ?? '']));
                     // }
                 }
             }

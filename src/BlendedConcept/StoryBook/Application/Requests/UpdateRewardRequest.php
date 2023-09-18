@@ -1,10 +1,10 @@
 <?php
 
-namespace Src\BlendedConcept\ClassRoom\Application\Requests;
+namespace Src\BlendedConcept\StoryBook\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class storeClassRoomRequest extends FormRequest
+class UpdateRewardRequest extends FormRequest
 {
     public function authorize()
     {
@@ -20,15 +20,22 @@ class storeClassRoomRequest extends FormRequest
             'description' => [
                 'string',
             ],
-            'gold_coins' => [
+            'gold_coins_needed' => [
                 'required', 'numeric',
             ],
-            'silver_coins' => [
+            'silver_coins_needed' => [
                 'required', 'numeric',
             ],
             'rarity' => [
-                'required', 'string',
+                'required', 'not_in:SELECT',
             ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'rarity' => 'Please select rarity',
         ];
     }
 }

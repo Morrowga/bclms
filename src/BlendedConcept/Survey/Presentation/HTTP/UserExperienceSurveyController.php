@@ -4,7 +4,6 @@ namespace Src\BlendedConcept\Survey\Presentation\HTTP;
 
 use Inertia\Inertia;
 use Src\BlendedConcept\Survey\Application\Requests\StoreSurveyRequest;
-use Src\BlendedConcept\Survey\Application\Requests\StoreQuestionRequest;
 
 class UserExperienceSurveyController
 {
@@ -21,7 +20,8 @@ class UserExperienceSurveyController
         return Inertia::render(config('route.userexperiencesurvey.create'));
     }
 
-    public function store(StoreSurveyRequest $request){
+    public function store(StoreSurveyRequest $request)
+    {
         return $request->all();
     }
 
