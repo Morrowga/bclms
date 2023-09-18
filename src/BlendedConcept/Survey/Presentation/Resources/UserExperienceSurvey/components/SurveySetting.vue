@@ -40,47 +40,47 @@ const dialogVisibleUpdate = val => {
 }
 
 const userTypes = ref([
-    {
-        title: 'All',
-        value: 'All',
-    },
+    // {
+    //     title: 'All',
+    //     value: 'All',
+    // },
     {
         title: 'BC Staff',
-        value: 'BC Staff',
+        value: 'BC STAFF',
     },
     {
         title: 'Org Teacher',
-        value: 'Org Teacher',
+        value: 'ORG_TEACHER',
     },
     {
         title: 'B2C User',
-        value: 'B2C User',
+        value: 'B2C_USER',
     },
 ])
 
 const appearOn = ref([
     {
         title: 'Log In',
-        value: 'Log In',
+        value: 'LOG_IN',
     },
     {
         title: 'Log Out',
-        value: 'Log Out',
+        value: 'LOG_OUT',
     },
     {
         title: 'Book End',
-        value: 'Book End',
+        value: 'BOOK_END',
     },
     {
         title: 'Game End',
-        value: 'Game End',
+        value: 'GAME_END',
     },
 ])
 </script>
 
 <template>
     <VDialog :width="$vuetify.display.smAndDown ? 'auto' : 600" :model-value="props.isDialogVisible"
-        @update:model-value="dialogVisibleUpdate">
+        @update:model-value="dialogVisibleUpdate" persistent>
         <VCard class="">
             <!-- 👉 dialog close btn -->
             <DialogCloseBtn variant="text" size="small" @click="onFormReset" />

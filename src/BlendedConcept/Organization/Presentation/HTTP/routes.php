@@ -7,6 +7,8 @@ use Src\BlendedConcept\Organization\Presentation\HTTP\OrganizationTeacherStudent
 Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('organizations', OrganizationController::class);
+    Route::get('organizations/{organization}/addsubscription', [OrganizationController::class, 'addSubscription'])->name('organizations.addSubscription');
+    Route::put('organizations/{organization}/storesubscription', [OrganizationController::class, 'storeSubscription'])->name('organizations.storeSubscription');
 
     Route::get('/org_view_teacher_student', [OrganizationTeacherStudentController::class, 'index'])->name('org_view_teacher_student.index');
     Route::get('/org_view_teacher_student/teacher/show', [OrganizationTeacherStudentController::class, 'showTeacher'])->name('org_view_teacher_student.teacher.show');

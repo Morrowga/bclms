@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Survey\Infrastructure\EloquentModels;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\QuestionEloquentModel;
 
 class SurveyEloquentModel extends Model
 {
-    use HasFactory;
-
     protected $table = 'surveys';
 
     protected $fillable = [
@@ -24,6 +22,11 @@ class SurveyEloquentModel extends Model
         'required',
         'repeat',
     ];
+
+    public function questions()
+    {
+        return $this->hasMany(QuestionEloquentModel::class, 'survey_id', 'id');
+    }
 
     public function scopeFilter($query, $filters)
     {

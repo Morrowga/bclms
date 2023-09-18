@@ -13,15 +13,6 @@ const props = defineProps({
 const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
 const options = ref(['']);
-// const editFormData = ref(props.form);
-// options.value = props.form.options;
-
-// const form = useForm({
-//   id: editFormData.value.id,
-//   question_type: editFormData.value.question_type,
-//   question: editFormData.value.question,
-//   options: options.value
-// });
 
 const addOption = () => {
     props.form.options.push('');
@@ -57,6 +48,8 @@ const items = ref([
         value: "Rating",
     },
 ]);
+
+
 </script>
 
 <template>
@@ -105,12 +98,16 @@ const items = ref([
                             </VCol>
                             <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label">Options</VLabel>
-                                    <VRow v-for="(option, index) in props.form.options" :key="index">
-                                        <VCol cols="10">
-                                        <VTextField v-model="props.form.options[index]" />
-                                        </VCol>
-                                        <VCol cols="2">
-                                        <VBtn @click="removeOption(index)">-</VBtn>
+                                    <VRow>
+                                        <VCol cols="12" v-for="(option, index) in props.form.options" :key="index">
+                                            <div class="option-container">
+                                                <VIcon @click="removeOption(index)"  icon="mdi-minus-circle" size="md"  class="removeoption-btn"></VIcon>
+                                                <!-- <VBtn  size="sm" append-icon="mdi-minus-circle" rounded></VBtn> -->
+                                                <VTextField v-model="props.form.options[index]"
+                                                :rules="[requiredValidator]"
+                                                :error-messages="form?.errors?.options"
+                                                />
+                                            </div>
                                         </VCol>
                                     </VRow>
                                 </VCol>
@@ -123,8 +120,8 @@ const items = ref([
                                         "
                                         block
                                         @click="addOption"
-                                    >
-                                        <span class="tiggie-p">Type to add more options</span>
+                                        >
+                                        <span class="typemore pppangram-bold">Type to add more options</span>
                                     </VBtn>
                                 </VCol>
 
@@ -162,5 +159,29 @@ const items = ref([
 .e-survey-border {
     border-radius: 5px;
     border: 1px dashed rgba(40, 40, 40, 0.5);
+}
+.typemore{
+    color: rgba(40, 40, 40, 0.50) !important;
+    font-size: 16px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 26px !important; /* 162.5% */
+}
+
+.option-container {
+  position: relative; /* Make the container a positioning context */
+}
+.removeoption-btn {
+  position: absolute;
+  right: -1%;
+  top: -20%;
+  width: 20px;
+  cursor: pointer;
+  z-index: 1;
+  height: 20px;
+  color: #000;
+  border-radius: 50%; /* Makes the button circular */
+  /* padding: 5px !important; */
+  text-align: center;
 }
 </style>

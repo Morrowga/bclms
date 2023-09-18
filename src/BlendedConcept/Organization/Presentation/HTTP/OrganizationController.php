@@ -3,11 +3,16 @@
 namespace Src\BlendedConcept\Organization\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
 use Src\BlendedConcept\Organization\Application\Mappers\OrganizationMapper;
+
+use Src\BlendedConcept\Organization\Application\Requests\StoreOrganizationSubscriptionRequest;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\DeleteOrganizationCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\StoreOrganizationCommand;
+use Src\BlendedConcept\Organization\Application\UseCases\Commands\StoreOrganizationSubscriptionCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\UpdateOrganizationCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\GetOrganizationWithPagination;
 use Src\BlendedConcept\Organization\Domain\Services\OrganizationService;
@@ -33,7 +38,11 @@ class OrganizationController extends Controller
     {
         // Authorize user to view organization
 
-        abort_if(authorize('view', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(
+            !(authorize('viewBc', OrganizationPolicy::class) || authorize('view', OrganizationPolicy::class)),
+            Response::HTTP_FORBIDDEN,
+            '403 Forbidden'
+        );
 
         try {
 
@@ -114,12 +123,21 @@ class OrganizationController extends Controller
 
     public function update(UpdateOrganizationRequest $request, OrganizationEloquentModel $organization)
     {
-        abort_if(authorize('edit', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
 
-        $quickOrgAdminCreate = $this->organizationService->updateQuickOrgAdmin($organization, $request);
-        $updateOrganization = OrganizationData::fromRequest($request, $organization);
-        $updateOrganizationcommand = (new updateOrganizationCommand($updateOrganization));
-        $updateOrganizationcommand->execute();
+            abort_if(authorize('edit', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+            $quickOrgAdminCreate = $this->organizationService->updateQuickOrgAdmin($organization, $request);
+            $updateOrganization = OrganizationData::fromRequest($request, $organization);
+            $updateOrganizationcommand = (new updateOrganizationCommand($updateOrganization));
+            $updateOrganizationcommand->execute();
+        } catch (\Exception $error) {
+            return redirect()
+                ->route('organizations.index')
+                ->with([
+                    'systemErrorMessage' => $error->getCode(),
+                ]);
+        }
 
         return redirect()->route('organizations.index')->with('successMessage', 'Organization Updated Successfully!');
     }
@@ -135,13 +153,51 @@ class OrganizationController extends Controller
 
     public function destroy(OrganizationEloquentModel $organization)
     {
-        abort_if(authorize('destroy', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $tenant = Tenant::get();
-        // Domain::where('tenant_id', $tenant->id)->delete();
-        // $tenant->delete();
-        $deleteOrganization = (new DeleteOrganizationCommand($organization));
-        $deleteOrganization->execute();
+        try {
 
-        return redirect()->route('organizations.index')->with('successMessage', 'Organizations Deleted Successfully!');
+            abort_if(authorize('destroy', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            // $tenant = Tenant::get();
+            // Domain::where('tenant_id', $tenant->id)->delete();
+            // $tenant->delete();
+            $deleteOrganization = (new DeleteOrganizationCommand($organization));
+            $deleteOrganization->execute();
+            return redirect()->route('organizations.index')->with('successMessage', 'Organizations Deleted Successfully!');
+        } catch (\Exception $error) {
+            return redirect()
+                ->route('organizations.index')
+                ->with([
+                    'systemErrorMessage' => $error->getCode(),
+                ]);
+        }
+    }
+
+    public function addSubscription(OrganizationEloquentModel $organization)
+    {
+        return Inertia::render(config('route.organizations.addSubscription'), [
+            'organization' => $organization->load('subscription')
+        ]);
+    }
+
+    public function storeSubscription(StoreOrganizationSubscriptionRequest $request)
+    {
+        try {
+
+            // Abort if the user is not authorized to create organizations
+            // abort_if(authorize('create', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+            // Validate the request data
+            $subscription = SubscriptionEloquentModel::findOrFail($request->b2b_subscription['subscription_id']);
+            $updateSubscription = SubscriptionData::fromRequest($request, $subscription);
+            $saveOrganizaton = (new StoreOrganizationSubscriptionCommand($updateSubscription));
+            $saveOrganizaton->execute();
+
+            return redirect()->route('organizations.index')->with('successMessage', 'Organizations Created Successfully!');
+        } catch (\Exception $error) {
+            return redirect()
+                ->route('organizations.index')
+                ->with([
+                    'systemErrorMessage' => $error->getCode(),
+                ]);
+        }
     }
 }

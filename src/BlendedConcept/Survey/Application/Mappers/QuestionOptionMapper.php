@@ -8,13 +8,13 @@ use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\QuestionOptionEloque
 
 class QuestionOptionMapper
 {
-    public static function fromRequest(Request $request, $question_option_id = null): QuestionOption
+    public static function fromRequest(Array $request, $question_option_id = null): QuestionOption
     {
 
         return new QuestionOption(
             id: $question_option_id,
-            question_id: $request->question_id,
-            content: $request->content,
+            question_id: $request['question_id'],
+            content: $request['content'],
         );
     }
 

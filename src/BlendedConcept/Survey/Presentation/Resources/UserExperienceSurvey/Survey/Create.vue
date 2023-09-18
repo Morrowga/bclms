@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import { router } from "@inertiajs/core";
 import { SuccessDialog } from '@actions/useSuccess';
 import SurveyAdd from "../components/SurveyAdd.vue"
 import SurveySetting from "../components/SurveySetting.vue"
@@ -80,7 +81,7 @@ const handleSettingModalSubmit = (data) => {
     console.log(form);
     form.post(route("userexperiencesurvey.store"), {
         onSuccess: () => {
-            // SuccessDialog({ title: "You've successfully posted announcement" });
+            SuccessDialog({ title: "You've successfully created user experience survey." });
         },
         onError: (error) => {
             form.setError("title", error?.title);
@@ -111,7 +112,14 @@ const handleSettingModalSubmit = (data) => {
                                 color="secondary"
                                 text-color="white"
                                 variant="tonal"
-                                @click="isUserProfileEdit = true"
+                                @click="
+                                    () =>
+                                        router.get(
+                                            route(
+                                                'userexperiencesurvey.index'
+                                            )
+                                        )
+                                "
                                 height="50"
                                 class="mr-4"
                             >

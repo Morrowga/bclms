@@ -52,14 +52,18 @@ const removeOption = (index) => {
 const refForm = ref(null); // Define refForm
 
 const onFormSubmit = () => {
-    emit("submit", form);
-    generateRandomCombination();
-    form.id = randomCombination.value; // Assuming id should be cleared
-    form.question_type = null;
-    form.question = '';
-    options.value = ['']; // Reset options as needed
-    form.options = options.value;
-    emit("update:isDialogVisible", false);
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            emit("submit", form);
+            generateRandomCombination();
+            form.id = randomCombination.value; // Assuming id should be cleared
+            form.question_type = null;
+            form.question = '';
+            options.value = ['']; // Reset options as needed
+            form.options = options.value;
+            emit("update:isDialogVisible", false);
+        }
+    })
 };
 
 const onFormReset = () => {
@@ -72,15 +76,15 @@ const dialogVisibleUpdate = (val) => {
 const items = ref([
     {
         title: "Single Choice",
-        value: "Single Choice",
+        value: "SINGLE_CHOICE",
     },
     {
         title: "Multi Response",
-        value: "Multi Response",
+        value: "MULTIPLE_RESPONSE",
     },
     {
         title: "Rating",
-        value: "Rating",
+        value: "RATING",
     },
 ]);
 </script>
@@ -103,7 +107,7 @@ const items = ref([
 
             <VCardText>
                 <!-- 👉 Form -->
-                <VForm class="mt-6" @submit.prevent="onFormSubmit">
+                <VForm class="mt-6" ref="refForm" @submit.prevent="onFormSubmit">
                     <VContainer>
                         <VRow justify="center">
                             <!-- 👉 Contact -->
@@ -117,6 +121,7 @@ const items = ref([
                                     :items="items"
                                     rounded="50%"
                                     :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.question_type"
                                     placeholder="Select Question Type"
                                     density="compact"
                                 />
@@ -128,19 +133,22 @@ const items = ref([
                                 <VTextarea v-model="form.question"
                                     placeholder="Type here ...."
                                     :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.question"
                                     rows="5"
                                 />
                             </VCol>
                             <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label">Options</VLabel>
-                                    <VRow v-for="(option, index) in options" :key="index">
-                                        <VCol cols="10">
-                                        <VTextField v-model="options[index]"
-                                        :rules="[requiredValidator]"
-                                        />
-                                        </VCol>
-                                        <VCol cols="2">
-                                        <VBtn @click="removeOption(index)">-</VBtn>
+                                    <VRow>
+                                        <VCol cols="12" v-for="(option, index) in options" :key="index">
+                                            <div class="option-container">
+                                                <VIcon @click="removeOption(index)"  icon="mdi-minus-circle" size="md"  class="removeoption-btn"></VIcon>
+                                                <!-- <VBtn  size="sm" append-icon="mdi-minus-circle" rounded></VBtn> -->
+                                                <VTextField v-model="options[index]"
+                                                :rules="[requiredValidator]"
+                                                :error-messages="form?.errors?.options"
+                                                />
+                                            </div>
                                         </VCol>
                                     </VRow>
                                 </VCol>
@@ -154,7 +162,7 @@ const items = ref([
                                         block
                                         @click="addOption"
                                     >
-                                        <span class="tiggie-p">Type to add more options</span>
+                                        <span class="typemore pppangram-bold">Type to add more options</span>
                                     </VBtn>
                                 </VCol>
 
@@ -192,5 +200,30 @@ const items = ref([
 .a-survey-border {
     border-radius: 5px !important;
     border: 1px dashed rgba(40, 40, 40, 0.5) !important;
+}
+
+.typemore{
+    color: rgba(40, 40, 40, 0.50) !important;
+    font-size: 16px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 26px !important; /* 162.5% */
+}
+
+.option-container {
+  position: relative; /* Make the container a positioning context */
+}
+.removeoption-btn {
+  position: absolute;
+  right: -1%;
+  top: -20%;
+  width: 20px;
+  cursor: pointer;
+  z-index: 1;
+  height: 20px;
+  color: #000;
+  border-radius: 50%; /* Makes the button circular */
+  /* padding: 5px !important; */
+  text-align: center;
 }
 </style>

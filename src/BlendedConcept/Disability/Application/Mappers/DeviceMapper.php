@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Src\BlendedConcept\Disability\Domain\Model\Entities\Device;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
 
-class DisabilityTypeMapper
+class DeviceMapper
 {
     public static function fromRequest(Request $request, $device_id = null): Device
     {

@@ -17,6 +17,7 @@ class Survey extends AggregateRoot
         public readonly string $end_date,
         public readonly bool $required,
         public readonly bool $repeat,
+        public readonly string $questions,
 
     ) {
     }
@@ -34,6 +35,7 @@ class Survey extends AggregateRoot
             'end_date' => $this->end_date,
             'required' => $this->required,
             'repeat' => $this->repeat,
+            'questions' => $this->questions,
         ];
     }
 }

@@ -1,7 +1,7 @@
 <script setup>
-import { useForm, usePage, Link } from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import { computed, defineProps } from "vue";
+import { computed } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
@@ -9,15 +9,22 @@ import Create from "./ThemeCreate.vue";
 import Edit from "./ThemeEdit.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
-let props = defineProps();
-let user = ref({});
-const form = useForm({});
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
+let props = defineProps(["disabilityTypes", "flash"]);
 
 //## start datatable section
 let columns = [
     {
-        label: "Themes",
-        field: "theme",
+        label: "Theme",
+        field: "name",
         sortable: false,
     },
     {
@@ -32,46 +39,17 @@ let columns = [
     },
 ];
 
-let rows = [
-    {
-        theme: "Social Skills",
-        description:
-            "Develop communication and interactions skills to build relationship with people ",
-    },
-    {
-        theme: "Life Skills",
-        description:
-            "Learn life skills  and develop critical thinking skills to adapt to social context ",
-    },
-    {
-        theme: "Language & Communication",
-        description:
-            "Understand the different type of communication and language skills to facilitate conversations ",
-    },
-    {
-        theme: "Math",
-        description:
-            "Learn math skills to develop critical thinking skills and problem solving abilities",
-    },
-    {
-        theme: "Science and Arts",
-        description: "Learn how society function through science and arts ",
-    },
-];
+serverPage.value = ref(props.disabilityTypes.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
 
-const items = ref([
-    {
-        title: "Edit",
-        value: "edit",
-    },
-    {
-        title: "Delete",
-        value: "delete",
-    },
-]);
-
-const isDiability = ref(false);
-const isEditDiability = ref(false);
+let options = ref({
+    enabled: true,
+    mode: "pages",
+    perPage: props.disabilityTypes?.meta?.per_page,
+    setCurrentPage: props?.disabilityTypes?.meta?.current_page,
+    perPageDropdown: [10, 20, 50, 100],
+    dropdownAllowAll: false,
+});
 //## truncatedText
 let truncatedText = (text) => {
     if (text) {
@@ -89,7 +67,14 @@ const selectionChanged = (data) => {
 const deleteItem = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",
-        denyButtonText: "Yes, delete it!",
+        denyButtonText: "Yes,delete it!",
+        onConfirm: () => {
+            router.delete(route("disability_themes.destroy", id), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.successMessage });
+                },
+            });
+        },
     });
 };
 const handleSubmit = ({ title }) => {
@@ -97,101 +82,137 @@ const handleSubmit = ({ title }) => {
 };
 </script>
 <template>
-    <VRow>
-        <VCol cols="12" sm="12" lg="12">
-            <section>
-                <VCard>
-                    <VCardText class="d-flex justify-between flex-wrap gap-4">
-                        <!-- 👉 Export button -->
-                        <div class="search-field">
-                            <VTextField
-                                label="Search Themes"
-                                single-line
-                                density="compact"
-                                variant="solo"
-                            />
-                        </div>
-                        <VSpacer />
-
-                        <div
-                            class="app-user-search-filter d-flex justify-end align-center gap-6"
+    <div>
+        <VRow>
+            <VCol cols="12" sm="12" lg="12">
+                <section>
+                    <VCard>
+                        <VCardText
+                            class="d-flex justify-between flex-wrap gap-4"
                         >
-                            <VRow align="center">
-                                <VCol cols="6"></VCol>
-                                <VCol cols="6" class="text-end">
-                                    <VBtn @click="isDiability = true">
-                                        <span
-                                            class="text-uppercase text-white pl-4 pr-4"
-                                        >
-                                            Add
-                                        </span>
-                                    </VBtn>
-                                </VCol>
-                            </VRow>
-                        </div>
-                    </VCardText>
-
-                    <VDivider />
-
-                    <vue-good-table
-                        class="role-data-table"
-                        styleClass="vgt-table"
-                        v-on:selected-rows-change="selectionChanged"
-                        :columns="columns"
-                        :rows="rows"
-                        :select-options="{
-                            enabled: false,
-                        }"
-                        :pagination-options="{ enabled: true }"
-                    >
-                        <template #table-row="dataProps">
-                            <div v-if="dataProps.column.field == 'action'">
-                                <VMenu location="end">
-                                    <template #activator="{ props }">
-                                        <VIcon
-                                            v-bind="props"
-                                            size="24"
-                                            icon="mdi-dots-horizontal"
-                                            color="black"
-                                            class="mt-n4"
-                                        />
-                                    </template>
-                                    <VList>
-                                        <VListItem
-                                            @click="isEditDiability = true"
-                                        >
-                                            <VListItemTitle
-                                                >Edit</VListItemTitle
-                                            >
-                                        </VListItem>
-                                        <VListItem @click="deleteItem()">
-                                            <VListItemTitle
-                                                >Delete</VListItemTitle
-                                            >
-                                        </VListItem>
-                                    </VList>
-                                </VMenu>
+                            <!-- 👉 Export button -->
+                            <div class="search-field">
+                                <VTextField
+                                    label="Search Themes"
+                                    single-line
+                                    density="compact"
+                                    variant="solo"
+                                    @keyup.enter="searchItems"
+                                    v-model="serverParams.search"
+                                />
                             </div>
-                        </template>
-                    </vue-good-table>
+                            <VSpacer />
 
-                    <VDivider />
-                </VCard>
-            </section>
-        </VCol>
-    </VRow>
+                            <div
+                                class="app-user-search-filter d-flex justify-end align-center gap-6"
+                            >
+                                <VRow align="center">
+                                    <VCol cols="6"></VCol>
+                                    <VCol cols="6" class="text-end">
+                                        <Create />
+                                    </VCol>
+                                </VRow>
+                            </div>
+                        </VCardText>
 
-    <Create
-        v-model:isDialogVisible="isDiability"
-        :user-data="user"
-        :form="form"
-        @submit="handleSubmit"
-    />
+                        <VDivider />
 
-    <Edit
-        v-model:isDialogVisible="isEditDiability"
-        :user-data="user"
-        :form="form"
-        @submit="handleSubmit"
-    />
+                        <vue-good-table
+                            class="role-data-table"
+                            styleClass="vgt-table"
+                            @column-filter="onColumnFilter"
+                            :totalRows="props.disabilityTypes.meta.total"
+                            :selected-rows-change="selectionChanged"
+                            :pagination-options="options"
+                            :rows="props.disabilityTypes.data"
+                            :columns="columns"
+                            :select-options="{
+                                enabled: true,
+                                selectOnCheckboxOnly: true,
+                            }"
+                        >
+                            <template #table-row="dataProps">
+                                <div v-if="dataProps.column.field == 'action'">
+                                    <VMenu location="end">
+                                        <template #activator="{ props }">
+                                            <VIcon
+                                                v-bind="props"
+                                                size="24"
+                                                icon="mdi-dots-horizontal"
+                                                color="black"
+                                                class="mt-n4"
+                                            />
+                                        </template>
+                                        <VList>
+                                            <Edit
+                                                :disability_type="dataProps.row"
+                                            />
+                                            <VListItem
+                                                @click="
+                                                    deleteItem(dataProps.row.id)
+                                                "
+                                            >
+                                                <VListItemTitle
+                                                    >Delete</VListItemTitle
+                                                >
+                                            </VListItem>
+                                        </VList>
+                                    </VMenu>
+                                </div>
+                            </template>
+                            <template #pagination-bottom>
+                                <VRow class="pa-4">
+                                    <VCol
+                                        cols="12"
+                                        class="d-flex justify-space-between"
+                                    >
+                                        <span>
+                                            Showing
+                                            {{
+                                                props.disabilityTypes.meta.from
+                                            }}
+                                            to
+                                            {{ props.disabilityTypes.meta.to }}
+                                            of
+                                            {{
+                                                props.disabilityTypes.meta.total
+                                            }}
+                                            entries
+                                        </span>
+                                        <div class="d-flex">
+                                            <div class="d-flex align-center">
+                                                <span class="me-2">Show</span>
+                                                <VSelect
+                                                    v-model="serverPerPage"
+                                                    density="compact"
+                                                    :items="
+                                                        options.perPageDropdown
+                                                    "
+                                                >
+                                                </VSelect>
+                                            </div>
+                                            <VPagination
+                                                v-model="serverPage"
+                                                size="small"
+                                                :total-visible="5"
+                                                :length="
+                                                    props.disabilityTypes.meta
+                                                        .last_page
+                                                "
+                                                @next="onPageChange"
+                                                @prev="onPageChange"
+                                                @click="onPageChange"
+                                            />
+                                        </div>
+                                    </VCol>
+                                </VRow>
+                            </template>
+                        </vue-good-table>
+
+                        <VDivider />
+                    </VCard>
+                </section>
+            </VCol>
+        </VRow>
+    </div>
 </template>

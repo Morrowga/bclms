@@ -8,6 +8,10 @@ class OrganizationPolicy
     {
         return auth()->user()->hasPermission('access_organization');
     }
+    public static function viewBc()
+    {
+        return auth()->user()->hasPermission('access_bcstaffOrganization');
+    }
 
     public static function create()
     {

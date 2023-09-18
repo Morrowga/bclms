@@ -43,6 +43,7 @@ return [
         'create' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Create',
         'edit' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Edit',
         'show' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Show',
+        'addSubscription' => 'BlendedConcept/Organization/Presentation/Resources/Organization/AddSubscription'
     ],
 
     'plans' => [
@@ -57,7 +58,7 @@ return [
         'index' => 'BlendedConcept/Finance/Presentation/Resources/SubScriptionInvoice/Index',
     ],
 
-    'disability_device' => [
+    'disability_type' => [
         'index' => 'BlendedConcept/Disability/Presentation/Resources/Disability/Index',
     ],
 
@@ -211,4 +212,5 @@ return [
 
     //resource
     'resource' => 'BlendedConcept/Library/Presentation/Resources/Resource/Index',
+
 ];

@@ -15,11 +15,11 @@ class DisabilityTypeData
     ) {
     }
 
-    public static function fromRequest(Request $request, $disability_type_id = null): DisabilityTypeData
+    public static function fromRequest(Request $request, $disabilityType): DisabilityTypeData
     {
 
         return new self(
-            id: $disability_type_id,
+            id: $disabilityType->id,
             name: $request->name,
             descripton: $request->description,
 

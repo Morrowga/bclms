@@ -119,6 +119,8 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_plan',
                         'access_pagebuilder',
                         'access_library',
+                        'access_bcstaffOrganization',
+                        'access_bcstaffSubscription'
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
