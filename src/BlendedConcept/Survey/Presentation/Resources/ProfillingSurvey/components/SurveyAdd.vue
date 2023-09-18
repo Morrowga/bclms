@@ -99,11 +99,11 @@ const items = ref([
             <!-- 👉 dialog close btn -->
             <DialogCloseBtn variant="text" size="small" @click="onFormReset" />
 
-            <VCardItem class="text-left pl-16">
+            <!-- <VCardItem class="text-left pl-16">
                 <VCardTitle class="te mb-2 tiggie-title">
                     Add Survey Question
                 </VCardTitle>
-            </VCardItem>
+            </VCardItem> -->
 
             <VCardText>
                 <!-- 👉 Form -->
@@ -145,8 +145,8 @@ const items = ref([
                                                 <VIcon @click="removeOption(index)"  icon="mdi-minus-circle" size="md"  class="removeoption-btn"></VIcon>
                                                 <!-- <VBtn  size="sm" append-icon="mdi-minus-circle" rounded></VBtn> -->
                                                 <VTextField v-model="options[index]"
-                                                :rules="[requiredValidator]"
-                                                :error-messages="form?.errors?.options"
+                                                    :rules="[requiredValidator]"
+                                                    :error-messages="form?.errors?.options"
                                                 />
                                             </div>
                                         </VCol>
@@ -157,12 +157,12 @@ const items = ref([
                                         variant="outlined"
                                         style="
                                         border-radius: 5px;
-                                        border: 1px dashed rgba(40, 40, 40, 0.5);
+                                        border: 1px dashed rgba(40, 40, 40, 0.50);
                                         "
                                         block
                                         @click="addOption"
                                     >
-                                        <span class="typemore pppangram-bold">Type to add more options</span>
+                                        <span class="pppangram-bold typemore">Type to add more options</span>
                                     </VBtn>
                                 </VCol>
 

@@ -11,7 +11,7 @@ import DefaultBtn from "@mainRoot/components/Buttons/DefaultBtn.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 
 // import Edit from "./Edit.vue";
-let props = defineProps();
+let props = defineProps(['surveyResults']);
 
 //## start datatable section
 let columns = [
@@ -20,19 +20,19 @@ let columns = [
         field: "users",
         sortable: false,
     },
-    {
-        label: "User Type",
-        field: "user_type",
-        sortable: false,
-    },
+    // {
+    //     label: "User Type",
+    //     field: "user_type",
+    //     sortable: false,
+    // },
     {
         label: "Name of Survey",
-        field: "name_of_survey",
+        field: "question",
         sortable: false,
     },
     {
         label: "Date Submitted",
-        field: "date_submitted",
+        field: "response_datetime",
         sortable: false,
     },
     {
@@ -42,44 +42,44 @@ let columns = [
     },
 ];
 
-let rows = [
-    {
-        users: "Albert Leon",
-        user_type: "Student",
-        name_of_survey: "Happiness survey",
-        date_submitted: "20/09/2023",
-    },
-    {
-        users: "Alic",
-        user_type: "Student",
-        name_of_survey: "Happiness survey",
-        date_submitted: "20/09/2023",
-    },
-    {
-        users: "John",
-        user_type: "Student",
-        name_of_survey: "Happiness survey",
-        date_submitted: "20/09/2023",
-    },
-    {
-        users: "Miran",
-        user_type: "Student",
-        name_of_survey: "Happiness survey",
-        date_submitted: "20/09/2023",
-    },
-    {
-        users: "Ellar",
-        user_type: "Student",
-        name_of_survey: "Happiness survey",
-        date_submitted: "20/09/2023",
-    },
-    {
-        users: "Manic",
-        user_type: "Student",
-        name_of_survey: "Happiness survey",
-        date_submitted: "20/09/2023",
-    },
-];
+// let rows = [
+//     {
+//         users: "Albert Leon",
+//         user_type: "Student",
+//         name_of_survey: "Happiness survey",
+//         date_submitted: "20/09/2023",
+//     },
+//     {
+//         users: "Alic",
+//         user_type: "Student",
+//         name_of_survey: "Happiness survey",
+//         date_submitted: "20/09/2023",
+//     },
+//     {
+//         users: "John",
+//         user_type: "Student",
+//         name_of_survey: "Happiness survey",
+//         date_submitted: "20/09/2023",
+//     },
+//     {
+//         users: "Miran",
+//         user_type: "Student",
+//         name_of_survey: "Happiness survey",
+//         date_submitted: "20/09/2023",
+//     },
+//     {
+//         users: "Ellar",
+//         user_type: "Student",
+//         name_of_survey: "Happiness survey",
+//         date_submitted: "20/09/2023",
+//     },
+//     {
+//         users: "Manic",
+//         user_type: "Student",
+//         name_of_survey: "Happiness survey",
+//         date_submitted: "20/09/2023",
+//     },
+// ];
 
 const items = ref([
     {
@@ -160,19 +160,41 @@ const deleteItem = () => {
                                 </div>
                             </VCardText>
                             <VDivider />
-
                             <vue-good-table
                                 class="role-data-table"
                                 styleClass="vgt-table"
                                 v-on:selected-rows-change="selectionChanged"
                                 :columns="columns"
-                                :rows="rows"
+                                :rows="props.surveyResults.data"
                                 :select-options="{
                                     enabled: false,
                                 }"
                                 :pagination-options="{ enabled: true }"
                             >
                                 <template #table-row="dataProps">
+                                    <div
+                                        v-if="dataProps.column.field == 'user'"
+                                    >
+                                        <span >{{
+                                                dataProps.row.user.name
+                                            }}</span>
+                                    </div>
+                                    <div
+                                        v-if="
+                                            dataProps.column.field ==
+                                            'question'
+                                        "
+                                    >
+                                    {{  formatDate(dataProps.row.question.survey.title) }}
+                                    </div>
+                                    <div
+                                        v-if="
+                                            dataProps.column.field ==
+                                            'response_datetime'
+                                        "
+                                    >
+                                       {{  formatDate(dataProps.row.response_datetime) }}
+                                    </div>
                                     <div
                                         v-if="
                                             dataProps.column.field == 'action'
@@ -190,7 +212,6 @@ const deleteItem = () => {
                                     </div>
                                 </template>
                             </vue-good-table>
-
                             <VDivider />
                         </VCard>
                     </section>

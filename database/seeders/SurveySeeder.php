@@ -30,7 +30,7 @@ class SurveySeeder extends Seeder
         $data = [
             'id' => 1,
             'title' => 'Profiling Survey',
-            'description' => 'that is profiling survey',
+            'description' => "Answer these questions to identify the best educational pathway for the student's unique needs and abilities.",
             'type' => 'PROFILING',
             'user_type' => 'B2C_USER',
             'appear_on' => 'LOG_IN',

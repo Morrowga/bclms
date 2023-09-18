@@ -12,12 +12,12 @@ use Src\BlendedConcept\Survey\Application\Requests\StoreSurveyRequest;
 use Src\BlendedConcept\Survey\Application\UseCases\Queries\ShowSurvey;
 use Src\BlendedConcept\Survey\Application\Requests\UpdateSurveyRequest;
 use Src\BlendedConcept\Survey\Application\Requests\StoreQuestionRequest;
-use Src\BlendedConcept\Survey\Application\UseCases\Queries\GetSurveyList;
 use Src\BlendedConcept\Survey\Application\UseCases\Queries\ShowSurveyData;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 use Src\BlendedConcept\Survey\Application\UseCases\Commands\Survey\StoreSurveyCommand;
 use Src\BlendedConcept\Survey\Application\UseCases\Commands\Survey\DeleteSurveyCommand;
 use Src\BlendedConcept\Survey\Application\UseCases\Commands\Survey\UpdateSurveyCommand;
+use Src\BlendedConcept\Survey\Application\UseCases\Queries\GetUserExperienceSurveyList;
 
 class UserExperienceSurveyController
 {
@@ -32,7 +32,7 @@ class UserExperienceSurveyController
             $filters = request()->only(['title', 'search', 'perPage']);
 
             // Get user list
-            $surveys = (new GetSurveyList())->handle();
+            $surveys = (new GetUserExperienceSurveyList())->handle();
             // return $surveys;
             // Render Inertia view
             return Inertia::render(config('route.userexperiencesurvey.index'), [

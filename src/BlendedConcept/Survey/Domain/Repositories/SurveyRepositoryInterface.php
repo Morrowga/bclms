@@ -10,7 +10,7 @@ use Src\BlendedConcept\Survey\Domain\Model\Entities\Question;
 
 interface SurveyRepositoryInterface
 {
-    public function getSurveyList($filters);
+    public function getUserExperienceSurveyList($filters);
 
     public function showSurvey($id);
 
@@ -25,4 +25,8 @@ interface SurveyRepositoryInterface
     public function deleteQuestion(int $question_id): void;
 
     public function updateQuestion(QuestionData $question);
+
+    public function getProfilingSurvey();
+
+    public function getSurveyResults($filters);
 }

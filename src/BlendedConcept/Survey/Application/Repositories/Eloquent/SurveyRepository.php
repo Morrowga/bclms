@@ -8,18 +8,21 @@ use Src\BlendedConcept\Survey\Application\DTO\QuestionData;
 use Src\BlendedConcept\Survey\Domain\Resources\SurveyResource;
 use Src\BlendedConcept\Survey\Application\Mappers\SurveyMapper;
 use Src\BlendedConcept\Survey\Application\Mappers\QuestionMapper;
+use Src\BlendedConcept\Survey\Domain\Resources\SurveyResultResource;
 use Src\BlendedConcept\Survey\Application\Mappers\QuestionOptionMapper;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
 use Src\BlendedConcept\Survey\Domain\Repositories\SurveyRepositoryInterface;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\QuestionEloquentModel;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\ResponseEloquentModel;
 
 class SurveyRepository implements SurveyRepositoryInterface
 {
 
-    public function getSurveyList($filters = [])
+    public function getUserExperienceSurveyList($filters = [])
     {
-        $surveys = SurveyResource::collection(SurveyEloquentModel::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $surveys = SurveyResource::collection(SurveyEloquentModel::filter($filters)->where('type', 'USERREXP')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+
         return $surveys;
     }
 
@@ -81,7 +84,7 @@ class SurveyRepository implements SurveyRepositoryInterface
         try {
             $surveyArray = $survey->toArray();
             $surveyEloquent = SurveyEloquentModel::query()->find($survey->id);
-            $surveyEloquent->fill($surveyArray);
+        $surveyEloquent->fill($surveyArray);
             $surveyEloquent->save();
 
 
@@ -176,5 +179,18 @@ class SurveyRepository implements SurveyRepositoryInterface
             DB::rollBack();
             dd($error);
         }
+    }
+
+    public function getProfilingSurvey()
+    {
+        $profilingSurvey = new SurveyResource(SurveyEloquentModel::with('questions.options')->where('type', 'PROFILING')->first());
+        return $profilingSurvey;
+    }
+
+    public function getSurveyResults($filters = [])
+    {
+        $surveyResults = SurveyResultResource::collection(ResponseEloquentModel::filter($filters)->with(['user', 'student', 'question.survey'])->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+
+        return $surveyResults;
     }
 }

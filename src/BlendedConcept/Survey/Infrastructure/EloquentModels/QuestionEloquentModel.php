@@ -24,4 +24,8 @@ class QuestionEloquentModel extends Model
     {
         return $this->hasMany(QuestionOptionEloquentModel::class, 'question_id', 'id');
     }
+
+    public function survey(){
+        return $this->belongsTo(SurveyEloquentModel::class, 'survey_id', 'id');
+    }
 }

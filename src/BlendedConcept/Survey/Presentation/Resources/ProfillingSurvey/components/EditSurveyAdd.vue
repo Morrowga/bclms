@@ -1,12 +1,9 @@
 <script setup>
-import {
-    emailValidator,
-    requiredValidator,
-    integerValidator,
-} from "@validators";
-import axios from "axios";
 import { useForm,usePage } from "@inertiajs/vue3";
 const props = defineProps({
+    form: {
+        type: Object,
+    },
     isDialogVisible: {
         type: Boolean,
         required: true,
@@ -17,53 +14,17 @@ const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
 const options = ref(['']);
 
-console.log(options.value);
-
-const randomCombination = ref('');
-
-const generateRandomCombination = () => {
-  const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  let result = '';
-
-  for (let i = 0; i < 4; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters.charAt(randomIndex);
-  }
-
-  randomCombination.value = result;
-};
-
-generateRandomCombination()
-
-const form = useForm({
-  id: randomCombination.value,
-  question_type: null,
-  question: "",
-  options: options.value
-});
-
 const addOption = () => {
-  options.value.push('');
+    props.form.options.push('');
 };
 
 const removeOption = (index) => {
-  options.value.splice(index, 1);
+    props.form.options.splice(index, 1);
 };
-const refForm = ref(null); // Define refForm
 
 const onFormSubmit = () => {
-    refForm.value?.validate().then(({ valid }) => {
-        if (valid) {
-            emit("submit", form);
-            generateRandomCombination();
-            form.id = randomCombination.value; // Assuming id should be cleared
-            form.question_type = null;
-            form.question = '';
-            options.value = ['']; // Reset options as needed
-            form.options = options.value;
-            emit("update:isDialogVisible", false);
-        }
-    })
+    emit("submit", props.form);
+    emit("update:isDialogVisible", false);
 };
 
 const onFormReset = () => {
@@ -76,17 +37,19 @@ const dialogVisibleUpdate = (val) => {
 const items = ref([
     {
         title: "Single Choice",
-        value: "SINGLE_CHOICE",
+        value: "Single Choice",
     },
     {
         title: "Multi Response",
-        value: "MULTIPLE_RESPONSE",
+        value: "Multi Response",
     },
     {
         title: "Rating",
-        value: "RATING",
+        value: "Rating",
     },
 ]);
+
+
 </script>
 
 <template>
@@ -99,15 +62,15 @@ const items = ref([
             <!-- 👉 dialog close btn -->
             <DialogCloseBtn variant="text" size="small" @click="onFormReset" />
 
-            <!-- <VCardItem class="text-left pl-16">
+            <VCardItem class="text-left pl-16">
                 <VCardTitle class="te mb-2 tiggie-title">
-                    Add Survey Question
+                    Edit Survey
                 </VCardTitle>
-            </VCardItem> -->
+            </VCardItem>
 
             <VCardText>
                 <!-- 👉 Form -->
-                <VForm class="mt-6" ref="refForm" @submit.prevent="onFormSubmit">
+                <VForm class="mt-6" @submit.prevent="onFormSubmit">
                     <VContainer>
                         <VRow justify="center">
                             <!-- 👉 Contact -->
@@ -117,11 +80,9 @@ const items = ref([
                                 >
                                 <!-- <VTextField /> -->
                                 <VSelect
-                                    v-model="form.question_type"
+                                    v-model="props.form.question_type"
                                     :items="items"
                                     rounded="50%"
-                                    :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.question_type"
                                     placeholder="Select Question Type"
                                     density="compact"
                                 />
@@ -130,24 +91,19 @@ const items = ref([
                             <!-- 👉 Contact -->
                             <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label">Question</VLabel>
-                                <VTextarea v-model="form.question"
+                                <VTextarea v-model="props.form.question"
                                     placeholder="Type here ...."
-                                    :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.question"
                                     rows="5"
                                 />
                             </VCol>
                             <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label">Options</VLabel>
-                                    <VRow v-for="(option, index) in options" :key="index">
-                                        <VCol cols="10">
-                                        <VTextField v-model="options[index]"
-                                        :rules="[requiredValidator]"
-                                        :error-messages="form?.errors?.options"
-                                        />
-                                        </VCol>
-                                        <VCol cols="2">
-                                        <VBtn @click="removeOption(index)">-</VBtn>
+                                    <VRow>
+                                        <VCol cols="12" v-for="(option, index) in props.form.options" :key="index">
+                                            <div class="option-container">
+                                                <VIcon @click="removeOption(index)"  icon="mdi-minus-circle" size="md"  class="removeoption-btn"></VIcon>
+                                                <VTextField v-model="props.form.options[index]" />
+                                            </div>
                                         </VCol>
                                     </VRow>
                                 </VCol>
@@ -161,7 +117,7 @@ const items = ref([
                                         block
                                         @click="addOption"
                                     >
-                                        <span class="tiggie-p">Type to add more options</span>
+                                        <span class="typemore pppangram-bold">Type to add more options</span>
                                     </VBtn>
                                 </VCol>
 
@@ -196,8 +152,26 @@ const items = ref([
     </VDialog>
 </template>
 <style scoped>
-.a-survey-border {
-    border-radius: 5px !important;
-    border: 1px dashed rgba(40, 40, 40, 0.5) !important;
+.e-survey-border {
+    border-radius: 5px;
+    border: 1px dashed rgba(40, 40, 40, 0.5);
+}
+
+
+.option-container {
+  position: relative; /* Make the container a positioning context */
+}
+.removeoption-btn {
+  position: absolute;
+  right: -1%;
+  top: -20%;
+  width: 20px;
+  cursor: pointer;
+  z-index: 1;
+  height: 20px;
+  color: #000;
+  border-radius: 50%; /* Makes the button circular */
+  /* padding: 5px !important; */
+  text-align: center;
 }
 </style>

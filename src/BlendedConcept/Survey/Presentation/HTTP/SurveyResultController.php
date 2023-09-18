@@ -3,12 +3,18 @@
 namespace Src\BlendedConcept\Survey\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Src\BlendedConcept\Survey\Application\UseCases\Queries\SurveyResults\GetSurveyResults;
 
 class SurveyResultController
 {
     public function index()
     {
-        return Inertia::render(config('route.survey_results.index'));
+        $filters = request()->only(['question', 'search', 'perPage']);
+
+        $surveyResults = (new GetSurveyResults($filters))->handle();
+        return Inertia::render(config('route.survey_results.index'),[
+            'surveyResults' => $surveyResults,
+        ]);
     }
 
     // public function create()

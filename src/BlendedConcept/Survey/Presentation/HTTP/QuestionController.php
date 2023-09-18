@@ -27,11 +27,18 @@ class QuestionController
             /**
              * Returns a redirect response to the current survey's edit page.
              */
+            if($request->type == 'profiling'){
+                return redirect()->route('profilling_survey.index')->with('successMessage', 'Question created Successfully!');
+            }
             return redirect()->route('userexperiencesurvey.edit', $request->survey_id)->with('successMessage', 'Question created Successfully!');
+
         } catch (\Exception $e) {
             // Handle the exception here
             dd($e->getMessage());
 
+            if($request->type == 'profiling'){
+                return redirect()->route('profilling_survey.index')->with('systemErrorMessage', $e->getMessage());
+            }
             return redirect()->route('userexperiencesurvey.edit', $request->survey_id)->with('systemErrorMessage', $e->getMessage());
         }
     }
@@ -59,11 +66,17 @@ class QuestionController
             $updateQuestionCommand = (new UpdateQuestionCommand($questionFilter));
             $updateQuestionCommand->execute();
 
-            return redirect()->route('userexperiencesurvey.edit', $question->survey_id)->with('successMessage', 'Survey updated Successfully!');
+            if($request->type == 'profiling'){
+                return redirect()->route('profilling_survey.index')->with('successMessage', 'Question updated Successfully!');
+            }
+            return redirect()->route('userexperiencesurvey.edit', $question->survey_id)->with('successMessage', 'Question updated Successfully!');
         } catch (\Exception $e) {
             /**
              * Catch any exceptions and display an error message.
              */
+            if($request->type == 'profiling'){
+                return redirect()->route('profilling_survey.index')->with('SystemErrorMessage', $e->getMessage());
+            }
             return redirect()->route('userexperiencesurvey.edit', $question->survey_id)->with('SystemErrorMessage', $e->getMessage());
         }
     }
@@ -75,7 +88,7 @@ class QuestionController
      * @param  QuestionEloquentModel  $question to delete.
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(QuestionEloquentModel $question)
+    public function destroy(Request $request,QuestionEloquentModel $question)
     {
         // abort_if(authorize('destroy', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         /**
@@ -85,11 +98,18 @@ class QuestionController
             $deleteQuestion= new DeleteQuestionCommand($question->id);
             $deleteQuestion->execute();
 
-            return redirect()->route('userexperiencesurvey.edit', $question->survey_id)->with('successMessage', 'Survey deleted Successfully!');
+
+            if($request->type == 'profiling'){
+                return redirect()->route('profilling_survey.index')->with('successMessage', 'Question deleted Successfully!');
+            }
+            return redirect()->route('userexperiencesurvey.edit', $question->survey_id)->with('successMessage', 'Question deleted Successfully!');
         } catch (\Exception $e) {
             /**
              * Catch any exceptions and display an error message.
              */
+            if($request->type == 'profiling'){
+                return redirect()->route('profilling_survey.index')->with('systemErrorMessage', $e->getMessage());
+            }
             return redirect()->route('userexperiencesurvey.edit', $question->survey_id)->with('systemErrorMessage', $e->getMessage());
         }
     }

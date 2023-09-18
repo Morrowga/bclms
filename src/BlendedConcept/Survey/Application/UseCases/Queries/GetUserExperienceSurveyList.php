@@ -5,7 +5,7 @@ namespace Src\BlendedConcept\Survey\Application\UseCases\Queries;
 use Src\Common\Domain\QueryInterface;
 use Src\BlendedConcept\Survey\Domain\Repositories\SurveyRepositoryInterface;
 
-class GetSurveyList implements QueryInterface
+class GetUserExperienceSurveyList implements QueryInterface
 {
     private SurveyRepositoryInterface $repository;
 
@@ -16,6 +16,6 @@ class GetSurveyList implements QueryInterface
 
     public function handle()
     {
-        return $this->repository->getSurveyList();
+        return $this->repository->getUserExperienceSurveyList();
     }
 }
