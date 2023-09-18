@@ -77,10 +77,4 @@ Route::group(['middleware' => ['auth']], function () {
      *  POST /logout
      */
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-
-    /**
-     * Display the user profile.
-     * GET /userprofile
-     */
-    Route::get('userprofile', [AuthController::class, 'userProfile'])->name('userprofile');
 });

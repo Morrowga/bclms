@@ -9,6 +9,7 @@ use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEl
 use Src\BlendedConcept\Security\Application\DTO\PermissionData;
 use Src\BlendedConcept\Security\Application\DTO\RoleData;
 use Src\BlendedConcept\Security\Application\DTO\UserData;
+use Src\BlendedConcept\Security\Application\DTO\UserProfileData;
 use Src\BlendedConcept\Security\Application\Mappers\PermissionMapper;
 use Src\BlendedConcept\Security\Application\Mappers\RoleMapper;
 use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
@@ -172,6 +173,16 @@ class SecurityRepository implements SecurityRepositoryInterface
         // Return the filtered results
         return $query;
     }
+
+    // update User Profile
+    public function updateUserProfile(UserProfileData $user)
+    {
+        $userArray = $user->toArray();
+        $updateUserEloquent = UserEloquentModel::query()->findOrFail($user->id);
+        $updateUserEloquent->fill($userArray);
+        $updateUserEloquent->save();
+    }
+ 
 
     // get permission
     public function getPermission($filters = [])
