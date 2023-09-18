@@ -38,14 +38,12 @@ class OrganizationController extends Controller
     {
         // Authorize user to view organization
 
-        // abort_if(authorize('view', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // if (!authorize('view', OrganizationPolicy::class)) {
-        //     // First condition is met, do something
-        // } elseif (authorize('viewBc', OrganizationPolicy::class)) {
-        //     // Second condition is met, do something else
-        // } else {
-        //     abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // }
+        abort_if(
+            !(authorize('viewBc', OrganizationPolicy::class) || authorize('view', OrganizationPolicy::class)),
+            Response::HTTP_FORBIDDEN,
+            '403 Forbidden'
+        );
+
         try {
 
             // Get filters from the request
