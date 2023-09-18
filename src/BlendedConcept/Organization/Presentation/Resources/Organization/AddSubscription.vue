@@ -18,11 +18,11 @@ let form = useForm({
     end_date: "",
     payment_date: "",
     payment_status: "UNPAID",
-    stripe_price: 0,
+    stripe_price: "",
     b2b_subscription: {
-        storage_limit: 0,
-        num_teacher_license: 0,
-        num_student_license: 0,
+        storage_limit: "",
+        num_teacher_license: "",
+        num_student_license: "",
         organization_id: props.organization?.id,
         subscription_id: props.organization?.subscription?.id,
         image: "",
@@ -89,6 +89,10 @@ let handleSubmit = () => {
                                             placeholder="Type here ..."
                                             type="number"
                                             :rules="[requiredValidator]"
+                                            :error-messages="
+                                                form?.errors?.b2b_subscription
+                                                    ?.num_teacher_license
+                                            "
                                         />
                                     </VCol>
                                     <VCol cols="12">
@@ -105,6 +109,10 @@ let handleSubmit = () => {
                                             class="w-100"
                                             :rules="[requiredValidator]"
                                             type="number"
+                                            :error-messages="
+                                                form?.errors?.b2b_subscription
+                                                    ?.num_student_license
+                                            "
                                         />
                                     </VCol>
                                     <VCol cols="12">
@@ -121,6 +129,10 @@ let handleSubmit = () => {
                                             "
                                             class="w-100"
                                             :rules="[requiredValidator]"
+                                            :error-messages="
+                                                form?.errors?.b2b_subscription
+                                                    ?.storage_limit
+                                            "
                                         />
                                     </VCol>
                                     <VCol cols="12">
@@ -133,6 +145,9 @@ let handleSubmit = () => {
                                             class="subplan-icon blue-outline-field"
                                             append-inner-icon="fa:fa-regular fa-calendar"
                                             variant="plain"
+                                            :error-messages="
+                                                form?.errors?.start_date
+                                            "
                                         />
                                     </VCol>
                                     <VCol cols="12">
@@ -145,6 +160,9 @@ let handleSubmit = () => {
                                             class="subplan-icon blue-outline-field"
                                             append-inner-icon="fa:fa-regular fa-calendar"
                                             variant="plain"
+                                            :error-messages="
+                                                form?.errors?.end_date
+                                            "
                                         />
                                     </VCol>
                                 </VRow>
@@ -175,6 +193,9 @@ let handleSubmit = () => {
                                             class="subplan-icon blue-outline-field"
                                             append-inner-icon="fa:fa-regular fa-calendar"
                                             variant="plain"
+                                            :error-messages="
+                                                form?.errors?.payment_date
+                                            "
                                         />
                                     </VCol>
                                     <VCol cols="12">
