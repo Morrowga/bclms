@@ -10,7 +10,7 @@ import ability from '@/plugins/casl/ability'
 import i18n from '@/plugins/i18n'
 import layoutsPlugin from '@/plugins/layouts'
 import vuetify from '@/plugins/vuetify'
-
+import draggable from 'vuedraggable'
 //plugin
 import { abilitiesPlugin } from '@casl/vue'
 // vue good table plugin
@@ -58,6 +58,7 @@ createInertiaApp({
       components:{
         VueGoodTable,
         SystemErrorAlert,
+        draggable,
         Link
       }
       })
