@@ -16,20 +16,20 @@ class StoreOrganizationSubscriptionRequest extends FormRequest
         return [
 
             'start_date' => [
-                'required'
+                'required',
             ],
             'end_date' => [
-                'required'
+                'required',
             ],
             'stripe_price' => [
-                'required'
+                'required',
             ],
             'payment_date' => [
-                'required'
+                'required',
             ],
             'b2b_subscription' => [
-                'required'
-            ]
+                'required',
+            ],
         ];
     }
 }

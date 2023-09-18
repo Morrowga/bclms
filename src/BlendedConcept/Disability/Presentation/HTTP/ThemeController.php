@@ -10,8 +10,8 @@ use Src\BlendedConcept\Disability\Application\Policies\ThemePolicy;
 use Src\BlendedConcept\Disability\Application\Requests\StoreThemeRequest;
 use Src\BlendedConcept\Disability\Application\Requests\UpdateThemeRequest;
 use Src\BlendedConcept\Disability\Application\UseCases\Commands\Themes\DeleteThemeCommand;
-use Src\BlendedConcept\Disability\Application\UseCases\Commands\Themes\UpdateThemeCommand;
 use Src\BlendedConcept\Disability\Application\UseCases\Commands\Themes\StoreThemeCommand;
+use Src\BlendedConcept\Disability\Application\UseCases\Commands\Themes\UpdateThemeCommand;
 use Src\BlendedConcept\Disability\Application\UseCases\Queries\Themes\GetThemes;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\ThemeEloquentModel;
 
@@ -23,9 +23,10 @@ class ThemeController
         $themes = (new GetThemes($filters))->handle();
 
         return Inertia::render(config('route.disability_type.index'), [
-            'disabilityTypes' => $themes
+            'disabilityTypes' => $themes,
         ]);
     }
+
     public function store(StoreThemeRequest $request)
     {
         try {
@@ -62,7 +63,6 @@ class ThemeController
             $updateThemecommand = (new UpdateThemeCommand($updateTheme));
             $updateThemecommand->execute();
 
-
             return redirect()->route('disability_themes.index')->with('successMessage', 'Organizations Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
@@ -72,12 +72,14 @@ class ThemeController
                 ]);
         }
     }
+
     public function destroy($id)
     {
         try {
             $theme = ThemeEloquentModel::findOrFail($id);
             $deleteThemeCommand = (new DeleteThemeCommand($theme));
             $deleteThemeCommand->execute();
+
             return redirect()->route('disability_themes.index')->with('successMessage', 'Organizations Created Successfully!');
         } catch (\Exception $error) {
             return redirect()

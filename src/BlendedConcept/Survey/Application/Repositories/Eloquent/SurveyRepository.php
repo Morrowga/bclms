@@ -3,29 +3,31 @@
 namespace Src\BlendedConcept\Survey\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
-use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
 use Src\BlendedConcept\Survey\Application\DTO\QuestionData;
-use Src\BlendedConcept\Survey\Domain\Resources\SurveyResource;
-use Src\BlendedConcept\Survey\Application\Mappers\SurveyMapper;
+use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
 use Src\BlendedConcept\Survey\Application\Mappers\QuestionMapper;
 use Src\BlendedConcept\Survey\Application\Mappers\QuestionOptionMapper;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
+use Src\BlendedConcept\Survey\Application\Mappers\SurveyMapper;
 use Src\BlendedConcept\Survey\Domain\Repositories\SurveyRepositoryInterface;
-use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
+use Src\BlendedConcept\Survey\Domain\Resources\SurveyResource;
+use Src\BlendedConcept\Survey\Domain\Resources\SurveyResultResource;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\QuestionEloquentModel;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\ResponseEloquentModel;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 
 class SurveyRepository implements SurveyRepositoryInterface
 {
-
-    public function getSurveyList($filters = [])
+    public function getUserExperienceSurveyList($filters = [])
     {
-        $surveys = SurveyResource::collection(SurveyEloquentModel::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $surveys = SurveyResource::collection(SurveyEloquentModel::filter($filters)->where('type', 'USERREXP')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+
         return $surveys;
     }
 
     public function showSurvey($id)
     {
         $survey = new SurveyResource(SurveyEloquentModel::with('questions.options')->find($id));
+
         return $survey;
     }
 
@@ -40,11 +42,11 @@ class SurveyRepository implements SurveyRepositoryInterface
 
             $questions = json_decode($request->questions, true);
 
-            foreach($questions as $question){
+            foreach ($questions as $question) {
                 $questionArray = [
-                    "survey_id" => $survey_id,
-                    "question_type" => $question['question_type'],
-                    "question" => $question['question']
+                    'survey_id' => $survey_id,
+                    'question_type' => $question['question_type'],
+                    'question' => $question['question'],
                 ];
                 $questionRequest = QuestionMapper::fromRequest($questionArray);
                 $questionEloquent = QuestionMapper::toEloquent($questionRequest);
@@ -53,11 +55,11 @@ class SurveyRepository implements SurveyRepositoryInterface
                 $question_id = $questionEloquent->id;
 
                 $options = $question['options'];
-                foreach($options as $option){
-                    if($option !== ''){
+                foreach ($options as $option) {
+                    if ($option !== '') {
                         $optionArray = [
-                            "question_id" => $question_id,
-                            "content" => $option,
+                            'question_id' => $question_id,
+                            'content' => $option,
                         ];
                         $optionRequest = QuestionOptionMapper::fromRequest($optionArray);
                         $questionOptionEloquent = QuestionOptionMapper::toEloquent($optionRequest);
@@ -65,7 +67,6 @@ class SurveyRepository implements SurveyRepositoryInterface
                     }
                 }
             }
-
 
             DB::commit();
         } catch (\Exception $error) {
@@ -83,7 +84,6 @@ class SurveyRepository implements SurveyRepositoryInterface
             $surveyEloquent = SurveyEloquentModel::query()->find($survey->id);
             $surveyEloquent->fill($surveyArray);
             $surveyEloquent->save();
-
 
             DB::commit();
         } catch (\Exception $error) {
@@ -104,10 +104,10 @@ class SurveyRepository implements SurveyRepositoryInterface
 
         try {
             $questionRequest = QuestionMapper::fromRequest([
-                "survey_id" => $request->survey_id,
-                 "question_type" => $request->question_type,
-                 "question" => $request->question
-             ]);
+                'survey_id' => $request->survey_id,
+                'question_type' => $request->question_type,
+                'question' => $request->question,
+            ]);
 
             $questionEloquent = QuestionMapper::toEloquent($questionRequest);
             $questionEloquent->save();
@@ -116,11 +116,11 @@ class SurveyRepository implements SurveyRepositoryInterface
 
             $options = json_decode($request->options, true);
 
-            foreach($options as $option){
-                if($option !== ''){
+            foreach ($options as $option) {
+                if ($option !== '') {
                     $optionArray = [
-                        "question_id" => $question_id,
-                        "content" => $option,
+                        'question_id' => $question_id,
+                        'content' => $option,
                     ];
                     $optionRequest = QuestionOptionMapper::fromRequest($optionArray);
                     $questionOptionEloquent = QuestionOptionMapper::toEloquent($optionRequest);
@@ -153,18 +153,18 @@ class SurveyRepository implements SurveyRepositoryInterface
 
             $oldOptions = $questionEloquent->options;
 
-            foreach($oldOptions as $oldOption){
+            foreach ($oldOptions as $oldOption) {
                 $oldOption->delete();
             }
 
             $question_id = $questionEloquent->id;
-            $newOptions = json_decode($questionArray['options'],true);
+            $newOptions = json_decode($questionArray['options'], true);
 
-            foreach($newOptions as $option){
-                if($option !== ''){
+            foreach ($newOptions as $option) {
+                if ($option !== '') {
                     $optionArray = [
-                        "question_id" => $question_id,
-                        "content" => $option,
+                        'question_id' => $question_id,
+                        'content' => $option,
                     ];
                     $optionRequest = QuestionOptionMapper::fromRequest($optionArray);
                     $questionOptionEloquent = QuestionOptionMapper::toEloquent($optionRequest);
@@ -176,5 +176,19 @@ class SurveyRepository implements SurveyRepositoryInterface
             DB::rollBack();
             dd($error);
         }
+    }
+
+    public function getProfilingSurvey()
+    {
+        $profilingSurvey = new SurveyResource(SurveyEloquentModel::with('questions.options')->where('type', 'PROFILING')->first());
+
+        return $profilingSurvey;
+    }
+
+    public function getSurveyResults($filters = [])
+    {
+        $surveyResults = SurveyResultResource::collection(ResponseEloquentModel::filter($filters)->with(['user', 'student', 'question.survey'])->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+
+        return $surveyResults;
     }
 }

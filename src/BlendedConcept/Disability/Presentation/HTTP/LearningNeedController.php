@@ -22,9 +22,10 @@ class LearningNeedController
         $learningNeeds = (new GetLearningNeeds($filters))->handle();
 
         return Inertia::render(config('route.disability_type.index'), [
-            'disabilityTypes' => $learningNeeds
+            'disabilityTypes' => $learningNeeds,
         ]);
     }
+
     public function store(StoreLearningNeedRequest $request)
     {
         try {
@@ -63,7 +64,6 @@ class LearningNeedController
             $updatelearningNeedcommand = (new UpdateLearningNeedCommand($updatelearningNeed));
             $updatelearningNeedcommand->execute();
 
-
             return redirect()->route('learning_need.index')->with('successMessage', 'Learning Need Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
@@ -73,12 +73,14 @@ class LearningNeedController
                 ]);
         }
     }
+
     public function destroy($id)
     {
         try {
             $learningNeed = learningNeedEloquentModel::findOrFail($id);
             $deletelearningNeedCommand = (new DeleteLearningNeedCommand($learningNeed));
             $deletelearningNeedCommand->execute();
+
             return redirect()->route('learning_need.index')->with('successMessage', 'Learning Need Created Successfully!');
         } catch (\Exception $error) {
             return redirect()

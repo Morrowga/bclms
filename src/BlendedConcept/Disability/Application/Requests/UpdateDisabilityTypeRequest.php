@@ -14,8 +14,8 @@ class UpdateDisabilityTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => ['required'],
-            "description" => ['required']
+            'name' => ['required'],
+            'description' => ['required'],
         ];
     }
 }

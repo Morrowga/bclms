@@ -18,13 +18,14 @@ import {
 
 let props = defineProps(['survey']);
 
+const drag = ref(false);
+
 let addNewQuestionForm = useForm({
     "survey_id" : props.survey.data.id,
     "question_type" : null,
     "question" : null,
     "options" : null,
 })
-
 let form = useForm({
     title: 'Untitled Survey',
     description: null,
@@ -55,6 +56,7 @@ function deleteSurveyForm(id) {
         onConfirm: () => {
             router.delete(route("questions.destroy", id, queryParams), {
                 onSuccess: () => {
+                    reload('userexperiencesurvey.edit', props.survey.data.id);
                     SuccessDialog({ title: "You've successfully deleted a question." });
                 },
             });
@@ -85,6 +87,7 @@ const handleEditSurveyFormSubmit = (data) => {
 
     updateData.put(route("questions.update", data.id), {
         onSuccess: () => {
+            reload('userexperiencesurvey.edit', props.survey.data.id);
             SuccessDialog({ title: "You've successfully updated a question." });
         },
         onError: (error) => {
@@ -124,6 +127,8 @@ const handleModalSubmit = (data) => {
     addNewQuestionForm.options = JSON.stringify(data.options)
     addNewQuestionForm.post(route("questions.store"), {
         onSuccess: () => {
+            reload('userexperiencesurvey.edit', props.survey.data.id);
+
             SuccessDialog({ title: "You've successfully created a new question." });
         },
         onError: (error) => {
@@ -144,6 +149,7 @@ const handleSettingModalSubmit = (data) => {
     form.repeat = data.repeat
     form.post(route("userexperiencesurvey.update", props.survey.data.id), {
         onSuccess: () => {
+            reload('userexperiencesurvey.update', props.survey.data.id);
             SuccessDialog({ title: "You've successfully updated user experience survey." });
         },
         onError: (error) => {
@@ -151,6 +157,26 @@ const handleSettingModalSubmit = (data) => {
             form.setError("description", error?.description);
         },
     })
+};
+
+const reload = (routeName, param) => {
+    if(param != null){
+        return new Promise((resolve) => {
+            router.get(route(routeName, param), {
+                onSuccess: () => {
+                    resolve();
+                },
+            });
+        });
+    } else {
+        return new Promise((resolve) => {
+            router.get(route(routeName), {
+                onSuccess: () => {
+                    resolve();
+                },
+            });
+        });
+    }
 };
 
 const optionsWithText = (option) => {
@@ -209,7 +235,8 @@ const optionsWithText = (option) => {
                     </VRow>
                 </VCol>
                 <Vcol cols="12" v-for="(item, i) in addSurveyForm" :key="i">
-                    <VCard style="width:81vw" class="mt-4">
+                    <VCard style="width:81vw" class="mt-4 draggable-item"
+                    >
                         <VCardTitle class="tiggie-subtitle">
                             <div class="d-flex justify-space-between">
                                 <div>
@@ -283,11 +310,12 @@ const optionsWithText = (option) => {
 </template>
 
 <style scoped>
-/* .v-label.v-field-label {
-    color: #4066E4 !important;
-    font-size: 20px !important;
-    font-style: normal !important;
-    font-weight: 700 !important;
-    text-transform: capitalize !important;
-} */
+.draggable-item {
+  cursor: grab;
+  transition: transform 0.2s;
+}
+.draggable-item.is-dragging {
+  cursor: grabbing;
+  transform: scale(1.1);
+}
 </style>

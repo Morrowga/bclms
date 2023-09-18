@@ -5,7 +5,6 @@ namespace Src\BlendedConcept\Disability\Application\Repositories\Eloquent;
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\Disability\Application\DTO\LearningNeedData;
 use Src\BlendedConcept\Disability\Application\Mappers\LearningNeedMapper;
-use Src\BlendedConcept\Disability\Application\Mappers\SubLearningTypeMapper;
 use Src\BlendedConcept\Disability\Domain\Model\Entities\LearningNeed;
 use Src\BlendedConcept\Disability\Domain\Repositories\LearningNeedRepositoryInterface;
 use Src\BlendedConcept\Disability\Domain\Resources\LearningNeedResource;
@@ -18,6 +17,7 @@ class LearningNeedRepository implements LearningNeedRepositoryInterface
     {
 
         $learningNeeds = LearningNeedResource::collection(LearningNeedEloquentModel::filter($filters)->with('sub_learnings')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+
         return $learningNeeds;
     }
 
@@ -29,7 +29,7 @@ class LearningNeedRepository implements LearningNeedRepositoryInterface
             $LearningNeedEloquent->save();
             foreach (request('sub_learnings') as $value) {
                 $LearningNeedEloquent->sub_learnings()->create([
-                    'name' => $value
+                    'name' => $value,
                 ]);
             }
             DB::commit();
@@ -48,14 +48,14 @@ class LearningNeedRepository implements LearningNeedRepositoryInterface
             $LearningNeedEloquent->fill($LearningNeedArray);
             $LearningNeedEloquent->update();
             foreach (request('sub_learnings') as $sub_learning) {
-                if (!$sub_learning['id']) {
+                if (! $sub_learning['id']) {
                     $LearningNeedEloquent->sub_learnings()->create([
-                        'name' => $sub_learning['name']
+                        'name' => $sub_learning['name'],
                     ]);
                 }
             }
             foreach (request('delete_sub_learnings') as $value) {
-                $subLearningEloquent =  SubLearningTypeEloquentModel::find($value);
+                $subLearningEloquent = SubLearningTypeEloquentModel::find($value);
                 $subLearningEloquent->delete();
             }
             DB::commit();

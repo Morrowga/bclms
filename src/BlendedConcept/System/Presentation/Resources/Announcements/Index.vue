@@ -29,6 +29,8 @@ let currentAnnouncement = ref();
 console.log(props.announcements)
 const isAddNewAnnouncementDrawerVisible = ref(false);
 const isEditAnnouncementDrawerVisible = ref(false);
+
+
 serverPage.value = ref(props.announcements.meta.current_page ?? 1);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 serverPerPage.value = ref(10);

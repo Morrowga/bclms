@@ -2,15 +2,14 @@
 
 namespace Src\BlendedConcept\Survey\Domain\Repositories;
 
-use Src\BlendedConcept\Survey\Domain\Model\Survey;
-use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
 use Src\BlendedConcept\Survey\Application\DTO\QuestionData;
+use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
 use Src\BlendedConcept\Survey\Domain\Model\Entities\Question;
-
+use Src\BlendedConcept\Survey\Domain\Model\Survey;
 
 interface SurveyRepositoryInterface
 {
-    public function getSurveyList($filters);
+    public function getUserExperienceSurveyList($filters);
 
     public function showSurvey($id);
 
@@ -25,4 +24,8 @@ interface SurveyRepositoryInterface
     public function deleteQuestion(int $question_id): void;
 
     public function updateQuestion(QuestionData $question);
+
+    public function getProfilingSurvey();
+
+    public function getSurveyResults($filters);
 }

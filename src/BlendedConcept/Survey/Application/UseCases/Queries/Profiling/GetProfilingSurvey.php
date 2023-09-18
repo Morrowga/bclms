@@ -1,11 +1,11 @@
 <?php
 
-namespace Src\BlendedConcept\Survey\Application\UseCases\Queries;
+namespace Src\BlendedConcept\Survey\Application\UseCases\Queries\Profiling;
 
-use Src\Common\Domain\QueryInterface;
 use Src\BlendedConcept\Survey\Domain\Repositories\SurveyRepositoryInterface;
+use Src\Common\Domain\QueryInterface;
 
-class GetSurveyList implements QueryInterface
+class GetProfilingSurvey implements QueryInterface
 {
     private SurveyRepositoryInterface $repository;
 
@@ -16,6 +16,6 @@ class GetSurveyList implements QueryInterface
 
     public function handle()
     {
-        return $this->repository->getSurveyList();
+        return $this->repository->getProfilingSurvey();
     }
 }

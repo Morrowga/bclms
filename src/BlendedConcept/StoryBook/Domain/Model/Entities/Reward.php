@@ -8,10 +8,11 @@ class Reward extends Entity
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly string $file_src,
-        public readonly int $gold_coins,
-        public readonly int $silver_coins,
-        public readonly string $status,
+        public readonly string $name,
+        public readonly ?string $file_src,
+        public readonly ?string $description,
+        public readonly int $gold_coins_needed,
+        public readonly int $silver_coins_needed,
         public readonly string $rarity,
     ) {
     }
@@ -20,10 +21,11 @@ class Reward extends Entity
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
             'file_src' => $this->file_src,
-            'gold_coins' => $this->gold_coins,
-            'silver_coins' => $this->silver_coins,
-            'status' => $this->status,
+            'description' => $this->description,
+            'gold_coins_needed' => $this->gold_coins_needed,
+            'silver_coins_needed' => $this->silver_coins_needed,
             'rarity' => $this->rarity,
         ];
     }

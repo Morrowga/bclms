@@ -161,6 +161,7 @@ class OrganizationController extends Controller
             // $tenant->delete();
             $deleteOrganization = (new DeleteOrganizationCommand($organization));
             $deleteOrganization->execute();
+
             return redirect()->route('organizations.index')->with('successMessage', 'Organizations Deleted Successfully!');
         } catch (\Exception $error) {
             return redirect()
@@ -174,7 +175,7 @@ class OrganizationController extends Controller
     public function addSubscription(OrganizationEloquentModel $organization)
     {
         return Inertia::render(config('route.organizations.addSubscription'), [
-            'organization' => $organization->load('subscription')
+            'organization' => $organization->load('subscription'),
         ]);
     }
 

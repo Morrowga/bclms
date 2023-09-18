@@ -2,8 +2,8 @@
 
 namespace Src\BlendedConcept\Survey\Application\UseCases\Commands\Question;
 
-use Src\Common\Domain\CommandInterface;
 use Src\BlendedConcept\Survey\Domain\Repositories\SurveyRepositoryInterface;
+use Src\Common\Domain\CommandInterface;
 
 class DeleteQuestionCommand implements CommandInterface
 {

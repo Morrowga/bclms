@@ -35,7 +35,7 @@ class AnnouncementController extends Controller
         try {
 
             // Get filters from request
-            $filters = request()->only(['name', 'search', 'perPage']);
+            $filters = request()->only(['name', 'search', 'π']);
 
             // Get user list
             $users = (new GetUserList())->handle();

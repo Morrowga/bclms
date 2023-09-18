@@ -15,6 +15,8 @@ use Src\BlendedConcept\StoryBook\Presentation\HTTP\TeacherStorybookController;
 Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('rewards', RewardController::class);
+
+    Route::post('changerewardStatus/{reward}', [RewardController::class, 'changerewardStatus'])->name('changerewardStatus');
     Route::get('/games', [GameController::class, 'index'])->name('games.index');
     Route::get('/books', [BookController::class, 'index'])->name('books.index');
     Route::resource('pathways', PathwayController::class);

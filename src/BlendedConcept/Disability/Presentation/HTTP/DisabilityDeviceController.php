@@ -23,9 +23,10 @@ class DisabilityDeviceController
         $disabilityTypes = (new GetDisabilityTypes($filters))->handle();
 
         return Inertia::render(config('route.disability_type.index'), [
-            'disabilityTypes' => $disabilityTypes
+            'disabilityTypes' => $disabilityTypes,
         ]);
     }
+
     public function store(StoreDisabilityTypeRequest $request)
     {
         try {
@@ -62,6 +63,7 @@ class DisabilityDeviceController
     {
         return Inertia::render(config('route.plans.edit'));
     }
+
     public function update(UpdateDisabilityTypeRequest $request, DisabilityTypeEloquentModel $disabilityType)
     {
 
@@ -69,7 +71,6 @@ class DisabilityDeviceController
             $updateDisabilityType = DisabilityTypeData::fromRequest($request, $disabilityType);
             $updateDisabilityTypecommand = (new UpdateDisabilityTypeCommand($updateDisabilityType));
             $updateDisabilityTypecommand->execute();
-
 
             return redirect()->route('disability_type.index')->with('successMessage', 'Organizations Created Successfully!');
         } catch (\Exception $error) {
@@ -80,12 +81,14 @@ class DisabilityDeviceController
                 ]);
         }
     }
+
     public function destroy(DisabilityTypeEloquentModel $disabilityType)
     {
         try {
 
             $updateDisabilityTypecommand = (new DeleteDisabilityTypeCommand($disabilityType));
             $updateDisabilityTypecommand->execute();
+
             return redirect()->route('disability_type.index')->with('successMessage', 'Organizations Created Successfully!');
         } catch (\Exception $error) {
             return redirect()

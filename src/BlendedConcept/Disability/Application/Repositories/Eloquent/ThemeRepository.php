@@ -16,6 +16,7 @@ class ThemeRepository implements ThemeRepositoryInterface
     {
 
         $themes = ThemeResource::collection(ThemeEloquentModel::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+
         return $themes;
     }
 

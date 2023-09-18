@@ -39,7 +39,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL') . '/storage',
+            'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -53,46 +53,52 @@ return [
         'media_user' => [
             'driver' => 'local',
             'root' => storage_path('app/public/users'),
-            'url' => env('APP_URL') . '/storage/users',
+            'url' => env('APP_URL').'/storage/users',
             'visibility' => 'public',
         ],
         'media_organization' => [
             'driver' => 'local',
             'root' => storage_path('app/public/organization'),
-            'url' => env('APP_URL') . '/storage/organization',
+            'url' => env('APP_URL').'/storage/organization',
             'visibility' => 'public',
         ],
 
         'media_students' => [
             'driver' => 'local',
             'root' => storage_path('app/public/students'),
-            'url' => env('APP_URL') . '/storage/students',
+            'url' => env('APP_URL').'/storage/students',
             'visibility' => 'public',
         ],
 
         'media_teachers' => [
             'driver' => 'local',
             'root' => storage_path('app/public/teachers'),
-            'url' => env('APP_URL') . '/storage/teachers',
+            'url' => env('APP_URL').'/storage/teachers',
             'visibility' => 'public',
         ],
 
         'media_sitelogo' => [
             'driver' => 'local',
             'root' => storage_path('app/public/sitelogo'),
-            'url' => env('APP_URL') . '/storage/sitelogo',
+            'url' => env('APP_URL').'/storage/sitelogo',
             'visibility' => 'public',
         ],
         'media_sitefavico' => [
             'driver' => 'local',
             'root' => storage_path('app/public/sitefavico'),
-            'url' => env('APP_URL') . '/storage/sitefavico',
+            'url' => env('APP_URL').'/storage/sitefavico',
             'visibility' => 'public',
         ],
         'media_payment_receipt' => [
             'driver' => 'local',
             'root' => storage_path('app/public/payment_receipt'),
-            'url' => env('APP_URL') . '/storage/payment_receipt',
+            'url' => env('APP_URL').'/storage/payment_receipt',
+            'visibility' => 'public',
+        ],
+        'media_reward' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/reward'),
+            'url' => env('APP_URL').'/storage/reward',
             'visibility' => 'public',
         ],
 

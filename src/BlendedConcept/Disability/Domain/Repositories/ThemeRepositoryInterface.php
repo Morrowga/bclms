@@ -9,7 +9,10 @@ use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\ThemeEloquentMod
 interface ThemeRepositoryInterface
 {
     public function getThemes($filters);
+
     public function createTheme(Theme $theme);
+
     public function updateTheme(ThemeData $themeData);
+
     public function deleteTheme(ThemeEloquentModel $theme);
 }

@@ -3,13 +3,13 @@
 namespace Src\Common\Infrastructure\Laravel\Kernel;
 
 use Illuminate\Console\Scheduling\Schedule;
-use Src\Common\Presentation\CLI\CreateQueryCmd;
-use Src\Common\Presentation\CLI\CreateDomainCmd;
-use Src\Common\Presentation\CLI\CreateRoutesCmd;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Src\Common\Presentation\CLI\CreateCommandCmd;
 use Src\Common\Presentation\CLI\CreateControllerCmd;
+use Src\Common\Presentation\CLI\CreateDomainCmd;
 use Src\Common\Presentation\CLI\CreateLaravelSetupCmd;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Src\Common\Presentation\CLI\CreateQueryCmd;
+use Src\Common\Presentation\CLI\CreateRoutesCmd;
 
 class Console extends ConsoleKernel
 {

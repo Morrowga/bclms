@@ -8,22 +8,24 @@ class RewardData
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly string $file_src,
-        public readonly int $gold_coins,
-        public readonly int $silver_coins,
-        public readonly string $status,
+        public readonly string $name,
+        public readonly ?string $file_src,
+        public readonly ?string $description,
+        public readonly int $gold_coins_needed,
+        public readonly int $silver_coins_needed,
         public readonly string $rarity,
     ) {
     }
 
-    public static function fromRequest(Request $request, $reward_id): RewardData
+    public static function fromRequest(Request $request, $reward): RewardData
     {
         return new self(
-            id: $reward_id,
-            file_src: $request->file_src,
-            gold_coins: $request->gold_coins,
-            silver_coins: $request->silver_coins,
-            status: $request->status,
+            id: $reward->id,
+            name: $request->name,
+            description: $request->description,
+            file_src : $request->file_src,
+            gold_coins_needed: $request->gold_coins_needed,
+            silver_coins_needed: $request->silver_coins_needed,
             rarity: $request->rarity,
         );
     }
@@ -32,10 +34,11 @@ class RewardData
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
             'file_src' => $this->file_src,
-            'gold_coins' => $this->gold_coins,
-            'silver_coins' => $this->silver_coins,
-            'status' => $this->status,
+            'description' => $this->description,
+            'gold_coins_needed' => $this->gold_coins_needed,
+            'silver_coins_needed' => $this->silver_coins_needed,
             'rarity' => $this->rarity,
         ];
     }

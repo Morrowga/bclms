@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\Survey\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Survey\Application\DTO\QuestionOptionData;
 
 class QuestionOptionData
 {

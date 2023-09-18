@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\Survey\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Survey\Application\DTO\QuestionData;
 
 class QuestionData
 {
@@ -35,7 +34,7 @@ class QuestionData
             'survey_id' => $this->survey_id,
             'question_type' => $this->question_type,
             'question' => $this->question,
-            'options' => $this->options
+            'options' => $this->options,
         ];
     }
 }

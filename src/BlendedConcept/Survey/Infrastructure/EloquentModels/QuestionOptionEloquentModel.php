@@ -17,5 +17,4 @@ class QuestionOptionEloquentModel extends Model
         'question_id',
         'content',
     ];
-
 }
