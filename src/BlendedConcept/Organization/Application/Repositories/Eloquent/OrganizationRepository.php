@@ -144,7 +144,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 $b2bSubscriptionEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_payment_receipt');
             }
             if ($b2bSubscriptionEloquent->getMedia('image')->isNotEmpty()) {
-                $b2bSubscriptionEloquent->logo = $b2bSubscriptionEloquent->getMedia('image')[0]->original_url;
+                $b2bSubscriptionEloquent->receipt_image = $b2bSubscriptionEloquent->getMedia('image')[0]->original_url;
                 $b2bSubscriptionEloquent->update();
             }
             DB::commit();

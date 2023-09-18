@@ -5,7 +5,16 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
-let props = defineProps();
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
+let props = defineProps(["pathways", "flash"]);
 
 //## start datatable section
 let columns = [
@@ -36,64 +45,6 @@ let columns = [
         sortable: false,
     },
 ];
-
-let rows = [
-    {
-        id: 1,
-        name: "Tiggy OMG",
-        description: "Fostering inclusive education and personalized support",
-        storybooks: [
-            {
-                name: "Toy Story 2",
-            },
-            {
-                name: "A Walk On Tundra",
-            },
-        ],
-        rewards_issued: "",
-    },
-    {
-        id: 2,
-        name: "Toy Story Feedback Survey",
-        description:
-            "Empowering to build coping skills and thrive in their environment",
-        storybooks: [
-            {
-                name: "Toy Story 2",
-            },
-            {
-                name: "A Walk On Tundra",
-            },
-        ],
-    },
-    {
-        id: 3,
-        name: "Website Experience Survey",
-        description: "improve social interactions and communication skills",
-        storybooks: [
-            {
-                name: "Toy Story 2",
-            },
-            {
-                name: "A Walk On Tundra",
-            },
-        ],
-    },
-];
-
-const items = ref([
-    {
-        title: "Edit",
-        value: "edit",
-    },
-    {
-        title: "Delete",
-        value: "delete",
-    },
-]);
-
-const isDiability = ref(false);
-const isEditDiability = ref(false);
 
 //## truncatedText
 let truncatedText = (text) => {

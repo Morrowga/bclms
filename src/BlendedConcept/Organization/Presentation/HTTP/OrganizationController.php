@@ -8,8 +8,9 @@ use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organization\Application\DTO\OrganizationData;
 use Src\BlendedConcept\Organization\Application\Mappers\OrganizationMapper;
-
+use Src\BlendedConcept\Organization\Application\Requests\StoreOrganizationRequest;
 use Src\BlendedConcept\Organization\Application\Requests\StoreOrganizationSubscriptionRequest;
+use Src\BlendedConcept\Organization\Application\Requests\UpdateOrganizationRequest;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\DeleteOrganizationCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\StoreOrganizationCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\StoreOrganizationSubscriptionCommand;
@@ -19,8 +20,7 @@ use Src\BlendedConcept\Organization\Domain\Services\OrganizationService;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
 use Src\BlendedConcept\System\Application\Policies\OrganizationPolicy;
-use Src\BlendedConcept\System\Application\Requests\StoreOrganizationRequest;
-use Src\BlendedConcept\System\Application\Requests\UpdateOrganizationRequest;
+
 use Src\Common\Infrastructure\Laravel\Controller;
 use Stancl\Tenancy\Database\Models\Domain;
 use Symfony\Component\HttpFoundation\Response;

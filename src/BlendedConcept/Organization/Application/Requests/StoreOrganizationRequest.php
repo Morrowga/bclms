@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\System\Application\Requests;
+namespace Src\BlendedConcept\Organization\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

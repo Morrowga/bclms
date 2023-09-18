@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\System\Application\Requests;
+namespace Src\BlendedConcept\Organization\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -21,7 +21,7 @@ class UpdateOrganizationRequest extends FormRequest
             'contact_email' => [
                 'required',
                 'email',
-                'unique:organizations,contact_email,'.request()->route('organization')->id,
+                'unique:organizations,contact_email,' . request()->route('organization')->id,
             ],
             'org_admin_name' => [
                 'required',
@@ -33,7 +33,7 @@ class UpdateOrganizationRequest extends FormRequest
             'login_email' => [
                 'required',
                 'email',
-                'unique:users,email,'.request()->route('organization')->org_admin_id,
+                'unique:users,email,' . request()->route('organization')->org_admin_id,
             ],
         ];
     }
