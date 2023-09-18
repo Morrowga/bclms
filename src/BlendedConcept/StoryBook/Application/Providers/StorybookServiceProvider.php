@@ -16,6 +16,7 @@ class StoryBookServiceProvider extends ServiceProvider
             RewaredRepositoryInterface::class,
             RewardRepository::class
         );
+
         $this->app->bind(
             PathwayRepositoryInterface::class,
             PathwayRepository::class
