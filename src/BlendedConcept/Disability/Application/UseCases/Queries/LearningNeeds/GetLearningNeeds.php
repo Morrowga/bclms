@@ -5,7 +5,7 @@ namespace Src\BlendedConcept\Disability\Application\UseCases\Queries\LearningNee
 use Src\BlendedConcept\Disability\Domain\Repositories\LearningNeedRepositoryInterface;
 use Src\Common\Domain\QueryInterface;
 
-class getLearningNeeds implements QueryInterface
+class GetLearningNeeds implements QueryInterface
 {
     private LearningNeedRepositoryInterface $repository;
 

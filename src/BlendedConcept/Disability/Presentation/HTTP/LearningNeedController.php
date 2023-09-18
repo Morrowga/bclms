@@ -11,7 +11,7 @@ use Src\BlendedConcept\Disability\Application\Requests\UpdateLearningNeedRequest
 use Src\BlendedConcept\Disability\Application\UseCases\Commands\LearningNeeds\DeleteLearningNeedCommand;
 use Src\BlendedConcept\Disability\Application\UseCases\Commands\LearningNeeds\StoreLearningNeedCommand;
 use Src\BlendedConcept\Disability\Application\UseCases\Commands\LearningNeeds\UpdateLearningNeedCommand;
-use Src\BlendedConcept\Disability\Application\UseCases\Queries\LearningNeeds\getLearningNeeds;
+use Src\BlendedConcept\Disability\Application\UseCases\Queries\LearningNeeds\GetLearningNeeds;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\LearningNeedEloquentModel;
 
 class LearningNeedController
@@ -19,7 +19,7 @@ class LearningNeedController
     public function index()
     {
         $filters = request(['search', 'page', 'perPage']);
-        $learningNeeds = (new getLearningNeeds($filters))->handle();
+        $learningNeeds = (new GetLearningNeeds($filters))->handle();
 
         return Inertia::render(config('route.disability_type.index'), [
             'disabilityTypes' => $learningNeeds
