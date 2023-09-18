@@ -9,6 +9,8 @@ import { isConfirmedDialog } from "@actions/useConfirm";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 let props = defineProps(["organizations", "flash", "auth"]);
+let page = usePage();
+let user_role = computed(() => page.props.user_info.user_role.name);
 import {
     serverParams,
     onColumnFilter,
@@ -246,7 +248,24 @@ const getPrice = (organization) => {
                                         class="mt-n4"
                                     />
                                 </template>
-                                <VList>
+                                <VList v-if="user_role == 'BC Staff'">
+                                    <VListItem
+                                        @click="
+                                            () =>
+                                                router.get(
+                                                    route(
+                                                        'organizations.addSubscription',
+                                                        props.row.id
+                                                    )
+                                                )
+                                        "
+                                    >
+                                        <VListItemTitle
+                                            >Add Subscription</VListItemTitle
+                                        >
+                                    </VListItem>
+                                </VList>
+                                <VList v-else>
                                     <VListItem
                                         @click="
                                             () =>
