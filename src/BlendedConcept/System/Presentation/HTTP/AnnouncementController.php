@@ -161,7 +161,7 @@ class AnnouncementController extends Controller
         // } catch (\Exception $e) {
         //     /**
         //      * Catch any exceptions and display an error message.
-        //      */
+    //      */
         //     return redirect()->route('announcements.index')->with('SystemErrorMessage', $e->getMessage());
         // }
     }

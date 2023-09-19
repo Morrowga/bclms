@@ -52,7 +52,7 @@ class GameEloquentModel extends Model implements HasMedia
     public function getGameFileAttribute()
     {
         // Check if there is any media associated with the 'thumbnail' collection
-        $media = $this->getMedia('gameFile');
+        $media = $this->getMedia('game_file');
 
         // If there is media, return the URL of the first item
         if ($media->isNotEmpty()) {

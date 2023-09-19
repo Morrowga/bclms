@@ -1,10 +1,16 @@
 <script setup>
 import { defineProps } from "vue";
+import { useForm } from "@inertiajs/vue3";
+
 const props = defineProps({
     isThumbnailDialogVisible: {
         type: Boolean,
         default: false,
     },
+});
+
+const form = useForm({
+    thumb : null
 });
 
 const emit = defineEmits(["submit", "update:isThumbnailDialogVisible"]);
@@ -35,7 +41,8 @@ const onDropThumbnail = (event) => {
 };
 
 const onFormSubmit = () => {
-    emit("submit", thumbnailFile.value);
+    form.thumb = thumbnailFile.value;
+    emit("submit", form);
     emit("update:isThumbnailDialogVisible", false);
 };
 

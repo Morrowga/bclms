@@ -175,7 +175,7 @@ const addToSublearningArray = (e) => {
               <v-col cols="12" md="12" class="py-0">
                 <v-col cols="12" md="6">
                   <VLabel class="tiggie-label">Physical Resources</VLabel>
-                  <ImageUpload v-model=""/>
+                  <ImageUpload />
                 </v-col>
               </v-col>
               <v-col cols="12" md="12" class="py-0">

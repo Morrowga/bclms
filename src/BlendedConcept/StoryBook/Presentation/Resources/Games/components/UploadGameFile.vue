@@ -1,5 +1,7 @@
 <script setup>
 import { defineProps } from "vue";
+import { useForm } from "@inertiajs/vue3";
+
 const props = defineProps({
     isGameFileDialogVisible: {
         type: Boolean,
@@ -28,8 +30,13 @@ const onDropGameFile = (event) => {
   gameFile.value = files[0];
 };
 
+const form = useForm({
+    game : null
+});
+
 const onFormSubmit = () => {
-    emit("submit", gameFile.value);
+    form.game = gameFile.value;
+    emit("submit", form);
     emit("update:isGameFileDialogVisible", false);
 };
 
@@ -56,7 +63,7 @@ const handleFileInputClick = () => {
         <!-- Dialog Content -->
         <div>
             <VCard>
-                <VForm ref="refForm" @submit.prevent="onFormSubmit">
+                <VForm class="mt-6" ref="refForm" @submit.prevent="onFormSubmit">
                     <VCardText>
                         <p class="heading-upload-modal">Upload Game File</p>
 

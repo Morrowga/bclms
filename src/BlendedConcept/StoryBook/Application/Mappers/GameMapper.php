@@ -18,7 +18,6 @@ class GameMapper
             thumbnail : $request->thumbnail,
             num_gold_coins : $request->num_gold_coins,
             num_silver_coins : $request->num_silver_coins,
-            disability_type_id : $request->disability_type_id,
         );
     }
 

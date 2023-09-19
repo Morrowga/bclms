@@ -20,18 +20,9 @@ class UpdateGameRequest extends FormRequest
             'description' => [
                 'string',
             ],
-            'game' => [
-                'required'
-            ],
-            'thumb' => [
-                'required'
-            ],
             'disability_type_id' => [
                 'required'
             ],
-            'tags' => [
-                'required'
-            ]
         ];
     }
 

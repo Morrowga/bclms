@@ -14,7 +14,6 @@ class Game extends Entity
         public readonly ?string $thumbnail,
         public readonly ?int $num_gold_coins,
         public readonly ?int $num_silver_coins,
-        public readonly int $disability_type_id,
     ) {
     }
 
