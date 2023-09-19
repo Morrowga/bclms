@@ -3,10 +3,13 @@ import { ref } from "vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
 import { SuccessDialog } from "@actions/useSuccess";
-
+import { useForm, usePage, Link } from "@inertiajs/vue3";
+import { requiredValidator } from "@validators";
 import AddBook from "./components/AddBook.vue";
 const props = defineProps(["data_type"]);
-
+let flash = computed(() => usePage().props.flash);
+const isFormValid = ref(false);
+let refForm = ref();
 function showBook() {
     isShowBook.value = !isShowBook.value;
 }
@@ -91,201 +94,259 @@ function handleDropp(event) {
 const removeUploadedItem = (index) => {
     uploadedImages.value.splice(index, 1);
 };
+
+const form = useForm({
+    name: "",
+    description: "",
+    num_gold_coins: "",
+    num_silver_coins: "",
+    need_complete_in_order: false,
+    storybooks: [],
+});
+let handleSubmit = () => {
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("pathways.store"), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.successMessage });
+                },
+                onError: (error) => {},
+            });
+        }
+    });
+};
 </script>
 <template>
     <AdminLayout>
-        <VContainer>
-            <VRow>
-                <VCol cols="6">
-                    <h1 class="tiggie-title">Add Pathway</h1>
-                </VCol>
-                <VCol cols="6" class="text-end">
-                    <Link :href="route('pathways.index')">
-                        <VBtn
-                            color="secondary"
-                            text-color="white"
-                            density="compact"
-                            variant="tonal"
-                            class="pl-16 pr-16"
-                            height="30"
-                        >
-                            <span class="text-dark">Back</span>
+        <VForm
+            ref="refForm"
+            v-model="isFormValid"
+            @submit.prevent="handleSubmit"
+        >
+            <VContainer>
+                <VRow>
+                    <VCol cols="6">
+                        <h1 class="tiggie-title">Add Pathway</h1>
+                    </VCol>
+                    <VCol cols="6" class="text-end">
+                        <Link :href="route('pathways.index')">
+                            <VBtn
+                                color="secondary"
+                                text-color="white"
+                                density="compact"
+                                variant="tonal"
+                                class="pl-16 pr-16"
+                                height="30"
+                            >
+                                <span class="text-dark">Back</span>
+                            </VBtn>
+                        </Link>
+                        <VBtn height="30" class="ml-4" type="submit">
+                            Add Pathway
                         </VBtn>
-                    </Link>
-                    <VBtn height="30" class="ml-4" @click="addPathway">
-                        Add Pathway
-                    </VBtn>
-                </VCol>
-            </VRow>
-            <VRow>
-                <VCol cols="12">
-                    <VRow>
-                        <VCol cols="12" sm="6" md="4">
-                            <VLabel class="tiggie-label required"
-                                >Path Name</VLabel
-                            >
-                            <VTextField
-                                placeholder="Type here ..."
-                                density="compact"
-                            />
-                        </VCol>
-                        <VCol cols="12" sm="6" md="4">
-                            <VLabel class="tiggie-label required"
-                                >Description</VLabel
-                            >
-                            <VTextField
-                                placeholder="Type here ..."
-                                density="compact"
-                            />
-                        </VCol>
-                        <VCol cols="12" sm="6" md="4"> </VCol>
+                    </VCol>
+                </VRow>
 
-                        <VCol cols="12" sm="6" md="4">
-                            <VLabel class="tiggie-label required"
-                                >Number Of Gold Coins for Completion</VLabel
-                            >
-                            <VTextField
-                                placeholder="Type here ..."
-                                density="compact"
-                            />
-                        </VCol>
+                <VRow>
+                    <VCol cols="12">
+                        <VRow>
+                            <VCol cols="12" sm="6" md="4">
+                                <VLabel class="tiggie-label required"
+                                    >Path Name</VLabel
+                                >
+                                <VTextField
+                                    placeholder="Type here ..."
+                                    density="compact"
+                                    v-model="form.name"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.name"
+                                />
+                            </VCol>
+                            <VCol cols="12" sm="6" md="4">
+                                <VLabel class="tiggie-label required"
+                                    >Description</VLabel
+                                >
+                                <VTextField
+                                    placeholder="Type here ..."
+                                    density="compact"
+                                    v-model="form.description"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.description"
+                                />
+                            </VCol>
+                            <VCol cols="12" sm="6" md="4"> </VCol>
 
-                        <VCol cols="12" sm="6" md="4">
-                            <VLabel class="tiggie-label required"
-                                >Number Of Silver Coins for Replay</VLabel
-                            >
-                            <VTextField
-                                placeholder="Type here ..."
-                                density="compact"
-                            />
-                        </VCol>
-                        <VCol cols="12" sm="6" md="4">
-                            <VLabel class="tiggie-label required"
-                                >Must Complete Books In Order</VLabel
-                            >
-                            <VSwitch v-model="switchBtn"> </VSwitch>
-                        </VCol>
-                        <VCol cols="12" sm="6" md="6" class="py-4">
-                            <h1 class="tiggie-title required">Current Flow</h1>
-                            <VCardText>
-                                <p class="pppangram-bold ml-5 fs-20 t-black">
-                                    <strong class="fs-20 l-blue">2</strong>
-                                    {{ type }} Remaining
-                                </p>
-                                <div class="mt-3">
-                                    <div
-                                        class="image-container mt-2 mx-4"
-                                        v-for="(image, index) in uploadedImages"
-                                        :key="index"
+                            <VCol cols="12" sm="6" md="4">
+                                <VLabel class="tiggie-label required"
+                                    >Number Of Gold Coins for Completion</VLabel
+                                >
+                                <VTextField
+                                    placeholder="Type here ..."
+                                    density="compact"
+                                    type="number"
+                                    v-model="form.num_gold_coins"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="
+                                        form?.errors?.num_gold_coins
+                                    "
+                                />
+                            </VCol>
+
+                            <VCol cols="12" sm="6" md="4">
+                                <VLabel class="tiggie-label required"
+                                    >Number Of Silver Coins for Replay</VLabel
+                                >
+                                <VTextField
+                                    placeholder="Type here ..."
+                                    density="compact"
+                                    type="number"
+                                    v-model="form.num_silver_coins"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="
+                                        form?.errors?.num_silver_coins
+                                    "
+                                />
+                            </VCol>
+                            <VCol cols="12" sm="6" md="4">
+                                <VLabel class="tiggie-label required"
+                                    >Must Complete Books In Order</VLabel
+                                >
+                                <VSwitch v-model="form.num_silver_coins">
+                                </VSwitch>
+                            </VCol>
+                            <VCol cols="12" sm="6" md="6" class="py-4">
+                                <h1 class="tiggie-title required">
+                                    Current Flow
+                                </h1>
+                                <VCardText>
+                                    <p
+                                        class="pppangram-bold ml-5 fs-20 t-black"
                                     >
+                                        <strong class="fs-20 l-blue">2</strong>
+                                        {{ type }} Remaining
+                                    </p>
+                                    <div class="mt-3">
                                         <div
-                                            class="d-flex justify-space-between"
+                                            class="image-container mt-2 mx-4"
+                                            v-for="(
+                                                image, index
+                                            ) in uploadedImages"
+                                            :key="index"
                                         >
-                                            <div class="d-flex">
-                                                <img
-                                                    :src="image.src"
-                                                    class="import-file-img mt-2 ml-3"
-                                                />
-                                                <p class="ml-3 mt-3">
-                                                    {{ image.name }}
-                                                </p>
-                                            </div>
+                                            <div
+                                                class="d-flex justify-space-between"
+                                            >
+                                                <div class="d-flex">
+                                                    <img
+                                                        :src="image.src"
+                                                        class="import-file-img mt-2 ml-3"
+                                                    />
+                                                    <p class="ml-3 mt-3">
+                                                        {{ image.name }}
+                                                    </p>
+                                                </div>
 
-                                            <div class="mt-3 mr-3">
-                                                <VIcon
-                                                    icon="mdi-close"
-                                                    @click="
-                                                        removeUploadedItem(
-                                                            index
-                                                        )
-                                                    "
-                                                ></VIcon>
+                                                <div class="mt-3 mr-3">
+                                                    <VIcon
+                                                        icon="mdi-close"
+                                                        @click="
+                                                            removeUploadedItem(
+                                                                index
+                                                            )
+                                                        "
+                                                    ></VIcon>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div
-                                        class="imprt-path-text mt-6 mx-5"
-                                        @dragover.prevent
-                                        @drop="handleDropp"
-                                    >
-                                        <div class="text-center">
-                                            <div class="mt-2">
-                                                <span class="import-fade-text">
-                                                    Drag and Drop to add
-                                                </span>
+                                        <div
+                                            class="imprt-path-text mt-6 mx-5"
+                                            @dragover.prevent
+                                            @drop="handleDropp"
+                                        >
+                                            <div class="text-center">
                                                 <div class="mt-2">
                                                     <span
-                                                        class="text-tiggie-blue"
-                                                        >Books</span
+                                                        class="import-fade-text"
                                                     >
-                                                    Here
+                                                        Drag and Drop to add
+                                                    </span>
+                                                    <div class="mt-2">
+                                                        <span
+                                                            class="text-tiggie-blue"
+                                                            >Books</span
+                                                        >
+                                                        Here
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </VCardText>
-                        </VCol>
-                    </VRow>
-                </VCol>
-            </VRow>
-            <VRow>
-                <VCol cols="12" class="pt-0">
-                    <div class="d-flex justify-space-between align-center">
-                        <h1 class="tiggie-title required">Book Library</h1>
-                        <div class="search-field">
-                            <v-text-field
-                                variant="solo"
-                                placeholder="Search Books"
-                                density="compact"
-                            >
-                            </v-text-field>
-                        </div>
-                    </div>
-                    <div class="control-position">
-                        <div class="head-section">
-                            <div class="title-section">
-                                <p class="heading-title">{{ title }}</p>
-                                <span class="subheading">{{ subtitle }}</span>
+                                </VCardText>
+                            </VCol>
+                        </VRow>
+                    </VCol>
+                </VRow>
+
+                <VRow>
+                    <VCol cols="12" class="pt-0">
+                        <div class="d-flex justify-space-between align-center">
+                            <h1 class="tiggie-title required">Book Library</h1>
+                            <div class="search-field">
+                                <v-text-field
+                                    variant="solo"
+                                    placeholder="Search Books"
+                                    density="compact"
+                                >
+                                </v-text-field>
                             </div>
                         </div>
-                        <div class="scroll-container">
-                            <div
-                                v-for="(data, index) in datas"
-                                :key="index"
-                                :draggable="true"
-                                @dragstart="startDrag(index)"
-                                class="card-container"
-                            >
-                                <v-card
-                                    class="ma-4 container-style"
-                                    height="200"
-                                    :color="'primary'"
+                        <div class="control-position">
+                            <div class="head-section">
+                                <div class="title-section">
+                                    <p class="heading-title">{{ title }}</p>
+                                    <span class="subheading">{{
+                                        subtitle
+                                    }}</span>
+                                </div>
+                            </div>
+                            <div class="scroll-container">
+                                <div
+                                    v-for="(data, index) in datas"
+                                    :key="index"
+                                    :draggable="true"
+                                    @dragstart="startDrag(index)"
+                                    class="card-container"
                                 >
-                                    <div
-                                        class="d-flex fill-height align-center justify-center"
+                                    <v-card
+                                        class="ma-4 container-style"
+                                        height="200"
+                                        :color="'primary'"
                                     >
-                                        <img
-                                            class="bg-white fit-img-2"
-                                            :src="data.image"
-                                        />
-                                    </div>
-                                    <v-scale-transition class="full-icon">
-                                        <!-- <v-icon
+                                        <div
+                                            class="d-flex fill-height align-center justify-center"
+                                        >
+                                            <img
+                                                class="bg-white fit-img-2"
+                                                :src="data.image"
+                                            />
+                                        </div>
+                                        <v-scale-transition class="full-icon">
+                                            <!-- <v-icon
                                                 size="48"
                                                 icon="mdi-check-circle-outline"
                                             ></v-icon> -->
-                                    </v-scale-transition>
-                                </v-card>
-                                <p class="font-weight-bold text-center">
-                                    {{ data.title }}
-                                </p>
+                                        </v-scale-transition>
+                                    </v-card>
+                                    <p class="font-weight-bold text-center">
+                                        {{ data.title }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </VCol>
-            </VRow>
-        </VContainer>
+                    </VCol>
+                </VRow>
+            </VContainer>
+        </VForm>
     </AdminLayout>
 </template>
 

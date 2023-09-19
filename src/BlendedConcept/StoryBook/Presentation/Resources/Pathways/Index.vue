@@ -45,7 +45,17 @@ let columns = [
         sortable: false,
     },
 ];
+serverPage.value = ref(props.pathways.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
 
+let options = ref({
+    enabled: true,
+    mode: "pages",
+    perPage: props.pathways?.meta?.per_page,
+    setCurrentPage: props?.pathways?.meta?.current_page,
+    perPageDropdown: [10, 20, 50, 100],
+    dropdownAllowAll: false,
+});
 //## truncatedText
 let truncatedText = (text) => {
     if (text) {
@@ -66,6 +76,9 @@ const deletePathway = () => {
             });
         },
     });
+};
+const selectionChanged = (data) => {
+    console.log(data.selectedRows);
 };
 </script>
 <template>
@@ -109,13 +122,16 @@ const deletePathway = () => {
                             <vue-good-table
                                 class="role-data-table"
                                 styleClass="vgt-table"
-                                v-on:selected-rows-change="selectionChanged"
+                                @column-filter="onColumnFilter"
+                                :totalRows="props.pathways.meta.total"
+                                :selected-rows-change="selectionChanged"
+                                :pagination-options="options"
+                                :rows="props.pathways.data"
                                 :columns="columns"
-                                :rows="rows"
                                 :select-options="{
-                                    enabled: false,
+                                    enabled: true,
+                                    selectOnCheckboxOnly: true,
                                 }"
-                                :pagination-options="{ enabled: true }"
                             >
                                 <template #table-row="dataProps">
                                     <div
@@ -138,7 +154,7 @@ const deletePathway = () => {
                                             'storybooks'
                                         "
                                     >
-                                        <v-chip
+                                        <!-- <v-chip
                                             v-for="storybook in dataProps.row
                                                 .storybooks"
                                             :key="storybook.name"
@@ -146,7 +162,7 @@ const deletePathway = () => {
                                             color="primary"
                                             size="small"
                                             >{{ storybook.name }}
-                                        </v-chip>
+                                        </v-chip> -->
                                     </div>
                                     <div
                                         v-if="
@@ -216,6 +232,53 @@ const deletePathway = () => {
                                             </VList>
                                         </VMenu>
                                     </div>
+                                </template>
+                                <template #pagination-bottom>
+                                    <VRow class="pa-4">
+                                        <VCol
+                                            cols="12"
+                                            class="d-flex justify-space-between"
+                                        >
+                                            <span>
+                                                Showing
+                                                {{ props.pathways.meta.from }}
+                                                to
+                                                {{ props.pathways.meta.to }}
+                                                of
+                                                {{ props.pathways.meta.total }}
+                                                entries
+                                            </span>
+                                            <div class="d-flex">
+                                                <div
+                                                    class="d-flex align-center"
+                                                >
+                                                    <span class="me-2"
+                                                        >Show</span
+                                                    >
+                                                    <VSelect
+                                                        v-model="serverPerPage"
+                                                        density="compact"
+                                                        :items="
+                                                            options.perPageDropdown
+                                                        "
+                                                    >
+                                                    </VSelect>
+                                                </div>
+                                                <VPagination
+                                                    v-model="serverPage"
+                                                    size="small"
+                                                    :total-visible="5"
+                                                    :length="
+                                                        props.pathways.meta
+                                                            .last_page
+                                                    "
+                                                    @next="onPageChange"
+                                                    @prev="onPageChange"
+                                                    @click="onPageChange"
+                                                />
+                                            </div>
+                                        </VCol>
+                                    </VRow>
                                 </template>
                             </vue-good-table>
 

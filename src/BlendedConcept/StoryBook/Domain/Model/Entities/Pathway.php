@@ -13,6 +13,7 @@ class Pathway extends Entity
         public readonly int $num_gold_coins,
         public readonly int $num_silver_coins,
         public readonly bool $need_complete_in_order,
+        public readonly ?array $storybooks,
     ) {
     }
 

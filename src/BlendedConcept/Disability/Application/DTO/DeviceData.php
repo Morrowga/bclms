@@ -16,11 +16,11 @@ class DeviceData
     ) {
     }
 
-    public static function fromRequest(Request $request, $device_id = null): DeviceData
+    public static function fromRequest(Request $request, $device): DeviceData
     {
 
         return new self(
-            id: $device_id,
+            id: $device->id,
             name: $request->name,
             descripton: $request->description,
             status: $request->status,
@@ -28,13 +28,13 @@ class DeviceData
         );
     }
 
-    public static function fromEloquent(Device $disabilityType): self
+    public static function fromEloquent(Device $device): self
     {
         return new self(
-            id: $disabilityType->id,
-            name: $disabilityType->name,
-            descripton: $disabilityType->description,
-            status: $disabilityType->status
+            id: $device->id,
+            name: $device->name,
+            descripton: $device->description,
+            status: $device->status
 
         );
     }

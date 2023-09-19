@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             BCStaffRoleSeeder::class,
             StudentRoleSeeder::class,
             SurveySeeder::class,
+            StorybookSeeder::class,
+            ReviewSeeder::class
         ]);
     }
 }

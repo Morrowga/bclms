@@ -6,6 +6,7 @@ namespace Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 
 class ReviewEloquentModel extends Model
 {
@@ -22,6 +23,14 @@ class ReviewEloquentModel extends Model
         'given_on',
     ];
 
+    public function storybooks()
+    {
+        return $this->hasMany(StoryBookEloquentModel::class, 'id', 'storybook_id');
+    }
+    public function users()
+    {
+        return $this->hasMany(B2bUserEloquentModel::class, 'id', 'given_by_user_id');
+    }
     // public function scopeFilter($query, $filters)
     // {
     //     $query->when($filters['name'] ?? false, function ($query, $name) {
