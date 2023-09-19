@@ -16,7 +16,6 @@ class DeviceRepository implements DeviceRepositoryInterface
     {
 
         $devices = DeviceResource::collection(DeviceEloquentModel::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
-
         return $devices;
     }
 

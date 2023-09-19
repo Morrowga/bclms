@@ -9,8 +9,16 @@ import { toastAlert } from "@Composables/useToastAlert";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import DefaultBtn from "@mainRoot/components/Buttons/DefaultBtn.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
-// import Edit from "./Edit.vue";
-let props = defineProps();
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
+let props = defineProps(["devices", "flash"]);
 
 //## start datatable section
 let columns = [
@@ -41,34 +49,34 @@ let columns = [
     },
 ];
 
-let rows = [
-    {
-        name: "Eye-Gaze",
-        disability: "Dyslexia",
-        description:
-            "Specific learning disabilities  that affect reading and language-based skills",
-        status: true,
-    },
-    {
-        name: "Eye-Gaze",
-        disability: "Attention Deficit/Hyperactivity Disorder",
-        description:
-            "Trouble paying attention, controlling impulsive behaviors and overly-active",
-        status: true,
-    },
-    {
-        name: "Eye-Gaze",
-        disability: "Dyscalculia",
-        description: "Affects the ability to understand and learn math facts",
-        status: false,
-    },
-    {
-        name: "Eye-Gaze",
-        disability: "Dyspraxia",
-        description: "Problem with movement, coordination, language and speech",
-        status: true,
-    },
-];
+// let rows = [
+//     {
+//         name: "Eye-Gaze",
+//         disability: "Dyslexia",
+//         description:
+//             "Specific learning disabilities  that affect reading and language-based skills",
+//         status: true,
+//     },
+//     {
+//         name: "Eye-Gaze",
+//         disability: "Attention Deficit/Hyperactivity Disorder",
+//         description:
+//             "Trouble paying attention, controlling impulsive behaviors and overly-active",
+//         status: true,
+//     },
+//     {
+//         name: "Eye-Gaze",
+//         disability: "Dyscalculia",
+//         description: "Affects the ability to understand and learn math facts",
+//         status: false,
+//     },
+//     {
+//         name: "Eye-Gaze",
+//         disability: "Dyspraxia",
+//         description: "Problem with movement, coordination, language and speech",
+//         status: true,
+//     },
+// ];
 
 const items = ref([
     {
@@ -81,9 +89,17 @@ const items = ref([
     },
 ]);
 
-const isDiability = ref(false);
-const isEditDiability = ref(false);
+serverPage.value = ref(props.devices.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
 
+let options = ref({
+    enabled: true,
+    mode: "pages",
+    perPage: props.devices?.meta?.per_page,
+    setCurrentPage: props?.devices?.meta?.current_page,
+    perPageDropdown: [10, 20, 50, 100],
+    dropdownAllowAll: false,
+});
 //## truncatedText
 let truncatedText = (text) => {
     if (text) {
@@ -168,13 +184,16 @@ const deleteItem = () => {
                             <vue-good-table
                                 class="role-data-table"
                                 styleClass="vgt-table"
-                                v-on:selected-rows-change="selectionChanged"
+                                @column-filter="onColumnFilter"
+                                :totalRows="props.devices.meta.total"
+                                :selected-rows-change="selectionChanged"
+                                :pagination-options="options"
+                                :rows="props.devices.data"
                                 :columns="columns"
-                                :rows="rows"
                                 :select-options="{
-                                    enabled: false,
+                                    enabled: true,
+                                    selectOnCheckboxOnly: true,
                                 }"
-                                :pagination-options="{ enabled: true }"
                             >
                                 <template #table-row="dataProps">
                                     <div
@@ -213,7 +232,9 @@ const deleteItem = () => {
                                                         () =>
                                                             router.get(
                                                                 route(
-                                                                    'accessibility_device.edit'
+                                                                    'accessibility_device.edit',
+                                                                    dataProps
+                                                                        .row.id
                                                                 )
                                                             )
                                                     "
@@ -232,6 +253,53 @@ const deleteItem = () => {
                                             </VList>
                                         </VMenu>
                                     </div>
+                                </template>
+                                <template #pagination-bottom>
+                                    <VRow class="pa-4">
+                                        <VCol
+                                            cols="12"
+                                            class="d-flex justify-space-between"
+                                        >
+                                            <span>
+                                                Showing
+                                                {{ props.devices.meta.from }}
+                                                to
+                                                {{ props.devices.meta.to }}
+                                                of
+                                                {{ props.devices.meta.total }}
+                                                entries
+                                            </span>
+                                            <div class="d-flex">
+                                                <div
+                                                    class="d-flex align-center"
+                                                >
+                                                    <span class="me-2"
+                                                        >Show</span
+                                                    >
+                                                    <VSelect
+                                                        v-model="serverPerPage"
+                                                        density="compact"
+                                                        :items="
+                                                            options.perPageDropdown
+                                                        "
+                                                    >
+                                                    </VSelect>
+                                                </div>
+                                                <VPagination
+                                                    v-model="serverPage"
+                                                    size="small"
+                                                    :total-visible="5"
+                                                    :length="
+                                                        props.devices.meta
+                                                            .last_page
+                                                    "
+                                                    @next="onPageChange"
+                                                    @prev="onPageChange"
+                                                    @click="onPageChange"
+                                                />
+                                            </div>
+                                        </VCol>
+                                    </VRow>
                                 </template>
                             </vue-good-table>
 

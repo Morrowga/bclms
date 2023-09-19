@@ -19,10 +19,10 @@ class AccessibilityDeviceController
     public function index()
     {
         $filters = request(['search', 'page', 'perPage']);
-        $Devices = (new GetDevices($filters))->handle();
+        $devices = (new GetDevices($filters))->handle();
 
-        return Inertia::render(config('route.disability_type.index'), [
-            'disabilityTypes' => $Devices,
+        return Inertia::render(config('route.accessibility_device.index'), [
+            'devices' => $devices,
         ]);
     }
 
@@ -35,8 +35,8 @@ class AccessibilityDeviceController
             // Validate the request data
 
             $request->validated();
-            $DeviceRequest = DeviceMapper::fromRequest($request);
-            $saveDevice = (new StoreDeviceCommand($DeviceRequest));
+            $deviceRequest = DeviceMapper::fromRequest($request);
+            $saveDevice = (new StoreDeviceCommand($deviceRequest));
             $saveDevice->execute();
 
             return redirect()->route('accessibility_device.index')->with('successMessage', 'Learning Need Created Successfully!');
@@ -48,19 +48,22 @@ class AccessibilityDeviceController
                 ]);
         }
     }
-
-    public function show()
+    public function create()
     {
-        return Inertia::render(config('route.plans.show'));
+        return Inertia::render(config('route.accessibility_device.create'));
     }
+    // public function show()
+    // {
+    //     return Inertia::render(config('route.plans.show'));
+    // }
 
     public function update(UpdateDeviceRequest $request, $id)
     {
 
         try {
 
-            $Device = DeviceEloquentModel::findOrFail($id);
-            $updateDevice = DeviceData::fromRequest($request, $Device);
+            $device = DeviceEloquentModel::findOrFail($id);
+            $updateDevice = DeviceData::fromRequest($request, $device);
             $updateDevicecommand = (new UpdateDeviceCommand($updateDevice));
             $updateDevicecommand->execute();
 
@@ -77,8 +80,8 @@ class AccessibilityDeviceController
     public function destroy($id)
     {
         try {
-            $Device = DeviceEloquentModel::findOrFail($id);
-            $deleteDeviceCommand = (new DeleteDeviceCommand($Device));
+            $device = DeviceEloquentModel::findOrFail($id);
+            $deleteDeviceCommand = (new DeleteDeviceCommand($device));
             $deleteDeviceCommand->execute();
 
             return redirect()->route('accessibility_device.index')->with('successMessage', 'Learning Need Created Successfully!');
