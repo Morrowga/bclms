@@ -14,6 +14,11 @@ class StoryBook extends AggregateRoot
         public readonly int $num_gold_coins,
         public readonly int $num_silver_coins,
         public readonly bool $is_free,
+        public readonly array $tags,
+        public readonly array $sub_learning_needs,
+        public readonly array $themes,
+        public readonly array $disability_type,
+        public readonly array $devices,
     ) {
     }
 
@@ -27,6 +32,11 @@ class StoryBook extends AggregateRoot
             'num_gold_coins' => $this->num_gold_coins,
             'num_silver_coins' => $this->num_silver_coins,
             'is_free' => $this->is_free,
+            'tags' => $this->tags,
+            'sub_learning_needs' => $this->sub_learning_needs,
+            'themes' => $this->themes,
+            'disability_type' => $this->disability_type,
+            'devices' => $this->devices,
         ];
     }
 }

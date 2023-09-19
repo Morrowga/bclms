@@ -1,10 +1,10 @@
 <?php
 
-namespace Src\BlendedConcept\System\Application\Requests;
+namespace Src\BlendedConcept\Organization\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateOrganizationRequest extends FormRequest
+class StoreOrganizationRequest extends FormRequest
 {
     public function authorize()
     {
@@ -13,6 +13,7 @@ class UpdateOrganizationRequest extends FormRequest
 
     public function rules()
     {
+
         return [
             'name' => [
                 'string',
@@ -35,6 +36,16 @@ class UpdateOrganizationRequest extends FormRequest
                 'email',
                 'unique:users,email,'.request()->route('organization')->org_admin_id,
             ],
+            'login_password' => [
+                'required', 'min:8',
+            ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name' => 'This organization name already exist',
         ];
     }
 }

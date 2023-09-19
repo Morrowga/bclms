@@ -1,4 +1,5 @@
 <script setup>
+import {defineProps} from "vue"
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import Show from "./Show.vue";
 import Create from "./Create.vue";
@@ -67,6 +68,7 @@ let datas = [
 const alertNow = () => {
     alert("hello world");
 };
+const props = defineProps(['learningneeds','themes','disability_types','devices']);
 </script>
 <template>
     <AdminLayout>
@@ -77,7 +79,12 @@ const alertNow = () => {
                     <span class="subheading">Showing 18 books</span>
                 </div>
                 <div class="head-button">
-                    <Create />
+                    <Create
+                    :learningneed="props.learningneeds"
+                    :themes="props.themes"
+                    :disability_types="props.disability_types"
+                    :devices="props.devices"
+                    />
                 </div>
             </div>
 

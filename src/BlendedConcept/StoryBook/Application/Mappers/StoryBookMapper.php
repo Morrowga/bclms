@@ -18,6 +18,12 @@ class ClassRoomMapper
             num_gold_coins: $request->num_gold_coins,
             num_silver_coins: $request->num_silver_coins,
             is_free: $request->is_free,
+            tags : $request->tags,
+            sub_learning_needs : $request->sub_learning_needs,
+            themes : $request->themes,
+            disability_type : $request->disability_type,
+            devices : $request->devices,
+
         );
     }
 
