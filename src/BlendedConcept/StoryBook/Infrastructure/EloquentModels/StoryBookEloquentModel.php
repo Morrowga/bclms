@@ -6,9 +6,14 @@ namespace Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\ThemeEloquentModel;
 
 class StoryBookEloquentModel extends Model implements HasMedia
 {
@@ -44,5 +49,25 @@ class StoryBookEloquentModel extends Model implements HasMedia
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query->where('name', 'like', '%'.$search.'%');
         });
+    }
+
+    public function learingneeds(): BelongsToMany
+    {
+        return $this->belongsToMany(SubLearningTypeEloquentModel::class, 'storybook_learning_needs', 'storybook_id', 'sub_learning_type_id');
+    }
+
+    public function themes(): BelongsToMany
+    {
+        return $this->belongsToMany(ThemeEloquentModel::class, 'storybook_themes', 'storybook_id', 'theme_id');
+    }
+
+    public function disability_types(): BelongsToMany
+    {
+        return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'storybook_disability_types', 'storybook_id', 'disability_type_id');
+    }
+
+    public function devices(): BelongsToMany
+    {
+        return $this->belongsToMany(DeviceEloquentModel::class, 'storybook_devices', 'storybook_id', 'device_id');
     }
 }

@@ -63,7 +63,7 @@ class AnnouncementController extends Controller
         $teachers = (new GetB2BTeachers())->handle();
         $b2cUsers = (new GetB2CUsers())->handle();
         $bcStaff = (new GetBcStaff())->handle();
-        $organizations = (new GetOrganizations())->handle();
+        $organizations = (new GetOrganizations($filers = []))->handle();
 
         return Inertia::render(config('route.announment.create'), [
             'organizations' => $organizations['default_organizations'],
@@ -174,7 +174,6 @@ class AnnouncementController extends Controller
      */
     public function destroy(AnnouncementEloquentModel $announcement)
     {
-        return $announcement;
         abort_if(authorize('destroy', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
