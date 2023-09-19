@@ -95,6 +95,12 @@ return [
             'url' => env('APP_URL').'/storage/payment_receipt',
             'visibility' => 'public',
         ],
+        'media_game' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/media_game'),
+            'url' => env('APP_URL').'/storage/media_game',
+            'visibility' => 'public',
+        ],
         'media_reward' => [
             'driver' => 'local',
             'root' => storage_path('app/public/reward'),

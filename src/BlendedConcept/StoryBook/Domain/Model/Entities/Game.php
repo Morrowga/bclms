@@ -10,10 +10,10 @@ class Game extends Entity
         public readonly ?int $id,
         public readonly string $name,
         public readonly string $description,
-        public readonly string $game_file,
-        public readonly string $thumbnail,
-        public readonly int $num_gold_coins,
-        public readonly int $num_silver_coins,
+        public readonly ?string $game_file,
+        public readonly ?string $thumbnail,
+        public readonly ?int $num_gold_coins,
+        public readonly ?int $num_silver_coins,
     ) {
     }
 

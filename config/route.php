@@ -8,6 +8,9 @@ return [
         'show' => 'BlendedConcept/Security/Presentation/Resources/Users/Show',
     ],
 
+    // user profile
+    'userprofile' => 'BlendedConcept/Security/Presentation/Resources/UserProfiles/Index',
+
     'userexperiencesurvey' => [
         'index' => 'BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Index',
         'create' => 'BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Create',
@@ -164,7 +167,6 @@ return [
     'verify' => 'Auth/Presentation/Resources/Verify',
     'register' => 'Auth/Presentation/Resources/Register',
     'registerplan' => 'Auth/Presentation/Resources/Plan',
-    'userprofile' => 'Auth/Presentation/Resources/UserProfile',
     'students' => 'BlendedConcept/Student/Presentation/Resources/Student/Index',
     'teachers' => 'BlendedConcept/Teacher/Presentation/Resources/Teacher/Index',
     'classrooms' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Index',

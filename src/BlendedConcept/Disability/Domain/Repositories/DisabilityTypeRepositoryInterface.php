@@ -10,6 +10,8 @@ interface DisabilityTypeRepositoryInterface
 {
     public function getDisabilityTypes($filters);
 
+    public function showDisabilityTypes();
+
     public function createDisability(DisabilityType $disabilityType);
 
     public function updateDisability(DisabilityTypeData $disabilityTypeData);

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->string('game_file')->nullable();
             $table->string('thumbnail')->nullable();
-            $table->integer('num_gole_coins')->default(0);
+            $table->integer('num_gold_coins')->default(0);
             $table->integer('num_silver_coins')->default(0);
             $table->timestamps();
             $table->softDeletes();

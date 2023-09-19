@@ -5,6 +5,7 @@ namespace Src\BlendedConcept\Security\Domain\Repositories;
 use Src\BlendedConcept\Security\Application\DTO\PermissionData;
 use Src\BlendedConcept\Security\Application\DTO\RoleData;
 use Src\BlendedConcept\Security\Application\DTO\UserData;
+use Src\BlendedConcept\Security\Application\DTO\UserProfileData;
 use Src\BlendedConcept\Security\Domain\Model\Entities\Permission;
 use Src\BlendedConcept\Security\Domain\Model\Entities\Role;
 use Src\BlendedConcept\Security\Domain\Model\User;
@@ -44,6 +45,9 @@ interface SecurityRepositoryInterface
 
     // server side rendering data for user
     public function filter($filters = []);
+
+    // update user profile
+    public function updateUserProfile(UserProfileData $userProfile);
 
     // get permission
     public function getPermission($filters = []);

@@ -52,6 +52,9 @@ const pages = {
 
     "BlendedConcept/Security/Presentation/Resources/Users/Show": import('../../src/BlendedConcept/Security/Presentation/Resources/Users/Show.vue'),
 
+    // user profile
+    "BlendedConcept/Security/Presentation/Resources/UserProfiles/Index": import('../../src/BlendedConcept/Security/Presentation/Resources/UserProfiles/Index.vue'),
+
 
     //manage disabilty device
     "BlendedConcept/Disability/Presentation/Resources/Disability/Index": import('../../src/BlendedConcept/Disability/Presentation/Resources/Disability/Index.vue'),
@@ -185,7 +188,6 @@ const pages = {
     "Auth/Presentation/Resources/Register": import("../../src/Auth/Presentation/Resources/Register.vue"),
     "Auth/Presentation/Resources/Plan": import("../../src/Auth/Presentation/Resources/Plan.vue"),
     "Auth/Presentation/Resources/Verify": import("../../src/Auth/Presentation/Resources/Verify.vue"),
-    "Auth/Presentation/Resources/UserProfile": import('../../src/Auth/Presentation/Resources/UserProfile.vue'),
 
 
 

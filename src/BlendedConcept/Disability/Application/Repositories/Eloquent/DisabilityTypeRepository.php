@@ -20,6 +20,13 @@ class DisabilityTypeRepository implements DisabilityTypeRepositoryInterface
         return $disabilityTypes;
     }
 
+    public function showDisabilityTypes()
+    {
+
+        $disabilityTypes = DisabilityTypeResource::collection(DisabilityTypeEloquentModel::orderBy('id', 'desc')->get());
+        return $disabilityTypes;
+    }
+
     public function createDisability(DisabilityType $disabilityType)
     {
         DB::beginTransaction();

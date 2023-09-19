@@ -17,14 +17,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('rewards', RewardController::class);
 
     Route::post('changerewardStatus/{reward}', [RewardController::class, 'changerewardStatus'])->name('changerewardStatus');
-    Route::get('/games', [GameController::class, 'index'])->name('games.index');
-    Route::get('/books', [BookController::class, 'index'])->name('books.index');
-    Route::resource('pathways', PathwayController::class);
+    Route::resource('games', GameController::class);
+    // storybook resources
+    Route::resource('books', BookController::class);
+    Route::resource('pathways', PathWaysController::class);
     Route::resource('bookreviews', BookReviewController::class);
-
-    //for testing purpose, not use resource.after testing change back to resource
-    // Route::get('/games', [GameController::class, 'index'])->name('games.index');
-    // Route::get('/books', [BookController::class, 'index'])->name('books.index');
     Route::get('/teacher_storybook', [TeacherStorybookController::class, 'index'])->name('teacher_storybook.index');
     Route::get('/teacher_storybook/edit', [TeacherStorybookController::class, 'edit'])->name('teacher_storybook.edit');
     Route::get('/teacher_storybook/show', [TeacherStorybookController::class, 'show'])->name('teacher_storybook.show');

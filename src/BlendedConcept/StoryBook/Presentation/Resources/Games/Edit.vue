@@ -1,24 +1,94 @@
 <script setup>
 import { defineProps, ref, defineEmits } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import UploadGameFile from "./components/UploadGameFile.vue";
+import UploadThumbnail from "./components/UploadThumbnail.vue";
+import { SuccessDialog } from "@actions/useSuccess";
+import { format } from 'date-fns';
+
 const props = defineProps({
-    data: {
+    datas: {
         type: Object,
         required: true,
     },
 });
 let emit = defineEmits();
 let dialog = ref(false);
+let gameFileDialog = ref(false);
+let thumbnailDialog = ref(false);
+let tags = ref([]);
+let types = ref([]);
+const getGameFile = ref(null);
+const getThumbFile = ref(null);
+
+props.datas.tags.forEach((item) => {
+    tags.value.push(item.name);
+});
+
+props.datas.disability_types.forEach((item) => {
+    types.value.push({
+        "id": item.id,
+        "name": item.name
+    });
+});
+
+
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
-const form = useForm({
-    title: "Boj Giggly Park Adventure",
-    description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo incididunt ut labore et doloremagna aliqua. Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod tempor incididunt utlabore et dolore magna aliqua.",
-    types: [],
+const formSubmit = useForm({
+    name: props.datas.name,
+    description: props.datas.description,
+    disability_type_id: null,
     devices: [],
+    tags: tags.value,
+    game: null,
+    thumb: null,
+    num_gold_coins: props.datas.num_gold_coins,
+    num_silver_coins: props.datas.num_silver_coins,
+    _method: 'PUT'
 });
+
+const handleGameFileModalSubmit = (data) => {
+    getGameFile.value = data.game;
+};
+
+const handleThumbnailModalSubmit = (data) => {
+    getThumbFile.value = data.thumb;
+};
+
+let updateformSubmit = () => {
+    let typeIds = [];
+    types.value.forEach((item) => {
+        typeIds.push(item.id);
+    });
+
+    formSubmit.game = getGameFile.value;
+    formSubmit.thumb = getThumbFile.value;
+    formSubmit.disability_type_id = typeIds;
+    console.log(formSubmit);
+    formSubmit.post(route("games.update", props.datas.id), {
+        onSuccess: () => {
+            dialog.value = false;
+        },
+        onError: (error) => {
+
+        },
+    })
+}
+
+const removeFromArray = (index) => {
+    types.value = types.value.filter(
+        (disability_id, i) => i != index
+    );
+};
+
+const formatDate = (dateString) => {
+      // Parse the date string into a Date object
+    const date = new Date(dateString);
+    // Format the date using date-fns
+    return format(date, 'd MMM yyyy h:mm  a'); // Customize the format string as needed
+}
 </script>
 <template>
     <div>
@@ -29,134 +99,143 @@ const form = useForm({
             color="secondary"
         ></v-btn>
         <v-dialog v-model="dialog" width="100%" max-width="800" persistent>
-            <v-card>
-                <v-card-title class="pa-0">
-                    <div class="faded-image">
-                        <img
-                            :src="'/images/teacherbanner.png'"
-                            class="img-header"
-                            alt="Faded Image"
-                        />
-                        <div class="faded-overlay"></div>
-                        <div class="book-title">
-                            <!-- <span>Boj Giggly Park Adventure</span> -->
-                            <v-text-field v-model="form.title"></v-text-field>
+            <VForm @submit.prevent="updateformSubmit">
+                <v-card>
+                    <v-card-title class="pa-0">
+                        <div class="faded-image">
+                            <img
+                                :src="'/images/teacherbanner.png'"
+                                class="img-header"
+                                alt="Faded Image"
+                            />
+                            <div class="faded-overlay"></div>
+                            <div class="book-title">
+                                <!-- <span>Boj Giggly Park Adventure</span> -->
+                                <v-text-field v-model="formSubmit.name"></v-text-field>
+                            </div>
+                            <div class="edit-icon">
+                                <v-btn
+                                    @click="thumbnailDialog = true"
+                                    icon="mdi-image-area"
+                                    size="x-small"
+                                    color="secondary"
+                                ></v-btn>
+                                <v-btn
+                                    type="submit"
+                                    icon="mdi-content-save"
+                                    size="x-small"
+                                    color="secondary"
+                                ></v-btn>
+                                <v-btn
+                                    @click="gameFileDialog = true"
+                                    icon="mdi-upload"
+                                    size="x-small"
+                                    color="secondary"
+                                ></v-btn>
+                            </div>
+                            <div class="close-btn">
+                                <v-btn
+                                    @click="dialog = false"
+                                    color="default"
+                                    variant="elevated"
+                                    icon="$close"
+                                    :rounded="false"
+                                >
+                                </v-btn>
+                            </div>
                         </div>
-                        <div class="edit-icon">
-                            <v-btn
-                                icon="mdi-image-area"
-                                size="x-small"
-                                color="secondary"
-                            ></v-btn>
-                            <v-btn
-                                icon="mdi-content-save"
-                                size="x-small"
-                                color="secondary"
-                            ></v-btn>
-                            <v-btn
-                                icon="mdi-upload"
-                                size="x-small"
-                                color="secondary"
-                            ></v-btn>
+                    </v-card-title>
+                    <v-card-text class="px-10 py-0 pb-5">
+                        <div class="paragraph">
+                            <v-textarea
+                                class="max-w-600"
+                                variant="outlined"
+                                v-model="formSubmit.description"
+                            ></v-textarea>
+                            <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed do eiusmod tempor incididunt ut labore et dolore
+                            magna aliqua. Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. -->
                         </div>
-                        <div class="close-btn">
-                            <v-btn
-                                @click="dialog = false"
-                                color="default"
-                                variant="elevated"
-                                icon="$close"
-                                :rounded="false"
-                            >
-                            </v-btn>
+                        <br />
+                        <div class="disability">
+                            <span class="font-weight-black text-black"
+                                >Disability Types</span
+                            ><br />
+                            <div class="d-flex mt-3">
+                                <v-chip-group>
+                                    <div class="ps-relative" v-for="(disability_type, index) in types" :key="index">
+                                        <v-chip size="small"> {{disability_type.name}} </v-chip>
+                                        <div class="delete-chip">
+                                            <span @click="removeFromArray(index)">-</span>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="ps-relative">
+                                        <v-chip size="small">
+                                            Hyperactive Disorder
+                                        </v-chip>
+                                        <div class="delete-chip">
+                                            <span>-</span>
+                                        </div>
+                                    </div> -->
+                                </v-chip-group>
+                                <v-btn
+                                    class="ml-10"
+                                    size="x-small"
+                                    icon="mdi-plus"
+                                    color="secondary"
+                                ></v-btn>
+                            </div>
                         </div>
-                    </div>
-                </v-card-title>
-                <v-card-text class="px-10 py-0 pb-5">
-                    <div class="paragraph">
-                        <v-textarea
-                            class="max-w-600"
-                            variant="outlined"
-                            v-model="form.description"
-                        ></v-textarea>
-                        <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. -->
-                    </div>
-                    <br />
-                    <div class="disability">
-                        <span class="font-weight-black text-black"
-                            >Disability Types</span
-                        ><br />
-                        <div class="d-flex">
-                            <v-chip-group>
-                                <div class="ps-relative">
-                                    <v-chip size="small"> Dyspraxia </v-chip>
-                                    <div class="delete-chip">
-                                        <span>-</span>
+                        <br />
+                        <div class="supported">
+                            <span class="font-weight-black text-black"
+                                >Supported Accessibility Devices</span
+                            ><br />
+                            <div class="d-flex">
+                                <v-chip-group>
+                                    <div class="ps-relative">
+                                        <v-chip size="small">Mouse/Keyboard</v-chip>
+                                        <div class="delete-chip">
+                                            <span>-</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="ps-relative">
-                                    <v-chip size="small">
-                                        Hyperactive Disorder
-                                    </v-chip>
-                                    <div class="delete-chip">
-                                        <span>-</span>
+                                    <div class="ps-relative">
+                                        <v-chip size="small">Switch-Single</v-chip>
+                                        <div class="delete-chip">
+                                            <span>-</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </v-chip-group>
-                            <v-btn
-                                class="ml-10"
-                                size="x-small"
-                                icon="mdi-plus"
-                                color="secondary"
-                            ></v-btn>
+                                    <div class="ps-relative">
+                                        <v-chip size="small">Switch-Double</v-chip>
+                                        <div class="delete-chip">
+                                            <span>-</span>
+                                        </div>
+                                    </div>
+                                </v-chip-group>
+                                <v-btn
+                                    class="ml-10"
+                                    size="x-small"
+                                    icon="mdi-plus"
+                                    color="secondary"
+                                ></v-btn>
+                            </div>
                         </div>
-                    </div>
-                    <br />
-                    <div class="supported">
-                        <span class="font-weight-black text-black"
-                            >Supported Accessibility Devices</span
-                        ><br />
-                        <div class="d-flex">
-                            <v-chip-group>
-                                <div class="ps-relative">
-                                    <v-chip size="small">Mouse/Keyboard</v-chip>
-                                    <div class="delete-chip">
-                                        <span>-</span>
-                                    </div>
-                                </div>
-                                <div class="ps-relative">
-                                    <v-chip size="small">Switch-Single</v-chip>
-                                    <div class="delete-chip">
-                                        <span>-</span>
-                                    </div>
-                                </div>
-                                <div class="ps-relative">
-                                    <v-chip size="small">Switch-Double</v-chip>
-                                    <div class="delete-chip">
-                                        <span>-</span>
-                                    </div>
-                                </div>
-                            </v-chip-group>
-                            <v-btn
-                                class="ml-10"
-                                size="x-small"
-                                icon="mdi-plus"
-                                color="secondary"
-                            ></v-btn>
-                        </div>
-                    </div>
-                </v-card-text>
-                <v-card-actions class="d-flex justify-end">
-                    <span class="text-caption"
-                        >Last updated on 14 Aug 2023 1:04Am</span
-                    >
-                </v-card-actions>
-            </v-card>
+                    </v-card-text>
+                    <v-card-actions class="d-flex justify-end">
+                        <span class="text-caption"
+                            >Last updated on {{  formatDate(datas.updated_at) }}</span
+                        >
+                    </v-card-actions>
+                </v-card>
+            </VForm>
         </v-dialog>
     </div>
+    <UploadGameFile v-model:isGameFileDialogVisible="gameFileDialog"
+        @submit="handleGameFileModalSubmit" />
+    <UploadThumbnail v-model:isThumbnailDialogVisible="thumbnailDialog"
+    @submit="handleThumbnailModalSubmit" />
 </template>
 
 <style scoped>
