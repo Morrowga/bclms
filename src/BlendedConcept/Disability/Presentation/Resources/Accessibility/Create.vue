@@ -66,7 +66,11 @@ let handleSubmit = () => {
                                 class="tiggie-resize-input-text"
                                 placeholder="Select disability the device is used for"
                                 :items="props.disability_types"
+                                item-value="id"
+                                item-title="name"
                                 v-model="form.disability_type_ids"
+                                multiple
+                                chips
                             />
                         </VCol>
                     </VCol>

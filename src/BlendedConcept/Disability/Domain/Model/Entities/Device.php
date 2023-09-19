@@ -11,6 +11,7 @@ class Device extends AggregateRoot
         public readonly string $name,
         public readonly ?string $description,
         public readonly string $status,
+        public readonly ?array $disability_types
     ) {
     }
 
@@ -21,6 +22,7 @@ class Device extends AggregateRoot
             'name' => $this->name,
             'description' => $this->description,
             'status' => $this->status,
+            'disability_types' => $this->disability_types
         ];
     }
 }
