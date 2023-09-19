@@ -198,6 +198,23 @@ const deleteItem = () => {
                                 <template #table-row="dataProps">
                                     <div
                                         v-if="
+                                            dataProps.column.field ==
+                                            'disability'
+                                        "
+                                        class="flex flex-wrap max-w-600"
+                                    >
+                                        <v-chip
+                                            v-for="disability in dataProps.row
+                                                .disability_types"
+                                            :key="disability.id"
+                                            class="ma-2"
+                                            color="primary"
+                                            size="small"
+                                            >{{ disability.name }}</v-chip
+                                        >
+                                    </div>
+                                    <div
+                                        v-if="
                                             dataProps.column.field == 'status'
                                         "
                                         class="flex flex-wrap"

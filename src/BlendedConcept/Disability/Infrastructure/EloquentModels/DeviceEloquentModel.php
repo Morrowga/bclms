@@ -28,6 +28,6 @@ class DeviceEloquentModel extends Model
 
     public function disabilityTypes()
     {
-        return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'disability_type_devices', 'device_id', 'disability_type_id');
+        return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'disability_types_devices', 'device_id', 'disability_type_id');
     }
 }

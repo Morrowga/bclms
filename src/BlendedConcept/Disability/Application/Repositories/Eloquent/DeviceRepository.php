@@ -15,17 +15,23 @@ class DeviceRepository implements DeviceRepositoryInterface
     public function getDevices($filters)
     {
 
-        $devices = DeviceResource::collection(DeviceEloquentModel::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $devices = DeviceResource::collection(DeviceEloquentModel::filter($filters)->with('disabilityTypes')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
         return $devices;
     }
 
     public function createDevice(Device $device)
     {
+
         DB::beginTransaction();
         try {
             $deviceEloquent = DeviceMapper::toEloquent($device);
             $deviceEloquent->save();
-
+            $disabilityCollection = collect($device->disability_types);
+            $disabilityLength = $disabilityCollection->count();
+            if ($disabilityLength > 0) {
+                // Attach disability types with the game
+                $deviceEloquent->disabilityTypes()->attach($device->disability_types);
+            }
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
@@ -41,6 +47,17 @@ class DeviceRepository implements DeviceRepositoryInterface
             $deviceEloquent = DeviceEloquentModel::findOrFail($deviceData->id);
             $deviceEloquent->fill($deviceArray);
             $deviceEloquent->update();
+
+            $disabilityCollection = collect($deviceData->disability_types);
+            $disabilityLength = $disabilityCollection->count();
+
+
+            if ($disabilityLength > 0) {
+                $deviceEloquent->disabilityTypes()->detach();
+
+                $deviceEloquent->disabilityTypes()->attach($deviceData->disability_types);
+                // Attach new tags (assuming $request contains the new tag IDs)
+            }
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();

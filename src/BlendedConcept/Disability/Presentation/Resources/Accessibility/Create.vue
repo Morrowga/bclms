@@ -11,14 +11,15 @@ const isFormValid = ref(false);
 let refForm = ref();
 let form = useForm({
     name: "",
-    disability_type_ids: [],
+    disability_types: [],
     description: "",
+    status: "INACTIVE",
 });
 
 let handleSubmit = () => {
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
-            form.post(route("pathways.store"), {
+            form.post(route("accessibility_device.store"), {
                 onSuccess: () => {
                     SuccessDialog({ title: flash?.successMessage });
                 },
@@ -68,7 +69,7 @@ let handleSubmit = () => {
                                 :items="props.disability_types"
                                 item-value="id"
                                 item-title="name"
-                                v-model="form.disability_type_ids"
+                                v-model="form.disability_types"
                                 multiple
                                 chips
                             />

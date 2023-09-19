@@ -31,9 +31,9 @@ class AccessibilityDeviceController
 
     public function store(StoreDeviceRequest $request)
     {
-        dd($request->all());
+
         try {
-            // Abort if the user is not authorized to create Learning Need
+            // Abort if the user is not authorized to create Devices
             // abort_if(authorize('create', DevicePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             // Validate the request data
@@ -43,7 +43,7 @@ class AccessibilityDeviceController
             $saveDevice = (new StoreDeviceCommand($deviceRequest));
             $saveDevice->execute();
 
-            return redirect()->route('accessibility_device.index')->with('successMessage', 'Learning Need Created Successfully!');
+            return redirect()->route('accessibility_device.index')->with('successMessage', 'Devices Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('accessibility_device.index')
@@ -59,10 +59,16 @@ class AccessibilityDeviceController
             'disability_types' => $disabilityTypes
         ]);
     }
-    // public function show()
-    // {
-    //     return Inertia::render(config('route.plans.show'));
-    // }
+    public function edit($id)
+    {
+        $device = DeviceEloquentModel::findOrFail($id);
+        $disabilityTypes = (new GetDisabilityTypeForSelect())->handle();
+
+        return Inertia::render(config('route.accessibility_device.edit'), [
+            'disability_types' => $disabilityTypes,
+            'device' => $device->load('disabilityTypes')
+        ]);
+    }
 
     public function update(UpdateDeviceRequest $request, $id)
     {
@@ -74,7 +80,7 @@ class AccessibilityDeviceController
             $updateDevicecommand = (new UpdateDeviceCommand($updateDevice));
             $updateDevicecommand->execute();
 
-            return redirect()->route('accessibility_device.index')->with('successMessage', 'Learning Need Created Successfully!');
+            return redirect()->route('accessibility_device.index')->with('successMessage', 'Devices Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('accessibility_device.index')
@@ -91,7 +97,7 @@ class AccessibilityDeviceController
             $deleteDeviceCommand = (new DeleteDeviceCommand($device));
             $deleteDeviceCommand->execute();
 
-            return redirect()->route('accessibility_device.index')->with('successMessage', 'Learning Need Created Successfully!');
+            return redirect()->route('accessibility_device.index')->with('successMessage', 'Devices Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('accessibility_device.index')
