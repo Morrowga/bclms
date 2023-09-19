@@ -7,6 +7,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    disabilitytypes: {
+        type: Object,
+        required: true
+    }
 });
 let dialog = ref(false);
 const toggleDialog = () => {
@@ -51,7 +55,7 @@ const formatDate = (dateString) => {
                             <span>{{ data.name }}</span>
                         </div>
                         <div class="edit-icon">
-                            <Edit :datas="props.data" />
+                            <Edit :datas="props.data" :disabilitytypes="props.disabilitytypes" />
                         </div>
                         <div class="close-btn">
                             <v-btn
