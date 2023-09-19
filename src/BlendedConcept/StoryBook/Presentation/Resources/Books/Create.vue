@@ -10,7 +10,6 @@ const toggleDialog = () => {
 };
 
 
-console.log(props.learningneed)
 
 //this arrary describe as multiple select for each roles
 
@@ -29,8 +28,10 @@ const form = useForm({
    physical_resource_src : ""
 });
 
-console.log(props.learningneed)
 
+
+
+console.log(props);
 
 let onFormSubmit = () => {
   SuccessDialog({ title: "Successfully Game added" });
@@ -84,6 +85,9 @@ let onFormSubmit = () => {
                     placeholder="Select devices"
                     density="compact"
                     :items="props.learningneed"
+                    item-title="name"
+                    item-value="id"
+                    multiple
                   />
                 </v-col>
               </v-col>
@@ -95,7 +99,10 @@ let onFormSubmit = () => {
                     class="tiggie-resize-input-text"
                     placeholder="Select devices"
                     density="compact"
-                    :items="[]"
+                    :items="props.themes"
+                    item-title="name"
+                    item-value="id"
+                    multiple
                   />
                 </v-col>
               </v-col>
@@ -107,6 +114,10 @@ let onFormSubmit = () => {
                     class="tiggie-resize-input-text"
                     placeholder="Select disability type"
                     density="compact"
+                    :items="props.disability_types"
+                    item-title="name"
+                    item-value="id"
+                    multiple
                   />
                 </v-col>
               </v-col>
@@ -120,7 +131,10 @@ let onFormSubmit = () => {
                     class="tiggie-resize-input-text"
                     placeholder="Select devices"
                     density="compact"
-                    :items="[]"
+                    :items="props.devices"
+                    item-title="name"
+                    item-value="id"
+                    multiple
                   />
                 </v-col>
               </v-col>
