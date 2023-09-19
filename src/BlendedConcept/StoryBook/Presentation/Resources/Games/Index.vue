@@ -92,7 +92,7 @@ const alertNow = () => {
                     v-for="data in props.games.data"
                     :key="data.thumbnail"
                 >
-                    <Show :data="data" />
+                    <Show :data="data" :disabilitytypes="props.disabilityTypes.data" />
                 </VCol>
             </VRow>
         </VContainer>

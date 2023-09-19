@@ -11,6 +11,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    disabilitytypes:{
+        type: Object,
+        requird:true
+    }
 });
 let emit = defineEmits();
 let dialog = ref(false);
@@ -18,6 +22,7 @@ let gameFileDialog = ref(false);
 let thumbnailDialog = ref(false);
 let tags = ref([]);
 let types = ref([]);
+let systemDisabilityTypes = ref([]);
 const getGameFile = ref(null);
 const getThumbFile = ref(null);
 
@@ -32,6 +37,12 @@ props.datas.disability_types.forEach((item) => {
     });
 });
 
+props.disabilitytypes.forEach((item) => {
+    systemDisabilityTypes.value.push({
+        "id": item.id,
+        "name": item.name
+    });
+});
 
 const toggleDialog = () => {
     dialog.value = !dialog.value;
@@ -77,10 +88,16 @@ let updateformSubmit = () => {
     })
 }
 
-const removeFromArray = (index) => {
-    types.value = types.value.filter(
-        (disability_id, i) => i != index
-    );
+const removeFromArray = (disabilityId) => {
+  types.value = types.value.filter((item) => item.id !== disabilityId);
+};
+
+const addToArray = (disability) => {
+  types.value.push(disability);
+};
+
+const isInGameDisabilityTypes = (disabilityId) => {
+  return types.value.some((type) => type.id === disabilityId);
 };
 
 const formatDate = (dateString) => {
@@ -165,10 +182,15 @@ const formatDate = (dateString) => {
                             ><br />
                             <div class="d-flex mt-3">
                                 <v-chip-group>
-                                    <div class="ps-relative" v-for="(disability_type, index) in types" :key="index">
-                                        <v-chip size="small"> {{disability_type.name}} </v-chip>
-                                        <div class="delete-chip">
-                                            <span @click="removeFromArray(index)">-</span>
+                                    <div class="ps-relative" v-for="(disabilityType, index) in systemDisabilityTypes" :key="index">
+                                        <v-chip size="small">
+                                            {{ disabilityType.name }}
+                                        </v-chip>
+                                        <div class="delete-chip" v-if="isInGameDisabilityTypes(disabilityType.id)">
+                                            <span @click="removeFromArray(disabilityType.id)">-</span>
+                                        </div>
+                                        <div class="add-chip" v-else>
+                                            <span @click="addToArray(disabilityType)">+</span>
                                         </div>
                                     </div>
                                     <!-- <div class="ps-relative">
@@ -180,12 +202,12 @@ const formatDate = (dateString) => {
                                         </div>
                                     </div> -->
                                 </v-chip-group>
-                                <v-btn
+                                <!-- <v-btn
                                     class="ml-10"
                                     size="x-small"
                                     icon="mdi-plus"
                                     color="secondary"
-                                ></v-btn>
+                                ></v-btn> -->
                             </div>
                         </div>
                         <br />
@@ -334,6 +356,7 @@ const formatDate = (dateString) => {
     border-radius: 50%;
     width: 15px;
     height: 15px;
+    cursor: pointer;
     color: #fff;
     text-align: center;
     position: absolute;
@@ -341,6 +364,27 @@ const formatDate = (dateString) => {
     top: 0;
 }
 .delete-chip span {
+    position: absolute;
+    top: -6px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: #fff;
+}
+
+.add-chip {
+    background: rgb(109, 120, 141);
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.add-chip span {
     position: absolute;
     top: -6px;
     left: 0;
