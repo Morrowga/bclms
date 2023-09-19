@@ -9,6 +9,8 @@ use Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent\PathwayReposi
 use Src\BlendedConcept\StoryBook\Domain\Repositories\PathwayRepositoryInterface;
 use Src\BlendedConcept\StoryBook\Domain\Repositories\StoryBookRepositoryInterface;
 use Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent\StoryBookRepository;
+use Src\BlendedConcept\StoryBook\Domain\Repositories\GameRepositoryInterface;
+use Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent\GameRepository;
 
 class StoryBookServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,10 @@ class StoryBookServiceProvider extends ServiceProvider
         $this->app->bind(
             PathwayRepositoryInterface::class,
             PathwayRepository::class
+        );
+        $this->app->bind(
+            GameRepositoryInterface::class,
+            GameRepository::class
         );
     }
 }

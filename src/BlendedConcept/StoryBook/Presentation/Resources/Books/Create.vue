@@ -1,41 +1,48 @@
 <script setup>
 import { defineProps, ref } from "vue";
 import { SuccessDialog } from "@actions/useSuccess";
-import {useForm} from "@inertiajs/inertia-vue3"
+import { useForm } from "@inertiajs/inertia-vue3";
 import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
-const props = defineProps(["learningneed","themes","disability_types","devices"]);
+const props = defineProps([
+  "learningneed",
+  "themes",
+  "disability_types",
+  "devices",
+]);
 let dialog = ref(false);
 const toggleDialog = () => {
   dialog.value = !dialog.value;
 };
 
-
-
 //this arrary describe as multiple select for each roles
-
+const gameTag = ref("");
 const form = useForm({
-   name : "",
-   tag_name : "",
-   is_free:"",
-   description : "",
-   tags : [],
-   sub_learning_needs:[],
-   themes:[],
-   disability_type_id : [],
-   devices : [],
-   storybook_file : "",
-   thumbnail_img : "",
-   physical_resource_src : ""
+  name: "",
+  tag_name: "",
+  is_free: "",
+  description: "",
+  tags: [],
+  sub_learning_needs: [],
+  themes: [],
+  disability_type_id: [],
+  devices: [],
+  storybook_file: "",
+  thumbnail_img: "",
+  physical_resource_src: "",
 });
-
-
-
 
 console.log(props);
 
 let onFormSubmit = () => {
   SuccessDialog({ title: "Successfully Game added" });
   dialog.value = false;
+};
+
+const addToSublearningArray = (e) => {
+  if (gameTag.value) {
+    form.tags.push(gameTag.value);
+    gameTag.value = "";
+  }
 };
 </script>
 <template>
@@ -55,21 +62,31 @@ let onFormSubmit = () => {
                     class="tiggie-resize-input-text"
                     placeholder="Text here"
                     density="compact"
-
                   />
                 </v-col>
               </v-col>
-              <v-col cols="12" md="6" class="pb-0">
-                <v-col cols="12" md="12">
-                  <VLabel class="tiggie-label">Tags</VLabel>
-                  <VTextField
-                    type="text"
-                    class="tiggie-resize-input-text"
-                    placeholder="Type to add tag"
-                    density="compact"
-                  />
-                </v-col>
-              </v-col>
+              <VCol cols="12" md="6" class="game-tag-add">
+                <VLabel class="tiggie-label">Tags</VLabel>
+                <div class="d-flex my-4" v-if="form.tags.length > 0">
+                  <div
+                    class="ps-relative"
+                    v-for="(tag, index) in form.tags"
+                    :key="index"
+                  >
+                    <v-chip size="small" color="primary">{{ tag }}</v-chip>
+                    <div class="delete-chip" @click="removeFromArray(index)">
+                      <span>-</span>
+                    </div>
+                  </div>
+                </div>
+                <VTextField
+                  v-model="gameTag"
+                  :error-messages="form?.errors?.tags"
+                  append-inner-icon="mdi-add-circle"
+                  @click:append-inner="addToSublearningArray"
+                >
+                </VTextField>
+              </VCol>
               <v-col cols="12" md="12" class="py-0">
                 <v-col cols="12" md="12">
                   <VLabel class="tiggie-label">Storybook Description</VLabel>
@@ -158,9 +175,7 @@ let onFormSubmit = () => {
               <v-col cols="12" md="12" class="py-0">
                 <v-col cols="12" md="6">
                   <VLabel class="tiggie-label">Physical Resources</VLabel>
-                  <div class="coming-soon">
-                    <p>Drop And Drop</p>
-                  </div>
+                  <ImageUpload v-model=""/>
                 </v-col>
               </v-col>
               <v-col cols="12" md="12" class="py-0">
@@ -272,5 +287,38 @@ let onFormSubmit = () => {
 }
 .coming-soon p {
   margin-bottom: 0;
+}
+
+:deep(.game-tag-add .v-field__append-inner svg) {
+  width: 30px;
+  height: 30px;
+}
+
+:deep(.game-name-input .v-input__details) {
+  margin-top: 10px !important;
+}
+
+:deep(.disability-type-input .v-input__details) {
+  margin-top: 10px !important;
+}
+.delete-chip {
+  background: rgb(109, 120, 141);
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  color: #fff;
+  text-align: center;
+  position: absolute;
+  right: -4px;
+  top: -5px;
+  cursor: pointer;
+}
+.delete-chip span {
+  position: absolute;
+  top: -6px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  color: #fff;
 }
 </style>
