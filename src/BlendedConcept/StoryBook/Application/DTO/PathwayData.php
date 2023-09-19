@@ -16,15 +16,15 @@ class PathwayData
     ) {
     }
 
-    public static function fromRequest(Request $request, $reward_id): PathwayData
+    public static function fromRequest(Request $request, $pathWay): PathwayData
     {
         return new self(
-            id : $reward_id,
-            file_src : $request->file_src,
-            gold_coins : $request->gold_coins,
-            silver_coins : $request->silver_coins,
-            status : $request->status,
-            rarity : $request->rarity,
+            id: $pathWay->id,
+            name: $request->name,
+            description: $request->description,
+            num_gold_coins: $request->num_gold_coins,
+            num_silver_coins: $request->num_silver_coins,
+            need_complete_in_order: $request->need_complete_in_order,
         );
     }
 

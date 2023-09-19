@@ -11,12 +11,12 @@ class PathwayMapper
     public static function fromRequest(Request $request, $pathway_id = null): Pathway
     {
         return new Pathway(
-            id : $pathway_id,
-            name : $this->name,
-            description : $this->description,
-            num_gold_coins : $this->num_gold_coins,
-            num_silver_coins : $this->num_silver_coins,
-            need_complete_in_order : $this->need_complete_in_order,
+            id: $pathway_id,
+            name: $request->name,
+            description: $request->description,
+            num_gold_coins: $request->num_gold_coins,
+            num_silver_coins: $request->num_silver_coins,
+            need_complete_in_order: $request->need_complete_in_order,
         );
     }
 

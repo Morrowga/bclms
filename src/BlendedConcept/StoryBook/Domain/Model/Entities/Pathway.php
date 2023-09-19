@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\StoryBook\Domain\Model\Entities;
 
 use Src\Common\Domain\Entity;
 
-class LearningNeed extends Entity
+class Pathway extends Entity
 {
     public function __construct(
         public readonly ?int $id,

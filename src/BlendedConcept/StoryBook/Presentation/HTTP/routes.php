@@ -5,7 +5,7 @@ use Src\BlendedConcept\StoryBook\Presentation\HTTP\AssignRewardController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\BookController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\BookReviewController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\GameController;
-use Src\BlendedConcept\StoryBook\Presentation\HTTP\PathWaysController;
+use Src\BlendedConcept\StoryBook\Presentation\HTTP\PathwayController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\RewardController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentGamesController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentRewardsController;
@@ -20,7 +20,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/games', [GameController::class, 'index'])->name('games.index');
     // storybook resources
     Route::resource('books', BookController::class);
-
     Route::resource('pathways', PathWaysController::class);
     Route::resource('bookreviews', BookReviewController::class);
     Route::get('/teacher_storybook', [TeacherStorybookController::class, 'index'])->name('teacher_storybook.index');
