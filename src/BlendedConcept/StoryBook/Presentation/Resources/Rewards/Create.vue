@@ -116,7 +116,7 @@ let handleSubmit = () => {
               <ImageUpload v-model="form.file_src" />
             </VCol>
             <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
-              <Link :href="route('organizations.index')" class="text-black">
+              <Link :href="route('rewards.index')" class="text-black">
                 <VBtn color="gray" height="50" class="" width="300">
                   Cancel
                 </VBtn>

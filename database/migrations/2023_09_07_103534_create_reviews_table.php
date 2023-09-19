@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('storybook_id')->nullable()->references('id')->on('storybooks')->cascadeOnDelete();
             $table->integer('starts');
             $table->string('feedback');
-            $table->string('given_on');
+            $table->dateTime('given_on');
             $table->timestamps();
         });
     }

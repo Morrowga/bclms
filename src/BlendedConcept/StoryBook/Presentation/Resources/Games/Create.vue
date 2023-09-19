@@ -27,7 +27,7 @@ const form = useForm({
   name: null,
   description: null,
   tags: [],
-  disability_type_id: null,
+  disability_type_id: [],
   access_device: "null",
   game: null,
   thumb: null,
@@ -169,6 +169,7 @@ const removeFromArray = (index) => {
                   <v-autocomplete
                     v-model="form.disability_type_id"
                     :items="props.disabilityTypes"
+                    multiple
                     type="text"
                     item-value="id"
                     item-title="name"

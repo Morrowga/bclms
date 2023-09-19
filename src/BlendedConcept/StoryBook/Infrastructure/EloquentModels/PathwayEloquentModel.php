@@ -31,4 +31,9 @@ class PathwayEloquentModel extends Model
             $query->where('name', 'like', '%'.$search.'%');
         });
     }
+
+    public function storybooks()
+    {
+        return $this->belongsToMany(StoryBookEloquentModel::class, 'pathway_storybook', 'pathway_id', 'storybook_id');
+    }
 }

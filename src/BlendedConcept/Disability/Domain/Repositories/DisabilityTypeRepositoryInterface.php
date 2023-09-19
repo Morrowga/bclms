@@ -17,4 +17,6 @@ interface DisabilityTypeRepositoryInterface
     public function updateDisability(DisabilityTypeData $disabilityTypeData);
 
     public function deleteDisability(DisabilityTypeEloquentModel $disabilityType);
+
+    public function getdisabilitytypeForSelect();
 }

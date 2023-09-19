@@ -13,7 +13,7 @@ interface RewaredRepositoryInterface
     public function createReward($request);
 
     //update reward
-    public function updateRewared(RewardData $reward);
+    public function updateReward(RewardData $reward);
 
     public function delete(int $annountment_id);
 

@@ -52,7 +52,7 @@ class StoryBookEloquentModel extends Model implements HasMedia
         });
     }
 
-    public function learingneeds(): BelongsToMany
+    public function learningneeds(): BelongsToMany
     {
         return $this->belongsToMany(SubLearningTypeEloquentModel::class, 'storybook_learning_needs', 'storybook_id', 'sub_learning_type_id');
     }

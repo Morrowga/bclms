@@ -17,6 +17,7 @@ class PathwayMapper
             num_gold_coins: $request->num_gold_coins,
             num_silver_coins: $request->num_silver_coins,
             need_complete_in_order: $request->need_complete_in_order,
+            storybooks: $request->storybooks
         );
     }
 

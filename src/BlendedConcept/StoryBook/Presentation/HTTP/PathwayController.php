@@ -54,6 +54,11 @@ class PathwayController
         return Inertia::render(config('route.pathways.show'));
     }
 
+    public function create()
+    {
+        return Inertia::render(config('route.pathways.create'));
+    }
+
     public function update(UpdatePathwayRequest $request, $id)
     {
 

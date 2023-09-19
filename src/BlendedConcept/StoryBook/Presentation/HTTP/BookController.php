@@ -18,47 +18,74 @@ use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquent
 
 class BookController
 {
+    /**
+     * Display the index page with data for learning needs, themes, disability types, devices, and storybooks.
+     *
+     * @return \Inertia\Response
+     * Author @hareom284
+     */
     public function index()
     {
-        $learningneeds = (new GetLearningNeed())->handle();
-
+        // Retrieve learning needs, themes, disability types, and devices
+        $learningNeeds = (new GetLearningNeed())->handle();
         $themes = (new GetTheme())->handle();
-
-        $disability_types = (new GetDisabilityType())->handle();
-
+        $disabilityTypes = (new GetDisabilityType())->handle();
         $devices = (new GetDevice())->handle();
 
-        $filers = request()->only(['search', 'name', 'perPage']) ?? [];
+        // Retrieve storybooks based on filters
+        $filters = request()->only(['search', 'name', 'perPage']) ?? [];
+        $storybooks = (new GetStoryBook($filters))->handle();
 
-        $storybooks = (new GetStoryBook($filers))->handle();
-
-        return Inertia::render(config('route.books.index'), compact('learningneeds', 'themes', 'disability_types', 'devices', 'storybooks'));
+        // Render the index page with the retrieved data
+        return Inertia::render(config('route.books.index'), compact('learningNeeds', 'themes', 'disabilityTypes', 'devices', 'storybooks'));
     }
 
+    /**
+     * Store a new storybook based on the provided request.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * Author @hareom284
+     */
     public function store(StoreBookRequest $request)
     {
         try {
+            // Map the request data to create a new storybook
             $newStoryBook = StoryBookMapper::fromRequest($request);
-            $StoryBookEloquent = (new CreateStoreStoryBookCommand($newStoryBook));
+
+            // Create a new storybook using a command
+            $StoryBookEloquent = new CreateStoreStoryBookCommand($newStoryBook);
             $StoryBookEloquent->execute();
 
-            return to_route('books.index')->with('successMessage', 'StoryBook Created Successfully!');
+            // Redirect to the index page with a success message
+            return redirect()->route('books.index')->with('successMessage', 'StoryBook Created Successfully!');
         } catch (\Exception $th) {
-            return to_route('books.index')->with('sytemErrorMessage', 'StoryBook is not created!');
+            // Redirect to the index page with a system error message
+            return redirect()->route('books.index')->with('systemErrorMessage', 'StoryBook is not created!');
         }
     }
 
+    /**
+     * Update an existing storybook based on the provided request.
+     *
+     * @param  StoryBookEloquentModel  $book The storybook to update
+     * @return \Illuminate\Http\RedirectResponse
+     * Author @hareom284
+     */
     public function update(UpdateStoryBookRequest $request, StoryBookEloquentModel $book)
     {
-
         try {
+            // Map the request data to update the storybook
             $updateStoryBook = StoryBookData::fromRequest($request, $book->id);
-            $updateStoryBook = (new UpdateStoryBookCommand($updateStoryBook));
-            $updateStoryBook->execute();
 
-            return to_route('books.index')->with('successMessage', 'StoryBook updated Successfully!');
+            // Update the storybook using a command
+            $updateStoryBookCommand = new UpdateStoryBookCommand($updateStoryBook);
+            $updateStoryBookCommand->execute();
+
+            // Redirect to the index page with a success message
+            return redirect()->route('books.index')->with('successMessage', 'StoryBook updated Successfully!');
         } catch (\Exception $th) {
-            return to_route('books.index')->with('sytemErrorMessage', 'Something unexcepted happened');
+            // Redirect to the index page with a system error message
+            return redirect()->route('books.index')->with('systemErrorMessage', 'Something unexpected happened');
         }
     }
 }

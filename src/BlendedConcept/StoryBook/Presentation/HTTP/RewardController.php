@@ -15,64 +15,110 @@ use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\RewardEloquentMod
 
 class RewardController
 {
+    /**
+     * Display a listing of rewards based on provided filters.
+     *
+     * @return \Inertia\Response
+     */
     public function index()
     {
+        // Get filters from the request
+        $filters = request()->only(['search', 'name', 'status', 'perPage']) ?? [];
 
-        $filers = request()->only(['search', 'name', 'status', 'perPage']) ?? [];
+        // Use a query handler to fetch rewards based on the filters
+        $rewards = (new GetRewardQuery($filters))->handle();
 
-        $rewards = (new GetRewardQuery($filers))->handle();
-
+        // Render the rewards using Inertia
         return Inertia::render(config('route.reward.index'), compact('rewards'));
     }
 
+    /**
+     * Display the create reward page.
+     *
+     * @return \Inertia\Response
+     */
     public function create()
     {
-
+        // Render the create reward page using Inertia
         return Inertia::render(config('route.reward.create'));
     }
 
+    /**
+     * Store a new reward based on the provided request.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(StoreRewardRequest $request)
     {
         try {
+            // Map the reward data from the request
             $rewardMap = RewardMapper::fromRequest($request);
-            $createnewReward = new StoreRewardCommand($rewardMap);
-            $createnewReward->execute();
 
-            return to_route('rewards.index')->with('successMessage', 'Reward created successfully!');
+            // Create a new reward using a command
+            $createNewReward = new StoreRewardCommand($rewardMap);
+            $createNewReward->execute();
+
+            // Redirect to the index page with a success message
+            return redirect()->route('rewards.index')->with('successMessage', 'Reward created successfully!');
         } catch (\Exception $exception) {
+            // Handle any exceptions and display the error message
             dd($exception->getMessage());
         }
     }
 
+    /**
+     * Display the details of a specific reward.
+     *
+     * @return \Inertia\Response
+     */
     public function show(RewardEloquentModel $reward)
     {
+        // Render the reward details using Inertia
         return Inertia::render(config('route.reward.show'), compact('reward'));
     }
 
+    /**
+     * Display the form to edit a specific reward.
+     *
+     * @return \Inertia\Response
+     */
     public function edit(RewardEloquentModel $reward)
     {
-
+        // Render the reward edit form using Inertia
         return Inertia::render(config('route.reward.edit'), compact('reward'));
     }
 
+    /**
+     * Update an existing reward based on the provided request.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateRewardRequest $request, RewardEloquentModel $reward)
     {
         try {
-            // return $request->all();
+            // Map the reward data from the request
             $rewardData = RewardData::fromRequest($request, $reward);
-            $updateReward = (new UpdateRewardCommand($rewardData));
+
+            // Update the reward using a command
+            $updateReward = new UpdateRewardCommand($rewardData);
             $updateReward->execute();
 
-            return to_route('rewards.index')->with('successMessage', 'Reward update successfully!');
-
+            // Redirect to the index page with a success message
+            return redirect()->route('rewards.index')->with('successMessage', 'Reward updated successfully!');
         } catch (\Exception $error) {
+            // Handle any exceptions and display the error
             dd($error);
         }
     }
 
+    /**
+     * Change the status of a specific reward.
+     *
+     * @return void
+     */
     public function changerewardStatus(RewardEloquentModel $reward)
     {
-
+        // Execute a command to change the reward status
         $changeRewardStatus = (new ChangeRewardStatusCommand($reward))->execute();
     }
 }

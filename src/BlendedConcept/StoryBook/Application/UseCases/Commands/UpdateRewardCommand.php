@@ -18,6 +18,6 @@ class UpdateRewardCommand implements CommandInterface
 
     public function execute()
     {
-        return $this->repository->updateRewared($this->reward);
+        return $this->repository->updateReward($this->reward);
     }
 }

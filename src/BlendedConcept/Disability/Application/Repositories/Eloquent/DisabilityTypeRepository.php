@@ -67,4 +67,12 @@ class DisabilityTypeRepository implements DisabilityTypeRepositoryInterface
             dd($exception);
         }
     }
+
+    public function getdisabilitytypeForSelect()
+    {
+
+        $disabilityTypes = DisabilityTypeEloquentModel::orderBy('id', 'desc')->select('name', 'id')->get();
+
+        return $disabilityTypes;
+    }
 }

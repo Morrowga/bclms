@@ -15,20 +15,21 @@ class DeviceMapper
             name: $request->name,
             description: $request->description,
             status: $request->status,
+            disability_types: $request->disability_types
         );
     }
 
     public static function toEloquent(Device $device): DeviceEloquentModel
     {
-        $DeviceEloquent = new DeviceEloquentModel();
+        $deviceEloquent = new DeviceEloquentModel();
 
         if ($device->id) {
-            $DeviceEloquent = DeviceEloquentModel::query()->findOrFail($device->id);
+            $deviceEloquent = DeviceEloquentModel::query()->findOrFail($device->id);
         }
-        $DeviceEloquent->name = $device->name;
-        $DeviceEloquent->description = $device->description;
-        $DeviceEloquent->status = $device->status;
+        $deviceEloquent->name = $device->name;
+        $deviceEloquent->description = $device->description;
+        $deviceEloquent->status = $device->status;
 
-        return $DeviceEloquent;
+        return $deviceEloquent;
     }
 }

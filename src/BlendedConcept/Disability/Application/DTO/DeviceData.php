@@ -11,31 +11,31 @@ class DeviceData
         public readonly ?int $id,
         public readonly string $name,
         public readonly ?string $descripton,
-        public readonly ?string $status
-
+        public readonly ?string $status,
+        public readonly ?array $disability_types
     ) {
     }
 
-    public static function fromRequest(Request $request, $device_id = null): DeviceData
+    public static function fromRequest(Request $request, $device): DeviceData
     {
 
         return new self(
-            id: $device_id,
+            id: $device->id,
             name: $request->name,
             descripton: $request->description,
             status: $request->status,
-
+            disability_types: $request->disability_types
         );
     }
 
-    public static function fromEloquent(Device $disabilityType): self
+    public static function fromEloquent(Device $device): self
     {
         return new self(
-            id: $disabilityType->id,
-            name: $disabilityType->name,
-            descripton: $disabilityType->description,
-            status: $disabilityType->status
-
+            id: $device->id,
+            name: $device->name,
+            descripton: $device->description,
+            status: $device->status,
+            disability_types: null
         );
     }
 
@@ -45,6 +45,7 @@ class DeviceData
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->descripton,
+            'disability_types' => $this->disability_types,
         ];
     }
 }

@@ -25,4 +25,9 @@ class DeviceEloquentModel extends Model
             $query->where('status', $status);
         });
     }
+
+    public function disabilityTypes()
+    {
+        return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'disability_types_devices', 'device_id', 'disability_type_id');
+    }
 }

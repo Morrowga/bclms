@@ -13,6 +13,7 @@ class PathwayData
         public readonly int $num_gold_coins,
         public readonly int $num_silver_coins,
         public readonly bool $need_complete_in_order,
+        public readonly ?array $storybooks,
     ) {
     }
 
@@ -25,6 +26,7 @@ class PathwayData
             num_gold_coins: $request->num_gold_coins,
             num_silver_coins: $request->num_silver_coins,
             need_complete_in_order: $request->need_complete_in_order,
+            storybooks: $request->storybooks
         );
     }
 
@@ -37,6 +39,7 @@ class PathwayData
             'num_gold_coins' => $this->num_gold_coins,
             'num_silver_coins' => $this->num_silver_coins,
             'need_complete_in_order' => $this->need_complete_in_order,
+            'storybooks' => $this->storybooks,
         ];
     }
 }

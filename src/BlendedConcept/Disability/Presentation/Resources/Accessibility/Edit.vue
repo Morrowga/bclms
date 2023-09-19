@@ -1,28 +1,52 @@
 <script setup>
-import { ref } from "vue";
+import { ref, defineProps } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
-
+import { requiredValidator } from "@validators";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import SampleStorybookSlider from "./components/SampleStorybookSlider.vue";
 
+const props = defineProps(["device", "disability_types"]);
+const isFormValid = ref(false);
+let refForm = ref();
 let form = useForm({
-    isCustomization: false,
-    isPresentation: false,
-    isFullAccess: false,
-    isConcurrentAccess: false,
-    isWeeklyLearningReport: false,
-    isDedicatedStudentReport: false,
+    name: "",
+    disability_types: [],
+    description: "",
+    status: "INACTIVE",
+    _method: "PUT",
 });
 
-let onFormSubmit = () => {
-    SuccessDialog({ title: "Successfully Device updated" });
+let handleSubmit = () => {
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("accessibility_device.update", props.device.id), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.successMessage });
+                },
+                onError: (error) => {},
+            });
+        }
+    });
 };
+
+onMounted(() => {
+    form.name = props.device?.name;
+    form.description = props.device?.description;
+    form.disability_types =
+        props.device?.disability_types?.map((disability) => disability.id) ??
+        [];
+});
 </script>
 <template>
     <AdminLayout>
         <VContainer>
-            <VForm class="mt-6" @submit.prevent="onFormSubmit">
+            <VForm
+                class="mt-6"
+                ref="refForm"
+                v-model="isFormValid"
+                @submit.prevent="handleSubmit"
+            >
                 <VRow justify="space-around" :gutter="10">
                     <VCol cols="12" class="accessibility">
                         <span class="tiggie-title margin-buttom-18">
@@ -36,6 +60,9 @@ let onFormSubmit = () => {
                                 type="text"
                                 class="tiggie-resize-input-text"
                                 placeholder="Text here"
+                                v-model="form.name"
+                                :rules="[requiredValidator]"
+                                :error-messages="form?.errors?.name"
                             />
                         </VCol>
                     </VCol>
@@ -44,10 +71,16 @@ let onFormSubmit = () => {
                             <VLabel class="tiggie-label"
                                 >Disability Type</VLabel
                             >
-                            <VTextField
+                            <VSelect
                                 type="text"
                                 class="tiggie-resize-input-text"
                                 placeholder="Select disability the device is used for"
+                                :items="props.disability_types"
+                                item-value="id"
+                                item-title="name"
+                                v-model="form.disability_types"
+                                multiple
+                                chips
                             />
                         </VCol>
                     </VCol>
@@ -58,6 +91,9 @@ let onFormSubmit = () => {
                                 type="text"
                                 class="tiggie-resize-input-text"
                                 placeholder="Type Here"
+                                v-model="form.description"
+                                :rules="[requiredValidator]"
+                                :error-messages="form?.errors?.description"
                             />
                         </VCol>
                     </VCol>

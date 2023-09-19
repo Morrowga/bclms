@@ -16,47 +16,64 @@ use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquent
 
 class StoryBookRepository implements StoryBookRepositoryInterface
 {
+    /**
+     * Get a collection of storybooks based on the provided filters.
+     *
+     * @param  array  $filters The filters to be applied
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     * Author @hareom284
+     */
     public function getStoryBooks($filters)
     {
-        $games = StoryBookResource::collection(StoryBookEloquentModel::with(['learingneeds', 'themes', 'disability_types', 'devices', 'physical_resources', 'tags'])
-            ->orderBy('id', 'desc')
-            ->paginate($filters['perPage'] ?? 10));
+        // Retrieve storybooks with relationships, order by id in descending order, and paginate the results
+        $storyBooks = StoryBookResource::collection(
+            StoryBookEloquentModel::with(['learningneeds', 'themes', 'disability_types', 'devices', 'physical_resources', 'tags'])
+                ->orderBy('id', 'desc')
+                ->paginate($filters['perPage'] ?? 10)
+        );
 
-        return $games;
+        return $storyBooks;
     }
 
-    //create storybooks
+    /**
+     * Create a new storybook based on the provided StoryBook model.
+     *
+     * @param  StoryBook  $storyBook The StoryBook model that used for static type on ddd pattern
+     * @return void
+     * Author @hareom284
+     */
     public function createStoryBook(StoryBook $storyBook)
     {
         DB::beginTransaction();
 
         try {
-            $storybookElouquent = StoryBookMapper::toEloquent($storyBook);
-            $storybookElouquent->save();
-            //  synce database with related database
+            // Map the StoryBook model to Eloquent
+            $storybookEloquent = StoryBookMapper::toEloquent($storyBook);
+            $storybookEloquent->save();
+            // Sync related databases
+            $storybookEloquent->learningneeds()->sync(request()->sub_learning_needs);
+            $storybookEloquent->themes()->sync(request()->themes);
+            $storybookEloquent->disability_types()->sync(request()->disability_type);
+            $storybookEloquent->devices()->sync(request()->devices);
 
-            $storybookElouquent->learingneeds()->sync(request()->sub_learning_needs);
-            $storybookElouquent->themes()->sync(request()->themes);
-            $storybookElouquent->disability_types()->sync(request()->disability_type);
-            $storybookElouquent->devices()->sync(request()->devices);
+            // Associate tags
+            $storybookEloquent->associateTags(request()->tags);
 
-            $storybookElouquent->associateTags(request()->tags);
-
-            //add media library
-
+            // Add media to media library
             if (request()->hasFile('thumbnail_img') && request()->file('thumbnail_img')->isValid()) {
-                $storybookElouquent->addMediaFromRequest('thumbnail_img')
+                $storybookEloquent->addMediaFromRequest('thumbnail_img')
                     ->toMediaCollection('thumbnail_img', 'media_storybook');
-                // $storybookElouquent->thumbnail_img = $storybookElouquent->getMedia('thumbnail_img')[0]->original_url;
             }
             if (request()->hasFile('storybook_file') && request()->file('storybook_file')->isValid()) {
-                $storybookElouquent->addMediaFromRequest('storybook_file')->toMediaCollection('storybook_file', 'media_storybook');
+                $storybookEloquent->addMediaFromRequest('storybook_file')
+                    ->toMediaCollection('storybook_file', 'media_storybook');
             }
             if (request()->hasFile('physical_resource_src') && request()->file('physical_resource_src')->isValid()) {
-                $storybookElouquent->addMediaFromRequest('physical_resource_src')->toMediaCollection('physical_resource_src', 'media_storybook');
+                $storybookEloquent->addMediaFromRequest('physical_resource_src')
+                    ->toMediaCollection('physical_resource_src', 'media_storybook');
 
-                $storybookElouquent->physical_resources()->create([
-                    'file_src' => $storybookElouquent->getMedia('physical_resource_src')[0]->original_url,
+                $storybookEloquent->physical_resources()->create([
+                    'file_src' => $storybookEloquent->getMedia('physical_resource_src')[0]->original_url,
                 ]);
             }
 
@@ -67,13 +84,21 @@ class StoryBookRepository implements StoryBookRepositoryInterface
         }
     }
 
-    //update storybooks
+    /**
+     * Update an existing storybook based on the provided StoryBookData.
+     *
+     * @param  StoryBookData  $storyBookData The StoryBookData that used as a Data Tranfer Object on DDD pattern
+     * @return void
+     */
     public function updateStoryBook(StoryBookData $storyBookData)
     {
-
         DB::beginTransaction();
+
         try {
+            // Convert StoryBookData to an array
             $storyBookArray = $storyBookData->toArray();
+
+            // Find the storybook by ID and fill with the updated data
             $updateStoryBookEloquent = StoryBookEloquentModel::query()->findOrFail($storyBookData->id);
             $updateStoryBookEloquent->fill($storyBookArray);
             $updateStoryBookEloquent->update();
@@ -89,30 +114,53 @@ class StoryBookRepository implements StoryBookRepositoryInterface
     {
     }
 
+    /**
+     * Get all sub learning needs.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getLearningNeed()
     {
-        $learningneeds = SubLearningTypeEloquentModel::get();
+        // Retrieve all sub learning needs
+        $learningNeeds = SubLearningTypeEloquentModel::get();
 
-        return $learningneeds;
+        return $learningNeeds;
     }
 
+    /**
+     * Get all themes.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getthemes()
     {
+        // Retrieve all themes
         $themes = ThemeEloquentModel::get();
 
         return $themes;
     }
 
+    /**
+     * Get all disability types.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getdisabilitytype()
     {
-        $disability = DisabilityTypeEloquentModel::get();
+        // Retrieve all disability types
+        $disabilityTypes = DisabilityTypeEloquentModel::get();
 
-        return $disability;
+        return $disabilityTypes;
     }
 
+    /**
+     * Get all devices.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getdevice()
     {
-
+        // Retrieve all devices
         $devices = DeviceEloquentModel::get();
 
         return $devices;
