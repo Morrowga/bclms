@@ -1,24 +1,78 @@
 <script setup>
 import { defineProps, ref, defineEmits } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import UploadGameFile from "./components/UploadGameFile.vue";
+import UploadThumbnail from "./components/UploadThumbnail.vue";
+import { format } from 'date-fns';
+
 const props = defineProps({
-    data: {
+    datas: {
         type: Object,
         required: true,
     },
 });
 let emit = defineEmits();
 let dialog = ref(false);
+let gameFileDialog = ref(false);
+let thumbnailDialog = ref(false);
+let tags = ref([]);
+let types = ref([]);
+
+props.datas.tags.forEach((item) => {
+    tags.value.push(item.name);
+});
+
+props.datas.disability_types.forEach((item) => {
+    types.value.push(item.name);
+});
+
+
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
 const form = useForm({
-    title: "Boj Giggly Park Adventure",
-    description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempo incididunt ut labore et doloremagna aliqua. Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod tempor incididunt utlabore et dolore magna aliqua.",
-    types: [],
+    name: props.datas.name,
+    description: props.datas.description,
+    disability_type_id: types.value,
     devices: [],
+    tags: tags.value,
+    game: null,
+    thumbnail: null
 });
+
+const handleGameFileModalSubmit = (data) => {
+    console.log(data);
+    form.game = data;
+};
+
+const handleThumbnailModalSubmit = (data) => {
+    form.thumbnail = data;
+};
+
+const updateformSubmit = () => {
+    console.log(form);
+    form.put(route("games.update", props.datas.id), {
+        onSuccess: () => {
+            // SuccessDialog({ title: "You've successfully updated a question." });
+        },
+        onError: (error) => {
+
+        },
+    })
+}
+
+const removeFromArray = (index) => {
+    form.disability_type_id = form.disability_type_id.filter(
+        (disability_id, i) => i != index
+    );
+};
+
+const formatDate = (dateString) => {
+      // Parse the date string into a Date object
+    const date = new Date(dateString);
+    // Format the date using date-fns
+    return format(date, 'd MMM yyyy h:mm  a'); // Customize the format string as needed
+}
 </script>
 <template>
     <div>
@@ -40,20 +94,23 @@ const form = useForm({
                         <div class="faded-overlay"></div>
                         <div class="book-title">
                             <!-- <span>Boj Giggly Park Adventure</span> -->
-                            <v-text-field v-model="form.title"></v-text-field>
+                            <v-text-field v-model="form.name"></v-text-field>
                         </div>
                         <div class="edit-icon">
                             <v-btn
+                                @click="thumbnailDialog = true"
                                 icon="mdi-image-area"
                                 size="x-small"
                                 color="secondary"
                             ></v-btn>
                             <v-btn
+                                @click="updateformSubmit"
                                 icon="mdi-content-save"
                                 size="x-small"
                                 color="secondary"
                             ></v-btn>
                             <v-btn
+                                @click="gameFileDialog = true"
                                 icon="mdi-upload"
                                 size="x-small"
                                 color="secondary"
@@ -89,22 +146,22 @@ const form = useForm({
                         <span class="font-weight-black text-black"
                             >Disability Types</span
                         ><br />
-                        <div class="d-flex">
+                        <div class="d-flex mt-3">
                             <v-chip-group>
-                                <div class="ps-relative">
-                                    <v-chip size="small"> Dyspraxia </v-chip>
+                                <div class="ps-relative" v-for="(disability_type, index) in form.disability_type_id" :key="index">
+                                    <v-chip size="small"> {{disability_type}} </v-chip>
                                     <div class="delete-chip">
-                                        <span>-</span>
+                                        <span @click="removeFromArray(index)">-</span>
                                     </div>
                                 </div>
-                                <div class="ps-relative">
+                                <!-- <div class="ps-relative">
                                     <v-chip size="small">
                                         Hyperactive Disorder
                                     </v-chip>
                                     <div class="delete-chip">
                                         <span>-</span>
                                     </div>
-                                </div>
+                                </div> -->
                             </v-chip-group>
                             <v-btn
                                 class="ml-10"
@@ -151,12 +208,16 @@ const form = useForm({
                 </v-card-text>
                 <v-card-actions class="d-flex justify-end">
                     <span class="text-caption"
-                        >Last updated on 14 Aug 2023 1:04Am</span
+                        >Last updated on {{  formatDate(datas.updated_at) }}</span
                     >
                 </v-card-actions>
             </v-card>
         </v-dialog>
     </div>
+    <UploadGameFile v-model:isGameFileDialogVisible="gameFileDialog"
+        @submit="handleGameFileModalSubmit" />
+    <UploadThumbnail v-model:isThumbnailDialogVisible="thumbnailDialog"
+    @submit="handleThumbnailModalSubmit" />
 </template>
 
 <style scoped>

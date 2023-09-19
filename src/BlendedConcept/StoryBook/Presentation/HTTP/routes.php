@@ -17,7 +17,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('rewards', RewardController::class);
 
     Route::post('changerewardStatus/{reward}', [RewardController::class, 'changerewardStatus'])->name('changerewardStatus');
-    Route::get('/games', [GameController::class, 'index'])->name('games.index');
+    Route::resource('games', GameController::class);
     Route::get('/books', [BookController::class, 'index'])->name('books.index');
     Route::resource('pathways', PathWaysController::class);
     Route::resource('bookreviews', BookReviewController::class);

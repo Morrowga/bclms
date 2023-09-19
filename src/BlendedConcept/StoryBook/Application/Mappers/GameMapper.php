@@ -12,12 +12,13 @@ class GameMapper
     {
         return new Game(
             id : $game_id,
-            name : $this->name,
-            description : $this->description,
-            game_file : $this->game_file,
-            thumbnail : $this->thumbnail,
-            num_gold_coins : $this->num_gold_coins,
-            num_silver_coins : $this->num_silver_coins,
+            name : $request->name,
+            description : $request->description,
+            game_file : $request->game_file,
+            thumbnail : $request->thumbnail,
+            num_gold_coins : $request->num_gold_coins,
+            num_silver_coins : $request->num_silver_coins,
+            disability_type_id : $request->disability_type_id,
         );
     }
 

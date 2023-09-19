@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps, ref } from "vue";
 import Edit from "./Edit.vue";
+import { format } from 'date-fns';
 const props = defineProps({
     data: {
         type: Object,
@@ -11,6 +12,13 @@ let dialog = ref(false);
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
+
+const formatDate = (dateString) => {
+      // Parse the date string into a Date object
+    const date = new Date(dateString);
+    // Format the date using date-fns
+    return format(date, 'd MMM yyyy h:mm  a'); // Customize the format string as needed
+}
 </script>
 <template>
     <div>
@@ -22,7 +30,7 @@ const toggleDialog = () => {
             >
                 <v-img
                     @click="toggleDialog"
-                    :src="data.image"
+                    :src="data.thumbnail"
                     alt="Your Image"
                     max-height="200"
                     cover
@@ -40,10 +48,10 @@ const toggleDialog = () => {
                         />
                         <div class="faded-overlay"></div>
                         <div class="book-title">
-                            <span>Boj Giggly Park Adventure</span>
+                            <span>{{ data.name }}</span>
                         </div>
                         <div class="edit-icon">
-                            <Edit :datas="data" />
+                            <Edit :datas="props.data" />
                         </div>
                         <div class="close-btn">
                             <v-btn
@@ -59,11 +67,7 @@ const toggleDialog = () => {
                 </v-card-title>
                 <v-card-text class="px-10 py-0 pb-5">
                     <div class="paragraph">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
+                       {{data.description}}
                     </div>
                     <br />
                     <div class="disability">
@@ -71,9 +75,11 @@ const toggleDialog = () => {
                             >Disability Types</span
                         ><br />
                         <v-chip-group>
-                            <v-chip size="small">Dyspraxia</v-chip>
-
-                            <v-chip size="small">Hyperactive Disorder</v-chip>
+                            <v-chip size="small" v-for="(disability,index) in data.disability_types"
+                            :key="index"
+                            >
+                                {{disability.name}}
+                            </v-chip>
                         </v-chip-group>
                     </div>
                     <br />
@@ -92,7 +98,7 @@ const toggleDialog = () => {
                 </v-card-text>
                 <v-card-actions class="d-flex justify-end">
                     <span class="text-caption"
-                        >Last updated on 14 Aug 2023 1:04Am</span
+                        >Last updated on {{ formatDate(props.data.updated_at) }}</span
                     >
                 </v-card-actions>
             </v-card>
@@ -102,7 +108,7 @@ const toggleDialog = () => {
 
 <style scoped>
 /* .img-header {
-   
+
 } */
 .faded-image {
     position: relative;
