@@ -1,7 +1,7 @@
 <script setup>
 import { ref, defineProps, defineEmits } from "vue";
 import NavBarNotifications from "@/layouts/components/NavBarNotifications.vue";
-import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
+// import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
 import StudentProfile from "@/layouts/components/StudentProfile.vue";
 import HorizontalNavStudent from "@layouts/components/HorizontalNavStudent.vue";
 import { Link, usePage } from "@inertiajs/vue3";

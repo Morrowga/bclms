@@ -5,7 +5,6 @@ namespace Src\BlendedConcept\Security\Domain\Services;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Src\BlendedConcept\Security\Application\Requests\updateUserPasswordRequest;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class UserService

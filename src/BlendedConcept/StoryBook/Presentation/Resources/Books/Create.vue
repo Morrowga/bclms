@@ -1,8 +1,13 @@
 <script setup>
 import { defineProps, ref } from "vue";
 import { SuccessDialog } from "@actions/useSuccess";
-import { useForm } from "@inertiajs/inertia-vue3";
-import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
+import { useForm } from "@inertiajs/vue3";
+import ImageUpload from "@mainRoot/components/DropZone/FileUpload.vue";
+import {
+  emailValidator,
+  requiredValidator,
+  integerValidator,
+} from "@validators";
 const props = defineProps([
   "learningneed",
   "themes",
@@ -14,28 +19,40 @@ const toggleDialog = () => {
   dialog.value = !dialog.value;
 };
 
+let refForm = ref();
+const isFormValid = ref(false);
+
 //this arrary describe as multiple select for each roles
 const gameTag = ref("");
 const form = useForm({
   name: "",
   tag_name: "",
-  is_free: "",
+  is_free: 0,
   description: "",
   tags: [],
   sub_learning_needs: [],
   themes: [],
-  disability_type_id: [],
+  disability_type: [],
   devices: [],
   storybook_file: "",
   thumbnail_img: "",
   physical_resource_src: "",
 });
 
-console.log(props);
-
 let onFormSubmit = () => {
-  SuccessDialog({ title: "Successfully Game added" });
-  dialog.value = false;
+  refForm.value?.validate().then(({ valid }) => {
+    if (valid) {
+      form.post(route("books.store"), {
+        onSuccess: () => {
+          SuccessDialog({ title: props.flash?.successMessage });
+          dialog.value = false;
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+      });
+    }
+  });
 };
 
 const addToSublearningArray = (e) => {
@@ -44,26 +61,39 @@ const addToSublearningArray = (e) => {
     gameTag.value = "";
   }
 };
+
+const removeFromArray = (index) => {
+  form.tags = form.tags.filter((tag, i) => i != index);
+};
 </script>
 <template>
   <div>
-    <VBtn @click="toggleDialog()">Add New Book</VBtn>
-
     <v-dialog v-model="dialog" max-width="800">
+      <template #activator="{ props }">
+        <VBtn v-bind="props">Add New Book</VBtn>
+      </template>
+
       <v-card>
         <v-card-text class="px-10 py-0 pb-5">
-          <v-form class="mt-6" @submit.prevent="onFormSubmit">
+          <v-form
+            class="mt-6"
+            ref="refForm"
+            v-model="isFormValid"
+            @submit.prevent="onFormSubmit"
+          >
             <v-row>
               <v-col cols="12" md="6" class="pb-0">
-                <v-col cols="12" md="12">
-                  <VLabel class="tiggie-label">Storybook Name</VLabel>
-                  <VTextField
-                    type="text"
-                    class="tiggie-resize-input-text"
-                    placeholder="Text here"
-                    density="compact"
-                  />
-                </v-col>
+                <v-label class="tiggie-label">Storybook Name</v-label>
+                <VTextField
+                  type="text"
+                  class="tiggie-resize-input-text"
+                  v-model="form.name"
+                  placeholder="Text here"
+                  :error-messages="form?.errors?.name"
+                  :rules="[requiredValidator]"
+                  density="compact"
+                  height="48px"
+                />
               </v-col>
               <VCol cols="12" md="6" class="game-tag-add">
                 <VLabel class="tiggie-label">Tags</VLabel>
@@ -87,10 +117,23 @@ const addToSublearningArray = (e) => {
                 >
                 </VTextField>
               </VCol>
+              <VCol cols="12" md="6">
+                <div class="d-flex ">
+                  <VLabel class="tiggie-label pr-5">Available for Free Users</VLabel>
+                  <VCheckbox
+                  v-model="form.is_free"/>
+                </div>
+              </VCol>
               <v-col cols="12" md="12" class="py-0">
                 <v-col cols="12" md="12">
                   <VLabel class="tiggie-label">Storybook Description</VLabel>
-                  <v-textarea type="text" rows="5" density="compact" />
+                  <v-textarea
+                    v-model="form.description"
+                    type="text"
+                    rows="5"
+                    density="compact"
+                    :error-messages="form?.errors?.description"
+                  />
                 </v-col>
               </v-col>
               <v-col cols="12" md="6" class="pb-0">
@@ -101,7 +144,9 @@ const addToSublearningArray = (e) => {
                     class="tiggie-resize-input-text"
                     placeholder="Select devices"
                     density="compact"
+                    v-model="form.sub_learning_needs"
                     :items="props.learningneed"
+                    :error-messages="form?.errors?.sub_learning_needs"
                     item-title="name"
                     item-value="id"
                     multiple
@@ -116,7 +161,9 @@ const addToSublearningArray = (e) => {
                     class="tiggie-resize-input-text"
                     placeholder="Select devices"
                     density="compact"
+                    v-model="form.themes"
                     :items="props.themes"
+                    :error-messages="form?.errors?.themes"
                     item-title="name"
                     item-value="id"
                     multiple
@@ -132,6 +179,8 @@ const addToSublearningArray = (e) => {
                     placeholder="Select disability type"
                     density="compact"
                     :items="props.disability_types"
+                    v-model="form.disability_type"
+                    :error-messages="form?.errors?.disability_type"
                     item-title="name"
                     item-value="id"
                     multiple
@@ -149,6 +198,8 @@ const addToSublearningArray = (e) => {
                     placeholder="Select devices"
                     density="compact"
                     :items="props.devices"
+                    v-model="form.devices"
+                    :error-messages="form?.errors?.devices"
                     item-title="name"
                     item-value="id"
                     multiple
@@ -159,23 +210,25 @@ const addToSublearningArray = (e) => {
               <v-col cols="12" md="6" class="py-0">
                 <v-col cols="12" md="12">
                   <VLabel class="tiggie-label">Storybook File</VLabel>
-                  <div class="coming-soon">
-                    <p>Drop And Drop</p>
-                  </div>
+                  <ImageUpload v-model="form.storybook_file" filename="H5P" />
                 </v-col>
               </v-col>
               <v-col cols="12" md="6" class="py-0">
                 <v-col cols="12" md="12">
                   <VLabel class="tiggie-label">Thumbnail Picture</VLabel>
-                  <div class="coming-soon">
-                    <p>Drop And Drop</p>
-                  </div>
+                  <ImageUpload
+                    v-model="form.thumbnail_img"
+                    filename=".png/jpg"
+                  />
                 </v-col>
               </v-col>
               <v-col cols="12" md="12" class="py-0">
                 <v-col cols="12" md="6">
                   <VLabel class="tiggie-label">Physical Resources</VLabel>
-                  <ImageUpload v-model=""/>
+                  <ImageUpload
+                    v-model="form.physical_resource_src"
+                    filename=".pdf/docx"
+                  />
                 </v-col>
               </v-col>
               <v-col cols="12" md="12" class="py-0">

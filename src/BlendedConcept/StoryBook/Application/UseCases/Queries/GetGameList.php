@@ -2,8 +2,8 @@
 
 namespace Src\BlendedConcept\StoryBook\Application\UseCases\Queries;
 
-use Src\Common\Domain\QueryInterface;
 use Src\BlendedConcept\StoryBook\Domain\Repositories\GameRepositoryInterface;
+use Src\Common\Domain\QueryInterface;
 
 class GetGameList implements QueryInterface
 {

@@ -3,13 +3,12 @@
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Src\BlendedConcept\Disability\Application\UseCases\Queries\DisabilityTypes\ShowDisabilityTypes;
 use Src\BlendedConcept\StoryBook\Application\Mappers\GameMapper;
 use Src\BlendedConcept\StoryBook\Application\Requests\StoreGameRequest;
 use Src\BlendedConcept\StoryBook\Application\Requests\UpdateGameRequest;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
-use Src\BlendedConcept\Disability\Application\Mappers\DisabilityTypeMapper;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoreGameCommand;
-use Src\BlendedConcept\Disability\Application\UseCases\Queries\DisabilityTypes\ShowDisabilityTypes;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
 
 class GameController
 {
@@ -17,31 +16,33 @@ class GameController
     {
         $disabilityTypes = (new ShowDisabilityTypes())->handle();
         $games = (new GetGameList())->handle();
-        return Inertia::render(config('route.games.index'),[
+
+        return Inertia::render(config('route.games.index'), [
             'disabilityTypes' => $disabilityTypes,
             'games' => $games,
         ]);
     }
 
-     /**
+    /**
      * This function stores a new game.
      *
      * @param  StoreGameRequest  $request The request object
      * @return \Illuminate\Http\RedirectResponse The redirect response
      */
-    public function store(StoreGameRequest $request){
+    public function store(StoreGameRequest $request)
+    {
         // try {
-            // Abort if the user is not authorized to create games
-            // abort_if(authorize('create', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // Abort if the user is not authorized to create games
+        // abort_if(authorize('create', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            // Validate the request data
-            $request->validated();
+        // Validate the request data
+        $request->validated();
 
-            $newGame = GameMapper::fromRequest($request);
-            $storeGameCommand = (new StoreGameCommand($newGame));
-            $storeGameCommand->execute();
+        $newGame = GameMapper::fromRequest($request);
+        $storeGameCommand = (new StoreGameCommand($newGame));
+        $storeGameCommand->execute();
 
-            return redirect()->route('games.index')->with('successMessage', 'Game Created Successfully!');
+        return redirect()->route('games.index')->with('successMessage', 'Game Created Successfully!');
         // } catch (\Exception $error) {
         //     return redirect()
         //         ->route('games.index')
@@ -51,7 +52,7 @@ class GameController
         // }
     }
 
-     /**
+    /**
      * Update an game.
      *
      *

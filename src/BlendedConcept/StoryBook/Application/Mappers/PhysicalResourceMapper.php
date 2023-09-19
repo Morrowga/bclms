@@ -12,8 +12,8 @@ class PhysicalResourceMapper
     {
         return new PhysicalResource(
             id : $physical_resource_id,
-            storybook_id : $this->storybook_id,
-            file_src : $this->file_src,
+            storybook_id : $request->storybook_id,
+            file_src : $request->file_src,
         );
     }
 

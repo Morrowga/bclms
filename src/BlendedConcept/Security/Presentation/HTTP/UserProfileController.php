@@ -2,7 +2,6 @@
 
 namespace Src\BlendedConcept\Security\Presentation\HTTP;
 
-use Illuminate\Http\Response;
 use Inertia\Inertia;
 use Src\BlendedConcept\Security\Application\DTO\UserProfileData;
 use Src\BlendedConcept\Security\Application\Requests\UpdateUserProfilePasswordRequest;
@@ -37,6 +36,7 @@ class UserProfileController extends Controller
         $updateUser = UserProfileData::fromRequest($request, $user->id);
         $updatedUserCommand = (new UpdateUserProfileCommand($updateUser));
         $updatedUserCommand->execute();
+
         return redirect()->route('userprofile')->with('successMessage', 'Your Profile Was Updated Successfully!');
     }
 
@@ -45,7 +45,8 @@ class UserProfileController extends Controller
         $isPasswordMatch = $this->userService->changePassword($request);
         if ($isPasswordMatch) {
             return redirect()->route('userprofile')->with('successMessage', 'Password Updated Successfully!');
-        } 
+        }
+
         return redirect()->route('userprofile')->with('errorMessage', 'Password does not match!');
     }
 }

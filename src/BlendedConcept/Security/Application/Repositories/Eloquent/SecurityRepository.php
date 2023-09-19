@@ -182,7 +182,6 @@ class SecurityRepository implements SecurityRepositoryInterface
         $updateUserEloquent->fill($userArray);
         $updateUserEloquent->save();
     }
- 
 
     // get permission
     public function getPermission($filters = [])

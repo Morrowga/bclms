@@ -113,6 +113,12 @@ return [
             'url' => env('APP_URL').'/storage/reward',
             'visibility' => 'public',
         ],
+        'media_storybook' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/storybook'),
+            'url' => env('APP_URL').'/storage/storybook',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',

@@ -2,7 +2,7 @@
 import { ref, defineProps, defineEmits } from "vue";
 import { Link, usePage } from "@inertiajs/inertia-vue3";
 import NavBarNotifications from "@/layouts/components/NavBarNotifications.vue";
-import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
+// import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
 import UserProfile from "@mainRoot/components/UserProfile/UserProfile.vue";
 
 import { HorizontalNav } from "@layouts/components";

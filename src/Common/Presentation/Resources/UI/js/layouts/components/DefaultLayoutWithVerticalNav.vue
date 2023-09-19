@@ -3,7 +3,6 @@ import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { Link, usePage } from "@inertiajs/inertia-vue3";
 import { themeConfig } from "@themeConfig";
 import navItems from "@/navigation/horizontal";
-import TheCustomizer from "@core/components/TheCustomizer.vue";
 import VerticalNavLink from "@layouts/components/VerticalNavLink.vue";
 import VerticalNavGroup from "@layouts/components/VerticalNavGroup.vue";
 import Header from "@mainRoot/components/Header/Header.vue";

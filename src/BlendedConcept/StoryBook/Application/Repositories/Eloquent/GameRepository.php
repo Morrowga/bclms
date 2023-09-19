@@ -3,11 +3,10 @@
 namespace Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
-use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Game;
-use Src\BlendedConcept\StoryBook\Domain\Resources\GameResource;
 use Src\BlendedConcept\StoryBook\Application\Mappers\GameMapper;
+use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Game;
 use Src\BlendedConcept\StoryBook\Domain\Repositories\GameRepositoryInterface;
-use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\TagEloquentModel;
+use Src\BlendedConcept\StoryBook\Domain\Resources\GameResource;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
 
 class GameRepository implements GameRepositoryInterface
@@ -19,6 +18,7 @@ class GameRepository implements GameRepositoryInterface
 
         return $games;
     }
+
     /**
      * Create a new game with the provided game object.
      *

@@ -88,6 +88,7 @@ const formatDate = (dateString) => {
                             >Supported Accessibility Devices</span
                         ><br />
                         <v-chip-group>
+
                             <v-chip size="small">Mouse/Keyboard</v-chip>
 
                             <v-chip size="small">Switch-Single</v-chip>

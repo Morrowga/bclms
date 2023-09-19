@@ -8,6 +8,7 @@ interface GameRepositoryInterface
 {
     //get game lists
     public function getGameList();
+
     //create game
     public function createGame(Game $game);
 }

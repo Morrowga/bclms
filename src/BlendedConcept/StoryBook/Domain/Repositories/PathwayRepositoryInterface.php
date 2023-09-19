@@ -9,7 +9,10 @@ use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\PathwayEloquentMo
 interface PathwayRepositoryInterface
 {
     public function getPathways($filters);
+
     public function createPathway(Pathway $Pathway);
+
     public function updatePathway(PathwayData $PathwayData);
+
     public function deletePathway(PathwayEloquentModel $Pathway);
 }

@@ -7,6 +7,7 @@ namespace Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -36,9 +37,9 @@ class StoryBookEloquentModel extends Model implements HasMedia
         'is_free',
     ];
 
-    public function getImageAttribute()
+    public function getThumbnailImgAttribute()
     {
-        return $this->getMedia('thumbnail_img');
+        return $this->getFirstMedia('thumbnail_img')->original_url ?? '';
     }
 
     public function scopeFilter($query, $filters)
@@ -69,5 +70,25 @@ class StoryBookEloquentModel extends Model implements HasMedia
     public function devices(): BelongsToMany
     {
         return $this->belongsToMany(DeviceEloquentModel::class, 'storybook_devices', 'storybook_id', 'device_id');
+    }
+
+    public function physical_resources(): HasOne
+    {
+        return $this->hasOne(PhysicalResourceEloquentModel::class, 'storybook_id', 'id');
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(TagEloquentModel::class, 'storybook_tags', 'storybook_id', 'tag_id');
+    }
+
+    public function associateTags(array $tagNames)
+    {
+        foreach ($tagNames as $tagName) {
+            $tag = TagEloquentModel::firstOrCreate(['name' => $tagName]);
+
+            // Attach the tag to the game
+            $this->tags()->attach($tag->id);
+        }
     }
 }

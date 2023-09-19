@@ -20,15 +20,15 @@ class UpdateUserProfileRequest extends FormRequest
             'email' => ['required', 'email',  'unique:users,email,'.auth()->user()->id],
         ];
     }
-    
+
     public function messages()
     {
         return [
-            'first_name.required' => "The first name field is required.",
-            'last_name.required' => "The last name field is required.",
-            'contact_number.required' => "The contact number field is required.",
-            'email.required' => "The email field is required.",
-            'email.unique' => "The email field must be unique",
+            'first_name.required' => 'The first name field is required.',
+            'last_name.required' => 'The last name field is required.',
+            'contact_number.required' => 'The contact number field is required.',
+            'email.required' => 'The email field is required.',
+            'email.unique' => 'The email field must be unique',
         ];
     }
 }

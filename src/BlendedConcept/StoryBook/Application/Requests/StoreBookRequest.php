@@ -20,15 +20,6 @@ class StoreBookRequest extends FormRequest
             'description' => [
                 'required', 'string',
             ],
-            'num_gold_coins' => [
-                'required',
-            ],
-            'num_silver_coins' => [
-                'required',
-            ],
-            'is_free' => [
-                'required',
-            ],
             'tags' => [
                 'required', 'array',
             ],
@@ -49,6 +40,16 @@ class StoreBookRequest extends FormRequest
 
     public function messages()
     {
-
+        return [
+            'name.required' => 'Name is required',
+            'name.unique' => 'Name must be unique',
+            'description' => 'Description is required',
+            'tags' => 'Tags is required',
+            'sub_learning_needs' => 'Learning Needs is required',
+            'themes' => 'Themes  is required',
+            'disability_type' => 'Disability Type is required',
+            'disability_type' => 'Disability Type is required',
+            'devices' => 'Supported Accessibility Devices  is required',
+        ];
     }
 }

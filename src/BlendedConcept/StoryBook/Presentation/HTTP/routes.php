@@ -20,7 +20,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('games', GameController::class);
     // storybook resources
     Route::resource('books', BookController::class);
-    Route::resource('pathways', PathWaysController::class);
+    Route::resource('pathways', PathwayController::class);
     Route::resource('bookreviews', BookReviewController::class);
     Route::get('/teacher_storybook', [TeacherStorybookController::class, 'index'])->name('teacher_storybook.index');
     Route::get('/teacher_storybook/edit', [TeacherStorybookController::class, 'edit'])->name('teacher_storybook.edit');

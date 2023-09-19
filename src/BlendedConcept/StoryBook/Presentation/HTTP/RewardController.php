@@ -65,8 +65,8 @@ class RewardController
 
             return to_route('rewards.index')->with('successMessage', 'Reward update successfully!');
 
-        } catch (\Exception $th) {
-            //throw $th;
+        } catch (\Exception $error) {
+            dd($error);
         }
     }
 

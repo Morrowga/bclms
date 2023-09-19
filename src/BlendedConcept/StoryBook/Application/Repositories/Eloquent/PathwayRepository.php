@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
-
 use Src\BlendedConcept\StoryBook\Application\DTO\PathwayData;
 use Src\BlendedConcept\StoryBook\Application\Mappers\PathwayMapper;
 use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Pathway;
@@ -16,6 +15,7 @@ class PathwayRepository implements PathwayRepositoryInterface
     public function getPathways($filters)
     {
         $pathways = PathwayResource::collection(PathwayEloquentModel::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+
         return $pathways;
     }
 

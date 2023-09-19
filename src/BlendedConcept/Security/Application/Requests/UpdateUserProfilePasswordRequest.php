@@ -19,16 +19,16 @@ class UpdateUserProfilePasswordRequest extends FormRequest
             'password_confirmation' => ['required', 'same:updatedpassword'],
         ];
     }
-    
+
     public function messages()
     {
         return [
-            'currentpassword.required' => "The current password field is required.",
-            'updatedpassword.required' => "The updated password field is required.",
-            'password_confirmation.required' => "The confirm password field is required.",
-            'currentpassword.min' => "Password must be at least 8 characters.",
-            'updatedpassword.min' => "Password must be at least 8 characters.",
-            'password_confirmation.same' => "Confirm password must be same.",
+            'currentpassword.required' => 'The current password field is required.',
+            'updatedpassword.required' => 'The updated password field is required.',
+            'password_confirmation.required' => 'The confirm password field is required.',
+            'currentpassword.min' => 'Password must be at least 8 characters.',
+            'updatedpassword.min' => 'Password must be at least 8 characters.',
+            'password_confirmation.same' => 'Confirm password must be same.',
         ];
     }
 }

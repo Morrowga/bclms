@@ -1,12 +1,11 @@
 <script setup>
 import navItems from "@/navigation/horizontal";
 import { useThemeConfig } from "@core/composable/useThemeConfig";
-import TheCustomizer from "@core/components/TheCustomizer.vue";
 import { themeConfig } from "@themeConfig";
 // Components
 import NavBarNotifications from "@/layouts/components/NavBarNotifications.vue";
 import NavbarShortcuts from "@/layouts/components/NavbarShortcuts.vue";
-import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
+// import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
 import NavSearchBar from "@/layouts/components/NavSearchBar.vue";
 import HorizontalNavLayout from "@layouts/components/HorizontalNavLayout.vue";
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";

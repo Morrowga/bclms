@@ -11,6 +11,7 @@ let dialog = ref(false);
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
+
 </script>
 <template>
     <div>
@@ -22,7 +23,7 @@ const toggleDialog = () => {
             >
                 <v-img
                     @click="toggleDialog"
-                    :src="data.image"
+                    :src="data.thumbnail_img"
                     alt="Your Image"
                     max-height="200"
                     cover
@@ -34,17 +35,14 @@ const toggleDialog = () => {
                 <v-card-title class="pa-0">
                     <div class="faded-image">
                         <img
-                            :src="'/images/teacherbanner.png'"
+                            :src="data.thumbnail_img"
                             class="img-header"
                             alt="Faded Image"
                         />
                         <div class="faded-overlay"></div>
                         <div class="book-title">
-                            <span>Boj Giggly Park Adventure</span>
+                            <span>{{data.name}}</span>
                         </div>
-                        <!-- <div class="edit-icon">
-                            <Edit :datas="data" />
-                        </div> -->
                         <div class="edit-icon">
                             <v-btn
                                 icon="mdi-gift"
@@ -72,11 +70,7 @@ const toggleDialog = () => {
                 </v-card-title>
                 <v-card-text class="px-10 py-0 pb-5">
                     <div class="paragraph">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
+                        {{data.description}}
                     </div>
 
                     <div class="learning pt-2">
@@ -84,24 +78,20 @@ const toggleDialog = () => {
                             >Learning Needs</span
                         >
                         <v-chip-group>
-                            <v-chip size="small">Social Awareness</v-chip>
-
-                            <v-chip size="small">Self Awareness</v-chip>
-
                             <v-chip size="small"
-                                >Responsible Decision Making</v-chip
-                            >
-
-                            <v-chip size="small">Mobility</v-chip>
+                            v-for="(learningneed,index) in data.learingneeds"
+                            :key="index">
+                                {{learningneed.name}}
+                            </v-chip>
                         </v-chip-group>
                     </div>
 
                     <div class="themes pt-2">
                         <span class="font-weight-black text-black">Themes</span>
                         <v-chip-group>
-                            <v-chip size="small">Social Skills</v-chip>
-
-                            <v-chip size="small">Life Skills</v-chip>
+                            <v-chip size="small" v-for="theme in data.themes" :key="theme.id">
+                                {{theme.name}}
+                            </v-chip>
                         </v-chip-group>
                     </div>
 
@@ -110,9 +100,10 @@ const toggleDialog = () => {
                             >Disability Types</span
                         >
                         <v-chip-group>
-                            <v-chip size="small">Dyspraxia</v-chip>
+                            <v-chip size="small" v-for="disability in data.disability_types" :key="disability.id">
+                                {{disability.name}}
+                            </v-chip>
 
-                            <v-chip size="small">Hyperactive Disorder</v-chip>
                         </v-chip-group>
                     </div>
 
@@ -121,11 +112,9 @@ const toggleDialog = () => {
                             >Supported Accessibility Devices</span
                         >
                         <v-chip-group>
-                            <v-chip size="small">Mouse/Keyboard</v-chip>
-
-                            <v-chip size="small">Switch-Single</v-chip>
-
-                            <v-chip size="small">Switch-Double</v-chip>
+                            <v-chip size="small" v-for="device in data.devices" :key="device.id">
+                                {{device.name}}
+                                </v-chip>
                         </v-chip-group>
                     </div>
                 </v-card-text>
@@ -141,7 +130,7 @@ const toggleDialog = () => {
 
 <style scoped>
 /* .img-header {
-   
+
 } */
 .faded-image {
     position: relative;

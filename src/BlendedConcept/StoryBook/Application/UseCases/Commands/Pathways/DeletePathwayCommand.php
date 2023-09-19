@@ -2,7 +2,6 @@
 
 namespace Src\BlendedConcept\StoryBook\Application\UseCases\Commands\Pathways;
 
-use Src\BlendedConcept\StoryBook\Application\DTO\PathwayData;
 use Src\BlendedConcept\StoryBook\Domain\Repositories\PathwayRepositoryInterface;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\PathwayEloquentModel;
 use Src\Common\Domain\CommandInterface;

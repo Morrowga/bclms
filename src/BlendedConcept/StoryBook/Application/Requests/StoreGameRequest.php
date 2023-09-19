@@ -21,17 +21,17 @@ class StoreGameRequest extends FormRequest
                 'string',
             ],
             'game' => [
-                'required'
+                'required',
             ],
             'thumb' => [
-                'required'
+                'required',
             ],
             'disability_type_id' => [
-                'required'
+                'required',
             ],
             'tags' => [
-                'required'
-            ]
+                'required',
+            ],
         ];
     }
 

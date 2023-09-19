@@ -3,6 +3,7 @@
 namespace Src\BlendedConcept\StoryBook\Domain\Repositories;
 
 use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookData;
+use Src\BlendedConcept\StoryBook\Domain\Model\StoryBook;
 
 interface StoryBookRepositoryInterface
 {
@@ -10,7 +11,7 @@ interface StoryBookRepositoryInterface
     public function getStoryBooks($filters);
 
     //create storybooks
-    public function createStoryBook($request);
+    public function createStoryBook(StoryBook $storyBook);
 
     //update storybooks
     public function updateStoryBook(StoryBookData $storyBookData);

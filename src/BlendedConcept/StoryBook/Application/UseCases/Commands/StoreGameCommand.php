@@ -2,9 +2,9 @@
 
 namespace Src\BlendedConcept\StoryBook\Application\UseCases\Commands;
 
-use Src\Common\Domain\CommandInterface;
 use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Game;
 use Src\BlendedConcept\StoryBook\Domain\Repositories\GameRepositoryInterface;
+use Src\Common\Domain\CommandInterface;
 
 class StoreGameCommand implements CommandInterface
 {

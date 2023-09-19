@@ -22,9 +22,10 @@ class PathwayController
         $pathways = (new GetPathwaysQuery($filters))->handle();
 
         return Inertia::render(config('route.pathways.index'), [
-            'pathways' => $pathways
+            'pathways' => $pathways,
         ]);
     }
+
     public function store(StorePathwayRequest $request)
     {
         try {
@@ -63,7 +64,6 @@ class PathwayController
             $updatePathwaycommand = (new UpdatePathwayCommand($updatePathway));
             $updatePathwaycommand->execute();
 
-
             return redirect()->route('pathways.index')->with('successMessage', 'Pathway Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
@@ -73,12 +73,14 @@ class PathwayController
                 ]);
         }
     }
+
     public function destroy($id)
     {
         try {
             $pathway = PathwayEloquentModel::findOrFail($id);
             $deletePathwayCommand = (new DeletePathwayCommand($pathway));
             $deletePathwayCommand->execute();
+
             return redirect()->route('pathways.index')->with('successMessage', 'Pathway Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
