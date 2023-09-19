@@ -2,13 +2,15 @@
 
 namespace Src\BlendedConcept\Security\Domain\Services;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use Src\BlendedConcept\Security\Application\Requests\updateUserPasswordRequest;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class UserService
 {
-    public function changePassword(updateUserPasswordRequest $request)
+    public function changePassword(Request $request)
     {
         $user = auth()->user();
         //  check passord same or not
@@ -21,6 +23,8 @@ class UserService
             return true;
         }
 
-        return false;
+        throw ValidationException::withMessages([
+            'currentpassword' => 'Old password is not correct.',
+        ]);
     }
 }
