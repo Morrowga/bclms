@@ -11,7 +11,6 @@ let dialog = ref(false);
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
-
 </script>
 <template>
     <div>
@@ -30,18 +29,19 @@ const toggleDialog = () => {
                 ></v-img>
             </v-card>
         </v-hover>
-        <v-dialog v-model="dialog" width="auto" max-width="800">
+        <v-dialog v-model="dialog" width="auto" max-width="800" min-width="800">
             <v-card>
                 <v-card-title class="pa-0">
                     <div class="faded-image">
-                        <img
+                        <v-img
                             :src="data.thumbnail_img"
-                            class="img-header"
+                            :aspect-ratio="16 / 9"
+                            fill
                             alt="Faded Image"
                         />
                         <div class="faded-overlay"></div>
                         <div class="book-title">
-                            <span>{{data.name}}</span>
+                            <span>{{ data.name }}</span>
                         </div>
                         <div class="edit-icon">
                             <v-btn
@@ -70,7 +70,7 @@ const toggleDialog = () => {
                 </v-card-title>
                 <v-card-text class="px-10 py-0 pb-5">
                     <div class="paragraph">
-                        {{data.description}}
+                        {{ data.description }}
                     </div>
 
                     <div class="learning pt-2">
@@ -78,10 +78,14 @@ const toggleDialog = () => {
                             >Learning Needs</span
                         >
                         <v-chip-group>
-                            <v-chip size="small"
-                            v-for="(learningneed,index) in data.learingneeds"
-                            :key="index">
-                                {{learningneed.name}}
+                            <v-chip
+                                size="small"
+                                v-for="(
+                                    learningneed, index
+                                ) in data.learingneeds"
+                                :key="index"
+                            >
+                                {{ learningneed.name }}
                             </v-chip>
                         </v-chip-group>
                     </div>
@@ -89,8 +93,12 @@ const toggleDialog = () => {
                     <div class="themes pt-2">
                         <span class="font-weight-black text-black">Themes</span>
                         <v-chip-group>
-                            <v-chip size="small" v-for="theme in data.themes" :key="theme.id">
-                                {{theme.name}}
+                            <v-chip
+                                size="small"
+                                v-for="theme in data.themes"
+                                :key="theme.id"
+                            >
+                                {{ theme.name }}
                             </v-chip>
                         </v-chip-group>
                     </div>
@@ -100,10 +108,13 @@ const toggleDialog = () => {
                             >Disability Types</span
                         >
                         <v-chip-group>
-                            <v-chip size="small" v-for="disability in data.disability_types" :key="disability.id">
-                                {{disability.name}}
+                            <v-chip
+                                size="small"
+                                v-for="disability in data.disability_types"
+                                :key="disability.id"
+                            >
+                                {{ disability.name }}
                             </v-chip>
-
                         </v-chip-group>
                     </div>
 
@@ -112,9 +123,13 @@ const toggleDialog = () => {
                             >Supported Accessibility Devices</span
                         >
                         <v-chip-group>
-                            <v-chip size="small" v-for="device in data.devices" :key="device.id">
-                                {{device.name}}
-                                </v-chip>
+                            <v-chip
+                                size="small"
+                                v-for="device in data.devices"
+                                :key="device.id"
+                            >
+                                {{ device.name }}
+                            </v-chip>
                         </v-chip-group>
                     </div>
                 </v-card-text>
