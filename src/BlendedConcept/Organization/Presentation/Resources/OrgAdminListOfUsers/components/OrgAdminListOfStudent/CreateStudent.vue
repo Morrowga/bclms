@@ -60,60 +60,59 @@ const createStudent = () => {
               </v-text-field>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col cols="12">
-              <v-tabs v-model="tab">
-                <v-tab value="learning">Learning Need</v-tab>
-                <v-tab value="disability">Disability Types</v-tab>
-              </v-tabs>
+            <v-row>
+                <v-col cols="12">
+                <v-tabs v-model="tab">
+                    <v-tab value="learning">Learning Need</v-tab>
+                    <v-tab value="disability">Disability Types</v-tab>
+                </v-tabs>
+                <div>
+                    <v-window v-model="tab">
+                        <v-window-item value="learning">
+                            <ChipWithBlueDot
+                            v-for="item in 5"
+                            :key="item"
+                            title="Dyslexia"
+                            />
+                        </v-window-item>
 
-              <div>
-                <v-window v-model="tab">
-                  <v-window-item value="learning">
-                    <ChipWithBlueDot
-                      v-for="item in 5"
-                      :key="item"
-                      title="Dyslexia"
-                    />
-                  </v-window-item>
-
-                  <v-window-item value="disability">
-                    <ChipWithBlueDot
-                      v-for="item in 5"
-                      :key="item"
-                      title="Disability"
-                    />
-                  </v-window-item>
-                </v-window>
-              </div>
-            </v-col>
-          </v-row>
-        </v-col>
-        <v-col cols="12">
-          <div class="d-flex justify-center">
-            <Link :href="route('org_view_teacher_student.index')">
-              <v-btn
-                variant="flat"
-                rounded
-                class="mr-4 text-primary"
-                width="200"
-                color="rgba(55, 73, 233, 0.10)"
-                >Cancel</v-btn
-              >
-            </Link>
-            <v-btn
-              variant="flat"
-              rounded
-              width="200"
-              color="primary"
-              class="text-white"
-              @click="createStudent()"
-              >Save</v-btn
-            >
-          </div>
-        </v-col>
-      </v-row>
-    </VContainer>
-  </AdminLayout>
+                        <v-window-item value="disability">
+                            <ChipWithBlueDot
+                                v-for="item in 5"
+                                :key="item"
+                                title="Disability"
+                            />
+                        </v-window-item>
+                    </v-window>
+                </div>
+                </v-col>
+            </v-row>
+         </v-col>
+                <v-col cols="12">
+                    <div class="d-flex justify-center">
+                        <Link :href="route('organizations-teacher.index')">
+                            <v-btn
+                                variant="flat"
+                                rounded
+                                class="mr-4 text-primary"
+                                width="200"
+                                color="rgba(55, 73, 233, 0.10)"
+                                >Cancel</v-btn
+                            >
+                        </Link>
+                        <v-btn
+                            variant="flat"
+                            rounded
+                            width="200"
+                            color="primary"
+                            class="text-white"
+                            @click="createStudent()"
+                            >Save</v-btn
+                        >
+                    </div>
+                </v-col>
+            </v-row>
+        </VContainer>
+    </AdminLayout>
 </template>
 <style scoped></style>

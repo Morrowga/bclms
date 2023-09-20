@@ -156,10 +156,11 @@ const updateStudent = () => {
                 </v-col>
                 <v-col cols="12">
                     <div class="d-flex justify-center">
+                        <!-- :href="
+                                route('organizations-student.show')
+                            " -->
                         <Link
-                            :href="
-                                route('org_view_teacher_student.student.show')
-                            "
+
                         >
                             <v-btn
                                 variant="flat"

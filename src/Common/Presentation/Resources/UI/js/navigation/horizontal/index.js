@@ -103,12 +103,12 @@ export default [
     },
     {
         title: 'Users',
-        url: `/org_view_teacher_student`,
+        url: `/organizations-teacher`,
         icon: { icon: ' mdi-google-classroom' },
-        route_name: 'org_view_teacher_student',
+        route_name: 'organizations-teacher',
         access_module: "access_orgusers",
     },
-    
+
     {
         title: 'Subscriptions',
         url: "/",

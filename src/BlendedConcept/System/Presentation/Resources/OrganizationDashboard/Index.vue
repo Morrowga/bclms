@@ -127,17 +127,17 @@ const statisticsWithImages = [
                         </div>
                     </div>
                     <VRow no-gutters>
+                        <!-- :route="
+                                    route(
+                                        'organizations-teacher.show'
+                                    )
+                                " -->
                         <v-col v-for="n in 12" :key="n">
                             <TeacherAvatar
                                 class="py-2"
                                 image="/images/teacher.png"
                                 title="Wren Clark"
                                 phone_number="9111 1112"
-                                :route="
-                                    route(
-                                        'org_view_teacher_student.teacher.show'
-                                    )
-                                "
                                 storage="135 MB/ 200 MB"
                             />
                         </v-col>
