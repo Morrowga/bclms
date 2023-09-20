@@ -124,15 +124,17 @@ return [
         'create' => 'BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create',
         'edit' => 'BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit',
     ],
-    'org_view_teacher_student' => [
+    'organizations-teacher' => [
         'index' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/Index',
-        'teacher-edit' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/EditTeacher',
-        'teacher-create' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/CreateTeacher',
-        'teacher-show' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/ViewTeacherDetail',
+        'edit' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/EditTeacher',
+        'create' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/CreateTeacher',
+        'show' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/ViewTeacherDetail',
+    ],
 
-        'student-edit' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/EditStudent',
-        'student-create' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/CreateStudent',
-        'student-show' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail',
+    'organizations-student' => [
+        'edit' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/EditStudent',
+        'create' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/CreateStudent',
+        'show' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail',
     ],
 
     //teacher profile view

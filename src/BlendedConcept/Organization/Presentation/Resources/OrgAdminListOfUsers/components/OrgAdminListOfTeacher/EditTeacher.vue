@@ -64,8 +64,9 @@ const updateTeacher = () => {
             </VRow>
             <VRow justify="center">
                 <VCol cols="2">
+                    <!-- route('organizations-teacher.show')
+                    :href="" -->
                     <Link
-                        :href="route('org_view_teacher_student.teacher.show')"
                         class="text-black"
                     >
                         <VBtn

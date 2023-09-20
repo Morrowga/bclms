@@ -3,6 +3,8 @@ import { Link } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
+let props = defineProps(['teacher']);
+
 const deleteTeacher = () => {
     isConfirmedDialog({
         title: "You won't be able to revert it!",
@@ -21,7 +23,7 @@ const deleteTeacher = () => {
         <v-container>
             <v-row justify="center">
                 <v-col cols="6">
-                    <VImg src="/images/teacherimg.png" />
+                    <VImg :src="props.teacher.data.profile_pic" />
                 </v-col>
                 <v-col cols="6">
                     <v-text class="teacherprofile-title">Profile</v-text>
@@ -32,7 +34,7 @@ const deleteTeacher = () => {
                                 <Link
                                     :href="
                                         route(
-                                            'org_view_teacher_student.teacher.edit'
+                                            'organizations-teacher.edit', props.teacher.data.id
                                         )
                                     "
                                 >
@@ -60,15 +62,15 @@ const deleteTeacher = () => {
                     <v-row>
                         <v-col cols="12" class="py-2">
                             <h6 class="tiggie-small-label">FullName</h6>
-                            <p class="tiggie-p">Tyler Covington</p>
+                            <p class="tiggie-p">{{  props.teacher.data.first_name + ' ' + props.teacher.data.last_name  }}</p>
                         </v-col>
                         <v-col cols="12" class="py-2">
                             <h6 class="tiggie-small-label">Work Email</h6>
-                            <p class="tiggie-p">tyler.covington@work.sg</p>
+                            <p class="tiggie-p">{{  props.teacher.data.email }}</p>
                         </v-col>
                         <v-col cols="12" class="py-2">
                             <h6 class="tiggie-small-label">Contact Number</h6>
-                            <p class="tiggie-p">9123 4567</p>
+                            <p class="tiggie-p">{{ props.teacher.data.contact_number }}</p>
                         </v-col>
                     </v-row>
                     <!-- contact user plan -->
@@ -76,7 +78,7 @@ const deleteTeacher = () => {
             </v-row>
             <v-row justify="center">
                 <v-col cols="2">
-                    <Link :href="route('org_view_teacher_student.index')">
+                    <Link :href="route('organizations-teacher.index')">
                         <v-btn
                             color="#e9eff0"
                             variant="flat"
