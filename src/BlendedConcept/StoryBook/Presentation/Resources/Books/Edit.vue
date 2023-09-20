@@ -47,10 +47,12 @@ onUpdated(() => {
         (form.description = props.datas.description),
         (form.thumbnail_img = props.datas.thumbnail_img),
         (form.disability_type = props.datas.disability_type),
-        (form.sub_learning_needs = props.datas.learingneeds),
+        (form.sub_learning_needs = props.datas.learningneeds),
         (form.themes = props.datas.themes),
         (form.disability_type = props.datas.disability_types),
         (form.devices = props.datas.devices);
+
+    console.log(props.datas);
 });
 </script>
 <template>
@@ -104,7 +106,7 @@ onUpdated(() => {
                 <v-card-text class="px-10 py-0 pb-5">
                     <div class="paragraph">
                         <v-textarea
-                            class="max-w-600"
+                            class="max-w-edit-book"
                             variant="outlined"
                             v-model="form.description"
                         ></v-textarea>
@@ -339,5 +341,8 @@ onUpdated(() => {
     bottom: 0;
     right: 0;
     color: #fff;
+}
+.max-w-edit-book {
+    max-width: 650px !important;
 }
 </style>
