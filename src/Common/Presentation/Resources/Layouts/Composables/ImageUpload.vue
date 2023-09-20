@@ -6,7 +6,6 @@ let file = ref(null);
 let hasImage = ref(false);
 
 function SelectImage() {
-    //select image from hidden field
     file.value.click();
 }
 
