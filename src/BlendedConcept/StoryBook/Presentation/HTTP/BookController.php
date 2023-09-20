@@ -27,9 +27,9 @@ class BookController
     public function index()
     {
         // Retrieve learning needs, themes, disability types, and devices
-        $learningNeeds = (new GetLearningNeed())->handle();
+        $learningneeds = (new GetLearningNeed())->handle();
         $themes = (new GetTheme())->handle();
-        $disabilityTypes = (new GetDisabilityType())->handle();
+        $disability_types = (new GetDisabilityType())->handle();
         $devices = (new GetDevice())->handle();
 
         // Retrieve storybooks based on filters
@@ -37,7 +37,7 @@ class BookController
         $storybooks = (new GetStoryBook($filters))->handle();
 
         // Render the index page with the retrieved data
-        return Inertia::render(config('route.books.index'), compact('learningNeeds', 'themes', 'disabilityTypes', 'devices', 'storybooks'));
+        return Inertia::render(config('route.books.index'), compact('learningneeds', 'themes', 'disability_types', 'devices', 'storybooks'));
     }
 
     /**

@@ -19,6 +19,8 @@ const toggleDialog = () => {
   dialog.value = !dialog.value;
 };
 
+console.log(props)
+
 let refForm = ref();
 const isFormValid = ref(false);
 
