@@ -33,7 +33,7 @@ const deleteStudent = () => {
                             <Link
                                 :href="
                                     route(
-                                        'org_view_teacher_student.student.edit'
+                                        'organizations-student.edit'
                                     )
                                 "
                             >
@@ -148,7 +148,7 @@ const deleteStudent = () => {
             </v-row>
             <v-row justify="center">
                 <v-col cols="2">
-                    <Link :href="route('org_view_teacher_student.index')">
+                    <Link :href="route('organizations-student.index')">
                         <v-btn
                             color="#e9eff0"
                             variant="flat"

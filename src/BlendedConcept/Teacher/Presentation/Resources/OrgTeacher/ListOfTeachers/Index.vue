@@ -11,7 +11,7 @@ import TeacherStorageField from "./components/TeacherStorageField.vue";
                     <h1 class="tiggie-teacher-title">
                         Allocate Teacher’s Storage
                     </h1>
-                    <Link :href="route('org_view_teacher_student.index')">
+                    <Link :href="route('organizations-teacher.index')">
                         <VBtn
                             class="text-primary"
                             color="#e8e9ed"
@@ -97,7 +97,7 @@ import TeacherStorageField from "./components/TeacherStorageField.vue";
             <div class="padding-block"></div>
 
             <VRow>
-                <VCol cols="6" v-for="item in 6">
+                <VCol cols="6" v-for="(item,index) in 6" :key="index">
                     <TeacherStorageField />
                 </VCol>
             </VRow>

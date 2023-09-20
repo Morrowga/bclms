@@ -4,6 +4,8 @@ import StudentList from "./components/OrgAdminListOfStudent/StudentList.vue";
 import TeacherList from "./components/OrgAdminListOfTeacher/TeacherList.vue";
 import { ref } from "vue";
 let tab = ref("student");
+let props = defineProps(['teachers']);
+
 const changeTab = (tabName) => {
     tab.value = tabName;
 };
@@ -55,7 +57,7 @@ const changeTab = (tabName) => {
                             <Link
                                 :href="
                                     route(
-                                        'org_view_teacher_student.student.create'
+                                        'organizations-student.create'
                                     )
                                 "
                             >
@@ -99,7 +101,7 @@ const changeTab = (tabName) => {
                             <Link
                                 :href="
                                     route(
-                                        'org_view_teacher_student.teacher.create'
+                                        'organizations-teacher.create'
                                     )
                                 "
                             >
@@ -132,7 +134,7 @@ const changeTab = (tabName) => {
                     <StudentList />
                 </section>
                 <section v-if="tab == 'teacher'">
-                    <TeacherList />
+                    <TeacherList  :data="props.teachers"/>
                 </section>
             </div>
         </VContainer>

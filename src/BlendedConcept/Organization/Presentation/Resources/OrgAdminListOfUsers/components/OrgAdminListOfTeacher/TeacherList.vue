@@ -2,6 +2,14 @@
 import TeacherAvatar from "@mainRoot/components/TeacherAvatar/TeacherAvatar.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+const props = defineProps({
+  data: {
+    type: Object,
+    required: true,
+  },
+});
+
+console.log(props.data.meta);
 </script>
 <template>
     <VContainer>
@@ -58,20 +66,21 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
                 md="3"
                 lg="2"
                 class="pe-2"
-                v-for="item in 12"
+                v-for="item in props.data.data"
                 :key="item"
             >
-                <TeacherAvatar
-                    image="/images/teacher.png"
-                    title="Wren Clark"
-                    phone_number="9111 1112"
-                    :route="route('org_view_teacher_student.teacher.show')"
+            <!--  -->
+                <TeacherAvatar class="teacherAvatar"
+                    :image="item.profile_pic"
+                    :route="route('organizations-teacher.show', item.id)"
+                    :title="item.first_name + ' ' + item.last_name"
+                    :phone_number="item.contact_number"
                     storage="135 MB/ 200 MB"
                 />
             </VCol>
         </VRow>
         <div class="d-flex justify-center">
-            <Pagination />
+            <Pagination :metadata="props.data.meta"/>
         </div>
     </VContainer>
 </template>
@@ -82,6 +91,11 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
     padding: 8px 16px 8px 20px !important;
     background: #f6f6f6 !important;
 }
+
+:deep(.teacherAvatar .tiggie-subtitle) {
+    font-size: 20px !important;
+}
+
 .abs-right {
     position: absolute !important;
     right: 10px !important;
