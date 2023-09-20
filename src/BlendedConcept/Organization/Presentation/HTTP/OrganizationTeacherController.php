@@ -35,8 +35,6 @@ class OrganizationTeacherController
      */
     public function store(StoreTeacherRequest $request)
     {
-        // return $request->all();
-        // abort_if(authorize('create', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $request->validated();
@@ -71,7 +69,7 @@ class OrganizationTeacherController
     public function edit($id)
     {
         $teacher = (new ShowTeacher($id))->handle();
-        
+
         return Inertia::render(config('route.organizations-teacher.edit'),[
             'teacher' => $teacher
         ]);

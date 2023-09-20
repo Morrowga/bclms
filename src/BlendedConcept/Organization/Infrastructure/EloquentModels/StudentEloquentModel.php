@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class StudentEloquentModel extends Model implements HasMedia
 {
@@ -17,7 +20,7 @@ class StudentEloquentModel extends Model implements HasMedia
 
     // for images
     protected $appends = [
-        'image',
+        'profile_pics',
     ];
 
     protected $primaryKey = 'student_id';
@@ -35,9 +38,9 @@ class StudentEloquentModel extends Model implements HasMedia
 
     ];
 
-    public function getImageAttribute()
+    public function getProfilePicsAttribute()
     {
-        return $this->getMedia('image');
+        return $this->getMedia('profile_pics');
     }
 
     public function scopeFilter($query, $filters)
@@ -57,11 +60,16 @@ class StudentEloquentModel extends Model implements HasMedia
 
     public function learningneeds(): BelongsToMany
     {
-        return $this->belongsToMany(SubLearningTypeEloquentModel::class, 'storybook_learning_needs', 'student_id', 'sub_learning_type_id');
+        return $this->belongsToMany(SubLearningTypeEloquentModel::class, 'student_learning_needs', 'student_id', 'sub_learning_type_id');
     }
 
     public function disability_types(): BelongsToMany
     {
-        return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'storybook_disability_types', 'student_id', 'disability_type_id');
+        return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'student_disability_types', 'student_id', 'disability_type_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(UserEloquentModel::class,'user_id','id');
     }
 }

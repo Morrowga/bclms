@@ -7,7 +7,8 @@ use Src\BlendedConcept\Organization\Domain\Repositories\TeacherRepositoryInterfa
 use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\TeacherRepository;
 use Src\BlendedConcept\Organization\Domain\Repositories\OrganizationRepositoryInterface;
 use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\OrganizationRepository;
-
+use Src\BlendedConcept\Organization\Domain\Repositories\StudentRepositoryInterface;
+use Src\BlendedConcept\Organization\Application\Repositories\Eloquent\StudentRepository;
 class OrganizationServiceProvider extends ServiceProvider
 {
     public function register()
@@ -20,6 +21,10 @@ class OrganizationServiceProvider extends ServiceProvider
         $this->app->bind(
             TeacherRepositoryInterface::class,
             TeacherRepository::class
+        );
+        $this->app->bind(
+            StudentRepositoryInterface::class,
+            StudentRepository::class
         );
     }
 }

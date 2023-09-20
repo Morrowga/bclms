@@ -130,6 +130,7 @@ class OrganizationController extends Controller
             $updateOrganization = OrganizationData::fromRequest($request, $organization);
             $updateOrganizationcommand = (new updateOrganizationCommand($updateOrganization));
             $updateOrganizationcommand->execute();
+
         } catch (\Exception $error) {
             return redirect()
                 ->route('organizations.index')
