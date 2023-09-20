@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Organization\Application\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTeacherRequest extends FormRequest
+class UpdateTeacherRequest extends FormRequest
 {
     public function authorize()
     {
@@ -24,9 +24,6 @@ class StoreTeacherRequest extends FormRequest
                 'required',
             ],
             'contact_number' => [
-                'required',
-            ],
-            'image' => [
                 'required',
             ],
         ];

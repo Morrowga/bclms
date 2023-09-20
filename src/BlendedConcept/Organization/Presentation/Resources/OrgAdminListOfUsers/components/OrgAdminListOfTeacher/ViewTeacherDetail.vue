@@ -3,16 +3,16 @@ import { Link } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
+import { router } from "@inertiajs/core";
 let props = defineProps(['teacher']);
 
-const deleteTeacher = () => {
+const deleteTeacher = (id) => {
     isConfirmedDialog({
-        title: "You won't be able to revert it!",
-        denyButtonText: "Yes, delete it!",
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,delete it!",
         onConfirm: () => {
-            SuccessDialog({
-                title: "You have successfully deleted teacher!",
-                color: "#17CAB6",
+            router.delete(id, {
+                onSuccess: () => {},
             });
         },
     });
@@ -49,7 +49,7 @@ const deleteTeacher = () => {
                                 variant="flat"
                                 rounded
                                 color="error"
-                                @click="deleteTeacher()"
+                                @click="deleteTeacher(props.teacher.data.id)"
                             >
                                 <VIcon
                                     icon="mdi-trash-outline"

@@ -3,13 +3,16 @@
 namespace Src\BlendedConcept\Organization\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Src\BlendedConcept\Organization\Application\DTO\TeacherData;
 use Src\BlendedConcept\Organization\Application\Mappers\TeacherMapper;
 use Src\BlendedConcept\Organization\Application\Requests\StoreTeacherRequest;
+use Src\BlendedConcept\Organization\Application\Requests\UpdateTeacherRequest;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\ShowTeacher;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\GetTeacherList;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\StoreTeacherCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\DeleteTeacherCommand;
+use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\UpdateTeacherCommand;
 
 class OrganizationTeacherController
 {
@@ -57,12 +60,13 @@ class OrganizationTeacherController
         /**
          * Returns a redirect response to the announcements index page.
          */
-        return redirect()->route('organizations-teacher.index')->with('successMessage', 'Announcement created Successfully!');
+        return redirect()->route('organizations-teacher.index')->with('successMessage', 'Teacher created Successfully!');
     }
 
     public function show($id)
     {
         $teacher = (new ShowTeacher($id))->handle();
+        // return $teacher;
         return Inertia::render(config('route.organizations-teacher.show'),[
             'teacher' => $teacher
         ]);
@@ -71,10 +75,41 @@ class OrganizationTeacherController
     public function edit($id)
     {
         $teacher = (new ShowTeacher($id))->handle();
-        
         return Inertia::render(config('route.organizations-teacher.edit'),[
             'teacher' => $teacher
         ]);
+    }
+
+     /**
+     * Update an teacher.
+     *
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateTeacherRequest $request,$teacher)
+    {
+        // abort_if(authorize('edit', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        /**
+         * Validate the request.
+         */
+        $request->validated();
+        /**
+         * Try to update the teacher.
+         */
+        // try {
+            $teacherEloquent = UserEloquentModel::find($teacher);
+            $teacherData = TeacherData::fromRequest($request, $teacherEloquent->id);
+            $updateTeacherCommand = (new UpdateTeacherCommand($teacherData));
+            $updateTeacherCommand->execute();
+
+            return redirect()->route('organizations-teacher.show', $teacherEloquent->id)->with('successMessage', 'Teacher updated Successfully!');
+        // } catch (\Exception $e) {
+        //     /**
+        //      * Catch any exceptions and display an error message.
+        //      */
+        //     return redirect()->route('organizations-teacher.show', $teacherEloquent->id)->with('SystemErrorMessage', $e->getMessage());
+        // }
     }
 
      /**
@@ -83,7 +118,7 @@ class OrganizationTeacherController
      * @param  UserEloquentModel  $teacher The teacher to delete.
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(UserEloquentModel $teacher)
+    public function destroy($teacher)
     {
         // abort_if(authorize('destroy', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -91,9 +126,8 @@ class OrganizationTeacherController
          * Try to delete the teacher.
          */
         try {
-
-            $teacher = new DeleteTeacherCommand($teacher->id);
-            $teacher->execute();
+            $teacherDestroy = new DeleteTeacherCommand($teacher);
+            $teacherDestroy->execute();
 
             return redirect()->route('organizations-teacher.index')->with('successMessage', 'Teacher deleted Successfully!');
         } catch (\Exception $e) {
