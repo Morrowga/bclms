@@ -39,11 +39,11 @@ let columns = [
         field: "storybooks",
         sortable: false,
     },
-    {
-        label: "",
-        field: "action",
-        sortable: false,
-    },
+    // {
+    //     label: "",
+    //     field: "action",
+    //     sortable: false,
+    // },
 ];
 serverPage.value = ref(props.pathways.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
@@ -141,7 +141,7 @@ const selectionChanged = (data) => {
                                             class="t-black"
                                             :href="
                                                 route('pathways.show', {
-                                                    id: 1,
+                                                    id: dataProps.row.id,
                                                 })
                                             "
                                         >
@@ -154,7 +154,7 @@ const selectionChanged = (data) => {
                                             'storybooks'
                                         "
                                     >
-                                        <!-- <v-chip
+                                        <v-chip
                                             v-for="storybook in dataProps.row
                                                 .storybooks"
                                             :key="storybook.name"
@@ -162,7 +162,7 @@ const selectionChanged = (data) => {
                                             color="primary"
                                             size="small"
                                             >{{ storybook.name }}
-                                        </v-chip> -->
+                                        </v-chip>
                                     </div>
                                     <div
                                         v-if="

@@ -25,4 +25,6 @@ interface StoryBookRepositoryInterface
     public function getdisabilitytype();
 
     public function getdevice();
+
+    public function getStoryBooksForSelect();
 }

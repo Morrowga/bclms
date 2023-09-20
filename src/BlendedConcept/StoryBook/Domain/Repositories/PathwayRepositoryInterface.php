@@ -10,9 +10,9 @@ interface PathwayRepositoryInterface
 {
     public function getPathways($filters);
 
-    public function createPathway(Pathway $Pathway);
+    public function createPathway(Pathway $pathway);
 
-    public function updatePathway(PathwayData $PathwayData);
+    public function updatePathway(PathwayData $pathwayData);
 
-    public function deletePathway(PathwayEloquentModel $Pathway);
+    public function deletePathway(PathwayEloquentModel $pathway);
 }
