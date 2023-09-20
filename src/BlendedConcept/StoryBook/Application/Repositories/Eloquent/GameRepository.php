@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\StoryBook\Application\DTO\GameData;
 use Src\BlendedConcept\StoryBook\Application\Mappers\GameMapper;
 use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Game;
-use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Game;
 use Src\BlendedConcept\StoryBook\Domain\Repositories\GameRepositoryInterface;
-use Src\BlendedConcept\StoryBook\Domain\Resources\GameResource;
 use Src\BlendedConcept\StoryBook\Domain\Resources\GameResource;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
 

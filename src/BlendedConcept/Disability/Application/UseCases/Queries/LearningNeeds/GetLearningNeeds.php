@@ -9,13 +9,13 @@ class GetLearningNeeds implements QueryInterface
 {
     private LearningNeedRepositoryInterface $repository;
 
-    public function __construct()
+    public function __construct(private readonly array $filters)
     {
         $this->repository = app()->make(LearningNeedRepositoryInterface::class);
     }
 
     public function handle()
     {
-        return $this->repository->getLearningNeeds();
+        return $this->repository->getLearningNeeds($this->filters);
     }
 }

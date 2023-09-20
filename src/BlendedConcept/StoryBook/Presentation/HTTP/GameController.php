@@ -11,6 +11,7 @@ use Src\BlendedConcept\StoryBook\Application\Requests\StoreGameRequest;
 use Src\BlendedConcept\StoryBook\Application\Requests\UpdateGameRequest;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoreGameCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\UpdateGameCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
 
 class GameController
