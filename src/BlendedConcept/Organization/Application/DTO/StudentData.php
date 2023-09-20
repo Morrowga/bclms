@@ -1,10 +1,10 @@
 <?php
 
-namespace Src\BlendedConcept\Organization\Domain\Model\Entities;
+namespace Src\BlendedConcept\Organization\Application\DTO;
 
-use Src\Common\Domain\Entity;
+use Illuminate\Http\Request;
 
-class Student extends Entity
+class StudentData
 {
     public function __construct(
         public readonly ?int $student_id,
@@ -19,7 +19,26 @@ class Student extends Entity
         public readonly ?float $total_time_spent,
         public readonly ?array $disability_types,
         public readonly ?array $learning_needs,
+
     ) {
+    }
+
+    public static function fromRequest(Request $request, $student): StudentData
+    {
+        return new self(
+            student_id: $request->student_id,
+            user_id: $request->user_id,
+            device_id: $request->device_id,
+            gender: $request->gender,
+            dob: $request->dob,
+            education_level: $request->education_level,
+            num_gold_coins: $request->num_gold_coins,
+            num_silver_coins: $request->num_silver_coins,
+            student_code: $request->student_code,
+            total_time_spent: $request->total_time_spent,
+            disability_types: $request->disability_types,
+            learning_needs: $request->learning_needs,
+        );
     }
 
     public function toArray(): array
@@ -37,6 +56,7 @@ class Student extends Entity
             'total_time_spent' => $this->total_time_spent,
             'disability_types' => $this->disability_types,
             'learning_needs' => $this->learning_needs,
+
         ];
     }
 }

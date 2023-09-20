@@ -122,7 +122,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
     public function getLearningNeed()
     {
         // Retrieve all sub learning needs
-        $learningNeeds = SubLearningTypeEloquentModel::get(['id','name']);
+        $learningNeeds = SubLearningTypeEloquentModel::get(['id', 'name']);
 
         return $learningNeeds;
     }
@@ -135,7 +135,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
     public function getthemes()
     {
         // Retrieve all themes
-        $themes = ThemeEloquentModel::get(['id','name']);
+        $themes = ThemeEloquentModel::get(['id', 'name']);
 
         return $themes;
     }
@@ -148,7 +148,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
     public function getdisabilitytype()
     {
         // Retrieve all disability types
-        $disabilityTypes = DisabilityTypeEloquentModel::get(['id','name']);
+        $disabilityTypes = DisabilityTypeEloquentModel::get(['id', 'name']);
 
         return $disabilityTypes;
     }
@@ -161,7 +161,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
     public function getdevice()
     {
         // Retrieve all devices
-        $devices = DeviceEloquentModel::get(['id','name']);
+        $devices = DeviceEloquentModel::get(['id', 'name']);
 
         return $devices;
     }

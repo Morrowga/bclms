@@ -24,7 +24,7 @@ class StoreBookRequest extends FormRequest
                 'required',
             ],
             'num_silver_coins' => [
-                'required'
+                'required',
             ],
             'tags' => [
                 'required', 'array',

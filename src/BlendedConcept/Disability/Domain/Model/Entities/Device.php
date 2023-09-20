@@ -2,9 +2,9 @@
 
 namespace Src\BlendedConcept\Disability\Domain\Model\Entities;
 
-use Src\Common\Domain\AggregateRoot;
+use Src\Common\Domain\Entity;
 
-class Device extends AggregateRoot
+class Device extends Entity
 {
     public function __construct(
         public readonly ?int $id,
