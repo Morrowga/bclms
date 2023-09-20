@@ -14,7 +14,7 @@ class PathwayRepository implements PathwayRepositoryInterface
 {
     public function getPathways($filters)
     {
-        $pathways = PathwayResource::collection(PathwayEloquentModel::filter($filters)->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $pathways = PathwayResource::collection(PathwayEloquentModel::filter($filters)->with('storybooks')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
 
         return $pathways;
     }
@@ -22,7 +22,7 @@ class PathwayRepository implements PathwayRepositoryInterface
     /**
      * Create a new Plan with the provided Plan object.
      *
-     * @param  Plan  $plan The Plan object containing the necessary information.
+     * @param  Pathway  $pathway The Plan object containing the necessary information.
      * @return void
      */
     public function createPathway(Pathway $pathway)
@@ -34,8 +34,14 @@ class PathwayRepository implements PathwayRepositoryInterface
 
             //insert data into plan
 
-            $planEloquent = PathwayMapper::toEloquent($pathway);
-            $planEloquent->save();
+            $pathwayEloquent = PathwayMapper::toEloquent($pathway);
+            $pathwayEloquent->save();
+
+            $pathwayEloquent->storybooks()->sync(
+                collect($pathway->storybooks)->mapWithKeys(function ($storybook, $index) {
+                    return [$storybook => ['sequence' => $index + 1]];
+                })
+            );
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());
@@ -55,6 +61,12 @@ class PathwayRepository implements PathwayRepositoryInterface
             $pathwayEloquent = PathwayEloquentModel::query()->findOrFail($pathwayData->id);
             $pathwayEloquent->fill($pathwayDataArray);
             $pathwayEloquent->update();
+
+            $pathwayEloquent->storybooks()->sync(
+                collect($pathwayData->storybooks)->mapWithKeys(function ($storybook, $index) {
+                    return [$storybook => ['sequence' => $index + 1]];
+                })
+            );
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error);

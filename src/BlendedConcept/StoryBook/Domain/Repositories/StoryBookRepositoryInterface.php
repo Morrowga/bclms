@@ -25,4 +25,6 @@ interface StoryBookRepositoryInterface
     public function getthemes();
 
     public function getdevice();
+
+    public function getStoryBooksForSelect();
 }

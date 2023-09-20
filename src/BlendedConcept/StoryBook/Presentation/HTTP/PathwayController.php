@@ -11,6 +11,8 @@ use Src\BlendedConcept\StoryBook\Application\Requests\UpdatePathwayRequest;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\Pathways\DeletePathwayCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\Pathways\StorePathwayCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\Pathways\UpdatePathwayCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStoryBook;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStorybookForSelect;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\Pathways\GetPathwaysQuery;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\PathwayEloquentModel;
 
@@ -49,19 +51,26 @@ class PathwayController
         }
     }
 
-    public function show()
+    public function show(PathwayEloquentModel $pathway)
     {
-        return Inertia::render(config('route.pathways.show'));
+
+        $storybooks = (new GetStorybookForSelect())->handle();
+        return Inertia::render(config('route.pathways.show'), [
+            'storybooks' => $storybooks,
+            'pathway' => $pathway->load('storybooks')
+        ]);
     }
 
     public function create()
     {
-        return Inertia::render(config('route.pathways.create'));
+        $storybooks = (new GetStorybookForSelect())->handle();
+        return Inertia::render(config('route.pathways.create'), [
+            'storybooks' => $storybooks
+        ]);
     }
 
     public function update(UpdatePathwayRequest $request, $id)
     {
-
         try {
 
             $pathway = PathwayEloquentModel::findOrFail($id);

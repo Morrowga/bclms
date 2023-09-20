@@ -6,7 +6,7 @@ import { SuccessDialog } from "@actions/useSuccess";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { requiredValidator } from "@validators";
 import AddBook from "./components/AddBook.vue";
-const props = defineProps(["data_type"]);
+const props = defineProps(["data_type", "storybooks"]);
 let flash = computed(() => usePage().props.flash);
 const isFormValid = ref(false);
 let refForm = ref();
@@ -17,7 +17,8 @@ let switchBtn = ref("");
 const selectedImage = ref(null);
 let draggedImageIndex = null;
 const uploadedImages = ref([]);
-
+const targetRef = ref(null);
+const containerRef = ref(null);
 let datas = [
     {
         id: 1,
@@ -57,9 +58,11 @@ const addPathway = () => {
     SuccessDialog({ title: "You have successfully created Pathway" });
 };
 
-function startDrag(index) {
-    console.log(index);
+function startDrag(index, id) {
     // Store the index of the dragged image
+    if (!form.storybooks.includes(id)) {
+        form.storybooks.push(id);
+    }
     draggedImageIndex = index;
 }
 
@@ -89,10 +92,12 @@ function handleDropp(event) {
             draggedImageIndex = null;
         }
     }
+    scrollToTarget();
 }
 
 const removeUploadedItem = (index) => {
     uploadedImages.value.splice(index, 1);
+    form.storybooks.splice(index, 1);
 };
 
 const form = useForm({
@@ -103,6 +108,18 @@ const form = useForm({
     need_complete_in_order: false,
     storybooks: [],
 });
+const scrollToTarget = () => {
+    const container = containerRef.value;
+    const target = targetRef.value;
+
+    const containerRect = container.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+
+    container.scrollTo({
+        left: targetRect.left - containerRect.left,
+        behavior: "smooth",
+    });
+};
 let handleSubmit = () => {
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
@@ -214,68 +231,108 @@ let handleSubmit = () => {
                                 <VSwitch v-model="form.num_silver_coins">
                                 </VSwitch>
                             </VCol>
-                            <VCol cols="12" sm="6" md="6" class="py-4">
+                            <VCol cols="12" sm="6" md="12" class="py-4">
                                 <h1 class="tiggie-title required">
                                     Current Flow
                                 </h1>
-                                <VCardText>
+                                <VCardText class="pa-0">
                                     <p
                                         class="pppangram-bold ml-5 fs-20 t-black"
                                     >
-                                        <strong class="fs-20 l-blue">2</strong>
-                                        {{ type }} Remaining
+                                        <strong class="fs-20 l-blue">{{
+                                            uploadedImages.length
+                                        }}</strong>
+                                        Book Remaining
                                     </p>
                                     <div class="mt-3">
                                         <div
-                                            class="image-container mt-2 mx-4"
-                                            v-for="(
-                                                image, index
-                                            ) in uploadedImages"
-                                            :key="index"
+                                            class="scroll-container"
+                                            ref="containerRef"
                                         >
                                             <div
-                                                class="d-flex justify-space-between"
+                                                class="ps-relative card-container"
+                                                v-for="(
+                                                    image, index
+                                                ) in uploadedImages"
+                                                :key="index"
+                                                :draggable="true"
+                                                @dragend="startDrag(index)"
                                             >
-                                                <div class="d-flex">
-                                                    <img
-                                                        :src="image.src"
-                                                        class="import-file-img mt-2 ml-3"
-                                                    />
-                                                    <p class="ml-3 mt-3">
-                                                        {{ image.name }}
-                                                    </p>
-                                                </div>
-
-                                                <div class="mt-3 mr-3">
+                                                <p
+                                                    class="font-weight-bold text-right storybook-ps"
+                                                >
                                                     <VIcon
-                                                        icon="mdi-close"
                                                         @click="
                                                             removeUploadedItem(
                                                                 index
                                                             )
                                                         "
-                                                    ></VIcon>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="imprt-path-text mt-6 mx-5"
-                                            @dragover.prevent
-                                            @drop="handleDropp"
-                                        >
-                                            <div class="text-center">
-                                                <div class="mt-2">
-                                                    <span
-                                                        class="import-fade-text"
+                                                        icon="mdi-minus-circle"
+                                                        size="20"
+                                                        color="#282828"
+                                                        class="mb-2 ml-2"
+                                                    />
+                                                </p>
+
+                                                <p
+                                                    class="font-weight-bold text-right text-white storybook-ps-2"
+                                                >
+                                                    <VBtn
+                                                        color="#fff"
+                                                        icon="dd"
+                                                        size="x-small"
+                                                        class="black-border"
                                                     >
-                                                        Drag and Drop to add
-                                                    </span>
+                                                        <span
+                                                            class="text-dark"
+                                                            >{{
+                                                                index + 1
+                                                            }}</span
+                                                        >
+                                                    </VBtn>
+                                                </p>
+                                                <v-card
+                                                    class="ma-4 ps-index"
+                                                    height="200"
+                                                    :color="'primary'"
+                                                >
+                                                    <div
+                                                        class="d-flex fill-height align-center justify-center"
+                                                    >
+                                                        <img
+                                                            class="bg-white fit-img-2"
+                                                            :src="image.src"
+                                                        />
+                                                    </div>
+                                                </v-card>
+                                                <p
+                                                    class="font-weight-bold text-center"
+                                                >
+                                                    {{ image.name }}
+                                                </p>
+                                            </div>
+                                            <div
+                                                class="imprt-path-text mt-4 mx-5"
+                                                @dragover.prevent
+                                                @drop="handleDropp"
+                                            >
+                                                <div class="text-center">
                                                     <div class="mt-2">
                                                         <span
-                                                            class="text-tiggie-blue"
-                                                            >Books</span
+                                                            class="import-fade-text"
                                                         >
-                                                        Here
+                                                            Drag and Drop to add
+                                                        </span>
+                                                        <div
+                                                            class="mt-2"
+                                                            ref="targetRef"
+                                                        >
+                                                            <span
+                                                                class="text-tiggie-blue"
+                                                                >Books</span
+                                                            >
+                                                            Here
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -302,23 +359,18 @@ let handleSubmit = () => {
                         </div>
                         <div class="control-position">
                             <div class="head-section">
-                                <div class="title-section">
-                                    <p class="heading-title">{{ title }}</p>
-                                    <span class="subheading">{{
-                                        subtitle
-                                    }}</span>
-                                </div>
+                                <div class="title-section"></div>
                             </div>
                             <div class="scroll-container">
                                 <div
-                                    v-for="(data, index) in datas"
+                                    v-for="(data, index) in props.storybooks"
                                     :key="index"
                                     :draggable="true"
-                                    @dragstart="startDrag(index)"
+                                    @dragend="startDrag(index, data.id)"
                                     class="card-container"
                                 >
                                     <v-card
-                                        class="ma-4 container-style"
+                                        class="ma-4 container-style pa-0"
                                         height="200"
                                         :color="'primary'"
                                     >
@@ -327,7 +379,7 @@ let handleSubmit = () => {
                                         >
                                             <img
                                                 class="bg-white fit-img-2"
-                                                :src="data.image"
+                                                :src="data.thumbnail_img"
                                             />
                                         </div>
                                         <v-scale-transition class="full-icon">
@@ -338,7 +390,7 @@ let handleSubmit = () => {
                                         </v-scale-transition>
                                     </v-card>
                                     <p class="font-weight-bold text-center">
-                                        {{ data.title }}
+                                        {{ data.name }}
                                     </p>
                                 </div>
                             </div>
@@ -393,6 +445,7 @@ let handleSubmit = () => {
     display: flex;
     flex-wrap: nowrap;
     padding: 10px; /* Add padding for spacing */
+    width: 100%;
 }
 .card-container {
     min-width: 380px; /* Adjust card width as needed */
@@ -457,8 +510,8 @@ let handleSubmit = () => {
     border-radius: 10px;
     border: 2px dashed var(--gray, #bfc0c1);
     display: flex;
-    width: 469px;
-    height: 299px;
+    width: 390px;
+    height: 200px;
     padding: 56px 79px;
     flex-direction: column;
     justify-content: center;
@@ -496,5 +549,17 @@ let handleSubmit = () => {
 .container-style {
     position: relative !important;
     z-index: 1 !important;
+}
+.storybook-ps {
+    position: absolute !important;
+    top: 7px !important;
+    right: 7px !important;
+    z-index: 3 !important;
+}
+.storybook-ps-2 {
+    position: absolute !important;
+    top: 24px !important;
+    left: 21px !important;
+    z-index: 3 !important;
 }
 </style>
