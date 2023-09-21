@@ -88,8 +88,9 @@ class StudentRepository implements StudentRepositoryInterface
 
     }
 
-    public function deleteStudent(StudentEloquentModel $studentEloquentModel)
+    public function deleteStudent($student)
     {
+        $student->delete();
     }
 
 
