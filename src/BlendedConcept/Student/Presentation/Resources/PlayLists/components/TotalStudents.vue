@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
+import { format, differenceInYears } from 'date-fns';
 
 import axios from "axios";
 import {
@@ -72,6 +73,12 @@ const extractStudentId = (studentId) => {
     props.form.student_id = studentId;
     // You can also perform other actions with the student ID as needed
 }
+function calculateAge(dateOfBirth) {
+  const currentDate = new Date();
+  const formattedDob = format(new Date(dateOfBirth), 'yyyy-MM-dd');
+  return differenceInYears(currentDate, new Date(formattedDob));
+}
+
 
 const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
 </script>
@@ -132,7 +139,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                     </VCol>
                     <VCol cols="3">
                         <p class="tiggie-p">
-                            {{ data.age ? data.age : "---" }}
+                            {{ data.dob ? calculateAge(data.dob) : "---" }}
                         </p>
                     </VCol>
 

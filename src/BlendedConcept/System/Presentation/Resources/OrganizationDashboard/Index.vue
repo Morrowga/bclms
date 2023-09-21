@@ -90,7 +90,7 @@ const statisticsWithImages = [
                     <VRow no-gutters>
                         <v-col v-for="n in 12" :key="n">
                             <StudentAvatar
-                                route="view_students/show"
+                                route="teacher_students/show"
                                 image="/images/student.png"
                                 title="Wren Clark"
                                 phone_number="9111 1112"

@@ -94,7 +94,7 @@ return [
         'show' => 'BlendedConcept/ClassRoom/Presentation/Resources/ConductLessons/Show',
     ],
 
-    'view_students' => [
+    'teacher_students' => [
         'index' => 'BlendedConcept/Student/Presentation/Resources/ViewStudents/Index',
         'create' => 'BlendedConcept/Student/Presentation/Resources/ViewStudents/Create',
         'edit' => 'BlendedConcept/Student/Presentation/Resources/ViewStudents/Edit',

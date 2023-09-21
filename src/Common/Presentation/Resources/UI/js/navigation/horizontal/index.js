@@ -49,10 +49,10 @@ export default [
     },
     {
         title: 'Students',
-        url: "/view_students",
+        url: "/teacher_students",
         icon: { icon: 'mdi-account-multiple-outline' },
         access_module: "access_viewStudents",
-        route_name: "view_students",
+        route_name: "teacher_students",
     },
     {
         title: 'Playlists',

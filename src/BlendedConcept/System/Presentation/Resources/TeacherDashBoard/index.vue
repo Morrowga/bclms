@@ -8,18 +8,6 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 <template>
     <section>
         <VContainer>
-            <!-- <SystemErrorAlert
-                sytemErrorMessage="Something is wrong"
-                v-if="true"
-            />
-            <SystemErrorAlert
-                sytemErrorMessage="Something is wrong"
-                v-if="true"
-            />
-            <SystemErrorAlert
-                sytemErrorMessage="Something is wrong"
-                v-if="true"
-            /> -->
             <VRow align="center">
                 <VCol cols="6">
                     <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
@@ -37,7 +25,8 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
             </VRow>
             <VRow cols="6">
                 <VCol cols="2" class="pe-2" v-for="item in 12" :key="item">
-                    <Link :href="route('view_students.show')">
+                    <!-- :href="route('teacher_students.show')" -->
+                    <Link>
                         <StudentProfile
                             :studentInfo="{
                                 name: 'Wren Clark',

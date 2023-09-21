@@ -1,5 +1,12 @@
 <script setup>
 import { ref } from "vue";
+const props = defineProps({
+  data: {
+    type: Object,
+    required: true,
+  },
+});
+
 let is_description = ref(false);
 let is_chip = ref(true);
 </script>
@@ -8,17 +15,17 @@ let is_chip = ref(true);
         <v-card-title class="ps-relative">
             <v-img src="/images/image4.png" />
             <div class="chip-page" v-if="is_chip">
-                <div class="chip-content">5 storybooks</div>
+                <div class="chip-content">{{ props.data.storybooks.length}} storybooks</div>
             </div>
         </v-card-title>
         <v-card-text>
             <h1 class="font-weight-bold text-h6 text-center pb-4">
-                Playlist #2
+                Playlist {{ props.data.name }}
             </h1>
-            <p v-if="is_description">
+            <!-- <p v-if="is_description">
                 When Woody is kidnapped by a greedy toy collector and is nowhere
                 to be found, Buzz and his friends set out to rescue him.
-            </p>
+            </p> -->
         </v-card-text>
     </v-card>
 </template>

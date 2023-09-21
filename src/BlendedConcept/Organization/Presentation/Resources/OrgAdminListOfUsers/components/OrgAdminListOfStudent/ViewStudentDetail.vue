@@ -40,7 +40,7 @@ const deleteStudent = () => {
     <v-container class="width-80">
       <v-row>
         <v-col cols="12" md="6">
-          <v-img src="/images/student_pf.png" />
+          <v-img :src="organizations_student.user.profile_pic" />
         </v-col>
         <v-col cols="12" md="6" class="pa-5">
           <div class="d-flex justify-space-between align-center">
