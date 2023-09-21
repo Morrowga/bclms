@@ -125,9 +125,11 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('successMessage', 'User Deleted Successfully!');
     }
 
-    public function show()
+    public function show(UserEloquentModel $user)
     {
-        return Inertia::render(config('route.users.show'));
+        $user->load('b2bUser');
+        // return $user;
+        return Inertia::render(config('route.users.show'),compact('user'));
     }
 
     public function changePassword(updateUserPasswordRequest $request)

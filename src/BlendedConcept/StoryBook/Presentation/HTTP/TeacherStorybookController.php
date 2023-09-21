@@ -2,13 +2,17 @@
 
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
-use Inertia\Inertia;
 
+use Inertia\Inertia;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStoryBook;
 class TeacherStorybookController
 {
     public function index()
     {
-        return Inertia::render(config('route.teacher_storybook.index'));
+
+        $filters = request()->only(['search', 'name', 'perPage']) ?? [];
+        $storyBooks = (new GetStoryBook($filters))->handle();
+        return Inertia::render(config('route.teacher_storybook.index'),compact('storyBooks'));
     }
 
     public function edit()
