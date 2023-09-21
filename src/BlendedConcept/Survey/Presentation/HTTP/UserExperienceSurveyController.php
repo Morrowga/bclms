@@ -93,7 +93,7 @@ class UserExperienceSurveyController
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateSurveyRequest $request, $survey)
+    public function update(UpdateSurveyRequest $request,SurveyEloquentModel $userexperiencesurvey)
     {
         // abort_if(authorize('edit', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -106,8 +106,7 @@ class UserExperienceSurveyController
          * Try to update the survey.
          */
         try {
-            $survey = SurveyEloquentModel::find($survey);
-            $surveyData = SurveyData::fromRequest($request, $survey);
+            $surveyData = SurveyData::fromRequest($request, $userexperiencesurvey->id);
             $updateSurveyCommand = (new UpdateSurveyCommand($surveyData));
             $updateSurveyCommand->execute();
 
@@ -126,15 +125,14 @@ class UserExperienceSurveyController
      * @param  SurveyEloquentModel  $survey to delete.
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($survey)
+    public function destroy(SurveyEloquentModel $userexperiencesurvey)
     {
         // abort_if(authorize('destroy', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         /**
          * Try to delete the announcement.
          */
         try {
-            $survey = SurveyEloquentModel::find($survey);
-            $deleteSurvey = new DeleteSurveyCommand($survey->id);
+            $deleteSurvey = new DeleteSurveyCommand($userexperiencesurvey->id);
             $deleteSurvey->execute();
 
             return redirect()->route('userexperiencesurvey.index')->with('successMessage', 'Survey deleted Successfully!');
