@@ -13,6 +13,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('/organizations-teacher', OrganizationTeacherController::class);
 
-    Route::resource('/organizations-student', OrganizationStudentController::class);
+    Route::resource('organizations-student', OrganizationStudentController::class);
 
 });

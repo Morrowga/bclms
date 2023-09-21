@@ -1,10 +1,10 @@
 <?php
 
-namespace Src\BlendedConcept\Disability\Domain\Repositories;
+namespace Src\BlendedConcept\Organization\Domain\Repositories;
 
 use Src\BlendedConcept\Organization\Application\DTO\StudentData;
 use Src\BlendedConcept\Organization\Domain\Model\Entities\Student;
-use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
 
 interface StudentRepositoryInterface
 {
@@ -14,5 +14,9 @@ interface StudentRepositoryInterface
 
     public function updateStudent(StudentData $studentData);
 
-    public function deleteStudent(StudentEloquentModel $LearningNeed);
+    public function deleteStudent(StudentEloquentModel $studentEloquentModel);
+
+    public function getLearningNeed();
+
+    public function getdisabilitytype();
 }

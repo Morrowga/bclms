@@ -58,7 +58,7 @@ class TeacherRepository implements TeacherRepositoryInterface
                 $userEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_teachers');
             }
 
-            if ($userEloquent->getMedia('image')->isNotEmpty() && $userEloquent->getMedia('image')->isNotEmpty()) {
+            if ($userEloquent->getMedia('image')->isNotEmpty()) {
                 $userEloquent->profile_pic = $userEloquent->getMedia('image')[0]->original_url;
                 $userEloquent->update();
             }
@@ -79,39 +79,40 @@ class TeacherRepository implements TeacherRepositoryInterface
     //  update user
     public function updateTeacher(TeacherData $teacherData)
     {
-
-        // $teacherArray = $teacherData->toArray();
-        // $updateUserEloquent = UserEloquentModel::query()->findOrFail($teacherData->id);
-        // $updateUserEloquent->fill($teacherArray);
-        // $updateUserEloquent->save();
-
-        // //  delete image if reupload or insert if does not exit
-        // if (request()->hasFile('image') && request()->file('image')->isValid()) {
-
-        //     $old_image = $updateUserEloquent->getFirstMedia('image');
-        //     if ($old_image != null) {
-        //         $old_image->delete();
-
-        //         $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_teachers');
-        //     } else {
-
-        //         $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_teachers');
-        //     }
-        // }
-
-        // $updateUserEloquent->roles()->sync(request('role'));
-    }
-
-    public function delete(int $teacher_id): void
-    {
         DB::beginTransaction();
 
         try {
-            $teacher= UserEloquentModel::query()->findOrFail($teacher_id);
-            $teacher->delete();
+
+            $teacherArray = $teacherData->toArray();
+            $updateUserEloquent = UserEloquentModel::query()->findOrFail($teacherData->id);
+            $updateUserEloquent->fill($teacherArray);
+            $updateUserEloquent->update();
+
+            //  delete image if reupload or insert if does not exit
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+                $old_image = $updateUserEloquent->getFirstMedia('image');
+                if ($old_image != null) {
+                    $old_image->forceDelete();
+                }
+
+                $newMediaItem = $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_teachers');
+
+                if ($newMediaItem->getUrl()) {
+                    $updateUserEloquent->profile_pic = $newMediaItem->getUrl();
+                    $updateUserEloquent->update();
+                }
+            }
+        DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error);
         }
+    }
+
+    public function delete(int $teacher_id): void
+    {
+        $teacher= UserEloquentModel::query()->findOrFail($teacher_id);
+        $teacher->clearMediaCollection('image'); // Replace with the actual collection name
+        $teacher->delete();
     }
 }

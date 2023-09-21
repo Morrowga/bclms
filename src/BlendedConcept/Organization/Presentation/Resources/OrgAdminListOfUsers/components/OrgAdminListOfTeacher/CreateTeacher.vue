@@ -18,24 +18,6 @@ const teacherForm = useForm({
     contact_number: "",
     image: ""
 });
-const createTeacher = () => {
-    teacherForm.image = profileFile.value;
-    teacherForm.post(route("organizations-teacher.store"), {
-        onSuccess: () => {
-        // SuccessDialog({ title: "You've successfully updated a question." });
-        },
-        onError: (error) => {
-        form.setError("name", error?.name);
-        form.setError("email", error?.email);
-        form.setError("contact_number", error?.contact_number);
-        },
-    });
-    // SuccessDialog({
-    //     title: "You have successfully create a teacher!",
-    //     color: "#17CAB6",
-    // });
-};
-
 const profile = ref(null);
 const dragging = ref(false);
 const profileFile = ref(null);
@@ -55,6 +37,26 @@ const onDropThumbnail = (event) => {
   console.log(profile.value);
   profileFile.value = files[0];
 };
+
+const createTeacher = () => {
+    teacherForm.image = profileFile.value;
+    teacherForm.post(route("organizations-teacher.store"), {
+        onSuccess: () => {
+            SuccessDialog({ title: "You've successfully created a teacher." });
+        },
+        onError: (error) => {
+        form.setError("first_name", error?.first_name);
+        form.setError("last_name", error?.last_name);
+        form.setError("email", error?.email);
+        form.setError("contact_number", error?.contact_number);
+        },
+    });
+    // SuccessDialog({
+    //     title: "You have successfully create a teacher!",
+    //     color: "#17CAB6",
+    // });
+};
+
 </script>
 <template>
     <AdminLayout>
@@ -216,7 +218,7 @@ const onDropThumbnail = (event) => {
   width: 100%;
   background: #f7f7f7;
   height: 440px;
-  border: 1px solid black;
+  border: 1px solid rgb(182,182,186, 0.6);
   border-radius: 10px;
 }
 .profileimg{

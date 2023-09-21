@@ -23,6 +23,7 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     // for images
     protected $appends = [
         'image',
+        'organization_id'
     ];
 
     protected $fillable = [
@@ -119,4 +120,11 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     {
         return $this->belongsTo(B2cUserEloquentModel::class, 'user_id');
     }
+
+    public function getOrganizationIdAttribute()
+    {
+        return $this->b2bUser->organization_id ?? null;
+    }
+
+
 }

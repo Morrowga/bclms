@@ -20,9 +20,9 @@ interface StoryBookRepositoryInterface
 
     public function getLearningNeed();
 
-    public function getthemes();
-
     public function getdisabilitytype();
+
+    public function getthemes();
 
     public function getdevice();
 

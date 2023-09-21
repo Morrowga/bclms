@@ -93,12 +93,14 @@ class GameRepository implements GameRepositoryInterface
             if (request()->hasFile('thumb') && request()->file('thumb')->isValid()) {
                 $old_thumbnail = $gameEloquent->getFirstMedia('thumbnail');
                 if ($old_thumbnail != null) {
-                    $old_thumbnail->delete();
+                    $old_thumbnail->forceDelete();
+                }
 
-                    $gameEloquent->addMediaFromRequest('thumb')->toMediaCollection('thumbnail', 'media_game');
-                } else {
+                $newThumbMedia = $gameEloquent->addMediaFromRequest('thumb')->toMediaCollection('thumbnail', 'media_game');
 
-                    $gameEloquent->addMediaFromRequest('thumb')->toMediaCollection('thumbnail', 'media_game');
+                if ($newThumbMedia->getUrl()) {
+                    $gameEloquent->thumbnail = $newThumbMedia->getUrl();
+                    $gameEloquent->update();
                 }
             }
 
@@ -106,20 +108,18 @@ class GameRepository implements GameRepositoryInterface
 
                 $old_game = $gameEloquent->getFirstMedia('game_file');
                 if ($old_game != null) {
-                    $old_game->delete();
+                    $old_game->forceDelete();
+                }
 
-                    $gameEloquent->addMediaFromRequest('game')->toMediaCollection('game_file', 'media_game');
-                } else {
+                $newGameMedia = $gameEloquent->addMediaFromRequest('game')->toMediaCollection('game_file', 'media_game');
 
-                    $gameEloquent->addMediaFromRequest('game')->toMediaCollection('game_file', 'media_game');
+                if ($newGameMedia->getUrl()) {
+                    $gameEloquent->game_file = $newGameMedia->getUrl();
+                    $gameEloquent->update();
                 }
             }
 
-            if ($gameEloquent->getMedia('thumbnail')->isNotEmpty() && $gameEloquent->getMedia('game_file')->isNotEmpty()) {
-                $gameEloquent->thumbnail = $gameEloquent->getMedia('thumbnail')[0]->original_url;
-                $gameEloquent->game_file = $gameEloquent->getMedia('game_file')[0]->original_url;
-                $gameEloquent->update();
-            }
+
 
             $tagCollection = collect(request()->tags);
             $disabilityCollection = collect(request()->disability_type_id);
