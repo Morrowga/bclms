@@ -36,10 +36,6 @@ class DashBoardController extends Controller
 
         $orgainzations_users = (new GetUserForAdminDashBoard())->handle();
 
-
-
-        // return $orgainzations_users;
-
         $students = (new GetStudentForAdminDashBoard())->handle();
 
         $UserCount = (new GetSuperAdminListCount())->handle();

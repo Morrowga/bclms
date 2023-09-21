@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm,Link } from "@inertiajs/vue3";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
@@ -18,10 +18,11 @@ const setInactive = () => {
         title: "Are you sure?",
         denyButtonText: "Set Inactive",
         onConfirm: () => {
-            // alert("good to go");
         },
     });
 };
+
+defineProps(['user']);
 </script>
 <template>
     <AdminLayout>
@@ -42,30 +43,34 @@ const setInactive = () => {
 
                         <VCol cols="12">
                             <VLabel class="tiggie-label">Name</VLabel>
-                            <p class="tiggie-p ml-4">Jordan Stevenson</p>
+                            <p class="tiggie-p ml-4">{{user?.full_name}}</p>
                         </VCol>
                         <VCol cols="12">
                             <VLabel class="tiggie-label">User Email</VLabel>
                             <p class="tiggie-p ml-4">
-                                susanna.lind57@gmail.com
+                                {{user?.email}}
                             </p>
                         </VCol>
                         <VCol cols="12">
                             <VLabel class="tiggie-label"
                                 >User Contact Number</VLabel
                             >
-                            <p class="tiggie-p ml-4">95159746</p>
+                            <p class="tiggie-p ml-4">
+                                {{user.contact_number}}
+                            </p>
                         </VCol>
-                        <VCol cols="12" class="vs-hidden">
+                        <VCol cols="12" class="vs-hidden" v-if="user.organization_id">
                             <Link
-                                :href="route('organizations.show')"
+                                :href="route('organizations.show',user.organization_id)"
                                 class="cu-pointer"
                             >
                                 <VLabel class="tiggie-label"
                                     >Organisation Name</VLabel
                                 >
                                 <p class="tiggie-p ml-4 underline">
-                                    Blended Concept
+                                    {{
+                                        user?.b2b_user
+                                    }}
                                 </p>
                             </Link>
                         </VCol>
@@ -164,8 +169,6 @@ const setInactive = () => {
                         </VCol>
                     </VRow>
                 </VCol>
-                <!-- <VCol cols="12" class="d-flex flex-wrap justify-center gap-10">
-                </VCol> -->
             </VRow>
         </VContainer>
     </AdminLayout>
