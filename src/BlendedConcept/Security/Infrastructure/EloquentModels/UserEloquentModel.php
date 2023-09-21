@@ -23,7 +23,9 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     // for images
     protected $appends = [
         'image',
-        'organization_id'
+        'organization_id',
+        'image_url',
+        'full_name'
     ];
 
     protected $fillable = [
@@ -53,7 +55,11 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     {
         return $this->getMedia('image');
     }
-
+    public function getImageUrlAttribute()
+    {
+        $media = $this->getMedia('image')->first();
+        return $media ? $media->getFullUrl() : null;
+    }
     public function getRemainingStorageSpace()
     {
         //fetch user's medialibary total uploads size
@@ -125,6 +131,4 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     {
         return $this->b2bUser->organization_id ?? null;
     }
-
-
 }

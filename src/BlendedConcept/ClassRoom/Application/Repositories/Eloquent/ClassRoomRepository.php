@@ -20,8 +20,8 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
     {
         $paginate_classrooms
             = ClassRoomResource::collection(ClassRoomEloquentModel::filter($filters)
+                ->withCount('teachers', 'students')
                 ->where('organization_id', auth()->user()->organization_id)
-                ->with('teacher', 'students')
                 ->orderBy('id', 'desc')
                 ->paginate($filters['perPage'] ?? 10));
         $default_classrooms = ClassRoomEloquentModel::get();
@@ -40,6 +40,7 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
         try {
 
             $createClassRoomEloquent = ClassRoomMapper::toEloquent($classRoom);
+            $createClassRoomEloquent->organization_id = auth()->user()->organization_id;
             $createClassRoomEloquent->save();
             $createClassRoomEloquent->students()->sync($classRoom->students);
             $createClassRoomEloquent->teachers()->sync($classRoom->teachers);
@@ -70,6 +71,19 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
             $updateClassRoomEloquent->update();
             $updateClassRoomEloquent->students()->sync($classRoomData->students);
             $updateClassRoomEloquent->teachers()->sync($classRoomData->teachers);
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+                $old_image = $updateClassRoomEloquent->getFirstMedia('image');
+                if ($old_image != null) {
+                    $old_image->forceDelete();
+                }
+
+                $newMediaItem = $updateClassRoomEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_classroom');
+
+                if ($newMediaItem->getUrl()) {
+                    $updateClassRoomEloquent->classroom_photo = $newMediaItem->getUrl();
+                    $updateClassRoomEloquent->update();
+                }
+            }
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());

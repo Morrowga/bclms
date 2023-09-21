@@ -77,6 +77,7 @@ let truncatedText = (text) => {
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
+const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
 </script>
 <template>
     <section>
@@ -119,15 +120,11 @@ const selectionChanged = (data) => {
                                 <v-img
                                     width="100"
                                     :aspect-ratio="16 / 9"
-                                    src="/images/profile/profilefive.png"
+                                    :src="userImage(data)"
                                 />
                             </div>
                             <span>
-                                {{
-                                    data.user?.first_name +
-                                    " " +
-                                    data.user?.last_name
-                                }}
+                                {{ data.user?.full_name }}
                             </span>
                         </div>
                     </VCol>

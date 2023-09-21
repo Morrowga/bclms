@@ -8,8 +8,8 @@ class ClassRoom extends AggregateRoot
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly int $organization_id,
-        public readonly int $name,
+        public readonly ?int $organization_id,
+        public readonly string $name,
         public readonly string $description,
         public readonly ?string $classroom_photo,
         public readonly ?array $teachers,

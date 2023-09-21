@@ -22,6 +22,7 @@ class StudentEloquentModel extends Model implements HasMedia
     // for images
     protected $appends = [
         'image',
+        'image_url'
     ];
 
     protected $primaryKey = 'student_id';
@@ -43,7 +44,11 @@ class StudentEloquentModel extends Model implements HasMedia
     {
         return $this->getMedia('image');
     }
-
+    public function getImageUrlAttribute()
+    {
+        $media = $this->getMedia('image')->first();
+        return $media ? $media->getFullUrl() : null;
+    }
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {

@@ -5,14 +5,6 @@ import { router } from "@inertiajs/core";
 import { computed } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue";
-
-let props = defineProps([
-    "classrooms",
-    "students",
-    "teachers",
-    "flash",
-    "auth",
-]);
 import {
     serverParams,
     onColumnFilter,
@@ -26,54 +18,21 @@ let flash = computed(() => usePage().props.flash);
 serverPage.value = ref(props.classrooms.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
 let permissions = computed(() => usePage().props.auth.data.permissions);
+const props = defineProps({
+    classrooms: {
+        type: Array,
+        default: [],
+    },
+});
 import Create from "./Create.vue";
 import Edit from "./Edit.vue";
 
 const deleteClassRoom = (id) => {
     deleteItem(id, "classrooms");
 };
-
-let columns = [
-    {
-        label: "NAME",
-        field: "name",
-        sortable: false,
-    },
-    {
-        label: "TEACHER",
-        field: "teacher",
-        sortable: false,
-    },
-    {
-        label: "Contact Number",
-        field: "contact_number",
-        sortable: false,
-    },
-    {
-        label: "Number Of Student",
-        field: "nofstudent",
-        sortable: false,
-    },
-
-    {
-        label: "ACTION",
-        field: "action",
-        sortable: false,
-    },
-];
-
-let options = ref({
-    enabled: true,
-    mode: "pages",
-    perPage: props.classrooms?.meta?.per_page,
-    setCurrentPage: props?.classrooms?.meta?.current_page,
-    perPageDropdown: [10, 20, 50, 100],
-    dropdownAllowAll: false,
-});
-
-watch(serverPerPage, function (value) {
-    onPerPageChange(value);
-});
+const showCount = (classroom) => {
+    return classroom?.students_count + "/" + classroom?.teachers_count;
+};
 </script>
 
 <template>
@@ -86,7 +45,8 @@ watch(serverPerPage, function (value) {
                     </VCol>
                     <VCol size="6" class="text-right">
                         <v-btn
-                            varient="flat" class="ruddy-bold"
+                            varient="flat"
+                            class="ruddy-bold"
                             @click="
                                 () => router.get(route('classrooms.create'))
                             "
@@ -98,17 +58,18 @@ watch(serverPerPage, function (value) {
                 </VRow>
                 <VRow>
                     <VCol
-                        v-for="item in 12"
-                        :key="item"
+                        v-for="classroom in props.classrooms.data"
+                        :key="classroom.id"
                         cols="12"
                         sm="6"
                         md="4"
                         lg="3"
                     >
                         <ClassroomCard
-                            :route="route('showCopy')"
-                            count="5 / 5"
-                            :label="`${item} A`"
+                            :route="route('showCopy', classroom.id)"
+                            :count="showCount(classroom)"
+                            :label="classroom.name"
+                            :image="classroom.classroom_photo"
                         />
                     </VCol>
                 </VRow>

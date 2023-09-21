@@ -133,15 +133,17 @@ const handleSubmit = () => {
                     </v-expansion-panels>
                 </div>
                 <div class="mt-10 d-flex justify-center">
-                    <v-btn
-                        varient="flat"
-                        color="#F6F6F6"
-                        class="cancel pppangram-bold"
-                        width="200"
-                        rounded
-                    >
-                        Cancel
-                    </v-btn>
+                    <Link :href="route('classrooms.index')">
+                        <v-btn
+                            varient="flat"
+                            color="#F6F6F6"
+                            class="cancel pppangram-bold"
+                            width="200"
+                            rounded
+                        >
+                            Cancel
+                        </v-btn>
+                    </Link>
                     <v-btn
                         type="submit"
                         varient="flat"

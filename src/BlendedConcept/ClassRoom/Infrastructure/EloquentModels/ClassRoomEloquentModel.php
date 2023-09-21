@@ -19,9 +19,9 @@ class ClassroomEloquentModel extends Model implements HasMedia
     protected $table = 'classrooms';
 
     // for images
-    protected $appends = [
-        'classroom_photo',
-    ];
+    // protected $appends = [
+    //     'classroom_photo',
+    // ];
 
     protected $fillable = [
         'id',
@@ -48,11 +48,11 @@ class ClassroomEloquentModel extends Model implements HasMedia
 
     public function teachers()
     {
-        return $this->belongsToMany(UserEloquentModel::class, 'classroom_teachers', 'classroom_id', 'id');
+        return $this->belongsToMany(UserEloquentModel::class, 'classroom_teachers', 'classroom_id', 'teacher_id');
     }
 
     public function students()
     {
-        return $this->belongsToMany(StudentEloquentModel::class, 'classroom_students', 'classroom_id', 'user_id');
+        return $this->belongsToMany(StudentEloquentModel::class, 'classroom_students', 'classroom_id', 'student_id');
     }
 }

@@ -1,80 +1,124 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { usePage } from "@inertiajs/vue3";
+import { usePage, useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, ref } from "vue";
 import SelectStudent from "./components/SelectStudent.vue";
 import SelectTeacher from "./components/SelectTeacher.vue";
 import { SuccessDialog } from "@actions/useSuccess";
-let props = defineProps(["flash", "auth"]);
+let props = defineProps(["flash", "auth", "classroom"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
+const isFormValid = ref(false);
+let refForm = ref();
 const selectedImage = ref(null);
 
-const handleFileUpload = (event) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-        selectedImage.value = URL.createObjectURL(selectedFile);
-    }
+const form = useForm({
+    name: "",
+    description: "",
+    image: "",
+    classroom_photo: "",
+    students: [],
+    teachers: [],
+    _method: "PUT",
+});
+const profile = ref(null);
+const dragging = ref(false);
+const profileFile = ref(null);
+
+const handleThumbnailChange = (event) => {
+    const file = event.target.files[0];
+    profileFile.value = file;
+    profile.value = URL.createObjectURL(file);
 };
 
-const fileInput = ref(null);
-
-const openFileInput = () => {
-    fileInput.value.click();
+const onDropThumbnail = (event) => {
+    event.preventDefault();
+    dragging.value = false;
+    const files = event.dataTransfer.files;
+    profile.value = URL.createObjectURL(files[0]);
+    profileFile.value = files[0];
 };
-const updateClassroom = () => {
-    SuccessDialog({
-        title: "You have successfully updated classroom!",
-        color: "#17CAB6",
+
+const handleSubmit = () => {
+    form.image = profileFile.value;
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("classrooms.update", props.classroom.id), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.successMessage });
+                },
+                onError: (error) => {},
+            });
+        }
     });
 };
+onMounted(() => {
+    form.name = props.classroom.name;
+    form.description = props.classroom.description;
+    profile.value = props.classroom?.classroom_photo ?? "";
+    form.students = props.classroom.students.map(
+        (student) => student.student_id
+    );
+    form.classroom_photo = props.classroom?.classroom_photo ?? "";
+    form.teachers = props.classroom.teachers.map((teacher) => teacher.id);
+});
 </script>
 
 <template>
     <AdminLayout>
-        <section>
+        <VForm
+            ref="refForm"
+            v-model="isFormValid"
+            @submit.prevent="handleSubmit"
+        >
             <VContainer>
-                <span class="span-text ruddy-bold">Edit Classroom</span>
+                <span class="span-text ruddy-bold">Create Classroom</span>
                 <VRow class="mt-3">
-                    <VCol cols="12" sm="6" md="6">
-                        <VCard class="upload-card" @click="openFileInput">
-                            <v-img
-                                v-if="selectedImage"
-                                :src="selectedImage"
-                                cover
-                            ></v-img>
-                            <v-img
-                                v-else
-                                src="/images/classroom9.jpeg"
-                                cover
-                            ></v-img>
-                            <!-- <div v-else class="card-text">
-                                <div class="text-center">
-                                <div class="d-flex justify-center">
-                                    <img src="/images/Icons.png" width="100">
+                    <VCol cols="12" md="6">
+                        <div
+                            class="profile-drag"
+                            :class="!profile ? 'd-flex justify-center' : ''"
+                            @dragover.prevent
+                            @dragenter.prevent
+                            @dragleave="dragging = false"
+                            @drop.prevent="onDropThumbnail"
+                        >
+                            <div v-if="!profile">
+                                <div class="d-flex justify-center text-center">
+                                    <v-img
+                                        src="/images/Icons.png"
+                                        width="80"
+                                        height="80"
+                                    ></v-img>
                                 </div>
-                                <div class="mt-2">
-                                    <span class="drag-text">
-                                        Drag your item to upload
-                                    </span>
-                                </div>
-                                <div class="mt-2">
-                                    <span class="fade-text">
-                                        PNG, GIF, WebP, MP4 or MP3. Maximum file size 100 Mb.
-                                    </span>
-                                </div>
+                                <p class="pppangram-bold mt-5">
+                                    Drag your item to upload
+                                </p>
+                                <p class="mt-2 blur-p">
+                                    PNG, GIF, WebP, MP4 or MP3. Maximum file
+                                    size 100 Mb.
+                                </p>
                             </div>
-                            </div> -->
-                        </VCard>
-                        <input
-                            type="file"
-                            ref="fileInput"
-                            class="d-none"
-                            @change="handleFileUpload"
-                        />
+                            <div v-else>
+                                <v-img
+                                    :src="profile"
+                                    class="profileimg"
+                                    cover
+                                />
+                                <!-- <p>File Name: {{ gameFile.name }}</p> -->
+                                <!-- <button @click="removeGameFile" class="remove-button">
+                                Remove
+                            </button> -->
+                            </div>
+                            <input
+                                type="file"
+                                style="display: none"
+                                @change="handleThumbnailChange"
+                            />
+                        </div>
                     </VCol>
-                    <VCol cols="12" sm="6" md="4">
+                    <VCol cols="12" sm="6" md="6">
                         <span class="semi-label pppangram-bold"
                             >Classroom Details</span
                         >
@@ -82,51 +126,49 @@ const updateClassroom = () => {
                             <span class="input-label"
                                 >Name <span class="star">*</span></span
                             >
-                            <VTextField value="1A" />
+                            <VTextField v-model="form.name" />
                         </div>
                         <div class="mt-2">
                             <span class="input-label">Description</span>
-                            <VTextarea
-                                rows="2"
-                                value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, impedit repellendus esse corporis voluptas et quis voluptates quo, incidunt consequuntur non temporibus cupiditate eaque dolores! Architecto obcaecati corporis earum tempora!"
-                            >
-                            </VTextarea>
+                            <VTextarea rows="2" v-model="form.description" />
                         </div>
                     </VCol>
                 </VRow>
                 <div class="mt-15">
                     <v-expansion-panels>
-                        <SelectTeacher />
+                        <SelectTeacher :form="form" />
                     </v-expansion-panels>
                 </div>
                 <div class="mt-3">
                     <v-expansion-panels>
-                        <SelectStudent />
+                        <SelectStudent :form="form" />
                     </v-expansion-panels>
                 </div>
                 <div class="mt-10 d-flex justify-center">
+                    <Link :href="route('classrooms.index')">
+                        <v-btn
+                            varient="flat"
+                            color="#F6F6F6"
+                            class="cancel pppangram-bold"
+                            width="200"
+                            rounded
+                        >
+                            Cancel
+                        </v-btn>
+                    </Link>
                     <v-btn
-                        varient="flat"
-                        color="#F6F6F6"
-                        class="cancel pppangram-bold"
-                        width="200"
-                        rounded
-                    >
-                        Cancel
-                    </v-btn>
-                    <v-btn
+                        type="submit"
                         varient="flat"
                         color="#3749E9"
                         class="textcolor ml-2 pppangram-bold"
                         width="200"
                         rounded
-                        @click="updateClassroom()"
                     >
-                        Save
+                        Create
                     </v-btn>
                 </div>
             </VContainer>
-        </section>
+        </VForm>
     </AdminLayout>
 </template>
 
@@ -236,5 +278,33 @@ const updateClassroom = () => {
 
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
+
+.blur-p {
+    color: var(--Secondary2, rgba(86, 86, 96, 0.4));
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 157.143% */
+    text-transform: capitalize;
+}
+
+.profile-drag {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    background: #f7f7f7;
+    height: 440px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.profileimg {
+    object-fit: cover !important;
+    height: 440px;
+    border-radius: 10px;
+}
+.profile-drag p {
+    margin-bottom: 0;
 }
 </style>
