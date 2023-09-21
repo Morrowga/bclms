@@ -23,7 +23,7 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
 
-                if (auth()->user()->organization_id) {
+                if (auth()->user()->organization_idd) {
 
                     $organization = auth()->user()->load('organization');
 

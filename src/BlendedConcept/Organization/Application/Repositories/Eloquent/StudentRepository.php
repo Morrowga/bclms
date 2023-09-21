@@ -30,6 +30,7 @@ class StudentRepository implements StudentRepositoryInterface
         DB::beginTransaction();
         try {
             $user = UserEloquentModel::create([
+                'role_id'    => 6,
                 'first_name' => $student->first_name,
                 'last_name' => $student->last_name,
                 'email' => $student->email,

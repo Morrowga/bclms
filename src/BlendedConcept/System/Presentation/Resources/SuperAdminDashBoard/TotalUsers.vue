@@ -143,7 +143,7 @@ let selectedRole = ref("");
                         class="flex flex-nowrap"
                     >
                         <VChip size="small" color="primary">
-                            {{ dataProps.row?.role.name }}
+                            {{ dataProps.row?.role?.name }}
                         </VChip>
                     </div>
                     <div

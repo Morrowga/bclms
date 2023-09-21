@@ -8,7 +8,6 @@ import { RouteTransitions, Skins } from '@core/enums'
 import { AppContentLayoutNav, ContentWidth, FooterType, NavbarType } from '@layouts/enums'
 
 
-
 var themsCustomize = JSON.parse(localStorage.getItem("site_theme"));
 
 export const { themeConfig, layoutConfig } = defineThemeConfig({
