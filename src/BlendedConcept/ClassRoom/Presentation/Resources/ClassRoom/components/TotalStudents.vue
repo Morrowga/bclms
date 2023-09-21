@@ -5,6 +5,8 @@ import { computed } from "vue";
 import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
+import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
+
 import axios from "axios";
 import {
     serverParams,
@@ -140,7 +142,11 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                     </VCol>
 
                     <VCol cols="3">
-                        <VChip color="success">Active</VChip>
+                        <ChipWithBlueDot
+                            v-for="item in data.disability_types"
+                            :key="item.id"
+                            :title="item.name"
+                        />
                     </VCol>
                 </VRow>
                 <VRow justify="center" align="center">
