@@ -66,7 +66,11 @@ class StudentEloquentModel extends Model implements HasMedia
             $query->where('name', 'like', '%'.$name.'%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->orWhere('name', 'like', '%'.$search.'%');
+            $query->whereHas('user', function ($query) use ($search) {
+                $query
+                    ->where('first_name', 'like', '%'.$search.'%')
+                    ->orWhere('last_name', 'like', '%'.$search.'%');
+            });
         });
     }
 

@@ -5,21 +5,31 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
-let props = defineProps(["flash", "auth"]);
+let props = defineProps(["flash", "auth", "classroom"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
-const deleteClassroom = () => {
+const deleteClassroom = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert it!",
         denyButtonText: "Yes, delete it!",
         onConfirm: () => {
-            SuccessDialog({
-                title: "You have successfully deleted classroom!",
-                color: "#17CAB6",
+            router.delete(route("classrooms.destroy", id), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.successMessage });
+                },
             });
         },
     });
 };
+const showCount = (classroom) => {
+    return classroom?.students_count + "/" + classroom?.teachers_count;
+};
+let srcImage = computed(
+    () =>
+        props.classroom.classroom_photo ??
+        "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+);
+const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
 </script>
 
 <template>
@@ -32,7 +42,7 @@ const deleteClassroom = () => {
                             <v-img src="/images/bg.png" cover></v-img>
                             <div class="overlay-container">
                                 <v-img
-                                    src="/images/classroom9.jpeg"
+                                    :src="srcImage"
                                     class="classroom-img"
                                 ></v-img>
                             </div>
@@ -41,11 +51,11 @@ const deleteClassroom = () => {
                     <VCol cols="12" sm="6" md="6" class="marginadjust">
                         <div class="text-left">
                             <span class="font-weight-black classname">
-                                1 A
+                                {{ props.classroom?.name }}
                             </span>
                             <v-chip class="ml-5 spacing">
                                 <span class="text-center pppangram-bold">
-                                    5 / 5</span
+                                    {{ showCount(props.classroom) }}</span
                                 >
                             </v-chip>
                         </div>
@@ -53,13 +63,9 @@ const deleteClassroom = () => {
                         <br />
                         <br />
 
-                        <span class="description pppangram-bold"
-                            >Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Cum ipsam animi aspernatur soluta. Illo odio
-                            ut molestias ea dolorem alias consequuntur
-                            reiciendis eius non minus tempora, adipisci rerum
-                            necessitatibus atque?</span
-                        >
+                        <span class="description pppangram-bold">{{
+                            props.classroom?.description
+                        }}</span>
                         <br />
                         <br />
                         <br />
@@ -67,7 +73,15 @@ const deleteClassroom = () => {
                             <v-btn
                                 prepend-icon="mdi-pencil"
                                 varient="flat"
-                                @click="() => router.get(route('editCopy'))"
+                                @click="
+                                    () =>
+                                        router.get(
+                                            route(
+                                                'editCopy',
+                                                props.classroom.id
+                                            )
+                                        )
+                                "
                                 color="#16cab6"
                                 class="textcolor pppangram-bold"
                                 rounded
@@ -75,7 +89,7 @@ const deleteClassroom = () => {
                                 Edit
                             </v-btn>
                             <v-btn
-                                @click="deleteClassroom()"
+                                @click="deleteClassroom(props.classroom.id)"
                                 prepend-icon="mdi-trash-can-outline"
                                 color="#ff6262"
                                 class="ml-2 textcolor pppangram-bold"
@@ -96,38 +110,21 @@ const deleteClassroom = () => {
                             md="4"
                             lg="2"
                             class="text-center d-flex justify-center"
+                            v-for="teacher in props.classroom.teachers"
+                            :key="teacher.id"
                         >
                             <div>
                                 <v-img
-                                    src="/images/classroom8.jpeg"
+                                    :src="userImage(teacher)"
                                     class="profile-img"
                                     cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Isbella Taylor</span
-                                    >
+                                    <span class="label-text pppangram-bold">{{
+                                        teacher.full_name
+                                    }}</span>
                                 </div>
-                            </div>
-                        </VCol>
-                        <VCol
-                            cols="12"
-                            sm="6"
-                            md="4"
-                            lg="2"
-                            class="text-center d-flex justify-center"
-                        >
-                            <div>
-                                <v-img
-                                    src="/images/classroom7.jpeg"
-                                    class="profile-img"
-                                    cover
-                                ></v-img>
-                                <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Liams William</span
-                                    >
-                                </div>
+                                <!-- {{ teacher }} -->
                             </div>
                         </VCol>
                     </VRow>
@@ -259,82 +256,18 @@ const deleteClassroom = () => {
                             md="4"
                             lg="2"
                             class="text-center d-flex justify-center"
+                            v-for="student in props.classroom.students"
+                            :key="student.student_id"
                         >
                             <div>
                                 <v-img
-                                    src="/images/classroom6.jpeg"
+                                    :src="userImage(student)"
                                     class="profile-img"
                                     cover
                                 ></v-img>
                                 <div class="mt-2">
                                     <span class="label-text pppangram-bold"
                                         >Ethan Jonathan</span
-                                    >
-                                </div>
-                                <div class="mt-1 d-flex justify-center">
-                                    <div>
-                                        <img
-                                            width="20"
-                                            src="/images/phone.svg"
-                                        />
-                                    </div>
-                                    <span
-                                        class="label-text-two ml-1 pppangram-bold"
-                                    >
-                                        9123 4567</span
-                                    >
-                                </div>
-                            </div>
-                        </VCol>
-                        <VCol
-                            cols="12"
-                            sm="6"
-                            md="4"
-                            lg="2"
-                            class="text-center d-flex justify-center"
-                        >
-                            <div>
-                                <v-img
-                                    src="/images/classroom1.jpeg"
-                                    class="profile-img"
-                                    cover
-                                ></v-img>
-                                <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Olivia Smith</span
-                                    >
-                                </div>
-                                <div class="mt-1 d-flex justify-center">
-                                    <div>
-                                        <img
-                                            width="20"
-                                            src="/images/phone.svg"
-                                        />
-                                    </div>
-                                    <span
-                                        class="label-text-two ml-1 pppangram-bold"
-                                    >
-                                        9123 4567</span
-                                    >
-                                </div>
-                            </div>
-                        </VCol>
-                        <VCol
-                            cols="12"
-                            sm="6"
-                            md="4"
-                            lg="2"
-                            class="text-center d-flex justify-center"
-                        >
-                            <div>
-                                <v-img
-                                    src="/images/classroom5.jpeg"
-                                    class="profile-img"
-                                    cover
-                                ></v-img>
-                                <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Emma Brown</span
                                     >
                                 </div>
                                 <div class="mt-1 d-flex justify-center">

@@ -8,8 +8,8 @@ use Src\BlendedConcept\Classroom\Presentation\HTTP\LearningActivityController;
 Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('classrooms', ClassRoomController::class);
-    Route::get('/classroom-show-copy', [ClassRoomController::class, 'showCopy'])->name('showCopy');
-    Route::get('/classroom-edit-copy', [ClassRoomController::class, 'editCopy'])->name('editCopy');
+    Route::get('/classroom-show-copy/{classroom}', [ClassRoomController::class, 'showCopy'])->name('showCopy');
+    Route::get('/classroom-edit-copy/{classroom}', [ClassRoomController::class, 'editCopy'])->name('editCopy');
 
     Route::get('/classroom/org-teacher', [ClassRoomController::class, 'orgTeacherIndex'])->name('org-teacher-classroom.index');
     Route::get('/classroom/org-teacher/create', [ClassRoomController::class, 'orgTeacherCreate'])->name('org-teacher-classroom.create');

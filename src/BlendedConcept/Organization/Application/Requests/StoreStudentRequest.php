@@ -1,6 +1,7 @@
 <?php
 
 namespace Src\BlendedConcept\Organization\Application\Requests;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreStudentRequest extends FormRequest
@@ -15,34 +16,34 @@ class StoreStudentRequest extends FormRequest
 
         return [
             'gender' => [
-                'required'
+                'required',
             ],
             'dob' => [
-                'required'
+                'required',
             ],
             'education_level' => [
-                'required'
+                'required',
             ],
             'contact_number' => [
-                'required','unique:users,contact_number'
+                'required', 'unique:users,contact_number',
             ],
             'email' => [
                 'email' => ['required', 'email', 'unique:users,email'],
-            ]
+            ],
         ];
     }
 
     public function messages()
     {
         return [
-            'gender.required' => "Please select a gender",
+            'gender.required' => 'Please select a gender',
             'dob' => 'Enter your date of birth',
-            'education_level' => "Enter your education level",
-            'contact_number.required' => "Enter a parent contact number",
-            'contact_number.unique' => "This phone number is already in use",
-            'email.required' => "Enter your email address",
-            'email.email' => "Enter a valid email address",
-            'email.unique' => "This email is already in use"
+            'education_level' => 'Enter your education level',
+            'contact_number.required' => 'Enter a parent contact number',
+            'contact_number.unique' => 'This phone number is already in use',
+            'email.required' => 'Enter your email address',
+            'email.email' => 'Enter a valid email address',
+            'email.unique' => 'This email is already in use',
         ];
     }
 }

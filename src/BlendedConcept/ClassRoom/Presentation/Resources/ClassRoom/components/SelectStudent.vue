@@ -1,11 +1,33 @@
 <script setup>
 import TotalStudents from "./TotalStudents.vue";
+import {
+    serverParams,
+    searchItems,
+    routeName,
+} from "./useStudentsDatatable.js";
+import { defineProps } from "vue";
+routeName.value = "classrooms.getStudents";
+const props = defineProps({
+    form: {
+        type: Object,
+        default: {
+            name: "",
+            description: "",
+            image: "",
+            students: [],
+            teachers: [],
+        },
+    },
+});
 </script>
 <template>
     <v-expansion-panel>
         <v-expansion-panel-title>
             <h2 class="font-weight-bold ruddy-bold fs-25">
-                Step 2: Select Students <v-chip class="chip-count">3</v-chip>
+                Step 2: Select Students
+                <v-chip class="chip-count">{{
+                    props.form.students.length
+                }}</v-chip>
             </h2>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
@@ -18,17 +40,15 @@ import TotalStudents from "./TotalStudents.vue";
                     rounded
                     hide-details
                     class="mr-4"
+                    @keyup.enter="searchItems"
+                    v-model="serverParams.search"
                 ></v-text-field>
             </div>
             <v-row>
                 <v-col cols="12">
-                    <TotalStudents />
+                    <TotalStudents :form="props.form" />
                 </v-col>
             </v-row>
-            <br />
-            <div class="d-flex justify-center">
-                <v-btn variant="outlined" color="primary">Load More</v-btn>
-            </div>
         </v-expansion-panel-text>
     </v-expansion-panel>
 </template>

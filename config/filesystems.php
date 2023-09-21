@@ -113,6 +113,12 @@ return [
             'url' => env('APP_URL').'/storage/storybook',
             'visibility' => 'public',
         ],
+        'media_classroom' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/classroom'),
+            'url' => env('APP_URL').'/storage/classroom',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',

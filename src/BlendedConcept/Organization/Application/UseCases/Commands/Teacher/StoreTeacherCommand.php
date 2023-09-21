@@ -2,9 +2,9 @@
 
 namespace Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher;
 
-use Src\Common\Domain\CommandInterface;
 use Src\BlendedConcept\Organization\Domain\Model\Entities\Teacher;
 use Src\BlendedConcept\Organization\Domain\Repositories\TeacherRepositoryInterface;
+use Src\Common\Domain\CommandInterface;
 
 class StoreTeacherCommand implements CommandInterface
 {

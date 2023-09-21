@@ -13,20 +13,6 @@ const props = defineProps({
   },
 });
 
-const stateList = [
-    "Alabama",
-    "Alaska",
-    "Arizona",
-    "Arkansas",
-    "California",
-    "Colorado",
-    "Connecticut",
-    "Delaware",
-    "Florida",
-    "Georgia",
-    "Hawaii",
-];
-
 const panel = ref(0);
 
 

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Src\BlendedConcept\Classroom\Domain\Model\Entities\ClassRoomGroup;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassRoomGroupEloquentModel;
 
-class ClassRoomMapper
+class ClassRoomGroupMapper
 {
     public static function fromRequest(Request $request, $classroom_group_id = null): ClassRoomGroup
     {

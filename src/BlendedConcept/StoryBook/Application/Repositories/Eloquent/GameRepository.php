@@ -119,8 +119,6 @@ class GameRepository implements GameRepositoryInterface
                 }
             }
 
-
-
             $tagCollection = collect(request()->tags);
             $disabilityCollection = collect(request()->disability_type_id);
 

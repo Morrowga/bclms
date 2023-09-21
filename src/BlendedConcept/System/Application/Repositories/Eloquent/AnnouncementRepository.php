@@ -183,7 +183,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         // }
     }
 
-    public function deleteAnnoument(int $annountment_id): void
+    public function delete(int $annountment_id): void
     {
         $annount = AnnouncementEloquentModel::query()->findOrFail($annountment_id);
         $annount->delete();

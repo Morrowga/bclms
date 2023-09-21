@@ -1,16 +1,15 @@
 <script setup>
 import { router } from "@inertiajs/core";
 
-let props = defineProps(["route", "count", "label"]);
+let props = defineProps(["route", "count", "label", "image"]);
+let srcImage = computed(
+    () => props.image ?? "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+);
 </script>
 <template>
     <VCard @click="() => router.get(props.route)">
         <v-chip class="class-count"> {{ props.count }} </v-chip>
-        <v-img
-            src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-            height="200px"
-            cover
-        ></v-img>
+        <v-img :src="srcImage" height="200px" cover></v-img>
         <div class="d-flex justify-center">
             <span class="class-label ruddy-bold"> {{ props.label }} </span>
         </div>

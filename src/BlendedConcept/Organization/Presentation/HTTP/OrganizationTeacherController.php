@@ -7,13 +7,14 @@ use Src\BlendedConcept\Organization\Application\DTO\TeacherData;
 use Src\BlendedConcept\Organization\Application\Mappers\TeacherMapper;
 use Src\BlendedConcept\Organization\Application\Requests\StoreTeacherRequest;
 use Src\BlendedConcept\Organization\Application\Requests\UpdateTeacherRequest;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\ShowTeacher;
-use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\GetTeacherList;
-use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\StoreTeacherCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\DeleteTeacherCommand;
+use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\StoreTeacherCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\UpdateTeacherCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\Student\GetStudentList;
+use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\GetTeacherList;
+use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\ShowTeacher;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+
 class OrganizationTeacherController
 {
     public function index()
@@ -23,6 +24,7 @@ class OrganizationTeacherController
         $teachers = (new GetTeacherList())->handle();
 
         $studentListWithPagniation = (new GetStudentList($filters))->handle();
+
         // return $teachers;
         return Inertia::render(config('route.organizations-teacher.index'), [
             'teachers' => $teachers,
@@ -35,7 +37,7 @@ class OrganizationTeacherController
         return Inertia::render(config('route.organizations-teacher.create'));
     }
 
-     /**
+    /**
      * This function stores a new teacher.
      *
      * @param  StoreTeacherRequest  $request The request object
@@ -78,12 +80,13 @@ class OrganizationTeacherController
     public function edit($id)
     {
         $teacher = (new ShowTeacher($id))->handle();
-        return Inertia::render(config('route.organizations-teacher.edit'),[
-            'teacher' => $teacher
+
+        return Inertia::render(config('route.organizations-teacher.edit'), [
+            'teacher' => $teacher,
         ]);
     }
 
-     /**
+    /**
      * Update an teacher.
      *
      *
@@ -114,7 +117,7 @@ class OrganizationTeacherController
         }
     }
 
-     /**
+    /**
      * Delete an teacher.
      *
      * @param  UserEloquentModel  $teacher The teacher to delete.
@@ -140,4 +143,3 @@ class OrganizationTeacherController
         }
     }
 }
-
