@@ -6,20 +6,39 @@ import PlaylistSlider from "./components/PlaylistSlider.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
+import { useForm } from "@inertiajs/vue3";
+import { router } from "@inertiajs/core";
 import { ref } from "vue";
 import { format } from 'date-fns';
 let tab = ref(null);
 let props = defineProps(['student']);
+const form = useForm({});
 
 
 const deleteStudent = () => {
-    isConfirmedDialog({
-        title: "You won't be able to revert it!",
-        denyButtonText: "Yes, delete it!",
-        onConfirm: () => {
-            SuccessDialog({ title: "You have successfully deleted a student" });
-        },
-    });
+  isConfirmedDialog({
+    title: "You won't be able to revert it!",
+    denyButtonText: "Yes, delete it!",
+    onConfirm: () => {
+      form.delete(
+        route(
+          "organizations-student.destroy",
+          props.student.data.student_id
+        ),
+        {
+          onSuccess: () => {
+            SuccessDialog({
+              title: "You have successfully deleted student!",
+              color: "#17CAB6",
+            });
+          },
+          onError : () => {
+            console.log(error)
+          }
+        }
+      );
+    },
+  });
 };
 
 const formatDate = (dateString) => {

@@ -16,7 +16,7 @@ const deleteStudent = () => {
     onConfirm: () => {
       form.delete(
         route(
-          "organizations-student.update",
+          "organizations-student.destroy",
           props.organizations_student.student_id
         ),
         {

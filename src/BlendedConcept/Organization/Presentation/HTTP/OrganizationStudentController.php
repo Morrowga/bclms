@@ -89,7 +89,6 @@ class OrganizationStudentController
 
     public function destroy(StudentEloquentModel $organizations_student)
     {
-
         (new DeleteStudentCommand($organizations_student))->execute();
 
         return to_route('organizations-teacher.index')->with('successMessage', 'Student Deleted Successfully!');
