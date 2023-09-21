@@ -74,6 +74,7 @@ const selectionChanged = (data) => {
                                         >
                                         {{ item.name }}
                                     </VCardTitle>
+                                    <ChipWithBlueDot v-for="item in item.disability_types" :key="item.id" :title="item.name" />
                                 </VCardItem>
                                 <VCardActions>
                                     <div class="d-flex gap-1">
