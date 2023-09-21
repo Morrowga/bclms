@@ -36,9 +36,14 @@ class DashBoardController extends Controller
 
         $orgainzations_users = (new GetUserForAdminDashBoard())->handle();
 
+
+
+        // return $orgainzations_users;
+
         $students = (new GetStudentForAdminDashBoard())->handle();
 
         $UserCount = (new GetSuperAdminListCount())->handle();
+
 
         //here I render it inside
         return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students', 'UserCount'));

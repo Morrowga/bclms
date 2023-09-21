@@ -13,6 +13,7 @@ use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use DateTimeInterface;
 
 class StudentEloquentModel extends Model implements HasMedia
 {
@@ -42,20 +43,31 @@ class StudentEloquentModel extends Model implements HasMedia
     ];
 
     public function getImageAttribute()
-{
+    {
         return $this->getMedia('image');
     }
+
+
+
+    // protected function serializeDate(DateTimeInterface $date): string
+    // {
+    //     return $date->format('Y-m-d');
+    // }
+
+
 
     public function getAgeAttribute()
     {
         // Replace 'dob' with the actual field name of date of birth in your database
         $dob = $this->attributes['dob'];
-
         // Check if the date of birth is set
         if ($dob) {
-            $dob = Carbon::createFromFormat('Y-m-d H:i:s', $dob);
-            return $dob->age;
+            // $dob = Carbon::createFromFormat('Y-m-d H:i:s', $dob);
+
+            // return $dob->age;
+            return null;
         }
+
 
         return null; // Return null if date of birth is not set
     }
