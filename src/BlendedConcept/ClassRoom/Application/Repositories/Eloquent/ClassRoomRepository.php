@@ -8,6 +8,8 @@ use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
 use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\ClassRoom\Domain\Resources\ClassRoomResource;
+use Src\BlendedConcept\ClassRoom\Domain\Resources\StudentResource;
+use Src\BlendedConcept\ClassRoom\Domain\Resources\TeacherResource;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
@@ -17,11 +19,11 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
     public function getClassRooms($filters)
     {
         $paginate_classrooms
-                = ClassRoomResource::collection(ClassRoomEloquentModel::filter($filters)
-                    ->where('organization_id', auth()->user()->organization_id)
-                    ->with('teacher', 'students')
-                    ->orderBy('id', 'desc')
-                    ->paginate($filters['perPage'] ?? 10));
+            = ClassRoomResource::collection(ClassRoomEloquentModel::filter($filters)
+                ->where('organization_id', auth()->user()->organization_id)
+                ->with('teacher', 'students')
+                ->orderBy('id', 'desc')
+                ->paginate($filters['perPage'] ?? 10));
         $default_classrooms = ClassRoomEloquentModel::get();
 
         return [
@@ -40,6 +42,16 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
             $createClassRoomEloquent = ClassRoomMapper::toEloquent($classRoom);
             $createClassRoomEloquent->save();
             $createClassRoomEloquent->students()->sync($classRoom->students);
+            $createClassRoomEloquent->teachers()->sync($classRoom->teachers);
+
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+                $createClassRoomEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_classroom');
+            }
+
+            if ($createClassRoomEloquent->getMedia('image')->isNotEmpty() && $createClassRoomEloquent->getMedia('image')->isNotEmpty()) {
+                $createClassRoomEloquent->classroom_photo = $createClassRoomEloquent->getMedia('image')[0]->original_url;
+                $createClassRoomEloquent->update();
+            }
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());
@@ -55,9 +67,9 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
             $ClassRoomArray = $classRoomData->toArray();
             $updateClassRoomEloquent = ClassRoomEloquentModel::findOrFail($classRoomData->id);
             $updateClassRoomEloquent->fill($ClassRoomArray);
-            $updateClassRoomEloquent->save();
+            $updateClassRoomEloquent->update();
             $updateClassRoomEloquent->students()->sync($classRoomData->students);
-
+            $updateClassRoomEloquent->teachers()->sync($classRoomData->teachers);
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());
@@ -66,15 +78,15 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
         DB::commit();
     }
 
-    public function getTeachers()
+    public function getTeachers($filters)
     {
-        return UserEloquentModel::whereHas('roles', function ($query) {
-            $query->where('roles.name', 'Teacher');
-        })->get();
+        return  UserEloquentModel::filter($filters)->whereHas('role_user', function ($query) {
+            $query->where('name', 'Teacher');
+        })->paginate($filters['perPage'] ?? 10);
     }
 
-    public function getStudents()
+    public function getStudents($filters)
     {
-        return StudentEloquentModel::get();
+        return  StudentEloquentModel::filter($filters)->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
     }
 }

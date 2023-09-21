@@ -16,6 +16,8 @@ class ClassRoomMapper
             name: $request->name,
             description: $request->description,
             classroom_photo: $request->classroom_photo,
+            teachers: $request->teachers,
+            students: $request->students
         );
     }
 

@@ -16,7 +16,7 @@ class updateClassRoomRequest extends FormRequest
         return [
             'name' => [
                 'string',
-                'unique:permissions,name',
+
                 'required',
             ],
         ];

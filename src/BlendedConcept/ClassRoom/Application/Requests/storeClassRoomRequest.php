@@ -17,18 +17,6 @@ class storeClassRoomRequest extends FormRequest
             'name' => [
                 'required', 'string',
             ],
-            'description' => [
-                'string',
-            ],
-            'gold_coins' => [
-                'required', 'numeric',
-            ],
-            'silver_coins' => [
-                'required', 'numeric',
-            ],
-            'rarity' => [
-                'required', 'string',
-            ],
         ];
     }
 }

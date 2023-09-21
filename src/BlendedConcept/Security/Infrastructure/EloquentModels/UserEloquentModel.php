@@ -87,23 +87,22 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
 
     public function scopeFilter($query, $filters)
     {
-        $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
-        });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->orWhere('name', 'like', '%'.$search.'%')
-                ->orWhere('email', 'like', '%'.$search.'%');
+            $query
+                ->where('first_name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('last_name', 'like', '%' . $search . '%');
         });
         $query->when($filters['roles'] ?? false, function ($query, $role) {
             $query->whereHas('roles', function ($query) use ($role) {
-                $query->where('name', 'like', '%'.$role.'%');
+                $query->where('name', 'like', '%' . $role . '%');
             });
         });
     }
 
     public function getFullNameAttribute()
     {
-        return $this->first_name.' '.$this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function role_user()
