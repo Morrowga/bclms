@@ -23,7 +23,8 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     // for images
     protected $appends = [
         'image',
-        'organization_id'
+        'organization_id',
+        'full_name'
     ];
 
     protected $fillable = [

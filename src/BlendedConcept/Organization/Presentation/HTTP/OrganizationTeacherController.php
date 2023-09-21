@@ -13,15 +13,20 @@ use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\GetTeac
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\StoreTeacherCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\DeleteTeacherCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\UpdateTeacherCommand;
-
+use Src\BlendedConcept\Organization\Application\UseCases\Queries\Student\GetStudentList;
 class OrganizationTeacherController
 {
     public function index()
     {
+        $filters = request(['search', 'first_name', 'last_name', 'email']) ?? [];
+
         $teachers = (new GetTeacherList())->handle();
+
+        $studentListWithPagniation = (new GetStudentList($filters))->handle();
         // return $teachers;
         return Inertia::render(config('route.organizations-teacher.index'), [
             'teachers' => $teachers,
+            'students' => $studentListWithPagniation,
         ]);
     }
 

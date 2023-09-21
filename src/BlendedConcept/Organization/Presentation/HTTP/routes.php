@@ -12,7 +12,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('organizations/{organization}/storesubscription', [OrganizationController::class, 'storeSubscription'])->name('organizations.storeSubscription');
 
     Route::resource('/organizations-teacher', OrganizationTeacherController::class);
-
     Route::resource('organizations-student', OrganizationStudentController::class);
 
 });

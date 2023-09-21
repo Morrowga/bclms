@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('device_id')->nullable()->references('id')->on('devices')->cascadeOnDelete();
             $table->string('gender');
-            $table->string('dob')->nullable();
+            $table->date('dob')->nullable();
             $table->string('education_level')->nullable();
             $table->integer('num_gold_coins')->default(0);
             $table->integer('num_silver_coins')->default(0);
