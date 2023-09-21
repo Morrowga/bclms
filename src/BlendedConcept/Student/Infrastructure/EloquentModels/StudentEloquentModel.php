@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Student\Infrastructure\EloquentModels;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Carbon\Carbon;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class StudentEloquentModel extends Model implements HasMedia
 {
@@ -22,7 +23,7 @@ class StudentEloquentModel extends Model implements HasMedia
     // for images
     protected $appends = [
         'image',
-        'image_url',
+        'age'
     ];
 
     protected $primaryKey = 'student_id';
@@ -41,15 +42,22 @@ class StudentEloquentModel extends Model implements HasMedia
     ];
 
     public function getImageAttribute()
-    {
+{
         return $this->getMedia('image');
     }
 
-    public function getImageUrlAttribute()
+    public function getAgeAttribute()
     {
-        $media = $this->getMedia('image')->first();
+        // Replace 'dob' with the actual field name of date of birth in your database
+        $dob = $this->attributes['dob'];
 
-        return $media ? $media->getFullUrl() : null;
+        // Check if the date of birth is set
+        if ($dob) {
+            $dob = Carbon::createFromFormat('Y-m-d H:i:s', $dob);
+            return $dob->age;
+        }
+
+        return null; // Return null if date of birth is not set
     }
 
     public function scopeFilter($query, $filters)
@@ -76,13 +84,13 @@ class StudentEloquentModel extends Model implements HasMedia
         return $this->belongsToMany(OrganizationEloquentModel::class, 'organization_students', 'student_id', 'organization_id');
     }
 
+    public function disability_types()
+    {
+        return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'student_disability_types', 'student_id', 'disability_type_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(UserEloquentModel::class, 'user_id', 'id');
-    }
-
-    public function disability_types(): BelongsToMany
-    {
-        return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'student_disability_types', 'student_id', 'disability_type_id');
     }
 }

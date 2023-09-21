@@ -45,6 +45,7 @@ class OrganizationTeacherController
      */
     public function store(StoreTeacherRequest $request)
     {
+        // abort_if(authorize('create', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $request->validated();
@@ -71,10 +72,8 @@ class OrganizationTeacherController
     public function show($id)
     {
         $teacher = (new ShowTeacher($id))->handle();
-
-        // return $teacher;
-        return Inertia::render(config('route.organizations-teacher.show'), [
-            'teacher' => $teacher,
+        return Inertia::render(config('route.organizations-teacher.show'),[
+            'teacher' => $teacher
         ]);
     }
 
@@ -93,7 +92,7 @@ class OrganizationTeacherController
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateTeacherRequest $request, $teacher)
+    public function update(UpdateTeacherRequest $request,UserEloquentModel $organization_teacher)
     {
         // abort_if(authorize('edit', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -104,19 +103,18 @@ class OrganizationTeacherController
         /**
          * Try to update the teacher.
          */
-        // try {
-        $teacherEloquent = UserEloquentModel::find($teacher);
-        $teacherData = TeacherData::fromRequest($request, $teacherEloquent->id);
-        $updateTeacherCommand = (new UpdateTeacherCommand($teacherData));
-        $updateTeacherCommand->execute();
+        try {
+            $teacherData = TeacherData::fromRequest($request, $organization_teacher->id);
+            $updateTeacherCommand = (new UpdateTeacherCommand($teacherData));
+            $updateTeacherCommand->execute();
 
-        return redirect()->route('organizations-teacher.show', $teacherEloquent->id)->with('successMessage', 'Teacher updated Successfully!');
-        // } catch (\Exception $e) {
-        //     /**
-        //      * Catch any exceptions and display an error message.
-        //      */
-        //     return redirect()->route('organizations-teacher.show', $teacherEloquent->id)->with('SystemErrorMessage', $e->getMessage());
-        // }
+            return redirect()->route('organizations-teacher.show', $teacherEloquent->id)->with('successMessage', 'Teacher updated Successfully!');
+        } catch (\Exception $e) {
+            /**
+             * Catch any exceptions and display an error message.
+             */
+            return redirect()->route('organizations-teacher.show', $teacherEloquent->id)->with('SystemErrorMessage', $e->getMessage());
+        }
     }
 
     /**
@@ -125,7 +123,7 @@ class OrganizationTeacherController
      * @param  UserEloquentModel  $teacher The teacher to delete.
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($teacher)
+    public function destroy(UserEloquentModel $organization_teacher)
     {
         // abort_if(authorize('destroy', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -133,7 +131,7 @@ class OrganizationTeacherController
          * Try to delete the teacher.
          */
         try {
-            $teacherDestroy = new DeleteTeacherCommand($teacher);
+            $teacherDestroy = new DeleteTeacherCommand($organization_teacher->id);
             $teacherDestroy->execute();
 
             return redirect()->route('organizations-teacher.index')->with('successMessage', 'Teacher deleted Successfully!');

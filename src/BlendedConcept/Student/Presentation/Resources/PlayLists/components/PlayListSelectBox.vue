@@ -2,38 +2,37 @@
 import GreenChip from "@mainRoot/components/GreenChip/GreenChip.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+const props = defineProps({
+  datas: {
+    type: Object,
+    required: true,
+  },
+  storybooks: {
+    type: Object,
+    required: true,
+  },
+});
 
-const stateList = [
-    "Alabama",
-    "Alaska",
-    "Arizona",
-    "Arkansas",
-    "California",
-    "Colorado",
-    "Connecticut",
-    "Delaware",
-    "Florida",
-    "Georgia",
-    "Hawaii",
-];
-
-const radios = ref("home");
-const deliveryOption = ref("standard");
-const paymentMethod = ref("credit-debit-card");
 const panel = ref(0);
 
-const paymentMethods = [
-    {
-        radioValue: "credit-debit-card",
-        radioLabel: "Credit/Debit/ATM Card",
-        icon: "mdi-credit-card-outline",
-    },
-    {
-        radioValue: "cash-on-delivery",
-        radioLabel: "Cash On Delivery",
-        icon: "mdi-help-circle-outline",
-    },
-];
+
+const extractStudentId = (studentId) => {
+    console.log('Student ID:', studentId);
+ }
+
+ const selectedStorybooks = ref([]);
+
+// Function to add or remove a storybook ID from the selectedStorybooks array
+const toggleSelectedStorybook = (storybookId) => {
+  const index = selectedStorybooks.value.indexOf(storybookId);
+  if (index === -1) {
+    selectedStorybooks.value.push(storybookId);
+  } else {
+    selectedStorybooks.value.splice(index, 1);
+  }
+  console.log(selectedStorybooks.value);
+};
+
 </script>
 
 <template>
@@ -89,12 +88,12 @@ const paymentMethods = [
                     <VRow
                         class="bg-line rounded pa-5 mb-2"
                         align="center"
-                        v-for="item in 6"
+                        v-for="item in props.datas"
                         :key="item"
                     >
                         <VCol cols="3">
                             <div class="d-flex align-center gap-1">
-                                <VRadio />
+                                <VRadio @click="extractStudentId(item.student_id)" />
                                 <VImg
                                     src="/teacherdashboard/student1.png"
                                     width="56px"
@@ -102,30 +101,28 @@ const paymentMethods = [
                                 />
                                 <span
                                     class="tiggie-teacher-label tiggie-black-color"
-                                    >Madge Dennis</span
+                                    >{{ item.user.full_name  }}</span
                                 >
                             </div>
                         </VCol>
                         <VCol cols="2">
                             <span
                                 class="tiggie-teacher-label ml-10 tiggie-black-color"
-                                >K2</span
+                                >{{ item.education_level }}</span
                             >
                         </VCol>
                         <VCol cols="1">
                             <span
                                 class="tiggie-teacher-label ml-5 tiggie-black-color"
-                                >6</span
+                                >{{item.age}}</span
                             >
                         </VCol>
                         <VCol cols="4">
                             <div class="d-flex flex-column gap-2 w-50">
                                 <ChipWithBlueDot
+                                v-for="disability_type in props.datas.disability_types"
+                                 :key="disability_type"
                                     title="Down Syndrome"
-                                    class="ma-1"
-                                />
-                                <ChipWithBlueDot
-                                    title="Dyslexia"
                                     class="ma-1"
                                 />
                             </div>
@@ -173,10 +170,10 @@ const paymentMethods = [
                     </VCol>
                 </VRow>
                 <VRow justify="center">
-                    <VCol cols="3" v-for="item in 12" :key="item" class="pa-1">
+                    <VCol cols="3" v-for="item in props.storybooks" :key="item" class="pa-1">
                         <VCard>
                             <VImg
-                                src="/teacherdashboard/student1.png"
+                                :src="item.thumbnail_img == '' || item.thumbnail_img == null  ? 'images/2.jpg' : item.thumbnail_img"
                                 height="282px"
                                 cover
                             />
@@ -184,12 +181,15 @@ const paymentMethods = [
                                 <VCheckbox
                                     color="secondary"
                                     class="checkbox-position"
+                                    :value="item.id"
+                                    @change="toggleSelectedStorybook(item.id)"
                                 />
                             </div>
                             <VCardItem>
                                 <VCardTitle
                                     class="text-center tiggie-teacher-p tiggie-black-color fw-700"
-                                    >Influencing The Influencer
+                                    >
+                                    <!-- {{}} -->
                                 </VCardTitle>
                             </VCardItem>
                             <VCardActions>
