@@ -18,5 +18,5 @@ interface AnnouncementRepositoryInterface
     //update announcement
     public function updateAnnouncement(AnnounmentData $announment);
 
-    public function deleteAnnoument(int $annountment_id);
+    public function delete(int $annountment_id);
 }

@@ -20,13 +20,20 @@ class PlayListController
 {
     public function index()
     {
-        $filters = request(['search', 'name']) ?? [];
+        try {
+            $filters = request(['search', 'name']) ?? [];
 
-        $playlists = (new GetPlaylist($filters))->handle();
+            $playlists = (new GetPlaylist($filters))->handle();
 
-        return Inertia::render(config('route.playlist.index'), [
-            "playlists" => $playlists
-        ]);
+            return Inertia::render(config('route.playlist.index'), [
+                "playlists" => $playlists
+            ]);
+        } catch (\Exception $e) {
+
+            dd($e->getMessage());
+
+            return redirect()->route('playlist.index')->with('sytemErrorMessage', $e->getMessage());
+        }
     }
 
     public function create()
