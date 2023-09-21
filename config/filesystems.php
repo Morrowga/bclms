@@ -97,8 +97,8 @@ return [
         ],
         'media_game' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/media_game'),
-            'url' => env('APP_URL').'/storage/media_game',
+            'root' => storage_path('app/public/game'),
+            'url' => env('APP_URL').'/storage/game',
             'visibility' => 'public',
         ],
         'media_reward' => [
@@ -117,6 +117,12 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public/classroom'),
             'url' => env('APP_URL').'/storage/classroom',
+            'visibility' => 'public',
+        ],
+        'media_playlists' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/playlists'),
+            'url' => env('APP_URL').'/storage/playlists',
             'visibility' => 'public',
         ],
 

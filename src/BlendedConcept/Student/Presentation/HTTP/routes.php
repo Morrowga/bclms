@@ -8,11 +8,11 @@ use Src\BlendedConcept\Student\Presentation\HTTP\ViewStudentController;
 Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('students', StudentController::class);
-    Route::get('playlists', [PlayListController::class, 'index'])->name('playlists.index');
+    Route::resource('playlists', PlayListController::class);
 
-    Route::get('createplaylists', [PlayListController::class, 'create'])->name('createplaylists');
-    Route::get('editplaylists', [PlayListController::class, 'edit'])->name('editplaylists');
-    Route::get('showplaylists', [PlayListController::class, 'show'])->name('showplaylists');
+    // Route::get('createplaylists', [PlayListController::class, 'create'])->name('createplaylists');
+    // Route::get('editplaylists', [PlayListController::class, 'edit'])->name('editplaylists');
+    // Route::get('showplaylists', [PlayListController::class, 'show'])->name('showplaylists');
 
     Route::get('/view_students', [ViewStudentController::class, 'index'])->name('view_students.index');
     Route::get('/view_students/show', [ViewStudentController::class, 'show'])->name('view_students.show');

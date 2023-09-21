@@ -85,4 +85,9 @@ class StudentRepository implements StudentRepositoryInterface
 
         DB::commit();
     }
+
+    public function getStudentsByPagination($filters)
+    {
+        return StudentEloquentModel::filter($filters)->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+    }
 }

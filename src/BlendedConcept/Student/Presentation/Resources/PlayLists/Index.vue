@@ -3,21 +3,33 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { router } from "@inertiajs/core";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
+import {
+    serverParams,
+    searchItems,
+} from "@Composables/useServerSideDatable.js";
 const items = ["Name", "Age", "Name", "Name"];
-
+let props = defineProps([
+    'playlists'
+]);
 const currentPage = ref(1);
-const deletePlaylist = () => {
+
+const deletePlaylist = (id) => {
     isConfirmedDialog({
-        title: "You won't be able to revert it!",
-        denyButtonText: "Yes, delete it!",
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,delete it!",
         onConfirm: () => {
-            SuccessDialog({
-                title: "You have successfully deleted playlist!",
-                color: "#17CAB6",
+            router.delete('/playlists/' + id, {
+                onSuccess: () => {
+                    SuccessDialog({
+                        title: "You have successfully deleted playlist!",
+                        color: "#17CAB6",
+                    });
+                },
             });
         },
     });
 };
+console.log(props.playlists);
 </script>
 
 <template>
@@ -29,7 +41,7 @@ const deletePlaylist = () => {
                 </VCol>
                 <VCol cols="6" class="text-end">
                     <VBtn color="primary" variant="flat" rounded>
-                        <Link :href="route('createplaylists')">
+                        <Link :href="route('playlists.create')">
                             <VIcon icon="mdi-plus" class="text-white"></VIcon>
                             <span class="text-white">Add</span>
                         </Link>
@@ -40,6 +52,8 @@ const deletePlaylist = () => {
                         placeholder="Search ..."
                         append-inner-icon=""
                         density="compact"
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
                         rounded
                     >
                         <template #append-inner>
@@ -68,20 +82,20 @@ const deletePlaylist = () => {
                     <VRow
                         class="bg-line mx-1 rounded pa-1 my-2"
                         align="center"
-                        v-for="item in 7"
+                        v-for="item in props.playlists.data"
                         :key="item"
                     >
                         <VCol
                             cols="3"
                             class="ml-4"
-                            @click="router.get(route('showplaylists'))"
+                            @click="router.get(route('playlists.show', item.id))"
                         >
                             <div
                                 class="d-flex flex-row align-center justify-center gap-3"
                             >
                                 <div clas="music-component">
                                     <VImg
-                                        src="/teacherdashboard/videoicon1.svg"
+                                        :src="item.playlist_photo"
                                         width="73px"
                                         height="56px"
                                     />
@@ -91,14 +105,14 @@ const deletePlaylist = () => {
                                         <VIcon
                                             icon="mdi-playlist-music-outline"
                                         />
-                                        <span>3</span>
+                                        <span>{{ item.storybooks.length }}</span>
                                     </div>
                                 </div>
-                                <span class="tiggie-p">Self-Love</span>
+                                <span class="tiggie-p">{{ item.name  }}</span>
                             </div>
                         </VCol>
                         <VCol cols="3">
-                            <p class="tiggie-p">William Tan</p>
+                            <p class="tiggie-p">{{ item.student.user.full_name  }}</p>
                         </VCol>
 
                         <VCol cols="3">
@@ -108,7 +122,7 @@ const deletePlaylist = () => {
                                     class="text-white"
                                     variant="flat"
                                     rounded
-                                    @click="router.get(route('editplaylists'))"
+                                    @click="router.get(route('playlists.edit', item.id))"
                                 >
                                     <VIcon icon="mdi-pencil" class="mr-2" />
                                     <span>Edit</span>
@@ -119,7 +133,7 @@ const deletePlaylist = () => {
                                     class="text-white ml-2"
                                     variant="flat"
                                     rounded
-                                    @click="deletePlaylist()"
+                                    @click="deletePlaylist(item.id)"
                                 >
                                     <VIcon
                                         icon="mdi-trash-can-outline"
@@ -132,9 +146,9 @@ const deletePlaylist = () => {
                     </VRow>
                     <VRow justify="center" align="center">
                         <VPagination
-                            v-model="currentPage"
+                            v-model="props.playlists.meta.current_page"
                             variant="outlined"
-                            :length="5"
+                            :length="props.playlists.meta.last_page"
                         />
                     </VRow>
                 </VCol>

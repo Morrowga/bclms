@@ -2,19 +2,35 @@
 import GreenChip from "@mainRoot/components/GreenChip/GreenChip.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+
+
+import axios from "axios";
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+    datas,
+    routeName,
+} from "./useStudentsDatatable.js";
+
 const props = defineProps({
-  datas: {
-    type: Object,
-    required: true,
-  },
-  storybooks: {
-    type: Object,
-    required: true,
-  },
+    form: {
+        type: Object,
+        default: {
+            name: "",
+            description: "",
+            image: "",
+            students: [],
+            teachers: [],
+        },
+    },
 });
 
 const panel = ref(0);
-
 
 const extractStudentId = (studentId) => {
     console.log('Student ID:', studentId);
@@ -37,107 +53,36 @@ const toggleSelectedStorybook = (storybookId) => {
 
 <template>
     <VExpansionPanels v-model="panel">
-        <VExpansionPanel>
-            <VExpansionPanelTitle class="tiggie-teacher-title"
-                >Step 1: Select Student</VExpansionPanelTitle
-            >
-
-            <VExpansionPanelText>
-                <VForm @submit.prevent="() => {}">
-                    <VRow justify="center">
-                        <VCol cols="12">
-                            <VTextField
-                                placeholder="Search ..."
-                                append-inner-icon=""
-                                density="compact"
-                                rounded
-                            >
-                                <template #append-inner>
-                                    <VIcon
-                                        v-bind="props"
-                                        icon="mdi-magnify"
-                                        size="30"
-                                    />
-                                </template>
-                            </VTextField>
-                        </VCol>
-                    </VRow>
-                    <VRow class="bg-line rounded pa-1 mb-5" align="center">
-                        <VCol cols="3" class="ml-4">
-                            <VLabel class="tiggie-label">Name</VLabel>
-                            <VIcon icon="mdi-menu-down"></VIcon>
-                        </VCol>
-                        <VCol cols="2">
-                            <VLabel class="tiggie-label"
-                                >Education Level</VLabel
-                            >
-                            <VIcon icon="mdi-menu-down"></VIcon>
-                        </VCol>
-
-                        <VCol cols="1">
-                            <VLabel class="tiggie-label">Age</VLabel>
-                            <VIcon icon="mdi-menu-down"></VIcon>
-                        </VCol>
-                        <VCol cols="4">
-                            <VLabel class="tiggie-label"
-                                >Disability Type</VLabel
-                            >
-                            <VIcon icon="mdi-menu-down"></VIcon>
-                        </VCol>
-                    </VRow>
-                    <VRow
-                        class="bg-line rounded pa-5 mb-2"
-                        align="center"
-                        v-for="item in props.datas"
-                        :key="item"
-                    >
-                        <VCol cols="3">
-                            <div class="d-flex align-center gap-1">
-                                <VRadio @click="extractStudentId(item.student_id)" />
-                                <VImg
-                                    src="/teacherdashboard/student1.png"
-                                    width="56px"
-                                    height="56px"
-                                />
-                                <span
-                                    class="tiggie-teacher-label tiggie-black-color"
-                                    >{{ item.user.full_name  }}</span
-                                >
-                            </div>
-                        </VCol>
-                        <VCol cols="2">
-                            <span
-                                class="tiggie-teacher-label ml-10 tiggie-black-color"
-                                >{{ item.education_level }}</span
-                            >
-                        </VCol>
-                        <VCol cols="1">
-                            <span
-                                class="tiggie-teacher-label ml-5 tiggie-black-color"
-                                >{{item.age}}</span
-                            >
-                        </VCol>
-                        <VCol cols="4">
-                            <div class="d-flex flex-column gap-2 w-50">
-                                <ChipWithBlueDot
-                                v-for="disability_type in props.datas.disability_types"
-                                 :key="disability_type"
-                                    title="Down Syndrome"
-                                    class="ma-1"
-                                />
-                            </div>
-                        </VCol>
-                    </VRow>
-                    <VRow justify="center" align="center">
-                        <VPagination
-                            v-model="currentPage"
-                            variant="outlined"
-                            :length="5"
-                        />
-                    </VRow>
-                </VForm>
-            </VExpansionPanelText>
-        </VExpansionPanel>
+        <v-expansion-panel>
+        <v-expansion-panel-title>
+            <h2 class="font-weight-bold ruddy-bold fs-25">
+                Step 1: Select Students
+                <v-chip class="chip-count">{{
+                    props.form.students.length
+                }}</v-chip>
+            </h2>
+        </v-expansion-panel-title>
+        <v-expansion-panel-text>
+            <div class="d-flex justify-end align-center mb-4">
+                <v-text-field
+                    density="compact"
+                    label="Search"
+                    append-inner-icon="mdi-magnify"
+                    single-line
+                    rounded
+                    hide-details
+                    class="mr-4"
+                    @keyup.enter="searchItems"
+                    v-model="serverParams.search"
+                ></v-text-field>
+            </div>
+            <v-row>
+                <v-col cols="12">
+                    <TotalStudents :form="props.form" />
+                </v-col>
+            </v-row>
+        </v-expansion-panel-text>
+    </v-expansion-panel>
         <VExpansionPanel>
             <VExpansionPanelTitle class="tiggie-teacher-title"
                 >Step 2: Select Storybooks</VExpansionPanelTitle
@@ -170,7 +115,7 @@ const toggleSelectedStorybook = (storybookId) => {
                     </VCol>
                 </VRow>
                 <VRow justify="center">
-                    <VCol cols="3" v-for="item in props.storybooks" :key="item" class="pa-1">
+                    <VCol cols="3" v-for="item in datas" :key="item" class="pa-1">
                         <VCard>
                             <VImg
                                 :src="item.thumbnail_img == '' || item.thumbnail_img == null  ? 'images/2.jpg' : item.thumbnail_img"

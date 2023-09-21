@@ -2,13 +2,15 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import PlayListSelectBox from "./components/PlayListSelectBox.vue";
 import { SuccessDialog } from "@actions/useSuccess";
-const createPlaylist = () => {
-    SuccessDialog({
-        title: "You have successfully create a playlist!",
-        color: "#17CAB6",
-    });
-};
-const props = defineProps(['students', 'storybooks']);
+import SelectStudent from "./components/SelectStudent.vue";
+import { useForm } from "@inertiajs/vue3";
+import SelectStorybook from "./components/SelectStorybook.vue";
+const form = useForm({
+    name: "",
+    image: null,
+    student_id: "",
+    storybooks: [],
+});
 
 const playlist = ref(null);
 const dragging = ref(false);
@@ -29,89 +31,122 @@ const onDropPlaylist = (event) => {
   playlistFile.value = files[0];
 };
 
+const createPlaylist = () => {
+    form.image = playlistFile.value
+    console.log(form);
+    form.post(route("playlists.store"), {
+        onSuccess: () => {
+            SuccessDialog({ title: "You've successfully created a playlist." });
+        },
+        onError: (error) => {
+            form.setError("name", error?.name);
+        },
+    });
+    // SuccessDialog({
+    //     title: "You have successfully create a playlist!",
+    //     color: "#17CAB6",
+    // });
+};
+
 </script>
 
 <template>
     <AdminLayout>
         <VContainer>
-            <VRow justify="space-around">
-                <VCol cols="12">
-                    <h4 class="tiggie-teacher-title">Create Playlist</h4>
-                </VCol>
-                <VCol cols="6" class="pr-10">
-                    <div
-                        class="profile-drag"
-                        :class="!playlist ? 'd-flex justify-center' : ''"
-                        @dragover.prevent
-                        @dragenter.prevent
-                        @dragleave="dragging = false"
-                        @drop.prevent="onDropPlaylist"
-                    >
-                        <div v-if="!playlist">
-                            <div class="d-flex justify-center text-center">
-                                <v-img src="/images/Icons.png" width="80" height="80"></v-img>
+            <VForm @submit.prevent="createPlaylist">
+                <VRow justify="space-around">
+                    <VCol cols="12">
+                        <h4 class="tiggie-teacher-title">Create Playlist</h4>
+                    </VCol>
+                    <VCol cols="6" class="pr-10">
+                        <div
+                            class="profile-drag"
+                            :class="!playlist ? 'd-flex justify-center' : ''"
+                            @dragover.prevent
+                            @dragenter.prevent
+                            @dragleave="dragging = false"
+                            @drop.prevent="onDropPlaylist"
+                        >
+                            <div v-if="!playlist">
+                                <div class="d-flex justify-center text-center">
+                                    <v-img src="/images/Icons.png" width="80" height="80"></v-img>
+                                </div>
+                                <p class="pppangram-bold mt-5">
+                                    Drag your item to upload
+                                </p>
+                                <p class="mt-2 blur-p">
+                                    PNG, GIF, WebP, MP4 or MP3. Maximum file size 100 Mb.
+                                </p>
                             </div>
-                            <p class="pppangram-bold mt-5">
-                                Drag your item to upload
-                            </p>
-                            <p class="mt-2 blur-p">
-                                PNG, GIF, WebP, MP4 or MP3. Maximum file size 100 Mb.
-                            </p>
+                            <div v-else>
+                                <v-img :src="playlist" class="profileimg" cover/>
+                                <!-- <p>File Name: {{ gameFile.name }}</p> -->
+                            <!-- <button @click="removeGameFile" class="remove-button">
+                                Remove
+                            </button> -->
+                            </div>
+                            <input
+                            type="file"
+                            style="display: none"
+                            @change="handlePlaylistChange"
+                            />
                         </div>
-                        <div v-else>
-                            <v-img :src="playlist" class="profileimg" cover/>
-                            <!-- <p>File Name: {{ gameFile.name }}</p> -->
-                        <!-- <button @click="removeGameFile" class="remove-button">
-                            Remove
-                        </button> -->
-                        </div>
-                        <input
-                        type="file"
-                        style="display: none"
-                        @change="handlePlaylistChange"
+                    </VCol>
+
+                    <VCol cols="6">
+                        <h1 class="tiggie-teacher-subtitle mb-5">
+                            Playlist Details
+                        </h1>
+
+                        <VLabel class="tiggie-teacher-label mb-2 required"
+                            >Name</VLabel
+                        >
+
+                        <VTextField placeholder="e.g. Bravery" v-model="form.name" color="line"
+                        :rules="[requiredValidator]"
+                        :error-messages="form?.errors?.name"
                         />
-                    </div>
-                </VCol>
+                    </VCol>
+                    <VCol cols="12">
+                        <div class="mt-15">
+                            <v-expansion-panels>
+                                <SelectStudent :form="form" />
+                            </v-expansion-panels>
+                        </div>
+                        <div class="mt-3">
+                            <v-expansion-panels>
+                                <SelectStorybook :form="form" />
+                            </v-expansion-panels>
+                        </div>
+                        <!-- 👉 Collapsible Section -->
+                        <!-- <PlayListSelectBox :datas="props.students.data" :storybooks="props.storybooks.data" /> -->
+                    </VCol>
+                </VRow>
+                <VRow justify="center">
+                    <VCol cols="4">
+                        <div class="d-flex gap-3">
+                            <VBtn
+                                class="text-tiggie-blue px-16"
+                                color="pale-blue"
+                                variant="flat"
+                                rounded
+                            >
+                                Cancel
+                            </VBtn>
+                            <VBtn
+                                class="text-white px-16"
+                                color="primary"
+                                variant="flat"
+                                rounded
+                                type="submit"
+                            >
+                                Create
+                            </VBtn>
+                        </div>
+                    </VCol>
+                </VRow>
+            </VForm>
 
-                <VCol cols="6">
-                    <h1 class="tiggie-teacher-subtitle mb-5">
-                        Playlist Details
-                    </h1>
-
-                    <VLabel class="tiggie-teacher-label mb-2 required"
-                        >Name</VLabel
-                    >
-
-                    <VTextField placeholder="e.g. Bravery" color="line" />
-                </VCol>
-                <VCol cols="12">
-                    <!-- 👉 Collapsible Section -->
-                    <PlayListSelectBox :datas="props.students.data" :storybooks="props.storybooks.data" />
-                </VCol>
-            </VRow>
-            <VRow justify="center">
-                <VCol cols="4">
-                    <div class="d-flex gap-3">
-                        <VBtn
-                            class="text-tiggie-blue px-16"
-                            color="pale-blue"
-                            variant="flat"
-                            rounded
-                        >
-                            Cancel
-                        </VBtn>
-                        <VBtn
-                            class="text-white px-16"
-                            color="primary"
-                            variant="flat"
-                            rounded
-                            @click="createPlaylist()"
-                        >
-                            Create
-                        </VBtn>
-                    </div>
-                </VCol>
-            </VRow>
         </VContainer>
     </AdminLayout>
 </template>
