@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\Organization\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Organization\Application\DTO\TeacherData;
 use Src\BlendedConcept\Organization\Domain\Model\Entities\Teacher;
 
 class TeacherData

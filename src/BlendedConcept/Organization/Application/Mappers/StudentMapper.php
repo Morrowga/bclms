@@ -16,7 +16,7 @@ class StudentMapper
             device_id: $request->device_id,
             first_name: $request->first_name,
             last_name: $request->last_name,
-            contact_number:  $request->contact_number,
+            contact_number: $request->contact_number,
             email : $request->email,
             gender: $request->gender,
             dob: $request->dob,
@@ -41,6 +41,7 @@ class StudentMapper
         $StudentEloquent->gender = $student->gender;
         $StudentEloquent->dob = $student->dob;
         $StudentEloquent->education_level = $student->education_level;
+
         return $StudentEloquent;
     }
 }

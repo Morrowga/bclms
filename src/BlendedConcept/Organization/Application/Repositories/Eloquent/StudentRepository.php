@@ -3,15 +3,16 @@
 namespace Src\BlendedConcept\Organization\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
-use Src\BlendedConcept\Organization\Domain\Repositories\StudentRepositoryInterface;
-use Src\BlendedConcept\Organization\Domain\Model\Entities\Student;
-use Src\BlendedConcept\Organization\Application\DTO\StudentData;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
-use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
+use Src\BlendedConcept\Organization\Application\DTO\StudentData;
 use Src\BlendedConcept\Organization\Application\Mappers\StudentMapper;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Organization\Domain\Model\Entities\Student;
+use Src\BlendedConcept\Organization\Domain\Repositories\StudentRepositoryInterface;
 use Src\BlendedConcept\Organization\Domain\Resources\StudentResource;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+
 class StudentRepository implements StudentRepositoryInterface
 {
     public function getStudents($filters)
@@ -29,10 +30,10 @@ class StudentRepository implements StudentRepositoryInterface
         DB::beginTransaction();
         try {
             $user = UserEloquentModel::create([
-                "first_name" => $student->first_name,
-                "last_name"  => $student->last_name,
-                "email"      => $student->email,
-                "contact_number" => $student->contact_number,
+                'first_name' => $student->first_name,
+                'last_name' => $student->last_name,
+                'email' => $student->email,
+                'contact_number' => $student->contact_number,
             ]);
             $StudentEloquentModel = StudentMapper::toEloquent($student);
             $StudentEloquentModel->user_id = $user->id;
@@ -62,19 +63,17 @@ class StudentRepository implements StudentRepositoryInterface
 
         $user = UserEloquentModel::find($studentData->user_id)
             ->update([
-                "first_name" => $studentData->first_name,
-                "last_name"  => $studentData->last_name,
-                "email"      => $studentData->email,
-                "contact_number" => $studentData->contact_number,
+                'first_name' => $studentData->first_name,
+                'last_name' => $studentData->last_name,
+                'email' => $studentData->email,
+                'contact_number' => $studentData->contact_number,
             ]);
-
 
         $studentEloquentModel = StudentEloquentModel::query()->findOrFail($studentData->student_id);
         $studentEloquentModel->fill($studentDataArrary);
         $studentEloquentModel->update();
         $studentEloquentModel->disability_types()->sync($studentData->disability_types);
         $studentEloquentModel->learningneeds()->sync($studentData->learning_needs);
-
 
         //for media file upload
 
@@ -85,14 +84,12 @@ class StudentRepository implements StudentRepositoryInterface
             $user->profile_pic = $studentEloquentModel->getFirstMediaUrl('profile_pics');
         }
 
-
     }
 
     public function deleteStudent($student)
     {
         $student->delete();
     }
-
 
     /**
      * Get all sub learning needs.

@@ -22,7 +22,7 @@ class StudentEloquentModel extends Model implements HasMedia
     // for images
     protected $appends = [
         'image',
-        'image_url'
+        'image_url',
     ];
 
     protected $primaryKey = 'student_id';
@@ -44,21 +44,24 @@ class StudentEloquentModel extends Model implements HasMedia
     {
         return $this->getMedia('image');
     }
+
     public function getImageUrlAttribute()
     {
         $media = $this->getMedia('image')->first();
+
         return $media ? $media->getFullUrl() : null;
     }
+
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query->whereHas('user', function ($query) use ($search) {
                 $query
-                    ->where('first_name', 'like', '%' . $search . '%')
-                    ->orWhere('last_name', 'like', '%' . $search . '%');
+                    ->where('first_name', 'like', '%'.$search.'%')
+                    ->orWhere('last_name', 'like', '%'.$search.'%');
             });
         });
     }
@@ -77,6 +80,7 @@ class StudentEloquentModel extends Model implements HasMedia
     {
         return $this->belongsTo(UserEloquentModel::class, 'user_id', 'id');
     }
+
     public function disability_types(): BelongsToMany
     {
         return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'student_disability_types', 'student_id', 'disability_type_id');

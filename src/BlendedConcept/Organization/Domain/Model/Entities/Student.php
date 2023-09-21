@@ -35,7 +35,7 @@ class Student extends Entity
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'contact_number' => $this->contact_number,
-            "email" => $this->email,
+            'email' => $this->email,
             'gender' => $this->gender,
             'dob' => $this->dob,
             'education_level' => $this->education_level,

@@ -2,8 +2,8 @@
 
 namespace Src\BlendedConcept\Organization\Application\UseCases\Queries\Student;
 
-use Src\Common\Domain\QueryInterface;
 use Src\BlendedConcept\Organization\Domain\Repositories\StudentRepositoryInterface;
+use Src\Common\Domain\QueryInterface;
 
 class GetDisabilityTypes implements QueryInterface
 {
