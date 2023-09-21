@@ -39,6 +39,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
     {
         // Retrieve storybooks with relationships, order by id in descending order, and paginate the results
         $storyBooks = StoryBookEloquentModel::select('name', 'id', 'thumbnail_img')->get();
+
         return $storyBooks;
     }
 

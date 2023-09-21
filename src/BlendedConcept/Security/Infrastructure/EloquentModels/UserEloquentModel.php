@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Src\BlendedConcept\Security\Infrastructure\EloquentModels;
 
 use Hash;
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
+use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyEmail
 {
@@ -25,7 +24,7 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
         'image',
         'organization_id',
         'image_url',
-        'full_name'
+        'full_name',
     ];
 
     protected $fillable = [
@@ -55,11 +54,14 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     {
         return $this->getMedia('image');
     }
+
     public function getImageUrlAttribute()
     {
         $media = $this->getMedia('image')->first();
+
         return $media ? $media->getFullUrl() : null;
     }
+
     public function getRemainingStorageSpace()
     {
         //fetch user's medialibary total uploads size
@@ -96,20 +98,20 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     {
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query
-                ->where('first_name', 'like', '%' . $search . '%')
-                ->orWhere('email', 'like', '%' . $search . '%')
-                ->orWhere('last_name', 'like', '%' . $search . '%');
+                ->where('first_name', 'like', '%'.$search.'%')
+                ->orWhere('email', 'like', '%'.$search.'%')
+                ->orWhere('last_name', 'like', '%'.$search.'%');
         });
         $query->when($filters['roles'] ?? false, function ($query, $role) {
             $query->whereHas('roles', function ($query) use ($role) {
-                $query->where('name', 'like', '%' . $role . '%');
+                $query->where('name', 'like', '%'.$role.'%');
             });
         });
     }
 
     public function getFullNameAttribute()
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
     public function role_user()

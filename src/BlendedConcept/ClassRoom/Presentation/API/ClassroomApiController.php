@@ -2,11 +2,9 @@
 
 namespace Src\BlendedConcept\ClassRoom\Presentation\API;
 
-use Inertia\Inertia;
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetStudentsWithPagination;
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetTeachersWithPagination;
 use Src\Common\Infrastructure\Laravel\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
 class ClassroomApiController extends Controller
 {
@@ -31,15 +29,16 @@ class ClassroomApiController extends Controller
             // $students = (new GetStudents)->handle();
 
             return response()->json([
-                'data' => $students
+                'data' => $students,
             ]);
         } catch (\Exception $e) {
 
             return response()->json([
-                'data' => $e
+                'data' => $e,
             ]);
         }
     }
+
     public function getTeachers()
     {
 
@@ -55,12 +54,13 @@ class ClassroomApiController extends Controller
             // $students = (new GetStudents)->handle();
 
             return response()->json([
-                'data' => $teachers
+                'data' => $teachers,
             ]);
         } catch (\Exception $e) {
             return $e;
+
             return response()->json([
-                'data' => $e
+                'data' => $e,
             ]);
         }
     }

@@ -8,8 +8,6 @@ use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
 use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\ClassRoom\Domain\Resources\ClassRoomResource;
-use Src\BlendedConcept\ClassRoom\Domain\Resources\StudentResource;
-use Src\BlendedConcept\ClassRoom\Domain\Resources\TeacherResource;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
@@ -94,13 +92,13 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
 
     public function getTeachers($filters)
     {
-        return  UserEloquentModel::filter($filters)->whereHas('role_user', function ($query) {
+        return UserEloquentModel::filter($filters)->whereHas('role_user', function ($query) {
             $query->where('name', 'Teacher');
         })->paginate($filters['perPage'] ?? 10);
     }
 
     public function getStudents($filters)
     {
-        return  StudentEloquentModel::filter($filters)->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+        return StudentEloquentModel::filter($filters)->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
     }
 }

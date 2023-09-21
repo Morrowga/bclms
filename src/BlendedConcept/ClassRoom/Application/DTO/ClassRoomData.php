@@ -40,7 +40,7 @@ class ClassRoomData
             'description' => $this->description,
             'classroom_photo' => $this->classroom_photo,
             'teachers' => $this->teachers,
-            'students' => $this->students
+            'students' => $this->students,
         ];
     }
 }

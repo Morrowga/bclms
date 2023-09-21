@@ -2,9 +2,9 @@
 
 namespace Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher;
 
-use Src\Common\Domain\CommandInterface;
 use Src\BlendedConcept\Organization\Application\DTO\TeacherData;
 use Src\BlendedConcept\Organization\Domain\Repositories\TeacherRepositoryInterface;
+use Src\Common\Domain\CommandInterface;
 
 class UpdateTeacherCommand implements CommandInterface
 {

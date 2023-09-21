@@ -4,13 +4,12 @@ namespace Src\BlendedConcept\Organization\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\Organization\Application\DTO\TeacherData;
-use Src\BlendedConcept\Organization\Domain\Model\Entities\Teacher;
-use Src\BlendedConcept\Organization\Domain\Resources\TeacherResource;
 use Src\BlendedConcept\Organization\Application\Mappers\TeacherMapper;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Organization\Domain\Model\Entities\Teacher;
 use Src\BlendedConcept\Organization\Domain\Repositories\TeacherRepositoryInterface;
+use Src\BlendedConcept\Organization\Domain\Resources\TeacherResource;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class TeacherRepository implements TeacherRepositoryInterface
 {
@@ -102,7 +101,7 @@ class TeacherRepository implements TeacherRepositoryInterface
                     $updateUserEloquent->update();
                 }
             }
-        DB::commit();
+            DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error);
@@ -111,7 +110,7 @@ class TeacherRepository implements TeacherRepositoryInterface
 
     public function delete(int $teacher_id): void
     {
-        $teacher= UserEloquentModel::query()->findOrFail($teacher_id);
+        $teacher = UserEloquentModel::query()->findOrFail($teacher_id);
         $teacher->clearMediaCollection('image'); // Replace with the actual collection name
         $teacher->delete();
     }

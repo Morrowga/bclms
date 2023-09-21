@@ -7,13 +7,14 @@ use Src\BlendedConcept\Organization\Application\DTO\TeacherData;
 use Src\BlendedConcept\Organization\Application\Mappers\TeacherMapper;
 use Src\BlendedConcept\Organization\Application\Requests\StoreTeacherRequest;
 use Src\BlendedConcept\Organization\Application\Requests\UpdateTeacherRequest;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\ShowTeacher;
-use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\GetTeacherList;
-use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\StoreTeacherCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\DeleteTeacherCommand;
+use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\StoreTeacherCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\UpdateTeacherCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\Student\GetStudentList;
+use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\GetTeacherList;
+use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\ShowTeacher;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+
 class OrganizationTeacherController
 {
     public function index()
@@ -23,6 +24,7 @@ class OrganizationTeacherController
         $teachers = (new GetTeacherList())->handle();
 
         $studentListWithPagniation = (new GetStudentList($filters))->handle();
+
         // return $teachers;
         return Inertia::render(config('route.organizations-teacher.index'), [
             'teachers' => $teachers,
@@ -35,7 +37,7 @@ class OrganizationTeacherController
         return Inertia::render(config('route.organizations-teacher.create'));
     }
 
-     /**
+    /**
      * This function stores a new teacher.
      *
      * @param  StoreTeacherRequest  $request The request object
@@ -69,27 +71,29 @@ class OrganizationTeacherController
     public function show($id)
     {
         $teacher = (new ShowTeacher($id))->handle();
+
         // return $teacher;
-        return Inertia::render(config('route.organizations-teacher.show'),[
-            'teacher' => $teacher
+        return Inertia::render(config('route.organizations-teacher.show'), [
+            'teacher' => $teacher,
         ]);
     }
 
     public function edit($id)
     {
         $teacher = (new ShowTeacher($id))->handle();
-        return Inertia::render(config('route.organizations-teacher.edit'),[
-            'teacher' => $teacher
+
+        return Inertia::render(config('route.organizations-teacher.edit'), [
+            'teacher' => $teacher,
         ]);
     }
 
-     /**
+    /**
      * Update an teacher.
      *
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateTeacherRequest $request,$teacher)
+    public function update(UpdateTeacherRequest $request, $teacher)
     {
         // abort_if(authorize('edit', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -101,12 +105,12 @@ class OrganizationTeacherController
          * Try to update the teacher.
          */
         // try {
-            $teacherEloquent = UserEloquentModel::find($teacher);
-            $teacherData = TeacherData::fromRequest($request, $teacherEloquent->id);
-            $updateTeacherCommand = (new UpdateTeacherCommand($teacherData));
-            $updateTeacherCommand->execute();
+        $teacherEloquent = UserEloquentModel::find($teacher);
+        $teacherData = TeacherData::fromRequest($request, $teacherEloquent->id);
+        $updateTeacherCommand = (new UpdateTeacherCommand($teacherData));
+        $updateTeacherCommand->execute();
 
-            return redirect()->route('organizations-teacher.show', $teacherEloquent->id)->with('successMessage', 'Teacher updated Successfully!');
+        return redirect()->route('organizations-teacher.show', $teacherEloquent->id)->with('successMessage', 'Teacher updated Successfully!');
         // } catch (\Exception $e) {
         //     /**
         //      * Catch any exceptions and display an error message.
@@ -115,7 +119,7 @@ class OrganizationTeacherController
         // }
     }
 
-     /**
+    /**
      * Delete an teacher.
      *
      * @param  UserEloquentModel  $teacher The teacher to delete.
@@ -141,4 +145,3 @@ class OrganizationTeacherController
         }
     }
 }
-

@@ -4,7 +4,6 @@ namespace Src\BlendedConcept\Organization\Domain\Model\Entities;
 
 use Src\Common\Domain\Entity;
 
-
 class Teacher extends Entity
 {
     public function __construct(
