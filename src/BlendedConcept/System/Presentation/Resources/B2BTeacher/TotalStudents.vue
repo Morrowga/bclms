@@ -11,17 +11,14 @@ import {
     onPerPageChange,
     serverPage,
     serverPerPage,
-    datas,
-    routeName,
-} from "./useStudentsDatatable.js";
-
-serverPage.value = ref(datas.value?.current_page ?? 1);
+} from "@Composables/useServerSideDatable.js";
+let props = defineProps(["students", "flash"]);
+serverPage.value = ref(props.students.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
-routeName.value = "classrooms.getStudents";
+
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
-
 const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
 </script>
 <template>
@@ -54,7 +51,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
             <v-col
                 cols="6"
                 md="3"
-                v-for="student in datas.data"
+                v-for="student in props.students.data"
                 :key="student.id"
             >
                 <StudentAvatar
@@ -69,7 +66,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                 v-model="serverPage"
                 size="small"
                 :total-visible="5"
-                :length="datas.last_page"
+                :length="props.students.meta.last_page"
                 @next="onPageChange"
                 @prev="onPageChange"
                 @click="onPageChange"

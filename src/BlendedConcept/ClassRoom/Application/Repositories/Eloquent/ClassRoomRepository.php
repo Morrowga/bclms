@@ -92,13 +92,36 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
 
     public function getTeachers($filters)
     {
-        return UserEloquentModel::filter($filters)->whereHas('role_user', function ($query) {
-            $query->where('name', 'Teacher');
-        })->paginate($filters['perPage'] ?? 10);
+        return UserEloquentModel::filter($filters)
+            ->whereHas('role_user', function ($query) {
+                $query->where('name', 'Teacher');
+            })
+            ->whereHas('b2bUser', function ($query) {
+                $query->where('organization_id', auth()->user()->organization_id);
+            })
+            ->paginate($filters['perPage'] ?? 10);
     }
 
     public function getStudents($filters)
     {
-        return StudentEloquentModel::filter($filters)->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+        return StudentEloquentModel::filter($filters)
+            ->whereHas('organizations', function ($query) {
+                $query->where('id', auth()->user()->organization_id);
+            })
+            ->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+    }
+
+    public function getOrgTeacherClassrooms($filters)
+    {
+        $classrooms
+            = ClassRoomResource::collection(ClassRoomEloquentModel::filter($filters)
+                ->withCount('teachers', 'students')
+                ->where('organization_id', auth()->user()->organization_id)
+                ->whereHas('teachers', function ($query) {
+                    $query->where('id', auth()->user()->id);
+                })
+                ->orderBy('id', 'desc')
+                ->paginate($filters['perPage'] ?? 10));
+        return $classrooms;
     }
 }

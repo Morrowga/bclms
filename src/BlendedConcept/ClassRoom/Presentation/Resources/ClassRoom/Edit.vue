@@ -71,6 +71,7 @@ onMounted(() => {
             ref="refForm"
             v-model="isFormValid"
             @submit.prevent="handleSubmit"
+            @keydown.enter="$event.preventDefault()"
         >
             <VContainer>
                 <span class="span-text ruddy-bold">Create Classroom</span>

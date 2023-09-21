@@ -4,6 +4,8 @@ import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue"
 import UserExperienceSurvey from "./components/UserExperienceSurvey.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue";
+import { defineProps } from "vue";
+let props = defineProps(["org_teacher_students", "org_teacher_classrooms"]);
 </script>
 
 <template>
@@ -29,55 +31,26 @@ import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue"
                     <div class="mt-5">
                         <v-row>
                             <v-col
-                                v-for="n in 8"
-                                :key="n"
+                                v-for="classroom in props.org_teacher_classrooms
+                                    .data"
+                                :key="classroom.id"
                                 cols="12"
                                 sm="6"
                                 md="4"
                                 lg="3"
                             >
                                 <ClassroomCard
-                                    :route="route('showCopy', 1)"
-                                    count="5 / 5"
-                                    :label="`${n}A`"
+                                    :route="route('showCopy', classroom.id)"
+                                    :count="showCount(classroom)"
+                                    :label="classroom.name"
+                                    :image="classroom.classroom_photo"
                                 />
                             </v-col>
                         </v-row>
                     </div>
                 </VCol>
                 <VCol cols="12" sm="12" lg="12" class="mt-10">
-                    <div class="header">
-                        <div class="d-flex justify-end mb-4">
-                            <h1 class="tiggie-title">Student</h1>
-                            <v-spacer></v-spacer>
-                            <v-spacer></v-spacer>
-                            <v-spacer></v-spacer>
-                            <VTextField
-                                placeholder="Search User ..."
-                                density="compact"
-                                class="mr-4"
-                            />
-
-                            <SelectBox
-                                label="Sort By"
-                                :datas="[]"
-                                density="compact"
-                            />
-                        </div>
-                        <VRow no-gutters>
-                            <v-col v-for="n in 12" :key="n">
-                                <StudentAvatar
-                                    image="/images/student.png"
-                                    title="Wren Clark"
-                                    phone_number="9111 1112"
-                                    route="#"
-                                />
-                            </v-col>
-                        </VRow>
-                        <VRow class="d-flex justify-center align-center">
-                            <Pagination />
-                        </VRow>
-                    </div>
+                    <TotalStudents :students="props.org_teacher_students" />
                 </VCol>
             </VRow>
         </VContainer>

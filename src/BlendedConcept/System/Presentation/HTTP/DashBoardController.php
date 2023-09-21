@@ -44,10 +44,8 @@ class DashBoardController extends Controller
         $UserCount = (new GetSuperAdminListCount())->handle();
 
         $classrooms = (new GetClassroomForOrgAdminDashboard($filters = ['search', 'perPage', 'page']))->handle()['paginate_classrooms'];
-        $org_students = (new GetStudentForOrgAdminDashboard($filters = ['search', 'perPage', 'page']))->handle();
-        $org_teachers = (new GetTeacherForOrgAdminDashboard($filters = ['search', 'perPage', 'page']))->handle();
         //here I render it inside
-        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students', 'UserCount', 'org_students', 'org_teachers', 'classrooms'));
+        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students', 'UserCount', 'classrooms'));
     }
 
     /***

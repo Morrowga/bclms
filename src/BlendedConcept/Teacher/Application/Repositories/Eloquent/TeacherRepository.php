@@ -3,6 +3,7 @@
 namespace Src\BlendedConcept\Teacher\Application\Repositories\Eloquent;
 
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Teacher\Application\DTO\TeacherData;
 use Src\BlendedConcept\Teacher\Application\Mappers\TeacherMapper;
 use Src\BlendedConcept\Teacher\Domain\Model\Teacher;
@@ -69,5 +70,15 @@ class TeacherRepository implements TeacherRepositoryInterface
         }
 
         $updateUserEloquent->roles()->sync(request('role'));
+    }
+
+    public function getOrgTeacherStudents($filters)
+    {
+
+        return StudentEloquentModel::filter($filters)
+            ->whereHas('organizations', function ($query) {
+                $query->where('id', auth()->user()->organization_id);
+            })
+            ->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
     }
 }

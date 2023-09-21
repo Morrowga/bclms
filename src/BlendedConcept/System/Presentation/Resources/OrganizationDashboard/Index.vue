@@ -1,14 +1,11 @@
 <script setup>
 import UserListCard from "@mainRoot/components/UserListCard.vue";
-
-import TotalClassRooms from "./TotalClassRooms.vue";
 import TotalStudents from "./TotalStudents.vue";
-import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue";
-import TeacherAvatar from "@mainRoot/components/TeacherAvatar/TeacherAvatar.vue";
+import TotalTeachers from "./TotalTeachers.vue";
+
 import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue";
-import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
+
 import UserExperienceSurvey from "./components/UserExperienceSurvey.vue";
-import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 const statisticsWithImages = [
     {
@@ -29,14 +26,13 @@ const statisticsWithImages = [
     },
 ];
 
-const props = defineProps(["classrooms", "students", "teachers"]);
+const props = defineProps(["classrooms"]);
 const showCount = (classroom) => {
     return classroom?.students_count + "/" + classroom?.teachers_count;
 };
 onMounted(() => {
     console.log(props.classrooms);
 });
-const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
 </script>
 
 <template>
@@ -73,97 +69,10 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                 </div>
             </VCol>
             <VCol cols="12" sm="12" lg="12" class="mt-10">
-                <div class="header">
-                    <div class="d-flex justify-space-between align-center mb-4">
-                        <h1 class="tiggie-title">Student</h1>
-
-                        <div class="d-flex">
-                            <div class="search-field">
-                                <VTextField
-                                    placeholder="Search User ..."
-                                    density="compact"
-                                    class="mr-4"
-                                    variant="solo"
-                                />
-                            </div>
-
-                            <div class="sort-field">
-                                <SelectBox
-                                    placeholder="Sort By"
-                                    :datas="['A-Z', 'Z-A', 'Contact Number']"
-                                    density="compact"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <VRow no-gutters>
-                        <v-col
-                            cols="6"
-                            md="3"
-                            v-for="student in props.students.data"
-                            :key="student.id"
-                        >
-                            <StudentAvatar
-                                :image="userImage(student)"
-                                :title="student?.user?.full_name"
-                                :phone_number="student?.user?.contact_number"
-                            />
-                        </v-col>
-                    </VRow>
-                    <VRow class="d-flex justify-center align-center">
-                        <Pagination />
-                    </VRow>
-                </div>
+                <TotalStudents />
             </VCol>
             <VCol cols="12" sm="12" lg="12" class="mt-10">
-                <div class="header">
-                    <div class="d-flex justify-space-between align-center mb-4">
-                        <h1 class="tiggie-title">Teacher</h1>
-
-                        <div class="d-flex">
-                            <div class="search-field">
-                                <VTextField
-                                    placeholder="Search User ..."
-                                    density="compact"
-                                    class="mr-4"
-                                    variant="solo"
-                                />
-                            </div>
-
-                            <div class="sort-field">
-                                <SelectBox
-                                    placeholder="Sort By"
-                                    :datas="['A-Z', 'Z-A', 'Contact Number']"
-                                    density="compact"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <VRow no-gutters>
-                        <!-- :route="
-                                    route(
-                                        'organizations-teacher.show'
-                                    )
-                                " -->
-                        <v-col
-                            cols="6"
-                            md="3"
-                            v-for="teacher in props.teachers.data"
-                            :key="teacher.id"
-                        >
-                            <TeacherAvatar
-                                class="py-2"
-                                :image="userImage(teacher)"
-                                :title="teacher.full_name"
-                                :phone_number="teacher.contact_number"
-                                storage="135 MB/ 200 MB"
-                            />
-                        </v-col>
-                    </VRow>
-                    <VRow class="d-flex justify-center align-center">
-                        <Pagination />
-                    </VRow>
-                </div>
+                <TotalTeachers />
             </VCol>
         </VRow>
         <UserExperienceSurvey />

@@ -1,8 +1,9 @@
 <script setup>
 import axios from "axios";
+import TeacherAvatar from "@mainRoot/components/TeacherAvatar/TeacherAvatar.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
+
 import {
     serverParams,
     onColumnFilter,
@@ -13,21 +14,20 @@ import {
     serverPerPage,
     datas,
     routeName,
-} from "./useStudentsDatatable.js";
+} from "./useTeachersDatatable.js";
 
 serverPage.value = ref(datas.value?.current_page ?? 1);
 serverPerPage.value = ref(10);
-routeName.value = "classrooms.getStudents";
+routeName.value = "classrooms.getTeachers";
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
-
 const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
 </script>
 <template>
     <div class="header">
         <div class="d-flex justify-space-between align-center mb-4">
-            <h1 class="tiggie-title">Student</h1>
+            <h1 class="tiggie-title">Teacher</h1>
 
             <div class="d-flex">
                 <div class="search-field">
@@ -51,16 +51,23 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
             </div>
         </div>
         <VRow no-gutters>
+            <!-- :route="
+                                    route(
+                                        'organizations-teacher.show'
+                                    )
+                                " -->
             <v-col
                 cols="6"
                 md="3"
-                v-for="student in datas.data"
-                :key="student.id"
+                v-for="teacher in datas.data"
+                :key="teacher.id"
             >
-                <StudentAvatar
-                    :image="userImage(student)"
-                    :title="student?.user?.full_name"
-                    :phone_number="student?.user?.contact_number"
+                <TeacherAvatar
+                    class="py-2"
+                    :image="userImage(teacher)"
+                    :title="teacher.full_name"
+                    :phone_number="teacher.contact_number"
+                    storage="135 MB/ 200 MB"
                 />
             </v-col>
         </VRow>
