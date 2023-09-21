@@ -2,12 +2,18 @@
 import { ref, defineProps } from "vue";
 let model = ref(false);
 import PlaylistCard from "./PlaylistCard.vue";
+const props = defineProps({
+  datas: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
 <template>
     <v-slide-group v-model="model" center-active show-arrows mandatory>
-        <v-slide-group-item v-for="data in 8" :key="data">
+        <v-slide-group-item v-for="data in props.datas" :key="data">
             <div class="mx-4 card-container">
-                <PlaylistCard />
+                <PlaylistCard :data="data"/>
             </div>
         </v-slide-group-item>
     </v-slide-group>

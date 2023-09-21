@@ -79,9 +79,18 @@ class StudentRepository implements StudentRepositoryInterface
 
         if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {
 
-            $studentEloquentModel->getFirstMedia('profile_pics')->delete();
-            $studentEloquentModel->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organization');
-            $user->profile_pic = $studentEloquentModel->getFirstMediaUrl('profile_pics');
+            $old_image = $studentEloquentModel->getFirstMedia('profile_pics');
+            if($old_image !== null){
+                $old_image->delete();
+            }
+
+            $newMediaItem = $studentEloquentModel->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organization');
+
+            if ($newMediaItem->getUrl()) {
+                $userEloquentModel = UserEloquentModel::find($studentData->user_id);
+                $userEloquentModel->profile_pic = $newMediaItem->getUrl();
+                $userEloquentModel->update();
+            }
         }
 
     }

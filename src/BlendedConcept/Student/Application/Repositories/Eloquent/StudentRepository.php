@@ -90,4 +90,15 @@ class StudentRepository implements StudentRepositoryInterface
     {
         return StudentEloquentModel::filter($filters)->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
     }
+
+    public function showStudent($id)
+    {
+
+        $student = new StudentResources(StudentEloquentModel::where('student_id', $id)
+        ->with(['user', 'learningneeds', 'disability_types', 'playlists.storybooks'])
+        ->orderBy('student_id', 'desc')
+        ->first());
+
+        return $student;
+    }
 }
