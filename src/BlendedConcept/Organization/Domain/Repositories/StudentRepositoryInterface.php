@@ -14,7 +14,7 @@ interface StudentRepositoryInterface
 
     public function updateStudent(StudentData $studentData);
 
-    public function deleteStudent(StudentEloquentModel $studentEloquentModel);
+    public function deleteStudent($student);
 
     public function getLearningNeed();
 

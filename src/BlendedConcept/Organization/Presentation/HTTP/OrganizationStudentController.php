@@ -14,7 +14,7 @@ use Src\BlendedConcept\Organization\Application\Requests\UpdateStudentRequest;
 use Src\BlendedConcept\Organization\Application\DTO\StudentData;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\Student\UpdateStudentCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\Student\GetStudentList;
-
+use Src\BlendedConcept\Organization\Application\UseCases\Commands\Student\DeleteStudentCommand;
 class OrganizationStudentController
 {
 
@@ -77,7 +77,18 @@ class OrganizationStudentController
 
     public function show(StudentEloquentModel $organizations_student)
     {
-        return $organizations_student;
-        return Inertia::render(config('route.organizations-student.show'));
+
+        $organizations_student->load(['organizations', 'user', 'disability_types', 'learningneeds']);
+
+        // // return $organizations_student;
+        return Inertia::render(config('route.organizations-student.show'),compact('organizations_student'));
+    }
+
+    public function destroy(StudentEloquentModel $organizations_student)
+    {
+
+        (new DeleteStudentCommand($organizations_student))->execute();
+
+        return to_route('organizations-teacher.index')->with('successMessage', 'Student Deleted Successfully!');;
     }
 }
