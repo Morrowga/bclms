@@ -13,9 +13,19 @@ use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquen
 use Src\BlendedConcept\Organization\Application\Requests\UpdateStudentRequest;
 use Src\BlendedConcept\Organization\Application\DTO\StudentData;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\Student\UpdateStudentCommand;
+use Src\BlendedConcept\Organization\Application\UseCases\Queries\Student\GetStudentList;
 
 class OrganizationStudentController
 {
+
+    public function index()
+    {
+        $filters = request(['search', 'first_name', 'last_name', 'email']) ?? [];
+        $studentListWithPagniation = (new GetStudentList($filters))->handle();
+        return Inertia::render(config('route.organizations-teacher.index'), [
+            'students' => $studentListWithPagniation,
+        ]);
+    }
     public function create()
     {
         // $disability_types =
@@ -31,7 +41,6 @@ class OrganizationStudentController
             $student = (new CreateStudentCommand($newStudent))->execute();
 
             return to_route('organizations-teacher.index')->with('successMessage', 'Student Created Successfully!');;
-
         } catch (\Exception $error) {
             dd($error->getMessage());
             return Inertia::render(config('route.organizations-student.create'));
@@ -60,14 +69,15 @@ class OrganizationStudentController
             (new UpdateStudentCommand($updateStudent))->execute();
 
             return to_route('organizations-teacher.index')
-            ->with('successMessage', 'Student Updated Successfully!');
+                ->with('successMessage', 'Student Updated Successfully!');
         } catch (\Exception $error) {
             //throw $th;
         }
     }
 
-    public function show()
+    public function show(StudentEloquentModel $organizations_student)
     {
+        return $organizations_student;
         return Inertia::render(config('route.organizations-student.show'));
     }
 }

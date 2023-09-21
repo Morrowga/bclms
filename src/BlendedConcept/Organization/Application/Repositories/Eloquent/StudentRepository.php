@@ -11,11 +11,16 @@ use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeE
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Organization\Application\Mappers\StudentMapper;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-
+use Src\BlendedConcept\Organization\Domain\Resources\StudentResource;
 class StudentRepository implements StudentRepositoryInterface
 {
     public function getStudents($filters)
     {
+        $users = StudentResource::collection(StudentEloquentModel::filter($filters)
+            ->with(['organizations', 'user', 'disability_types', 'learningneeds'])
+            ->paginate($filters['perPage'] ?? 10));
+
+        return $users;
     }
 
     public function createStudent(Student $student)
