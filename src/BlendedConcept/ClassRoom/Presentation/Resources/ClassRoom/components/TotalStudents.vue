@@ -66,16 +66,6 @@ watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
 
-//## truncatedText
-let truncatedText = (text) => {
-    if (text) {
-        if (text?.length <= 30) {
-            return text;
-        } else {
-            return text?.substring(0, 30) + "...";
-        }
-    }
-};
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
@@ -183,6 +173,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
     border: none;
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
+
 .chip {
     display: inline-flex;
     flex-direction: row;
@@ -212,6 +203,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
     padding-left: 12px;
     padding-right: 12px;
 }
+
 .std-width-high {
     width: 60px !important;
     height: 60px !important;

@@ -1,6 +1,5 @@
 <script setup>
 import UserListCard from "@mainRoot/components/UserListCard.vue";
-import { defineProps } from "vue";
 
 import TotalClassRooms from "./TotalClassRooms.vue";
 import TotalStudents from "./TotalStudents.vue";
@@ -29,6 +28,15 @@ const statisticsWithImages = [
         color: "success",
     },
 ];
+
+const props = defineProps(["classrooms", "students", "teachers"]);
+const showCount = (classroom) => {
+    return classroom?.students_count + "/" + classroom?.teachers_count;
+};
+onMounted(() => {
+    console.log(props.classrooms);
+});
+const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
 </script>
 
 <template>
@@ -47,17 +55,18 @@ const statisticsWithImages = [
                 <div class="mt-5">
                     <v-row>
                         <v-col
-                            v-for="n in 8"
-                            :key="n"
+                            v-for="classroom in props.classrooms.data"
+                            :key="classroom.id"
                             cols="12"
                             sm="6"
                             md="4"
                             lg="3"
                         >
                             <ClassroomCard
-                                :route="route('showCopy', 1)"
-                                count="5 / 5"
-                                :label="`${n}A`"
+                                :route="route('showCopy', classroom.id)"
+                                :count="showCount(classroom)"
+                                :label="classroom.name"
+                                :image="classroom.classroom_photo"
                             />
                         </v-col>
                     </v-row>
@@ -88,12 +97,16 @@ const statisticsWithImages = [
                         </div>
                     </div>
                     <VRow no-gutters>
-                        <v-col v-for="n in 12" :key="n">
+                        <v-col
+                            cols="6"
+                            md="3"
+                            v-for="student in props.students.data"
+                            :key="student.id"
+                        >
                             <StudentAvatar
-                                route="view_students/show"
-                                image="/images/student.png"
-                                title="Wren Clark"
-                                phone_number="9111 1112"
+                                :image="userImage(student)"
+                                :title="student?.user?.full_name"
+                                :phone_number="student?.user?.contact_number"
                             />
                         </v-col>
                     </VRow>
@@ -132,12 +145,17 @@ const statisticsWithImages = [
                                         'organizations-teacher.show'
                                     )
                                 " -->
-                        <v-col v-for="n in 12" :key="n">
+                        <v-col
+                            cols="6"
+                            md="3"
+                            v-for="teacher in props.teachers.data"
+                            :key="teacher.id"
+                        >
                             <TeacherAvatar
                                 class="py-2"
-                                image="/images/teacher.png"
-                                title="Wren Clark"
-                                phone_number="9111 1112"
+                                :image="userImage(teacher)"
+                                :title="teacher.full_name"
+                                :phone_number="teacher.contact_number"
                                 storage="135 MB/ 200 MB"
                             />
                         </v-col>

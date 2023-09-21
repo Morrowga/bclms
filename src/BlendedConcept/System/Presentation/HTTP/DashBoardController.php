@@ -5,7 +5,10 @@ namespace Src\BlendedConcept\System\Presentation\HTTP;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgAdminDashboard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetStudentForAdminDashBoard;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetStudentForOrgAdminDashboard;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetTeacherForOrgAdminDashboard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetUserForAdminDashBoard;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetSuperAdminListCount;
 use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
@@ -40,8 +43,11 @@ class DashBoardController extends Controller
 
         $UserCount = (new GetSuperAdminListCount())->handle();
 
+        $classrooms = (new GetClassroomForOrgAdminDashboard($filters = ['search', 'perPage', 'page']))->handle()['paginate_classrooms'];
+        $org_students = (new GetStudentForOrgAdminDashboard($filters = ['search', 'perPage', 'page']))->handle();
+        $org_teachers = (new GetTeacherForOrgAdminDashboard($filters = ['search', 'perPage', 'page']))->handle();
         //here I render it inside
-        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students', 'UserCount'));
+        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students', 'UserCount', 'org_students', 'org_teachers', 'classrooms'));
     }
 
     /***
