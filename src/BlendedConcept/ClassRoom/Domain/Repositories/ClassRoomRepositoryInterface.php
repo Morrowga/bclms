@@ -7,13 +7,13 @@ use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
 
 interface ClassRoomRepositoryInterface
 {
-    public function getClassRooms($filers);
+    public function getClassRooms($filters);
 
     public function createClassRoom(ClassRoom $classRoom);
 
     public function updateClassRoom(ClassRoomData $classRoomData);
 
-    public function getTeachers();
+    public function getTeachers($filters);
 
-    public function getStudents();
+    public function getStudents($filters);
 }

@@ -16,8 +16,7 @@ import {
     serverPerPage,
     datas,
     routeName,
-} from "./useStudentsDatatable.js";
-
+} from "./useTeachersDatatable.js";
 const props = defineProps({
     form: {
         type: Object,
@@ -30,8 +29,6 @@ const props = defineProps({
         },
     },
 });
-routeName.value = "classrooms.getStudents";
-let students = ref([]);
 //## start datatable section
 let columns = [
     {
@@ -40,18 +37,13 @@ let columns = [
         sortable: false,
     },
     {
-        label: "Education Level",
-        field: "education_level",
+        label: "Email Level",
+        field: "email",
         sortable: false,
     },
     {
-        label: "Age",
-        field: "age",
-        sortable: false,
-    },
-    {
-        label: "Disability Type",
-        field: "disability_types",
+        label: "Contact Number",
+        field: "contact_number",
         sortable: false,
     },
 ];
@@ -59,7 +51,7 @@ let rows = ref([]);
 
 serverPage.value = ref(datas.value?.current_page ?? 1);
 serverPerPage.value = ref(10);
-
+routeName.value = "classrooms.getTeachers";
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
@@ -86,36 +78,30 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
 
             <VCol cols="12">
                 <VRow class="bg-line mx-1 rounded pa-1 mb-5" align="center">
-                    <VCol cols="3" class="d-flex justify-center">
+                    <VCol cols="4" class="d-flex justify-center">
                         <VLabel class="tiggie-label"> Name </VLabel>
                         <VIcon icon="mdi-menu-down"></VIcon>
                     </VCol>
-                    <VCol cols="3">
-                        <VLabel class="tiggie-label"> Education Level </VLabel>
+                    <VCol cols="4">
+                        <VLabel class="tiggie-label"> Email </VLabel>
                     </VCol>
-                    <VCol cols="3">
-                        <VLabel class="tiggie-label"> Age </VLabel>
-                        <VIcon icon="mdi-menu-down"></VIcon>
-                    </VCol>
-
-                    <VCol cols="3">
-                        <VLabel class="tiggie-label"> Disability Type </VLabel>
+                    <VCol cols="4">
+                        <VLabel class="tiggie-label"> Contact Number </VLabel>
                         <VIcon icon="mdi-menu-down"></VIcon>
                     </VCol>
                 </VRow>
-
                 <VRow
                     class="bg-line mx-1 rounded pa-1 my-2"
                     v-for="data in datas.data"
-                    :key="data.student_id"
+                    :key="data.id"
                     align="center"
                 >
-                    <VCol cols="3">
+                    <VCol cols="4">
                         <div class="d-flex align-center">
                             <div class="d-flex align-center">
                                 <v-checkbox
-                                    v-model="props.form.students"
-                                    :value="data.student_id"
+                                    v-model="props.form.teachers"
+                                    :value="data.id"
                                 />
                                 <v-img
                                     width="100"
@@ -124,23 +110,16 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                                 />
                             </div>
                             <span>
-                                {{ data.user?.full_name }}
+                                {{ data.full_name }}
                             </span>
                         </div>
                     </VCol>
-                    <VCol cols="3">
-                        <span>
-                            {{ data.education_level }}
-                        </span>
-                    </VCol>
-                    <VCol cols="3">
-                        <p class="tiggie-p">
-                            {{ data.age ? data.age : "---" }}
-                        </p>
+                    <VCol cols="4">
+                        <p class="tiggie-p">{{ data.email }}</p>
                     </VCol>
 
-                    <VCol cols="3">
-                        <VChip color="success">Active</VChip>
+                    <VCol cols="4">
+                        <p color="tiggie-p">{{ data.contact_number }}</p>
                     </VCol>
                 </VRow>
                 <VRow justify="center" align="center">
