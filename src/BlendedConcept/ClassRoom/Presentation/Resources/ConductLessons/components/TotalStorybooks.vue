@@ -18,22 +18,21 @@ import {
     serverPerPage,
     datas,
     routeName,
-} from "./useStudentsDatatable.js";
+} from "./useStorybooksDatatable.js";
 
 const props = defineProps({
     form: {
         type: Object,
         default: {
             name: "",
-            description: "",
             image: "",
-            students: [],
-            teachers: [],
+            student_id: "",
+            storybooks: [],
         },
     },
 });
-routeName.value = "classrooms.getStudents";
-let students = ref([]);
+routeName.value = "playlists.getStorybooks";
+let storybooks = ref([]);
 //## start datatable section
 let rows = ref([]);
 
@@ -47,75 +46,45 @@ watch(serverPerPage, function (value) {
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
-const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
 </script>
 <template>
     <section>
         <VCard>
             <VDivider />
-
             <VCol cols="12">
-                <VRow class="bg-line mx-1 rounded pa-1 mb-5" align="center">
-                    <VCol cols="3" class="d-flex justify-center">
-                        <VLabel class="tiggie-label"> Name </VLabel>
-                        <VIcon icon="mdi-menu-down"></VIcon>
-                    </VCol>
-                    <VCol cols="3">
-                        <VLabel class="tiggie-label"> Education Level </VLabel>
-                    </VCol>
-                    <VCol cols="3">
-                        <VLabel class="tiggie-label"> Age </VLabel>
-                        <VIcon icon="mdi-menu-down"></VIcon>
-                    </VCol>
-
-                    <VCol cols="3">
-                        <VLabel class="tiggie-label"> Disability Type </VLabel>
-                        <VIcon icon="mdi-menu-down"></VIcon>
-                    </VCol>
-                </VRow>
-
-                <VRow
-                    class="bg-line mx-1 rounded pa-1 my-2"
-                    v-for="data in datas.data"
-                    :key="data.student_id"
-                    align="center"
-                >
-                    <VCol cols="3">
-                        <div class="d-flex align-center">
-                            <div class="d-flex align-center">
-                                <v-checkbox
-                                    v-model="props.form.students"
-                                    :value="data.student_id"
+                <VRow>
+                    <VCol cols="3" v-for="item in datas" :key="item" class="pa-1">
+                            <VCard>
+                                <VImg
+                                    :src="item.thumbnail_img == '' || item.thumbnail_img == null  ? '/images/2.jpg' : item.thumbnail_img"
+                                    height="282px"
+                                    cover
                                 />
-                                <v-img
-                                    width="100"
-                                    :aspect-ratio="16 / 9"
-                                    :src="userImage(data)"
-                                />
-                            </div>
-                            <span>
-                                {{ data.user?.full_name }}
-                            </span>
-                        </div>
-                    </VCol>
-                    <VCol cols="3">
-                        <span>
-                            {{ data.education_level }}
-                        </span>
-                    </VCol>
-                    <VCol cols="3">
-                        <p class="tiggie-p">
-                            {{ data.age ? data.age : "---" }}
-                        </p>
-                    </VCol>
-
-                    <VCol cols="3">
-                        <ChipWithBlueDot
-                            v-for="item in data.disability_types"
-                            :key="item.id"
-                            :title="item.name"
-                        />
-                    </VCol>
+                                <div class="select-box">
+                                    <VCheckbox
+                                        color="secondary"
+                                        class="checkbox-position"
+                                        v-model="props.form.storybooks"
+                                        :value="item.id"
+                                    />
+                                </div>
+                                <VCardItem>
+                                    <VCardTitle
+                                        class="text-center tiggie-teacher-p tiggie-black-color fw-700"
+                                        >
+                                        {{ item.name }}
+                                    </VCardTitle>
+                                    <ChipWithBlueDot v-for="item in item.disability_types" :key="item.id" :title="item.name" />
+                                </VCardItem>
+                                <VCardActions>
+                                    <div class="d-flex gap-1">
+                                        <GreenChip title="Switch" />
+                                        <GreenChip title="Eye-Gaze" />
+                                        <GreenChip title="Touch" />
+                                    </div>
+                                </VCardActions>
+                            </VCard>
+                        </VCol>
                 </VRow>
                 <VRow justify="center" align="center">
                     <VPagination
@@ -151,7 +120,6 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
     border: none;
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
-
 .chip {
     display: inline-flex;
     flex-direction: row;
@@ -181,7 +149,6 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
     padding-left: 12px;
     padding-right: 12px;
 }
-
 .std-width-high {
     width: 60px !important;
     height: 60px !important;

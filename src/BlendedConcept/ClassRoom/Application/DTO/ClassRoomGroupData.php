@@ -10,6 +10,7 @@ class ClassRoomGroupData
         public readonly ?int $id,
         public readonly int $classroom_id,
         public readonly string $name,
+        public readonly ?array $students
 
     ) {
     }
@@ -20,6 +21,7 @@ class ClassRoomGroupData
             id: $classroom_id,
             classroom_id: $request->classroom_id,
             name: $request->name,
+            students: $request->students
         );
     }
 
@@ -29,6 +31,7 @@ class ClassRoomGroupData
             'id' => $this->id,
             'classroom_id' => $this->classroom_id,
             'name' => $this->name,
+            'students' => $this->students
         ];
     }
 }

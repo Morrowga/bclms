@@ -31,16 +31,29 @@ let clicked = () => {
 
 <template>
     <div>
-        <Link :href="route">
+        <div v-if="props.type">
             <v-btn
                 variant="flat"
+                :type="props.type"
                 rounded
                 color="rgba(55, 73, 233, 0.10)"
                 class="text-primary"
                 :width="width"
-                @click="clicked"
                 >{{ title }}</v-btn
             >
-        </Link>
+        </div>
+        <div v-else>
+            <Link :href="route">
+                <v-btn
+                    variant="flat"
+                    rounded
+                    color="rgba(55, 73, 233, 0.10)"
+                    class="text-primary"
+                    :width="width"
+                    @click="clicked"
+                    >{{ title }}</v-btn
+                >
+            </Link>
+        </div>
     </div>
 </template>

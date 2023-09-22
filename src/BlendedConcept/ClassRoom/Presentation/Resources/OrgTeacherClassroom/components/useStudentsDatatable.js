@@ -1,8 +1,10 @@
 import {ref} from "vue";
 import { router } from "@inertiajs/core";
+import axios from "axios";
 let serverPage = ref();
 let serverPerPage = ref(10);
-let routeParam = ref({});
+let routeName = ref("");
+let datas = ref([]);
 //## initial state
 let serverParams = ref({
     columnFilters: {},
@@ -78,12 +80,12 @@ let searchItems = () => {
  * load item everytime
  *
  */
-let loadItems = () => {
-    router.get(route(route().current(),routeParam.value), getQueryParams(), {
-        replace: false,
-        preserveState: true,
-        preserveScroll: true,
-    });
+let loadItems = async () => {
+    await axios
+        .get(route(routeName.value, getQueryParams()))
+        .then((resp) => {
+            datas.value = resp.data.data;
+        });
 };
 
 //## truncatedText
@@ -109,5 +111,6 @@ export
     onPerPageChange,
     serverPage,
     serverPerPage,
-    routeParam
+    routeName,
+    datas
 }

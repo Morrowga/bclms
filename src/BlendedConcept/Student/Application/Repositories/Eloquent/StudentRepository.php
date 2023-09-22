@@ -3,6 +3,7 @@
 namespace Src\BlendedConcept\Student\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Application\DTO\StudentData;
 use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
 use Src\BlendedConcept\Student\Domain\Model\Student;
@@ -95,10 +96,28 @@ class StudentRepository implements StudentRepositoryInterface
     {
 
         $student = new StudentResources(StudentEloquentModel::where('student_id', $id)
-        ->with(['user', 'learningneeds', 'disability_types', 'playlists.storybooks'])
-        ->orderBy('student_id', 'desc')
-        ->first());
+            ->with(['user', 'learningneeds', 'disability_types', 'playlists.storybooks'])
+            ->orderBy('student_id', 'desc')
+            ->first());
 
         return $student;
+    }
+
+    public function getStudentsByOrgTeacher($filters)
+    {
+        $teachers = UserEloquentModel::with('classrooms')->find(auth()->user()->id);
+        $classroom_ids = [];
+        foreach ($teachers->classrooms as $classroom) {
+            array_push($classroom_ids, $classroom->id);
+        }
+        return StudentEloquentModel::filter($filters)
+            ->whereHas('organizations', function ($query) {
+                $query->where('id', auth()->user()->organization_id);
+            })
+            ->whereHas('classrooms', function ($query) use ($classroom_ids) {
+                $query->whereIn('id', $classroom_ids);
+            })
+
+            ->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
     }
 }

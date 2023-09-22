@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquentModel;
 
 class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyEmail
 {
@@ -98,20 +99,20 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     {
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query
-                ->where('first_name', 'like', '%'.$search.'%')
-                ->orWhere('email', 'like', '%'.$search.'%')
-                ->orWhere('last_name', 'like', '%'.$search.'%');
+                ->where('first_name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('last_name', 'like', '%' . $search . '%');
         });
         $query->when($filters['roles'] ?? false, function ($query, $role) {
             $query->whereHas('roles', function ($query) use ($role) {
-                $query->where('name', 'like', '%'.$role.'%');
+                $query->where('name', 'like', '%' . $role . '%');
             });
         });
     }
 
     public function getFullNameAttribute()
     {
-        return $this->first_name.' '.$this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function role_user()
@@ -132,5 +133,9 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     public function getOrganizationIdAttribute()
     {
         return $this->b2bUser->organization_id ?? null;
+    }
+    public function classrooms()
+    {
+        return $this->belongsToMany(ClassroomEloquentModel::class, 'classroom_teachers', 'teacher_id', 'classroom_id');
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquentModel;
+use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\PlaylistEloquentModel;
@@ -100,5 +101,10 @@ class StudentEloquentModel extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo(UserEloquentModel::class, 'user_id', 'id');
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(ClassroomGroupEloquentModel::class, 'group_students', 'classroom_group_id', 'student_id')->with('students');
     }
 }
