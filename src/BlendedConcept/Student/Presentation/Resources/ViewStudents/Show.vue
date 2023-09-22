@@ -203,7 +203,7 @@ function checkURL(input) {
                                 </Link>
                                 <Link
                                     :href="
-                                        route('set_accessibility_device.index')
+                                        route('set_accessibility_device.index', props.student.data.student_id)
                                     "
                                 >
                                     <v-btn
