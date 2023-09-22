@@ -45,14 +45,11 @@ class StudentEloquentModel extends Model implements HasMedia
     ];
 
     public function getImageAttribute()
-<<<<<<< HEAD
     {
         return $this->getMedia('image');
     }
 
     public function getAgeAttribute()
-=======
->>>>>>> 5cd646bb9b5fba39565c1cfc758e624bcc0a2418
     {
         return $this->getMedia('image');
     }
