@@ -13,7 +13,7 @@ import {
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
 let props = defineProps(["students", "flash"]);
-serverPage.value = ref(props.students.meta.current_page ?? 1);
+serverPage.value = ref(props.students.current_page ?? 1);
 serverPerPage.value = ref(10);
 
 watch(serverPerPage, function (value) {
@@ -66,7 +66,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                 v-model="serverPage"
                 size="small"
                 :total-visible="5"
-                :length="props.students.meta.last_page"
+                :length="props.students.last_page"
                 @next="onPageChange"
                 @prev="onPageChange"
                 @click="onPageChange"

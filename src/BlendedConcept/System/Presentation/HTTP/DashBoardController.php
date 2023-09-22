@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgAdminDashboard;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgTeacherDashboard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetStudentForAdminDashBoard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetStudentForOrgAdminDashboard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetTeacherForOrgAdminDashboard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetUserForAdminDashBoard;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetSuperAdminListCount;
 use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
+use Src\BlendedConcept\Teacher\Application\UseCases\Queries\GetStudentsForOrgTeacherDashboard;
 use Src\Common\Infrastructure\Laravel\Controller;
 
 class DashBoardController extends Controller
@@ -43,9 +45,11 @@ class DashBoardController extends Controller
 
         $UserCount = (new GetSuperAdminListCount())->handle();
 
-        $classrooms = (new GetClassroomForOrgAdminDashboard($filters = ['search', 'perPage', 'page']))->handle()['paginate_classrooms'];
+        $classrooms = (new GetClassroomForOrgAdminDashboard($filters = request(['search', 'perPage', 'page'])))->handle()['paginate_classrooms'];
+        $org_teacher_classrooms = (new GetClassroomForOrgTeacherDashboard($filters = []))->handle();
+        $org_teacher_students = (new GetStudentsForOrgTeacherDashboard($filters = request(['search', 'perPage', 'page'])))->handle();
         //here I render it inside
-        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students', 'UserCount', 'classrooms'));
+        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students', 'UserCount', 'classrooms', 'org_teacher_classrooms', 'org_teacher_students'));
     }
 
     /***

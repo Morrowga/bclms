@@ -5,7 +5,11 @@ import UserExperienceSurvey from "./components/UserExperienceSurvey.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue";
 import { defineProps } from "vue";
+import TotalStudents from "./TotalStudents.vue";
 let props = defineProps(["org_teacher_students", "org_teacher_classrooms"]);
+const showCount = (classroom) => {
+    return classroom?.students_count + "/" + classroom?.teachers_count;
+};
 </script>
 
 <template>
