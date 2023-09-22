@@ -1,12 +1,12 @@
 <script setup>
-import TotalStudents from "./TotalStudents.vue";
+import TotalStorybooks from "./TotalStorybooks.vue";
 import {
     serverParams,
     searchItems,
     routeName,
-} from "./useStudentsDatatable.js";
+} from "./useStorybooksDatatable.js";
 import { defineProps } from "vue";
-routeName.value = "playlists.getStudents";
+routeName.value = "playlists.getStorybooks";
 const props = defineProps({
     form: {
         type: Object,
@@ -14,7 +14,7 @@ const props = defineProps({
             name: "",
             image: "",
             student_id: "",
-            students: [],
+            storybooks: [],
         },
     },
 });
@@ -23,34 +23,42 @@ const props = defineProps({
     <v-expansion-panel>
         <v-expansion-panel-title>
             <h2 class="font-weight-bold ruddy-bold fs-25">
-                Step 2: Select Students
+                Step 1: Select Storybooks
                 <v-chip class="chip-count">{{
-                    props.form.students.length
+                    props.form.storybooks.length
                 }}</v-chip>
             </h2>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
-            <div class="d-flex justify-end align-center mb-4">
-                <v-text-field
-                    density="compact"
-                    label="Search"
-                    append-inner-icon="mdi-magnify"
-                    single-line
-                    rounded
-                    hide-details
-                    class="mr-4"
-                    @keyup.enter="searchItems"
-                    v-model="serverParams.search"
-                ></v-text-field>
-            </div>
+            <VRow justify="end">
+                <VCol cols="2">
+                    <VTextField
+                        density="compact"
+                        label="Search"
+                        append-inner-icon="mdi-magnify"
+                        single-line
+                        rounded
+                        hide-details
+                        class="mr-4"
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
+                    >
+                    </VTextField>
+                </VCol>
+                <VCol cols="2">
+                    <SelectBox placeholder="Sort By" density="compact" rounded>
+                    </SelectBox>
+                </VCol>
+            </VRow>
             <v-row>
                 <v-col cols="12">
-                    <TotalStudents :form="props.form" />
+                    <TotalStorybooks :form="props.form" />
                 </v-col>
             </v-row>
         </v-expansion-panel-text>
     </v-expansion-panel>
 </template>
+
 <style scoped>
 .chip {
     display: inline-flex;

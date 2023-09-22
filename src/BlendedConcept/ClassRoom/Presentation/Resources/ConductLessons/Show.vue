@@ -1,11 +1,5 @@
 <script setup>
-import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
-
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-
-import ChooseStorybook from "./components/ChooseStorybook.vue";
-import SelectStudent from "./components/SelectStudent.vue";
 </script>
 <template>
     <AdminLayout>
@@ -19,10 +13,10 @@ import SelectStudent from "./components/SelectStudent.vue";
             <div class="book-panels">
                 <div class="mt-10">
                     <iframe
-                    src="http://bc-lms.test/admin/h5p/h5p/19/edit"
-                    frameborder="0"
-                    scrolling="auto"
-                    class="h5p-width"
+                        src="http://bc-lms.test/admin/h5p/h5p/19/edit"
+                        frameborder="0"
+                        scrolling="auto"
+                        class="h5p-width"
                     ></iframe>
                 </div>
                 <br />
@@ -36,7 +30,11 @@ import SelectStudent from "./components/SelectStudent.vue";
                 </div>
             </div>
             <br />
-            <v-btn variant="flat" color="#FC0" rounded>Back</v-btn>
+            <Link :href="route('conduct_lessons.index')">
+                <v-btn variant="flat" class="text-white" color="#FC0" rounded
+                    >Back</v-btn
+                >
+            </Link>
         </VContainer>
     </AdminLayout>
 </template>
@@ -49,7 +47,7 @@ import SelectStudent from "./components/SelectStudent.vue";
     text-transform: unset !important;
 }
 
-.h5p-width{
+.h5p-width {
     width: 100%;
     height: 1500px;
 }
