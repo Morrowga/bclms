@@ -3,14 +3,25 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
-const deletePlaylist = () => {
+
+
+let props = defineProps([
+    'playlist'
+]);
+
+console.log(props.playlist);
+const deletePlaylist = (id) => {
     isConfirmedDialog({
-        title: "You won't be able to revert it!",
-        denyButtonText: "Yes, delete it!",
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,delete it!",
         onConfirm: () => {
-            SuccessDialog({
-                title: "You have successfully deleted playlist!",
-                color: "#17CAB6",
+            router.delete('/playlists/' + id, {
+                onSuccess: () => {
+                    SuccessDialog({
+                        title: "You have successfully deleted playlist!",
+                        color: "#17CAB6",
+                    });
+                },
             });
         },
     });
@@ -49,17 +60,17 @@ const deletePlaylist = () => {
             <VRow>
                 <VCol cols="3">
                     <div>
-                        <VImg src="/teacherdashboard/teacherimage.png" />
+                        <VImg :src="props.playlist.data.playlist_photo" />
                         <div class="img-text-info mb-16">
-                            <h4 class="text-white pl-8">Bravery</h4>
+                            <h4 class="text-white pl-8 text-capitalize">{{props.playlist.data.name}}</h4>
                             <p class="text-white pl-8">
-                                Assigned To:<span>Ethan Jonathan</span>
+                                Assigned To : <span>{{props.playlist.data.student.user.full_name}}</span>
                             </p>
                         </div>
                     </div>
 
                     <div class="d-flex flex-row justify-center mt-3">
-                        <Link :href="route('editplaylists')">
+                        <Link :href="route('playlists.edit', props.playlist.data.id)">
                             <VBtn
                                 color="teal"
                                 class="text-white"
@@ -76,7 +87,7 @@ const deletePlaylist = () => {
                             class="text-white ml-2"
                             variant="flat"
                             rounded
-                            @click="deletePlaylist()"
+                            @click="deletePlaylist(props.playlist.data.id)"
                         >
                             <VIcon icon="mdi-trash-can-outline" class="mr-2" />
                             <span>Delete</span>
@@ -85,7 +96,7 @@ const deletePlaylist = () => {
                 </VCol>
                 <VCol cols="9">
                     <VRow>
-                        <VCol cols="4" v-for="item in 12" :key="item">
+                        <VCol cols="4" v-for="item in props.playlist.data.storybooks" :key="item">
                             <VCard>
                                 <div class="playmenu"></div>
                                 <v-checkbox
@@ -93,7 +104,7 @@ const deletePlaylist = () => {
                                     class="checkmenu ml-2"
                                 ></v-checkbox>
                                 <VImg
-                                    src="/teacherdashboard/student1.png"
+                                    :src="item.thumbnail_img == '' ? '/images/detail.png' : item.thumbnail_img"
                                     height="282px"
                                     cover
                                 />
@@ -101,19 +112,19 @@ const deletePlaylist = () => {
                                 <VCardItem>
                                     <VCardTitle
                                         class="text-center tiggie-teacher-p influcencing"
-                                        >Influencing The Influencer
+                                        >{{ item.name }}
                                     </VCardTitle>
                                 </VCardItem>
                                 <VCardActions>
                                     <div class="d-flex justify-start">
-                                        <VChip
+                                        <VChip v-for="(chip, index) in item.disability_types" :key="index"
                                             color="teal"
                                             class="mx-1 playlistchip"
                                             variant="outlined"
                                         >
-                                            Switch
+                                            {{chip.name}}
                                         </VChip>
-                                        <VChip
+                                        <!-- <VChip
                                             color="teal"
                                             class="mx-1 playlistchip"
                                             variant="outlined"
@@ -126,7 +137,7 @@ const deletePlaylist = () => {
                                             variant="outlined"
                                         >
                                             Touch
-                                        </VChip>
+                                        </VChip> -->
                                     </div>
                                 </VCardActions>
                             </VCard>

@@ -112,9 +112,12 @@ class PlayListController
         }
     }
 
-    public function show()
+    public function show($id)
     {
-        return Inertia::render(config('route.playlist.show'));
+        $playlist = (new ShowPlaylist($id))->handle();
+        return Inertia::render(config('route.playlist.show'),[
+            "playlist" => $playlist
+        ]);
     }
 
 

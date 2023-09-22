@@ -49,14 +49,22 @@ const formatDate = (dateString) => {
     return format(date, 'MMMM d, yyyy'); // "MMMM" for full month name, "d" for day, "yyyy" for year
 }
 
-
+function checkURL(input) {
+  if (input.includes('https://') && input.includes('http://')) {
+    return input;
+  } else if (input.includes('https://') || input.includes('http://')) {
+    return input;
+  } else {
+    return '/' + input;
+  }
+}
 </script>
 <template>
     <AdminLayout>
         <VContainer class="width-80">
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-img :src="props.student.data.user.profile_pic" />
+                    <v-img :src="props.student.data.user.profile_pic == '' ? '/images/teacherimg.png': checkURL(props.student.data.user.profile_pic)" />
 
                     <div class="d-flex justify-center my-4">
                         <Link href="#">
