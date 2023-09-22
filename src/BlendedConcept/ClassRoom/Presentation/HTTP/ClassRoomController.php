@@ -61,7 +61,9 @@ class ClassRoomController extends Controller
         try {
             // dd($classroom->load('students', 'teachers')->loadCount('students', 'teachers'));
             return Inertia::render(config('route.showCopy'), [
-                'classroom' => $classroom->load('students', 'teachers')->loadCount('students', 'teachers'),
+                'classroom' => $classroom->load(['students' => function ($query) {
+                    $query->doesntHave('groups');
+                }, 'teachers', 'groups'])->loadCount('students', 'teachers'),
             ]);
         } catch (\Exception $e) {
             dd($e->getMessage());

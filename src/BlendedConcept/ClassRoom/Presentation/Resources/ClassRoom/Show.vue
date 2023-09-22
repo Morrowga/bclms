@@ -130,82 +130,21 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                     </VRow>
                 </div>
                 <div class="mt-15">
-                    <span class="span-text ruddy-bold">Groups</span>
-                    <div class="mt-5">
-                        <span class="semi-label ruddy-bold">Group 1</span>
-                    </div>
-                    <VRow class="mt-5">
-                        <VCol
-                            cols="12"
-                            sm="6"
-                            md="4"
-                            lg="2"
-                            class="text-center d-flex justify-center"
-                        >
-                            <div>
-                                <v-img
-                                    src="/images/classroom2.jpeg"
-                                    class="profile-img"
-                                    cover
-                                ></v-img>
-                                <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Wren Clark</span
-                                    >
-                                </div>
-                                <div class="mt-1 d-flex justify-center">
-                                    <div>
-                                        <img
-                                            width="20"
-                                            src="/images/phone.svg"
-                                        />
-                                    </div>
-                                    <span
-                                        class="label-text-two ml-1 pppangram-bold"
-                                    >
-                                        9123 4567</span
-                                    >
-                                </div>
-                            </div>
-                        </VCol>
-                        <VCol
-                            cols="12"
-                            sm="6"
-                            md="4"
-                            lg="2"
-                            class="text-center d-flex justify-center"
-                        >
-                            <div>
-                                <v-img
-                                    src="/images/classroom3.jpeg"
-                                    class="profile-img"
-                                    cover
-                                ></v-img>
-                                <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Madge Dennis</span
-                                    >
-                                </div>
-                                <div class="mt-1 d-flex justify-center">
-                                    <div>
-                                        <img
-                                            width="20"
-                                            src="/images/phone.svg"
-                                        />
-                                    </div>
-                                    <span
-                                        class="label-text-two ml-1 pppangram-bold"
-                                    >
-                                        9123 4567</span
-                                    >
-                                </div>
-                            </div>
-                        </VCol>
-                    </VRow>
+                    <VRow>
+                        <VCol cols="6">
+                            <span class="span-text ruddy-bold">Groups</span>
+                        </VCol></VRow
+                    >
                 </div>
-                <div class="mt-15">
+                <div v-for="group in props.classroom.groups" :key="group.index">
                     <div class="mt-5">
-                        <span class="semi-label ruddy-bold">Group 2</span>
+                        <VRow>
+                            <VCol cols="6">
+                                <span class="semi-label ruddy-bold">{{
+                                    group.name
+                                }}</span>
+                            </VCol>
+                        </VRow>
                     </div>
                     <VRow class="mt-5">
                         <VCol
@@ -214,17 +153,19 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                             md="4"
                             lg="2"
                             class="text-center d-flex justify-center"
+                            v-for="student in group.students"
+                            :key="student.id"
                         >
                             <div>
                                 <v-img
-                                    src="/images/classroom4.jpeg"
+                                    :src="userImage(student)"
                                     class="profile-img"
                                     cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Wren Clark</span
-                                    >
+                                    <span class="label-text pppangram-bold">{{
+                                        student?.user?.full_name
+                                    }}</span>
                                 </div>
                                 <div class="mt-1 d-flex justify-center">
                                     <div>
@@ -236,7 +177,9 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                                     <span
                                         class="label-text-two ml-1 pppangram-bold"
                                     >
-                                        9123 4567</span
+                                        {{
+                                            student?.user?.contact_number
+                                        }}</span
                                     >
                                 </div>
                             </div>

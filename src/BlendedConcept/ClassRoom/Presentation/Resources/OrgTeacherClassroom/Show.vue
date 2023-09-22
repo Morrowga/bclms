@@ -245,7 +245,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                             md="4"
                             lg="2"
                             class="text-center d-flex justify-center"
-                            v-for="student in props.classroom.students"
+                            v-for="student in props.students"
                             :key="student.student_id"
                         >
                             <div>
