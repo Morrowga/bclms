@@ -40,9 +40,11 @@ const form = useForm({
             <VRow justify="center">
                 <VCol cols="4">
                     <div class="d-flex gap-3">
-                        <VBtn color="gray" height="50" class="" width="200">
-                            Cancel
-                        </VBtn>
+                        <Link :href="route('conduct_lessons.index')">
+                            <VBtn color="gray" height="50" class="" width="200">
+                                Cancel
+                            </VBtn>
+                        </Link>
 
                         <VBtn
                             type="submit"
