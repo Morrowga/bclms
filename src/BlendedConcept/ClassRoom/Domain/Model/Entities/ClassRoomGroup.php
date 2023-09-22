@@ -10,6 +10,7 @@ class ClassroomGroup extends Entity
         public readonly ?int $id,
         public readonly int $classroom_id,
         public readonly string $name,
+        public readonly ?array $students
     ) {
     }
 
@@ -19,6 +20,7 @@ class ClassroomGroup extends Entity
             'id' => $this->id,
             'classroom_id' => $this->classroom_id,
             'name' => $this->name,
+            'students' => $this->students
         ];
     }
 }

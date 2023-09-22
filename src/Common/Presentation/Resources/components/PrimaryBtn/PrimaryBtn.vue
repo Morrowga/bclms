@@ -42,6 +42,7 @@ let clicked = () => {
         </Link>
         <v-btn
             v-else
+            :type="props.type"
             variant="flat"
             rounded
             color="primary"

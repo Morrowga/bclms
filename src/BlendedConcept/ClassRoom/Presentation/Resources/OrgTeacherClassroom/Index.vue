@@ -5,6 +5,34 @@ import { router } from "@inertiajs/core";
 import { computed } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue";
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
+import Create from "./Create.vue";
+import Edit from "./Edit.vue";
+let flash = computed(() => usePage().props.flash);
+serverPage.value = ref(props.classrooms.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
+let permissions = computed(() => usePage().props.auth.data.permissions);
+const props = defineProps({
+    classrooms: {
+        type: Array,
+        default: [],
+    },
+});
+
+const deleteClassRoom = (id) => {
+    deleteItem(id, "classrooms");
+};
+const showCount = (classroom) => {
+    return classroom?.students_count + "/" + classroom?.teachers_count;
+};
 </script>
 
 <template>
@@ -18,17 +46,23 @@ import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue"
                 </VRow>
                 <VRow>
                     <VCol
-                        v-for="item in 12"
-                        :key="item"
+                        v-for="classroom in props.classrooms.data"
+                        :key="classroom.id"
                         cols="12"
                         sm="6"
                         md="4"
                         lg="3"
                     >
                         <ClassroomCard
-                            :route="route('org-teacher-classroom.show')"
-                            count="5 / 5"
-                            :label="`${item} A`"
+                            :route="
+                                route(
+                                    'org-teacher-classroom.show',
+                                    classroom.id
+                                )
+                            "
+                            :count="showCount(classroom)"
+                            :label="classroom.name"
+                            :image="classroom.classroom_photo"
                         />
                     </VCol>
                 </VRow>

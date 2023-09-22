@@ -14,6 +14,7 @@ class ClassRoomGroupMapper
             id: $classroom_group_id,
             classroom_id: $request->classroom_id,
             name: $request->name,
+            students: $request->students
         );
     }
 

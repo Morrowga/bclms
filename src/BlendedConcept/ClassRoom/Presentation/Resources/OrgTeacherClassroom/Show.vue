@@ -5,22 +5,32 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
-let props = defineProps(["flash", "auth"]);
+let props = defineProps(["flash", "auth", "classroom"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 
-const deleteGroup = () => {
+const deleteGroup = (id) => {
     isConfirmedDialog({
-        title: "You won't be able to revert it!",
-        denyButtonText: "Yes, delete it!",
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,delete it!",
         onConfirm: () => {
-            SuccessDialog({
-                title: "You have successfully deleted a Group!",
-                color: "#17CAB6",
+            router.delete(route("org-teacher-classroom.delete-group", id), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.successMessage });
+                },
             });
         },
     });
 };
+const showCount = (classroom) => {
+    return classroom?.students_count + "/" + classroom?.teachers_count;
+};
+let srcImage = computed(
+    () =>
+        props.classroom.classroom_photo ??
+        "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+);
+const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
 </script>
 
 <template>
@@ -33,7 +43,7 @@ const deleteGroup = () => {
                             <v-img src="/images/bg.png" cover></v-img>
                             <div class="overlay-container">
                                 <v-img
-                                    src="/images/classroom9.jpeg"
+                                    :src="srcImage"
                                     class="classroom-img"
                                 ></v-img>
                             </div>
@@ -42,11 +52,11 @@ const deleteGroup = () => {
                     <VCol cols="12" sm="6" md="6" class="marginadjust">
                         <div class="text-left">
                             <span class="font-weight-black classname">
-                                1 A
+                                {{ props.classroom?.name }}
                             </span>
                             <v-chip class="ml-5 spacing">
                                 <span class="text-center pppangram-bold">
-                                    5 / 5</span
+                                    {{ showCount(props.classroom) }}</span
                                 >
                             </v-chip>
                         </div>
@@ -54,13 +64,9 @@ const deleteGroup = () => {
                         <br />
                         <br />
 
-                        <span class="description pppangram-bold"
-                            >Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Cum ipsam animi aspernatur soluta. Illo odio
-                            ut molestias ea dolorem alias consequuntur
-                            reiciendis eius non minus tempora, adipisci rerum
-                            necessitatibus atque?</span
-                        >
+                        <span class="description pppangram-bold">{{
+                            props.classroom?.description
+                        }}</span>
                         <br />
                         <br />
                         <br />
@@ -91,37 +97,19 @@ const deleteGroup = () => {
                             md="4"
                             lg="2"
                             class="text-center d-flex justify-center"
+                            v-for="teacher in props.classroom.teachers"
+                            :key="teacher.id"
                         >
                             <div>
                                 <v-img
-                                    src="/images/classroom8.jpeg"
+                                    :src="userImage(teacher)"
                                     class="profile-img"
                                     cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Isbella Taylor</span
-                                    >
-                                </div>
-                            </div>
-                        </VCol>
-                        <VCol
-                            cols="12"
-                            sm="6"
-                            md="4"
-                            lg="2"
-                            class="text-center d-flex justify-center"
-                        >
-                            <div>
-                                <v-img
-                                    src="/images/classroom7.jpeg"
-                                    class="profile-img"
-                                    cover
-                                ></v-img>
-                                <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Liams William</span
-                                    >
+                                    <span class="label-text pppangram-bold">{{
+                                        teacher.full_name
+                                    }}</span>
                                 </div>
                             </div>
                         </VCol>
@@ -134,7 +122,12 @@ const deleteGroup = () => {
                         </VCol>
                         <VCol cols="6" class="text-end">
                             <Link
-                                :href="route('org-teacher-classroom.add-group')"
+                                :href="
+                                    route(
+                                        'org-teacher-classroom.add-group',
+                                        props.classroom.id
+                                    )
+                                "
                             >
                                 <v-btn
                                     prepend-icon="mdi-plus"
@@ -145,201 +138,99 @@ const deleteGroup = () => {
                             </Link>
                         </VCol>
                     </VRow>
-                    <div class="mt-5">
-                        <VRow>
-                            <VCol cols="6">
-                                <span class="semi-label ruddy-bold"
-                                    >Group 1</span
-                                >
-                            </VCol>
-                            <VCol cols="6" class="text-end">
-                                <div class="d-flex justify-end gap-10">
-                                    <v-btn
-                                        variant="flat"
-                                        rounded
-                                        color="#FF8015"
-                                        class="text-white"
-                                        >Choose Story</v-btn
-                                    >
-                                    <Link
-                                        :href="
-                                            route(
-                                                'org-teacher-classroom.edit-group'
-                                            )
-                                        "
-                                    >
+                    <div
+                        v-for="group in props.classroom.groups"
+                        :key="group.index"
+                    >
+                        <div class="mt-5">
+                            <VRow>
+                                <VCol cols="6">
+                                    <span class="semi-label ruddy-bold">{{
+                                        group.name
+                                    }}</span>
+                                </VCol>
+                                <VCol cols="6" class="text-end">
+                                    <div class="d-flex justify-end gap-10">
                                         <v-btn
                                             variant="flat"
                                             rounded
-                                            prepend-icon="mdi-pencil"
-                                            color="#17CAB6"
+                                            color="#FF8015"
                                             class="text-white"
-                                            >Edit</v-btn
+                                            >Choose Story</v-btn
                                         >
-                                    </Link>
-                                    <v-btn
-                                        append-icon="mdi-delete"
-                                        variant="flat"
-                                        rounded
-                                        color="candy-red"
-                                        class="text-white"
-                                        @click="deleteGroup()"
-                                        >Delete</v-btn
-                                    >
+                                        <Link
+                                            :href="
+                                                route(
+                                                    'org-teacher-classroom.edit-group',
+                                                    group.id
+                                                )
+                                            "
+                                        >
+                                            <v-btn
+                                                variant="flat"
+                                                rounded
+                                                prepend-icon="mdi-pencil"
+                                                color="#17CAB6"
+                                                class="text-white"
+                                                >Edit</v-btn
+                                            >
+                                        </Link>
+                                        <v-btn
+                                            append-icon="mdi-delete"
+                                            variant="flat"
+                                            rounded
+                                            color="candy-red"
+                                            class="text-white"
+                                            @click="deleteGroup(group.id)"
+                                            >Delete</v-btn
+                                        >
+                                    </div>
+                                </VCol>
+                            </VRow>
+                        </div>
+                        <VRow class="mt-5">
+                            <VCol
+                                cols="12"
+                                sm="6"
+                                md="4"
+                                lg="2"
+                                class="text-center d-flex justify-center"
+                                v-for="student in group.students"
+                                :key="student.id"
+                            >
+                                <div>
+                                    <v-img
+                                        :src="userImage(student)"
+                                        class="profile-img"
+                                        cover
+                                    ></v-img>
+                                    <div class="mt-2">
+                                        <span
+                                            class="label-text pppangram-bold"
+                                            >{{
+                                                student?.user?.full_name
+                                            }}</span
+                                        >
+                                    </div>
+                                    <div class="mt-1 d-flex justify-center">
+                                        <div>
+                                            <img
+                                                width="20"
+                                                src="/images/phone.svg"
+                                            />
+                                        </div>
+                                        <span
+                                            class="label-text-two ml-1 pppangram-bold"
+                                        >
+                                            {{
+                                                student?.user?.contact_number
+                                            }}</span
+                                        >
+                                    </div>
                                 </div>
                             </VCol>
                         </VRow>
                     </div>
-                    <VRow class="mt-5">
-                        <VCol
-                            cols="12"
-                            sm="6"
-                            md="4"
-                            lg="2"
-                            class="text-center d-flex justify-center"
-                        >
-                            <div>
-                                <v-img
-                                    src="/images/classroom2.jpeg"
-                                    class="profile-img"
-                                    cover
-                                ></v-img>
-                                <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Wren Clark</span
-                                    >
-                                </div>
-                                <div class="mt-1 d-flex justify-center">
-                                    <div>
-                                        <img
-                                            width="20"
-                                            src="/images/phone.svg"
-                                        />
-                                    </div>
-                                    <span
-                                        class="label-text-two ml-1 pppangram-bold"
-                                    >
-                                        9123 4567</span
-                                    >
-                                </div>
-                            </div>
-                        </VCol>
-                        <VCol
-                            cols="12"
-                            sm="6"
-                            md="4"
-                            lg="2"
-                            class="text-center d-flex justify-center"
-                        >
-                            <div>
-                                <v-img
-                                    src="/images/classroom3.jpeg"
-                                    class="profile-img"
-                                    cover
-                                ></v-img>
-                                <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Madge Dennis</span
-                                    >
-                                </div>
-                                <div class="mt-1 d-flex justify-center">
-                                    <div>
-                                        <img
-                                            width="20"
-                                            src="/images/phone.svg"
-                                        />
-                                    </div>
-                                    <span
-                                        class="label-text-two ml-1 pppangram-bold"
-                                    >
-                                        9123 4567</span
-                                    >
-                                </div>
-                            </div>
-                        </VCol>
-                    </VRow>
-                </div>
-                <div class="mt-15">
-                    <div class="mt-5">
-                        <VRow>
-                            <VCol cols="6">
-                                <span class="semi-label ruddy-bold"
-                                    >Group 1</span
-                                >
-                            </VCol>
-                            <VCol cols="6" class="text-end">
-                                <div class="d-flex justify-end gap-10">
-                                    <v-btn
-                                        variant="flat"
-                                        rounded
-                                        color="#FF8015"
-                                        class="text-white"
-                                        >Choose Story</v-btn
-                                    >
-                                    <Link
-                                        :href="
-                                            route(
-                                                'org-teacher-classroom.add-group'
-                                            )
-                                        "
-                                    >
-                                        <v-btn
-                                            variant="flat"
-                                            rounded
-                                            prepend-icon="mdi-pencil"
-                                            color="#17CAB6"
-                                            class="text-white"
-                                            >Edit</v-btn
-                                        >
-                                    </Link>
-                                    <v-btn
-                                        append-icon="mdi-delete"
-                                        variant="flat"
-                                        rounded
-                                        color="candy-red"
-                                        class="text-white"
-                                        @click="deleteGroup()"
-                                        >Delete</v-btn
-                                    >
-                                </div>
-                            </VCol>
-                        </VRow>
-                    </div>
-                    <VRow class="mt-5">
-                        <VCol
-                            cols="12"
-                            sm="6"
-                            md="4"
-                            lg="2"
-                            class="text-center d-flex justify-center"
-                        >
-                            <div>
-                                <v-img
-                                    src="/images/classroom4.jpeg"
-                                    class="profile-img"
-                                    cover
-                                ></v-img>
-                                <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Wren Clark</span
-                                    >
-                                </div>
-                                <div class="mt-1 d-flex justify-center">
-                                    <div>
-                                        <img
-                                            width="20"
-                                            src="/images/phone.svg"
-                                        />
-                                    </div>
-                                    <span
-                                        class="label-text-two ml-1 pppangram-bold"
-                                    >
-                                        9123 4567</span
-                                    >
-                                </div>
-                            </div>
-                        </VCol>
-                    </VRow>
                 </div>
                 <div class="mt-15">
                     <div class="mt-5">
@@ -354,17 +245,19 @@ const deleteGroup = () => {
                             md="4"
                             lg="2"
                             class="text-center d-flex justify-center"
+                            v-for="student in props.classroom.students"
+                            :key="student.student_id"
                         >
                             <div>
                                 <v-img
-                                    src="/images/classroom6.jpeg"
+                                    :src="userImage(student)"
                                     class="profile-img"
                                     cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Ethan Jonathan</span
-                                    >
+                                    <span class="label-text pppangram-bold">{{
+                                        student?.user?.full_name
+                                    }}</span>
                                 </div>
                                 <div class="mt-1 d-flex justify-center">
                                     <div>
@@ -376,73 +269,9 @@ const deleteGroup = () => {
                                     <span
                                         class="label-text-two ml-1 pppangram-bold"
                                     >
-                                        9123 4567</span
-                                    >
-                                </div>
-                            </div>
-                        </VCol>
-                        <VCol
-                            cols="12"
-                            sm="6"
-                            md="4"
-                            lg="2"
-                            class="text-center d-flex justify-center"
-                        >
-                            <div>
-                                <v-img
-                                    src="/images/classroom1.jpeg"
-                                    class="profile-img"
-                                    cover
-                                ></v-img>
-                                <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Olivia Smith</span
-                                    >
-                                </div>
-                                <div class="mt-1 d-flex justify-center">
-                                    <div>
-                                        <img
-                                            width="20"
-                                            src="/images/phone.svg"
-                                        />
-                                    </div>
-                                    <span
-                                        class="label-text-two ml-1 pppangram-bold"
-                                    >
-                                        9123 4567</span
-                                    >
-                                </div>
-                            </div>
-                        </VCol>
-                        <VCol
-                            cols="12"
-                            sm="6"
-                            md="4"
-                            lg="2"
-                            class="text-center d-flex justify-center"
-                        >
-                            <div>
-                                <v-img
-                                    src="/images/classroom5.jpeg"
-                                    class="profile-img"
-                                    cover
-                                ></v-img>
-                                <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Emma Brown</span
-                                    >
-                                </div>
-                                <div class="mt-1 d-flex justify-center">
-                                    <div>
-                                        <img
-                                            width="20"
-                                            src="/images/phone.svg"
-                                        />
-                                    </div>
-                                    <span
-                                        class="label-text-two ml-1 pppangram-bold"
-                                    >
-                                        9123 4567</span
+                                        {{
+                                            student?.user?.contact_number
+                                        }}</span
                                     >
                                 </div>
                             </div>

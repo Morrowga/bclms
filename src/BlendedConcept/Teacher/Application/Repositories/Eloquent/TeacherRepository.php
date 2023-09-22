@@ -74,10 +74,17 @@ class TeacherRepository implements TeacherRepositoryInterface
 
     public function getOrgTeacherStudents($filters)
     {
-
+        $teachers = UserEloquentModel::with('classrooms')->find(auth()->user()->id);
+        $classroom_ids = [];
+        foreach ($teachers->classrooms as $classroom) {
+            array_push($classroom_ids, $classroom->id);
+        }
         return StudentEloquentModel::filter($filters)
             ->whereHas('organizations', function ($query) {
                 $query->where('id', auth()->user()->organization_id);
+            })
+            ->whereHas('classrooms', function ($query) use ($classroom_ids) {
+                $query->whereIn('id', $classroom_ids);
             })
             ->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
     }

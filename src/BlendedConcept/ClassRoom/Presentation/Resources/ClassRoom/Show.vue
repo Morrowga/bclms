@@ -266,9 +266,9 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                                     cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text pppangram-bold"
-                                        >Ethan Jonathan</span
-                                    >
+                                    <span class="label-text pppangram-bold">{{
+                                        student?.user?.full_name
+                                    }}</span>
                                 </div>
                                 <div class="mt-1 d-flex justify-center">
                                     <div>
@@ -280,7 +280,9 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                                     <span
                                         class="label-text-two ml-1 pppangram-bold"
                                     >
-                                        9123 4567</span
+                                        {{
+                                            student?.user?.contact_number
+                                        }}</span
                                     >
                                 </div>
                             </div>

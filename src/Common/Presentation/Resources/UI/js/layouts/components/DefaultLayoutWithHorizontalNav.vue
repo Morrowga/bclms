@@ -43,6 +43,7 @@ let showMenubar = ref(true);
 let text = ref("");
 let emit = defineEmits();
 const resolveHeaderComponent = () => {
+    console.log("userrole", props.user_role);
     switch (props.user_role) {
         case "BC Super Admin":
             return Header;

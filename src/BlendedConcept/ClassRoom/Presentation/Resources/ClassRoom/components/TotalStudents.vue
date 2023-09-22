@@ -35,28 +35,6 @@ const props = defineProps({
 routeName.value = "classrooms.getStudents";
 let students = ref([]);
 //## start datatable section
-let columns = [
-    {
-        label: "Name",
-        field: "name",
-        sortable: false,
-    },
-    {
-        label: "Education Level",
-        field: "education_level",
-        sortable: false,
-    },
-    {
-        label: "Age",
-        field: "age",
-        sortable: false,
-    },
-    {
-        label: "Disability Type",
-        field: "disability_types",
-        sortable: false,
-    },
-];
 let rows = ref([]);
 
 serverPage.value = ref(datas.value?.current_page ?? 1);

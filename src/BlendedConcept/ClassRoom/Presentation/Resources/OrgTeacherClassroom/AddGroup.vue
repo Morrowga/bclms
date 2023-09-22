@@ -6,6 +6,7 @@ import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { useForm, usePage } from "@inertiajs/vue3";
 
 const addGroup = () => {
     SuccessDialog({
@@ -13,60 +14,100 @@ const addGroup = () => {
         color: "#17CAB6",
     });
 };
+const props = defineProps(["students", "classroom"]);
+let flash = computed(() => usePage().props.flash);
+const isFormValid = ref(false);
+let refForm = ref();
+const form = useForm({
+    name: "",
+    classroom_id: props.classroom.id,
+    students: [],
+});
+const handleSubmit = () => {
+    console.log(form);
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("org-teacher-classroom.store-group"), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.successMessage });
+                },
+                onError: (error) => {},
+            });
+        }
+    });
+};
 </script>
 <template>
     <AdminLayout>
-        <VContainer>
-            <div>
-                <span class="semi-label-head ruddy-bold">Add A New Group</span>
-                <p class="text-subtitle-1">
-                    Each student in a classroom is limited to being part of just
-                    one group.
-                </p>
-            </div>
-            <VLabel class="semi-label ruddy-bold required mb-2"
-                >Group Name</VLabel
-            >
-            <div class="d-flex justify-end align-center mb-4">
-                <v-text-field
-                    density="compact"
-                    label="Search"
-                    append-inner-icon="mdi-magnify"
-                    single-line
-                    rounded
-                    hide-details
-                    model-value="Group 3"
-                    class="mr-4"
-                ></v-text-field>
-            </div>
-            <VLabel class="semi-label ruddy-bold required mb-2"
-                >Select Students</VLabel
-            >
-            <div class="d-flex justify-end align-center mb-4">
-                <v-text-field
-                    density="compact"
-                    label="Search"
-                    append-inner-icon="mdi-magnify"
-                    single-line
-                    rounded
-                    hide-details
-                    class="mr-4"
-                ></v-text-field>
-            </div>
-            <v-row>
-                <v-col cols="12">
-                    <TotalStudents />
-                </v-col>
-            </v-row>
-            <br />
-            <div class="d-flex justify-center gap-10">
-                <SecondaryBtn
-                    title="Cancel"
-                    :route="route('org-teacher-classroom.show')"
-                />
-                <PrimaryBtn title="Save" :isLink="false" @click="addGroup()" />
-            </div>
-        </VContainer>
+        <VForm
+            ref="refForm"
+            v-model="isFormValid"
+            @submit.prevent="handleSubmit"
+            @keydown.enter="$event.preventDefault()"
+        >
+            <VContainer>
+                <div>
+                    <span class="semi-label-head ruddy-bold"
+                        >Add A New Group</span
+                    >
+                    <p class="text-subtitle-1">
+                        Each student in a classroom is limited to being part of
+                        just one group.
+                    </p>
+                </div>
+                <VLabel class="semi-label ruddy-bold required mb-2"
+                    >Group Name</VLabel
+                >
+                <div class="d-flex justify-end align-center mb-4">
+                    <v-text-field
+                        density="compact"
+                        label="Search"
+                        append-inner-icon="mdi-magnify"
+                        single-line
+                        rounded
+                        hide-details
+                        v-model="form.name"
+                        class="mr-4"
+                    ></v-text-field>
+                </div>
+                <VLabel class="semi-label ruddy-bold required mb-2"
+                    >Select Students</VLabel
+                >
+                <div class="d-flex justify-end align-center mb-4">
+                    <v-text-field
+                        density="compact"
+                        label="Search"
+                        append-inner-icon="mdi-magnify"
+                        single-line
+                        rounded
+                        hide-details
+                        class="mr-4"
+                    ></v-text-field>
+                </div>
+                <v-row>
+                    <v-col cols="12">
+                        <TotalStudents
+                            :students="props.students"
+                            :form="form"
+                            :classroom_id="props.classroom.id"
+                        />
+                    </v-col>
+                </v-row>
+                <br />
+                <div class="d-flex justify-center gap-10">
+                    <SecondaryBtn
+                        title="Cancel"
+                        :route="
+                            route(
+                                'org-teacher-classroom.show',
+                                props.classroom.id
+                            )
+                        "
+                    />
+                    <PrimaryBtn title="Save" :isLink="false" type="submit" />
+                </div>
+            </VContainer>
+        </VForm>
     </AdminLayout>
 </template>
 <style scoped>
