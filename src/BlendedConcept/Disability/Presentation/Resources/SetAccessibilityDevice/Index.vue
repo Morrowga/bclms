@@ -1,8 +1,13 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import Touch from "./components/Touch.vue";
+import DeviceInfo from "./components/DeviceInfo.vue";
 import { ref } from "vue";
-let selectedValue = ref("");
+let props = defineProps(['devices', 'id']);
+const selectedValue = ref(null);
+const showDeviceInfo = ref(false);
+const selectedDevice = ref(null);
+
+
 </script>
 <template>
     <AdminLayout>
@@ -21,20 +26,14 @@ let selectedValue = ref("");
                         placeholder="Select"
                         class="mt-4"
                         v-model="selectedValue"
-                        :items="[
-                            'Touch',
-                            'Switch-Single',
-                            'Switch-Double',
-                            'Eye-Gaze',
-                            'Mouse/Keyboard',
-                        ]"
+                        item-value="id"
+                        item-title="name"
+                        :items="props.devices.data"
                         variant="solo"
                     ></v-select>
                 </v-col>
                 <v-col cols="12">
-                    <div v-if="selectedValue == 'Touch'">
-                        <Touch />
-                    </div>
+                    <DeviceInfo v-if="selectedValue != null" :student_id="props.id" :selectedId="selectedValue" :devices="props.devices.data" />
                 </v-col>
             </v-row>
         </VContainer>

@@ -4,11 +4,13 @@ namespace Src\BlendedConcept\Disability\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\Disability\Application\DTO\DeviceData;
-use Src\BlendedConcept\Disability\Application\Mappers\DeviceMapper;
 use Src\BlendedConcept\Disability\Domain\Model\Entities\Device;
-use Src\BlendedConcept\Disability\Domain\Repositories\DeviceRepositoryInterface;
 use Src\BlendedConcept\Disability\Domain\Resources\DeviceResource;
+use Src\BlendedConcept\Disability\Application\Mappers\DeviceMapper;
+use Src\BlendedConcept\Disability\Domain\Repositories\DeviceRepositoryInterface;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
 
 class DeviceRepository implements DeviceRepositoryInterface
 {
@@ -71,6 +73,27 @@ class DeviceRepository implements DeviceRepositoryInterface
         try {
             $device->delete();
             DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            dd($exception);
+        }
+    }
+
+    public function getDevicesWithoutPagination()
+    {
+
+        $devices = DeviceResource::collection(DeviceEloquentModel::with('disabilityTypes')->orderBy('id', 'desc')->get());
+
+        return $devices;
+    }
+
+    public function setDevice(StudentEloquentModel $student, DeviceEloquentModel $device)
+    {
+        DB::beginTransaction();
+        try {
+            $student->device_id = $device->id;
+            $student->update();
+
         } catch (\Exception $exception) {
             DB::rollBack();
             dd($exception);
