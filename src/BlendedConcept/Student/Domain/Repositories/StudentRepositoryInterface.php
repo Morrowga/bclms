@@ -12,4 +12,6 @@ interface StudentRepositoryInterface
     public function createStudent(Student $student);
 
     public function updateStudent(StudentData $studentData);
+
+    public function getStudentsByPagination($filers);
 }

@@ -6,24 +6,57 @@ import PlaylistSlider from "./components/PlaylistSlider.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
+import { useForm } from "@inertiajs/vue3";
+import { router } from "@inertiajs/core";
 import { ref } from "vue";
+import { format } from 'date-fns';
 let tab = ref(null);
+let props = defineProps(['student']);
+const form = useForm({});
+
+
 const deleteStudent = () => {
-    isConfirmedDialog({
-        title: "You won't be able to revert it!",
-        denyButtonText: "Yes, delete it!",
-        onConfirm: () => {
-            SuccessDialog({ title: "You have successfully deleted a student" });
-        },
-    });
+  isConfirmedDialog({
+    title: "You won't be able to revert it!",
+    denyButtonText: "Yes, delete it!",
+    onConfirm: () => {
+      form.delete(
+        route(
+          "organizations-student.destroy",
+          props.student.data.student_id
+        ),
+        {
+          onSuccess: () => {
+            SuccessDialog({
+              title: "You have successfully deleted student!",
+              color: "#17CAB6",
+            });
+          },
+          onError : () => {
+            console.log(error)
+          }
+        }
+      );
+    },
+  });
 };
+
+const formatDate = (dateString) => {
+    // Parse the date string into a Date object
+    const date = new Date(dateString);
+
+    // Format the date using date-fns with the custom format
+    return format(date, 'MMMM d, yyyy'); // "MMMM" for full month name, "d" for day, "yyyy" for year
+}
+
+
 </script>
 <template>
     <AdminLayout>
         <VContainer class="width-80">
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-img src="/images/student_pf.png" />
+                    <v-img :src="props.student.data.user.profile_pic" />
 
                     <div class="d-flex justify-center my-4">
                         <Link href="#">
@@ -41,7 +74,7 @@ const deleteStudent = () => {
                     <div class="d-flex justify-space-between align-center">
                         <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
                         <div>
-                            <Link :href="route('view_students.edit')">
+                            <Link :href="route('teacher_students.edit', props.student.data.student_id)">
                                 <v-btn
                                     variant="flat"
                                     rounded
@@ -70,25 +103,25 @@ const deleteStudent = () => {
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Fullname</p>
                             <p class="text-h6 font-weight-bold mx-4">
-                                Wren Clark
+                                {{ props.student.data.user.full_name }}
                             </p>
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Gender</p>
-                            <p class="text-h6 font-weight-bold mx-4">Female</p>
+                            <p class="text-h6 font-weight-bold mx-4">{{ props.student.data.gender }}</p>
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Date of birth</p>
                             <p class="text-h6 font-weight-bold mx-4">
-                                January 24, 2010
+                                {{ formatDate(props.student.data.dob) }}
                             </p>
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Education Level</p>
-                            <p class="text-h6 font-weight-bold mx-4">K1</p>
+                            <p class="text-h6 font-weight-bold mx-4">{{ props.student.data.education_level}}</p>
                         </v-col>
                     </v-row>
-                    <v-row>
+                    <!-- <v-row>
                         <v-col cols="12" class="mt-3">
                             <p class="text-h5 font-weight-bold mb-0">
                                 Parent Details
@@ -118,7 +151,7 @@ const deleteStudent = () => {
                                 francisco@gmail.com
                             </p>
                         </v-col>
-                    </v-row>
+                    </v-row> -->
                     <v-row>
                         <v-col cols="12">
                             <v-tabs v-model="tab">
@@ -132,7 +165,7 @@ const deleteStudent = () => {
                                 <v-window v-model="tab">
                                     <v-window-item value="learning">
                                         <ChipWithBlueDot
-                                            v-for="item in 5"
+                                            v-for="item in props.student.data.learningneeds"
                                             :key="item"
                                             title="Dyslexia"
                                         />
@@ -140,7 +173,7 @@ const deleteStudent = () => {
 
                                     <v-window-item value="disability">
                                         <ChipWithBlueDot
-                                            v-for="item in 5"
+                                            v-for="item in props.student.data.disability_types"
                                             :key="item"
                                             title="Disability"
                                         />
@@ -222,7 +255,7 @@ const deleteStudent = () => {
                 </div>
             </VContainer>
             <div>
-                <PlaylistSlider />
+                <PlaylistSlider :datas="props.student.data.playlists"/>
             </div>
         </div>
     </AdminLayout>

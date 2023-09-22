@@ -3,8 +3,10 @@
 namespace Src\BlendedConcept\Student\Application\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Src\BlendedConcept\Student\Application\Repositories\Eloquent\StudentRepository;
 use Src\BlendedConcept\Student\Domain\Repositories\StudentRepositoryInterface;
+use Src\BlendedConcept\Student\Domain\Repositories\PlaylistRepositoryInterface;
+use Src\BlendedConcept\Student\Application\Repositories\Eloquent\StudentRepository;
+use Src\BlendedConcept\Student\Application\Repositories\Eloquent\PlaylistRepository;
 
 class StudentServiceProvider extends ServiceProvider
 {
@@ -13,6 +15,11 @@ class StudentServiceProvider extends ServiceProvider
         $this->app->bind(
             StudentRepositoryInterface::class,
             StudentRepository::class
+        );
+
+        $this->app->bind(
+            PlaylistRepositoryInterface::class,
+            PlaylistRepository::class
         );
     }
 

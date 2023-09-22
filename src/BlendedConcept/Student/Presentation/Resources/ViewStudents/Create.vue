@@ -5,9 +5,17 @@ import StoryBookSlider from "./components/StoryBookSlider.vue";
 import PlaylistSlider from "./components/PlaylistSlider.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { useForm } from "@inertiajs/vue3";
 
 import { ref } from "vue";
 let tab = ref(null);
+let form = useForm({
+    first_name: null,
+    last_name: null
+})
+
+const item = ['male','female'];
+
 const isPasswordVisible = ref(false);
 const saveStudent = () => {
     SuccessDialog({
@@ -33,17 +41,25 @@ const saveStudent = () => {
                                 Student Details
                             </p>
                         </v-col>
-                        <v-col cols="12">
-                            <p class="text-subtitle-1 mb-0">Fullname</p>
+                        <v-col cols="6">
+                            <p class="text-subtitle-1 mb-0">First Name</p>
                             <v-text-field
-                                placeholder="e.g. Wren Clark"
+                                placeholder="e.g. Wren"
+                                variant="outlined"
+                            >
+                            </v-text-field>
+                        </v-col>
+                        <v-col cols="6">
+                            <p class="text-subtitle-1 mb-0">Last Name</p>
+                            <v-text-field
+                                placeholder="e.g. Clark"
                                 variant="outlined"
                             >
                             </v-text-field>
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Gender</p>
-                            <v-select placeholder="Select" variant="outlined">
+                            <v-select placeholder="Select" :items="item" variant="outlined">
                             </v-select>
                         </v-col>
                         <v-col cols="12">
@@ -151,7 +167,7 @@ const saveStudent = () => {
                 </v-col>
                 <v-col cols="12">
                     <div class="d-flex justify-center">
-                        <Link :href="route('view_students.index')">
+                        <Link :href="route('teacher_students.index')">
                             <v-btn
                                 variant="flat"
                                 rounded

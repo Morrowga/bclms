@@ -37,7 +37,7 @@ class UserExperienceSurveyController
                 'surveys' => $surveys,
             ]);
         } catch (\Exception $e) {
-            return Inertia::render(config('route.userexperiencesurvey.index'))->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route('userexperiencesurvey.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 

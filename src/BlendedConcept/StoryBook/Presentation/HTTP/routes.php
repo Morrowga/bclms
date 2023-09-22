@@ -22,6 +22,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('books', BookController::class);
     Route::resource('pathways', PathwayController::class);
     Route::resource('bookreviews', BookReviewController::class);
+
+    Route::resource('teacher_storybooks',TeacherStorybookController::class);
     Route::get('/teacher_storybook', [TeacherStorybookController::class, 'index'])->name('teacher_storybook.index');
     Route::get('/teacher_storybook/edit', [TeacherStorybookController::class, 'edit'])->name('teacher_storybook.edit');
     Route::get('/teacher_storybook/show', [TeacherStorybookController::class, 'show'])->name('teacher_storybook.show');

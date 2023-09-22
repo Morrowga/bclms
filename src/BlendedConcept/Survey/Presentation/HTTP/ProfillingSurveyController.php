@@ -9,10 +9,15 @@ class ProfillingSurveyController
 {
     public function index()
     {
-        $survey = (new GetProfilingSurvey())->handle();
+        try {
 
-        return Inertia::render(config('route.profilling_survey.index'), [
-            'survey' => $survey,
-        ]);
+            $survey = (new GetProfilingSurvey())->handle();
+
+            return Inertia::render(config('route.profilling_survey.index'), [
+                'survey' => $survey,
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('profilling_survey.index')->with('sytemErrorMessage', $e->getMessage());
+        }
     }
 }

@@ -18,13 +18,22 @@ class GameController
 {
     public function index()
     {
-        $disabilityTypes = (new ShowDisabilityTypes())->handle();
-        $games = (new GetGameList())->handle();
+        try {
+            $disabilityTypes = (new ShowDisabilityTypes())->handle();
+            $games = (new GetGameList())->handle();
 
-        return Inertia::render(config('route.games.index'), [
-            'disabilityTypes' => $disabilityTypes,
-            'games' => $games,
-        ]);
+            return Inertia::render(config('route.games.index'), [
+                'disabilityTypes' => $disabilityTypes,
+                'games' => $games,
+            ]);
+
+        } catch (\Exception $e) {
+
+            dd($e->getMessage());
+
+            return redirect()->route('games.index')->with('sytemErrorMessage', $e->getMessage());
+        }
+
     }
 
     /**

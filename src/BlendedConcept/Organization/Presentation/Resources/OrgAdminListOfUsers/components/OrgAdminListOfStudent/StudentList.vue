@@ -66,7 +66,7 @@ let props = defineProps(["students"]);
       >
         <StudentAvatar
          :route="route('organizations-student.show',item.student_id)"
-          image="/images/student.png"
+          :image="item.user.profile_pic"
           :title="item.user.full_name"
           :phone_number="item.user.contact_number"
         />

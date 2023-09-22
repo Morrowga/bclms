@@ -5,7 +5,6 @@ import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
 import { router } from "@inertiajs/core";
 let props = defineProps(['teacher']);
-
 const deleteTeacher = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",

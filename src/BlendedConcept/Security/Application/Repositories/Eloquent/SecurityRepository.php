@@ -46,6 +46,7 @@ class SecurityRepository implements SecurityRepositoryInterface
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
 
+
         return $users;
     }
 

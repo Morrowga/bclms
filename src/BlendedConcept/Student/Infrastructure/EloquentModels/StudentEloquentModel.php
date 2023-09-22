@@ -12,8 +12,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\PlaylistEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 
 class StudentEloquentModel extends Model implements HasMedia
 {
@@ -24,7 +26,7 @@ class StudentEloquentModel extends Model implements HasMedia
     // for images
     protected $appends = [
         'image',
-        'age'
+        // 'age'
     ];
 
     protected $primaryKey = 'student_id';
@@ -43,22 +45,16 @@ class StudentEloquentModel extends Model implements HasMedia
     ];
 
     public function getImageAttribute()
+<<<<<<< HEAD
     {
         return $this->getMedia('image');
     }
 
     public function getAgeAttribute()
+=======
+>>>>>>> 5cd646bb9b5fba39565c1cfc758e624bcc0a2418
     {
-        // Replace 'dob' with the actual field name of date of birth in your database
-        $dob = $this->attributes['dob'];
-
-        // Check if the date of birth is set
-        if ($dob) {
-            $dob = Carbon::createFromFormat('Y-m-d H:i:s', $dob);
-            return $dob->age;
-        }
-
-        return null; // Return null if date of birth is not set
+        return $this->getMedia('image');
     }
 
     public function scopeFilter($query, $filters)
@@ -89,9 +85,19 @@ class StudentEloquentModel extends Model implements HasMedia
         return $this->belongsToMany(ClassroomEloquentModel::class, 'classroom_students', 'student_id', 'classroom_id');
     }
 
+    public function playlists()
+    {
+        return $this->hasMany(PlaylistEloquentModel::class, 'student_id');
+    }
+
     public function disability_types()
     {
         return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'student_disability_types', 'student_id', 'disability_type_id');
+    }
+
+    public function learningneeds()
+    {
+        return $this->belongsToMany(SubLearningTypeEloquentModel::class, 'student_learning_needs', 'student_id', 'sub_learning_type_id');
     }
 
     public function user()

@@ -19,6 +19,7 @@ let selectedValue = ref("");
                     >
                     <v-select
                         placeholder="Select"
+                        class="mt-4"
                         v-model="selectedValue"
                         :items="[
                             'Touch',

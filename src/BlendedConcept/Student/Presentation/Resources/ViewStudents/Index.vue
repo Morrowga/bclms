@@ -2,6 +2,7 @@
 import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+let props = defineProps(['students']);
 
 let roles = [];
 let selectedRole = null;
@@ -12,7 +13,7 @@ let selectedRole = null;
             <div class="d-flex justify-space-between align-center mb-10">
                 <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
 
-                <Link :href="route('view_students.create')">
+                <!-- <Link :href="route('teacher_students.create')">
                     <v-btn
                         variant="flat"
                         rounded
@@ -22,7 +23,7 @@ let selectedRole = null;
                     >
                         Add
                     </v-btn>
-                </Link>
+                </Link> -->
             </div>
             <div class="d-flex justify-end mb-4 align-center">
                 <v-spacer></v-spacer>
@@ -56,12 +57,13 @@ let selectedRole = null;
                 </div>
             </div>
             <VRow cols="6">
-                <VCol cols="2" class="pe-2" v-for="item in 12" :key="item">
+                <VCol cols="2" class="pe-2" v-for="item in props.students.data" :key="item">
                     <StudentProfile
                         :studentInfo="{
-                            name: 'Wren Clark',
-                            phone_number: '9123 4567',
-                            img: '/images/students/studentone.svg',
+                            id: item.student_id,
+                            name: item.user.full_name,
+                            contact_number: item.user.contact_number,
+                            img: item.user.profile_pic,
                         }"
                     />
                 </VCol>

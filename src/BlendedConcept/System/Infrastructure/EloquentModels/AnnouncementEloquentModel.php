@@ -35,11 +35,11 @@ class AnnouncementEloquentModel extends Model
 
     public function scopeFilter($query, $filters)
     {
-        $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('title', 'like', '%'.$name.'%');
-        });
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query->where('title', 'like', '%'.$search.'%');
+        });
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            $query->where('message', 'like', '%'.$search.'%');
         });
     }
 }

@@ -16,16 +16,19 @@ const props = defineProps(["learningNeeds", "disabilityTypes",'organizations_stu
 console.log(props.organizations_student);
 
 const form = useForm({
+  student_id: props.organizations_student.student_id,
   first_name: "",
   last_name: "",
   gender: "",
   dob: "",
   contact_number: "",
+  num_gold_coins: props.organizations_student.num_gold_coins,
+  num_silver_coins: props.organizations_student.num_silver_coins,
   email: "",
   education_level: "",
   profile_pics: "",
-  learning_needs: [1, 2],
-  disability_types: [1, 2],
+  learning_needs: [],
+  disability_types: [],
   _method:"PUT"
 });
 
@@ -34,6 +37,7 @@ let refForm = ref();
 const gender = ref(["Select", "Male", "Female"]);
 let tab = ref(null);
 const createStudent = () => {
+    console.log(form);
   form.post(route("organizations-student.update",props.organizations_student.student_id), {
     onSuccess: () => {
       SuccessDialog({

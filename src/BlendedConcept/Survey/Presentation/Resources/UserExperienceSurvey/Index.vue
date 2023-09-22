@@ -5,6 +5,10 @@ import { router } from "@inertiajs/core";
 import { format } from 'date-fns';
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
+import {
+    serverParams,
+    searchItems,
+} from "@Composables/useServerSideDatable.js";
 import avatar4 from "@images/avatars/avatar-4.png";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
@@ -169,6 +173,7 @@ const deleteSurvey = (id) => {
                                 <div class="search-field">
                                     <VTextField
                                         @keyup.enter="searchItems"
+                                        v-model="serverParams.search"
                                         placeholder="Search Surveys"
                                         density="compact"
                                         variant="solo"

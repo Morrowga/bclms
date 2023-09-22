@@ -1,66 +1,146 @@
 <script setup>
-import { defineProps, ref, defineEmits } from "vue";
+import { defineProps } from "vue";
 import { useForm } from "@inertiajs/vue3";
+
 const props = defineProps({
-    data: {
-        type: Object,
-        required: true,
+    isGameFileDialogVisible: {
+        type: Boolean,
+        default: false,
     },
 });
-let dialog = ref(false);
-const toggleDialog = () => {
-    dialog.value = !dialog.value;
+
+const emit = defineEmits(["submit", "update:isGameFileDialogVisible"]);
+
+const gameFile = ref(null);
+const dragging = ref(false);
+
+const handleGameFileChange = (event) => {
+  const file = event.target.files[0];
+  gameFile.value = file;
 };
+
+const removeGameFile = () => {
+  gameFile.value = null;
+};
+
+const onDropGameFile = (event) => {
+  event.preventDefault();
+  dragging.value = false;
+  const files = event.dataTransfer.files;
+  gameFile.value = files[0];
+};
+
+const form = useForm({
+    game : null
+});
+
+const onFormSubmit = () => {
+    form.game = gameFile.value;
+    emit("submit", form);
+    emit("update:isGameFileDialogVisible", false);
+};
+
+const onFormReset = () => {
+    emit("update:isGameFileDialogVisible", false);
+};
+
+const dialogVisibleUpdate = (val) => {
+    emit("update:isGameFileDialogVisible", val);
+};
+
+const handleFileInputClick = () => {
+  const fileInput = document.getElementById('game-file-input');
+  fileInput.click();
+};
+
 </script>
+
 <template>
-    <div>
-        <v-btn
-            @click="toggleDialog"
-            icon="mdi-upload"
-            size="x-small"
-            color="secondary"
-        ></v-btn>
-        <v-dialog v-model="dialog" width="100%" max-width="550" persistent>
-            <v-card>
-                <v-card-title class="px-10 pt-10">
-                    <span class="font-weight-bold text-primary"
-                        >Upload Storybook Thumbnail</span
-                    >
-                </v-card-title>
-                <v-card-text class="px-10 py-0 pb-5">
-                    <div class="coming-soon">
-                        <p>Drop And Drop</p>
-                    </div>
+    <VDialog
+    :model-value="props.isGameFileDialogVisible"
+    @update:model-value="dialogVisibleUpdate"
+    width="500">
+        <!-- Dialog Content -->
+        <div>
+            <VCard>
+                <VForm class="mt-6" ref="refForm" @submit.prevent="onFormSubmit">
+                    <VCardText>
+                        <p class="heading-upload-modal">Upload Game File</p>
 
-                    <div class="d-flex justify-center aligns-center pt-10">
-                        <div>
-                            <VBtn
-                                color="gray"
-                                height="50"
-                                class=""
-                                width="200"
-                                @click="dialog = false"
-                            >
-                                Cancel
-                            </VBtn>
+                        <span class="warning-text pppangram-normal">Warnings: This will override the existing game file!</span>
 
-                            <VBtn
-                                type="submit"
-                                class="ml-10"
-                                height="50"
-                                width="200"
-                            >
-                                Add
-                            </VBtn>
+                        <div
+                        class="drop-zone coming-soon mt-4"
+                        @dragover.prevent
+                        @dragenter.prevent
+                        @dragleave="dragging = false"
+                        @drop.prevent="onDropGameFile"
+                        >
+                            <p v-if="!gameFile" class="pppangram-normal" @click="handleFileInputClick">
+                                Drag & Drop <strong class="colorprimary">HTML5</strong> file here <br>
+                                or <br>
+                                Click to browser files
+                            </p>
+                            <div v-else>
+                                <p>File Name: {{ gameFile.name }}</p>
+                                <button @click="removeGameFile" class="remove-button">Remove</button>
+                            </div>
+                            <input
+                                id="game-file-input"
+                                type="file"
+                                style="display: none"
+                                @change="handleGameFileChange"
+                                :error-messages="form?.errors?.game"
+                            />
                         </div>
-                    </div>
-                </v-card-text>
-            </v-card>
-        </v-dialog>
-    </div>
-</template>
+                    </VCardText>
 
+                    <VCardActions class="pt-3 justify-center">
+                        <VBtn
+                            color="secondary"
+                            text-color="white"
+                            variant="tonal"
+                            class="pl-16 pr-16"
+                            @click="onFormReset"
+                            height="50"
+                        >
+                            <span class="text-dark">Close</span>
+                        </VBtn>
+                        <VBtn
+                            type="submit"
+                            variant="tonal"
+                            class="pl-16 pr-16 submit-btn-color"
+                            height="50"
+                        >
+                            <span>Submit</span>
+                        </VBtn>
+                    </VCardActions>
+                </VForm>
+            </VCard>
+        </div>
+    </VDialog>
+</template>
 <style scoped>
+.width-high {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.heading-upload-modal {
+    margin: 0;
+    font-size: 20px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 52px !important; /* 130% */
+    text-transform: capitalize !important;
+    color: var(--tiggie-blue, #4066e4);
+}
+
+.warning-text{
+    color: red !important;
+    font-size: 15px !important;
+}
+
 .coming-soon {
     display: flex;
     justify-content: center;
@@ -71,7 +151,12 @@ const toggleDialog = () => {
     border: 1px dashed black;
     border-radius: 10px;
 }
-.coming-soon p {
-    margin-bottom: 0;
+
+.submit-btn-color{
+    background: #4066e4 !important;
+    color: #fff !important;
+}
+.colorprimary{
+    color: #4066e4 !important;
 }
 </style>

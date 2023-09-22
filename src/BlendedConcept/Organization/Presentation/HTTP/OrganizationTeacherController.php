@@ -19,17 +19,24 @@ class OrganizationTeacherController
 {
     public function index()
     {
-        $filters = request(['search', 'first_name', 'last_name', 'email']) ?? [];
+        try {
+            $filters = request(['search', 'first_name', 'last_name', 'email']) ?? [];
 
-        $teachers = (new GetTeacherList())->handle();
+            $teachers = (new GetTeacherList())->handle();
 
-        $studentListWithPagniation = (new GetStudentList($filters))->handle();
+            $studentListWithPagniation = (new GetStudentList($filters))->handle();
 
-        // return $teachers;
-        return Inertia::render(config('route.organizations-teacher.index'), [
-            'teachers' => $teachers,
-            'students' => $studentListWithPagniation,
-        ]);
+            // return $teachers;
+            return Inertia::render(config('route.organizations-teacher.index'), [
+                'teachers' => $teachers,
+                'students' => $studentListWithPagniation,
+            ]);
+        } catch (\Exception $e) {
+
+            dd($e->getMessage());
+
+            return redirect()->route('organizations-teacher.index')->with('sytemErrorMessage', $e->getMessage());
+        }
     }
 
     public function create()

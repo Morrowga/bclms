@@ -28,7 +28,7 @@ class StoreStudentRequest extends FormRequest
                 'required', 'unique:users,contact_number',
             ],
             'email' => [
-                'email' => ['required', 'email', 'unique:users,email'],
+                'email' => 'required', 'email', 'unique:users,email',
             ],
         ];
     }

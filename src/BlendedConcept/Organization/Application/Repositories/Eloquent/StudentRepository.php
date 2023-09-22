@@ -30,6 +30,7 @@ class StudentRepository implements StudentRepositoryInterface
         DB::beginTransaction();
         try {
             $user = UserEloquentModel::create([
+                'role_id'    => 6,
                 'first_name' => $student->first_name,
                 'last_name' => $student->last_name,
                 'email' => $student->email,
@@ -59,29 +60,45 @@ class StudentRepository implements StudentRepositoryInterface
     public function updateStudent(StudentData $studentData)
     {
 
-        $studentDataArrary = $studentData->toArray();
+        DB::beginTransaction();
+        try {
+            $studentDataArrary = $studentData->toArray();
 
-        $user = UserEloquentModel::find($studentData->user_id)
-            ->update([
-                'first_name' => $studentData->first_name,
-                'last_name' => $studentData->last_name,
-                'email' => $studentData->email,
-                'contact_number' => $studentData->contact_number,
-            ]);
+            $user = UserEloquentModel::find($studentData->user_id)
+                ->update([
+                    'first_name' => $studentData->first_name,
+                    'last_name' => $studentData->last_name,
+                    'email' => $studentData->email,
+                    'contact_number' => $studentData->contact_number,
+                ]);
 
-        $studentEloquentModel = StudentEloquentModel::query()->findOrFail($studentData->student_id);
-        $studentEloquentModel->fill($studentDataArrary);
-        $studentEloquentModel->update();
-        $studentEloquentModel->disability_types()->sync($studentData->disability_types);
-        $studentEloquentModel->learningneeds()->sync($studentData->learning_needs);
+            $studentEloquentModel = StudentEloquentModel::query()->findOrFail($studentData->student_id);
+            $studentEloquentModel->fill($studentDataArrary);
+            $studentEloquentModel->update();
+            $studentEloquentModel->disability_types()->sync($studentData->disability_types);
+            $studentEloquentModel->learningneeds()->sync($studentData->learning_needs);
 
-        //for media file upload
+            //for media file upload
 
-        if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {
+            if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {
+                $old_image = $studentEloquentModel->getFirstMedia('profile_pics');
+                if($old_image !== null){
+                    $old_image->delete();
+                }
 
-            $studentEloquentModel->getFirstMedia('profile_pics')->delete();
-            $studentEloquentModel->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organization');
-            $user->profile_pic = $studentEloquentModel->getFirstMediaUrl('profile_pics');
+                $newMediaItem = $studentEloquentModel->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organization');
+
+                if ($newMediaItem->getUrl()) {
+                    $userEloquentModel = UserEloquentModel::find($studentData->user_id);
+                    $userEloquentModel->profile_pic = $newMediaItem->getUrl();
+                    $userEloquentModel->update();
+                }
+            }
+
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            dd($error->getMessage());
         }
 
     }

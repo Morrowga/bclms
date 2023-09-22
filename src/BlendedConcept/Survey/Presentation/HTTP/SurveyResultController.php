@@ -9,13 +9,18 @@ class SurveyResultController
 {
     public function index()
     {
-        $filters = request()->only(['question', 'search', 'perPage']);
+        try {
 
-        $surveyResults = (new GetSurveyResults($filters))->handle();
+            $filters = request()->only(['question', 'search', 'perPage']);
 
-        return Inertia::render(config('route.survey_results.index'), [
-            'surveyResults' => $surveyResults,
-        ]);
+            $surveyResults = (new GetSurveyResults($filters))->handle();
+
+            return Inertia::render(config('route.survey_results.index'), [
+                'surveyResults' => $surveyResults,
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('survey_results.index')->with('sytemErrorMessage', $e->getMessage());
+        }
     }
 
     // public function create()
