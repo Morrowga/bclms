@@ -15,7 +15,7 @@ class GameRepository implements GameRepositoryInterface
     //get all games
     public function getGameList()
     {
-        $games = GameResource::collection(GameEloquentModel::with(['tags', 'disabilityTypes'])->orderBy('id', 'desc')->get());
+        $games = GameResource::collection(GameEloquentModel::with(['tags', 'disabilityTypes', 'devices'])->orderBy('id', 'desc')->get());
 
         return $games;
     }
@@ -28,6 +28,7 @@ class GameRepository implements GameRepositoryInterface
      */
     public function createGame(Game $game)
     {
+
         DB::beginTransaction();
         try {
             // Insert data into the game
@@ -49,23 +50,20 @@ class GameRepository implements GameRepositoryInterface
                 $gameEloquent->update();
             }
 
-            // Upload the game file if provided
-
-            // dd($gameEloquent->getMedia('game_file'));
-
-            // if ($gameEloquent->getMedia('game_file')->isNotEmpty()) {
-            //     $gameEloquent->game_file = $gameEloquent->getMedia('game_file')[0]->original_url;
-            //     $gameEloquent->update();
-            // }
-
             $tagCollection = collect(request()->tags);
             $disabilityCollection = collect(request()->disability_type_id);
+            $deviceCollection = collect(request()->devices);
 
             $tagLength = $tagCollection->count();
             $disabilityLength = $disabilityCollection->count();
+            $deviceLength = $deviceCollection->count();
 
             if ($tagLength > 0) {
                 $gameEloquent->associateTags(request()->tags);
+            }
+
+            if ($deviceLength > 0) {
+                $gameEloquent->devices()->attach(request()->devices);
             }
 
             if ($disabilityLength > 0) {
@@ -121,14 +119,23 @@ class GameRepository implements GameRepositoryInterface
 
             $tagCollection = collect(request()->tags);
             $disabilityCollection = collect(request()->disability_type_id);
+            $deviceCollection = collect(request()->devices);
 
             $tagLength = $tagCollection->count();
             $disabilityLength = $disabilityCollection->count();
+            $deviceLength = $deviceCollection->count();
 
             if ($tagLength > 0) {
                 $gameEloquent->tags()->detach();
                 // Attach new tags (assuming $request contains the new tag IDs)
                 $gameEloquent->associateTags(request()->tags);
+            }
+
+            if ($deviceLength > 0) {
+                $gameEloquent->devices()->detach();
+
+                $gameEloquent->devices()->attach(request()->devices);
+                // Attach new tags (assuming $request contains the new tag IDs)
             }
 
             if ($disabilityLength > 0) {

@@ -10,12 +10,19 @@ const props = defineProps({
     disabilitytypes: {
         type: Object,
         required: true
+    },
+    devices: {
+        type: Object,
+        required: true
     }
 });
+
 let dialog = ref(false);
+
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
+console.log(props.data.devices);
 
 const formatDate = (dateString) => {
       // Parse the date string into a Date object
@@ -55,7 +62,7 @@ const formatDate = (dateString) => {
                             <span>{{ data.name }}</span>
                         </div>
                         <div class="edit-icon">
-                            <Edit :datas="props.data" :disabilitytypes="props.disabilitytypes" />
+                            <Edit :datas="props.data" :disabilitytypes="props.disabilitytypes" :devices="props.devices" />
                         </div>
                         <div class="close-btn">
                             <v-btn
@@ -92,12 +99,7 @@ const formatDate = (dateString) => {
                             >Supported Accessibility Devices</span
                         ><br />
                         <v-chip-group>
-
-                            <v-chip size="small">Mouse/Keyboard</v-chip>
-
-                            <v-chip size="small">Switch-Single</v-chip>
-
-                            <v-chip size="small">Switch-Double</v-chip>
+                            <v-chip size="small" v-for="(device,index) in data.devices" :key="index">{{device.name}}</v-chip>
                         </v-chip-group>
                     </div>
                 </v-card-text>

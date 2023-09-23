@@ -29,6 +29,9 @@ class StoreGameRequest extends FormRequest
             'disability_type_id' => [
                 'required',
             ],
+            'devices' => [
+                'required',
+            ],
             'tags' => [
                 'required',
             ],

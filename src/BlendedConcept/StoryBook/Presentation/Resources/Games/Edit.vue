@@ -15,6 +15,10 @@ const props = defineProps({
     type: Object,
     requird: true,
   },
+  devices: {
+    type: Object,
+    requird: true,
+  },
 });
 let emit = defineEmits();
 let dialog = ref(false);
@@ -22,7 +26,9 @@ let gameFileDialog = ref(false);
 let thumbnailDialog = ref(false);
 let tags = ref([]);
 let types = ref([]);
+let devices = ref([]);
 let systemDisabilityTypes = ref([]);
+let systemDevices = ref([]);
 const getGameFile = ref(null);
 const getThumbFile = ref(null);
 
@@ -37,12 +43,27 @@ props.datas.disability_types.forEach((item) => {
   });
 });
 
+props.datas.devices.forEach((item) => {
+  devices.value.push({
+    id: item.id,
+    name: item.name,
+  });
+});
+
 props.disabilitytypes.forEach((item) => {
   systemDisabilityTypes.value.push({
     id: item.id,
     name: item.name,
   });
 });
+
+props.devices.forEach((item) => {
+  systemDevices.value.push({
+    id: item.id,
+    name: item.name,
+  });
+});
+
 
 const toggleDialog = () => {
   dialog.value = !dialog.value;
@@ -51,7 +72,7 @@ const formSubmit = useForm({
   name: props.datas.name,
   description: props.datas.description,
   disability_type_id: null,
-  devices: [],
+  devices: null,
   tags: tags.value,
   game: null,
   thumb: null,
@@ -70,14 +91,21 @@ const handleThumbnailModalSubmit = (data) => {
 
 let updateformSubmit = () => {
   let typeIds = [];
+  let deviceIds = [];
+
   types.value.forEach((item) => {
     typeIds.push(item.id);
+  });
+
+  devices.value.forEach((item) => {
+    deviceIds.push(item.id);
   });
 
   formSubmit.game = getGameFile.value;
   formSubmit.thumb = getThumbFile.value;
   formSubmit.disability_type_id = typeIds;
-  console.log(formSubmit);
+  formSubmit.devices = deviceIds;
+
   formSubmit.post(route("games.update", props.datas.id), {
     onSuccess: () => {
       dialog.value = false;
@@ -96,6 +124,18 @@ const addToArray = (disability) => {
 
 const isInGameDisabilityTypes = (disabilityId) => {
   return types.value.some((type) => type.id === disabilityId);
+};
+
+const removeDeviceFromArray = (deviceId) => {
+    devices.value = devices.value.filter((item) => item.id !== deviceId);
+};
+
+const addDeviceToArray = (device) => {
+  devices.value.push(device);
+};
+
+const isInGameDevices = (deviceId) => {
+  return devices.value.some((device) => device.id === deviceId);
 };
 
 const formatDate = (dateString) => {
@@ -202,31 +242,30 @@ const formatDate = (dateString) => {
               ><br />
               <div class="d-flex">
                 <v-chip-group>
-                  <div class="ps-relative">
-                    <v-chip size="small">Mouse/Keyboard</v-chip>
-                    <div class="delete-chip">
-                      <span>-</span>
+                  <div class="ps-relative"
+                  v-for="(device, index) in systemDevices"
+                  :key="index"
+                  >
+                    <v-chip size="small">
+                      {{ device.name }}
+                    </v-chip>
+                    <div
+                      class="delete-chip"
+                      v-if="isInGameDevices(device.id)"
+                    >
+                      <span @click="removeDeviceFromArray(device.id)">-</span>
                     </div>
-                  </div>
-                  <div class="ps-relative">
-                    <v-chip size="small">Switch-Single</v-chip>
-                    <div class="delete-chip">
-                      <span>-</span>
-                    </div>
-                  </div>
-                  <div class="ps-relative">
-                    <v-chip size="small">Switch-Double</v-chip>
-                    <div class="delete-chip">
-                      <span>-</span>
+                    <div class="add-chip" v-else>
+                      <span @click="addDeviceToArray(device)">+</span>
                     </div>
                   </div>
                 </v-chip-group>
-                <v-btn
+                <!-- <v-btn
                   class="ml-10"
                   size="x-small"
                   icon="mdi-plus"
                   color="secondary"
-                ></v-btn>
+                ></v-btn> -->
               </div>
             </div>
           </v-card-text>

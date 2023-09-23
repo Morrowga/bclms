@@ -2,28 +2,35 @@
 
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Src\BlendedConcept\Disability\Application\UseCases\Queries\DisabilityTypes\ShowDisabilityTypes;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Src\BlendedConcept\StoryBook\Application\DTO\GameData;
+use Src\BlendedConcept\StoryBook\Domain\Policies\GamePolicy;
 use Src\BlendedConcept\StoryBook\Application\Mappers\GameMapper;
 use Src\BlendedConcept\StoryBook\Application\Requests\StoreGameRequest;
 use Src\BlendedConcept\StoryBook\Application\Requests\UpdateGameRequest;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoreGameCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\UpdateGameCommand;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
+use Src\BlendedConcept\Disability\Application\UseCases\Queries\Devices\GetDevicesWithoutPagination;
+use Src\BlendedConcept\Disability\Application\UseCases\Queries\DisabilityTypes\ShowDisabilityTypes;
 
 class GameController
 {
     public function index()
     {
+        abort_if(authorize('view', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             $disabilityTypes = (new ShowDisabilityTypes())->handle();
+            $devices = (new GetDevicesWithoutPagination())->handle();
             $games = (new GetGameList())->handle();
 
             return Inertia::render(config('route.games.index'), [
                 'disabilityTypes' => $disabilityTypes,
+                'devices' => $devices,
                 'games' => $games,
             ]);
 
@@ -44,10 +51,9 @@ class GameController
      */
     public function store(StoreGameRequest $request)
     {
-        try {
-            // Abort if the user is not authorized to create games
-            // abort_if(authorize('create', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('create', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        try {
             // Validate the request data
             $request->validated();
 
@@ -73,7 +79,7 @@ class GameController
      */
     public function update(UpdateGameRequest $request, GameEloquentModel $game)
     {
-        // abort_if(authorize('edit', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('edit', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Validate the request.
