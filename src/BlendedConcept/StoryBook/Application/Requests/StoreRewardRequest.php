@@ -35,7 +35,11 @@ class StoreRewardRequest extends FormRequest
     public function messages()
     {
         return [
-            'rarity' => 'Please select rarity',
+            'name' => "Name field is required",
+            'description' => "Description field is required",
+            'gold_coins_needed' => "Gold Coins Need is required",
+            'silver_coins_needed' => 'Silver Coins Need is required',
+            'rarity.not_in' => 'Please select rarity',
         ];
     }
 }

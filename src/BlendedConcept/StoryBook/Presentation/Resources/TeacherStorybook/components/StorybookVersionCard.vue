@@ -5,9 +5,7 @@ import { router } from "@inertiajs/core";
 let onFormSubmit = () => {
   isConfirmedDialog({ title: "Are you sure want to delete it." });
 };
-
 const props = defineProps(['storybook_versions','story_img','storybook_id']);
-console.log(props,"FU")
 </script>
 <template>
   <v-card>

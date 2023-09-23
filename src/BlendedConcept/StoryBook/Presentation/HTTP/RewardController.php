@@ -50,6 +50,7 @@ class RewardController
      */
     public function store(StoreRewardRequest $request)
     {
+
         try {
             // Map the reward data from the request
             $rewardMap = RewardMapper::fromRequest($request);
@@ -95,6 +96,7 @@ class RewardController
      */
     public function update(UpdateRewardRequest $request, RewardEloquentModel $reward)
     {
+
         try {
             // Map the reward data from the request
             $rewardData = RewardData::fromRequest($request, $reward);

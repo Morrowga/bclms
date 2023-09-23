@@ -22,7 +22,7 @@ class StoreOrganizationRequest extends FormRequest
             'contact_email' => [
                 'required',
                 'email',
-                'unique:organizations,contact_email,'.request()->route('organization')->id,
+                'unique:organizations,contact_email',
             ],
             'org_admin_name' => [
                 'required',
@@ -34,7 +34,7 @@ class StoreOrganizationRequest extends FormRequest
             'login_email' => [
                 'required',
                 'email',
-                'unique:users,email,'.request()->route('organization')->org_admin_id,
+                'unique:users,email'
             ],
             'login_password' => [
                 'required', 'min:8',

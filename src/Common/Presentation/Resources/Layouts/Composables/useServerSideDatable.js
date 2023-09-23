@@ -65,7 +65,6 @@ let getQueryParams = () => {
             data[key] = value;
         }
     }
-    console.log(data, "current parameter")
     return data;
 };
 

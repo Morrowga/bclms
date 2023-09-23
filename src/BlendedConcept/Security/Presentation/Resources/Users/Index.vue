@@ -127,9 +127,6 @@ const exportUser = () => {
   if (data) exportFromJSON({ data, fileName, exportType });
   return;
 };
-const fullName = (user) => {
-  return (user?.first_name ?? "") + " " + (user?.last_name ?? "");
-};
 </script>
 
 <template>
@@ -198,10 +195,9 @@ const fullName = (user) => {
                   src="/images/defaults/avator.png"
                   class="user-profile-image"
                 />
-                <span>{{ fullName(props.row) }}</span>
+                <span>{{ props.row.full_name }}</span>
               </div>
             </div>
-
             <div v-if="props.column.field == 'orgainzations'">
               <p class="">
                 {{ props.row.b2b_user?.organization?.name }}
