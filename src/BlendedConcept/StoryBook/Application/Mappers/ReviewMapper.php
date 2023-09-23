@@ -12,11 +12,11 @@ class ReviewMapper
     {
         return new Review(
             id : $review_id,
-            given_by_user_id : $this->given_by_user_id,
-            storybook_id : $this->storybook_id,
-            stars : $this->stars,
-            feedback : $this->feedback,
-            given_on : $this->given_on,
+            given_by_user_id : $request->given_by_user_id,
+            storybook_id : $request->storybook_id,
+            stars : $request->stars,
+            feedback : $request->feedback,
+            given_on : $request->given_on,
         );
     }
 

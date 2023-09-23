@@ -12,10 +12,10 @@ class StoryBookVersionMapper
     {
         return new StoryBookVersion(
             id : $storybook_version_id,
-            storybook_id : $this->storybook_id,
-            teacher_id : $this->teacher_id,
-            name : $this->name,
-            description : $this->description,
+            storybook_id : $request->storybook_id,
+            teacher_id : $request->teacher_id,
+            name : $request->name,
+            description : $request->description,
         );
     }
 

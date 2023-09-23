@@ -14,11 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('storybook_assignments', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('storybook_version_id')->references('id')->on('storybook_versions');
             $table->foreignId('student_id')->references('student_id')->on('students');
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 

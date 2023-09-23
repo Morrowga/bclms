@@ -10,10 +10,12 @@ import {
   requiredValidator,
   integerValidator,
 } from "@validators";
-const props = defineProps(["learningNeeds", "disabilityTypes",'organizations_student']);
+const props = defineProps([
+  "learningNeeds",
+  "disabilityTypes",
+  "organizations_student",
+]);
 
-
-console.log(props.organizations_student);
 
 const form = useForm({
   student_id: props.organizations_student.student_id,
@@ -29,7 +31,7 @@ const form = useForm({
   profile_pics: "",
   learning_needs: [],
   disability_types: [],
-  _method:"PUT"
+  _method: "PUT",
 });
 
 let refForm = ref();
@@ -37,29 +39,38 @@ let refForm = ref();
 const gender = ref(["Select", "Male", "Female"]);
 let tab = ref(null);
 const createStudent = () => {
-    console.log(form);
-  form.post(route("organizations-student.update",props.organizations_student.student_id), {
-    onSuccess: () => {
-      SuccessDialog({
-        title: "You have successfully create a student!",
-        color: "#17CAB6",
-      });
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  console.log(form);
+  form.post(
+    route(
+      "organizations-student.update",
+      props.organizations_student.student_id
+    ),
+    {
+      onSuccess: () => {
+        SuccessDialog({
+          title: "You have successfully create a student!",
+          color: "#17CAB6",
+        });
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    }
+  );
 };
 
-onMounted(()=> {
+onMounted(() => {
     (form.email = props.organizations_student.user.email),
     (form.contact_number = props.organizations_student.user.contact_number),
     (form.first_name = props.organizations_student.user.first_name),
     (form.last_name = props.organizations_student.user.last_name),
     (form.gender = props.organizations_student.gender),
     (form.dob = props.organizations_student.dob),
+    (form.education_level = props.organizations_student.education_level),
+    (form.education_level = props.organizations_student.education_level),
     (form.education_level = props.organizations_student.education_level)
-})
+
+});
 </script>
 <template>
   <AdminLayout>
@@ -68,8 +79,9 @@ onMounted(()=> {
         <v-row>
           <v-col cols="12" md="6">
             <ImageUpload
-            v-model="form.profile_pics"
-            :old_image="organizations_student.user.profile_pics" />
+              v-model="form.profile_pics"
+              :old_image="organizations_student.user.profile_pics"
+            />
           </v-col>
           <v-col cols="12" md="6" class="pa-5">
             <div class="d-flex justify-space-between align-center">
@@ -164,19 +176,37 @@ onMounted(()=> {
                 <div>
                   <v-window v-model="tab">
                     <v-window-item value="learning">
-                      <ChipWithBlueDot
-                        v-for="item in learningNeeds"
-                        :key="item.id"
-                        :title="item.name"
-                      />
+                      <v-chip-group
+                        filter
+                        v-model="form.learning_needs"
+                        multiple
+                        column
+                      >
+                        <v-chip
+                          v-for="item in learningNeeds"
+                          variant="outlined"
+                          :key="item.id"
+                        >
+                          {{ item.name }}
+                        </v-chip>
+                      </v-chip-group>
                     </v-window-item>
 
                     <v-window-item value="disability">
-                      <ChipWithBlueDot
-                        v-for="item in disabilityTypes"
-                        :key="item.id"
-                        :title="item.name"
-                      />
+                      <v-chip-group
+                        filter
+                        v-model="form.learning_needs"
+                        multiple
+                        column
+                      >
+                        <v-chip
+                          v-for="item in learningNeeds"
+                          variant="outlined"
+                          :key="item.id"
+                        >
+                          {{ item.name }}
+                        </v-chip>
+                      </v-chip-group>
                     </v-window-item>
                   </v-window>
                 </div>

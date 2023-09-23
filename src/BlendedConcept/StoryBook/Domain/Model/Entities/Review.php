@@ -8,11 +8,11 @@ class Review extends Entity
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly int $given_by_user_id,
+        public readonly ?int $given_by_user_id,
         public readonly int $storybook_id,
         public readonly int $stars,
         public readonly string $feedback,
-        public readonly string $given_on,
+        public readonly ?string $given_on,
     ) {
     }
 

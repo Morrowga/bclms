@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref } from "vue";
+import { defineProps, ref, onUpdated } from "vue";
 import Edit from "./Edit.vue";
 const props = defineProps({
   data: {
@@ -11,6 +11,46 @@ let dialog = ref(false);
 const toggleDialog = () => {
   dialog.value = !dialog.value;
 };
+const isEdit = ref(false);
+const form = useForm({
+  id: "",
+  name: "",
+  tag_name: "",
+  is_free: 0,
+  description: "",
+  tags: [],
+  sub_learning_needs: [],
+  themes: [],
+  disability_type: [],
+  devices: [],
+  thumbnail_img: "",
+  _method: "PUT",
+});
+
+const handleUpdate = () => {
+  form.post(route("books.update", form.id), {
+    onSuccess: () => {
+      SuccessDialog({ title: props.flash?.successMessage });
+      dialog.value = false;
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+};
+
+onUpdated(() => {
+    (form.id = props.data.id),
+    (form.name = props.data.name),
+    (form.description = props.data.description),
+    (form.thumbnail_img = props.data.thumbnail_img),
+    (form.disability_type = props.data.disability_type),
+    (form.sub_learning_needs = props.data.learningneeds),
+    (form.themes = props.data.themes),
+    (form.disability_type = props.data.disability_types),
+    (form.devices = props.data.devices)
+});
+
 </script>
 <template>
   <div>
@@ -22,47 +62,51 @@ const toggleDialog = () => {
       >
         <v-img
           @click="toggleDialog"
-          :src="data.thumbnail_img"
+          :src="form.thumbnail_img"
           alt="Your Image"
           max-height="200"
+          class="p-relative img-hover"
           cover
-        ></v-img>
+        >
+          <!-- show free storybook is free -->
+          <div class="free-bar" v-if="data.is_free">
+            <div class="pppangram-bold">FREE</div>
+          </div>
+        </v-img>
       </v-card>
     </v-hover>
+    <!-- noted this dialog module is used for both show and edit on one page -->
     <v-dialog v-model="dialog" width="auto" max-width="800" min-width="800">
       <v-card>
         <v-card-title class="pa-0">
           <div class="faded-image">
-            <div class="pa-2 coins-bg">
-              <div class="d-flex space-between">
-                <img
-                src="/images/icons/goldcoins.png"
-                class="coin-image"
-              />
-              <span class="coin-text pl-1">{{data.num_gold_coins}}</span>
-              </div>
-              <div class="d-flex space-between">
-                <img
-                src="/images/icons/silvercoins.png"
-                class="coin-image"
-              />
-              <span class="coin-text pl-2">{{data.num_silver_coins}}</span>
-              </div>
-
-            </div>
             <v-img
               :src="data.thumbnail_img"
               :aspect-ratio="16 / 9"
               fill
               alt="Faded Image"
-            />
+            >
+              <div class="pa-2 ml-10 mt-4 coins-bg">
+                <div class="d-flex space-between">
+                  <img src="/images/icons/goldcoins.png" class="coin-image" />
+                  <span class="coin-text pl-1">{{ data.num_gold_coins }}</span>
+                </div>
+                <div class="d-flex space-between">
+                  <img src="/images/icons/silvercoins.png" class="coin-image" />
+                  <span class="coin-text pl-2">
+                    {{ data.num_silver_coins }}
+                  </span>
+                </div>
+              </div>
+            </v-img>
             <div class="faded-overlay"></div>
             <div class="book-title">
               <span>{{ data.name }}</span>
             </div>
             <div class="edit-icon">
               <v-btn icon="mdi-gift" size="x-small" color="secondary"></v-btn>
-              <Edit :datas="data" />
+              <!-- <Edit :datas="data" /> -->
+              <v-btn icon="mdi-edit" size="x-small" color="secondary" @click="isEdit = true"/>
               <v-btn icon="mdi-upload" size="x-small" color="secondary"></v-btn>
             </div>
             <div class="close-btn">
@@ -137,6 +181,7 @@ const toggleDialog = () => {
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <!-- noted this dialog module is used for both show and edit on one page -->
   </div>
 </template>
 
@@ -233,10 +278,9 @@ const toggleDialog = () => {
   gap: 10px;
   width: 300px !important;
   height: 80px;
-  border-radius: 20px !important;
+  border-radius: 30px !important;
   background: rgba(0, 0, 0, 0.75) !important;
   background-color: transparent;
-
 }
 .coin-image {
   width: 70px !important;
@@ -245,11 +289,36 @@ const toggleDialog = () => {
 .coin-text {
   color: #fff !important;
   text-align: center !important;
-  font-family:'ruddy-bold';
+  font-family: "ruddy-bold";
   font-size: 60px !important;
   font-style: normal !important;
   font-weight: 700 !important;
   line-height: 74px !important; /* 123.333% */
   text-transform: capitalize !important;
+}
+
+.p-relative {
+  position: relative;
+}
+.free-bar {
+  position: absolute;
+  width: 160px;
+  height: 37.191px;
+  top: 15px;
+  right: -40px;
+  transform: rotate(40.242deg);
+  flex-shrink: 0;
+  background: #d7f2f0;
+  text-align: center;
+  padding-top: 5px;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  color: #000 !important;
+  line-height: 32px;
+}
+.img-hover:hover {
+  fill: #282828;
+  fill-opacity: 0.5;
 }
 </style>

@@ -12,7 +12,7 @@ const props = defineProps({
   item : {
     type : Object,
     default:{}
-  }
+  },
 });
 </script>
 <template>
@@ -24,11 +24,12 @@ const props = defineProps({
     >
       <div class="main-card-book">
         <v-card
-          @click="router.get(route('teacher_storybook.show'))"
+          @click="router.get(route('teacher_storybook.show',item.id,))"
           v-bind="props"
         >
           <v-card-title class="ps-relative">
-            <v-img src="/images/image4.png" />
+            <v-img
+            :src="item.thumbnail_img" />
             <div class="chip-page" v-if="is_chip">
               <div class="chip-content">14 pages</div>
             </div>
@@ -38,15 +39,19 @@ const props = defineProps({
               {{item?.name}}
             </h1>
             <div class="chip-group">
-
-              <GreenChip title="Switch" />
-              <GreenChip title="Eye-Gaze" />
-              <GreenChip title="Touch" />
+              <GreenChip
+              v-for="element in item.devices"
+              :title="element.name"
+              :key="element.id"  />
             </div>
           </v-card-text>
         </v-card>
         <v-scale-transition>
-          <HoverCard v-if="isHovering" class="card-hover" v-bind="props" />
+          <HoverCard
+          v-if="isHovering"
+          class="card-hover"
+          :dataItem="item"
+          v-bind="props" />
         </v-scale-transition>
       </div>
     </v-hover>

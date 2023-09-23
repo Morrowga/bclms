@@ -1,4 +1,4 @@
-import {ref} from "vue";
+import { ref } from "vue";
 import { router } from "@inertiajs/core";
 let serverPage = ref();
 let serverPerPage = ref(10);
@@ -65,6 +65,7 @@ let getQueryParams = () => {
             data[key] = value;
         }
     }
+    console.log(data, "current parameter")
     return data;
 };
 
@@ -79,7 +80,9 @@ let searchItems = () => {
  *
  */
 let loadItems = () => {
-    router.get(route(route().current()), getQueryParams(), {
+    const urlString = location.href;
+    const currentURL = urlString.split('?')[0];
+    router.get(currentURL, getQueryParams(), {
         replace: false,
         preserveState: true,
         preserveScroll: true,
@@ -97,8 +100,7 @@ let truncatedText = (text) => {
     }
 };
 
-export
-{
+export {
     serverParams,
     updateParams,
     onColumnFilter,
