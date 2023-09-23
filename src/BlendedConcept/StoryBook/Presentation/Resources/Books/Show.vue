@@ -2,7 +2,6 @@
 import { defineProps, ref, onUpdated } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import Edit from "./Edit.vue";
-import { useForm } from "@inertiajs/vue3";
 const props = defineProps({
   data: {
     type: Object,
