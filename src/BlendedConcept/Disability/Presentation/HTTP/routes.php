@@ -18,5 +18,6 @@ Route::group(['middleware' => ['auth']], function () {
     // Route::get('/accessibility_device/create', [AccessibilityDeviceController::class, 'create'])->name('accessibility_device.create');
     // Route::get('/accessibility_device/show', [AccessibilityDeviceController::class, 'show'])->name('accessibility_device.show');
 
-    Route::get('/set_accessibility_device', [SetAccessibilityController::class, 'index'])->name('set_accessibility_device.index');
+    Route::get('/set_accessibility_device/{student_id}', [SetAccessibilityController::class, 'index'])->name('set_accessibility_device.index');
+    Route::post('/set_accessibility_device/{student_id}', [SetAccessibilityController::class, 'store'])->name('set_accessibility_device.store');
 });

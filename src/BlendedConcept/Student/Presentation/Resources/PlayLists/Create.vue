@@ -17,22 +17,22 @@ const dragging = ref(false);
 const playlistFile = ref(null);
 
 const handlePlaylistChange = (event) => {
-  const file = event.target.files[0];
-  playlistFile.value = file;
-  playlist.value = URL.createObjectURL(file);
-  console.log(profile.value);
+    const file = event.target.files[0];
+    playlistFile.value = file;
+    playlist.value = URL.createObjectURL(file);
+    console.log(profile.value);
 };
 
 const onDropPlaylist = (event) => {
-  event.preventDefault();
-  dragging.value = false;
-  const files = event.dataTransfer.files;
-  playlist.value = URL.createObjectURL(files[0]);
-  playlistFile.value = files[0];
+    event.preventDefault();
+    dragging.value = false;
+    const files = event.dataTransfer.files;
+    playlist.value = URL.createObjectURL(files[0]);
+    playlistFile.value = files[0];
 };
 
 const createPlaylist = () => {
-    form.image = playlistFile.value
+    form.image = playlistFile.value;
     console.log(form);
     form.post(route("playlists.store"), {
         onSuccess: () => {
@@ -47,7 +47,6 @@ const createPlaylist = () => {
     //     color: "#17CAB6",
     // });
 };
-
 </script>
 
 <template>
@@ -69,26 +68,35 @@ const createPlaylist = () => {
                         >
                             <div v-if="!playlist">
                                 <div class="d-flex justify-center text-center">
-                                    <v-img src="/images/Icons.png" width="80" height="80"></v-img>
+                                    <v-img
+                                        src="/images/Icons.png"
+                                        width="80"
+                                        height="80"
+                                    ></v-img>
                                 </div>
                                 <p class="pppangram-bold mt-5">
                                     Drag your item to upload
                                 </p>
                                 <p class="mt-2 blur-p">
-                                    PNG, GIF, WebP, MP4 or MP3. Maximum file size 100 Mb.
+                                    PNG, GIF, WebP, MP4 or MP3. Maximum file
+                                    size 100 Mb.
                                 </p>
                             </div>
                             <div v-else>
-                                <v-img :src="playlist" class="profileimg" cover/>
+                                <v-img
+                                    :src="playlist"
+                                    class="profileimg"
+                                    cover
+                                />
                                 <!-- <p>File Name: {{ gameFile.name }}</p> -->
-                            <!-- <button @click="removeGameFile" class="remove-button">
+                                <!-- <button @click="removeGameFile" class="remove-button">
                                 Remove
                             </button> -->
                             </div>
                             <input
-                            type="file"
-                            style="display: none"
-                            @change="handlePlaylistChange"
+                                type="file"
+                                style="display: none"
+                                @change="handlePlaylistChange"
                             />
                         </div>
                     </VCol>
@@ -102,9 +110,12 @@ const createPlaylist = () => {
                             >Name</VLabel
                         >
 
-                        <VTextField placeholder="e.g. Bravery" v-model="form.name" color="line"
-                        :rules="[requiredValidator]"
-                        :error-messages="form?.errors?.name"
+                        <VTextField
+                            placeholder="e.g. Bravery"
+                            v-model="form.name"
+                            color="line"
+                            :rules="[requiredValidator]"
+                            :error-messages="form?.errors?.name"
                         />
                     </VCol>
                     <VCol cols="12">
@@ -146,7 +157,6 @@ const createPlaylist = () => {
                     </VCol>
                 </VRow>
             </VForm>
-
         </VContainer>
     </AdminLayout>
 </template>
@@ -155,9 +165,8 @@ const createPlaylist = () => {
     border: 3px solid #565660 !important;
 }
 
-
-.blur-p{
-    color: var(--Secondary2, rgba(86, 86, 96, 0.40));
+.blur-p {
+    color: var(--Secondary2, rgba(86, 86, 96, 0.4));
     text-align: center;
     font-size: 14px;
     font-style: normal;
@@ -167,20 +176,20 @@ const createPlaylist = () => {
 }
 
 .profile-drag {
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  background: #f7f7f7;
-  height: 440px;
-  border: 1px solid rgb(182,182,186, 0.6);
-  border-radius: 10px;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    background: #f7f7f7;
+    height: 440px;
+    border: 1px solid rgb(182, 182, 186, 0.6);
+    border-radius: 10px;
 }
-.profileimg{
+.profileimg {
     object-fit: cover !important;
     height: 440px;
     border-radius: 10px;
 }
 .profile-drag p {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 </style>

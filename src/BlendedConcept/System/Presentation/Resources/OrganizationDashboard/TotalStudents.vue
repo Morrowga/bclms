@@ -1,203 +1,80 @@
 <script setup>
-import { useForm, usePage, Link } from "@inertiajs/vue3";
-import { router } from "@inertiajs/core";
-import { computed, defineProps } from "vue";
-import Swal from "sweetalert2";
-import avatar4 from "@images/avatars/avatar-4.png";
-import { toastAlert } from "@Composables/useToastAlert";
+import axios from "axios";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+import StudentAvatar from "@mainRoot/components/StudentAvatar/StudentAvatar.vue";
+import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+    datas,
+    routeName,
+} from "./useStudentsDatatable.js";
 
-let props = defineProps(["users"]);
-//## start datatable section
-let columns = [
-    {
-        label: "USER",
-        field: "name",
-        sortable: false,
-    },
-    {
-        label: "EMAIL",
-        field: "email",
-        sortable: false,
-    },
-    {
-        label: "ROLE",
-        field: "role",
-        sortable: false,
-    },
-    {
-        label: "PLAN",
-        field: "plan",
-        sortable: false,
-    },
-    {
-        label: "STATUS",
-        field: "status",
-        sortable: false,
-    },
+serverPage.value = ref(datas.value?.current_page ?? 1);
+serverPerPage.value = ref(10);
+routeName.value = "classrooms.getStudents";
+watch(serverPerPage, function (value) {
+    onPerPageChange(value);
+});
 
-    {
-        label: "ACTION",
-        field: "action",
-        sortable: false,
-    },
-];
-
-let rows = props.users;
-
-//## truncatedText
-let truncatedText = (text) => {
-    if (text) {
-        if (text?.length <= 30) {
-            return text;
-        } else {
-            return text?.substring(0, 30) + "...";
-        }
-    }
-};
-
-const selectionChanged = (data) => {
-    console.log(data.selectedRows);
-};
+const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
 </script>
 <template>
-    <section>
-        <VCard>
-            <VCardText class="d-flex flex-wrap gap-4">
-                <!-- 👉 Export button -->
-                <div class="d-flex align-center">
-                    <v-btn
-                        prepend-icon="mdi-export"
-                        variant="outlined"
-                        color="secondary"
-                        >Export</v-btn
-                    >
+    <div class="header">
+        <div class="d-flex justify-space-between align-center mb-4">
+            <h1 class="tiggie-title">Student</h1>
+
+            <div class="d-flex">
+                <div class="search-field">
+                    <VTextField
+                        placeholder="Search User ..."
+                        density="compact"
+                        class="mr-4"
+                        variant="solo"
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
+                    />
                 </div>
 
-                <VSpacer />
-
-                <div
-                    class="app-user-search-filter d-flex justify-end align-center gap-6"
-                >
-                    <Link :href="route('users.index')">
-                        <v-btn>View More</v-btn>
-                    </Link>
+                <div class="sort-field">
+                    <SelectBox
+                        placeholder="Sort By"
+                        :datas="['A-Z', 'Z-A', 'Contact Number']"
+                        density="compact"
+                    />
                 </div>
-            </VCardText>
-
-            <VDivider />
-
-            <vue-good-table
-                class="role-data-table"
-                styleClass="vgt-table"
-                v-on:selected-rows-change="selectionChanged"
-                :columns="columns"
-                :rows="rows"
-                :select-options="{
-                    enabled: true,
-                }"
-                :pagination-options="{
-                    enabled: true,
-                }"
+            </div>
+        </div>
+        <VRow no-gutters>
+            <v-col
+                cols="6"
+                md="3"
+                v-for="student in datas.data"
+                :key="student.id"
             >
-                <template #table-row="dataProps">
-                    <div
-                        v-if="dataProps.column.field == 'user'"
-                        class="flex flex-nowrap"
-                    >
-                        <VListItem class="pa-0">
-                            <!-- 👉 Avatar  -->
-                            <template #prepend>
-                                <VAvatar
-                                    rounded
-                                    :size="38"
-                                    class="me-3"
-                                    :image="avatar4"
-                                />
-                            </template>
-
-                            <!-- 👉 Title and Subtitle -->
-                            <VListItemTitle
-                                class="text-sm font-weight-semibold mb-1"
-                            >
-                                {{ dataProps.row.user }}
-                            </VListItemTitle>
-
-                            <VListItemSubtitle
-                                class="text-xs text-no-wrap d-flex align-center"
-                            >
-                                <span> {{ dataProps.row.email }}</span>
-                            </VListItemSubtitle>
-                        </VListItem>
-                    </div>
-                    <div
-                        v-if="dataProps.column.field == 'role'"
-                        class="flex flex-nowrap"
-                    >
-                        <VChip size="small" color="primary">
-                            {{ dataProps.row?.roles[0]?.name }}
-                        </VChip>
-                    </div>
-                    <div
-                        v-if="dataProps.column.field == 'plan'"
-                        class="flex flex-nowrap"
-                    >
-                        &minus;
-                    </div>
-                    <div
-                        v-if="dataProps.column.field == 'status'"
-                        class="flex flex-nowrap"
-                    >
-                        <VChip
-                            size="small"
-                            color="success"
-                            v-if="dataProps.row.email_verified_at"
-                        >
-                            verify
-                        </VChip>
-                        <VChip
-                            size="small"
-                            color="warning"
-                            v-if="!dataProps.row.email_verified_at"
-                        >
-                            pending
-                        </VChip>
-                    </div>
-                    <div
-                        v-if="dataProps.column.field == 'action'"
-                        class="flex flex-nowrap"
-                    >
-                        <div class="d-flex">
-                            <VBtn
-                                variant="text"
-                                color="secondary"
-                                density="compact"
-                                icon="mdi-eye-outline"
-                                class="ml-2"
-                            >
-                            </VBtn>
-                        </div>
-                    </div>
-                </template>
-            </vue-good-table>
-
-            <VDivider />
-        </VCard>
-    </section>
+                <StudentAvatar
+                    :image="userImage(student)"
+                    :title="student?.user?.full_name"
+                    :phone_number="student?.user?.contact_number"
+                />
+            </v-col>
+        </VRow>
+        <VRow class="d-flex justify-center align-center">
+            <VPagination
+                v-model="serverPage"
+                size="small"
+                :total-visible="5"
+                :length="datas.last_page"
+                @next="onPageChange"
+                @prev="onPageChange"
+                @click="onPageChange"
+                variant="outlined"
+            />
+        </VRow>
+    </div>
 </template>
-
-<style lang="scss">
-.vgt-table th {
-    font-size: 10pt !important;
-}
-.vgt-table th.vgt-checkbox-col {
-    background: rgb(var(--v-theme-surface)) !important;
-    padding: 15px;
-    border-right: none;
-    border-bottom: 1px solid #dcdfe6;
-}
-.vgt-wrap__footer {
-    background: rgb(var(--v-theme-surface)) !important;
-    border: none;
-    color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
-}
-</style>

@@ -93,7 +93,7 @@ console.log(props.playlists);
                             <div
                                 class="d-flex flex-row align-center justify-center gap-3"
                             >
-                                <div clas="music-component">
+                                <div class="music-component">
                                     <VImg
                                         :src="item.playlist_photo"
                                         width="73px"
@@ -161,5 +161,8 @@ console.log(props.playlists);
 .music-icon {
     width: 73px;
     height: 18px;
+}
+.music-component{
+    cursor: pointer !important;
 }
 </style>

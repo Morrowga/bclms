@@ -1,11 +1,33 @@
 <script setup>
 import TotalStudents from "./TotalStudents.vue";
-import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
+import {
+    serverParams,
+    searchItems,
+    routeName,
+} from "./useStudentsDatatable.js";
+import { defineProps } from "vue";
+routeName.value = "playlists.getStudents";
+const props = defineProps({
+    form: {
+        type: Object,
+        default: {
+            name: "",
+            image: "",
+            student_id: "",
+            students: [],
+        },
+    },
+});
 </script>
 <template>
     <v-expansion-panel>
         <v-expansion-panel-title>
-            <h2 class="font-weight-bold text-h5">Step 2: Select Students</h2>
+            <h2 class="font-weight-bold ruddy-bold fs-25">
+                Step 2: Select Students
+                <v-chip class="chip-count">{{
+                    props.form.students.length
+                }}</v-chip>
+            </h2>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
             <div class="d-flex justify-end align-center mb-4">
@@ -17,17 +39,15 @@ import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
                     rounded
                     hide-details
                     class="mr-4"
+                    @keyup.enter="searchItems"
+                    v-model="serverParams.search"
                 ></v-text-field>
             </div>
             <v-row>
                 <v-col cols="12">
-                    <TotalStudents />
+                    <TotalStudents :form="props.form" />
                 </v-col>
             </v-row>
-            <br />
-            <div class="d-flex justify-center">
-                <Pagination />
-            </div>
         </v-expansion-panel-text>
     </v-expansion-panel>
 </template>
@@ -50,6 +70,13 @@ import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
     text-decoration: none;
     justify-content: center;
     border: 1px solid #17cab6;
+}
+
+.chip-count {
+    background: var(--seaform, #d7f2f0) !important;
+    gap: 10px !important;
+    border-radius: 50px !important;
+    color: #17cab6 !important;
 }
 
 .chip-content {

@@ -9,6 +9,8 @@ use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquentModel;
+use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\PlaylistEloquentModel;
@@ -48,16 +50,21 @@ class StudentEloquentModel extends Model implements HasMedia
         return $this->getMedia('image');
     }
 
+    public function getAgeAttribute()
+    {
+        return $this->getMedia('image');
+    }
+
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query->whereHas('user', function ($query) use ($search) {
                 $query
-                    ->where('first_name', 'like', '%'.$search.'%')
-                    ->orWhere('last_name', 'like', '%'.$search.'%');
+                    ->where('first_name', 'like', '%' . $search . '%')
+                    ->orWhere('last_name', 'like', '%' . $search . '%');
             });
         });
     }
@@ -70,6 +77,10 @@ class StudentEloquentModel extends Model implements HasMedia
     public function organizations()
     {
         return $this->belongsToMany(OrganizationEloquentModel::class, 'organization_students', 'student_id', 'organization_id');
+    }
+    public function classrooms()
+    {
+        return $this->belongsToMany(ClassroomEloquentModel::class, 'classroom_students', 'student_id', 'classroom_id');
     }
 
     public function playlists()
@@ -90,5 +101,10 @@ class StudentEloquentModel extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo(UserEloquentModel::class, 'user_id', 'id');
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(ClassroomGroupEloquentModel::class, 'group_students', 'classroom_group_id', 'student_id')->with('students');
     }
 }

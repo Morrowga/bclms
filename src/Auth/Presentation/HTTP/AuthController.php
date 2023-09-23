@@ -35,6 +35,7 @@ class AuthController extends Controller
     {
         try {
             $tenant = tenant('id') ? 'c.' : '';
+            // dd($tenant);
             // Check if the user is already authenticated
             if (Auth::check()) {
                 // Redirect the authenticated user to the dashboard page
@@ -114,7 +115,6 @@ class AuthController extends Controller
                     'errorMessage' => $isAuthenticated['errorMessage'],
                 ]);
             }
-
         } catch (\Exception $e) {
 
             dd($e->getMessage());
@@ -204,7 +204,6 @@ class AuthController extends Controller
             $this->authservices->registerB2CUser($request);
 
             return redirect()->route('verify');
-
         } catch (\Exception $e) {
             dd($e->getMessage(), $e->getFile());
 

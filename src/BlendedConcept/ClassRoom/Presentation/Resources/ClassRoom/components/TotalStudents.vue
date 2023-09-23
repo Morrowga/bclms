@@ -35,28 +35,6 @@ const props = defineProps({
 routeName.value = "classrooms.getStudents";
 let students = ref([]);
 //## start datatable section
-let columns = [
-    {
-        label: "Name",
-        field: "name",
-        sortable: false,
-    },
-    {
-        label: "Education Level",
-        field: "education_level",
-        sortable: false,
-    },
-    {
-        label: "Age",
-        field: "age",
-        sortable: false,
-    },
-    {
-        label: "Disability Type",
-        field: "disability_types",
-        sortable: false,
-    },
-];
 let rows = ref([]);
 
 serverPage.value = ref(datas.value?.current_page ?? 1);
@@ -66,16 +44,6 @@ watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
 
-//## truncatedText
-let truncatedText = (text) => {
-    if (text) {
-        if (text?.length <= 30) {
-            return text;
-        } else {
-            return text?.substring(0, 30) + "...";
-        }
-    }
-};
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
@@ -183,6 +151,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
     border: none;
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
+
 .chip {
     display: inline-flex;
     flex-direction: row;
@@ -212,6 +181,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
     padding-left: 12px;
     padding-right: 12px;
 }
+
 .std-width-high {
     width: 60px !important;
     height: 60px !important;

@@ -6,20 +6,39 @@ import PlaylistSlider from "./components/PlaylistSlider.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
+import { useForm } from "@inertiajs/vue3";
+import { router } from "@inertiajs/core";
 import { ref } from "vue";
 import { format } from 'date-fns';
 let tab = ref(null);
 let props = defineProps(['student']);
+const form = useForm({});
 
 
 const deleteStudent = () => {
-    isConfirmedDialog({
-        title: "You won't be able to revert it!",
-        denyButtonText: "Yes, delete it!",
-        onConfirm: () => {
-            SuccessDialog({ title: "You have successfully deleted a student" });
-        },
-    });
+  isConfirmedDialog({
+    title: "You won't be able to revert it!",
+    denyButtonText: "Yes, delete it!",
+    onConfirm: () => {
+      form.delete(
+        route(
+          "organizations-student.destroy",
+          props.student.data.student_id
+        ),
+        {
+          onSuccess: () => {
+            SuccessDialog({
+              title: "You have successfully deleted student!",
+              color: "#17CAB6",
+            });
+          },
+          onError : () => {
+            console.log(error)
+          }
+        }
+      );
+    },
+  });
 };
 
 const formatDate = (dateString) => {
@@ -30,14 +49,22 @@ const formatDate = (dateString) => {
     return format(date, 'MMMM d, yyyy'); // "MMMM" for full month name, "d" for day, "yyyy" for year
 }
 
-
+function checkURL(input) {
+  if (input.includes('https://') && input.includes('http://')) {
+    return input;
+  } else if (input.includes('https://') || input.includes('http://')) {
+    return input;
+  } else {
+    return '/' + input;
+  }
+}
 </script>
 <template>
     <AdminLayout>
         <VContainer class="width-80">
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-img :src="props.student.data.user.profile_pic" />
+                    <v-img :src="props.student.data.user.profile_pic == '' ? '/images/teacherimg.png': checkURL(props.student.data.user.profile_pic)" />
 
                     <div class="d-flex justify-center my-4">
                         <Link href="#">
@@ -165,7 +192,7 @@ const formatDate = (dateString) => {
 
                         <v-col cols="12">
                             <div>
-                                <Link :href="route('profilling_survey.index')">
+                                <Link :href="route('teacher_students.profiling_surveys')">
                                     <v-btn
                                         variant="flat"
                                         rounded
@@ -176,7 +203,7 @@ const formatDate = (dateString) => {
                                 </Link>
                                 <Link
                                     :href="
-                                        route('set_accessibility_device.index')
+                                        route('set_accessibility_device.index', props.student.data.student_id)
                                     "
                                 >
                                     <v-btn

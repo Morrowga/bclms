@@ -99,6 +99,7 @@ return [
         'create' => 'BlendedConcept/Student/Presentation/Resources/ViewStudents/Create',
         'edit' => 'BlendedConcept/Student/Presentation/Resources/ViewStudents/Edit',
         'show' => 'BlendedConcept/Student/Presentation/Resources/ViewStudents/Show',
+        'profiling_surveys' => 'BlendedConcept/Student/Presentation/Resources/ViewStudents/ProfilingSurvey',
     ],
 
     'learning_activities' => [

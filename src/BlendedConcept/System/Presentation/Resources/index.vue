@@ -21,6 +21,9 @@ let props = defineProps([
     "tenant",
     "students",
     "UserCount",
+    "classrooms",
+    "org_teacher_students",
+    "org_teacher_classrooms",
 ]);
 
 const isAlertVisible = ref(true);
@@ -116,10 +119,15 @@ onMounted(() => {
             </TeacherOrParentDashboard>
         </div>
         <div v-else-if="current_user_role == 'Organization Admin'">
-            <OrganizatinDashBoard></OrganizatinDashBoard>
+            <OrganizatinDashBoard
+                :classrooms="props.classrooms"
+            ></OrganizatinDashBoard>
         </div>
         <div v-else-if="current_user_role == 'Teacher'">
-            <B2BTeacherDashboard></B2BTeacherDashboard>
+            <B2BTeacherDashboard
+                :org_teacher_students="props.org_teacher_students"
+                :org_teacher_classrooms="props.org_teacher_classrooms"
+            ></B2BTeacherDashboard>
         </div>
         <div v-else>
             <StaffDashboard

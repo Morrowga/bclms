@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { router } from "@inertiajs/core";
 let serverPage = ref();
 let serverPerPage = ref(10);
-
+let routeParam = ref({});
 //## initial state
 let serverParams = ref({
     columnFilters: {},
@@ -110,5 +110,6 @@ export {
     onPageChange,
     onPerPageChange,
     serverPage,
-    serverPerPage
+    serverPerPage,
+    routeParam
 }
