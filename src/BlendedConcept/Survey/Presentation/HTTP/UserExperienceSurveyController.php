@@ -50,7 +50,7 @@ class UserExperienceSurveyController
 
     public function store(StoreSurveyRequest $request)
     {
-        // abort_if(authorize('create', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('create', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $request->validated();
@@ -80,6 +80,8 @@ class UserExperienceSurveyController
 
     public function edit($id)
     {
+        abort_if(authorize('edit', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $survey = (new ShowSurvey($id))->handle();
 
         // dd('hello');
@@ -96,7 +98,7 @@ class UserExperienceSurveyController
      */
     public function update(UpdateSurveyRequest $request,SurveyEloquentModel $userexperiencesurvey)
     {
-        // abort_if(authorize('edit', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('edit', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Validate the request.
@@ -128,7 +130,7 @@ class UserExperienceSurveyController
      */
     public function destroy(SurveyEloquentModel $userexperiencesurvey)
     {
-        // abort_if(authorize('destroy', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('destroy', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         /**
          * Try to delete the announcement.
          */
