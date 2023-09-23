@@ -11,6 +11,7 @@ use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentGamesController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentRewardsController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentStoryBookController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\TeacherStorybookController;
+use Src\BlendedConcept\StoryBook\Presentation\HTTP\StoryBookVersionController;
 
 Route::group(['middleware' => ['auth']], function () {
 
@@ -23,11 +24,27 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('pathways', PathwayController::class);
     Route::resource('bookreviews', BookReviewController::class);
 
-    Route::resource('teacher_storybooks',TeacherStorybookController::class);
-    Route::get('/teacher_storybook', [TeacherStorybookController::class, 'index'])->name('teacher_storybook.index');
-    Route::get('/teacher_storybook/edit', [TeacherStorybookController::class, 'edit'])->name('teacher_storybook.edit');
-    Route::get('/teacher_storybook/show', [TeacherStorybookController::class, 'show'])->name('teacher_storybook.show');
-    Route::get('/teacher_storybook/assign_student', [TeacherStorybookController::class, 'assign_student'])->name('teacher_storybook.assign_student');
+    // Route::get('/teacher_storybook', [TeacherStorybookController::class, 'index'])->name('teacher_storybook.index');
+    // Route::get('/teacher_storybook/edit', [TeacherStorybookController::class, 'edit'])->name('teacher_storybook.edit');
+    // Route::get('/teacher_storybook/show', [TeacherStorybookController::class, 'show'])->name('teacher_storybook.show');
+
+    // Route::get('teacher_storybook/assign_student', [TeacherStorybookController::class, 'assign_student'])->name('teacher_storybook.assign_student');
+    /***
+     * Note!!!!
+     * StudentAssinment
+     *  First is storybook_id and second parameter is storybook_version_id
+     */
+    Route::get('teacher_storybook/{teacher_storybook}/v/{version}',[TeacherStorybookController::class,'assign_student'])->name('teacher_storybook_version.show');
+
+
+    Route::resource('teacher_storybook',TeacherStorybookController::class);
+
+    //teacher storybook version
+    Route::resource('storybooksversions', StoryBookVersionController::class);
+    // assign storybook version to students
+    Route::post('storybookassignment',[StoryBookVersionController::class,'storybookassignment'])->name('storybookassignment');
+
+    Route::post('bookreview',[StoryBookVersionController::class,'bookreview'])->name('bookreview');
 
     Route::get('/assign_rewards', [AssignRewardController::class, 'index'])->name('assign_rewards.index');
     Route::get('/assign_rewards/create', [AssignRewardController::class, 'create'])->name('assign_rewards.create');

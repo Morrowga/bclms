@@ -21,8 +21,8 @@ const form = useForm({
   email: "",
   education_level: "",
   profile_pics: "",
-  learning_needs: [1, 2],
-  disability_types: [1, 2],
+  learning_needs: [],
+  disability_types: [],
 });
 
 let refForm = ref();
@@ -117,7 +117,7 @@ const createStudent = () => {
                   v-model="form.contact_number"
                   placeholder="e.g. 9180003"
                   variant="outlined"
-                  :rules="[requiredValidator,integerValidator]"
+                  :rules="[requiredValidator, integerValidator]"
                   :error-messages="form?.errors?.contact_number"
                 />
               </v-col>
@@ -144,19 +144,37 @@ const createStudent = () => {
                 <div>
                   <v-window v-model="tab">
                     <v-window-item value="learning">
-                      <ChipWithBlueDot
-                        v-for="item in learningNeeds"
-                        :key="item.id"
-                        :title="item.name"
-                      />
+                      <v-chip-group
+                        filter
+                        v-model="form.learning_needs"
+                        multiple
+                        column
+                      >
+                        <v-chip
+                          v-for="item in learningNeeds"
+                          variant="outlined"
+                          :key="item.id"
+                        >
+                          {{ item.name }}
+                        </v-chip>
+                      </v-chip-group>
                     </v-window-item>
 
                     <v-window-item value="disability">
-                      <ChipWithBlueDot
-                        v-for="item in disabilityTypes"
-                        :key="item.id"
-                        :title="item.name"
-                      />
+                      <v-chip-group
+                        filter
+                        v-model="form.disability_types"
+                        multiple
+                        column
+                      >
+                        <v-chip
+                          v-for="item in disabilityTypes"
+                          variant="outlined"
+                          :key="item.id"
+                        >
+                          {{ item.name }}
+                        </v-chip>
+                      </v-chip-group>
                     </v-window-item>
                   </v-window>
                 </div>
@@ -191,4 +209,5 @@ const createStudent = () => {
     </VContainer>
   </AdminLayout>
 </template>
-<style scoped></style>
+<style scoped>
+</style>

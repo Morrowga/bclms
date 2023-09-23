@@ -15,6 +15,9 @@ use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentMo
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\ThemeEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class StoryBookEloquentModel extends Model implements HasMedia
 {
@@ -82,6 +85,12 @@ class StoryBookEloquentModel extends Model implements HasMedia
         return $this->belongsToMany(TagEloquentModel::class, 'storybook_tags', 'storybook_id', 'tag_id');
     }
 
+    public function storybook_versions() : HasMany
+    {
+        return $this->hasMany(StoryBookVersionEloquentModel::class,'storybook_id','id');
+    }
+
+
     public function associateTags(array $tagNames)
     {
         foreach ($tagNames as $tagName) {
@@ -91,4 +100,6 @@ class StoryBookEloquentModel extends Model implements HasMedia
             $this->tags()->attach($tag->id);
         }
     }
+
+
 }
