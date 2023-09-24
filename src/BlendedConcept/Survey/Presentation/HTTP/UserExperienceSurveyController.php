@@ -60,7 +60,6 @@ class UserExperienceSurveyController
             $storeSurveyCommand = new StoreSurveyCommand($newSurvey);
             $storeSurveyCommand->execute();
         } catch (\Exception $e) {
-
             // Handle the exception here
             dd($e->getMessage());
 

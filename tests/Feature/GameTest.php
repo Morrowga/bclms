@@ -136,8 +136,8 @@ test('update game with bcstaff roles', function () {
 
     $response->assertStatus(302);
 
-    // Extract the survey ID from the response or retrieve it from the database
-    $gameId = 1; // Retrieve the survey ID as needed
+    // Extract the teacher ID from the response or retrieve it from the database
+    $gameId = 1; // Retrieve the teacher ID as needed
     $thumbUpdateFile = UploadedFile::fake()->image('thumbUpdate.jpg'); // Change 'test.jpg' to the desired file name and extension
 
     $gameUpdateFile = UploadedFile::fake()->image('gameUpdate.jpg'); // Change 'test.jpg' to the desired file name and extension
@@ -158,7 +158,7 @@ test('update game with bcstaff roles', function () {
 
     $update_device->assertStatus(302);
 
-    // Attempt to update the survey
+    // Attempt to update the teacher
 
     $updateResponse = $this->put("/games/{$gameId}", [
         'name' => 'Example Game Update',
