@@ -2,10 +2,30 @@
 import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-let props = defineProps(['students']);
-
+let props = defineProps(["students"]);
+import {
+    onColumnFilter,
+    serverParams,
+    searchItems,
+} from "@Composables/useServerSideDatable.js";
 let roles = [];
 let selectedRole = null;
+let filters = ref(null);
+let filterDatas = ref([
+    { title: "A-Z", value: "asc" },
+    { title: "Z-A", value: "desc" },
+    {
+        title: "Contact Number",
+        value: "contact_number",
+    },
+]);
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 </script>
 <template>
     <AdminLayout>
@@ -34,6 +54,8 @@ let selectedRole = null;
                         density="compact"
                         class="mr-4"
                         variant="solo"
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
                     />
                 </div>
                 <div class="d-flex">
@@ -41,23 +63,24 @@ let selectedRole = null;
                         class="app-user-search-filter d-flex align-center justify-end gap-3 width-200"
                     >
                         <selectBox
+                            v-model="filters"
                             placeholder="Sort By"
+                            :datas="filterDatas"
                             density="compact"
-                            variant="outlined"
-                            :datas="[
-                                'Name',
-                                'Email',
-                                'Contact Number',
-                                'Role',
-                                'Status',
-                            ]"
+                            item_title="title"
+                            item_value="value"
                         />
                         <!-- 👉 Add User button -->
                     </div>
                 </div>
             </div>
             <VRow cols="6">
-                <VCol cols="2" class="pe-2" v-for="item in props.students.data" :key="item">
+                <VCol
+                    cols="2"
+                    class="pe-2"
+                    v-for="item in props.students.data"
+                    :key="item"
+                >
                     <StudentProfile
                         :studentInfo="{
                             id: item.student_id,

@@ -2,14 +2,31 @@
 import TeacherAvatar from "@mainRoot/components/TeacherAvatar/TeacherAvatar.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+import {
+    onColumnFilter,
+    serverParams,
+    searchItems,
+} from "@Composables/useServerSideDatable.js";
 const props = defineProps({
-  data: {
-    type: Object,
-    required: true,
-  },
+    data: {
+        type: Object,
+        required: true,
+    },
 });
 
-console.log(props.data.meta);
+let filters = ref(null);
+let filterDatas = ref([
+    { title: "A-Z", value: "asc" },
+    { title: "Z-A", value: "desc" },
+    { title: "Contact Number", value: "contact_number" },
+]);
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 </script>
 <template>
     <VContainer>
@@ -24,6 +41,8 @@ console.log(props.data.meta);
                             placeholder="Search User ..."
                             variant="plain"
                             density="compact"
+                            @keyup.enter="searchItems"
+                            v-model="serverParams.search"
                         >
                             <template #append-inner>
                                 <VIcon
@@ -37,11 +56,13 @@ console.log(props.data.meta);
                         </VTextField>
                     </VCol>
                     <VCol cols="4">
-                        <SelectBox
-                            v-model="selectedRole"
+                        <selectBox
+                            v-model="filters"
                             placeholder="Sort By"
-                            :datas="['A-Z', 'Z-A', 'Contact Number']"
-                            :density="compact"
+                            :datas="filterDatas"
+                            density="compact"
+                            item_title="title"
+                            item_value="value"
                         />
                     </VCol>
                     <VCol cols="12" class="pa-0">
@@ -69,8 +90,9 @@ console.log(props.data.meta);
                 v-for="item in props.data.data"
                 :key="item"
             >
-            <!--  -->
-                <TeacherAvatar class="teacherAvatar"
+                <!--  -->
+                <TeacherAvatar
+                    class="teacherAvatar"
                     :image="item.profile_pic"
                     :route="route('organizations-teacher.show', item.id)"
                     :title="item.first_name + ' ' + item.last_name"
@@ -80,7 +102,7 @@ console.log(props.data.meta);
             </VCol>
         </VRow>
         <div class="d-flex justify-center">
-            <Pagination :metadata="props.data.meta"/>
+            <Pagination :metadata="props.data.meta" />
         </div>
     </VContainer>
 </template>

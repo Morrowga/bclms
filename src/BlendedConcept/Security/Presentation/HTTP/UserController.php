@@ -46,7 +46,7 @@ class UserController extends Controller
         try {
 
             // Get the filters from the request, or initialize an empty array if they are not present
-            $filters = request()->only(['name', 'email', 'role', 'search', 'perPage', 'roles']) ?? [];
+            $filters = request()->only(['name', 'search', 'perPage', 'filter']) ?? [];
 
             // Retrieve users with pagination using the provided filters
             $users = (new GetUsersWithPagination($filters))->handle();
@@ -129,7 +129,7 @@ class UserController extends Controller
     {
         $user->load('b2bUser');
         // return $user;
-        return Inertia::render(config('route.users.show'),compact('user'));
+        return Inertia::render(config('route.users.show'), compact('user'));
     }
 
     public function changePassword(updateUserPasswordRequest $request)

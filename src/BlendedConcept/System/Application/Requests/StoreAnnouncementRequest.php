@@ -44,6 +44,7 @@ class StoreAnnouncementRequest extends FormRequest
             'title' => 'Title is required',
             'message' => 'Message is required',
             'icon' => 'Icon is required',
+            'to' => "Announment to is required"
         ];
     }
 }

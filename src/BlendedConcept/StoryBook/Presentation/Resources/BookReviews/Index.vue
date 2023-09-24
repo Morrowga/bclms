@@ -86,6 +86,20 @@ const items = ref([
 const isDiability = ref(false);
 const isEditDiability = ref(false);
 let isDialogVisible = ref(false);
+
+let filters = ref(null);
+let filterDatas = ref([
+    { title: "Reviewers", value: "reviewers" },
+    { title: "Book", value: "book" },
+    { title: "Date", value: "given_on" },
+]);
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 //## truncatedText
 let truncatedText = (text) => {
     if (text) {
@@ -132,16 +146,13 @@ const deleteReview = () => {
                                 <div
                                     class="app-user-search-filter d-flex justify-end align-center gap-4"
                                 >
-                                    <SelectBox
-                                        :datas="[
-                                            'Name',
-                                            'Date Sticker',
-                                            'Rewards Issue',
-                                            'Status',
-                                        ]"
+                                    <selectBox
+                                        v-model="filters"
                                         placeholder="Sort By"
+                                        :datas="filterDatas"
                                         density="compact"
-                                        variant="solo"
+                                        item_title="title"
+                                        item_value="value"
                                     />
                                     <!-- 👉 Add Announcement button -->
                                     <VBtn class="tiggie-btn"> Delete </VBtn>

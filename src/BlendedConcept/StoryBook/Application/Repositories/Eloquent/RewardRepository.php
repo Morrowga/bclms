@@ -75,6 +75,8 @@ class RewardRepository implements RewaredRepositoryInterface
     {
         // Author: @hareom284
 
+
+
         DB::beginTransaction();
 
         try {
@@ -82,7 +84,6 @@ class RewardRepository implements RewaredRepositoryInterface
             $rewardEloquent = RewardEloquentModel::query()->findOrFail($reward->id);
             $rewardEloquent->fill($rewardArray);
             $rewardEloquent->update();
-
             // Check if an image file was uploaded and is valid
             if (request()->hasFile('image') && request()->file('image')->isValid()) {
                 // Delete the old image and add the new image to the media collection
@@ -101,9 +102,10 @@ class RewardRepository implements RewaredRepositoryInterface
 
             DB::commit();
         } catch (\Exception $error) {
+            DB::rollBack();
             // Handle any exceptions and display the error message
             dd($error->getMessage());
-            DB::rollBack();
+
         }
     }
 

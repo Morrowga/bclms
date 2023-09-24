@@ -21,7 +21,7 @@ class GameController
 {
     public function index()
     {
-        abort_if(authorize('view', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('view', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $disabilityTypes = (new ShowDisabilityTypes())->handle();
@@ -33,14 +33,12 @@ class GameController
                 'devices' => $devices,
                 'games' => $games,
             ]);
-
         } catch (\Exception $e) {
 
             dd($e->getMessage());
 
             return redirect()->route('games.index')->with('sytemErrorMessage', $e->getMessage());
         }
-
     }
 
     /**

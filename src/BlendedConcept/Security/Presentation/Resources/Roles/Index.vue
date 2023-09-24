@@ -4,7 +4,7 @@ import Edit from "./EditDialog.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { computed, defineProps } from "vue";
-import deleteItem from "@Composables/useDeleteItem.js";
+import deleteItem from "@actions/useDeleteItem.js";
 import {
   serverParams,
   onColumnFilter,

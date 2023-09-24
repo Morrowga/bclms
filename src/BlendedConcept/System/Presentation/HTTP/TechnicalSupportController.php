@@ -17,7 +17,7 @@ class TechnicalSupportController extends Controller
     public function index()
     {
 
-        $filters = request(['search', 'page', 'perPage']);
+        $filters = request(['search', 'page', 'perPage', 'filter']);
 
         $technicalSupportList = (new getTechnicalSupportQueries($filters))->handle();
 
@@ -33,8 +33,10 @@ class TechnicalSupportController extends Controller
 
         $technicalSupportList = (new getTechnicalSupportQueries($filters))->handle();
 
-        return Inertia::render(config('route.support.techsupport'),
-            ['technicalSupportList' => $technicalSupportList]);
+        return Inertia::render(
+            config('route.support.techsupport'),
+            ['technicalSupportList' => $technicalSupportList]
+        );
     }
 
     public function askSupportQuestion(QuestionTechnicalSupportRequest $request)
@@ -45,7 +47,6 @@ class TechnicalSupportController extends Controller
             $technicalSupportCommand->execute();
 
             return redirect()->route('techsupports')->with('successMessage', 'Asked question successfully!');
-
         } catch (\Exception $error) {
 
             dd($error->getMessage());

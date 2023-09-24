@@ -9,9 +9,17 @@ import { toastAlert } from "@Composables/useToastAlert";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import DefaultBtn from "@mainRoot/components/Buttons/DefaultBtn.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
-
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
 // import Edit from "./Edit.vue";
-let props = defineProps(['surveyResults']);
+let props = defineProps(["surveyResults"]);
 
 //## start datatable section
 let columns = [
@@ -42,45 +50,6 @@ let columns = [
     },
 ];
 
-// let rows = [
-//     {
-//         users: "Albert Leon",
-//         user_type: "Student",
-//         name_of_survey: "Happiness survey",
-//         date_submitted: "20/09/2023",
-//     },
-//     {
-//         users: "Alic",
-//         user_type: "Student",
-//         name_of_survey: "Happiness survey",
-//         date_submitted: "20/09/2023",
-//     },
-//     {
-//         users: "John",
-//         user_type: "Student",
-//         name_of_survey: "Happiness survey",
-//         date_submitted: "20/09/2023",
-//     },
-//     {
-//         users: "Miran",
-//         user_type: "Student",
-//         name_of_survey: "Happiness survey",
-//         date_submitted: "20/09/2023",
-//     },
-//     {
-//         users: "Ellar",
-//         user_type: "Student",
-//         name_of_survey: "Happiness survey",
-//         date_submitted: "20/09/2023",
-//     },
-//     {
-//         users: "Manic",
-//         user_type: "Student",
-//         name_of_survey: "Happiness survey",
-//         date_submitted: "20/09/2023",
-//     },
-// ];
-
 const items = ref([
     {
         title: "Edit",
@@ -105,7 +74,20 @@ let truncatedText = (text) => {
         }
     }
 };
-
+let filters = ref(null);
+let filterDatas = ref([
+    { title: "User", value: "user" },
+    { title: "User Type", value: "user_type" },
+    { title: "Name Of Surveys", value: "title" },
+    { title: "Date Submitted", value: "created_at" },
+]);
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
@@ -147,15 +129,12 @@ const deleteItem = () => {
                                     class="app-user-search-filter d-flex align-center justify-end gap-3 width-20"
                                 >
                                     <selectBox
-                                        :datas="[
-                                            'User',
-                                            'User Type',
-                                            'Name Of Survey',
-                                            'Date Submitted',
-                                        ]"
+                                        v-model="filters"
                                         placeholder="Sort By"
+                                        :datas="filterDatas"
                                         density="compact"
-                                        variant="solo"
+                                        item_title="title"
+                                        item_value="value"
                                     />
                                 </div>
                             </VCardText>
@@ -175,17 +154,21 @@ const deleteItem = () => {
                                     <div
                                         v-if="dataProps.column.field == 'user'"
                                     >
-                                        <span >{{
-                                                dataProps.row.user.name
-                                            }}</span>
+                                        <span>{{
+                                            dataProps.row.user.name
+                                        }}</span>
                                     </div>
                                     <div
                                         v-if="
-                                            dataProps.column.field ==
-                                            'question'
+                                            dataProps.column.field == 'question'
                                         "
                                     >
-                                    {{  formatDate(dataProps.row.question.survey.title) }}
+                                        {{
+                                            formatDate(
+                                                dataProps.row.question.survey
+                                                    .title
+                                            )
+                                        }}
                                     </div>
                                     <div
                                         v-if="
@@ -193,7 +176,11 @@ const deleteItem = () => {
                                             'response_datetime'
                                         "
                                     >
-                                       {{  formatDate(dataProps.row.response_datetime) }}
+                                        {{
+                                            formatDate(
+                                                dataProps.row.response_datetime
+                                            )
+                                        }}
                                     </div>
                                     <div
                                         v-if="

@@ -32,13 +32,19 @@ class ReviewEloquentModel extends Model
     {
         return $this->hasMany(B2bUserEloquentModel::class, 'id', 'given_by_user_id');
     }
-    // public function scopeFilter($query, $filters)
-    // {
-    //     $query->when($filters['name'] ?? false, function ($query, $name) {
-    //         $query->where('name', 'like', '%' . $name . '%');
-    //     });
-    //     $query->when($filters['search'] ?? false, function ($query, $search) {
-    //         $query->where('name', 'like', '%' . $search . '%');
-    //     });
-    // }
+    public function scopeFilter($query, $filters)
+    {
+        $query->when($filters['name'] ?? false, function ($query, $name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        });
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        });
+        $query->when($filters['filter'] ?? false, function ($query, $filter) {
+            if ($filter == 'book') {
+            } else {
+                $query->orderBy($filter, config('sorting.orderBy'));
+            }
+        });
+    }
 }

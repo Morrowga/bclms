@@ -23,7 +23,7 @@ class RewardController
     public function index()
     {
         // Get filters from the request
-        $filters = request()->only(['search', 'name', 'status', 'perPage']) ?? [];
+        $filters = request()->only(['search', 'name', 'status', 'perPage', 'filter']) ?? [];
 
         // Use a query handler to fetch rewards based on the filters
         $rewards = (new GetRewardQuery($filters))->handle();
@@ -50,6 +50,7 @@ class RewardController
      */
     public function store(StoreRewardRequest $request)
     {
+
         try {
             // Map the reward data from the request
             $rewardMap = RewardMapper::fromRequest($request);
@@ -95,6 +96,7 @@ class RewardController
      */
     public function update(UpdateRewardRequest $request, RewardEloquentModel $reward)
     {
+
         try {
             // Map the reward data from the request
             $rewardData = RewardData::fromRequest($request, $reward);

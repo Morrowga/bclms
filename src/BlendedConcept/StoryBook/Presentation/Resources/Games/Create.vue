@@ -79,12 +79,12 @@ const toggleDialog = () => {
 };
 
 let onFormSubmit = () => {
-  console.log(form);
   form.game = gameFile.value;
   form.thumb = thumbnailFile.value;
   form.post(route("games.store"), {
     onSuccess: () => {
-      // SuccessDialog({ title: "You've successfully updated a question." });
+      SuccessDialog({ title: "You've successfully updated a question." });
+      form.reset();
     },
     onError: (error) => {
       form.setError("name", error?.name);

@@ -18,7 +18,7 @@ class TeacherRepository implements TeacherRepositoryInterface
      *
      *
      */
-    public function getTeachers($filters = [])
+    public function getTeachers($filters)
     {
         //set roles
         $users = TeacherResource::collection(UserEloquentModel::filter($filters)

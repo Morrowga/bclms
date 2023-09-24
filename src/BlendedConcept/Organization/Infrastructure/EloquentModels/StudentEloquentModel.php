@@ -45,11 +45,30 @@ class StudentEloquentModel extends Model implements HasMedia
 
     public function scopeFilter($query, $filters)
     {
-        $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
-        });
+
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->orWhere('name', 'like', '%'.$search.'%');
+            $query->whereHas('user', function ($query) use ($search) {
+                $query->where('first_name', 'like', '%' . $search . '%');
+                $query->orWhere('last_name', 'like', '%' . $search . '%');
+            });
+        });
+        $query->when($filters['filter'] ?? false, function ($query, $filter) {
+
+            if ($filter == 'asc') {
+                $query->whereHas('user', function ($query) {
+                    $query->orderBy('first_name', 'asc');
+                });
+            } else if ($filter == 'desc') {
+                $query->whereHas('user', function ($query) {
+                    $query->orderBy('first_name', 'desc');
+                });
+            } else if ($filter == 'contact_number') {
+                $query->whereHas('user', function ($query) {
+                    $query->orderBy('contact_number', config('sorting.orderBy'));
+                });
+            } else {
+                $query->orderBy($filter, config('sorting.orderBy'));
+            }
         });
     }
 

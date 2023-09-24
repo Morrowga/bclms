@@ -23,7 +23,13 @@ class TechnicalSupportEloquentModel extends Model
     {
 
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('question', 'like', '%'.$search.'%');
+            $query->where('question', 'like', '%' . $search . '%');
+        });
+        $query->when($filters['filter'] ?? false, function ($query, $filter) {
+            if ($filter == 'name') {
+            } else {
+                $query->orderBy($filter, config('sorting.orderBy'));
+            }
         });
     }
 

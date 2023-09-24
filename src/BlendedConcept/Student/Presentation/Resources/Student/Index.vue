@@ -60,13 +60,24 @@ let options = ref({
     perPageDropdown: [10, 20, 50, 100],
     dropdownAllowAll: false,
 });
-
+let filters = ref(null);
+let filterDatas = ref([
+    { title: "Name", value: "first_name" },
+    { title: "Email", value: "email" },
+    { title: "Contact Number", value: "contact_number" },
+    { title: "Role", value: "role" },
+    { title: "Status", value: "status" },
+]);
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
-const fullName = (user) => {
-    return (user?.first_name ?? "") + " " + (user?.last_name ?? "");
-};
 const exportUser = () => {
     const array = props.students.data;
     let data = array.map(
@@ -117,16 +128,12 @@ const exportUser = () => {
                                 class="app-user-search-filter d-flex align-center justify-end gap-3 width-200"
                             >
                                 <selectBox
+                                    v-model="filters"
                                     placeholder="Sort By"
+                                    :datas="filterDatas"
                                     density="compact"
-                                    variant="outlined"
-                                    :datas="[
-                                        'Name',
-                                        'Email',
-                                        'Contact Number',
-                                        'Role',
-                                        'Status',
-                                    ]"
+                                    item_title="title"
+                                    item_value="value"
                                 />
                                 <!-- 👉 Add User button -->
                             </div>
@@ -156,15 +163,12 @@ const exportUser = () => {
                                         src="/images/defaults/avator.png"
                                         class="user-profile-image"
                                     />
-                                    <span>{{ fullName(props.row?.user) }}</span>
+                                    <span>{{ props.row?.user.full_name }}</span>
                                 </div>
                             </div>
                             <div v-if="props.column.field == 'email'">
                                 <div class="d-flex flex-row gap-2">
-                                    <span>{{
-                                        props.row?.organizations?.[0]
-                                            ?.contact_email ?? "-"
-                                    }}</span>
+                                    <span>{{ props.row?.user.email }}</span>
                                 </div>
                             </div>
                             <div v-if="props.column.field == 'type'">

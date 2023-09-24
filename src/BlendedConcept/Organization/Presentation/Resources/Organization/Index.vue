@@ -1,7 +1,7 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage, Link } from "@inertiajs/vue3";
-import { computed, defineProps } from "vue";
+import { computed, defineProps, watch } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import { router } from "@inertiajs/core";
 import { SuccessDialog } from "@actions/useSuccess";
@@ -24,6 +24,7 @@ let flash = computed(() => usePage().props.flash);
 serverPage.value = ref(props.organizations.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
 let permissions = computed(() => usePage().props.auth.data.permissions);
+let filters = ref(null);
 
 const roles = [
     "Name",
@@ -93,9 +94,6 @@ const deleteOrganization = (id) => {
         },
     });
 };
-const showInfo = (value) => {
-    router.get(route("organizations.show", value.row.id));
-};
 const maxTeacher = (organization) => {
     return (
         organization?.subscription?.b2b_subscription?.num_teacher_license ?? 0
@@ -112,12 +110,27 @@ const maxStorage = (organization) => {
 const getPrice = (organization) => {
     return organization?.subscription?.stripe_price * 1000 ?? 0;
 };
+let filterDatas = ref([
+    { title: "Name", value: "name" },
+    { title: "Teacher Usage", value: "teacher_usage" },
+    { title: "Student Usage", value: "student_usage" },
+    { title: "Storage Usage", value: "storage_usage" },
+    { title: "Status", value: "status" },
+]);
+
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 </script>
 
 <template>
     <AdminLayout>
         <VContainer fluid>
-            <h1 class="tiggie-title">Organizations</h1>
+            <h1 class="tiggie-title">Organizations Key</h1>
             <VCard>
                 <VCardText class="d-flex align-center flex-wrap gap-4">
                     <!-- 👉 Export button -->
@@ -146,16 +159,12 @@ const getPrice = (organization) => {
                     >
                         <!-- 👉 Search  -->
                         <SelectBox
-                            v-model="selectedRole"
+                            v-model="filters"
                             placeholder="Sort By"
-                            :datas="[
-                                'Name',
-                                'Email',
-                                'Contact Number',
-                                'Role',
-                                'Status',
-                            ]"
+                            :datas="filterDatas"
                             density="compact"
+                            item_title="title"
+                            item_value="value"
                         />
                         <!-- 👉 Add user button -->
                         <Link :href="route('organizations.create')">

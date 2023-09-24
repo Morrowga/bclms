@@ -18,6 +18,7 @@ let handleSubmit = () => {
                 onSuccess: () => {
                     SuccessDialog({ title: props.flash?.successMessage });
                     isDialogVisible.value = false;
+                    form.reset();
                 },
                 onError: (error) => {},
             });
