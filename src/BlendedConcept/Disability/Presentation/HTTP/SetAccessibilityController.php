@@ -19,19 +19,20 @@ class SetAccessibilityController
     }
 
     public function store(SetDeviceRequest $request,StudentEloquentModel $student_id){
-        // try {
+
+        try {
             $request->validated();
             $find_device = DeviceEloquentModel::find($request->device_id);
             $setDevice = (new SetDeviceCommand($student_id, $find_device));
             $setDevice->execute();
 
             return redirect()->route('teacher_students.show', $student_id->student_id)->with('successMessage', 'Set Device Successfully!');
-        // } catch (\Exception $error) {
-        //     return redirect()
-        //         ->route('teacher_students.show', $student_id->id)
-        //         ->with([
-        //             'systemErrorMessage' => $error->getCode(),
-        //         ]);
-        // }
+        } catch (\Exception $error) {
+            return redirect()
+                ->route('teacher_students.show', $student_id->id)
+                ->with([
+                    'systemErrorMessage' => $error->getCode(),
+                ]);
+        }
     }
 }

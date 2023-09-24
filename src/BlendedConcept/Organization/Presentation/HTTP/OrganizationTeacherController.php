@@ -84,6 +84,8 @@ class OrganizationTeacherController
 
     public function show($id)
     {
+        abort_if(authorize('show', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $teacher = (new ShowTeacher($id))->handle();
         return Inertia::render(config('route.organizations-teacher.show'), [
             'teacher' => $teacher
@@ -92,6 +94,8 @@ class OrganizationTeacherController
 
     public function edit($id)
     {
+        abort_if(authorize('edit', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $teacher = (new ShowTeacher($id))->handle();
 
         return Inertia::render(config('route.organizations-teacher.edit'), [

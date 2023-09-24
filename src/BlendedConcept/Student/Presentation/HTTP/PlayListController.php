@@ -79,6 +79,8 @@ class PlayListController
 
     public function edit($id)
     {
+        abort_if(authorize('edit', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $playlist = (new ShowPlaylist($id))->handle();
 
         return Inertia::render(config('route.playlist.edit'), [
@@ -94,7 +96,7 @@ class PlayListController
      */
     public function update(UpdatePlaylistRequest $request,PlaylistEloquentModel $playlist)
     {
-        // abort_if(authorize('edit', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('edit', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Validate the request.
@@ -134,7 +136,7 @@ class PlayListController
      */
     public function destroy(PlaylistEloquentModel $playlist)
     {
-        // abort_if(authorize('destroy', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('destroy', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Try to delete the playlist.
