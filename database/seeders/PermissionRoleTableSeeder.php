@@ -139,6 +139,10 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_teacherStorybook',
                         'access_playlists',
                         'access_orgClassroom',
+                        'access_playlist',
+                        'delete_playlist',
+                        'edit_playlist',
+                        'create_playlist',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);

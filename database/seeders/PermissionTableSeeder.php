@@ -424,6 +424,26 @@ class PermissionTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'description' => 'Users can delete games.',
             ],
+            [
+                'name' => 'access_playlist',
+                'guard_name' => 'web',
+                'description' => 'Users can create playlists and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_playlist',
+                'guard_name' => 'web',
+                'description' => 'Users can create playlists and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_playlist',
+                'guard_name' => 'web',
+                'description' => 'Users can update playlists and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_playlist',
+                'guard_name' => 'web',
+                'description' => 'Users can delete playlists.',
+            ],
         ];
         foreach ($permissions as $permission) {
             PermissionEloquentModel::create($permission);
