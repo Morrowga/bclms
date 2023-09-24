@@ -11,7 +11,7 @@ class SurveyResultController
     {
         try {
 
-            $filters = request()->only(['question', 'search', 'perPage']);
+            $filters = request()->only(['question', 'search', 'perPage', 'filter']);
 
             $surveyResults = (new GetSurveyResults($filters))->handle();
 

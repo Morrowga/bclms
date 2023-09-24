@@ -19,7 +19,7 @@ class AccessibilityDeviceController
 {
     public function index()
     {
-        $filters = request(['search', 'page', 'perPage']);
+        $filters = request(['search', 'page', 'perPage', 'filter']);
         $devices = (new GetDevices($filters))->handle();
 
         return Inertia::render(config('route.accessibility_device.index'), [

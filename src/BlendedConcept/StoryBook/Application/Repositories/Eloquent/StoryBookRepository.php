@@ -27,7 +27,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
     {
         // Retrieve storybooks with relationships, order by id in descending order, and paginate the results
         $storyBooks = StoryBookResource::collection(
-            StoryBookEloquentModel::with(['learningneeds', 'themes', 'disability_types', 'devices', 'physical_resources', 'tags'])
+            StoryBookEloquentModel::filter($filters)->with(['learningneeds', 'themes', 'disability_types', 'devices', 'physical_resources', 'tags'])
                 ->orderBy('id', 'desc')
                 ->paginate($filters['perPage'] ?? 10)
         );

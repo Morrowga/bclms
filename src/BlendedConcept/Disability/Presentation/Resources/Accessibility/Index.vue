@@ -100,6 +100,20 @@ let options = ref({
     perPageDropdown: [10, 20, 50, 100],
     dropdownAllowAll: false,
 });
+let filters = ref(null);
+let filterDatas = ref([
+    { title: "Name", value: "name" },
+    { title: "Description", value: "description" },
+    { title: "Disability", value: "disability" },
+    { title: "Status", value: "status" },
+]);
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 //## truncatedText
 let truncatedText = (text) => {
     if (text) {
@@ -155,15 +169,12 @@ const deleteItem = () => {
                                         class="app-user-search-filter d-flex align-center justify-end gap-3"
                                     >
                                         <selectBox
-                                            :datas="[
-                                                'Name',
-                                                'Discription',
-                                                'Disability',
-                                                'Status',
-                                            ]"
+                                            v-model="filters"
                                             placeholder="Sort By"
+                                            :datas="filterDatas"
                                             density="compact"
-                                            variant="solo"
+                                            item_title="title"
+                                            item_value="value"
                                         />
                                         <!-- 👉 Add button -->
                                         <DefaultBtn

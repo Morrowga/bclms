@@ -19,7 +19,7 @@ class TeacherStudentController
         try {
 
             // Get the filters from the request, or initialize an empty array if they are not present
-            $filters = request()->only(['name', 'search', 'perPage']) ?? [];
+            $filters = request()->only(['name', 'search', 'perPage', 'filter']) ?? [];
 
             // Retrieve users with pagination using the provided filters
             $students = (new GetStudentWithPagination($filters))->handle()['paginate_students'];
@@ -29,7 +29,6 @@ class TeacherStudentController
         } catch (\Exception $e) {
             return redirect()->route('teacher_students.index')->with('sytemErrorMessage', $e->getMessage());
         }
-
     }
 
     public function show($id)
@@ -49,11 +48,11 @@ class TeacherStudentController
         abort_if(authorize('edit', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // try {
-            $updateStudent = StudentData::fromRequest($request, $teacher_student);
-            $updateStudent = (new UpdateStudentCommand($updateStudent));
-            $updateStudent->execute();
+        $updateStudent = StudentData::fromRequest($request, $teacher_student);
+        $updateStudent = (new UpdateStudentCommand($updateStudent));
+        $updateStudent->execute();
 
-            return redirect()->route('teacher_students.show', $teacher_student->student_id)->with('successMessage', 'Student Updated Successfully!');
+        return redirect()->route('teacher_students.show', $teacher_student->student_id)->with('successMessage', 'Student Updated Successfully!');
 
         // } catch (\Exception $e) {
 

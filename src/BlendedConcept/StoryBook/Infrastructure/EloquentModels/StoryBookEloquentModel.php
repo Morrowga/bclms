@@ -48,10 +48,20 @@ class StoryBookEloquentModel extends Model implements HasMedia
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('name', 'like', '%'.$search.'%');
+            $query->where('name', 'like', '%' . $search . '%');
+        });
+        $query->when($filters['filter'] ?? false, function ($query, $filter) {
+            if ($filter == 'role') {
+            } else if ($filter == 'asc') {
+                $query->orderBy('name', 'asc');
+            } else if ($filter == 'desc') {
+                $query->orderBy('name', 'desc');
+            } else {
+                $query->orderBy($filter, config('sorting.orderBy'));
+            }
         });
     }
 
@@ -85,9 +95,9 @@ class StoryBookEloquentModel extends Model implements HasMedia
         return $this->belongsToMany(TagEloquentModel::class, 'storybook_tags', 'storybook_id', 'tag_id');
     }
 
-    public function storybook_versions() : HasMany
+    public function storybook_versions(): HasMany
     {
-        return $this->hasMany(StoryBookVersionEloquentModel::class,'storybook_id','id');
+        return $this->hasMany(StoryBookVersionEloquentModel::class, 'storybook_id', 'id');
     }
 
 
@@ -100,6 +110,4 @@ class StoryBookEloquentModel extends Model implements HasMedia
             $this->tags()->attach($tag->id);
         }
     }
-
-
 }

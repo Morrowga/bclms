@@ -14,6 +14,10 @@ const addGroup = () => {
         color: "#17CAB6",
     });
 };
+import {
+    serverParams,
+    searchItems,
+} from "@Composables/useServerSideDatable.js";
 const props = defineProps(["students", "classroom"]);
 let flash = computed(() => usePage().props.flash);
 const isFormValid = ref(false);
@@ -82,6 +86,8 @@ const handleSubmit = () => {
                         rounded
                         hide-details
                         class="mr-4"
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
                     ></v-text-field>
                 </div>
                 <v-row>

@@ -19,10 +19,16 @@ class DeviceEloquentModel extends Model
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
         $query->when($filters['status'] ?? false, function ($query, $status) {
             $query->where('status', $status);
+        });
+        $query->when($filters['filter'] ?? false, function ($query, $filter) {
+            if ($filter == 'disability') {
+            } else {
+                $query->orderBy($filter, config('sorting.orderBy'));
+            }
         });
     }
 

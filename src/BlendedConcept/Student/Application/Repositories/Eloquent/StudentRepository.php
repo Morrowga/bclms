@@ -22,6 +22,7 @@ class StudentRepository implements StudentRepositoryInterface
      */
     public function getStudent($filters)
     {
+        // dd($filters);
         $paginate_students = StudentResources::collection(
             StudentEloquentModel::with('user', 'organizations', 'disability_types')
                 ->filter($filters)

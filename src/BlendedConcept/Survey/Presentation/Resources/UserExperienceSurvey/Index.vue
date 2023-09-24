@@ -2,12 +2,13 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
 import {
     serverParams,
     searchItems,
+    onColumnFilter,
 } from "@Composables/useServerSideDatable.js";
 import avatar4 from "@images/avatars/avatar-4.png";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
@@ -16,14 +17,14 @@ import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 
 // import Create from "./Create.vue";
 // import Edit from "./Edit.vue";
-let props = defineProps(['surveys']);
+let props = defineProps(["surveys"]);
 
 const formatDate = (dateString) => {
-      // Parse the date string into a Date object
+    // Parse the date string into a Date object
     const date = new Date(dateString);
     // Format the date using date-fns
-    return format(date, 'dd/M/yyyy'); // Customize the format string as needed
-}
+    return format(date, "dd/M/yyyy"); // Customize the format string as needed
+};
 //## start datatable section
 let columns = [
     {
@@ -53,71 +54,6 @@ let columns = [
     },
 ];
 
-// let rows = [
-//     {
-//         name: "Happines Survey",
-//         user_types: [
-//             {
-//                 name: "Organization Teachers",
-//             },
-//             {
-//                 name: "B2C Users",
-//             },
-//         ],
-//         completion_status: "testing",
-//         date_created: "20/8/2023",
-//     },
-//     {
-//         name: "Toy Story Feedback Survey",
-//         user_types: [
-//             {
-//                 name: "Students",
-//             },
-//         ],
-//         completion_status: "testing",
-//         date_created: "20/8/2023",
-//     },
-//     {
-//         name: "Website Experience Survey",
-//         user_types: [
-//             {
-//                 name: "Organization Teachers",
-//             },
-//             {
-//                 name: "B2C Users",
-//             },
-//         ],
-//         completion_status: "testing",
-//         date_created: "20/8/2023",
-//     },
-//     {
-//         name: "Teacher Experience Survey",
-//         user_types: [
-//             {
-//                 name: "Organization Teacher",
-//             },
-//             {
-//                 name: "B2C Users",
-//             },
-//         ],
-//         completion_status: "testing",
-//         date_created: "20/8/2023",
-//     },
-//     {
-//         name: "Food Survey",
-//         user_types: [
-//             {
-//                 name: "Organization Teacher",
-//             },
-//             {
-//                 name: "B2C Users",
-//             },
-//         ],
-//         completion_status: "testing",
-//         date_created: "20/8/2023",
-//     },
-// ];
-
 const items = ref([
     {
         title: "User Type",
@@ -142,7 +78,19 @@ let truncatedText = (text) => {
         }
     }
 };
-
+let filters = ref(null);
+let filterDatas = ref([
+    { title: "Name", value: "title" },
+    { title: "Date Created", value: "created_at" },
+    { title: "Completion Status", value: "completion_status" },
+]);
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
@@ -190,15 +138,14 @@ const deleteSurvey = (id) => {
                                             :roles="roles_name"
                                             :flash="flash"
                                         />
-                                        <SelectBox
+                                        <selectBox
+                                            v-model="filters"
                                             placeholder="Sort By"
+                                            :datas="filterDatas"
                                             density="compact"
-                                            :datas="[
-                                                'Name',
-                                                'Date Created',
-                                                'Completion Status',
-                                            ]"
-                                        ></SelectBox>
+                                            item_title="title"
+                                            item_value="value"
+                                        />
                                         <Link
                                             :href="
                                                 route(
@@ -238,11 +185,12 @@ const deleteSurvey = (id) => {
                                             class="text-secondary"
                                             :href="
                                                 route(
-                                                    'userexperiencesurvey.edit', dataProps.row.id
+                                                    'userexperiencesurvey.edit',
+                                                    dataProps.row.id
                                                 )
                                             "
                                         >
-                                            <span >{{
+                                            <span>{{
                                                 dataProps.row.title
                                             }}</span>
                                         </Link>
@@ -253,15 +201,15 @@ const deleteSurvey = (id) => {
                                             'user_type'
                                         "
                                     >
-                                    <!-- v-for="user_type in dataProps.row
+                                        <!-- v-for="user_type in dataProps.row
                                                 .user_type" -->
-                                            <!-- :key="user_type" -->
+                                        <!-- :key="user_type" -->
                                         <v-chip
                                             class="ma-2"
                                             color="primary"
                                             size="small"
-                                            >
-                                            {{dataProps.row.user_type}}
+                                        >
+                                            {{ dataProps.row.user_type }}
                                         </v-chip>
                                     </div>
                                     <div
@@ -289,7 +237,9 @@ const deleteSurvey = (id) => {
                                             'created_at'
                                         "
                                     >
-                                       {{  formatDate(dataProps.row.created_at) }}
+                                        {{
+                                            formatDate(dataProps.row.created_at)
+                                        }}
                                     </div>
                                     <div
                                         v-if="

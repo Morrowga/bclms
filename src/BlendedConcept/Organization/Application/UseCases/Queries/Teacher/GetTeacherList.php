@@ -10,12 +10,13 @@ class GetTeacherList implements QueryInterface
     private TeacherRepositoryInterface $repository;
 
     public function __construct(
+        private readonly array $filters
     ) {
         $this->repository = app()->make(TeacherRepositoryInterface::class);
     }
 
     public function handle()
     {
-        return $this->repository->getTeachers();
+        return $this->repository->getTeachers($this->filters);
     }
 }

@@ -82,7 +82,7 @@ class StudentRepository implements StudentRepositoryInterface
 
             if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {
                 $old_image = $studentEloquentModel->getFirstMedia('profile_pics');
-                if($old_image !== null){
+                if ($old_image !== null) {
                     $old_image->delete();
                 }
 
@@ -100,7 +100,6 @@ class StudentRepository implements StudentRepositoryInterface
             DB::rollBack();
             dd($error->getMessage());
         }
-
     }
 
     public function deleteStudent($student)

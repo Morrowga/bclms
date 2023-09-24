@@ -23,11 +23,11 @@ class UserExperienceSurveyController
     {
 
         // Authorize user
-        abort_if(authorize('view', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('view', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
             // Get filters from request
-            $filters = request()->only(['title', 'search', 'perPage']);
+            $filters = request()->only(['title', 'search', 'perPage', 'filter']);
 
             // Get user list
             $surveys = (new GetUserExperienceSurveyList())->handle();
@@ -96,7 +96,7 @@ class UserExperienceSurveyController
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateSurveyRequest $request,SurveyEloquentModel $userexperiencesurvey)
+    public function update(UpdateSurveyRequest $request, SurveyEloquentModel $userexperiencesurvey)
     {
         abort_if(authorize('edit', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

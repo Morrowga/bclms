@@ -110,6 +110,10 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
             if ($filter == 'role') {
+            } else if ($filter == 'asc') {
+                $query->orderBy('first_name', 'asc');
+            } else if ($filter == 'desc') {
+                $query->orderBy('first_name', 'desc');
             } else {
                 $query->orderBy($filter, config('sorting.orderBy'));
             }

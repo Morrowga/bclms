@@ -20,9 +20,9 @@ class OrganizationTeacherController
     public function index()
     {
         try {
-            $filters = request(['search', 'first_name', 'last_name', 'email']) ?? [];
+            $filters = request(['search', 'first_name', 'last_name', 'email', 'filter']) ?? [];
 
-            $teachers = (new GetTeacherList())->handle();
+            $teachers = (new GetTeacherList($filters))->handle();
 
             $studentListWithPagniation = (new GetStudentList($filters))->handle();
 
@@ -32,7 +32,7 @@ class OrganizationTeacherController
                 'students' => $studentListWithPagniation,
             ]);
         } catch (\Exception $e) {
-
+            return $e;
             dd($e->getMessage());
 
             return redirect()->route('organizations-teacher.index')->with('sytemErrorMessage', $e->getMessage());
@@ -79,7 +79,7 @@ class OrganizationTeacherController
     public function show($id)
     {
         $teacher = (new ShowTeacher($id))->handle();
-        return Inertia::render(config('route.organizations-teacher.show'),[
+        return Inertia::render(config('route.organizations-teacher.show'), [
             'teacher' => $teacher
         ]);
     }
@@ -99,7 +99,7 @@ class OrganizationTeacherController
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateTeacherRequest $request,UserEloquentModel $organization_teacher)
+    public function update(UpdateTeacherRequest $request, UserEloquentModel $organization_teacher)
     {
         // abort_if(authorize('edit', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

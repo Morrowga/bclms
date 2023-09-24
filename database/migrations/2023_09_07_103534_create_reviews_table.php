@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('given_by_user_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('storybook_id')->nullable()->references('id')->on('storybooks')->cascadeOnDelete();
-            $table->integer('starts');
+            $table->integer('stars');
             $table->string('feedback');
             $table->dateTime('given_on');
             $table->timestamps();

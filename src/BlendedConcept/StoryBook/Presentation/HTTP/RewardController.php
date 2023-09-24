@@ -23,7 +23,7 @@ class RewardController
     public function index()
     {
         // Get filters from the request
-        $filters = request()->only(['search', 'name', 'status', 'perPage']) ?? [];
+        $filters = request()->only(['search', 'name', 'status', 'perPage', 'filter']) ?? [];
 
         // Use a query handler to fetch rewards based on the filters
         $rewards = (new GetRewardQuery($filters))->handle();

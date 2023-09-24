@@ -7,7 +7,7 @@ use Src\BlendedConcept\Organization\Domain\Model\Entities\Teacher;
 
 interface TeacherRepositoryInterface
 {
-    public function getTeachers($filters = []);
+    public function getTeachers($filters);
 
     public function showTeacher($id);
 
