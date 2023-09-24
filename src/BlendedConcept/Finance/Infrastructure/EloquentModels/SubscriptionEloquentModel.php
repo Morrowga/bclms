@@ -64,9 +64,13 @@ class SubscriptionEloquentModel extends Model
                 $query->join('b2b_subscriptions', 'subscriptions.id', '=', 'b2b_subscriptions.subscription_id')
                     ->orderBy('b2b_subscriptions.num_teacher_license', config('sorting.orderBy'));
             } else if ($filter == 'name') {
-                $query->whereHas('organization', function ($query) {
-                    $query->orderBy('name', config('sorting.orderBy'));
-                });
+                // $query->whereHas('organization', function ($query) {
+                //     $query->orderBy('name', config('sorting.orderBy'));
+                // });
+                // $query->join('users', 'subscriptions.user_id', 'users.id')->orderBy('users.first_name', config('sorting.orderBy'));
+            } else if ($filter == 'plan') {
+                // $query->join('plan', 'subscriptions.id', '=', 'b2b_subscriptions.subscription_id')
+                //     ->orderBy('b2b_subscriptions.num_student_license', config('sorting.orderBy'));
             } else if ($filter == 'students') {
                 $query->join('b2b_subscriptions', 'subscriptions.id', '=', 'b2b_subscriptions.subscription_id')
                     ->orderBy('b2b_subscriptions.num_student_license', config('sorting.orderBy'));
