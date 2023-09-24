@@ -78,8 +78,8 @@ let filters = ref(null);
 let filterDatas = ref([
     { title: "User", value: "user" },
     { title: "User Type", value: "user_type" },
-    { title: "Name Of Surveys", value: "title" },
-    { title: "Date Submitted", value: "created_at" },
+    { title: "Name Of Surveys", value: "name" },
+    { title: "Date Submitted", value: "response_datetime" },
 ]);
 watch(filters, (newValue) => {
     onColumnFilter({

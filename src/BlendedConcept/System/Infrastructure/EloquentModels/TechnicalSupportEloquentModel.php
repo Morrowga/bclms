@@ -26,7 +26,9 @@ class TechnicalSupportEloquentModel extends Model
             $query->where('question', 'like', '%' . $search . '%');
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
-            if ($filter == 'name') {
+            if ($filter == 'status') {
+            } elseif ($filter == 'name') {
+                $query->join('users', 'support_tickets.user_id', 'users.id')->orderBy('users.first_name', config('sorting.orderBy'));
             } else {
                 $query->orderBy($filter, config('sorting.orderBy'));
             }

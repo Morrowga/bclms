@@ -68,10 +68,18 @@ class StudentEloquentModel extends Model implements HasMedia
             });
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
-            $query->whereHas('user', function ($query) use ($filter) {
-                $query
-                    ->orderBy($filter, config('sorting.orderBy'));
-            });
+            if ($filter == 'asc') {
+                $query->join('users', 'students.user_id', '=', 'users.id')
+                    ->orderBy("users.first_name", "asc");
+            } else if ($filter == 'desc') {
+                $query->join('users', 'students.user_id', '=', 'users.id')
+                    ->orderBy("users.first_name", "desc");
+            } else if ($filter == 'role') {
+                $query->join("roles", "users.role_id", "roles.id")->orderBy('name', config('sorting.orderBy'));
+            } else {
+                $query->join('users', 'students.user_id', '=', 'users.id')
+                    ->orderBy("users.$filter", config('sorting.orderBy'));
+            }
         });
     }
 
