@@ -2,6 +2,7 @@
 
 namespace Src\BlendedConcept\Finance\Presentation\HTTP;
 
+use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
 use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Finance\Application\Requests\UpdateB2bSubscriptionRequest;
@@ -19,7 +20,7 @@ class SubscribtionInvoiceController
         try {
 
             // Get filters from the request
-            $filters = request()->only(['page', 'search', 'perPage']);
+            $filters = request()->only(['page', 'search', 'perPage', 'filter']);
 
             //quick create org admin
 

@@ -50,14 +50,14 @@ class StudentController extends Controller
         try {
 
             // Get the filters from the request, or initialize an empty array if they are not present
-            $filters = request()->only(['name', 'search', 'perPage']) ?? [];
+            $filters = request()->only(['name', 'search', 'perPage', 'filter']) ?? [];
 
             // Retrieve users with pagination using the provided filters
             $students = (new GetStudentWithPagination($filters))->handle()['paginate_students'];
 
             return Inertia::render(config('route.students'), compact('students'));
         } catch (\Exception $e) {
-            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
@@ -80,11 +80,10 @@ class StudentController extends Controller
             $createNewUser = new StoreStudentCommand($newUser);
             $createNewUser->execute();
 
-            return redirect()->route($this->route_url.'students.index')->with('successMessage', 'Student created successfully!');
-
+            return redirect()->route($this->route_url . 'students.index')->with('successMessage', 'Student created successfully!');
         } catch (\Exception $e) {
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
@@ -98,11 +97,10 @@ class StudentController extends Controller
             $updateStudent = (new UpdateStudentCommand($updateStudent));
             $updateStudent->execute();
 
-            return redirect()->route($this->route_url.'students.index')->with('successMessage', 'Student Updated Successfully!');
-
+            return redirect()->route($this->route_url . 'students.index')->with('successMessage', 'Student Updated Successfully!');
         } catch (\Exception $e) {
 
-            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
@@ -112,6 +110,6 @@ class StudentController extends Controller
 
         $student->delete();
 
-        return redirect()->route($this->route_url.'students.index')->with('successMessage', 'Student Deleted Successfully!');
+        return redirect()->route($this->route_url . 'students.index')->with('successMessage', 'Student Deleted Successfully!');
     }
 }

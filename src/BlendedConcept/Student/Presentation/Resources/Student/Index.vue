@@ -60,7 +60,21 @@ let options = ref({
     perPageDropdown: [10, 20, 50, 100],
     dropdownAllowAll: false,
 });
-
+let filters = ref(null);
+let filterDatas = ref([
+    { title: "Name", value: "first_name" },
+    { title: "Email", value: "email" },
+    { title: "Contact Number", value: "contact_number" },
+    { title: "Role", value: "role" },
+    { title: "Status", value: "status" },
+]);
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
@@ -117,16 +131,12 @@ const exportUser = () => {
                                 class="app-user-search-filter d-flex align-center justify-end gap-3 width-200"
                             >
                                 <selectBox
+                                    v-model="filters"
                                     placeholder="Sort By"
+                                    :datas="filterDatas"
                                     density="compact"
-                                    variant="outlined"
-                                    :datas="[
-                                        'Name',
-                                        'Email',
-                                        'Contact Number',
-                                        'Role',
-                                        'Status',
-                                    ]"
+                                    item_title="title"
+                                    item_value="value"
                                 />
                                 <!-- 👉 Add User button -->
                             </div>

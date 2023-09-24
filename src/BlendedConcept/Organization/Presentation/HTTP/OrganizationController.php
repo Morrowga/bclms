@@ -38,7 +38,7 @@ class OrganizationController extends Controller
         // Authorize user to view organization
 
         abort_if(
-            ! (authorize('viewBc', OrganizationPolicy::class) || authorize('view', OrganizationPolicy::class)),
+            !(authorize('viewBc', OrganizationPolicy::class) || authorize('view', OrganizationPolicy::class)),
             Response::HTTP_FORBIDDEN,
             '403 Forbidden'
         );
@@ -46,7 +46,7 @@ class OrganizationController extends Controller
         try {
 
             // Get filters from the request
-            $filters = request()->only(['page', 'search', 'perPage']);
+            $filters = request()->only(['page', 'search', 'perPage', 'filter']);
 
             //quick create org admin
 
@@ -130,7 +130,6 @@ class OrganizationController extends Controller
             $updateOrganization = OrganizationData::fromRequest($request, $organization);
             $updateOrganizationcommand = (new updateOrganizationCommand($updateOrganization));
             $updateOrganizationcommand->execute();
-
         } catch (\Exception $error) {
             return redirect()
                 ->route('organizations.index')

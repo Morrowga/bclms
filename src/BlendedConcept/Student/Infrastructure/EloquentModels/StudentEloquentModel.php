@@ -67,6 +67,12 @@ class StudentEloquentModel extends Model implements HasMedia
                     ->orWhere('last_name', 'like', '%' . $search . '%');
             });
         });
+        $query->when($filters['filter'] ?? false, function ($query, $filter) {
+            $query->whereHas('user', function ($query) use ($filter) {
+                $query
+                    ->orderBy($filter, config('sorting.orderBy'));
+            });
+        });
     }
 
     public function b2cUsers()

@@ -1,7 +1,6 @@
 <template>
     <div class="custom-select">
-        <VAutocomplete
-            clearable
+        <VSelect
             :label="label"
             :menu-props="menu_props"
             :error-messages="error_messages"
@@ -11,15 +10,16 @@
             :rules="rules"
             :items="datas"
             :modal-value="modelValue"
-            @change="updateValue"
             variant="plain"
             :placeholder="placeholder"
-            class="select-box"
-        ></VAutocomplete>
+            v-model="filters"
+            class="custom-select select-box"
+        ></VSelect>
     </div>
 </template>
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, watch, ref } from "vue";
+let filters = ref(null);
 let props = defineProps({
     modelValue: {
         type: [Number, String],
@@ -66,9 +66,12 @@ let props = defineProps({
     },
 });
 let emit = defineEmits(["update:modelValue"]);
-let updateValue = (event) => {
-    emit("update:modelValue", event.target.value);
-};
+// let updateValue = (event) => {
+//     emit("update:modelValue", event.target.value);
+// };
+watch(filters, (newValue) => {
+    emit("update:modelValue", newValue);
+});
 </script>
 <style scoped>
 .custom-select {

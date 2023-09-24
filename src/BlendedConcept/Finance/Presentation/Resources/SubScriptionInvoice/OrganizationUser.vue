@@ -17,6 +17,7 @@ import {
 const props = defineProps(["subscriptions", "flash"]);
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
+
 //## start datatable section
 let columns = [
     {
@@ -97,6 +98,23 @@ const selectionChanged = (data) => {
 const getInvoice = () => {
     SuccessDialog({ title: "You have successfully downloaded invoice" });
 };
+let filters = ref(null);
+let filterDatas = ref([
+    { title: "Name", value: "name" },
+    { title: "Teachers", value: "teachers" },
+    { title: "Students", value: "students" },
+    { title: "Storage", value: "storage" },
+    { title: "Start Date", value: "start_date" },
+    { title: "End Date", value: "end_date" },
+    { title: "Status", value: "stripe_status" },
+]);
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 </script>
 <template>
     <section>
@@ -113,18 +131,12 @@ const getInvoice = () => {
                 </div>
                 <div class="sort-field">
                     <SelectBox
-                        :datas="[
-                            'Name',
-                            'Teachers',
-                            'Students',
-                            'Storage',
-                            'Start Date',
-                            'End Date',
-                            'Status',
-                        ]"
+                        v-model="filters"
                         placeholder="Sort By"
+                        :datas="filterDatas"
                         density="compact"
-                        variant="solo"
+                        item_title="title"
+                        item_value="value"
                     />
                 </div>
             </VCardText>
@@ -188,7 +200,7 @@ const getInvoice = () => {
                             <VList>
                                 <VListItem
                                     @click="() => {}"
-                                    v-if="user_role == 'BC Superadmin'"
+                                    v-if="user_role == 'BC Super Admin'"
                                 >
                                     <UpdateB2bSubscription
                                         :key="dataProps.row.id"

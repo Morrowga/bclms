@@ -52,11 +52,31 @@ class SubscriptionEloquentModel extends Model
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
 
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('name', 'like', '%'.$search.'%');
+            $query->where('name', 'like', '%' . $search . '%');
+        });
+
+        $query->when($filters['filter'] ?? false, function ($query, $filter) {
+            if ($filter == 'teachers') {
+                $query->join('b2b_subscriptions', 'subscriptions.id', '=', 'b2b_subscriptions.subscription_id')
+                    ->orderBy('b2b_subscriptions.num_teacher_license', config('sorting.orderBy'));
+            } else if ($filter == 'name') {
+                $query->whereHas('organization', function ($query) {
+                    $query->orderBy('name', config('sorting.orderBy'));
+                });
+            } else if ($filter == 'students') {
+                $query->join('b2b_subscriptions', 'subscriptions.id', '=', 'b2b_subscriptions.subscription_id')
+                    ->orderBy('b2b_subscriptions.num_student_license', config('sorting.orderBy'));
+            } else if ($filter == 'storage') {
+                $query->join('b2b_subscriptions', 'subscriptions.id', '=', 'b2b_subscriptions.subscription_id')
+                    ->orderBy('b2b_subscriptions.storage_limit', config('sorting.orderBy'));
+            } else if ($filter == 'user') {
+            } else {
+                $query->orderBy($filter, config('sorting.orderBy'));
+            }
         });
     }
 }

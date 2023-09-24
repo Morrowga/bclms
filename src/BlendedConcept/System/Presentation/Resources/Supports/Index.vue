@@ -72,7 +72,19 @@ let options = ref({
     perPageDropdown: [10, 20, 50, 100],
     dropdownAllowAll: false,
 });
-
+let filters = ref(null);
+let filterDatas = ref([
+    { title: "Name", value: "name" },
+    { title: "Date", value: "date" },
+    { title: "Status", value: "status" },
+]);
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
@@ -123,14 +135,25 @@ const onRowClick = (params) => {
                         <VCard>
                             <VCardText class="d-flex flex-wrap gap-4">
                                 <VSpacer id="helloMarNayTae" />
-                                <div class="d-flex justify-end align-center gap-3">
-                                    <VTextField placeholder="Search Request" density="compact" style="width: 300px"
-                                        variant="solo" />
-                                    <SelectBox placeholder="Sort By" :datas="['Name', 'Date', 'Status']" density="compact"
-                                        style="width: 150px" />
-                                    <VBtn class="tiggie-btn">
-                                        Delete
-                                    </VBtn>
+                                <div
+                                    class="d-flex justify-end align-center gap-3"
+                                >
+                                    <VTextField
+                                        placeholder="Search Request"
+                                        density="compact"
+                                        style="width: 300px"
+                                        variant="solo"
+                                    />
+                                    <SelectBox
+                                        v-model="filters"
+                                        placeholder="Sort By"
+                                        :datas="filterDatas"
+                                        density="compact"
+                                        item_title="title"
+                                        item_value="value"
+                                        style="width: 150px"
+                                    />
+                                    <VBtn class="tiggie-btn"> Delete </VBtn>
                                 </div>
                             </VCardText>
                             <VDivider />
