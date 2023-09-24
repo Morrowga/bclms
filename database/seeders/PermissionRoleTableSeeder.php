@@ -159,6 +159,10 @@ class PermissionRoleTableSeeder extends Seeder
                         'edit_classroom',
                         'create_classroom',
                         'access_classroom',
+                        'delete_teacher',
+                        'edit_teacher',
+                        'create_teacher',
+                        'access_teacher'
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);

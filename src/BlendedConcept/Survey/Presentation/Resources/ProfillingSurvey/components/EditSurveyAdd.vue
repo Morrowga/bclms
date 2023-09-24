@@ -37,15 +37,15 @@ const dialogVisibleUpdate = (val) => {
 const items = ref([
     {
         title: "Single Choice",
-        value: "Single Choice",
+        value: "SINGLE_CHOICE",
     },
     {
         title: "Multi Response",
-        value: "Multi Response",
+        value: "MULTI_RESPONSE",
     },
     {
-        title: "Rating",
-        value: "Rating",
+        title: "RATING",
+        value: "RATING",
     },
 ]);
 
@@ -82,6 +82,7 @@ const items = ref([
                                 <VSelect
                                     v-model="props.form.question_type"
                                     :items="items"
+                                    item-value=""
                                     rounded="50%"
                                     placeholder="Select Question Type"
                                     density="compact"

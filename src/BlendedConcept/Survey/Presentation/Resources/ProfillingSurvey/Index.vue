@@ -70,9 +70,6 @@ const handleEditSurveyFormSubmit = (data) => {
             SuccessDialog({ title: "You've successfully updated a question." });
         },
         onError: (error) => {
-            form.setError("question_type", error?.question_type);
-            form.setError("question", error?.question);
-            form.setError("options", error?.options);
         },
     })
 };
