@@ -121,6 +121,10 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_library',
                         'access_bcstaffOrganization',
                         'access_bcstaffSubscription',
+                        'access_game',
+                        'delete_game',
+                        'edit_game',
+                        'create_game',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);

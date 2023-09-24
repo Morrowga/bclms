@@ -66,8 +66,8 @@ class GameController
             return redirect()
                 ->route('games.index')
                 ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+                'systemErrorMessage' => $error->getCode(),
+            ]);
         }
     }
 
