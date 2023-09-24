@@ -15,7 +15,11 @@ const props = defineProps({
   disabilityTypes: {
     type: Object,
   },
+  devices: {
+    type: Object,
+  },
 });
+console.log(props.devices);
 let dialog = ref(false);
 const gameTag = ref("");
 const gameFile = ref(null);
@@ -28,7 +32,7 @@ const form = useForm({
   description: null,
   tags: [],
   disability_type_id: [],
-  access_device: "null",
+  devices: [],
   game: null,
   thumb: null,
   num_gold_coins: 0,
@@ -75,12 +79,12 @@ const toggleDialog = () => {
 };
 
 let onFormSubmit = () => {
-  console.log(form);
   form.game = gameFile.value;
   form.thumb = thumbnailFile.value;
   form.post(route("games.store"), {
     onSuccess: () => {
-      // SuccessDialog({ title: "You've successfully updated a question." });
+      SuccessDialog({ title: "You've successfully updated a question." });
+      form.reset();
     },
     onError: (error) => {
       form.setError("name", error?.name);
@@ -89,6 +93,7 @@ let onFormSubmit = () => {
       form.setError("thumb", error?.thumb);
       form.setError("disability_type_id", error?.disability_type_id);
       form.setError("tags", error?.tags);
+      form.setError("devices", error?.devices);
     },
   });
   // SuccessDialog({ title: "Successfully Game added" });
@@ -187,11 +192,17 @@ const removeFromArray = (index) => {
                     >Supported Accessibility Devices</VLabel
                   >
                   <v-autocomplete
+                    v-model="form.devices"
+                    :items="props.devices"
+                    multiple
                     type="text"
+                    item-value="id"
+                    item-title="name"
                     class="tiggie-resize-input-text"
                     placeholder="Select devices"
                     density="compact"
-                    :items="[]"
+                    :rules="[requiredValidator]"
+                    :error-messages="form?.errors?.devices"
                   />
                 </v-col>
               </v-col>

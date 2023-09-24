@@ -384,6 +384,46 @@ class PermissionTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'description' => 'Users can create bcstaff Subscription surveys and their configurations within the application.',
             ],
+            [
+                'name' => 'access_survey',
+                'guard_name' => 'web',
+                'description' => 'Users can create surveys and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_survey',
+                'guard_name' => 'web',
+                'description' => 'Users can create surveys and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_survey',
+                'guard_name' => 'web',
+                'description' => 'Users can update surveys and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_survey',
+                'guard_name' => 'web',
+                'description' => 'Users can delete surveys.',
+            ],
+            [
+                'name' => 'access_game',
+                'guard_name' => 'web',
+                'description' => 'Users can create games and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_game',
+                'guard_name' => 'web',
+                'description' => 'Users can create games and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_game',
+                'guard_name' => 'web',
+                'description' => 'Users can update games and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_game',
+                'guard_name' => 'web',
+                'description' => 'Users can delete games.',
+            ],
         ];
         foreach ($permissions as $permission) {
             PermissionEloquentModel::create($permission);

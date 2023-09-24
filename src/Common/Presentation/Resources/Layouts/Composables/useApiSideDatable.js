@@ -1,4 +1,4 @@
-import {ref} from "vue";
+import { ref } from "vue";
 import { router } from "@inertiajs/core";
 import axios from "axios";
 let serverPage = ref();
@@ -99,8 +99,7 @@ let truncatedText = (text) => {
     }
 };
 
-export
-{
+export {
     serverParams,
     updateParams,
     onColumnFilter,

@@ -48,6 +48,7 @@ let onFormSubmit = () => {
         onSuccess: () => {
           SuccessDialog({ title: props.flash?.successMessage });
           dialog.value = false;
+          form.reset();
         },
         onError: (error) => {
           console.log(error);
@@ -136,6 +137,7 @@ const removeFromArray = (index) => {
                   type="text"
                   rows="5"
                   density="compact"
+                  :rules="[requiredValidator]"
                   :error-messages="form?.errors?.description"
                 />
               </VCol>
@@ -149,6 +151,7 @@ const removeFromArray = (index) => {
                   v-model="form.sub_learning_needs"
                   :items="props.learningneed"
                   :error-messages="form?.errors?.sub_learning_needs"
+                  :rules="[requiredValidator]"
                   item-title="name"
                   item-value="id"
                   multiple
@@ -165,6 +168,7 @@ const removeFromArray = (index) => {
                   v-model="form.themes"
                   :items="props.themes"
                   :error-messages="form?.errors?.themes"
+                  :rules="[requiredValidator]"
                   item-title="name"
                   item-value="id"
                   multiple
@@ -181,6 +185,7 @@ const removeFromArray = (index) => {
                   :items="props.disability_types"
                   v-model="form.disability_type"
                   :error-messages="form?.errors?.disability_type"
+                  :rules="[requiredValidator]"
                   item-title="name"
                   item-value="id"
                   multiple
@@ -199,6 +204,7 @@ const removeFromArray = (index) => {
                   :items="props.devices"
                   v-model="form.devices"
                   :error-messages="form?.errors?.devices"
+                  :rules="[requiredValidator]"
                   item-title="name"
                   item-value="id"
                   multiple

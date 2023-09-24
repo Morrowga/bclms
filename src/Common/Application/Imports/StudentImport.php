@@ -14,6 +14,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
+use Carbon\Carbon;
 
 class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithHeadingRow, WithValidation
 {
@@ -45,10 +46,19 @@ class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithH
                     'role_id' => 6,
                 ];
                 $userEloquent = UserEloquentModel::create($create_data);
+
+                /****
+                 * This will format the data from 1 10 2014 to
+                 * 2014-10-1
+                 * to dateformat on the database
+                 */
+                $dateFormat = Carbon::createFromFormat('j m Y', $row['dob']);
+                $dob = $dateFormat->format('Y-m-d');
+
                 $create_student = [
                     'user_id' => $userEloquent->id,
                     'gender' => $row['gender'],
-                    'dob' => $row['dob'],
+                    'dob' => $dob,
                     'education_level' => $row['education_level'],
                 ];
                 $studentEloquent = StudentEloquentModel::create($create_student);

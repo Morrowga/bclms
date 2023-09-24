@@ -192,7 +192,7 @@ function checkURL(input) {
 
                         <v-col cols="12">
                             <div>
-                                <Link :href="route('profilling_survey.index')">
+                                <Link :href="route('teacher_students.profiling_surveys')">
                                     <v-btn
                                         variant="flat"
                                         rounded

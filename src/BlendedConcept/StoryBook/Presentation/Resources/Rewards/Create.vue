@@ -84,7 +84,7 @@ let handleSubmit = () => {
                     v-model="form.gold_coins_needed"
                     class="w-100"
                     :rules="[requiredValidator]"
-                    :error-messages="form?.errors?.gold_coins"
+                    :error-messages="form?.errors?.gold_coins_needed"
                   />
                 </VCol>
                 <VCol cols="8">
@@ -95,7 +95,7 @@ let handleSubmit = () => {
                     v-model="form.silver_coins_needed"
                     class="w-100"
                     :rules="[requiredValidator]"
-                    :error-messages="form?.errors?.silver_coins"
+                    :error-messages="form?.errors?.silver_coins_needed"
                   />
                 </VCol>
                 <VCol cols="8">
@@ -104,7 +104,7 @@ let handleSubmit = () => {
                     :items="ratity"
                     rounded="50%"
                     density="compact"
-                    :error-messages="forms?.errors?.rarity"
+                    :error-messages="form?.errors?.rarity"
                     v-model="form.rarity"
                   />
                 </VCol>

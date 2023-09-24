@@ -5,54 +5,54 @@ import { ref, defineProps } from "vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import { SuccessDialog } from "@actions/useSuccess";
 import {
-    serverParams,
-    onColumnFilter,
-    searchItems,
-    onPageChange,
-    onPerPageChange,
-    serverPage,
-    serverPerPage,
+  serverParams,
+  onColumnFilter,
+  searchItems,
+  onPageChange,
+  onPerPageChange,
+  serverPage,
+  serverPerPage,
 } from "@Composables/useServerSideDatable.js";
 // import avatar4 from "@images/avatars/avatar-4.png";
 
 let props = defineProps(["active_plans", "flash"]);
 
 let columns = [
-    {
-        label: "",
-        field: "id",
-        sortable: false,
-    },
-    {
-        label: "Plan Name",
-        field: "name",
-        sortable: false,
-    },
-    {
-        label: "Description",
-        field: "description",
-        sortable: false,
-    },
-    {
-        label: "Price",
-        field: "price",
-        sortable: false,
-    },
-    {
-        label: "No. of Students",
-        field: "num_student_profiles",
-        sortable: false,
-    },
-    {
-        label: "Storage Space",
-        field: "storage_limit",
-        sortable: false,
-    },
-    {
-        label: "",
-        field: "action",
-        sortable: false,
-    },
+  {
+    label: "",
+    field: "id",
+    sortable: false,
+  },
+  {
+    label: "Plan Name",
+    field: "name",
+    sortable: false,
+  },
+  {
+    label: "Description",
+    field: "description",
+    sortable: false,
+  },
+  {
+    label: "Price",
+    field: "price",
+    sortable: false,
+  },
+  {
+    label: "No. of Students",
+    field: "num_student_profiles",
+    sortable: false,
+  },
+  {
+    label: "Storage Space",
+    field: "storage_limit",
+    sortable: false,
+  },
+  {
+    label: "",
+    field: "action",
+    sortable: false,
+  },
 ];
 
 const items = ["Foo", "Bar"];
@@ -60,187 +60,156 @@ const items = ["Foo", "Bar"];
 serverPage.value = ref(props.active_plans.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
 
-//## truncatedText
-let truncatedText = (text) => {
-    if (text) {
-        if (text?.length <= 30) {
-            return text;
-        } else {
-            return text?.substring(0, 30) + "...";
-        }
-    }
-};
 let options = ref({
-    enabled: true,
-    mode: "pages",
-    perPage: props.active_plans?.meta?.per_page,
-    setCurrentPage: props?.active_plans?.meta?.current_page,
-    perPageDropdown: [10, 20, 50, 100],
-    dropdownAllowAll: false,
+  enabled: true,
+  mode: "pages",
+  perPage: props.active_plans?.meta?.per_page,
+  setCurrentPage: props?.active_plans?.meta?.current_page,
+  perPageDropdown: [10, 20, 50, 100],
+  dropdownAllowAll: false,
 });
 let form = useForm({
-    status: "INACTIVE",
-    _method: "PUT",
+  status: "INACTIVE",
+  _method: "PUT",
 });
 watch(serverPerPage, function (value) {
-    onPerPageChange(value);
+  onPerPageChange(value);
 });
 const selectionChanged = (data) => {
-    console.log(data.selectedRows);
+  console.log(data.selectedRows);
 };
 
 const deletePlan = () => {
-    SuccessDialog({ title: "Subscription plan deleted" });
+  SuccessDialog({ title: "Subscription plan deleted" });
 };
 
 const setInactive = (id) => {
-    form.post(route("plans.change_status", id), {
-        onSuccess: () => {
-            SuccessDialog({ title: props.flash?.successMessage });
-            onColumnFilter({
-                columnFilters: {
-                    status: "active",
-                },
-            });
+  form.post(route("plans.change_status", id), {
+    onSuccess: () => {
+      SuccessDialog({ title: props.flash?.successMessage });
+      onColumnFilter({
+        columnFilters: {
+          status: "active",
         },
-        onError: (error) => {},
-    });
-};
-const showInfo = (value) => {
-    router.get(route("plans.show", value.row.id));
+      });
+    },
+    onError: (error) => {},
+  });
 };
 </script>
 <template>
-    <section>
-        <VCard>
-            <VCardText class="d-flex flex-wrap gap-4">
-                <!-- 👉 Export button -->
-                <div class="search-field">
-                    <VTextField
-                        @keyup.enter="searchItems"
-                        v-model="serverParams.search"
-                        density="compact"
-                        placeholder="Search Subscription Plans"
-                        variant="solo"
-                    />
+  <section>
+    <VCard>
+      <VCardText class="d-flex flex-wrap gap-4">
+        <!-- 👉 Export button -->
+        <div class="search-field">
+          <VTextField
+            @keyup.enter="searchItems"
+            v-model="serverParams.search"
+            density="compact"
+            placeholder="Search Subscription Plans"
+            variant="solo"
+          />
+        </div>
+        <VSpacer />
+      </VCardText>
+
+      <VDivider />
+
+      <vue-good-table
+        class="role-data-table"
+        mode="remote"
+        @column-filter="onColumnFilter"
+        :totalRows="props.active_plans.meta.total"
+        :selected-rows-change="selectionChanged"
+        styleClass="vgt-table "
+        :pagination-options="options"
+        :rows="props.active_plans.data"
+        :columns="columns"
+        :select-options="{
+          enabled: true,
+          selectOnCheckboxOnly: true,
+        }"
+      >
+        <template #table-row="dataProps">
+          <div v-if="dataProps.column.field == 'name'">
+            <Link :href="route('plans.show', dataProps.row.id)">
+              <p>{{ dataProps.row.name }}</p>
+            </Link>
+          </div>
+          <div v-if="dataProps.column.field == 'action'">
+            <VMenu location="end">
+              <template #activator="{ props }">
+                <VIcon
+                  v-bind="props"
+                  size="24"
+                  icon="mdi-dots-horizontal"
+                  color="black"
+                  class="mt-n4"
+                />
+              </template>
+              <VList>
+                <VListItem
+                  @click="() => router.get(route('plans.edit', dataProps.row.id))">
+                  <VListItemTitle>Edit</VListItemTitle>
+                </VListItem>
+                <VListItem @click="setInactive(dataProps.row.id)">
+                  <VListItemTitle>Set Inactive</VListItemTitle>
+                </VListItem>
+              </VList>
+            </VMenu>
+          </div>
+        </template>
+        <template #pagination-bottom>
+          <VRow class="pa-4">
+            <VCol cols="12" class="d-flex justify-space-between">
+              <span>
+                Showing
+                {{ props.active_plans.meta.from }} to
+                {{ props.active_plans.meta.to }} of
+                {{ props.active_plans.meta.total }}
+                entries
+              </span>
+              <div class="d-flex">
+                <div class="d-flex align-center">
+                  <span class="me-2">Show</span>
+                  <VSelect
+                    v-model="serverPerPage"
+                    density="compact"
+                    :items="options.perPageDropdown"
+                  >
+                  </VSelect>
                 </div>
-                <VSpacer />
-            </VCardText>
+                <VPagination
+                  v-model="serverPage"
+                  size="small"
+                  :total-visible="5"
+                  :length="props.active_plans.meta.last_page"
+                  @next="onPageChange"
+                  @prev="onPageChange"
+                  @click="onPageChange"
+                />
+              </div>
+            </VCol>
+          </VRow>
+        </template>
+      </vue-good-table>
 
-            <VDivider />
-
-            <vue-good-table
-                class="role-data-table"
-                mode="remote"
-                @column-filter="onColumnFilter"
-                :totalRows="props.active_plans.meta.total"
-                :selected-rows-change="selectionChanged"
-                styleClass="vgt-table "
-                :pagination-options="options"
-                :rows="props.active_plans.data"
-                :columns="columns"
-                :select-options="{
-                    enabled: true,
-                    selectOnCheckboxOnly: true,
-                }"
-                @row-click="showInfo"
-            >
-                <template #table-row="dataProps">
-                    <div v-if="dataProps.column.field === 'user'">
-                        <div class="d-flex flex-row gap-2">
-                            <img
-                                src="/images/defaults/avator.png"
-                                class="user-profile-image"
-                            />
-                            <span>Jordan Stevenson</span>
-                        </div>
-                    </div>
-                    <div v-if="dataProps.column.field == 'action'">
-                        <VMenu location="end">
-                            <template #activator="{ props }">
-                                <VIcon
-                                    v-bind="props"
-                                    size="24"
-                                    icon="mdi-dots-horizontal"
-                                    color="black"
-                                    class="mt-n4"
-                                />
-                            </template>
-                            <VList>
-                                <VListItem
-                                    @click="
-                                        () =>
-                                            router.get(
-                                                route(
-                                                    'plans.edit',
-                                                    dataProps.row.id
-                                                )
-                                            )
-                                    "
-                                >
-                                    <VListItemTitle>Edit</VListItemTitle>
-                                </VListItem>
-                                <VListItem
-                                    @click="setInactive(dataProps.row.id)"
-                                >
-                                    <VListItemTitle
-                                        >Set Inactive</VListItemTitle
-                                    >
-                                </VListItem>
-                            </VList>
-                        </VMenu>
-                    </div>
-                </template>
-                <template #pagination-bottom>
-                    <VRow class="pa-4">
-                        <VCol cols="12" class="d-flex justify-space-between">
-                            <span>
-                                Showing
-                                {{ props.active_plans.meta.from }} to
-                                {{ props.active_plans.meta.to }} of
-                                {{ props.active_plans.meta.total }}
-                                entries
-                            </span>
-                            <div class="d-flex">
-                                <div class="d-flex align-center">
-                                    <span class="me-2">Show</span>
-                                    <VSelect
-                                        v-model="serverPerPage"
-                                        density="compact"
-                                        :items="options.perPageDropdown"
-                                    >
-                                    </VSelect>
-                                </div>
-                                <VPagination
-                                    v-model="serverPage"
-                                    size="small"
-                                    :total-visible="5"
-                                    :length="props.active_plans.meta.last_page"
-                                    @next="onPageChange"
-                                    @prev="onPageChange"
-                                    @click="onPageChange"
-                                />
-                            </div>
-                        </VCol>
-                    </VRow>
-                </template>
-            </vue-good-table>
-
-            <VDivider />
-        </VCard>
-    </section>
+      <VDivider />
+    </VCard>
+  </section>
 </template>
 
 <style lang="scss">
 .vgt-table th {
-    font-size: 10pt !important;
+  font-size: 10pt !important;
 }
 
 .vgt-table th.vgt-checkbox-col {
-    background: rgb(var(--v-theme-surface)) !important;
-    padding: 15px;
-    border-right: none;
-    border-bottom: 1px solid #dcdfe6;
+  background: rgb(var(--v-theme-surface)) !important;
+  padding: 15px;
+  border-right: none;
+  border-bottom: 1px solid #dcdfe6;
 }
 
 // .v-input__control {

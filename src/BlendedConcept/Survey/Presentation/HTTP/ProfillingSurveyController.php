@@ -3,12 +3,16 @@
 namespace Src\BlendedConcept\Survey\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Response;
+use Src\BlendedConcept\Survey\Domain\Policies\SurveyPolicy;
 use Src\BlendedConcept\Survey\Application\UseCases\Queries\Profiling\GetProfilingSurvey;
 
 class ProfillingSurveyController
 {
     public function index()
     {
+        // Authorize user
+        abort_if(authorize('view', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
             $survey = (new GetProfilingSurvey())->handle();

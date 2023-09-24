@@ -24,8 +24,8 @@ class RewardEloquentModel extends Model implements HasMedia
         'file_src',
         'name',
         'description',
-        'gold_coins',
-        'silver_coins',
+        'gold_coins_needed',
+        'silver_coins_needed',
         'status',
         'rarity',
     ];

@@ -94,9 +94,6 @@ const deleteOrganization = (id) => {
         },
     });
 };
-const showInfo = (value) => {
-    router.get(route("organizations.show", value.row.id));
-};
 const maxTeacher = (organization) => {
     return (
         organization?.subscription?.b2b_subscription?.num_teacher_license ?? 0

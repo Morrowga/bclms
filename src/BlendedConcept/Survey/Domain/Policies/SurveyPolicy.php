@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Survey\Application\Policies;
+namespace Src\BlendedConcept\Survey\Domain\Policies;
 
 class SurveyPolicy
 {

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('storybook_versions', function (Blueprint $table) {
             $table->id();
-            $table->integer('storybook_id');
+            $table->foreignId('storybook_id')->references('id')->on('storybooks');
             $table->foreignId('teacher_id')->nullable()->references('id')->on('users');
             $table->string('name');
             $table->longText('description')->nullable();
