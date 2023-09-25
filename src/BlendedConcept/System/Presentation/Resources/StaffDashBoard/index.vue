@@ -1,11 +1,12 @@
 <script setup>
 import { defineProps } from "vue";
 
-let orgainzations_users = defineProps(["orgainzations_users"]);
+let orgainzations_users = defineProps(["orgainzations_users",'usercount']);
 import LatestModifiedOrganizations from "./LatestModifiedOrganizations.vue";
 import TotalUserSurveys from "./TotalUserSurveys.vue";
 import RoleCard from "@mainRoot/components/RoleCard.vue";
 import Slider from "./components/Slider.vue";
+
 
 const bookResources = [
     {
@@ -81,7 +82,8 @@ const gameResources = [
     {
         image: "/images/image10.png",
     },
-];
+]
+
 </script>
 
 <template>
@@ -90,20 +92,20 @@ const gameResources = [
             <RoleCard
                 title="Organizations"
                 btnText="Manage"
-                totalText="Total 19 Organizations"
+                :totalText="`Total ${usercount?.organization_count}  Organizations`"
                 :url="route('organizations.index')"
             />
             <RoleCard
                 title="Subscriptions"
                 btnText="Manage"
-                totalText="Total 87 Users"
+                :totalText="`Total ${usercount?.b2csubscriper_count}   Users`"
                 :url="route('subscription_invoice')"
             />
             <RoleCard
                 title="Users"
                 :avatars="avatars"
                 btnText="Manage"
-                totalText="Total 253 Students"
+                :totalText="`Total ${usercount?.user_count}  Students`"
                 :url="route('users.index')"
             />
         </VRow>
