@@ -6,6 +6,7 @@ import { computed, ref } from "vue";
 import SelectStudent from "./components/SelectStudent.vue";
 import SelectTeacher from "./components/SelectTeacher.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { requiredValidator } from "@validators";
 let props = defineProps(["flash", "auth", "classroom"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
@@ -127,7 +128,11 @@ onMounted(() => {
                             <span class="input-label"
                                 >Name <span class="star">*</span></span
                             >
-                            <VTextField v-model="form.name" />
+                            <VTextField
+                                v-model="form.name"
+                                :rules="[requiredValidator]"
+                                :error-messages="form?.errors?.name"
+                            />
                         </div>
                         <div class="mt-2">
                             <span class="input-label">Description</span>

@@ -38,6 +38,7 @@ class StudentEloquentModel extends Model implements HasMedia
 
     ];
 
+
     public function getProfilePicsAttribute()
     {
         return $this->getMedia('profile_pics');

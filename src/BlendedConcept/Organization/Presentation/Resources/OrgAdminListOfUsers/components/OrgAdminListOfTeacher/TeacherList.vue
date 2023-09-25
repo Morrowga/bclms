@@ -93,7 +93,7 @@ watch(filters, (newValue) => {
                 <!--  -->
                 <TeacherAvatar
                     class="teacherAvatar"
-                    :image="item.profile_pic"
+                    :image="item.image_url"
                     :route="route('organizations-teacher.show', item.id)"
                     :title="item.first_name + ' ' + item.last_name"
                     :phone_number="item.contact_number"

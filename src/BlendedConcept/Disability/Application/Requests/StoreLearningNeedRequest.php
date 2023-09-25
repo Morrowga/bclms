@@ -15,7 +15,7 @@ class StoreLearningNeedRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'description' => ['required'],
+            // 'description' => ['required'],
         ];
     }
 }
