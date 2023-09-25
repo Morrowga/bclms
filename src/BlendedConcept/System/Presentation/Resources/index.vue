@@ -132,6 +132,7 @@ onMounted(() => {
         <div v-else>
             <StaffDashboard
                 :orgainzations_users="props.orgainzations_users"
+                :usercount="props.UserCount"
             ></StaffDashboard>
         </div>
     </AdminLayout>
