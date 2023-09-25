@@ -112,7 +112,7 @@ console.log(props.organizations);
 const org_array = ref([]);
 for (let i = 0; i < props.organizations.length; i++) {
     org_array.value.push({
-        id: props.organizations[i].id,
+        id: props.organizations[i].org_admin_id,
         name: props.organizations[i].name,
     });
 }
