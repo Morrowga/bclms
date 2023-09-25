@@ -15,28 +15,21 @@ defineProps(["teacher_storybook", "version",'students']);
       <v-row class="mb-10">
         <v-col cols="12" md="6">
           <div class="ps-relative">
-            <v-img src="/images/imgbook.png" class="main-pic" />
+            <v-img :src="teacher_storybook.thumbnail_img" class="main-pic" />
             <div class="vector-background">
               <img src="/images/vector.png" />
             </div>
           </div>
         </v-col>
         <v-col cols="12" md="6">
-          <h1 class="tiggie-sub-subtitle ml-10 fs-40">Toy Story 2</h1>
+          <h1 class="tiggie-sub-subtitle ml-10 fs-40">{{teacher_storybook.name}}</h1>
           <p class="text-subtitle-1">
-            When Woody is kidnapped by a greedy toy collector and is nowhere to
-            be found, Buzz and his friends set out to rescue him.
+           {{ teacher_storybook.description }}
           </p>
           <br />
           <div class="learning-chip-group">
-            <v-chip variant="outlined" color="success" class="mr-4"
-              >Switch</v-chip
-            >
-            <v-chip variant="outlined" color="success" class="mr-4"
-              >Eye-Gaze</v-chip
-            >
-            <v-chip variant="outlined" color="success" class="mr-4"
-              >Touch</v-chip
+            <v-chip variant="outlined" v-for="item in teacher_storybook.devices" :key="item.id" color="success" class="mr-4"
+              >{{item.name}}</v-chip
             >
           </div>
           <div class="learning-tabs mt-10">
@@ -50,24 +43,24 @@ defineProps(["teacher_storybook", "version",'students']);
               <v-window v-model="tab">
                 <v-window-item value="learning">
                   <ChipWithBlueDot
-                    v-for="item in 5"
+                    v-for="item in teacher_storybook.learningneeds"
                     :key="item"
-                    title="Dyslexia"
+                    :title="item.name"
                   />
                 </v-window-item>
                 <v-window-item value="themes">
                   <ChipWithBlueDot
-                    v-for="item in 5"
+                    v-for="item in teacher_storybook.themes"
                     :key="item"
-                    title="Themes"
+                    :title="item.name"
                   />
                 </v-window-item>
 
                 <v-window-item value="disability">
                   <ChipWithBlueDot
-                    v-for="item in 5"
+                    v-for="item in teacher_storybook.disability_types"
                     :key="item"
-                    title="Disability"
+                    :title="item.name"
                   />
                 </v-window-item>
               </v-window>

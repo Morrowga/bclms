@@ -183,12 +183,6 @@ const deleteSurvey = (id) => {
                                     >
                                         <Link
                                             class="text-secondary"
-                                            :href="
-                                                route(
-                                                    'userexperiencesurvey.edit',
-                                                    dataProps.row.id
-                                                )
-                                            "
                                         >
                                             <span>{{
                                                 dataProps.row.title

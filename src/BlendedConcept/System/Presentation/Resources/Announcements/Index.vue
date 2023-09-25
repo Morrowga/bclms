@@ -60,11 +60,11 @@ let columns = [
     field: "to",
     sortable: false,
   },
-//   {
-//     label: "Action",
-//     field: "action",
-//     sortable: false,
-//   },
+  {
+    label: "",
+    field: "action",
+    sortable: false,
+  },
 ];
 
 //## options for datatable
@@ -184,14 +184,14 @@ const deleteAnnouncement = (id) => {
                     />
                   </template>
                   <VList>
-                    <VListItem
+                    <!-- <VListItem
                       @click="
                         () =>
                           router.get(route('announcements.edit', props.row.id))
                       "
                     >
                       <VListItemTitle>Edit</VListItemTitle>
-                    </VListItem>
+                    </VListItem> -->
                     <VListItem @click="deleteAnnouncement(props.row.id)">
                       <VListItemTitle>Delete</VListItemTitle>
                     </VListItem>
