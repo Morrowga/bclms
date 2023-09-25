@@ -1,23 +1,22 @@
 <script setup>
-import { defineProps } from "vue";
-const props = defineProps({
-    isDialogVisible: {
-        type: Boolean,
-        default: false,
-    },
-});
+import { defineProps, onUpdated } from "vue";
+// const props = defineProps({
+//     isDialogVisible: {
+//         type: Boolean,
+//         default: false,
+//     }
+// });
+
+const props = defineProps(['isDialogVisible','bookreviews'])
+const BookReviewDetails = ref({});
+
+onUpdated(()=> {
+    BookReviewDetails.value = props.bookreviews
+})
 </script>
 
 <template>
     <VDialog v-model="props.isDialogVisible" width="800">
-        <!-- Activator -->
-        <!-- <template #activator="{ props }">
-            <VBtn v-bind="props">
-                Show Review Details
-            </VBtn>
-        </template> -->
-
-        <!-- Dialog Content -->
         <VCard>
             <VCardTitle>
                 <VRow align="center">
@@ -25,21 +24,19 @@ const props = defineProps({
                         <VImg src="/images/image1.png" />
                     </VCol>
                     <VCol cols="3">
-                        <h1 class="tiggie-label">Toy Story 2</h1>
-                        <VRating :model-value="1" active-color="#4C4E64" />
+                        <h1 class="tiggie-label">
+                        {{BookReviewDetails?.storybooks?.name}}
+                        </h1>
+                        <VRating :model-value="BookReviewDetails.stars" active-color="#4C4E64" />
                     </VCol>
                 </VRow>
             </VCardTitle>
             <VCardText>
-                <h1 class="tiggie-label">Absolute Garbage Book! Refund!!!</h1>
+                <h1 class="tiggie-label">
+                 Feedbacks
+                </h1>
                 <p class="tiggie-p">
-                    Bear claw pastry cotton candy jelly toffee. Pudding
-                    chocolate cake shortbread bonbon biscuit sweet. Lemon drops
-                    cupcake muffin brownie fruitcake. Pastry pastry tootsie roll
-                    jujubes chocolate cake gummi bears muffin pudding caramels.
-                    Jujubes lollipop gummies croissant shortbread. Cupcake
-                    dessert marzipan topping gingerbread apple pie chupa chups
-                    powder. Cake croissant halvah candy canes gummies.
+                    {{BookReviewDetails.feedback}}
                 </p>
             </VCardText>
 
@@ -51,7 +48,9 @@ const props = defineProps({
                     />
                     <div class="">
                         <h5>Customer</h5>
-                        <div class="tiggie-p">Jordan Stevenson</div>
+                        <div class="tiggie-p">
+                        {{BookReviewDetails.users[0].full_name}}
+                        </div>
                     </div>
                 </div>
                 <VBtn
