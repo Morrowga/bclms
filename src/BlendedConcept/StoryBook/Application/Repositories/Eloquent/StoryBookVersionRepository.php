@@ -53,8 +53,8 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
     {
         DB::beginTransaction();
         try {
-            $storybookversion = StoryBookVersionEloquentModel::find(request('storybook_version_id'));
-            $storybookversion->storybook_assigments()->sync(request('student_ids'));
+            $storybookversion = StoryBookVersionEloquentModel::where('storybook_id', request()->storybook_version_id)->first();
+            $storybookversion->storybook_assigments()->sync(request()->student_ids);
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();

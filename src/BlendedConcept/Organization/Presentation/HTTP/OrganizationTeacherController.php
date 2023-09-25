@@ -2,10 +2,10 @@
 
 namespace Src\BlendedConcept\Organization\Presentation\HTTP;
 
-use Symfony\Component\HttpFoundation\Response;
 use Inertia\Inertia;
-use Src\BlendedConcept\Teacher\Domain\Policies\TeacherPolicy;
+use Symfony\Component\HttpFoundation\Response;
 use Src\BlendedConcept\Organization\Application\DTO\TeacherData;
+use Src\BlendedConcept\Teacher\Domain\Policies\B2bTeacherPolicy;
 use Src\BlendedConcept\Organization\Application\Mappers\TeacherMapper;
 use Src\BlendedConcept\Organization\Application\Requests\StoreTeacherRequest;
 use Src\BlendedConcept\Organization\Application\Requests\UpdateTeacherRequest;
@@ -84,6 +84,8 @@ class OrganizationTeacherController
 
     public function show($id)
     {
+        abort_if(authorize('view', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $teacher = (new ShowTeacher($id))->handle();
         return Inertia::render(config('route.organizations-teacher.show'), [
             'teacher' => $teacher
@@ -92,6 +94,8 @@ class OrganizationTeacherController
 
     public function edit($id)
     {
+        abort_if(authorize('edit', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $teacher = (new ShowTeacher($id))->handle();
 
         return Inertia::render(config('route.organizations-teacher.edit'), [
@@ -105,9 +109,9 @@ class OrganizationTeacherController
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateTeacherRequest $request, UserEloquentModel $organization_teacher)
+    public function update(UpdateTeacherRequest $request, UserEloquentModel $organizations_teacher)
     {
-        // abort_if(authorize('edit', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('edit', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Validate the request.
@@ -117,16 +121,16 @@ class OrganizationTeacherController
          * Try to update the teacher.
          */
         try {
-            $teacherData = TeacherData::fromRequest($request, $organization_teacher->id);
+            $teacherData = TeacherData::fromRequest($request, $organizations_teacher->id);
             $updateTeacherCommand = (new UpdateTeacherCommand($teacherData));
             $updateTeacherCommand->execute();
 
-            return redirect()->route('organizations-teacher.show', $teacherEloquent->id)->with('successMessage', 'Teacher updated Successfully!');
+            return redirect()->route('organizations-teacher.show', $organizations_teacher->id)->with('successMessage', 'Teacher updated Successfully!');
         } catch (\Exception $e) {
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('organizations-teacher.show', $teacherEloquent->id)->with('SystemErrorMessage', $e->getMessage());
+            return redirect()->route('organizations-teacher.show', $organizations_teacher->id)->with('SystemErrorMessage', $e->getMessage());
         }
     }
 
@@ -136,15 +140,15 @@ class OrganizationTeacherController
      * @param  UserEloquentModel  $teacher The teacher to delete.
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(UserEloquentModel $organization_teacher)
+    public function destroy(UserEloquentModel $organizations_teacher)
     {
-        // abort_if(authorize('destroy', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('destroy', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Try to delete the teacher.
          */
         try {
-            $teacherDestroy = new DeleteTeacherCommand($organization_teacher->id);
+            $teacherDestroy = new DeleteTeacherCommand($organizations_teacher->id);
             $teacherDestroy->execute();
 
             return redirect()->route('organizations-teacher.index')->with('successMessage', 'Teacher deleted Successfully!');

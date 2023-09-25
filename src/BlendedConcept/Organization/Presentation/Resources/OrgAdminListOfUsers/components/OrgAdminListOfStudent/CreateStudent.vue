@@ -10,8 +10,8 @@ import {
   requiredValidator,
   integerValidator,
 } from "@validators";
-defineProps(["learningNeeds", "disabilityTypes"]);
-
+const props = defineProps(["learningNeeds", "disabilityTypes"]);
+console.log(props.disabilityTypes);
 const form = useForm({
   first_name: "",
   last_name: "",
@@ -27,7 +27,7 @@ const form = useForm({
 
 let refForm = ref();
 
-const gender = ref(["Select", "Male", "Female"]);
+const gender = ref(["Male", "Female"]);
 let tab = ref(null);
 const createStudent = () => {
   form.post(route("organizations-student.store"), {
@@ -88,6 +88,12 @@ const createStudent = () => {
                 />
               </v-col>
               <v-col cols="12">
+                <p class="text-subtitle-1 mb-0">Date of birth</p>
+                <AppDateTimePicker placeholder="Select End Date"
+                v-model="form.dob" :rules="[requiredValidator]"
+                :error-messages="form?.errors?.dob"  density="compact" />
+             </v-col>
+              <!-- <v-col cols="12">
                 <p class="text-subtitle-1 mb-0 required">Date of birth</p>
                 <v-text-field
                   v-model="form.dob"
@@ -97,7 +103,7 @@ const createStudent = () => {
                   :error-messages="form?.errors?.dob"
                 >
                 </v-text-field>
-              </v-col>
+              </v-col> -->
               <v-col cols="12">
                 <p class="text-subtitle-1 mb-0 required">Education Level</p>
                 <v-text-field
@@ -154,6 +160,7 @@ const createStudent = () => {
                           v-for="item in learningNeeds"
                           variant="outlined"
                           :key="item.id"
+                          :value="item.id"
                         >
                           {{ item.name }}
                         </v-chip>
@@ -168,9 +175,10 @@ const createStudent = () => {
                         column
                       >
                         <v-chip
-                          v-for="item in disabilityTypes"
+                          v-for="item in props.disabilityTypes"
                           variant="outlined"
                           :key="item.id"
+                          :value="item.id"
                         >
                           {{ item.name }}
                         </v-chip>

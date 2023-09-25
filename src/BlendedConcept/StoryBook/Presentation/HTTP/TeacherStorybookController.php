@@ -28,7 +28,6 @@ class TeacherStorybookController
     public function show(StoryBookEloquentModel $teacher_storybook)
     {
         $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions']);
-
         $games = (new GetGameList())->handle();
 
 

@@ -69,6 +69,7 @@ const selectionChanged = (data) => {
 };
 
 const assignStudent = () => {
+
   form.post(route("storybookassignment"), {
     onSuccess: () => {
       SuccessDialog({ title: "Assign StoryBook Version Success" });

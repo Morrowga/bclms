@@ -15,6 +15,7 @@ import VersionCard from "@mainRoot/components/Teacher/VersionCard.vue";
 const props = defineProps(["teacher_storybook",'storybooks','games']);
 
 let tab = ref(false);
+console.log(props.teacher_storybook.thumbnail_img);
 </script>
 <template>
   <AdminLayout>

@@ -73,9 +73,7 @@ const handleEditSurveyFormSubmit = (data) => {
             reload("profilling_survey.index");
             SuccessDialog({ title: "You've successfully updated a question." });
         },
-        onError: (error) => {
-            console.log(error);
-        },
+        onError: (error) => {},
     });
 };
 
