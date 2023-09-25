@@ -10,12 +10,13 @@ class GetGameList implements QueryInterface
     private GameRepositoryInterface $repository;
 
     public function __construct(
+        private readonly array $filters
     ) {
         $this->repository = app()->make(GameRepositoryInterface::class);
     }
 
     public function handle()
     {
-        return $this->repository->getGameList();
+        return $this->repository->getGameList($this->filters);
     }
 }

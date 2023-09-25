@@ -7,6 +7,7 @@ namespace Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class ReviewEloquentModel extends Model
 {
@@ -25,12 +26,12 @@ class ReviewEloquentModel extends Model
 
     public function storybooks()
     {
-        return $this->hasMany(StoryBookEloquentModel::class, 'id', 'storybook_id');
+        return $this->hasOne(StoryBookEloquentModel::class, 'id', 'storybook_id');
     }
 
     public function users()
     {
-        return $this->hasMany(B2bUserEloquentModel::class, 'id', 'given_by_user_id');
+        return $this->hasMany(UserEloquentModel::class, 'id', 'given_by_user_id');
     }
     public function scopeFilter($query, $filters)
     {

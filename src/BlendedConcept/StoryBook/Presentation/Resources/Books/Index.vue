@@ -1,38 +1,66 @@
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, ref } from "vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import Show from "./Show.vue";
 import Create from "./Create.vue";
 import { useForm } from "@inertiajs/vue3";
-
+import Filter from "./components/Filter.vue";
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
 
 const props = defineProps([
   "learningneeds",
   "themes",
   "disability_types",
   "devices",
-  "storybooks"
+  "storybooks",
 ]);
 
+const searchItem = ref({
+  book_name: "",
+});
 </script>
 <template>
   <AdminLayout>
     <VContainer fluid>
-      <div class="head-section">
-        <div class="title-section">
-          <p class="heading">Manage Books</p>
-          <span class="subheading">Showing 18 books</span>
-        </div>
-        <div class="head-button">
-          <Create
-            :learningneed="props.learningneeds"
-            :themes="props.themes"
-            :disability_types="props.disability_types"
-            :devices="props.devices"
-          />
-        </div>
-      </div>
-
+      <v-row justify="space-between">
+        <v-col cols="4">
+          <div class="title-section">
+            <p class="heading">Manage Books</p>
+            <span class="subheading">Showing {{storybooks.data.length}} books</span>
+          </div>
+        </v-col>
+        <v-col cols="6">
+          <div class="d-flex gap-5">
+            <v-text-field
+              @keyup.enter="searchItems"
+              v-model="serverParams.search"
+              density="compact"
+              max-height="20px"
+              max-width="100px"
+            />
+            <Filter
+              :learningneed="props.learningneeds"
+              :themes="props.themes"
+              :disability_types="props.disability_types"
+              :devices="props.devices"
+            />
+            <Create
+              :learningneed="props.learningneeds"
+              :themes="props.themes"
+              :disability_types="props.disability_types"
+              :devices="props.devices"
+            />
+          </div>
+        </v-col>
+      </v-row>
       <VRow class="mt-5">
         <VCol
           cols="12"
@@ -65,7 +93,8 @@ const props = defineProps([
 }
 
 .head-button {
-  align-self: flex-end;
+  display: flex;
+  /* align-self: flex-end; */
 }
 .fit-img {
   width: 100%;

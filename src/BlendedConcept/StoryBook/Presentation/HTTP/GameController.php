@@ -24,9 +24,11 @@ class GameController
         abort_if(authorize('view', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
+
+            $filters = request()->only(['search', 'name', 'perPage']) ?? [];
             $disabilityTypes = (new ShowDisabilityTypes())->handle();
             $devices = (new GetDevicesWithoutPagination())->handle();
-            $games = (new GetGameList())->handle();
+            $games = (new GetGameList($filters))->handle();
 
             return Inertia::render(config('route.games.index'), [
                 'disabilityTypes' => $disabilityTypes,
