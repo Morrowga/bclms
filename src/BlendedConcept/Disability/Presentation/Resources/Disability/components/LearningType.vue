@@ -93,6 +93,8 @@ const handleSubmit = ({ title }) => {
                                 single-line
                                 density="compact"
                                 variant="solo"
+                                @keyup.enter="searchItems"
+                                v-model="serverParams.search"
                             />
                         </div>
                         <VSpacer />

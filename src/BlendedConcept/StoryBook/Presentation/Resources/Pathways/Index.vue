@@ -96,6 +96,8 @@ const selectionChanged = (data) => {
                                         placeholder="Search Pathway"
                                         density="compact"
                                         variant="solo"
+                                        @keyup.enter="searchItems"
+                                        v-model="serverParams.search"
                                     />
                                 </div>
                                 <VSpacer />

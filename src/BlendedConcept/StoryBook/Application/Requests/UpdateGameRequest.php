@@ -18,7 +18,7 @@ class UpdateGameRequest extends FormRequest
                 'required', 'string',
             ],
             'description' => [
-                'string',
+                'required', 'string'
             ]
         ];
     }
@@ -28,10 +28,6 @@ class UpdateGameRequest extends FormRequest
         return [
             'name' => 'Name is required',
             'description' => 'Description is required',
-            'game' => 'Game file is required',
-            'thumb' => 'Thumbnail image is required',
-            'disability_type_id' => 'Disability Type is required',
-            'tags' => 'Tag is required',
         ];
     }
 }

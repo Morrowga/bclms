@@ -53,7 +53,7 @@ class ClassroomEloquentModel extends Model implements HasMedia
 
     public function students()
     {
-        return $this->belongsToMany(StudentEloquentModel::class, 'classroom_students', 'classroom_id', 'student_id')->with('user');
+        return $this->belongsToMany(StudentEloquentModel::class, 'classroom_students', 'classroom_id', 'student_id')->with('user', 'groups');
     }
 
     public function groups()

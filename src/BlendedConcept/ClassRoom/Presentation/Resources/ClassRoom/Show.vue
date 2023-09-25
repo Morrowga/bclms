@@ -120,9 +120,23 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                                     cover
                                 ></v-img>
                                 <div class="mt-2">
-                                    <span class="label-text pppangram-bold">{{
-                                        teacher.full_name
-                                    }}</span>
+                                    <span
+                                        class="label-text pppangram-bold nowrap"
+                                        >{{ teacher.full_name }}</span
+                                    >
+                                </div>
+                                <div class="mt-1 d-flex justify-center">
+                                    <div>
+                                        <img
+                                            width="20"
+                                            src="/images/phone.svg"
+                                        />
+                                    </div>
+                                    <span
+                                        class="label-text-two ml-1 pppangram-bold"
+                                    >
+                                        {{ teacher?.contact_number }}</span
+                                    >
                                 </div>
                                 <!-- {{ teacher }} -->
                             </div>

@@ -28,7 +28,6 @@ class GameRepository implements GameRepositoryInterface
      */
     public function createGame(Game $game)
     {
-
         DB::beginTransaction();
         try {
             // Insert data into the game

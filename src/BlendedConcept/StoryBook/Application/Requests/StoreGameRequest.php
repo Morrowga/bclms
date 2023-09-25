@@ -18,7 +18,7 @@ class StoreGameRequest extends FormRequest
                 'required', 'string',
             ],
             'description' => [
-                'string',
+                'required','string',
             ],
             'game' => [
                 'required',

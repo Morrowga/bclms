@@ -66,9 +66,10 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
     {
         DB::beginTransaction();
         try {
-            $ClassRoomArray = $classRoomData->toArray();
+
+            $classRoomArray = $classRoomData->toArray();
             $updateClassRoomEloquent = ClassRoomEloquentModel::findOrFail($classRoomData->id);
-            $updateClassRoomEloquent->fill($ClassRoomArray);
+            $updateClassRoomEloquent->fill($classRoomArray);
             $updateClassRoomEloquent->update();
             $updateClassRoomEloquent->students()->sync($classRoomData->students);
             $updateClassRoomEloquent->teachers()->sync($classRoomData->teachers);
