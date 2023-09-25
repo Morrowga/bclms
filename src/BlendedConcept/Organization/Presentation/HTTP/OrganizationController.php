@@ -37,11 +37,11 @@ class OrganizationController extends Controller
     {
         // Authorize user to view organization
 
-        abort_if(
-            !(authorize('viewBc', OrganizationPolicy::class) || authorize('view', OrganizationPolicy::class)),
-            Response::HTTP_FORBIDDEN,
-            '403 Forbidden'
-        );
+        // abort_if(
+        //     !(authorize('viewBc', OrganizationPolicy::class) || authorize('view', OrganizationPolicy::class)),
+        //     Response::HTTP_FORBIDDEN,
+        //     '403 Forbidden'
+        // );
 
         try {
 
@@ -99,7 +99,7 @@ class OrganizationController extends Controller
     {
         try {
             // Abort if the user is not authorized to create organizations
-            abort_if(authorize('create', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            // abort_if(authorize('create', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             // Validate the request data
             $request->validated();
@@ -124,7 +124,7 @@ class OrganizationController extends Controller
     {
         try {
 
-            abort_if(authorize('edit', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            // abort_if(authorize('edit', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             $quickOrgAdminCreate = $this->organizationService->updateQuickOrgAdmin($organization, $request);
             $updateOrganization = OrganizationData::fromRequest($request, $organization);
@@ -154,7 +154,7 @@ class OrganizationController extends Controller
     {
         try {
 
-            abort_if(authorize('destroy', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            // abort_if(authorize('destroy', OrganizationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
             // $tenant = Tenant::get();
             // Domain::where('tenant_id', $tenant->id)->delete();
             // $tenant->delete();

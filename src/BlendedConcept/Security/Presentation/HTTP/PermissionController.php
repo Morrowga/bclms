@@ -26,7 +26,7 @@ class PermissionController extends Controller
     {
 
         //check permission user's has permission
-        abort_if(authorize('view', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('view', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -53,7 +53,7 @@ class PermissionController extends Controller
     public function store(StorepermissionRequest $request)
     {
         // Authorize the user to create a permission
-        abort_if(authorize('create', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('create', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -77,7 +77,7 @@ class PermissionController extends Controller
     {
         // Authorize the user to edit the permission
 
-        abort_if(authorize('edit', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('edit', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
             // Validate the request data
@@ -106,7 +106,7 @@ class PermissionController extends Controller
     public function destroy(PermissionEloquentModel $permission)
     {
 
-        abort_if(authorize('destroy', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('destroy', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
