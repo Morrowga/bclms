@@ -13,9 +13,12 @@ use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel
 class GameRepository implements GameRepositoryInterface
 {
     //get all games
-    public function getGameList()
+    public function getGameList($filters)
     {
-        $games = GameResource::collection(GameEloquentModel::with(['tags', 'disabilityTypes', 'devices'])->orderBy('id', 'desc')->get());
+        $games = GameResource::collection(GameEloquentModel::filter($filters)
+        ->with(['tags', 'disabilityTypes', 'devices'])
+        ->orderBy('id', 'desc')
+        ->paginate($filters['perPage'] ?? 10));
 
         return $games;
     }

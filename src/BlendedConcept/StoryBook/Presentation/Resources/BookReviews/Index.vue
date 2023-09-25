@@ -6,7 +6,17 @@ import { computed, defineProps } from "vue";
 import BookReviewDetails from "./components/BookReviewDetails.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
-let props = defineProps();
+let props = defineProps(['bookreviews']);
+
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+} from "@Composables/useServerSideDatable.js";
 
 let columns = [
     {
@@ -41,47 +51,8 @@ let columns = [
     },
 ];
 
-let rows = [
-    {
-        reviewer: "Jordan Stevenson",
-        book: "Toy Story 2",
-        stars: 4,
-        title: "Absolute Garbage Book! Refund!!!",
-        date: "02/08/23",
-    },
-    {
-        reviewer: "Jordan Stevenson",
-        book: "Toy Story 2",
-        stars: 1,
-        title: "Absolute Garbage Book! Refund!!!",
-        date: "02/08/23",
-    },
-    {
-        reviewer: "Jordan Stevenson",
-        book: "Toy Story 2",
-        stars: 2,
-        title: "Absolute Garbage Book! Refund!!!",
-        date: "02/08/23",
-    },
-    {
-        reviewer: "Jordan Stevenson",
-        book: "Toy Story 2",
-        stars: 3,
-        title: "Absolute Garbage Book! Refund!!!",
-        date: "02/08/23",
-    },
-];
 
-const items = ref([
-    {
-        title: "Edit",
-        value: "edit",
-    },
-    {
-        title: "Delete",
-        value: "delete",
-    },
-]);
+
 
 const isDiability = ref(false);
 const isEditDiability = ref(false);
@@ -93,6 +64,24 @@ let filterDatas = ref([
     { title: "Book", value: "book" },
     { title: "Date", value: "given_on" },
 ]);
+
+serverPage.value = ref(props.bookreviews.meta.current_page ?? 1);
+let permissions = computed(() => usePage().props.auth.data.permissions);
+serverPerPage.value = ref(10);
+let page = usePage();
+let options = ref({
+    enabled: true,
+    mode: "pages",
+    perPage: props.bookreviews.meta.per_page,
+    setCurrentPage: props.bookreviews.meta.current_page,
+    perPageDropdown: [10, 20, 50, 100],
+    dropdownAllowAll: false,
+});
+
+watch(serverPerPage, function (value) {
+    onPerPageChange(value);
+});
+
 watch(filters, (newValue) => {
     onColumnFilter({
         columnFilters: {
@@ -100,16 +89,6 @@ watch(filters, (newValue) => {
         },
     });
 });
-//## truncatedText
-let truncatedText = (text) => {
-    if (text) {
-        if (text?.length <= 30) {
-            return text;
-        } else {
-            return text?.substring(0, 30) + "...";
-        }
-    }
-};
 const showDetail = () => {
     isDialogVisible.value = !isDialogVisible.value;
 };
@@ -168,7 +147,7 @@ const deleteReview = () => {
                                 styleClass="vgt-table"
                                 v-on:selected-rows-change="selectionChanged"
                                 :columns="columns"
-                                :rows="rows"
+                                :rows="bookreviews.data"
                                 :select-options="{
                                     enabled: false,
                                 }"
@@ -176,6 +155,26 @@ const deleteReview = () => {
                                 v-on:row-click="showDetail()"
                             >
                                 <template #table-row="dataProps">
+                                    <div v-if="dataProps.column.field == 'reviewer'">
+                                        <p>
+                                            {{dataProps.row.users[0].full_name}}
+                                        </p>
+                                    </div>
+                                                                        <div v-if="dataProps.column.field == 'book'">
+                                        <p>
+                                            {{dataProps?.row?.storybooks?.name}}
+                                        </p>
+                                    </div>
+                                    <div v-if="dataProps.column.field == 'title'">
+                                        <p>
+                                            {{dataProps?.row?.feedback}}
+                                        </p>
+                                    </div>
+                                    <div v-if="dataProps.column.field == 'date'">
+                                        <p>
+                                           {{moment(dataProps.row.give_on).format("DD-MM-YYYY") }}
+                                        </p>
+                                    </div>
                                     <div
                                         v-if="dataProps.column.field == 'stars'"
                                     >
@@ -201,6 +200,50 @@ const deleteReview = () => {
                                             />
                                         </VBtn>
                                     </div>
+                                </template>
+                                                                <template #pagination-bottom>
+                                    <VRow class="pa-4">
+                                        <VCol
+                                            cols="12"
+                                            class="d-flex justify-space-between"
+                                        >
+                                            <span>
+                                                Showing
+                                                {{ props.bookreviews.meta.from }} to
+                                                {{ props.bookreviews.meta.to }} of
+                                                {{ props.bookreviews.meta.total }}
+                                                entries
+                                            </span>
+                                            <div>
+                                                <div
+                                                    class="d-flex align-center"
+                                                >
+                                                    <span class="me-2"
+                                                        >Show</span
+                                                    >
+                                                    <VSelect
+                                                        v-model="serverPerPage"
+                                                        density="compact"
+                                                        :items="
+                                                            options.perPageDropdown
+                                                        "
+                                                    ></VSelect>
+                                                    <VPagination
+                                                        v-model="serverPage"
+                                                        size="small"
+                                                        :total-visible="5"
+                                                        :length="
+                                                            props.bookreviews.meta
+                                                                .last_page
+                                                        "
+                                                        @next="onPageChange"
+                                                        @prev="onPageChange"
+                                                        @click="onPageChange"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </VCol>
+                                    </VRow>
                                 </template>
                             </vue-good-table>
 

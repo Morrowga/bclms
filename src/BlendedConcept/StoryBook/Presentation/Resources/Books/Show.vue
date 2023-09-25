@@ -106,8 +106,8 @@ onUpdated(() => {
             </div>
             <div class="edit-icon">
               <v-btn icon="mdi-gift" size="x-small" color="secondary"></v-btn>
-              <!-- <Edit :datas="data" /> -->
-              <v-btn icon="mdi-edit" size="x-small" color="secondary" @click="isEdit = true"/>
+              <Edit :datas="data" />
+              <!-- <v-btn icon="mdi-edit" size="x-small" color="secondary" @click="isEdit = true"/> -->
               <v-btn icon="mdi-upload" size="x-small" color="secondary"></v-btn>
             </div>
             <div class="close-btn">
