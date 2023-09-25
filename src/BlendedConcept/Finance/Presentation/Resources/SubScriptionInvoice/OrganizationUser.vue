@@ -127,6 +127,8 @@ watch(filters, (newValue) => {
                         placeholder="Search Organisation ..."
                         density="compact"
                         variant="solo"
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
                     />
                 </div>
                 <div class="sort-field">

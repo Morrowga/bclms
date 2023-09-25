@@ -38,6 +38,8 @@ class StudentRoleSeeder extends Seeder
                 'education_level' => 'G1',
             ];
             $studentCreate = StudentEloquentModel::create($studentData);
+
+            
         }
     }
 }

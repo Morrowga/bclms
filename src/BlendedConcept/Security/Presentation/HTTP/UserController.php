@@ -41,7 +41,7 @@ class UserController extends Controller
     public function index()
     {
 
-        abort_if(authorize('view', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('view', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 

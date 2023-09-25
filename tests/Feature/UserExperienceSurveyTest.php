@@ -159,7 +159,7 @@ test('update user experience survey with bcstaff roles', function () {
         // Add other fields you want to update here
     ]);
 
-    $response->assertStatus(302);
+    $updateResponse->assertStatus(302);
 
     $updateData = $this->put("/userexperiencesurvey/{$surveyId}", []);
 

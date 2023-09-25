@@ -30,7 +30,7 @@ class UserExperienceSurveyController
             $filters = request()->only(['title', 'search', 'perPage', 'filter']);
 
             // Get user list
-            $surveys = (new GetUserExperienceSurveyList())->handle();
+            $surveys = (new GetUserExperienceSurveyList($filters))->handle();
 
             // return $surveys;
             // Render Inertia view
@@ -50,7 +50,7 @@ class UserExperienceSurveyController
 
     public function store(StoreSurveyRequest $request)
     {
-        abort_if(authorize('create', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('create', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $request->validated();
@@ -60,7 +60,6 @@ class UserExperienceSurveyController
             $storeSurveyCommand = new StoreSurveyCommand($newSurvey);
             $storeSurveyCommand->execute();
         } catch (\Exception $e) {
-
             // Handle the exception here
             dd($e->getMessage());
 

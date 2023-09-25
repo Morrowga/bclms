@@ -36,7 +36,7 @@ const form = useForm({
 
 let refForm = ref();
 
-const gender = ref(["Select", "Male", "Female"]);
+const gender = ref(["Male", "Female"]);
 let tab = ref(null);
 const createStudent = () => {
   console.log(form);
@@ -186,6 +186,7 @@ onMounted(() => {
                           v-for="item in learningNeeds"
                           variant="outlined"
                           :key="item.id"
+                          :value="item.id"
                         >
                           {{ item.name }}
                         </v-chip>
@@ -203,6 +204,7 @@ onMounted(() => {
                           v-for="item in learningNeeds"
                           variant="outlined"
                           :key="item.id"
+                          :value="item.id"
                         >
                           {{ item.name }}
                         </v-chip>

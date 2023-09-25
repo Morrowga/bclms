@@ -122,17 +122,17 @@ const deleteStudent = () => {
                 <v-window v-model="tab">
                   <v-window-item value="learning">
                     <ChipWithBlueDot
-                      v-for="item in 5"
-                      :key="item"
-                      title="Dyslexia"
+                      v-for="item in props.organizations_student.learningneeds"
+                      :key="item.id"
+                      :title="item.name"
                     />
                   </v-window-item>
 
                   <v-window-item value="disability">
                     <ChipWithBlueDot
-                      v-for="item in 5"
-                      :key="item"
-                      title="Disability"
+                    v-for="item in props.organizations_student.disability_types"
+                      :key="item.id"
+                      :title="item.name"
                     />
                   </v-window-item>
                 </v-window>

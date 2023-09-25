@@ -9,13 +9,13 @@ class GetUserExperienceSurveyList implements QueryInterface
 {
     private SurveyRepositoryInterface $repository;
 
-    public function __construct()
+    public function __construct(private readonly array $filters)
     {
         $this->repository = app()->make(SurveyRepositoryInterface::class);
     }
 
     public function handle()
     {
-        return $this->repository->getUserExperienceSurveyList();
+        return $this->repository->getUserExperienceSurveyList($this->filters);
     }
 }

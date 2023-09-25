@@ -73,7 +73,6 @@ class SurveyRepository implements SurveyRepositoryInterface
             DB::rollBack();
             dd($error);
         }
-
     }
 
     public function updateSurvey(SurveyData $survey)
@@ -133,7 +132,6 @@ class SurveyRepository implements SurveyRepositoryInterface
             DB::rollBack();
             dd($error);
         }
-
     }
 
     public function deleteQuestion(int $question_id): void
@@ -185,7 +183,7 @@ class SurveyRepository implements SurveyRepositoryInterface
         return $profilingSurvey;
     }
 
-    public function getSurveyResults($filters = [])
+    public function getSurveyResults($filters)
     {
         $surveyResults = SurveyResultResource::collection(ResponseEloquentModel::filter($filters)->with(['user', 'student', 'question.survey'])->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
 

@@ -306,7 +306,7 @@ const fullName = (user) => {
                             </VMenu>
                         </div>
                     </template>
-                    <template #pagination-bottom>
+                    <!-- <template #pagination-bottom>
                         <VRow class="pa-4">
                             <VCol
                                 cols="12"
@@ -401,51 +401,42 @@ const fullName = (user) => {
                                         </VMenu>
                                     </div>
                                 </template>
-                                <template #pagination-bottom>
-                                    <VRow class="pa-4">
-                                        <VCol
-                                            cols="12"
-                                            class="d-flex justify-space-between"
+                               
+                            </VCol>
+                        </VRow>
+                    </template> -->
+                    <template #pagination-bottom>
+                        <VRow class="pa-4">
+                            <VCol
+                                cols="12"
+                                class="d-flex justify-space-between"
+                            >
+                                <span
+                                    >Showing {{ props.users.meta.from }} to
+                                    {{ props.users.meta.to }} of
+                                    {{ props.users.meta.total }}
+                                    entries</span
+                                >
+                                <div>
+                                    <div class="d-flex align-center">
+                                        <span class="me-2">Show</span>
+                                        <VSelect
+                                            v-model="serverPerPage"
+                                            density="compact"
+                                            :items="options.perPageDropdown"
                                         >
-                                            <span
-                                                >Showing
-                                                {{ props.users.meta.from }} to
-                                                {{ props.users.meta.to }} of
-                                                {{ props.users.meta.total }}
-                                                entries</span
-                                            >
-                                            <div>
-                                                <div
-                                                    class="d-flex align-center"
-                                                >
-                                                    <span class="me-2"
-                                                        >Show</span
-                                                    >
-                                                    <VSelect
-                                                        v-model="serverPerPage"
-                                                        density="compact"
-                                                        :items="
-                                                            options.perPageDropdown
-                                                        "
-                                                    >
-                                                    </VSelect>
-                                                    <VPagination
-                                                        v-model="serverPage"
-                                                        size="small"
-                                                        :total-visible="5"
-                                                        :length="
-                                                            props.users.meta
-                                                                .last_page
-                                                        "
-                                                        @next="onPageChange"
-                                                        @prev="onPageChange"
-                                                        @click="onPageChange"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </VCol>
-                                    </VRow>
-                                </template>
+                                        </VSelect>
+                                        <VPagination
+                                            v-model="serverPage"
+                                            size="small"
+                                            :total-visible="5"
+                                            :length="props.users.meta.last_page"
+                                            @next="onPageChange"
+                                            @prev="onPageChange"
+                                            @click="onPageChange"
+                                        />
+                                    </div>
+                                </div>
                             </VCol>
                         </VRow>
                     </template>

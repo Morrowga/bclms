@@ -15,6 +15,7 @@ class RewardEloquentModel extends Model implements HasMedia
 
     protected $appends = [
         'image',
+        'image_url'
     ];
 
     protected $table = 'stickers';
@@ -49,6 +50,12 @@ class RewardEloquentModel extends Model implements HasMedia
         return $this->getMedia('image');
     }
 
+    public function getImageUrlAttribute()
+    {
+        $media = $this->getMedia('image')->first();
+
+        return $media ? $media->getFullUrl() : null;
+    }
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {

@@ -98,7 +98,6 @@ let truncatedText = (text) => {
         }
     }
 };
-
 export {
     serverParams,
     updateParams,

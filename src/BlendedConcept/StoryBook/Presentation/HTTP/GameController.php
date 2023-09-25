@@ -21,7 +21,7 @@ class GameController
 {
     public function index()
     {
-        // abort_if(authorize('view', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('view', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -51,7 +51,7 @@ class GameController
      */
     public function store(StoreGameRequest $request)
     {
-        abort_if(authorize('create', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('create', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             // Validate the request data
@@ -79,7 +79,7 @@ class GameController
      */
     public function update(UpdateGameRequest $request, GameEloquentModel $game)
     {
-        abort_if(authorize('edit', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('edit', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Validate the request.

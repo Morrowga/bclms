@@ -130,8 +130,8 @@ class ClassRoomController extends Controller
         try {
             $updateClassRoom = ClassRoomData::fromRequest($request, $classroom->id);
             $updateClassRoom = (new UpdateClassRoomCommand($updateClassRoom));
-            return redirect()->route('classrooms.index')->with('successMessage', 'ClassRoom Updated Successfully!');
             $updateClassRoom->execute();
+            return redirect()->route('classrooms.index')->with('successMessage', 'ClassRoom Updated Successfully!');
         } catch (\Exception $e) {
             return redirect()->route('classrooms.index')->with('sytemErrorMessage', $e->getMessage());
         }

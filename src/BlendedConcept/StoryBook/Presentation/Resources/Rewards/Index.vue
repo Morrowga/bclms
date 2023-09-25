@@ -211,7 +211,8 @@ const setInactive = (id) => {
                                     >
                                         <div class="d-flex flex-row gap-2">
                                             <img
-                                                src="/images/defaults/reward2.png"
+                                                :src="dataProps.row.image_url"
+                                                class="reward-img"
                                             />
                                         </div>
                                     </div>
@@ -343,5 +344,9 @@ const setInactive = (id) => {
 :deep(.role-data-table .vgt-left-align) {
     vertical-align: middle !important;
     cursor: pointer;
+}
+.reward-img {
+    height: 100px;
+    object-fit: contain;
 }
 </style>

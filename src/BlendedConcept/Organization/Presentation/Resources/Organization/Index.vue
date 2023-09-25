@@ -130,7 +130,7 @@ watch(filters, (newValue) => {
 <template>
     <AdminLayout>
         <VContainer fluid>
-            <h1 class="tiggie-title">Organizations Key</h1>
+            <h1 class="tiggie-title">Organizations</h1>
             <VCard>
                 <VCardText class="d-flex align-center flex-wrap gap-4">
                     <!-- 👉 Export button -->

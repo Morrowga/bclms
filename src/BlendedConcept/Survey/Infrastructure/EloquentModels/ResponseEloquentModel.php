@@ -39,10 +39,20 @@ class ResponseEloquentModel extends Model
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('answer', 'like', '%'.$name.'%');
+            $query->where('answer', 'like', '%' . $name . '%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('answer', 'like', '%'.$search.'%');
+            $query->where('answer', 'like', '%' . $search . '%');
+        });
+        $query->when($filters['filter'] ?? false, function ($query, $filter) {
+
+            if ($filter == 'completion_status') {
+            } else if ($filter == 'user') {
+                $query->join('users', 'responses.user_id', 'users.id')->orderBy('users.name', config('sorting.orderBy'));
+            } else if ($filter == 'user_type') {
+            } else {
+                $query->orderBy($filter, config('sorting.orderBy'));
+            }
         });
     }
 }

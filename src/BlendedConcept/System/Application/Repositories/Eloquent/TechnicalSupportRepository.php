@@ -26,13 +26,10 @@ class TechnicalSupportRepository implements TechnicalSupportRepositoryInterface
             $technicalSupportEloquent->user_id = auth()->user()->id;
             $technicalSupportEloquent->has_responded = false;
             $technicalSupportEloquent->save();
-
         } catch (\Exception $e) {
 
             dd($e->getMessage());
-
         }
-
     }
 
     public function getSupportQuestion($filters = [])
@@ -47,22 +44,18 @@ class TechnicalSupportRepository implements TechnicalSupportRepositoryInterface
             $technicalSupport = TechnicalSupportResource::collection(TechnicalSupportEloquentModel::with(['user'])
                 ->filter($filters)
                 ->paginate($filters['perPage'] ?? 10));
-
         } else {
             $technicalSupport = TechnicalSupportResource::collection(TechnicalSupportEloquentModel::where('user_id', auth()->user()->id)
                 ->with(['user'])
                 ->filter($filters)
                 ->paginate($filters['perPage'] ?? 10));
-
         }
 
         return $technicalSupport;
-
     }
 
     public function answerSupportQuestion(TechnicalSupportData $technicalSupportData)
     {
-
     }
 
     public function deleteSupportQuestion($support)

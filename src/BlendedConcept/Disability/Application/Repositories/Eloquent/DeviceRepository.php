@@ -93,7 +93,7 @@ class DeviceRepository implements DeviceRepositoryInterface
         try {
             $student->device_id = $device->id;
             $student->update();
-
+            DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
             dd($exception);
