@@ -52,7 +52,10 @@ const createPlaylist = () => {
 <template>
     <AdminLayout>
         <VContainer>
-            <VForm @submit.prevent="createPlaylist">
+            <VForm
+                @submit.prevent="createPlaylist"
+                @keydown.enter="$event.preventDefault()"
+            >
                 <VRow justify="space-around">
                     <VCol cols="12">
                         <h4 class="tiggie-teacher-title">Create Playlist</h4>

@@ -25,6 +25,7 @@ const form = useForm({
     _method: "PUT",
 });
 let flash = computed(() => usePage().props.flash);
+let search = ref("");
 const handleDrop = (event) => {
     event.preventDefault();
     const selectedFile = event.dataTransfer.files[0];
@@ -120,6 +121,13 @@ onMounted(() => {
     });
     form.storybooks = props.pathway.storybooks.map((storybook) => storybook.id);
 });
+const storybooks = (datas) => {
+    let searchTerm = search.value.toLowerCase();
+
+    return datas.filter((data) => {
+        return data.name.toLowerCase().includes(searchTerm);
+    });
+};
 </script>
 <template>
     <AdminLayout>
@@ -239,6 +247,7 @@ onMounted(() => {
                                     density="compact"
                                     placeholder="Search book"
                                     variant="solo"
+                                    v-model="search"
                                 ></v-text-field>
                             </div>
                         </div>
@@ -246,7 +255,9 @@ onMounted(() => {
                     <VCol cols="12">
                         <div class="scroll-container">
                             <div
-                                v-for="(data, index) in props.storybooks"
+                                v-for="(data, index) in storybooks(
+                                    props.storybooks
+                                )"
                                 :key="index"
                                 :draggable="true"
                                 @dragend="startDrag(index, data.id)"

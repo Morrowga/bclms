@@ -25,7 +25,7 @@ class SettingController extends Controller
     public function index()
     {
         // Authorize the user to view the site settings
-        abort_if(authorize('view', SettingPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('view', SettingPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -75,7 +75,6 @@ class SettingController extends Controller
             $system_theme = SiteThemData::fromRequest($request);
             $update_system_theme = new UpdateSiteThemeCommand($system_theme);
             $update_system_theme->execute();
-
         } catch (\Exception $error) {
             dd($error->getMessage());
         }

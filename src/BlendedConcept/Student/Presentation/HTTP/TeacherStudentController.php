@@ -45,7 +45,7 @@ class TeacherStudentController
 
     public function update(UpdateStudentRequest $request, StudentEloquentModel $teacher_student)
     {
-        abort_if(authorize('edit', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('edit', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // try {
         $updateStudent = StudentData::fromRequest($request, $teacher_student);

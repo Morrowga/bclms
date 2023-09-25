@@ -84,7 +84,7 @@ class OrganizationTeacherController
 
     public function show($id)
     {
-        abort_if(authorize('view', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('view', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $teacher = (new ShowTeacher($id))->handle();
         return Inertia::render(config('route.organizations-teacher.show'), [
@@ -94,7 +94,7 @@ class OrganizationTeacherController
 
     public function edit($id)
     {
-        abort_if(authorize('edit', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('edit', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $teacher = (new ShowTeacher($id))->handle();
 
@@ -111,7 +111,7 @@ class OrganizationTeacherController
      */
     public function update(UpdateTeacherRequest $request, UserEloquentModel $organizations_teacher)
     {
-        abort_if(authorize('edit', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('edit', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Validate the request.
@@ -142,7 +142,7 @@ class OrganizationTeacherController
      */
     public function destroy(UserEloquentModel $organizations_teacher)
     {
-        abort_if(authorize('destroy', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('destroy', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Try to delete the teacher.

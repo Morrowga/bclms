@@ -120,6 +120,7 @@ const scrollToTarget = () => {
         behavior: "smooth",
     });
 };
+let search = ref("");
 let handleSubmit = () => {
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
@@ -130,6 +131,14 @@ let handleSubmit = () => {
                 onError: (error) => {},
             });
         }
+    });
+};
+
+const storybooks = (datas) => {
+    let searchTerm = search.value.toLowerCase();
+
+    return datas.filter((data) => {
+        return data.name.toLowerCase().includes(searchTerm);
     });
 };
 </script>
@@ -353,6 +362,7 @@ let handleSubmit = () => {
                                     variant="solo"
                                     placeholder="Search Books"
                                     density="compact"
+                                    v-model="search"
                                 >
                                 </v-text-field>
                             </div>
@@ -363,7 +373,9 @@ let handleSubmit = () => {
                             </div>
                             <div class="scroll-container">
                                 <div
-                                    v-for="(data, index) in props.storybooks"
+                                    v-for="(data, index) in storybooks(
+                                        props.storybooks
+                                    )"
                                     :key="index"
                                     :draggable="true"
                                     @dragend="startDrag(index, data.id)"

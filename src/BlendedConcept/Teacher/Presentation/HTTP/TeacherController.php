@@ -36,7 +36,7 @@ class TeacherController extends Controller
 
         // Check if the user is authorized to view users
 
-        abort_if(authorize('view', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('view', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -69,7 +69,7 @@ class TeacherController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        abort_if(authorize('create', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('create', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -87,7 +87,7 @@ class TeacherController extends Controller
     //update user
     public function update(UpdateTeacherRequest $request, UserEloquentModel $teacher)
     {
-        abort_if(authorize('edit', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('edit', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->teacherService->updateTeacher($request, $teacher->id);
 
         return redirect()->route('c.teachers.index')->with('successMessage', 'User Updated Successfully!');
@@ -95,7 +95,7 @@ class TeacherController extends Controller
 
     public function destroy(UserEloquentModel $user)
     {
-        abort_if(authorize('destroy', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('destroy', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $this->teacherService->deleteTeacher($user);
 
         return redirect()->route('c.teachers.index')->with('successMessage', 'User Deleted Successfully!');
@@ -131,7 +131,7 @@ class TeacherController extends Controller
                 foreach ($import->failures() as $failure) {
                     $currentRow = $failure->row();
                     if ($currentRow == $failure->row()) {
-                        if (! in_array($failure->values(), $errorRows)) {
+                        if (!in_array($failure->values(), $errorRows)) {
                             array_push($errorRows, $failure->values());
                         }
                     }
