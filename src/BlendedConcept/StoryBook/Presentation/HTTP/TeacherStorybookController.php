@@ -27,8 +27,9 @@ class TeacherStorybookController
 
     public function show(StoryBookEloquentModel $teacher_storybook)
     {
+        $filters = request(['search', 'filter', 'perPage', 'page']);
         $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions']);
-        $games = (new GetGameList())->handle();
+        $games = (new GetGameList($filters))->handle();
 
         $storybooks = (new GetStoryBook($filters = []))->handle();
 

@@ -24,9 +24,9 @@ class StoryBookEloquentModel extends Model implements HasMedia
     protected $table = 'storybooks';
 
     // for images
-    // protected $appends = [
-    //     'thumbnail_img',
-    // ];
+    protected $appends = [
+        'thumbnail_img',
+    ];
 
     protected $fillable = [
         'id',
@@ -38,10 +38,10 @@ class StoryBookEloquentModel extends Model implements HasMedia
         'is_free',
     ];
 
-    // public function getThumbnailImgAttribute()
-    // {
-    //     return $this->getFirstMedia('thumbnail_img')->original_url ?? '';
-    // }
+    public function getThumbnailImgAttribute()
+    {
+        return $this->getFirstMedia('thumbnail_img')->original_url ?? '';
+    }
 
     public function scopeFilter($query, $filters)
     {
