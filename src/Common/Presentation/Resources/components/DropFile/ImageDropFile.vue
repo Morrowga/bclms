@@ -1,18 +1,43 @@
 <script setup>
 import { ref, defineProps, defineEmits } from "vue";
-const { emit } = defineEmits();
+const emit = defineEmits();
 
 const file = ref(null);
+const thumbnail = ref(null);
 const dragging = ref(false);
+let memeName = ref("");
 const props = defineProps({
     modelValue: {
         default: null,
     },
+    memeType: {
+        type: String,
+        default: "",
+    },
 });
+
+const checkMemeType = (selectedFile) => {
+    if (props.memeType == "image") {
+        return (
+            selectedFile &&
+            (selectedFile.type === "image/jpeg" ||
+                selectedFile.type === "image/png")
+        );
+    } else if (props.memeType == "video") {
+        return selectedFile && selectedFile.type === "video/mp4";
+    } else {
+        return true;
+    }
+};
 
 const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
+    var parent = event.target.closest(".drop-zone");
     if (selectedFile) {
+        thumbnail.value = URL.createObjectURL(selectedFile);
+    }
+
+    if (checkMemeType(selectedFile)) {
         file.value = selectedFile;
         emit("update:modelValue", file.value);
     } else {
@@ -30,7 +55,8 @@ const onDropGameFile = (event) => {
     dragging.value = false;
     const files = event.dataTransfer.files;
     const selectedFile = files[0];
-    if (selectedFile) {
+
+    if (checkMemeType(selectedFile)) {
         file.value = selectedFile;
         emit("update:modelValue", file.value);
     } else {
@@ -42,6 +68,16 @@ const handleFileInputClick = () => {
     const fileInput = document.getElementById("game-file-input");
     fileInput.click();
 };
+
+onMounted(() => {
+    if (props.memeType == "image") {
+        memeName.value = "PNG / JPEG";
+    } else if (props.memeType == "video") {
+        memeName.value = "MP4";
+    } else {
+        memeName.value = "H5P";
+    }
+});
 </script>
 <template>
     <div
@@ -53,13 +89,19 @@ const handleFileInputClick = () => {
     >
         <p v-if="!file" class="pppangram-normal" @click="handleFileInputClick">
             Drag & Drop
-            <strong class="colorprimary">JPG/PNG</strong> file here
+            <strong class="colorprimary">{{ memeName }}</strong> file here
             <br />
             or <br />
             Click to browser files
         </p>
         <div v-else>
-            <p>File Name: {{ file.name }}</p>
+            <v-img
+                v-if="memeType == 'image'"
+                :src="thumbnail"
+                alt="Thumbnail"
+                cover
+            />
+            <p v-else>File Name: {{ file.name }}</p>
             <button @click="removeGameFile" class="remove-button">
                 Remove
             </button>
