@@ -3,6 +3,7 @@ import { defineProps, ref } from "vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { useForm } from "@inertiajs/vue3";
 import ImageUpload from "@mainRoot/components/DropZone/FileUpload.vue";
+import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
 import {
     emailValidator,
     requiredValidator,
@@ -256,18 +257,19 @@ const removeFromArray = (index) => {
                                 <VLabel class="tiggie-label required"
                                     >Storybook File</VLabel
                                 >
-                                <ImageUpload
+                                <ImageDropFile
                                     v-model="form.storybook_file"
-                                    filename="H5P"
+                                    memeType="h5p"
                                 />
                             </VCol>
                             <VCol cols="12" md="6" class="py-0">
                                 <VLabel class="tiggie-label required"
                                     >Thumbnail Picture</VLabel
                                 >
-                                <ImageUpload
+
+                                <ImageDropFile
                                     v-model="form.thumbnail_img"
-                                    filename=".png/jpg"
+                                    memeType="image"
                                 />
                             </VCol>
                             <VCol cols="12" md="12" class="py-0">
