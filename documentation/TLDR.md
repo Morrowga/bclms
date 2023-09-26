@@ -54,3 +54,5 @@ UseCase has two moudels that has Queries and Command .Queries are used for getti
 Models are used for define data type on the eloquentModel
 </ul>
 </details>
+
+
