@@ -9,7 +9,6 @@ interface TeacherRepositoryInterface
 {
     public function getTeachers($filters = []);
 
-
     public function CreateTeacher(Teacher $teacher);
 
     public function updateTeacher(TeacherData $teacherData);

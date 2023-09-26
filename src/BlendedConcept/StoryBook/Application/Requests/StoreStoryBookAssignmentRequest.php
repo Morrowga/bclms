@@ -15,15 +15,15 @@ class StoreStoryBookAssignmentRequest extends FormRequest
     {
         return [
             'storybook_version_id' => ['required'],
-            'student_ids' => ['array','required']
+            'student_ids' => ['array', 'required'],
         ];
     }
 
     public function messages()
     {
         return [
-            'storybook_version_id' => "Story Version is required",
-            'student_ids' => "Select Students"
+            'storybook_version_id' => 'Story Version is required',
+            'student_ids' => 'Select Students',
         ];
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Src\BlendedConcept\Student\Application\UseCases\Queries\Playlist;
 
-use Src\Common\Domain\QueryInterface;
 use Src\BlendedConcept\Student\Domain\Repositories\PlaylistRepositoryInterface;
+use Src\Common\Domain\QueryInterface;
 
 class GetPlaylist implements QueryInterface
 {

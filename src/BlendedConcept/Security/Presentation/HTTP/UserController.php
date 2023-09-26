@@ -128,6 +128,7 @@ class UserController extends Controller
     public function show(UserEloquentModel $user)
     {
         $user->load('b2bUser');
+
         // return $user;
         return Inertia::render(config('route.users.show'), compact('user'));
     }

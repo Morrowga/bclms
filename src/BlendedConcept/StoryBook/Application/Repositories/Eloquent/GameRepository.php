@@ -16,9 +16,9 @@ class GameRepository implements GameRepositoryInterface
     public function getGameList($filters)
     {
         $games = GameResource::collection(GameEloquentModel::filter($filters)
-        ->with(['tags', 'disabilityTypes', 'devices'])
-        ->orderBy('id', 'desc')
-        ->paginate($filters['perPage'] ?? 10));
+            ->with(['tags', 'disabilityTypes', 'devices'])
+            ->orderBy('id', 'desc')
+            ->paginate($filters['perPage'] ?? 10));
 
         return $games;
     }

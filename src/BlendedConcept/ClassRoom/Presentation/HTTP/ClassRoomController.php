@@ -16,7 +16,6 @@ use Src\BlendedConcept\ClassRoom\Application\UseCases\Commands\UpdateClassRoomCo
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Commands\UpdateClassroomGroupCommand;
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetClassRoomWithPagination;
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetOrgStudentsWithPagination;
-use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetStudentsWithPagination;
 use Src\BlendedConcept\ClassRoom\Domain\Policies\ClassRoomPolicy;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
@@ -131,6 +130,7 @@ class ClassRoomController extends Controller
             $updateClassRoom = ClassRoomData::fromRequest($request, $classroom->id);
             $updateClassRoom = (new UpdateClassRoomCommand($updateClassRoom));
             $updateClassRoom->execute();
+
             return redirect()->route('classrooms.index')->with('successMessage', 'ClassRoom Updated Successfully!');
         } catch (\Exception $e) {
             return redirect()->route('classrooms.index')->with('sytemErrorMessage', $e->getMessage());
@@ -195,9 +195,10 @@ class ClassRoomController extends Controller
         try {
             $filters = request(['search', 'page', 'perPage']);
             $students = (new GetOrgStudentsWithPagination($filters))->handle();
+
             return Inertia::render(config('route.org-teacher-classroom.add-group'), [
                 'classroom' => $classroom,
-                'students' => $students
+                'students' => $students,
             ]);
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -223,11 +224,13 @@ class ClassRoomController extends Controller
             return redirect()->route('org-teacher-classroom.show', $request->classroom_id)->with('sytemErrorMessage', $e->getMessage());
         }
     }
+
     public function orgTeacherUpdateGroup(StoreGroupRequest $request, ClassroomGroupEloquentModel $classroomGroup)
     {
         try {
             $updateClassRoomGroup = ClassRoomGroupData::fromRequest($request, $classroomGroup->id);
             $updateClassRoomGroup = (new UpdateClassroomGroupCommand($updateClassRoomGroup));
+
             return redirect()->route('org-teacher-classroom.show', $classroomGroup->classroom_id)->with('successMessage', 'Classroom Group Updated Successfully!');
             $updateClassRoomGroup->execute();
         } catch (\Exception $e) {
@@ -240,18 +243,19 @@ class ClassRoomController extends Controller
 
         $filters = request(['search', 'page', 'perPage']);
         $students = (new GetOrgStudentsWithPagination($filters))->handle();
+
         return Inertia::render(config('route.org-teacher-classroom.edit-group'), [
             'classroom_group' => $classroomGroup->load('students'),
-            'students' => $students
+            'students' => $students,
         ]);
     }
-
 
     public function orgTeacherDeleteGroup(ClassroomGroupEloquentModel $classroomGroup)
     {
         try {
             //code...
             $classroomGroup->delete();
+
             return redirect()->route('org-teacher-classroom.show', $classroomGroup->classroom_id)->with('successMessage', 'Classroom Group Deleted Successfully!');
         } catch (\Exception $e) {
             return redirect()->route('org-teacher-classroom.show', $classroomGroup->classroom_id)->with('sytemErrorMessage', $e->getMessage());

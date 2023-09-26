@@ -3,19 +3,19 @@
 namespace Src\BlendedConcept\Organization\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Symfony\Component\HttpFoundation\Response;
 use Src\BlendedConcept\Organization\Application\DTO\TeacherData;
-use Src\BlendedConcept\Teacher\Domain\Policies\B2bTeacherPolicy;
 use Src\BlendedConcept\Organization\Application\Mappers\TeacherMapper;
 use Src\BlendedConcept\Organization\Application\Requests\StoreTeacherRequest;
 use Src\BlendedConcept\Organization\Application\Requests\UpdateTeacherRequest;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\ShowTeacher;
+use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\DeleteTeacherCommand;
+use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\StoreTeacherCommand;
+use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\UpdateTeacherCommand;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\Student\GetStudentList;
 use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\GetTeacherList;
-use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\StoreTeacherCommand;
-use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\DeleteTeacherCommand;
-use Src\BlendedConcept\Organization\Application\UseCases\Commands\Teacher\UpdateTeacherCommand;
+use Src\BlendedConcept\Organization\Application\UseCases\Queries\Teacher\ShowTeacher;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Teacher\Domain\Policies\B2bTeacherPolicy;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrganizationTeacherController
 {
@@ -87,8 +87,9 @@ class OrganizationTeacherController
         // abort_if(authorize('view', B2bTeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $teacher = (new ShowTeacher($id))->handle();
+
         return Inertia::render(config('route.organizations-teacher.show'), [
-            'teacher' => $teacher
+            'teacher' => $teacher,
         ]);
     }
 

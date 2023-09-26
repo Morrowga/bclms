@@ -39,7 +39,6 @@ class StudentRoleSeeder extends Seeder
             ];
             $studentCreate = StudentEloquentModel::create($studentData);
 
-            
         }
     }
 }

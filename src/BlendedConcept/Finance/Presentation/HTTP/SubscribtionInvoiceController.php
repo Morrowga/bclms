@@ -2,7 +2,6 @@
 
 namespace Src\BlendedConcept\Finance\Presentation\HTTP;
 
-use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
 use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Finance\Application\Requests\UpdateB2bSubscriptionRequest;

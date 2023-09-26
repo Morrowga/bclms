@@ -2,20 +2,20 @@
 
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
-use Inertia\Inertia;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Inertia\Inertia;
+use Src\BlendedConcept\Disability\Application\UseCases\Queries\Devices\GetDevicesWithoutPagination;
+use Src\BlendedConcept\Disability\Application\UseCases\Queries\DisabilityTypes\ShowDisabilityTypes;
 use Src\BlendedConcept\StoryBook\Application\DTO\GameData;
-use Src\BlendedConcept\StoryBook\Domain\Policies\GamePolicy;
 use Src\BlendedConcept\StoryBook\Application\Mappers\GameMapper;
 use Src\BlendedConcept\StoryBook\Application\Requests\StoreGameRequest;
 use Src\BlendedConcept\StoryBook\Application\Requests\UpdateGameRequest;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoreGameCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\UpdateGameCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
+use Src\BlendedConcept\StoryBook\Domain\Policies\GamePolicy;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
-use Src\BlendedConcept\Disability\Application\UseCases\Queries\Devices\GetDevicesWithoutPagination;
-use Src\BlendedConcept\Disability\Application\UseCases\Queries\DisabilityTypes\ShowDisabilityTypes;
+use Symfony\Component\HttpFoundation\Response;
 
 class GameController
 {

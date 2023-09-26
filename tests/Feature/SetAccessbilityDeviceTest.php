@@ -1,11 +1,7 @@
 <?php
 
-use Carbon\Carbon;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
-use Symfony\Component\HttpFoundation\Response;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Illuminate\Support\Facades\Auth;
 
 beforeEach(function () {
     // Run migrations
@@ -28,7 +24,6 @@ test('without login not access set device', function () {
     $reponse->assertRedirect('/login');
 });
 
-
 test('set device with org teacher roles', function () {
     $this->assertTrue(Auth::check());
 
@@ -43,7 +38,7 @@ test('set device with org teacher roles', function () {
         'name' => 'Example Device',
         'description' => 'Device Description',
         'disability_types' => [1],
-        'status' => "INACTIVE",
+        'status' => 'INACTIVE',
     ]);
 
     $device->assertStatus(302);

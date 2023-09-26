@@ -2,19 +2,17 @@
 
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
-use Inertia\Inertia;
+use Src\BlendedConcept\StoryBook\Application\Mappers\ReviewMapper;
 use Src\BlendedConcept\StoryBook\Application\Mappers\StoryBookVersionMapper;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoryBookVersion\CreateStoryBookVersionCommand;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoryBookVersion\CreateStoryBookAssigmentCommand;
-use Src\BlendedConcept\StoryBook\Application\Requests\StoreStoryBookVersion;
 use Src\BlendedConcept\StoryBook\Application\Requests\StoreStoryBookAssignmentRequest;
 use Src\BlendedConcept\StoryBook\Application\Requests\StoreStoryBookReview;
-use Src\BlendedConcept\StoryBook\Application\Mappers\ReviewMapper;
+use Src\BlendedConcept\StoryBook\Application\Requests\StoreStoryBookVersion;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\BookReview\GiveBookReviewCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoryBookVersion\CreateStoryBookAssigmentCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoryBookVersion\CreateStoryBookVersionCommand;
 
 class StoryBookVersionController
 {
-
     /**
      * Store a new storybook based on the provided request.
      *
@@ -42,6 +40,7 @@ class StoryBookVersionController
     {
         try {
             $createNewStoryBook = (new CreateStoryBookAssigmentCommand())->execute();
+
             return redirect()->back()->with('successMessage', 'StoryBook Version created successfully!');
         } catch (\Exception $error) {
             dd($error->getCode());
@@ -54,6 +53,7 @@ class StoryBookVersionController
         try {
             $newReview = ReviewMapper::fromRequest($request);
             $createReview = (new GiveBookReviewCommand($newReview))->execute();
+
             return redirect()->back()->with('successMessage', 'StoryBook Version created successfully!');
         } catch (\Exception $th) {
             dd($th->getMessage());

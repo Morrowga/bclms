@@ -4,19 +4,20 @@ namespace Src\BlendedConcept\Student\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\Student\Application\DTO\PlaylistData;
-use Src\BlendedConcept\Student\Domain\Model\Entities\Playlist;
-use Src\BlendedConcept\Student\Domain\Resources\PlaylistResource;
 use Src\BlendedConcept\Student\Application\Mappers\PlaylistMapper;
+use Src\BlendedConcept\Student\Domain\Model\Entities\Playlist;
 use Src\BlendedConcept\Student\Domain\Repositories\PlaylistRepositoryInterface;
+use Src\BlendedConcept\Student\Domain\Resources\PlaylistResource;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\PlaylistEloquentModel;
 
 class PlaylistRepository implements PlaylistRepositoryInterface
 {
-    public function getPlaylist($filters = []){
+    public function getPlaylist($filters = [])
+    {
         $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
-        ->with(['storybooks', 'student.user'])
-        ->orderBy('id', 'desc')
-        ->paginate($filters['perPage'] ?? 10));
+            ->with(['storybooks', 'student.user'])
+            ->orderBy('id', 'desc')
+            ->paginate($filters['perPage'] ?? 10));
 
         return $playlists;
     }
@@ -24,14 +25,15 @@ class PlaylistRepository implements PlaylistRepositoryInterface
     public function showPlaylist($id)
     {
         $playlist = new PlaylistResource(PlaylistEloquentModel::where('id', $id)
-        ->with(['storybooks', 'student.user'])
-        ->orderBy('id', 'desc')
-        ->first());
+            ->with(['storybooks', 'student.user'])
+            ->orderBy('id', 'desc')
+            ->first());
 
         return $playlist;
     }
 
-    public function createPlaylist(Playlist $playlist){
+    public function createPlaylist(Playlist $playlist)
+    {
         DB::beginTransaction();
 
         try {
@@ -61,7 +63,8 @@ class PlaylistRepository implements PlaylistRepositoryInterface
         }
     }
 
-    public function updatePlaylist(PlaylistData $playlistData){
+    public function updatePlaylist(PlaylistData $playlistData)
+    {
         DB::beginTransaction();
 
         try {

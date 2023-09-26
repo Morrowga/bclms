@@ -18,8 +18,8 @@ class UpdateGameRequest extends FormRequest
                 'required', 'string',
             ],
             'description' => [
-                'required', 'string'
-            ]
+                'required', 'string',
+            ],
         ];
     }
 

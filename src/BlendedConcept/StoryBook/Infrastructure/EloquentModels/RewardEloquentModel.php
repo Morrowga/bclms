@@ -15,7 +15,7 @@ class RewardEloquentModel extends Model implements HasMedia
 
     protected $appends = [
         'image',
-        'image_url'
+        'image_url',
     ];
 
     protected $table = 'stickers';
@@ -56,14 +56,15 @@ class RewardEloquentModel extends Model implements HasMedia
 
         return $media ? $media->getFullUrl() : null;
     }
+
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->orWhere('name', 'like', '%' . $search . '%')
-                ->orWhere('status', 'like', '%' . $search . '%');
+            $query->orWhere('name', 'like', '%'.$search.'%')
+                ->orWhere('status', 'like', '%'.$search.'%');
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
             if ($filter == 'reviewers') {

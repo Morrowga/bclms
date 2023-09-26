@@ -1,9 +1,10 @@
 <?php
 
 namespace Src\BlendedConcept\StoryBook\Domain\Repositories;
-use Src\BlendedConcept\StoryBook\Domain\Model\Entities\StoryBookVersion;
+
 use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookVersionData;
 use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Review;
+use Src\BlendedConcept\StoryBook\Domain\Model\Entities\StoryBookVersion;
 
 interface StoryBookVersionRepositoryInterface
 {

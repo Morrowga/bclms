@@ -1,8 +1,8 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -49,18 +49,17 @@ test('without other role not access user experience survey', function () {
     $reponse->assertStatus(403);
 });
 
-
 test('create user experience survey with bcstaff roles', function () {
     // Start a database transaction for the test
     $this->assertTrue(Auth::check());
 
     $questions = [
         [
-            "id" => '1',
-            "question_type" => 'SINGLE_CHOICE',
-            "question" => 'That is question',
-            "options" => ['That is options', 'That is option 2', 'That is option 3']
-        ]
+            'id' => '1',
+            'question_type' => 'SINGLE_CHOICE',
+            'question' => 'That is question',
+            'options' => ['That is options', 'That is option 2', 'That is option 3'],
+        ],
     ];
 
     $response = $this->post('/userexperiencesurvey', [
@@ -119,11 +118,11 @@ test('update user experience survey with bcstaff roles', function () {
 
     $questions = [
         [
-            "id" => '1',
-            "question_type" => 'SINGLE_CHOICE',
-            "question" => 'That is question',
-            "options" => ['That is options', 'That is option 2', 'That is option 3']
-        ]
+            'id' => '1',
+            'question_type' => 'SINGLE_CHOICE',
+            'question' => 'That is question',
+            'options' => ['That is options', 'That is option 2', 'That is option 3'],
+        ],
     ];
 
     $response = $this->post('/userexperiencesurvey', [
@@ -136,7 +135,7 @@ test('update user experience survey with bcstaff roles', function () {
         'end_date' => Carbon::now()->addDay(3),
         'required' => true,
         'repeat' => true,
-        'questions' => json_encode($questions)
+        'questions' => json_encode($questions),
     ]);
 
     $response->assertStatus(302);
@@ -173,11 +172,11 @@ test('add new question in user experience survey with bcstaff roles', function (
 
     $questions = [
         [
-            "id" => '1',
-            "question_type" => 'SINGLE_CHOICE',
-            "question" => 'That is question',
-            "options" => ['That is options', 'That is option 2', 'That is option 3']
-        ]
+            'id' => '1',
+            'question_type' => 'SINGLE_CHOICE',
+            'question' => 'That is question',
+            'options' => ['That is options', 'That is option 2', 'That is option 3'],
+        ],
     ];
 
     // Create the initial user experience survey
@@ -200,13 +199,13 @@ test('add new question in user experience survey with bcstaff roles', function (
 
     // Create a new question for the survey
     $questionResponse = $this->post('/questions', [
-        "survey_id" => $surveyId,
-        "question_type" => 'SINGLE_CHOICE',
-        "question" => 'That is question',
-        "options" => json_encode(['That is new options', 'That is new option 2', 'That new is option 3'])
+        'survey_id' => $surveyId,
+        'question_type' => 'SINGLE_CHOICE',
+        'question' => 'That is question',
+        'options' => json_encode(['That is new options', 'That is new option 2', 'That new is option 3']),
     ]);
 
-    $addQuestionData = $this->post("/questions", []);
+    $addQuestionData = $this->post('/questions', []);
 
     $addQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question', 'options']);
 
@@ -214,17 +213,16 @@ test('add new question in user experience survey with bcstaff roles', function (
     // $response->assertRedirect($questionResponse->headers->get('Location'));
 });
 
-
 test('update existing question in user experience survey with bcstaff roles', function () {
     $this->assertTrue(Auth::check());
 
     $questions = [
         [
-            "id" => '1',
-            "question_type" => 'SINGLE_CHOICE',
-            "question" => 'That is question',
-            "options" => ['That is options', 'That is option 2', 'That is option 3']
-        ]
+            'id' => '1',
+            'question_type' => 'SINGLE_CHOICE',
+            'question' => 'That is question',
+            'options' => ['That is options', 'That is option 2', 'That is option 3'],
+        ],
     ];
 
     $response = $this->post('/userexperiencesurvey', [
@@ -242,17 +240,16 @@ test('update existing question in user experience survey with bcstaff roles', fu
 
     $response->assertStatus(302);
 
-
     // Define the route name and route parameters
-    $questionId =  1;
-    $surveyId =  1;
+    $questionId = 1;
+    $surveyId = 1;
 
     // Define the updated question data
     $updatedQuestionData = [
-        "survey_id" => $surveyId,
-        "question_type" => 'MULTIPLE_RESPONSE',
-        "question" => 'That is update question',
-        "options" => json_encode(['That is update options', 'That is update option 2', 'That is option 3'])
+        'survey_id' => $surveyId,
+        'question_type' => 'MULTIPLE_RESPONSE',
+        'question' => 'That is update question',
+        'options' => json_encode(['That is update options', 'That is update option 2', 'That is option 3']),
     ];
 
     $questionResponse = $this->put("/questions/{$questionId}", $updatedQuestionData);
@@ -264,7 +261,6 @@ test('update existing question in user experience survey with bcstaff roles', fu
     $questionResponse->assertStatus(302);
 });
 
-
 test('delete  the question in user experience survey with bcstaff roles', function () {
     // Start a database transaction for the test
     $this->assertTrue(Auth::check());
@@ -272,11 +268,11 @@ test('delete  the question in user experience survey with bcstaff roles', functi
     // Create a survey that you intend to delete
     $questions = [
         [
-            "id" => '1',
-            "question_type" => 'SINGLE_CHOICE',
-            "question" => 'That is question',
-            "options" => ['That is options', 'That is option 2', 'That is option 3']
-        ]
+            'id' => '1',
+            'question_type' => 'SINGLE_CHOICE',
+            'question' => 'That is question',
+            'options' => ['That is options', 'That is option 2', 'That is option 3'],
+        ],
     ];
 
     $response = $this->post('/userexperiencesurvey', [
@@ -311,11 +307,11 @@ test('delete user experience survey with bcstaff roles', function () {
     // Create a survey that you intend to delete
     $questions = [
         [
-            "id" => '1',
-            "question_type" => 'SINGLE_CHOICE',
-            "question" => 'That is question',
-            "options" => ['That is options', 'That is option 2', 'That is option 3']
-        ]
+            'id' => '1',
+            'question_type' => 'SINGLE_CHOICE',
+            'question' => 'That is question',
+            'options' => ['That is options', 'That is option 2', 'That is option 3'],
+        ],
     ];
 
     $response = $this->post('/userexperiencesurvey', [
@@ -341,4 +337,3 @@ test('delete user experience survey with bcstaff roles', function () {
 
     $deleteResponse->assertStatus(302);
 });
-

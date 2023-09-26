@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Student\Infrastructure\EloquentModels;
 
-use Carbon\Carbon;
-use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquentModel;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
-use Src\BlendedConcept\Student\Infrastructure\EloquentModels\PlaylistEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class StudentEloquentModel extends Model implements HasMedia
 {
@@ -58,24 +55,24 @@ class StudentEloquentModel extends Model implements HasMedia
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query->whereHas('user', function ($query) use ($search) {
                 $query
-                    ->where('first_name', 'like', '%' . $search . '%')
-                    ->orWhere('last_name', 'like', '%' . $search . '%');
+                    ->where('first_name', 'like', '%'.$search.'%')
+                    ->orWhere('last_name', 'like', '%'.$search.'%');
             });
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
             if ($filter == 'asc') {
                 $query->join('users', 'students.user_id', '=', 'users.id')
-                    ->orderBy("users.first_name", "asc");
-            } else if ($filter == 'desc') {
+                    ->orderBy('users.first_name', 'asc');
+            } elseif ($filter == 'desc') {
                 $query->join('users', 'students.user_id', '=', 'users.id')
-                    ->orderBy("users.first_name", "desc");
-            } else if ($filter == 'role') {
-                $query->join("roles", "users.role_id", "roles.id")->orderBy('name', config('sorting.orderBy'));
+                    ->orderBy('users.first_name', 'desc');
+            } elseif ($filter == 'role') {
+                $query->join('roles', 'users.role_id', 'roles.id')->orderBy('name', config('sorting.orderBy'));
             } else {
                 $query->join('users', 'students.user_id', '=', 'users.id')
                     ->orderBy("users.$filter", config('sorting.orderBy'));
@@ -92,6 +89,7 @@ class StudentEloquentModel extends Model implements HasMedia
     {
         return $this->belongsToMany(OrganizationEloquentModel::class, 'organization_students', 'student_id', 'organization_id');
     }
+
     public function classrooms()
     {
         return $this->belongsToMany(ClassroomEloquentModel::class, 'classroom_students', 'student_id', 'classroom_id');

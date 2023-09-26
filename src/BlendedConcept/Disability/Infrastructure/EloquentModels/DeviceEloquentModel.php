@@ -19,7 +19,7 @@ class DeviceEloquentModel extends Model
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
         $query->when($filters['status'] ?? false, function ($query, $status) {
             $query->where('status', $status);

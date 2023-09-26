@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Student\Infrastructure\EloquentModels;
 
-use Carbon\Carbon;
-use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
 
@@ -20,7 +19,6 @@ class PlaylistEloquentModel extends Model implements HasMedia
     protected $appends = [
         'image',
     ];
-
 
     protected $fillable = [
         'name',
@@ -42,7 +40,8 @@ class PlaylistEloquentModel extends Model implements HasMedia
         });
     }
 
-    public function student(){
+    public function student()
+    {
         return $this->belongsTo(StudentEloquentModel::class, 'student_id', 'student_id');
     }
 

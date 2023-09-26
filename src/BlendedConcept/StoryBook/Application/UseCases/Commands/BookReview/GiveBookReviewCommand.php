@@ -2,10 +2,8 @@
 
 namespace Src\BlendedConcept\StoryBook\Application\UseCases\Commands\BookReview;
 
-
-use Src\BlendedConcept\StoryBook\Domain\Repositories\StoryBookVersionRepositoryInterface;
 use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Review;
-
+use Src\BlendedConcept\StoryBook\Domain\Repositories\StoryBookVersionRepositoryInterface;
 use Src\Common\Domain\CommandInterface;
 
 class GiveBookReviewCommand implements CommandInterface

@@ -2,8 +2,8 @@
 
 namespace Src\BlendedConcept\Student\Application\UseCases\Commands\Playlist;
 
-use Src\Common\Domain\CommandInterface;
 use Src\BlendedConcept\Student\Domain\Repositories\PlaylistRepositoryInterface;
+use Src\Common\Domain\CommandInterface;
 
 class DeletePlaylistCommand implements CommandInterface
 {

@@ -75,8 +75,6 @@ class RewardRepository implements RewaredRepositoryInterface
     {
         // Author: @hareom284
 
-
-
         DB::beginTransaction();
 
         try {

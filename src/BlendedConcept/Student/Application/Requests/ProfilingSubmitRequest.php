@@ -25,7 +25,7 @@ class ProfilingSubmitRequest extends FormRequest
             ],
             'response_datetime' => [
                 'required',
-            ]
+            ],
         ];
     }
 }

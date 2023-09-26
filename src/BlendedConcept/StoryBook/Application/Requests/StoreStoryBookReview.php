@@ -23,9 +23,9 @@ class StoreStoryBookReview extends FormRequest
     public function messages()
     {
         return [
-            "storybook_id" =>"StoryBook is required",
-            "stars" => "",
-            "feedback" => "You need to give some feedbacks"
+            'storybook_id' => 'StoryBook is required',
+            'stars' => '',
+            'feedback' => 'You need to give some feedbacks',
         ];
     }
 }

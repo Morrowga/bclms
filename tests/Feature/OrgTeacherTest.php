@@ -2,10 +2,10 @@
 
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Symfony\Component\HttpFoundation\Response;
 
 beforeEach(function () {
     // Run migrations
@@ -50,7 +50,6 @@ test('without other role not access organizations teacher', function () {
     $reponse->assertStatus(403);
 });
 
-
 test('create org teacher with org admin roles', function () {
     $this->assertTrue(Auth::check());
 
@@ -66,7 +65,7 @@ test('create org teacher with org admin roles', function () {
 
     $response->assertStatus(302);
 
-    $storeData = $this->post("/organizations-teacher", []);
+    $storeData = $this->post('/organizations-teacher', []);
 
     $storeData->assertSessionHasErrors(['first_name', 'last_name', 'email', 'contact_number', 'image']);
 
@@ -111,4 +110,3 @@ test('delete org teacher with org admin roles', function () {
 
     $deleteResponse->assertStatus(302);
 });
-

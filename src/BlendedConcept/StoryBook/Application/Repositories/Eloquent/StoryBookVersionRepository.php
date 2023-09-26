@@ -3,20 +3,19 @@
 namespace Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
-use Src\BlendedConcept\StoryBook\Domain\Repositories\StoryBookVersionRepositoryInterface;
-use Src\BlendedConcept\StoryBook\Domain\Model\Entities\StoryBookVersion;
 use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookVersionData;
-use Src\BlendedConcept\StoryBook\Application\Mappers\StoryBookVersionMapper;
-use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
-use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Review;
 use Src\BlendedConcept\StoryBook\Application\Mappers\ReviewMapper;
+use Src\BlendedConcept\StoryBook\Application\Mappers\StoryBookVersionMapper;
+use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Review;
+use Src\BlendedConcept\StoryBook\Domain\Model\Entities\StoryBookVersion;
+use Src\BlendedConcept\StoryBook\Domain\Repositories\StoryBookVersionRepositoryInterface;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
 
 class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
 {
     public function getStoryBooksWithVersions()
     {
     }
-
 
     /****
      *  In the funciton we have to create storyversion that will copy from original storybooks
@@ -25,7 +24,7 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
      *
      */
 
-    public function createStoryBookVersion(StoryBookVersion $storyBookVersion,)
+    public function createStoryBookVersion(StoryBookVersion $storyBookVersion)
     {
 
         DB::beginTransaction();
@@ -73,7 +72,7 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
             $createEloquent->save();
             DB::commit();
         } catch (\Exception $error) {
-             dd($error->getMessage());
+            dd($error->getMessage());
             DB::rollBack();
         }
     }

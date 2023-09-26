@@ -38,7 +38,6 @@ class StudentEloquentModel extends Model implements HasMedia
 
     ];
 
-
     public function getProfilePicsAttribute()
     {
         return $this->getMedia('profile_pics');
@@ -49,18 +48,18 @@ class StudentEloquentModel extends Model implements HasMedia
 
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query->whereHas('user', function ($query) use ($search) {
-                $query->where('first_name', 'like', '%' . $search . '%');
-                $query->orWhere('last_name', 'like', '%' . $search . '%');
+                $query->where('first_name', 'like', '%'.$search.'%');
+                $query->orWhere('last_name', 'like', '%'.$search.'%');
             });
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
 
             if ($filter == 'asc') {
                 $query->join('users', 'students.user_id', '=', 'users.id')
-                    ->orderBy("users.first_name", "asc");
-            } else if ($filter == 'desc') {
+                    ->orderBy('users.first_name', 'asc');
+            } elseif ($filter == 'desc') {
                 $query->join('users', 'students.user_id', '=', 'users.id')
-                    ->orderBy("users.first_name", "desc");
+                    ->orderBy('users.first_name', 'desc');
             } else {
                 $query->join('users', 'students.user_id', '=', 'users.id')
                     ->orderBy("users.$filter", config('sorting.orderBy'));

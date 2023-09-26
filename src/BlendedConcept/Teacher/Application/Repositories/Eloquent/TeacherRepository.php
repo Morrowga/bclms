@@ -79,6 +79,7 @@ class TeacherRepository implements TeacherRepositoryInterface
         foreach ($teachers->classrooms as $classroom) {
             array_push($classroom_ids, $classroom->id);
         }
+
         return StudentEloquentModel::filter($filters)
             ->whereHas('organizations', function ($query) {
                 $query->where('id', auth()->user()->organization_id);

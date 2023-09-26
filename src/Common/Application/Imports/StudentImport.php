@@ -2,6 +2,7 @@
 
 namespace Src\Common\Application\Imports;
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -14,7 +15,6 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
-use Carbon\Carbon;
 
 class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithHeadingRow, WithValidation
 {

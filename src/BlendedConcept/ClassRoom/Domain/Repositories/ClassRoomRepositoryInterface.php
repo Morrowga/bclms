@@ -18,8 +18,10 @@ interface ClassRoomRepositoryInterface
     public function getTeachers($filters);
 
     public function getStudents($filters);
+
     public function getOrgTeacherClassrooms($filters);
 
     public function createClassRoomGroup(ClassroomGroup $classroomGroup);
+
     public function updateClassRoomGroup(ClassRoomGroupData $classroomGroupData);
 }

@@ -3,10 +3,10 @@
 namespace Src\BlendedConcept\Student\Application\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Src\BlendedConcept\Student\Domain\Repositories\StudentRepositoryInterface;
-use Src\BlendedConcept\Student\Domain\Repositories\PlaylistRepositoryInterface;
-use Src\BlendedConcept\Student\Application\Repositories\Eloquent\StudentRepository;
 use Src\BlendedConcept\Student\Application\Repositories\Eloquent\PlaylistRepository;
+use Src\BlendedConcept\Student\Application\Repositories\Eloquent\StudentRepository;
+use Src\BlendedConcept\Student\Domain\Repositories\PlaylistRepositoryInterface;
+use Src\BlendedConcept\Student\Domain\Repositories\StudentRepositoryInterface;
 
 class StudentServiceProvider extends ServiceProvider
 {

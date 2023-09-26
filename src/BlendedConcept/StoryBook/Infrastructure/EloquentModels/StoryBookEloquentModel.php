@@ -7,6 +7,7 @@ namespace Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
@@ -15,9 +16,6 @@ use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentMo
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\ThemeEloquentModel;
-use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class StoryBookEloquentModel extends Model implements HasMedia
 {
@@ -48,16 +46,16 @@ class StoryBookEloquentModel extends Model implements HasMedia
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('name', 'like', '%' . $search . '%');
+            $query->where('name', 'like', '%'.$search.'%');
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
             if ($filter == 'role') {
-            } else if ($filter == 'asc') {
+            } elseif ($filter == 'asc') {
                 $query->orderBy('name', 'asc');
-            } else if ($filter == 'desc') {
+            } elseif ($filter == 'desc') {
                 $query->orderBy('name', 'desc');
             } else {
                 $query->orderBy($filter, config('sorting.orderBy'));
@@ -99,7 +97,6 @@ class StoryBookEloquentModel extends Model implements HasMedia
     {
         return $this->hasMany(StoryBookVersionEloquentModel::class, 'storybook_id', 'id');
     }
-
 
     public function associateTags(array $tagNames)
     {

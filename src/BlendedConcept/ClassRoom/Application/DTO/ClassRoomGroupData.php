@@ -31,7 +31,7 @@ class ClassRoomGroupData
             'id' => $this->id,
             'classroom_id' => $this->classroom_id,
             'name' => $this->name,
-            'students' => $this->students
+            'students' => $this->students,
         ];
     }
 }

@@ -2,10 +2,10 @@
 
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Symfony\Component\HttpFoundation\Response;
 
 beforeEach(function () {
     // Run migrations
@@ -50,7 +50,6 @@ test('without other role not access playlist', function () {
     $reponse->assertStatus(403);
 });
 
-
 test('create playlist with org teacher roles', function () {
     $this->assertTrue(Auth::check());
 
@@ -60,12 +59,12 @@ test('create playlist with org teacher roles', function () {
         'name' => 'Example Device',
         'student_id' => 1,
         'image' => $playlistImage,
-        'storybooks' => [1,2]
+        'storybooks' => [1, 2],
     ]);
 
     $response->assertStatus(302);
 
-    $storeData = $this->post("/playlists", []);
+    $storeData = $this->post('/playlists', []);
 
     $storeData->assertSessionHasErrors(['name', 'student_id', 'image', 'storybooks']);
 
@@ -84,7 +83,7 @@ test('update playlist with org teacher roles', function () {
         'name' => 'Example Device',
         'student_id' => 1,
         'image' => $playlistImage,
-        'storybooks' => [1,2]
+        'storybooks' => [1, 2],
     ]);
 
     $response->assertStatus(302);
@@ -101,7 +100,7 @@ test('update playlist with org teacher roles', function () {
         'student_id' => 1,
         'image' => $updatePlaylistImage,
         'teacher_id' => 11,
-        'storybooks' => [3,4]
+        'storybooks' => [3, 4],
         // Add other fields you want to update here
     ]);
 
@@ -124,7 +123,7 @@ test('delete playlist with org teacher roles', function () {
         'name' => 'Example Device',
         'student_id' => 1,
         'image' => $playlistImage,
-        'storybooks' => [1,2]
+        'storybooks' => [1, 2],
     ]);
 
     $response->assertStatus(302);
@@ -137,4 +136,3 @@ test('delete playlist with org teacher roles', function () {
 
     $deleteResponse->assertStatus(302);
 });
-

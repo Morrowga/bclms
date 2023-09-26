@@ -131,7 +131,7 @@ class TeacherController extends Controller
                 foreach ($import->failures() as $failure) {
                     $currentRow = $failure->row();
                     if ($currentRow == $failure->row()) {
-                        if (!in_array($failure->values(), $errorRows)) {
+                        if (! in_array($failure->values(), $errorRows)) {
                             array_push($errorRows, $failure->values());
                         }
                     }

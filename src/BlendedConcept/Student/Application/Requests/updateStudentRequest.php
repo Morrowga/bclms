@@ -14,9 +14,9 @@ class updateStudentRequest extends FormRequest
     public function rules()
     {
         return [
-          'name' => [
-            'required'
-          ]
+            'name' => [
+                'required',
+            ],
         ];
     }
 

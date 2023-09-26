@@ -34,7 +34,7 @@ class StoreOrganizationRequest extends FormRequest
             'login_email' => [
                 'required',
                 'email',
-                'unique:users,email'
+                'unique:users,email',
             ],
             'login_password' => [
                 'required', 'min:8',

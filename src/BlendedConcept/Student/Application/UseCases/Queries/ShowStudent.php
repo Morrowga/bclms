@@ -2,8 +2,8 @@
 
 namespace Src\BlendedConcept\Student\Application\UseCases\Queries;
 
-use Src\Common\Domain\QueryInterface;
 use Src\BlendedConcept\Student\Domain\Repositories\StudentRepositoryInterface;
+use Src\Common\Domain\QueryInterface;
 
 class ShowStudent implements QueryInterface
 {

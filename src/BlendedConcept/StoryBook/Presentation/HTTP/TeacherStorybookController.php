@@ -2,13 +2,12 @@
 
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
-
 use Inertia\Inertia;
+use Src\BlendedConcept\Organization\Application\UseCases\Queries\Student\GetStudentList;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStoryBook;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
-use Src\BlendedConcept\Organization\Application\UseCases\Queries\Student\GetStudentList;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
 
 class TeacherStorybookController
 {
@@ -17,6 +16,7 @@ class TeacherStorybookController
 
         $filters = request()->only(['search', 'name', 'perPage', 'filter']) ?? [];
         $storyBooks = (new GetStoryBook($filters))->handle();
+
         return Inertia::render(config('route.teacher_storybook.index'), compact('storyBooks'));
     }
 
@@ -29,7 +29,6 @@ class TeacherStorybookController
     {
         $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions']);
         $games = (new GetGameList())->handle();
-
 
         $storybooks = (new GetStoryBook($filters = []))->handle();
 

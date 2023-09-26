@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Src\BlendedConcept\Student\Presentation\HTTP\StudentController;
 use Src\BlendedConcept\Student\Presentation\HTTP\PlayListController;
-use Src\BlendedConcept\Student\Presentation\HTTP\TeacherStudentController;
 use Src\BlendedConcept\Student\Presentation\HTTP\ProfilingSurveyController;
+use Src\BlendedConcept\Student\Presentation\HTTP\StudentController;
+use Src\BlendedConcept\Student\Presentation\HTTP\TeacherStudentController;
 
 Route::group(['middleware' => ['auth']], function () {
 

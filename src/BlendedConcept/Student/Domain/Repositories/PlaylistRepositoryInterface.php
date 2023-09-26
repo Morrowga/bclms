@@ -5,7 +5,6 @@ namespace Src\BlendedConcept\Student\Domain\Repositories;
 use Src\BlendedConcept\Student\Application\DTO\PlaylistData;
 use Src\BlendedConcept\Student\Domain\Model\Entities\Playlist;
 
-
 interface PlaylistRepositoryInterface
 {
     public function getPlaylist($filters = []);

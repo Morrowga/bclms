@@ -166,7 +166,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'delete_b2bteacher',
                         'edit_b2bteacher',
                         'create_b2bteacher',
-                        'access_b2bteacher'
+                        'access_b2bteacher',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);

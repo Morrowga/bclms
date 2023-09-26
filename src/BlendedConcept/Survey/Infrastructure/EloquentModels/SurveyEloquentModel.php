@@ -31,12 +31,12 @@ class SurveyEloquentModel extends Model
     {
         $query->when($filters['search'] ?? false, function ($query, $search) {
 
-            $query->where('title', 'like', '%' . $search . '%');
+            $query->where('title', 'like', '%'.$search.'%');
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
             if ($filter == 'completion_status') {
-            } else if ($filter == 'user') {
-            } else if ($filter == 'user_type') {
+            } elseif ($filter == 'user') {
+            } elseif ($filter == 'user_type') {
             } else {
                 $query->orderBy($filter, config('sorting.orderBy'));
             }

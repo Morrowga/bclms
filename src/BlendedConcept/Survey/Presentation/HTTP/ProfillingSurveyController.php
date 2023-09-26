@@ -3,9 +3,9 @@
 namespace Src\BlendedConcept\Survey\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Symfony\Component\HttpFoundation\Response;
-use Src\BlendedConcept\Survey\Domain\Policies\SurveyPolicy;
 use Src\BlendedConcept\Survey\Application\UseCases\Queries\Profiling\GetProfilingSurvey;
+use Src\BlendedConcept\Survey\Domain\Policies\SurveyPolicy;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProfillingSurveyController
 {

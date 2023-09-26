@@ -2,10 +2,10 @@
 
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Symfony\Component\HttpFoundation\Response;
 
 beforeEach(function () {
     // Run migrations
@@ -50,7 +50,6 @@ test('without other role not access games', function () {
     $reponse->assertStatus(403);
 });
 
-
 test('create game with bcstaff roles', function () {
     $this->assertTrue(Auth::check());
 
@@ -69,11 +68,10 @@ test('create game with bcstaff roles', function () {
         'name' => 'Example Device',
         'description' => 'Device Description',
         'disability_types' => [1],
-        'status' => "INACTIVE",
+        'status' => 'INACTIVE',
     ]);
 
     $device->assertStatus(302);
-
 
     $response = $this->post('/games', [
         'name' => 'Example Game',
@@ -89,7 +87,7 @@ test('create game with bcstaff roles', function () {
 
     $response->assertStatus(302);
 
-    $storeData = $this->post("/games", []);
+    $storeData = $this->post('/games', []);
 
     $storeData->assertSessionHasErrors(['name', 'description', 'thumb', 'game', 'disability_type_id', 'devices', 'tags']);
 
@@ -117,7 +115,7 @@ test('update game with bcstaff roles', function () {
         'name' => 'Example Device',
         'description' => 'Device Description',
         'disability_types' => [1],
-        'status' => "INACTIVE",
+        'status' => 'INACTIVE',
     ]);
 
     $device->assertStatus(302);
@@ -153,7 +151,7 @@ test('update game with bcstaff roles', function () {
         'name' => 'Example Device Update',
         'description' => 'Device Description Update',
         'disability_types' => [2],
-        'status' => "INACTIVE",
+        'status' => 'INACTIVE',
     ]);
 
     $update_device->assertStatus(302);
@@ -228,4 +226,3 @@ test('update game with bcstaff roles', function () {
 
 //     $deleteResponse->assertStatus(302);
 // });
-

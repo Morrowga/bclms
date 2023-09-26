@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\Student\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Illuminate\Http\Response;
 use Src\BlendedConcept\Student\Application\Requests\ProfilingSubmitRequest;
 use Src\BlendedConcept\Survey\Application\UseCases\Queries\Profiling\GetProfilingSurvey;
 
@@ -20,7 +19,8 @@ class ProfilingSurveyController
         }
     }
 
-    public function submitProfilingSurvey(ProfilingSubmitRequest $request){
+    public function submitProfilingSurvey(ProfilingSubmitRequest $request)
+    {
 
     }
 }

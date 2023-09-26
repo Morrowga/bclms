@@ -3,20 +3,18 @@
 namespace Src\BlendedConcept\Student\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Symfony\Component\HttpFoundation\Response;
 use Src\BlendedConcept\Student\Application\DTO\PlaylistData;
-use Src\BlendedConcept\Student\Domain\Policies\PlaylistPolicy;
 use Src\BlendedConcept\Student\Application\Mappers\PlaylistMapper;
 use Src\BlendedConcept\Student\Application\Requests\StorePlaylistRequest;
 use Src\BlendedConcept\Student\Application\Requests\UpdatePlaylistRequest;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStoryBook;
+use Src\BlendedConcept\Student\Application\UseCases\Commands\Playlist\DeletePlaylistCommand;
+use Src\BlendedConcept\Student\Application\UseCases\Commands\Playlist\StorePlaylistCommand;
+use Src\BlendedConcept\Student\Application\UseCases\Commands\Playlist\UpdatePlaylistCommand;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\Playlist\GetPlaylist;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\Playlist\ShowPlaylist;
+use Src\BlendedConcept\Student\Domain\Policies\PlaylistPolicy;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\PlaylistEloquentModel;
-use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
-use Src\BlendedConcept\Student\Application\UseCases\Commands\Playlist\StorePlaylistCommand;
-use Src\BlendedConcept\Student\Application\UseCases\Commands\Playlist\DeletePlaylistCommand;
-use Src\BlendedConcept\Student\Application\UseCases\Commands\Playlist\UpdatePlaylistCommand;
+use Symfony\Component\HttpFoundation\Response;
 
 class PlayListController
 {
@@ -29,7 +27,7 @@ class PlayListController
             $playlists = (new GetPlaylist($filters))->handle();
 
             return Inertia::render(config('route.playlist.index'), [
-                "playlists" => $playlists
+                'playlists' => $playlists,
             ]);
         } catch (\Exception $e) {
 
@@ -84,7 +82,7 @@ class PlayListController
         $playlist = (new ShowPlaylist($id))->handle();
 
         return Inertia::render(config('route.playlist.edit'), [
-            "playlist" => $playlist
+            'playlist' => $playlist,
         ]);
     }
 
@@ -122,11 +120,11 @@ class PlayListController
     public function show($id)
     {
         $playlist = (new ShowPlaylist($id))->handle();
+
         return Inertia::render(config('route.playlist.show'), [
-            "playlist" => $playlist
+            'playlist' => $playlist,
         ]);
     }
-
 
     /**
      * Delete an playlist.

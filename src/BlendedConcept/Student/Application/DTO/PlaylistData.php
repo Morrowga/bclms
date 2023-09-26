@@ -3,7 +3,6 @@
 namespace Src\BlendedConcept\Student\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Student\Application\DTO\PlaylistData;
 
 class PlaylistData
 {

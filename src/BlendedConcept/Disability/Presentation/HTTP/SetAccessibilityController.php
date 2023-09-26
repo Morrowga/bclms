@@ -4,10 +4,10 @@ namespace Src\BlendedConcept\Disability\Presentation\HTTP;
 
 use Inertia\Inertia;
 use Src\BlendedConcept\Disability\Application\Requests\SetDeviceRequest;
-use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Disability\Application\UseCases\Commands\Devices\SetDeviceCommand;
 use Src\BlendedConcept\Disability\Application\UseCases\Queries\Devices\GetDevicesWithoutPagination;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
 
 class SetAccessibilityController
 {
@@ -18,7 +18,8 @@ class SetAccessibilityController
         return Inertia::render(config('route.set_accessibility_device.index'), compact('devices', 'id'));
     }
 
-    public function store(SetDeviceRequest $request,StudentEloquentModel $student_id){
+    public function store(SetDeviceRequest $request, StudentEloquentModel $student_id)
+    {
 
         try {
             $request->validated();

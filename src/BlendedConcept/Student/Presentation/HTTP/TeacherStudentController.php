@@ -2,15 +2,15 @@
 
 namespace Src\BlendedConcept\Student\Presentation\HTTP;
 
-use Inertia\Inertia;
 use Illuminate\Http\Response;
-use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
+use Inertia\Inertia;
 use Src\BlendedConcept\Organization\Application\DTO\StudentData;
-use Src\BlendedConcept\Student\Application\UseCases\Queries\ShowStudent;
 use Src\BlendedConcept\Organization\Application\Requests\UpdateStudentRequest;
-use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Organization\Application\UseCases\Commands\Student\UpdateStudentCommand;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
+use Src\BlendedConcept\Student\Application\UseCases\Queries\ShowStudent;
+use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
 
 class TeacherStudentController
 {
@@ -23,6 +23,7 @@ class TeacherStudentController
 
             // Retrieve users with pagination using the provided filters
             $students = (new GetStudentWithPagination($filters))->handle()['paginate_students'];
+
             // return $students;
             return Inertia::render(config('route.teacher_students.index'), compact('students'));
             // return Inertia::render(config('route.students'), compact('students'));
@@ -34,6 +35,7 @@ class TeacherStudentController
     public function show($id)
     {
         $student = (new ShowStudent($id))->handle();
+
         // return $student;
         return Inertia::render(config('route.teacher_students.show'), compact('student'));
     }

@@ -2,10 +2,9 @@
 
 namespace Src\BlendedConcept\Student\Presentation\API;
 
-use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStoryBook;
-use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\Playlist\GetStudentsForPlaylist;
+use Src\Common\Infrastructure\Laravel\Controller;
 
 class PlaylistApiController extends Controller
 {

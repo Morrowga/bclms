@@ -4,7 +4,6 @@ namespace Src\BlendedConcept\Student\Domain\Model\Entities;
 
 use Src\Common\Domain\Entity;
 
-
 class Playlist extends Entity implements \JsonSerializable
 {
     public function __construct(

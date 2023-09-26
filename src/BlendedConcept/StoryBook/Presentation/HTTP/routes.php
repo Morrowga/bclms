@@ -7,11 +7,11 @@ use Src\BlendedConcept\StoryBook\Presentation\HTTP\BookReviewController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\GameController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\PathwayController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\RewardController;
+use Src\BlendedConcept\StoryBook\Presentation\HTTP\StoryBookVersionController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentGamesController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentRewardsController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentStoryBookController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\TeacherStorybookController;
-use Src\BlendedConcept\StoryBook\Presentation\HTTP\StoryBookVersionController;
 
 Route::group(['middleware' => ['auth']], function () {
 
@@ -34,17 +34,16 @@ Route::group(['middleware' => ['auth']], function () {
      * StudentAssinment
      *  First is storybook_id and second parameter is storybook_version_id
      */
-    Route::get('teacher_storybook/{teacher_storybook}/v/{version}',[TeacherStorybookController::class,'assign_student'])->name('teacher_storybook_version.show');
+    Route::get('teacher_storybook/{teacher_storybook}/v/{version}', [TeacherStorybookController::class, 'assign_student'])->name('teacher_storybook_version.show');
 
-
-    Route::resource('teacher_storybook',TeacherStorybookController::class);
+    Route::resource('teacher_storybook', TeacherStorybookController::class);
 
     //teacher storybook version
     Route::resource('storybooksversions', StoryBookVersionController::class);
     // assign storybook version to students
-    Route::post('storybookassignment',[StoryBookVersionController::class,'storybookassignment'])->name('storybookassignment');
+    Route::post('storybookassignment', [StoryBookVersionController::class, 'storybookassignment'])->name('storybookassignment');
 
-    Route::post('bookreview',[StoryBookVersionController::class,'bookreview'])->name('bookreview');
+    Route::post('bookreview', [StoryBookVersionController::class, 'bookreview'])->name('bookreview');
 
     Route::get('/assign_rewards', [AssignRewardController::class, 'index'])->name('assign_rewards.index');
     Route::get('/assign_rewards/create', [AssignRewardController::class, 'create'])->name('assign_rewards.create');

@@ -46,7 +46,6 @@ class SecurityRepository implements SecurityRepositoryInterface
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
 
-
         return $users;
     }
 
@@ -65,13 +64,13 @@ class SecurityRepository implements SecurityRepositoryInterface
     public function getB2bTeachersByOrganization($id)
     {
         $organization = OrganizationEloquentModel::where('org_admin_id', $id)->first();
-        if(!empty($organization)){
+        if (! empty($organization)) {
             $b2bteachers = B2bUserEloquentModel::with('users')
-            ->where('organization_id', $organization->id)
-            ->whereHas('users', function ($query) {
-                $query->where('role_id', 4);
-            })
-            ->orderBy('b2b_user_id', 'desc')->get();
+                ->where('organization_id', $organization->id)
+                ->whereHas('users', function ($query) {
+                    $query->where('role_id', 4);
+                })
+                ->orderBy('b2b_user_id', 'desc')->get();
 
             return UserResource::collection($b2bteachers->pluck('users')->flatten());
         }

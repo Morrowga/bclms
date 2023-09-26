@@ -18,7 +18,7 @@ class StorybookSeeder extends Seeder
             [
                 'name' => 'Toy Story 1',
                 'description' => 'nice book',
-                'thumbnail_img' =>  env('APP_URL') . '/images/image2.png',
+                'thumbnail_img' => env('APP_URL').'/images/image2.png',
                 'num_gold_coins' => 1,
                 'num_silver_coins' => 10,
                 'is_free' => true,
@@ -26,7 +26,7 @@ class StorybookSeeder extends Seeder
             [
                 'name' => 'Toy Story 2',
                 'description' => 'nice book 2',
-                'thumbnail_img' =>  env('APP_URL') . '/images/image2.png',
+                'thumbnail_img' => env('APP_URL').'/images/image2.png',
                 'num_gold_coins' => 1,
                 'num_silver_coins' => 10,
                 'is_free' => true,
@@ -34,7 +34,7 @@ class StorybookSeeder extends Seeder
             [
                 'name' => 'Toy Story 3',
                 'description' => 'nice book 3',
-                'thumbnail_img' =>  env('APP_URL') . '/images/image2.png',
+                'thumbnail_img' => env('APP_URL').'/images/image2.png',
                 'num_gold_coins' => 1,
                 'num_silver_coins' => 10,
                 'is_free' => true,
@@ -42,7 +42,7 @@ class StorybookSeeder extends Seeder
             [
                 'name' => 'Toy Story 4',
                 'description' => 'nice book 4',
-                'thumbnail_img' =>  env('APP_URL') . '/images/image2.png',
+                'thumbnail_img' => env('APP_URL').'/images/image2.png',
                 'num_gold_coins' => 1,
                 'num_silver_coins' => 10,
                 'is_free' => true,

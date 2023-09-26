@@ -10,10 +10,10 @@ class BookReviewController
     public function index()
     {
 
-
         $filters = request()->only(['search', 'name', 'perPage']) ?? [];
 
         $bookreviews = (new GetBookReview($filters))->handle();
-        return Inertia::render(config('route.bookreviews.index'),compact('bookreviews'));
+
+        return Inertia::render(config('route.bookreviews.index'), compact('bookreviews'));
     }
 }
