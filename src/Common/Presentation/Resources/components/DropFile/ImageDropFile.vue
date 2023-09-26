@@ -14,6 +14,10 @@ const props = defineProps({
         type: String,
         default: "",
     },
+    id: {
+        type: Number,
+        default: 1,
+    },
 });
 
 const checkMemeType = (selectedFile) => {
@@ -41,7 +45,7 @@ const handleFileChange = (event) => {
         file.value = selectedFile;
         emit("update:modelValue", file.value);
     } else {
-        alert("Please select a valid JPG or PNG file.");
+        alert(`Please select a valid ${memeName.value} file.`);
     }
 };
 
@@ -55,17 +59,19 @@ const onDropGameFile = (event) => {
     dragging.value = false;
     const files = event.dataTransfer.files;
     const selectedFile = files[0];
-
+    if (selectedFile) {
+        thumbnail.value = URL.createObjectURL(selectedFile);
+    }
     if (checkMemeType(selectedFile)) {
         file.value = selectedFile;
         emit("update:modelValue", file.value);
     } else {
-        alert("Please select a valid JPG or PNG file.");
+        alert(`Please select a valid ${memeName.value} file.`);
     }
 };
 
 const handleFileInputClick = () => {
-    const fileInput = document.getElementById("game-file-input");
+    const fileInput = document.getElementById(`game-file-input${props.id}`);
     fileInput.click();
 };
 
@@ -81,7 +87,8 @@ onMounted(() => {
 </script>
 <template>
     <div
-        class="drop-zone coming-soon mt-4"
+        class="coming-soon mt-4"
+        :class="`drop-zone${id}`"
         @dragover.prevent
         @dragenter.prevent
         @dragleave="dragging = false"
@@ -107,7 +114,7 @@ onMounted(() => {
             </button>
         </div>
         <input
-            id="game-file-input"
+            :id="`game-file-input${id}`"
             type="file"
             style="display: none"
             @change="handleFileChange"

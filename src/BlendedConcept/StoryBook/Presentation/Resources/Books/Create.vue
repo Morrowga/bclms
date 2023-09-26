@@ -259,7 +259,8 @@ const removeFromArray = (index) => {
                                 >
                                 <ImageDropFile
                                     v-model="form.storybook_file"
-                                    memeType="h5p"
+                                    memeType="video"
+                                    :id="1"
                                 />
                             </VCol>
                             <VCol cols="12" md="6" class="py-0">
@@ -270,6 +271,7 @@ const removeFromArray = (index) => {
                                 <ImageDropFile
                                     v-model="form.thumbnail_img"
                                     memeType="image"
+                                    :id="3"
                                 />
                             </VCol>
                             <VCol cols="12" md="12" class="py-0">
