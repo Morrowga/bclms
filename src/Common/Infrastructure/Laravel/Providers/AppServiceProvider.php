@@ -5,15 +5,15 @@ namespace Src\Common\Infrastructure\Laravel\Providers;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
-use Src\Auth\Application\Repositories\Eloquent\AuthRepository;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\System\Application\Repositories\Eloquent\OrganizationRepository;
-use Src\BlendedConcept\System\Domain\Repositories\OrganizationRepositoryInterface;
-use Src\BlendedConcept\User\Application\Repositories\Eloquent\NotificationRepository;
+use Src\Auth\Application\Repositories\Eloquent\AuthRepository;
+use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
 use Src\BlendedConcept\User\Application\Repositories\Eloquent\UserRepository;
 use Src\BlendedConcept\User\Domain\Repositories\NotificationRepositoryInterface;
-use Src\BlendedConcept\User\Domain\Repositories\UserRepositoryInterface;
+use Src\BlendedConcept\System\Domain\Repositories\OrganizationRepositoryInterface;
+use Src\BlendedConcept\User\Application\Repositories\Eloquent\NotificationRepository;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\OrganizationRepository;
+use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganisationEloquentModel;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useBootstrapFour();
         //set config for organization file system
-        $organization = OrganizationEloquentModel::all();
+        $organization = OrganisationEloquentModel::all();
         foreach ($organization as $item) {
             $rootPath = storage_path('app/public/organization/'.$item->name);
             $url = env('APP_URL').'/storage';

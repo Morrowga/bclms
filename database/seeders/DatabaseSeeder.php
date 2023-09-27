@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\OrganisationAdminSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,8 +23,7 @@ class DatabaseSeeder extends Seeder
             PageBuilderSeeder::class,
             SiteSettingSeeder::class,
             B2CTeacherRoleSeeder::class,
-            OrganizationAdminSeeder::class,
-            OrganizationSeeder::class,
+            OrganisationAdminSeeder::class,
             B2BTeacherRoleSeeder::class,
             BCStaffRoleSeeder::class,
             StudentRoleSeeder::class,
