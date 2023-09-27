@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class B2BTeacherRoleSeeder extends Seeder
 {
@@ -18,46 +18,23 @@ class B2BTeacherRoleSeeder extends Seeder
         $users = [
             [
                 'role_id' => 4,
-                'first_name' => 'B2b',
-                'last_name' => 'Teacher',
+                'first_name' => 'B2B Teacher',
+                'last_name' => 'One',
                 'email' => 'b2bteacher@mail.com',
                 'password' => bcrypt('password'),
                 'contact_number' => '1234567890',
                 'status' => 'ACTIVE',
                 'email_verification_send_on' => now(),
                 'profile_pic' => 'images/profile/profilefive.png',
-            ],
-            [
-                'role_id' => 4,
-                'first_name' => 'B2b',
-                'last_name' => 'Teacher Two',
-                'email' => 'b2bteachertwo@mail.com',
-                'password' => bcrypt('password'),
-                'contact_number' => '234235234',
-                'status' => 'ACTIVE',
-                'email_verification_send_on' => now(),
-                'profile_pic' => 'images/profile/profilefive.png',
-            ],
-            [
-                'role_id' => 4,
-                'first_name' => 'B2b',
-                'last_name' => 'Teacher Three',
-                'email' => 'b2bteacherthree@mail.com',
-                'password' => bcrypt('password'),
-                'contact_number' => '23434534',
-                'status' => 'INACTIVE',
-                'email_verification_send_on' => now(),
-                'profile_pic' => 'images/profile/profilefive.png',
-            ],
+            ]
         ];
 
         foreach ($users as $user) {
-            $userCreate = UserEloquentModel::create($user);
-            B2bUserEloquentModel::create([
-                'user_id' => $userCreate->id,
-                'organisation_id' => 1,
-                'allocated_storage_limit' => 0,
-                'has_full_library_access' => false,
+            $userEloquent = UserEloquentModel::create($user);
+            $teacherEloquent = TeacherEloquentModel::create([
+                "user_id" => $userEloquent->id,
+                "allocated_storage_limit" => 100,
+                "organisation_id" => 1,
             ]);
         }
     }

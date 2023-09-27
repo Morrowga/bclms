@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             B2BTeacherRoleSeeder::class,
             BCStaffRoleSeeder::class,
             StudentRoleSeeder::class,
-            SurveySeeder::class,
+            // SurveySeeder::class,
             StorybookSeeder::class,
             // ReviewSeeder::class,
         ]);
