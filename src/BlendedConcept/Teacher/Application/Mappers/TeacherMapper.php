@@ -5,50 +5,34 @@ namespace Src\BlendedConcept\Teacher\Application\Mappers;
 use Illuminate\Http\Request;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Teacher\Domain\Model\Teacher;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class TeacherMapper
 {
     public static function fromRequest(Request $request, $teacher_id = null): Teacher
     {
         return new Teacher(
-            id : $teacher_id,
-            name : $request->name,
-            email : $request->email,
-            organization_id  : $request->organization_id,
-            email_verified_at : $request->email_verified_at,
-            dob : $request->dob,
-            contact_number  : $request->contact_number,
-            storage_limit : $request->storage_limit,
-            password  : $request->password,
-            is_active : $request->is_active,
-            stripe_id : $request->stripe_id,
-            pm_brand : $request->pm_brand,
-            pm_last_four : $request->pm_last_four,
-            trial_end_at : $request->trial_end_at,
+            teacher_id: $teacher_id,
+            user_id: $request->user_id,
+            organisation_id: $request->organisation_id,
+            allocated_storage_limit: $request->allocated_storage_limit,
+            curr_subscription_id: $request->curr_subscription_id
         );
     }
 
     public static function toEloquent(Teacher $teacher): UserEloquentModel
     {
-        $UserEloquent = new UserEloquentModel();
+        $TeacherEloquent = new TeacherEloquentModel();
 
-        if ($teacher->id) {
-            $UserEloquent = UserEloquentModel::query()->findOrFail($teacher->id);
+        if ($teacher->teacher_id) {
+            $TeacherEloquent = TeacherEloquentModel::query()->findOrFail($teacher->teacher_id);
         }
-        $UserEloquent->name = $teacher->name;
-        $UserEloquent->email = $teacher->email;
-        $UserEloquent->organization_id = auth()->user()->organization_id;
-        $UserEloquent->email_verified_at = $teacher->email_verified_at;
-        $UserEloquent->dob = $teacher->dob;
-        $UserEloquent->contact_number = $teacher->contact_number;
-        $UserEloquent->storage_limit = $teacher->storage_limit;
-        $UserEloquent->password = $teacher->password;
-        $UserEloquent->is_active = $teacher->is_active;
-        $UserEloquent->stripe_id = $teacher->stripe_id;
-        $UserEloquent->pm_brand = $teacher->pm_brand;
-        $UserEloquent->pm_last_four = $teacher->pm_last_four;
-        $UserEloquent->trial_end_at = $teacher->trial_end_at;
+        $TeacherEloquent->teacher_id = $teacher->teacher_id;
+        $TeacherEloquent->user_id = $teacher->user_id;
+        $TeacherEloquent->organisation_id = $teacher->organisation_id;
+        $TeacherEloquent->allocated_storage_limit = $teacher->allocated_storage_limit;
 
-        return $UserEloquent;
+
+        return $TeacherEloquent;
     }
 }
