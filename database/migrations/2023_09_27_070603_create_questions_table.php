@@ -22,6 +22,11 @@ return new class extends Migration
                 'RATING'
             ]);
             $table->string('question');
+            $table->enum('status', [
+                'ACTIVE',
+                'INACTIVE',
+                'MODIFIED'
+            ]);
             $table->integer('order');
             $table->boolean('is_compulsory')->default(false);
             $table->timestamps();
