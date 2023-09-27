@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('organisation_id')->nullable()
                 ->references('id')
                 ->on('organisations')->onDelete('cascade');
-            $table->float('allocated_storage_limit');
+            $table->float('allocated_storage_limit')->nullable();
             $table->foreignId('curr_subscription_id')->nullable()
                 ->references('id')
                 ->on('subscriptions')->onDelete('cascade');
