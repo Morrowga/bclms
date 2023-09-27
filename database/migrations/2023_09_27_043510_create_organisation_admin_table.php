@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('support_tickets', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
-            $table->date('date');
-            $table->boolean('has_responded');
-            $table->longText('question');
-            $table->longText('response')->nullable();
+        Schema::create('organisation_admin', function (Blueprint $table) {
+            $table->id('org_admin_id');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('organisation_id')->references('id')->on('organisations')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('support_tickets');
+        Schema::dropIfExists('organisation_admin');
     }
 };

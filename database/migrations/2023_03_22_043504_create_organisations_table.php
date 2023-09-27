@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('organizations', function (Blueprint $table) {
+        Schema::create('organisations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('curr_subscription_id')->nullable()->references('id')->on('subscriptions')->cascadeOnDelete();
             $table->foreignId('org_admin_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organizations');
+        Schema::dropIfExists('organisations');
     }
 };

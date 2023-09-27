@@ -13,14 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('b2c_users', function (Blueprint $table) {
-            $table->bigIncrements('b2c_user_id');
-            $table->foreignId('user_id')->nullable()
-                ->references('id')
-                ->on('users')->onDelete('cascade');
-            $table->foreignId('current_subscription_id')->nullable()
+        Schema::create('b2b_subscriptions', function (Blueprint $table) {
+            $table->foreignId('subscription_id')->nullable()
                 ->references('id')
                 ->on('subscriptions')->onDelete('cascade');
+            $table->foreignId('organisation_id')->nullable()
+                ->references('id')
+                ->on('organisations')->onDelete('cascade');
+            $table->string('receipt_image')->nullable();
+            $table->float('storage_limit');
+            $table->integer('num_teacher_license');
+            $table->integer('num_student_license');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('b2c_users');
+        Schema::dropIfExists('b2b_subscriptions');
     }
 };

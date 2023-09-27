@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('b2b_users', function (Blueprint $table) {
-            $table->id('b2b_user_id');
-            $table->foreignId('user_id')->nullable()
+        Schema::create('b2c_subscriptions', function (Blueprint $table) {
+            $table->foreignId('subscription_id')->nullable()
                 ->references('id')
-                ->on('users')->onDelete('cascade');
-            $table->foreignId('organization_id')->nullable()
+                ->on('subscriptions')->onDelete('cascade');
+            $table->foreignId('teacher_id')->nullable()
+                ->references('teacher_id')
+                ->on('teachers')->onDelete('cascade');
+            $table->foreignId('plan_id')->nullable()
                 ->references('id')
-                ->on('organizations')->onDelete('cascade');
-            $table->decimal('allocated_storage_limit', 10, 1);
-            $table->boolean('has_full_library_access');
+                ->on('plans')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('b2b_users');
+        Schema::dropIfExists('b2c_subscriptions');
     }
 };
