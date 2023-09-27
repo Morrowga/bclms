@@ -134,7 +134,7 @@ const deleteSurvey = (id) => {
                                     >
                                         <!-- 👉 Add User button -->
                                         <Create
-                                            :organizations="organizations"
+                                            :organisations="organisations"
                                             :roles="roles_name"
                                             :flash="flash"
                                         />

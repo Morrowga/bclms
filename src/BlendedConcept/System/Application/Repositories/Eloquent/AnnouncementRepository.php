@@ -3,7 +3,7 @@
 namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
@@ -158,7 +158,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     {
         // $announcementArray = $annountment->toArray();
         // $announemtEloquent = AnnouncementEloquentModel::query()->with(['announcement_to_b2c_user', 'announcement_to_b2b_user', 'announcement_to_bcstaff_user'])->find($annountment->id);
-        // $create_by_user = OrganizationEloquentModel::find($annountment->to);
+        // $create_by_user = OrganisationEloquentModel::find($annountment->to);
         // // $receive_user = UserEloquentModel::find($annountment->by);
         // $announemtEloquent->fill($announcementArray);
         // $announemtEloquent->save();

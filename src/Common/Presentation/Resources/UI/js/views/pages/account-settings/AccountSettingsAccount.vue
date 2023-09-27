@@ -199,14 +199,14 @@ const currencies = [
                 />
               </VCol>
 
-              <!-- 👉 Organization -->
+              <!-- 👉 Organisation -->
               <VCol
                 cols="12"
                 md="6"
               >
                 <VTextField
                   v-model="accountDataLocal.org"
-                  label="Organization"
+                  label="Organisation"
                 />
               </VCol>
 

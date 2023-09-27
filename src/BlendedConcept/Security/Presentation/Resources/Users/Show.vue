@@ -54,9 +54,9 @@ defineProps(["user"]);
                 {{ user.contact_number }}
               </p>
             </VCol>
-            <VCol cols="12" class="vs-hidden" v-if="user.organization_id">
+            <VCol cols="12" class="vs-hidden" v-if="user.organisation_id">
               <Link
-                :href="route('organizations.show', user.organization_id)"
+                :href="route('organisations.show', user.organisation_id)"
                 class="cu-pointer"
               >
                 <VLabel class="tiggie-label">Organisation Name</VLabel>
@@ -85,7 +85,7 @@ defineProps(["user"]);
             <VCol cols="12" class="mb-16"> </VCol>
             <VCol cols="12">
               <VLabel class="tiggie-label">User Role</VLabel>
-              <p class="tiggie-p ml-4">Organization Admin</p>
+              <p class="tiggie-p ml-4">Organisation Admin</p>
             </VCol>
 
             <VCol cols="12">

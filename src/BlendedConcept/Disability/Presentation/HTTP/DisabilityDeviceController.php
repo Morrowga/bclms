@@ -30,7 +30,7 @@ class DisabilityDeviceController
     public function store(StoreDisabilityTypeRequest $request)
     {
         try {
-            // Abort if the user is not authorized to create organizations
+            // Abort if the user is not authorized to create organisations
             // abort_if(authorize('create', DisabilityTypePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             // Validate the request data
@@ -39,7 +39,7 @@ class DisabilityDeviceController
             $saveDisabilityType = (new StoreDisabilityTypeCommand($disabilityTypeRequest));
             $saveDisabilityType->execute();
 
-            return redirect()->route('disability_type.index')->with('successMessage', 'Organizations Created Successfully!');
+            return redirect()->route('disability_type.index')->with('successMessage', 'Organisations Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('disability_type.index')
@@ -72,7 +72,7 @@ class DisabilityDeviceController
             $updateDisabilityTypecommand = (new UpdateDisabilityTypeCommand($updateDisabilityType));
             $updateDisabilityTypecommand->execute();
 
-            return redirect()->route('disability_type.index')->with('successMessage', 'Organizations Created Successfully!');
+            return redirect()->route('disability_type.index')->with('successMessage', 'Organisations Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('disability_type.index')
@@ -89,7 +89,7 @@ class DisabilityDeviceController
             $updateDisabilityTypecommand = (new DeleteDisabilityTypeCommand($disabilityType));
             $updateDisabilityTypecommand->execute();
 
-            return redirect()->route('disability_type.index')->with('successMessage', 'Organizations Created Successfully!');
+            return redirect()->route('disability_type.index')->with('successMessage', 'Organisations Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('disability_type.index')

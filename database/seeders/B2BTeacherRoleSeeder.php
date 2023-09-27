@@ -55,7 +55,7 @@ class B2BTeacherRoleSeeder extends Seeder
             $userCreate = UserEloquentModel::create($user);
             B2bUserEloquentModel::create([
                 'user_id' => $userCreate->id,
-                'organization_id' => 1,
+                'organisation_id' => 1,
                 'allocated_storage_limit' => 0,
                 'has_full_library_access' => false,
             ]);

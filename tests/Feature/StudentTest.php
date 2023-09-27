@@ -29,7 +29,7 @@ test('import student excel with super admin role module', function () {
     );
 
     $response = $this->post('/teacher/import', [
-        'organization_id' => 1,
+        'organisation_id' => 1,
         'file' => $excelFile,
         'type' => 'student',
     ]);

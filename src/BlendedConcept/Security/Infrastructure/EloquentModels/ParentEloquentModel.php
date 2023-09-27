@@ -7,7 +7,7 @@ namespace Src\BlendedConcept\Security\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class ParentEloquentModel extends Authenticatable
@@ -33,7 +33,7 @@ class ParentEloquentModel extends Authenticatable
 
     public function organisation()
     {
-        return $this->belongsTo(OrganizationEloquentModel::class, 'organisation_id', 'id');
+        return $this->belongsTo(OrganisationEloquentModel::class, 'organisation_id', 'id');
     }
 
     public function subscription()

@@ -47,7 +47,7 @@ let columns = [
     },
     {
         label: "Organisation / Parent",
-        field: "organization",
+        field: "organisation",
         sortable: false,
     },
 ];
@@ -81,7 +81,7 @@ watch(serverPerPage, function (value) {
 const exportUser = () => {
     const array = props.students.data;
     let data = array.map(
-        ({ image, media, organizations, user, deleted_at, ...rest }) => rest
+        ({ image, media, organisations, user, deleted_at, ...rest }) => rest
     );
     const fileName = "Export Students";
     const exportType = exportFromJSON.types.csv;
@@ -172,32 +172,32 @@ const exportUser = () => {
                                 </div>
                             </div>
                             <div v-if="props.column.field == 'type'">
-                                <div v-if="props.row.organizations.length > 0">
-                                    <span>Organization</span>
+                                <div v-if="props.row.organisations.length > 0">
+                                    <span>Organisation</span>
                                 </div>
                                 <div v-else>
                                     <span>BC</span>
                                 </div>
                             </div>
-                            <div v-if="props.column.field == 'organization'">
+                            <div v-if="props.column.field == 'organisation'">
                                 <div class="">
                                     <div
                                         v-if="
-                                            props.row.organizations.length > 0
+                                            props.row.organisations.length > 0
                                         "
                                     >
                                         <Link
                                             :href="
-                                                route('organizations.show', {
+                                                route('organisations.show', {
                                                     id: props.row
-                                                        .organizations?.[0]?.id,
+                                                        .organisations?.[0]?.id,
                                                 })
                                             "
                                         >
                                             <span
                                                 class="text-default-color cu-pointer"
                                                 >{{
-                                                    props.row.organizations?.[0]
+                                                    props.row.organisations?.[0]
                                                         ?.name ?? "-"
                                                 }}</span
                                             >
@@ -215,7 +215,7 @@ const exportUser = () => {
                                                 class="user-profile-image"
                                             />
                                             <span>
-                                                {{ props.row.organization }}
+                                                {{ props.row.organisation }}
                                             </span>
                                         </Link>
                                     </div>

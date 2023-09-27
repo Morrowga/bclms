@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
@@ -73,10 +73,10 @@ test('update b2b subscription', function () {
     ];
 
     $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
-    $organizationData = [
+    $organisationData = [
         'curr_subscription_id' => $subscriptionOne->id,
         'org_admin_id' => 1,
-        'name' => 'organization one',
+        'name' => 'organisation one',
         'contact_name' => 'org one',
         'contact_email' => 'orgone@mail.com',
         'contact_number' => '973434533',
@@ -93,11 +93,11 @@ test('update b2b subscription', function () {
         'role_id' => 1,
         'email_verified_at' => Carbon::now(),
     ];
-    $organizationEloquent = OrganizationEloquentModel::create($organizationData);
+    $organisationEloquent = OrganisationEloquentModel::create($organisationData);
     $userCreate = UserEloquentModel::create($userData);
     B2bUserEloquentModel::create([
         'user_id' => $userCreate->id,
-        'organization_id' => $organizationEloquent->id,
+        'organisation_id' => $organisationEloquent->id,
         'allocated_storage_limit' => 0,
         'has_full_library_access' => false,
     ]);

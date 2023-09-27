@@ -3,11 +3,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\Tenant;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\Tenant;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganisationEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
 
 class OrganisationAdminSeeder extends Seeder
 {
@@ -45,7 +45,7 @@ class OrganisationAdminSeeder extends Seeder
         // [
         //     'curr_subscription_id' => $subscriptionTwo->id,
         //     'org_admin_id' => 10,
-        //     'name' => 'organization two',
+        //     'name' => 'organisation two',
         //     'contact_name' => 'org two',
         //     'contact_email' => 'orgtwo@mail.com',
         //     'contact_number' => '973434533',
@@ -65,7 +65,7 @@ class OrganisationAdminSeeder extends Seeder
 
         $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
 
-        $organizationData = [
+        $organisationData = [
             'curr_subscription_id' => $subscriptionOne->id,
             'org_admin_id' => $userCreate->id,
             'name' => 'organisation one',
@@ -77,18 +77,18 @@ class OrganisationAdminSeeder extends Seeder
             'status' => 'ACTIVE',
         ];
 
-        $organizationModel = OrganisationEloquentModel::create($organizationData);
+        $organisationModel = OrganisationEloquentModel::create($organisationData);
 
         $subdomain = Tenant::create([
-            'id' => $organizationModel->sub_domain,
-            'organisation_id' => $organizationModel->id,
+            'id' => $organisationModel->sub_domain,
+            'organisation_id' => $organisationModel->id,
         ]);
 
         $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
 
     $org_admin = OrganisationAdminEloquentModel::create([
             'user_id' => $userCreate->id,
-            'organisation_id' => $organizationModel->id
+            'organisation_id' => $organisationModel->id
         ]);
     }
 }

@@ -26,7 +26,7 @@ class GameRepository implements GameRepositoryInterface
     /**
      * Create a new game with the provided game object.
      *
-     * @param  Game  $game The organization object containing the necessary information.
+     * @param  Game  $game The game object containing the necessary information.
      * @return void
      */
     public function createGame(Game $game)

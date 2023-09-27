@@ -24,12 +24,12 @@ console.log(props);
                 <VList>
                     <VListItem
                         @click="
-                            () => router.get(route('organizations.test.edit'))
+                            () => router.get(route('organisations.test.edit'))
                         "
                     >
                         <VListItemTitle>Edit</VListItemTitle>
                     </VListItem>
-                    <VListItem @click="deleteOrganization(props.row.id)">
+                    <VListItem @click="deleteOrganisation(props.row.id)">
                         <VListItemTitle>Delete</VListItemTitle>
                     </VListItem>
                 </VList>
@@ -54,7 +54,7 @@ console.log(props);
                             <template #prepend>
                                 <VIcon :icon="item.icon" />
                             </template>
-                            <VListItemTitle v-text="item.text" />
+                            <VListItemTitle>{{  item.text }}</VListItemTitle>
                         </VListItem>
                     </VList>
                 </VCol>

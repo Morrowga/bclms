@@ -28,7 +28,7 @@ let form = useForm({
 
 // submit create form
 let handleSubmit = () => {
-  // SuccessDialog({ title: "You've successfully created organization" });
+  // SuccessDialog({ title: "You've successfully created organisation" });
 
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {

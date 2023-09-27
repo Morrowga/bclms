@@ -348,7 +348,7 @@ const optionsWithText = (option) => {
                         </v-col>
                         <v-col cols="12" md="4">
                             <v-checkbox
-                                label="Difficulty with organization and time management"
+                                label="Difficulty with organisation and time management"
                             ></v-checkbox>
                         </v-col>
                     </v-row>

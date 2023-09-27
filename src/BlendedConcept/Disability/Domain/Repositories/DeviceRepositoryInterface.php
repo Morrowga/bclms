@@ -5,7 +5,7 @@ namespace Src\BlendedConcept\Disability\Domain\Repositories;
 use Src\BlendedConcept\Disability\Application\DTO\DeviceData;
 use Src\BlendedConcept\Disability\Domain\Model\Entities\Device;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
 
 interface DeviceRepositoryInterface
 {

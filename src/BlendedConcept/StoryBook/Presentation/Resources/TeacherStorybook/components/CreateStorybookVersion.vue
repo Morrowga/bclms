@@ -26,7 +26,7 @@ const form = useForm({
 const CreateStoryBookVersion = () => {
   form.post(route("storybooksversions.store"), {
     onSuccess: () => {
-      SuccessDialog({ title: "You've successfully created organization" });
+      SuccessDialog({ title: "You've successfully created organisation" });
       dialog.value = false;
     },
     onError: (error) => {

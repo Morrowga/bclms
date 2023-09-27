@@ -139,7 +139,7 @@ password : password
 email : teachertwo@mail.com
 password : password
 
-`Organization Admin Role`
+`Organisation Admin Role`
 
 email : hmm@gmail.com
 password : password

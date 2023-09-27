@@ -40,7 +40,7 @@ class AuthController extends Controller
             if (Auth::check()) {
                 // Redirect the authenticated user to the dashboard page
                 if (tenant('id')) {
-                    return redirect()->route('c.organizationaadmin');
+                    return redirect()->route('c.organisationaadmin');
                 }
 
                 return redirect()->route('dashboard');
@@ -105,7 +105,7 @@ class AuthController extends Controller
 
                 // Redirect the authenticated user to the dashboard page
                 if (tenant('id')) {
-                    return redirect()->route('c.organizationaadmin');
+                    return redirect()->route('c.organisationaadmin');
                 }
 
                 return redirect()->route('dashboard');

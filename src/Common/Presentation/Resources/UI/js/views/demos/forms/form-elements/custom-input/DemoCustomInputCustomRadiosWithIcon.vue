@@ -14,7 +14,7 @@ const radioContent = [
   },
   {
     title: 'Enterprise',
-    desc: 'Solution for big organizations.',
+    desc: 'Solution for big organisations.',
     value: 'enterprise',
     icon: 'mdi-crown-outline',
   },

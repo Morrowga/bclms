@@ -56,10 +56,10 @@ return [
             'url' => env('APP_URL').'/storage/users',
             'visibility' => 'public',
         ],
-        'media_organization' => [
+        'media_organisation' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/organization'),
-            'url' => env('APP_URL').'/storage/organization',
+            'root' => storage_path('app/public/organisation'),
+            'url' => env('APP_URL').'/storage/organisation',
             'visibility' => 'public',
         ],
 

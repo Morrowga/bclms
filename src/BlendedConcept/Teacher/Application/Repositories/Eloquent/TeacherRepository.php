@@ -21,7 +21,7 @@ class TeacherRepository implements TeacherRepositoryInterface
     {
         //set roles
         $users = TeacherResource::collection(UserEloquentModel::filter($filters)
-            ->where('organization_id', auth()->user()->organization_id)
+            ->where('organisation_id', auth()->user()->organisation_id)
             ->with('roles')
             ->whereHas('roles', function ($query) {
                 return $query->where('name', 'Teacher');
@@ -81,8 +81,8 @@ class TeacherRepository implements TeacherRepositoryInterface
         }
 
         return StudentEloquentModel::filter($filters)
-            ->whereHas('organizations', function ($query) {
-                $query->where('id', auth()->user()->organization_id);
+            ->whereHas('organisations', function ($query) {
+                $query->where('id', auth()->user()->organisation_id);
             })
             ->whereHas('classrooms', function ($query) use ($classroom_ids) {
                 $query->whereIn('id', $classroom_ids);

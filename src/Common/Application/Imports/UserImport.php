@@ -49,7 +49,7 @@ class UserImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithHead
 
                 B2bUserEloquentModel::create([
                     'user_id' => $userEloquenet->id,
-                    'organization_id' => $this->request->organization_id,
+                    'organisation_id' => $this->request->organisation_id,
                     'allocated_storage_limit' => 0,
                     'has_full_library_access' => false,
                 ]);

@@ -43,7 +43,7 @@ let rows = [
         name: "User One",
         user_types: [
             {
-                title: "Organization",
+                title: "Organisation",
             },
             {
                 title: "User",
@@ -56,7 +56,7 @@ let rows = [
         name: "User Two",
         user_types: [
             {
-                title: "Organization",
+                title: "Organisation",
             },
             {
                 title: "User",
@@ -69,7 +69,7 @@ let rows = [
         name: "User Three",
         user_types: [
             {
-                title: "Organization",
+                title: "Organisation",
             },
             {
                 title: "User",
@@ -94,7 +94,7 @@ let truncatedText = (text) => {
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
-const deleteOrganization = (id) => {
+const deleteOrganisation = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",
         denyButtonText: "Yes, delete it!",
@@ -194,7 +194,7 @@ const deleteOrganization = (id) => {
                             <VList>
                                 <VListItem
                                     @click="
-                                        deleteOrganization(dataProps.row.id)
+                                        deleteOrganisation(dataProps.row.id)
                                     "
                                 >
                                     <VListItemTitle>Delete</VListItemTitle>

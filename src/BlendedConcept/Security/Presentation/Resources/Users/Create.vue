@@ -10,7 +10,7 @@ import {
     requiredValidator,
     integerValidator,
 } from "@validators";
-let props = defineProps(["roles", "flash", "organizations"]);
+let props = defineProps(["roles", "flash", "organisations"]);
 const isDialogVisible = ref(false);
 const isPasswordVisible = ref(false);
 const refForm = ref();
@@ -19,7 +19,7 @@ let form = useForm({
     name: " ",
     password: "",
     contact_number: "",
-    organization_id: "",
+    organisation_id: "",
     email: "",
     image: "",
     dob: "",
@@ -61,11 +61,11 @@ let handleSubmit = () => {
                                         item-value="id" :error-messages="form?.errors?.role" />
                                 </VCol>
                                 <!--
-                    appear when organization role 4 and 5 is teacher and organiztion admin -->
+                    appear when organisation role 4 and 5 is teacher and organiztion admin -->
                                 <VCol cols="12" v-if="form.role === 4 || form.role === 5">
-                                    <VSelect label="Select Organization" v-model="form.organization_id"
-                                        :items="organizations" item-title="name" item-value="id"
-                                        :rules="[requiredValidator]" :error-messages="form?.errors?.organization_id" />
+                                    <VSelect label="Select Organisation" v-model="form.organisation_id"
+                                        :items="organisations" item-title="name" item-value="id"
+                                        :rules="[requiredValidator]" :error-messages="form?.errors?.organisation_id" />
                                 </VCol>
                                 <VCol cols="12">
                                     <VTextField label="Name" v-model="form.name" class="w-100" :rules="[requiredValidator]"

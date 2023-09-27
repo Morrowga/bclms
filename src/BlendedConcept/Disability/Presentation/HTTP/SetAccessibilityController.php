@@ -7,7 +7,7 @@ use Src\BlendedConcept\Disability\Application\Requests\SetDeviceRequest;
 use Src\BlendedConcept\Disability\Application\UseCases\Commands\Devices\SetDeviceCommand;
 use Src\BlendedConcept\Disability\Application\UseCases\Queries\Devices\GetDevicesWithoutPagination;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
 
 class SetAccessibilityController
 {

@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Security\Presentation\HTTP;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Src\BlendedConcept\Organization\Application\UseCases\Queries\GetOrganizationWithCount;
+use Src\BlendedConcept\Organisation\Application\UseCases\Queries\GetOrganisationWithCount;
 use Src\BlendedConcept\Security\Application\DTO\UserData;
 use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
 use Src\BlendedConcept\Security\Application\Policies\UserPolicy;
@@ -56,14 +56,14 @@ class UserController extends Controller
             // Retrieve role names
             $roles_name = (new GetRoleName())->handle();
 
-            $oragnizations = (new GetOrganizationWithCount())->handle();
+            $oragnizations = (new GetOrganisationWithCount())->handle();
 
             // Render the Inertia view with the obtained data
             return Inertia::render(config('route.users.index'), [
                 'users' => $users,
                 'users_name' => $users_name,
                 'roles_name' => $roles_name,
-                'organizations' => $oragnizations,
+                'organisations' => $oragnizations,
             ]);
         } catch (\Exception $e) {
             dd($e->getMessage());

@@ -18,7 +18,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                                 <Link
                                     :href="
                                         route(
-                                            'organizations-teacher.edit'
+                                            'organisations-teacher.edit'
                                         )
                                     "
                                 >
@@ -57,7 +57,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
             </v-row>
             <v-row justify="center">
                 <v-col cols="2">
-                    <Link :href="route('organizations-teacher.index')">
+                    <Link :href="route('organisations-teacher.index')">
                         <v-btn
                             color="#e9eff0"
                             variant="flat"

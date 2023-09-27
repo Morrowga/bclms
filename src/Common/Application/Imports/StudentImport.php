@@ -62,7 +62,7 @@ class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithH
                     'education_level' => $row['education_level'],
                 ];
                 $studentEloquent = StudentEloquentModel::create($create_student);
-                $studentEloquent->organizations()->sync([$this->request->organization_id]);
+                $studentEloquent->organisations()->sync([$this->request->organisation_id]);
             }
             DB::commit();
         } catch (\Exception $e) {

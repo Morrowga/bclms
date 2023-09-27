@@ -23,10 +23,10 @@ class SubscribtionInvoiceController
 
             //quick create org admin
 
-            // Get organizations with pagination using the provided filters
+            // Get organisations with pagination using the provided filters
             $b2b_subscriptions = (new GetB2bSubscriptions($filters))->handle();
             $b2c_subscriptions = (new GetB2cSubscriptions($filters))->handle();
-            // Render the organization index page with the retrieved organizations
+            // Render the organisation index page with the retrieved organisations
 
             return Inertia::render(config('route.subscriptioninvoice.index'), [
                 'b2b_subscriptions' => $b2b_subscriptions,

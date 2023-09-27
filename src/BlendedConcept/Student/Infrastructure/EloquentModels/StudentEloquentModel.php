@@ -11,7 +11,7 @@ use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquent
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
@@ -82,7 +82,7 @@ class StudentEloquentModel extends Model implements HasMedia
 
     public function organisations()
     {
-        return $this->belongsToMany(OrganizationEloquentModel::class, 'organisation_students', 'student_id', 'organisation_id');
+        return $this->belongsToMany(OrganisationEloquentModel::class, 'organisation_students', 'student_id', 'organisation_id');
     }
 
     public function classrooms()

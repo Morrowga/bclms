@@ -18,7 +18,7 @@ class AnnouncementToB2CEloquentModel extends Model
 
     // public function author_id()
     // {
-    //     return $this->belongsTo(OrganizationEloquentModel::class, 'author_id', 'id');
+    //     return $this->belongsTo(OrganisationEloquentModel::class, 'author_id', 'id');
     // }
 
     // public function target_role_id()

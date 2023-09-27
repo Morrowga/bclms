@@ -23,11 +23,11 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
 
-                if (auth()->user()->organization_idd) {
+                if (auth()->user()->organisation_idd) {
 
-                    $organization = auth()->user()->load('organization');
+                    $organisation = auth()->user()->load('organisation');
 
-                    return redirect('http://'.$organization->organization->name.'.'.request()->getHost().'/c/');
+                    return redirect('http://'.$organisation->organisation->name.'.'.request()->getHost().'/c/');
 
                 }
 

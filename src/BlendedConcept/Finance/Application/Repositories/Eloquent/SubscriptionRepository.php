@@ -14,15 +14,15 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
 {
     public function getB2bSubscriptions($filters)
     {
-        $subscriptions = SubscriptionResource::collection(SubscriptionEloquentModel::filter($filters)->with('organization', 'b2b_subscription')->whereHas('organization')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $subscriptions = SubscriptionResource::collection(SubscriptionEloquentModel::filter($filters)->with('organisation', 'b2b_subscription')->whereHas('organisation')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
 
         return $subscriptions;
     }
 
     public function getB2cSubscriptions($filters)
     {
-        $subscriptions = SubscriptionResource::collection(SubscriptionEloquentModel::filter($filters)->with('organization', 'b2c_subscription')
-            ->whereDoesntHave('organization')
+        $subscriptions = SubscriptionResource::collection(SubscriptionEloquentModel::filter($filters)->with('organisation', 'b2c_subscription')
+            ->whereDoesntHave('organisation')
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
 
@@ -38,10 +38,10 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
             $subscriptionEloquent = SubscriptionEloquentModel::query()->findOrFail($subscriptionData->id);
             $subscriptionEloquent->fill($subscriptionDataArray);
             $subscriptionEloquent->update();
-            $subscriptionEloquent->load('organization');
+            $subscriptionEloquent->load('organisation');
             $b2bSubscriptionEloquent = new B2bSubscriptionEloquentModel;
             $b2bSubscriptionEloquent->subscription_id = $subscriptionEloquent->id;
-            $b2bSubscriptionEloquent->organization_id = $subscriptionEloquent->organization->id;
+            $b2bSubscriptionEloquent->organisation_id = $subscriptionEloquent->organisation->id;
             $b2bSubscriptionEloquent->storage_limit = $subscriptionDataArray['b2b_subscription']['storage_limit'];
             $b2bSubscriptionEloquent->num_student_license = $subscriptionDataArray['b2b_subscription']['num_student_license'];
             $b2bSubscriptionEloquent->num_teacher_license = $subscriptionDataArray['b2b_subscription']['num_teacher_license'];

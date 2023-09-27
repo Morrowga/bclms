@@ -23,7 +23,7 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     // for images
     protected $appends = [
         'image',
-        'organization_id',
+        'organisation_id',
         'image_url',
         'full_name',
     ];
@@ -133,7 +133,7 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
 
     public function b2bUser()
     {
-        return $this->belongsTo(B2bUserEloquentModel::class, 'id', 'user_id')->with('organization');
+        return $this->belongsTo(B2bUserEloquentModel::class, 'id', 'user_id')->with('organisation');
     }
 
     public function b2cUser()
@@ -141,9 +141,9 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
         return $this->belongsTo(B2cUserEloquentModel::class, 'user_id');
     }
 
-    public function getOrganizationIdAttribute()
+    public function getOrganisationIdAttribute()
     {
-        return $this->b2bUser->organization_id ?? null;
+        return $this->b2bUser->organisation_id ?? null;
     }
 
     public function classrooms()

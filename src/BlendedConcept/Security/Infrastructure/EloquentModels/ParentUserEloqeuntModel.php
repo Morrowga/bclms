@@ -5,7 +5,7 @@ namespace Src\BlendedConcept\Security\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class ParentUserEloqeuntModel extends Model
@@ -28,7 +28,7 @@ class ParentUserEloqeuntModel extends Model
 
     public function organisation()
     {
-        return $this->belongsTo(OrganizationEloquentModel::class, 'organisation_id', 'id');
+        return $this->belongsTo(OrganisationEloquentModel::class, 'organisation_id', 'id');
     }
 
     public function subscription()

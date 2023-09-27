@@ -18,16 +18,16 @@ class StudentRepository implements StudentRepositoryInterface
      *
      *  this queries gets students list according to organizaiton_id
      *  with paginated data default is 10
-     *  if organization exits
+     *  if organisation exits
      */
     public function getStudent($filters)
     {
         // dd($filters);
         $paginate_students = StudentResources::collection(
-            StudentEloquentModel::with('user', 'organizations', 'disability_types')
+            StudentEloquentModel::with('user', 'organisations', 'disability_types')
                 ->filter($filters)
                 ->orderBy('student_id', 'desc')
-                // ->where('organization_id', auth()->user()->organization_id)
+                // ->where('organisation_id', auth()->user()->organisation_id)
                 ->paginate($filters['perPage'] ?? 10)
         );
         $default_students = StudentEloquentModel::latest()->take(5)->get();
@@ -112,8 +112,8 @@ class StudentRepository implements StudentRepositoryInterface
         }
 
         return StudentEloquentModel::filter($filters)
-            ->whereHas('organizations', function ($query) {
-                $query->where('id', auth()->user()->organization_id);
+            ->whereHas('organisations', function ($query) {
+                $query->where('id', auth()->user()->organisation_id);
             })
             ->whereHas('classrooms', function ($query) use ($classroom_ids) {
                 $query->whereIn('id', $classroom_ids);

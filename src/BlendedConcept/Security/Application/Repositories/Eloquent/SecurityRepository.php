@@ -5,7 +5,7 @@ namespace Src\BlendedConcept\Security\Application\Repositories\Eloquent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Application\DTO\PermissionData;
 use Src\BlendedConcept\Security\Application\DTO\RoleData;
 use Src\BlendedConcept\Security\Application\DTO\UserData;
@@ -61,12 +61,12 @@ class SecurityRepository implements SecurityRepositoryInterface
         return UserResource::collection($b2bteachers->pluck('users')->flatten());
     }
 
-    public function getB2bTeachersByOrganization($id)
+    public function getB2bTeachersByOrganisation($id)
     {
-        $organization = OrganizationEloquentModel::where('org_admin_id', $id)->first();
-        if (! empty($organization)) {
+        $organisation = OrganisationEloquentModel::where('org_admin_id', $id)->first();
+        if (! empty($organisation)) {
             $b2bteachers = B2bUserEloquentModel::with('users')
-                ->where('organization_id', $organization->id)
+                ->where('organisation_id', $organisation->id)
                 ->whereHas('users', function ($query) {
                     $query->where('role_id', 4);
                 })
@@ -261,9 +261,9 @@ class SecurityRepository implements SecurityRepositoryInterface
     public function getUserForDashBoard()
     {
         $users = UserEloquentModel::with('role')->latest()->take(5)->get();
-        $organizations = OrganizationEloquentModel::latest()->take(5)->get();
+        $organisations = OrganisationEloquentModel::latest()->take(5)->get();
 
-        return [$users, $organizations];
+        return [$users, $organisations];
     }
 
     public function changepassword($request)
@@ -299,7 +299,7 @@ class SecurityRepository implements SecurityRepositoryInterface
 
     public function getUserListCount()
     {
-        $organization_count = OrganizationEloquentModel::count();
+        $organisation_count = OrganisationEloquentModel::count();
 
         $b2csubscriper_count = UserEloquentModel::whereHas('role', function ($query) {
             $query->where('name', config('userrole.bcscubscriber'));
@@ -308,7 +308,7 @@ class SecurityRepository implements SecurityRepositoryInterface
         $user_count = UserEloquentModel::count();
 
         return [
-            'organization_count' => $organization_count,
+            'organisation_count' => $organisation_count,
             'b2csubscriper_count' => $b2csubscriper_count,
             'user_count' => $user_count,
         ];

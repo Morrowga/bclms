@@ -23,7 +23,7 @@ let props = defineProps([
   "flash",
   "auth",
   "users",
-  "organizations",
+  "organisations",
 ]);
 let currentAnnouncement = ref();
 console.log(props.announcements);

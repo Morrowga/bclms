@@ -7,7 +7,7 @@ import StaffDashboard from "./StaffDashBoard/index.vue";
 import SuperAdminDashboard from "./SuperAdminDashBoard/index.vue";
 import StudentDashboard from "./Student/Index.vue";
 import TeacherOrParentDashboard from "./TeacherDashBoard/index.vue";
-import OrganizatinDashBoard from "./OrganizationDashboard/Index.vue";
+import OrganizatinDashBoard from "./OrganisationDashboard/Index.vue";
 import B2BTeacherDashboard from "./B2BTeacher/Index.vue";
 import SystemAlert from "@mainRoot/components/SystemAlert/SystemAlert.vue";
 
@@ -118,7 +118,7 @@ onMounted(() => {
             <TeacherOrParentDashboard :students="students">
             </TeacherOrParentDashboard>
         </div>
-        <div v-else-if="current_user_role == 'Organization Admin'">
+        <div v-else-if="current_user_role == 'Organisation Admin'">
             <OrganizatinDashBoard
                 :classrooms="props.classrooms"
             ></OrganizatinDashBoard>

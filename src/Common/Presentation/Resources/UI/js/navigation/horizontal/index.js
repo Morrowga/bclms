@@ -7,7 +7,7 @@
 const PREFIX = localStorage.getItem("tenant") !="" ? `/${localStorage.getItem("tenant") }` : "";
 
 const DASHBOARD_URL = PREFIX != "" ? "/c" : "/home";
-const DASHBOARD_ROUTE = PREFIX != "" ? "c.organizationaadmin" : "dashboard";
+const DASHBOARD_ROUTE = PREFIX != "" ? "c.organisationaadmin" : "dashboard";
 const HASH_ROUTE = "#"
 
 export default [
@@ -74,11 +74,11 @@ export default [
     },
 
     {
-        title: 'Organizations',
-        url: "/organizations",
+        title: 'Organisations',
+        url: "/organisations",
         icon: { icon: 'mdi-briefcase-variant' },
-        route_name: 'organizations',
-        access_module: "access_organization",
+        route_name: 'organisations',
+        access_module: "access_organisation",
     },
     {
         title: 'Teachers',
@@ -103,9 +103,9 @@ export default [
     },
     {
         title: 'Users',
-        url: `/organizations-teacher`,
+        url: `/organisations-teacher`,
         icon: { icon: ' mdi-google-classroom' },
-        route_name: 'organizations-teacher',
+        route_name: 'organisations-teacher',
         access_module: "access_orgusers",
     },
 
@@ -130,7 +130,7 @@ export default [
             { title: 'Student', url: `${PREFIX}/students`, icon: { icon: 'mdi-account-group-outline' }, route_name: 'students', access_module: "access_student" },
             { title: 'Roles', url: '/roles', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'roles', access_module: "access_role" },
             { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
-            { title: 'Organizations', url: '/organizations', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'organizations', access_module: "access_bcstaffOrganization", },
+            { title: 'Organisations', url: '/organisations', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'organisations', access_module: "access_bcstaffOrganisation", },
             { title: 'Subscriptions', url: '/subscribptioninvoice', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'subscription_invoice', access_module: "access_bcstaffSubscription", },
         ],
     },

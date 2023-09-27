@@ -41,12 +41,12 @@ return [
     'roles-create' => 'BlendedConcept/Security/Presentation/Resources/Roles/Create',
     'roles-edit' => 'BlendedConcept/Security/Presentation/Resources/Roles/Edit',
 
-    'organizations' => [
-        'index' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Index',
-        'create' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Create',
-        'edit' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Edit',
-        'show' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Show',
-        'addSubscription' => 'BlendedConcept/Organization/Presentation/Resources/Organization/AddSubscription',
+    'organisations' => [
+        'index' => 'BlendedConcept/Organisation/Presentation/Resources/Organisation/Index',
+        'create' => 'BlendedConcept/Organisation/Presentation/Resources/Organisation/Create',
+        'edit' => 'BlendedConcept/Organisation/Presentation/Resources/Organisation/Edit',
+        'show' => 'BlendedConcept/Organisation/Presentation/Resources/Organisation/Show',
+        'addSubscription' => 'BlendedConcept/Organisation/Presentation/Resources/Organisation/AddSubscription',
     ],
 
     'plans' => [
@@ -127,17 +127,17 @@ return [
         'create' => 'BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create',
         'edit' => 'BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit',
     ],
-    'organizations-teacher' => [
-        'index' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/Index',
-        'edit' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/EditTeacher',
-        'create' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/CreateTeacher',
-        'show' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/ViewTeacherDetail',
+    'organisations-teacher' => [
+        'index' => 'BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/Index',
+        'edit' => 'BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/EditTeacher',
+        'create' => 'BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/CreateTeacher',
+        'show' => 'BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/ViewTeacherDetail',
     ],
 
-    'organizations-student' => [
-        'edit' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/EditStudent',
-        'create' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/CreateStudent',
-        'show' => 'BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail',
+    'organisations-student' => [
+        'edit' => 'BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/EditStudent',
+        'create' => 'BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/CreateStudent',
+        'show' => 'BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail',
     ],
 
     //teacher profile view

@@ -62,29 +62,29 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Users can view and manage roles and their permissions.',
             ],
             [
-                'name' => 'access_organization',
+                'name' => 'access_organisation',
                 'guard_name' => 'web',
-                'description' => 'Users can access organization-related functionalities.',
+                'description' => 'Users can access organisation-related functionalities.',
             ],
             [
-                'name' => 'create_organization',
+                'name' => 'create_organisation',
                 'guard_name' => 'web',
-                'description' => 'Users can create new organizations for management.',
+                'description' => 'Users can create new organisations for management.',
             ],
             [
-                'name' => 'show_organization',
+                'name' => 'show_organisation',
                 'guard_name' => 'web',
-                'description' => 'Users can view details about different organizations.',
+                'description' => 'Users can view details about different organisations.',
             ],
             [
-                'name' => 'edit_organization',
+                'name' => 'edit_organisation',
                 'guard_name' => 'web',
-                'description' => 'Users can edit existing organization settings.',
+                'description' => 'Users can edit existing organisation settings.',
             ],
             [
-                'name' => 'delete_organization',
+                'name' => 'delete_organisation',
                 'guard_name' => 'web',
-                'description' => 'Users can delete organizations when they are no longer needed.',
+                'description' => 'Users can delete organisations when they are no longer needed.',
             ],
             [
                 'name' => 'access_user',
@@ -365,14 +365,14 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Users can access profilling surveys and their configurations within the application.',
             ],
             [
-                'name' => 'access_bcstaffOrganization',
+                'name' => 'access_bcstaffOrganisation',
                 'guard_name' => 'web',
-                'description' => 'Users can access bcstaff organization subscription and their configurations within the application.',
+                'description' => 'Users can access bcstaff organisation subscription and their configurations within the application.',
             ],
             [
-                'name' => 'create_bcstaffOrganization',
+                'name' => 'create_bcstaffOrganisation',
                 'guard_name' => 'web',
-                'description' => 'Users can create bcstaff organization subscription surveys and their configurations within the application.',
+                'description' => 'Users can create bcstaff organisation subscription surveys and their configurations within the application.',
             ],
             [
                 'name' => 'access_bcstaffSubscription',

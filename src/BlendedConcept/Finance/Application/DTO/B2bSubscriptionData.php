@@ -9,7 +9,7 @@ class B2bSubscriptionData
 {
     public function __construct(
         public readonly ?int $subscription_id,
-        public readonly ?string $organization_id,
+        public readonly ?string $organisation_id,
         public readonly ?string $receipt_image,
         public readonly ?string $storage_limit,
         public readonly ?string $num_teacher_license,
@@ -21,7 +21,7 @@ class B2bSubscriptionData
     {
         return new self(
             subscription_id: $b2bSubscription->subscription_id,
-            organization_id: $b2bSubscription->organization_id,
+            organisation_id: $b2bSubscription->organisation_id,
             receipt_image: $request->end_date,
             storage_limit: $request->payment_date,
             num_teacher_license: $request->payment_status,
@@ -33,7 +33,7 @@ class B2bSubscriptionData
     {
         return new self(
             subscription_id: $b2bSubscription->b2bSubscription_id,
-            organization_id: $b2bSubscription->organization_id,
+            organisation_id: $b2bSubscription->organisation_id,
             receipt_image: $b2bSubscription->receipt_image,
             storage_limit: $b2bSubscription->storage_limit,
             num_teacher_license: $b2bSubscription->num_teacher_license,
@@ -45,7 +45,7 @@ class B2bSubscriptionData
     {
         return [
             'subscription_id' => $this->subscription_id,
-            'organization_id' => $this->organization_id,
+            'organisation_id' => $this->organisation_id,
             'receipt_image' => $this->receipt_image,
             'storage_limit' => $this->storage_limit,
             'num_teacher_license' => $this->num_teacher_license,
