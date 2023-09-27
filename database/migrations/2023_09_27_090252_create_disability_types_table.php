@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('storybooks', function (Blueprint $table) {
+        Schema::create('disability_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->longText('description');
-            $table->string('thumbnail_img')->nullable();
-            $table->integer('num_gold_coins')->default(0);
-            $table->integer('num_silver_coins')->default(0);
-            $table->boolean('is_free');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('storybooks');
+        Schema::dropIfExists('disability_types');
     }
 };
