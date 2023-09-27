@@ -8,27 +8,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
-class B2cUserEloquentModel extends Authenticatable
+class ParentEloquentModel extends Authenticatable
 {
     use HasFactory;
 
-    protected $table = 'b2c_users';
+    protected $table = 'parents';
 
-    protected $primaryKey = 'b2c_user_id';
+    protected $primaryKey = 'parent_id';
 
     protected $fillable = [
-        'b2c_user_id',
+        'parent_id',
         'user_id',
-        'current_subscription_id',
+        'organisation_id',
+        'curr_subscription_id',
+        'type'
     ];
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(UserEloquentModel::class, 'user_id');
-    }
-
-    public function students()
-    {
-        return $this->belongsToMany(StudentEloquentModel::class, 'b2c_students', 'b2c_user_id', 'student_id');
     }
 }

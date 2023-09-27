@@ -15,15 +15,15 @@ class DisabilityTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        $items = [
-            [
-                
-            ]
-        ]
-        DisabilityTypeEloquentModel::create([
-            "name" =>
-            "description"
-        ])
+        // $items = [
+        //     [
+
+        //     ]
+        // ]
+        // DisabilityTypeEloquentModel::create([
+        //     "name" =>
+        //     "description"
+        // ])
 
     }
 }

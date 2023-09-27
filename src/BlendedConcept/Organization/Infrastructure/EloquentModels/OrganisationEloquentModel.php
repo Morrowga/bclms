@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Organization\Infrastructure\EloquentModels;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
 
-class OrganizationEloquentModel extends Model implements HasMedia
+class OrganisationEloquentModel extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, Notifiable;
 
@@ -26,6 +26,7 @@ class OrganizationEloquentModel extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'id',
         'curr_subscription_id',
         'org_admin_id',
         'name',
@@ -49,17 +50,17 @@ class OrganizationEloquentModel extends Model implements HasMedia
 
     public function org_admin()
     {
-        return $this->belongsTo(UserEloquentModel::class, 'org_admin_id', 'id');
+        return $this->belongsTo(OrganisationAdminEloquentModel::class, 'org_admin_id', 'id');
     }
 
-    public function teachers()
-    {
-        return $this->hasMany(B2bUserEloquentModel::class, 'organization_id', 'id');
-    }
+    // public function teachers()
+    // {
+    //     return $this->hasMany(B2bUserEloquentModel::class, 'organisation_id', 'id');
+    // }
 
     public function students()
     {
-        return $this->belongsToMany(StudentEloquentModel::class, 'organization_students', 'organization_id', 'student_id');
+        return $this->belongsToMany(StudentEloquentModel::class, 'organisation_students', 'organization_id', 'student_id');
     }
 
     public function scopeFilter($query, $filters)

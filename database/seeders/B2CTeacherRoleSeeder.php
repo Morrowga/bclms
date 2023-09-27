@@ -78,15 +78,15 @@ class B2CTeacherRoleSeeder extends Seeder
                 'stripe_price' => $planEloquent->price,
             ];
             $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
-            B2cUserEloquentModel::create([
-                'user_id' => $userCreate->id,
-                'current_subscription_id' => $subscriptionOne->id,
-            ]);
-            B2cSubscriptionEloquentModel::create([
-                'subscription_id' => $subscriptionOne->id,
-                'user_id' => $userCreate->id,
-                'plan_id' => $planEloquent->id,
-            ]);
+            // B2cUserEloquentModel::create([
+            //     'user_id' => $userCreate->id,
+            //     'current_subscription_id' => $subscriptionOne->id,
+            // ]);
+            // B2cSubscriptionEloquentModel::create([
+            //     'subscription_id' => $subscriptionOne->id,
+            //     'user_id' => $userCreate->id,
+            //     'plan_id' => $planEloquent->id,
+            // ]);
         }
     }
 }
