@@ -18,6 +18,9 @@ return new class extends Migration
             $table->foreignId('organisation_id')->nullable()
                 ->references('id')
                 ->on('organisations')->onDelete('cascade');
+            $table->string('name');
+            $table->longText('description')->nullable();
+            $table->string('classroom_photo')->nullable();
             $table->timestamps();
         });
     }
