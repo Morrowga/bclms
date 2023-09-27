@@ -48,8 +48,8 @@ class StudentEloquentModel extends Model implements HasMedia
 
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query->whereHas('user', function ($query) use ($search) {
-                $query->where('first_name', 'like', '%'.$search.'%');
-                $query->orWhere('last_name', 'like', '%'.$search.'%');
+                $query->where('first_name', 'like', '%' . $search . '%');
+                $query->orWhere('last_name', 'like', '%' . $search . '%');
             });
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
@@ -67,9 +67,13 @@ class StudentEloquentModel extends Model implements HasMedia
         });
     }
 
-    public function organisations(): BelongsToMany
+    // public function organisations(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(OrganisationEloquentModel::class, 'organisation_students', 'student_id', 'organisation_id');
+    // }
+    public function organisations()
     {
-        return $this->belongsToMany(OrganisationEloquentModel::class, 'organisation_students', 'student_id', 'organisation_id');
+        return $this->belongsTo(OrganisationEloquentModel::class, 'organisation_id', 'id');
     }
 
     public function learningneeds(): BelongsToMany
@@ -79,7 +83,7 @@ class StudentEloquentModel extends Model implements HasMedia
 
     public function disability_types(): BelongsToMany
     {
-        return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'student_disability_types', 'student_id', 'disability_type_id');
+        return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'student_disability_type', 'student_id', 'disability_type_id');
     }
 
     public function user()

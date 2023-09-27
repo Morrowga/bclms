@@ -23,9 +23,9 @@ class TeacherRepository implements TeacherRepositoryInterface
         //set roles
         $users = TeacherResource::collection(UserEloquentModel::filter($filters)
             ->with(['role_user', 'b2bUser'])
-            ->whereHas('b2bUser', function ($query) {
-                return $query->where('organisation_id', auth()->user()->b2bUser->organisation_id);
-            })
+            // ->whereHas('b2bUser', function ($query) {
+            //     return $query->where('organisation_id', auth()->user()->b2bUser->organisation_id);
+            // })
             ->whereHas('role_user', function ($query) {
                 return $query->where('name', 'Teacher');
             })

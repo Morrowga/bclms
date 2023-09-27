@@ -20,7 +20,7 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
     contentLayoutNav: AppContentLayoutNav.Horizontal,
     overlayNavFromBreakpoint: breakpointsVuetify.md + 16,
     enableI18n: false,
-    theme: themsCustomize?.themes ?? 'light',
+    theme:  'light',
     isRtl: false,
     skin:themsCustomize?.skins ?? 'default',
     routeTransition: RouteTransitions.Fade,

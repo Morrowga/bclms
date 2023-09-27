@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('learning_needs_id')
                 ->references('id')
                 ->on('learning_needs')->onDelete('cascade');
+            $table->string('name');
             $table->timestamps();
         });
     }

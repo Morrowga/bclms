@@ -12,7 +12,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class OrganisationEloquentModel extends Model implements HasMedia
 {
@@ -50,17 +51,17 @@ class OrganisationEloquentModel extends Model implements HasMedia
 
     public function org_admin()
     {
-        return $this->belongsTo(OrganisationAdminEloquentModel::class, 'org_admin_id', 'id');
+        return $this->belongsTo(OrganisationAdminEloquentModel::class, 'id', 'org_admin_id');
     }
 
-    // public function teachers()
-    // {
-    //     return $this->hasMany(B2bUserEloquentModel::class, 'organisation_id', 'id');
-    // }
+    public function teachers()
+    {
+        return $this->hasMany(TeacherEloquentModel::class, 'organisation_id', 'id');
+    }
 
     public function students()
     {
-        return $this->belongsToMany(StudentEloquentModel::class, 'organisation_students', 'organisation_id', 'student_id');
+        return $this->hasOne(StudentEloquentModel::class, 'student_id');
     }
 
     public function scopeFilter($query, $filters)
