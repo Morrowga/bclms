@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('num_gold_coins');
             $table->integer('num_silver_coins');
             $table->boolean('need_complete_in_order')->default(false);
-            $table->string('description');
             $table->timestamps();
         });
     }
