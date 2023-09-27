@@ -13,7 +13,7 @@ use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 class TeacherEloquentModel extends Authenticatable
 {
     protected $table = 'teachers';
-
+    protected $primaryKey = 'teacher_id';
     protected $fillable = [
         'teacher_id',
         'user_id',
