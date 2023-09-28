@@ -60,16 +60,16 @@ class AnnouncementController extends Controller
     public function create()
     {
 
-        // $teachers = (new GetB2BTeachers())->handle();
-        // $b2cUsers = (new GetB2CUsers())->handle();
-        // $bcStaff = (new GetBcStaff())->handle();
+        $teachers = (new GetB2BTeachers())->handle();
+        $b2cUsers = (new GetB2CUsers())->handle();
+        $bcStaff = (new GetBcStaff())->handle();
         $organisations = (new GetOrganisations($filers = []))->handle();
 
         return Inertia::render(config('route.announment.create'), [
             'organisations' => $organisations['default_organisations'],
-            'teachers' => [],
-            'b2cUsers' => [],
-            'bcStaff' => [],
+            'teachers' => $teachers,
+            'b2cUsers' => $b2cUsers,
+            'bcStaff' => $bcStaff,
         ]);
     }
 
@@ -81,7 +81,6 @@ class AnnouncementController extends Controller
      */
     public function store(StoreAnnouncementRequest $request)
     {
-
         // abort_if(authorize('create', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
