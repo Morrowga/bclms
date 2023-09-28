@@ -7,6 +7,7 @@ import SurveyAdd from "./components/SurveyAdd.vue";
 import EditSurveyAdd from "./components/EditSurveyAdd.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+import axios from "axios";
 
 import {
     emailValidator,
@@ -64,7 +65,8 @@ const handleEditSurveyFormSubmit = (data) => {
         survey_id: data.survey_id,
         question_type: data.question_type,
         question: data.question,
-        options: JSON.stringify(newOptions),
+        order: data.order,
+        options: data.question_type == 'SHORT_ANSWER' ? '' : JSON.stringify(newOptions),
         type: "profiling",
     });
 
@@ -91,6 +93,7 @@ const openEditSurveyForm = (id) => {
                 survey_id: addSurveyForm.value[i].survey_id,
                 question_type: addSurveyForm.value[i].question_type,
                 question: addSurveyForm.value[i].question,
+                order: addSurveyForm.value[i].order,
                 options: remodifyOptionsArray,
             };
 
@@ -103,7 +106,7 @@ const openEditSurveyForm = (id) => {
 const handleModalSubmit = (data) => {
     addNewQuestionForm.question_type = data.question_type;
     addNewQuestionForm.question = data.question;
-    addNewQuestionForm.options = JSON.stringify(data.options);
+    addNewQuestionForm.options = data.question_type == 'SHORT_ANSWER' ? '' : JSON.stringify(data.options);
     addNewQuestionForm.post(route("questions.store"), {
         onSuccess: () => {
             reload("profilling_survey.index");
@@ -113,10 +116,19 @@ const handleModalSubmit = (data) => {
             });
         },
         onError: (error) => {
-            form.setError("question_type", error?.question_type);
-            form.setError("question", error?.question);
-            form.setError("options", error?.options);
+            addNewQuestionForm.setError("question_type", error?.question_type);
+            addNewQuestionForm.setError("question", error?.question);
+            addNewQuestionForm.setError("options", error?.options);
         },
+    });
+};
+
+const handleDrag = (event) => {
+    const DragForm = useForm({
+        "questions": JSON.stringify(addSurveyForm.value)
+    })
+    axios.post(route("profilling_survey.order-saving", props.survey.data.id), DragForm).then((res) => {
+        console.log('drag saved');
     });
 };
 
@@ -172,85 +184,94 @@ const optionsWithText = (option) => {
                         <VBtn @click="isSurveryAdd = true">Add New</VBtn>
                     </div>
                 </v-col>
-                <Vcol cols="12" v-for="(item, i) in addSurveyForm" :key="i">
-                    <VCard style="width: 81vw" class="mt-4 draggable-item">
-                        <VCardTitle class="tiggie-subtitle">
-                            <div class="d-flex justify-space-between">
-                                <div>
-                                    Question {{ i + 1 }} .
-                                    {{ item.question_type }}
-                                </div>
-                                <div>
-                                    <v-menu>
-                                        <template v-slot:activator="{ props }">
-                                            <div
-                                                class="cursor-pointer"
-                                                v-bind="props"
-                                            >
-                                                ...
+                <div v-if="addSurveyForm.length > 0">
+                    <draggable v-model="addSurveyForm" @change="handleDrag" :options="{ handle: '.drag-handle' }">
+                        <template v-slot:item="{ element, index }">
+                            <Vcol cols="12" :key="index">
+                                <VCard style="width: 81vw" class="mt-4 draggable-item">
+                                    <VCardTitle class="tiggie-subtitle">
+                                        <div class="d-flex justify-space-between">
+                                            <div>
+                                                Question {{ index + 1 }} .
+                                                {{ element.question_type }}
                                             </div>
-                                        </template>
-                                        <v-list>
-                                            <v-list-item>
-                                                <v-list-item-title
-                                                    class="px-5 cursor-pointer"
-                                                    @click="
-                                                        openEditSurveyForm(
-                                                            item.id
-                                                        )
-                                                    "
-                                                    >Edit</v-list-item-title
-                                                >
-                                                <v-spacer></v-spacer>
-                                                <v-list-item-title
-                                                    class="px-5 mt-2 cursor-pointer"
-                                                    @click="
-                                                        deleteSurveyForm(
-                                                            item.id
-                                                        )
-                                                    "
-                                                    >Delete</v-list-item-title
-                                                >
-                                            </v-list-item>
-                                        </v-list>
-                                    </v-menu>
-                                </div>
-                            </div>
-                        </VCardTitle>
-                        <VCardSubTitle class="pl-4 tiggie-p">
-                            {{ item.question }}
-                        </VCardSubTitle>
-                        <VDivider />
-                        <VCardText>
-                            <VRow no-gutters justify="start">
-                                <VCol cols="1">
-                                    <h4 class="tiggie-subtitle">Options</h4>
-                                </VCol>
-                                <VCol
-                                    cols="4"
-                                    style="text-align: left"
-                                    class="mb-10"
-                                >
-                                    <VList>
-                                        <VListItem
-                                            v-for="(option, i) in item.options"
-                                            :key="i"
-                                        >
-                                            <template #prepend>
-                                                <VIcon
-                                                    :icon="'mdi-circle-small'"
-                                                />
-                                            </template>
-                                            <VListItemTitle class="tiggie-p">
-                                                {{ optionsWithText(option) }}
-                                            </VListItemTitle>
-                                        </VListItem>
-                                    </VList>
-                                </VCol>
-                            </VRow>
-                        </VCardText>
-                    </VCard>
-                </Vcol>
+                                            <div>
+                                                <v-menu>
+                                                    <template v-slot:activator="{ props }">
+                                                        <div
+                                                            class="cursor-pointer"
+                                                            v-bind="props"
+                                                        >
+                                                            ...
+                                                        </div>
+                                                    </template>
+                                                    <v-list>
+                                                        <v-list-item>
+                                                            <v-list-item-title
+                                                                class="px-5 cursor-pointer"
+                                                                @click="
+                                                                    openEditSurveyForm(
+                                                                        element.id
+                                                                    )
+                                                                "
+                                                                >Edit</v-list-item-title
+                                                            >
+                                                            <v-spacer></v-spacer>
+                                                            <v-list-item-title
+                                                                class="px-5 mt-2 cursor-pointer"
+                                                                @click="
+                                                                    deleteSurveyForm(
+                                                                        element.id
+                                                                    )
+                                                                "
+                                                                >Delete</v-list-item-title
+                                                            >
+                                                        </v-list-item>
+                                                    </v-list>
+                                                </v-menu>
+                                            </div>
+                                        </div>
+                                    </VCardTitle>
+                                    <VCardSubTitle class="pl-4 tiggie-p" v-if="element.question_type != 'SHORT_ANSWER'">
+                                        {{element.question}}
+                                    </VCardSubTitle>
+                                    <VCardSubTitle class="pl-4 tiggie-p shortanswer" v-else>
+                                        {{element.question}}
+                                    </VCardSubTitle>
+                                    <VDivider v-if="element.question_type != 'SHORT_ANSWER'"/>
+                                    <VCardText v-if="element.question_type != 'SHORT_ANSWER'">
+                                        <VRow no-gutters justify="start">
+                                            <VCol cols="1">
+                                                <h4 class="tiggie-subtitle">Options</h4>
+                                            </VCol>
+                                            <VCol
+                                                cols="4"
+                                                style="text-align: left"
+                                                class="mb-10"
+                                            >
+                                                <VList>
+                                                    <VListItem
+                                                        v-for="(option, i) in element.options"
+                                                        :key="i"
+                                                    >
+                                                        <template #prepend>
+                                                            <VIcon
+                                                                :icon="'mdi-circle-small'"
+                                                            />
+                                                        </template>
+                                                        <VListItemTitle class="tiggie-p">
+                                                            {{ optionsWithText(option) }}
+                                                        </VListItemTitle>
+                                                    </VListItem>
+                                                </VList>
+                                            </VCol>
+                                        </VRow>
+                                    </VCardText>
+                                </VCard>
+                            </Vcol>
+                        </template>
+                    </draggable>
+                </div>
                 <!-- <br />
                 <v-col cols="12" md="12">
                     <span class="text-h5 font-weight-bold t-black"

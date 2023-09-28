@@ -3,9 +3,12 @@
 namespace Src\BlendedConcept\Survey\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Src\BlendedConcept\Survey\Application\UseCases\Queries\Profiling\GetProfilingSurvey;
-use Src\BlendedConcept\Survey\Domain\Policies\SurveyPolicy;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Src\BlendedConcept\Survey\Domain\Policies\SurveyPolicy;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
+use Src\BlendedConcept\Survey\Application\UseCases\Queries\Profiling\GetProfilingSurvey;
+use Src\BlendedConcept\Survey\Application\UseCases\Commands\Survey\Profiling\StoreOrderCommand;
 
 class ProfillingSurveyController
 {
@@ -22,6 +25,22 @@ class ProfillingSurveyController
             ]);
         } catch (\Exception $e) {
             return redirect()->route('profilling_survey.index')->with('sytemErrorMessage', $e->getMessage());
+        }
+    }
+
+    public function saveOrder(Request $request, SurveyEloquentModel $profilingSurvey)
+    {
+        try {
+            // Creates a new StoreSurveyCommand object and executes it.
+            $storeStoreCommand = new StoreOrderCommand($request, $profilingSurvey);
+            $storeStoreCommand->execute();
+
+            return response()->json('success');
+        } catch (\Exception $e) {
+            // Handle the exception here
+            dd($e->getMessage());
+
+            return redirect()->route('profilling_survey.index')->with('systemErrorMessage', $e->getMessage());
         }
     }
 }

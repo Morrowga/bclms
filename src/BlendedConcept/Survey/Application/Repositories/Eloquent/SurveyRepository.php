@@ -2,18 +2,19 @@
 
 namespace Src\BlendedConcept\Survey\Application\Repositories\Eloquent;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Src\BlendedConcept\Survey\Application\DTO\QuestionData;
 use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
-use Src\BlendedConcept\Survey\Application\Mappers\QuestionMapper;
-use Src\BlendedConcept\Survey\Application\Mappers\QuestionOptionMapper;
-use Src\BlendedConcept\Survey\Application\Mappers\SurveyMapper;
-use Src\BlendedConcept\Survey\Domain\Repositories\SurveyRepositoryInterface;
+use Src\BlendedConcept\Survey\Application\DTO\QuestionData;
 use Src\BlendedConcept\Survey\Domain\Resources\SurveyResource;
+use Src\BlendedConcept\Survey\Application\Mappers\SurveyMapper;
+use Src\BlendedConcept\Survey\Application\Mappers\QuestionMapper;
 use Src\BlendedConcept\Survey\Domain\Resources\SurveyResultResource;
+use Src\BlendedConcept\Survey\Application\Mappers\QuestionOptionMapper;
+use Src\BlendedConcept\Survey\Domain\Repositories\SurveyRepositoryInterface;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\QuestionEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\ResponseEloquentModel;
-use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 
 class SurveyRepository implements SurveyRepositoryInterface
 {
@@ -198,9 +199,23 @@ class SurveyRepository implements SurveyRepositoryInterface
 
     public function getProfilingSurvey()
     {
-        $profilingSurvey = new SurveyResource(SurveyEloquentModel::with('questions.options')->where('type', 'PROFILING')->first());
+        $profilingSurvey = new SurveyResource(SurveyEloquentModel::with(['questions' => function ($query) {
+            $query->orderBy('order', 'asc'); // Replace 'your_question_column' with the actual column name in the questions table
+        }, 'questions.options'])->where('type', 'PROFILING')->first());
 
         return $profilingSurvey;
+    }
+
+    public function storeOrder(Request $request, SurveyEloquentModel $survey)
+    {
+        $questions = json_decode($request->questions, true);
+
+        foreach($questions as $key => $question){
+            $questionEloquent = QuestionEloquentModel::find($question['id']);
+            $questionEloquent->order = $key;
+            $questionEloquent->update();
+        }
+
     }
 
     public function getSurveyResults($filters)

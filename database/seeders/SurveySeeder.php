@@ -35,6 +35,7 @@ class SurveySeeder extends Seeder
             'appear_on' => 'LOG_IN',
             'start_date' => Carbon::now(),
             'end_date' => Carbon::now(),
+            'date_created' => Carbon::now(),
             'required' => true,
             'repeat' => true,
         ];

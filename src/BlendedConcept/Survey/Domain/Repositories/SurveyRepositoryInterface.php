@@ -2,10 +2,12 @@
 
 namespace Src\BlendedConcept\Survey\Domain\Repositories;
 
-use Src\BlendedConcept\Survey\Application\DTO\QuestionData;
-use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
-use Src\BlendedConcept\Survey\Domain\Model\Entities\Question;
+use Illuminate\Http\Request;
 use Src\BlendedConcept\Survey\Domain\Model\Survey;
+use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
+use Src\BlendedConcept\Survey\Application\DTO\QuestionData;
+use Src\BlendedConcept\Survey\Domain\Model\Entities\Question;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 
 interface SurveyRepositoryInterface
 {
@@ -26,6 +28,8 @@ interface SurveyRepositoryInterface
     public function updateQuestion(QuestionData $question);
 
     public function getProfilingSurvey();
+
+    public function storeOrder(Request $request, SurveyEloquentModel $survey);
 
     public function getSurveyResults($filters);
 }
