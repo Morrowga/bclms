@@ -19,7 +19,7 @@ class StoreSurveyRequest extends FormRequest
             'description' => ['required', 'string'],
             'type' => [
                 'required',
-                Rule::in(['USERREXP', 'PROFILING']),
+                Rule::in(['USEREXP', 'PROFILING']),
             ],
             'user_type' => ['required', 'string'],
             'appear_on' => ['required', 'string'],

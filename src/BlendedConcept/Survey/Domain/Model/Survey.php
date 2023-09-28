@@ -18,7 +18,6 @@ class Survey extends AggregateRoot
         public readonly bool $required,
         public readonly bool $repeat,
         public readonly string $questions,
-
     ) {
     }
 

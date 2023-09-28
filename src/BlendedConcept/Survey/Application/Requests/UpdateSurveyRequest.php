@@ -15,11 +15,11 @@ class UpdateSurveyRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['string', 'required'],
+            'title' => ['required', 'string'],
             'description' => ['required', 'string'],
             'type' => [
                 'required',
-                Rule::in(['USERREXP', 'PROFILING']),
+                Rule::in(['USEREXP', 'PROFILING']),
             ],
             'user_type' => ['required', 'string'],
             'appear_on' => ['required', 'string'],
@@ -27,6 +27,7 @@ class UpdateSurveyRequest extends FormRequest
             'end_date' => ['required'],
             'required' => ['required', 'boolean'],
             'repeat' => ['required', 'boolean'],
+            'questions' => ['required'],
         ];
     }
 

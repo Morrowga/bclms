@@ -9,6 +9,7 @@ import EditSurveySetting from "../components/EditSurveySetting.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import SurveyListQuestionComponent from "../components/SurveyListQuestionComponent.vue";
+import draggable from 'vuedraggable';
 
 import {
     emailValidator,
@@ -24,12 +25,13 @@ let addNewQuestionForm = useForm({
     "survey_id" : props.survey.data.id,
     "question_type" : null,
     "question" : null,
-    "options" : null,
+    "options" : null
 })
+
 let form = useForm({
-    title: 'Untitled Survey',
+    title: props.survey.data.title,
     description: null,
-    type: 'USERREXP',
+    type: 'USEREXP',
     user_type: null,
     appear_on: null,
     start_date: null,
@@ -73,16 +75,20 @@ function deleteSurveyForm(id) {
 const handleEditSurveyFormSubmit = (data) => {
     console.log(data);
     let newOptions = [];
-    data.options.forEach((item) => {
-        newOptions.push(item);
-    });
+    if(data.question_type == 'SHORT_ANSWER'){
+        data.options.forEach((item) => {
+            newOptions.push(item);
+        });
+    }
+
 
     let updateData = useForm({
         "id": data.id,
         "survey_id": data.survey_id,
         "question_type": data.question_type,
         "question" : data.question,
-        "options": JSON.stringify(newOptions)
+        "order" : data.order,
+        "options": data.question_type == 'SHORT_ANSWER' ? '' : JSON.stringify(newOptions)
     });
 
     updateData.put(route("questions.update", data.id), {
@@ -112,6 +118,7 @@ const openEditSurveyForm = (id) => {
                 "survey_id": addSurveyForm.value[i].survey_id,
                 "question_type": addSurveyForm.value[i].question_type,
                 "question": addSurveyForm.value[i].question,
+                "order": addSurveyForm.value[i].order,
                 "options": remodifyOptionsArray
             }
 
@@ -147,9 +154,10 @@ const handleSettingModalSubmit = (data) => {
     form.required = data.required
     form.description = props.survey.data.description
     form.repeat = data.repeat
+    form.questions = addSurveyForm.value.length > 0 ? JSON.stringify(addSurveyForm.value) : null;
     form.post(route("userexperiencesurvey.update", props.survey.data.id), {
         onSuccess: () => {
-            reload('userexperiencesurvey.update', props.survey.data.id);
+            reload('userexperiencesurvey.edit', props.survey.data.id);
             SuccessDialog({ title: "You've successfully updated user experience survey." });
         },
         onError: (error) => {
@@ -234,59 +242,68 @@ const optionsWithText = (option) => {
                         </VCol>
                     </VRow>
                 </VCol>
-                <Vcol cols="12" v-for="(item, i) in addSurveyForm" :key="i">
-                    <VCard style="width:81vw" class="mt-4 draggable-item"
-                    >
-                        <VCardTitle class="tiggie-subtitle">
-                            <div class="d-flex justify-space-between">
-                                <div>
-                                    Question {{ i + 1 }} . {{ item.question_type }}
-                                </div>
-                                <div>
-                                    <v-menu>
-                                        <template v-slot:activator="{ props }">
-                                            <div class="cursor-pointer"
-                                            v-bind="props"
-                                            >
-                                            ...
+                <div v-if="addSurveyForm.length > 0">
+                    <draggable v-model="addSurveyForm" :options="{ handle: '.drag-handle' }">
+                        <template v-slot:item="{ element, index }">
+                            <Vcol cols="12" :key="index">
+                                <VCard style="width:81vw" class="mt-4 draggable-item"
+                                >
+                                    <VCardTitle class="tiggie-subtitle">
+                                        <div class="d-flex justify-space-between">
+                                            <div>
+                                                Question {{ index + 1 }} . {{ element.question_type }}
                                             </div>
-                                        </template>
-                                        <v-list>
-                                            <v-list-item>
-                                                <v-list-item-title class="px-5 cursor-pointer" @click="openEditSurveyForm(item.id)">Edit</v-list-item-title>
-                                                <v-spacer></v-spacer>
-                                                <v-list-item-title class="px-5 mt-2 cursor-pointer" @click="deleteSurveyForm(item.id)">Delete</v-list-item-title>
-                                            </v-list-item>
-                                        </v-list>
-                                    </v-menu>
-                                </div>
-                            </div>
-                        </VCardTitle>
-                        <VCardSubTitle class="pl-4 tiggie-p">
-                            {{item.question}}
-                        </VCardSubTitle>
-                        <VDivider />
-                        <VCardText>
-                            <VRow no-gutters justify="start">
-                                <VCol cols="1">
-                                    <h4 class="tiggie-subtitle">Options</h4>
-                                </VCol>
-                                <VCol cols="4" style="text-align: left;" class="mb-10">
-                                    <VList>
-                                        <VListItem v-for="(option, i) in item.options" :key="i">
-                                            <template #prepend>
-                                                <VIcon :icon="'mdi-circle-small'" />
-                                            </template>
-                                            <VListItemTitle class="tiggie-p">
-                                                {{ optionsWithText(option) }}
-                                            </VListItemTitle>
-                                        </VListItem>
-                                    </VList>
-                                </VCol>
-                            </VRow>
-                        </VCardText>
-                    </VCard>
-                </Vcol>
+                                            <div>
+                                                <v-menu>
+                                                    <template v-slot:activator="{ props }">
+                                                        <div class="cursor-pointer"
+                                                        v-bind="props"
+                                                        >
+                                                        ...
+                                                        </div>
+                                                    </template>
+                                                    <v-list>
+                                                        <v-list-item>
+                                                            <v-list-item-title class="px-5 cursor-pointer" @click="openEditSurveyForm(element.id)">Edit</v-list-item-title>
+                                                            <v-spacer></v-spacer>
+                                                            <v-list-item-title class="px-5 mt-2 cursor-pointer" @click="deleteSurveyForm(element.id)">Delete</v-list-item-title>
+                                                        </v-list-item>
+                                                    </v-list>
+                                                </v-menu>
+                                            </div>
+                                        </div>
+                                    </VCardTitle>
+                                    <VCardSubTitle class="pl-4 tiggie-p" v-if="element.question_type != 'SHORT_ANSWER'">
+                                        {{element.question}}
+                                    </VCardSubTitle>
+                                    <VCardSubTitle class="pl-4 tiggie-p shortanswer" v-else>
+                                        {{element.question}}
+                                    </VCardSubTitle>
+                                    <VDivider v-if="element.question_type != 'SHORT_ANSWER'"/>
+                                    <VCardText v-if="element.question_type != 'SHORT_ANSWER'">
+                                        <VRow no-gutters justify="start">
+                                            <VCol cols="1">
+                                                <h4 class="tiggie-subtitle">Options</h4>
+                                            </VCol>
+                                            <VCol cols="4" style="text-align: left;" class="mb-10">
+                                                <VList>
+                                                    <VListItem v-for="(option, i) in element.options" :key="i">
+                                                        <template #prepend>
+                                                            <VIcon :icon="'mdi-circle-small'" />
+                                                        </template>
+                                                        <VListItemTitle class="tiggie-p">
+                                                            {{ optionsWithText(option) }}
+                                                        </VListItemTitle>
+                                                    </VListItem>
+                                                </VList>
+                                            </VCol>
+                                        </VRow>
+                                    </VCardText>
+                                </VCard>
+                            </Vcol>
+                        </template>
+                    </draggable>
+                </div>
             </VRow>
             <VRow justify="center">
                 <VCol cols="4" class="text-center">
@@ -317,5 +334,9 @@ const optionsWithText = (option) => {
 .draggable-item.is-dragging {
   cursor: grabbing;
   transform: scale(1.1);
+}
+
+.shortanswer{
+    line-height: 3 !important;
 }
 </style>

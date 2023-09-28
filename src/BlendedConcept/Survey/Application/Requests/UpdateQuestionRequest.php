@@ -18,10 +18,9 @@ class UpdateQuestionRequest extends FormRequest
             'survey_id' => ['required'],
             'question_type' => [
                 'required',
-                Rule::in(['SINGLE_CHOICE', 'MULTIPLE_RESPONSE', 'RATING']),
+                Rule::in(['SINGLE_CHOICE', 'MULTIPLE_RESPONSE', 'RATING', 'SHORT_ANSWER']),
             ],
             'question' => ['required', 'string'],
-            'options' => ['required', 'string'],
         ];
     }
 

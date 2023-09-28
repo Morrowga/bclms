@@ -30,7 +30,7 @@ class AnnouncementController extends Controller
     public function index()
     {
         // Authorize user
-        // abort_if(authorize('view', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('view', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -81,7 +81,7 @@ class AnnouncementController extends Controller
      */
     public function store(StoreAnnouncementRequest $request)
     {
-        // abort_if(authorize('create', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('create', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $request->validated();

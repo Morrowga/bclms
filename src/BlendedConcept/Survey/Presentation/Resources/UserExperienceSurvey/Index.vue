@@ -182,6 +182,10 @@ const deleteSurvey = (id) => {
                                         v-if="dataProps.column.field == 'title'"
                                     >
                                         <Link
+                                            :href="
+                                                route(
+                                                    'userexperiencesurvey.edit', dataProps.row.id
+                                                )"
                                             class="text-secondary"
                                         >
                                             <span>{{

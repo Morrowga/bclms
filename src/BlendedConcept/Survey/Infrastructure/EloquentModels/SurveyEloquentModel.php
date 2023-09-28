@@ -14,7 +14,6 @@ class SurveyEloquentModel extends Model
         'title',
         'description',
         'type',
-        'user_type',
         'appear_on',
         'start_date',
         'end_date',

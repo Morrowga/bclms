@@ -6,6 +6,7 @@ import { SuccessDialog } from '@actions/useSuccess';
 import SurveyAdd from "../components/SurveyAdd.vue"
 import SurveySetting from "../components/SurveySetting.vue"
 import EditSurveyAdd from "../components/EditSurveyAdd.vue"
+import draggable from 'vuedraggable';
 
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import {
@@ -17,14 +18,15 @@ import {
 let form = useForm({
     title: 'Untitled Survey',
     description: null,
-    type: 'USERREXP',
+    type: 'USEREXP',
     user_type: null,
     appear_on: null,
     start_date: null,
     end_date: null,
     required: null,
     repeat: null,
-    questions: []
+    questions: [],
+    // date_created: null,
 })
 
 const addSurveyForm = ref([]);
@@ -66,7 +68,7 @@ const handleModalSubmit = (data) => {
         "id": data.id,
         "question_type": data.question_type,
         "question": data.question,
-        "options": data.options
+        "options": data.question_type == 'SHORT_ANSWER' ? [] : data.options
     })
 };
 const handleSettingModalSubmit = (data) => {
@@ -142,58 +144,65 @@ const handleSettingModalSubmit = (data) => {
                     v-model="form.description" auto-grow rows="5" />
                 </VCol>
                 <div v-if="addSurveyForm.length > 0">
-                    <Vcol cols="12" v-for="(item, i) in addSurveyForm" :key="i">
-                        <VCard style="width:81vw" class="mt-4">
-                            <VCardTitle class="tiggie-subtitle">
-                                <div class="d-flex justify-space-between">
-                                    <div>
-                                        Question {{ i + 1 }} . {{ item.question_type }}
-                                    </div>
-                                    <div>
-                                        <v-menu>
-                                            <template v-slot:activator="{ props }">
-                                                <div class="cursor-pointer"
-                                                v-bind="props"
-                                                >
-                                                ...
-                                                </div>
-                                            </template>
-                                            <v-list>
-                                                <v-list-item>
-                                                    <v-list-item-title class="px-5 cursor-pointer" @click="openEditSurveyForm(item.id)">Edit</v-list-item-title>
-                                                    <v-spacer></v-spacer>
-                                                    <v-list-item-title class="px-5 mt-2 cursor-pointer" @click="deleteSurveyForm(item.id)">Delete</v-list-item-title>
-                                                </v-list-item>
-                                            </v-list>
-                                        </v-menu>
-                                    </div>
-                                </div>
-                            </VCardTitle>
-                            <VCardSubTitle class="pl-4 tiggie-p">
-                                {{item.question}}
-                            </VCardSubTitle>
-                            <VDivider />
-                            <VCardText>
-                                <VRow no-gutters justify="start">
-                                    <VCol cols="1">
-                                        <h4 class="tiggie-subtitle">Options</h4>
-                                    </VCol>
-                                    <VCol cols="4" style="text-align: left;" class="mb-10">
-                                        <VList>
-                                            <VListItem v-for="(option, i) in item.options" :key="i">
-                                                <template #prepend>
-                                                    <VIcon :icon="'mdi-circle-small'" />
-                                                </template>
-                                                <VListItemTitle class="tiggie-p">
-                                                    {{ option }}
-                                                </VListItemTitle>
-                                            </VListItem>
-                                        </VList>
-                                    </VCol>
-                                </VRow>
-                            </VCardText>
-                        </VCard>
-                    </Vcol>
+                    <draggable v-model="addSurveyForm" :options="{ handle: '.drag-handle' }">
+                        <template v-slot:item="{ element, index }">
+                            <Vcol cols="12" :key="index">
+                                <VCard style="width:81vw" class="mt-4">
+                                    <VCardTitle class="tiggie-subtitle">
+                                        <div class="d-flex justify-space-between">
+                                            <div>
+                                                Question {{ index + 1 }} . {{ element.question_type }}
+                                            </div>
+                                            <div>
+                                                <v-menu>
+                                                    <template v-slot:activator="{ props }">
+                                                        <div class="cursor-pointer"
+                                                        v-bind="props"
+                                                        >
+                                                        ...
+                                                        </div>
+                                                    </template>
+                                                    <v-list>
+                                                        <v-list-item>
+                                                            <v-list-item-title class="px-5 cursor-pointer" @click="openEditSurveyForm(element.id)">Edit</v-list-item-title>
+                                                            <v-spacer></v-spacer>
+                                                            <v-list-item-title class="px-5 mt-2 cursor-pointer" @click="deleteSurveyForm(element.id)">Delete</v-list-item-title>
+                                                        </v-list-item>
+                                                    </v-list>
+                                                </v-menu>
+                                            </div>
+                                        </div>
+                                    </VCardTitle>
+                                    <VCardSubTitle class="pl-4 tiggie-p" v-if="element.question_type != 'SHORT_ANSWER'">
+                                        {{element.question}}
+                                    </VCardSubTitle>
+                                    <VCardSubTitle class="pl-4 tiggie-p shortanswer" v-else>
+                                        {{element.question}}
+                                    </VCardSubTitle>
+                                    <VDivider v-if="element.question_type != 'SHORT_ANSWER'"/>
+                                    <VCardText v-if="element.question_type != 'SHORT_ANSWER'">
+                                        <VRow no-gutters justify="start">
+                                            <VCol cols="1">
+                                                <h4 class="tiggie-subtitle">Options</h4>
+                                            </VCol>
+                                            <VCol cols="4" style="text-align: left;" class="mb-10">
+                                                <VList>
+                                                    <VListItem v-for="(option, i) in element.options" :key="i">
+                                                        <template #prepend>
+                                                            <VIcon :icon="'mdi-circle-small'" />
+                                                        </template>
+                                                        <VListItemTitle class="tiggie-p">
+                                                            {{ option }}
+                                                        </VListItemTitle>
+                                                    </VListItem>
+                                                </VList>
+                                            </VCol>
+                                        </VRow>
+                                    </VCardText>
+                                </VCard>
+                            </Vcol>
+                        </template>
+                    </draggable>
                 </div>
             </VRow>
             <VRow justify="center">
@@ -217,6 +226,10 @@ const handleSettingModalSubmit = (data) => {
 </template>
 
 <style>
+
+.shortanswer{
+    line-height: 3 !important;
+}
 /* .v-label.v-field-label {
     color: #4066E4 !important;
     font-size: 20px !important;

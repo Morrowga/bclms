@@ -31,7 +31,6 @@ class UserExperienceSurveyController
             // Get user list
             $surveys = (new GetUserExperienceSurveyList($filters))->handle();
 
-            // return $surveys;
             // Render Inertia view
             return Inertia::render(config('route.userexperiencesurvey.index'), [
                 'surveys' => $surveys,
@@ -107,7 +106,7 @@ class UserExperienceSurveyController
          * Try to update the survey.
          */
         try {
-            $surveyData = SurveyData::fromRequest($request, $userexperiencesurvey->id);
+            $surveyData = SurveyData::fromRequest($request, $userexperiencesurvey);
             $updateSurveyCommand = (new UpdateSurveyCommand($surveyData));
             $updateSurveyCommand->execute();
 

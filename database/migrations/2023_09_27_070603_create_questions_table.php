@@ -19,7 +19,8 @@ return new class extends Migration
             $table->enum('question_type', [
                 'SINGLE_CHOICE',
                 'MULTIPLE_RESPONSE',
-                'RATING'
+                'RATING',
+                'SHORT_ANSWER'
             ]);
             $table->string('question');
             $table->enum('status', [

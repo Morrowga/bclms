@@ -34,7 +34,6 @@ class SurveyData
             end_date: $request->end_date,
             required: $request->required,
             repeat: $request->repeat,
-
         );
     }
 
