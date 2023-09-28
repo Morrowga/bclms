@@ -10,15 +10,26 @@ import {
     integerValidator,
 } from "@validators";
 import MultiSelectBox from "@mainRoot/components/MultiSelectBox/MultiSelectBox.vue";
-let props = defineProps(["organisations", "b2cUsers", "teachers", "bcStaff"]);
+let props = defineProps(["organisations", "b2cUsers", "teachers", "bcStaff", "auth"]);
 
 let groupSelectBox = ["Super Admin", "BC Staff", "Organisation Admin"];
-const tos = ref([
-    "BC Staff",
-    "Organisation Admin",
-    "Organisation Teacher",
-    "B2C Users",
-]);
+console.log(props.auth.data.roles.id);
+const tos = ref(null);
+if(props.auth.data.roles.id === 3){
+    tos.value = [
+        "Organisation Admin",
+        "Organisation Teacher",
+        "B2C Users",
+    ];
+} else {
+    tos.value = [
+        "BC Staff",
+        "Organisation Admin",
+        "Organisation Teacher",
+        "B2C Users",
+    ];
+}
+
 
 const visibleToSelectBox = ref(true);
 const visibleToOriginizationList = ref(true);
