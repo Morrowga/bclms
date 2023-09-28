@@ -7,6 +7,7 @@ use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organisation\Application\DTO\OrganisationData;
+use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationAdminMapper;
 use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationMapper;
 use Src\BlendedConcept\Organisation\Application\Requests\StoreOrganisationRequest;
 use Src\BlendedConcept\Organisation\Application\Requests\StoreOrganisationSubscriptionRequest;
@@ -79,6 +80,7 @@ class OrganisationController extends Controller
         $organisation->load('org_admin', 'subscription.b2b_subscription')->loadCount('teachers', 'students');
         // return "hello";
 
+
         return Inertia::render(config('route.organisations.edit'), [
             'organisation' => $organisation,
         ]);
@@ -104,11 +106,11 @@ class OrganisationController extends Controller
             // Validate the request data
             $request->validated();
             $quickOrgAdminCreate = $this->organisationService->createQuickOrgAdmin($request);
-            $request['org_admin_id'] = $quickOrgAdminCreate->id;
-            $newOrganizaton = OrganisationMapper::fromRequest($request);
-            $newSubscription = SubscriptionMapper::fromRequest($request);
-            $saveOrganizaton = (new StoreOrganisationCommand($newOrganizaton, $newSubscription));
-            $saveOrganizaton->execute();
+            $request['user_id'] = $quickOrgAdminCreate->id;
+            $newOrganisation = OrganisationMapper::fromRequest($request);
+            $newOrganisationAdmin = OrganisationAdminMapper::fromRequest($request);
+            $saveOrganisation = (new StoreOrganisationCommand($newOrganisation, $newOrganisationAdmin));
+            $saveOrganisation->execute();
 
             return redirect()->route('organisations.index')->with('successMessage', 'Organisations Created Successfully!');
         } catch (\Exception $error) {
@@ -125,7 +127,6 @@ class OrganisationController extends Controller
         try {
 
             // abort_if(authorize('edit', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
             $quickOrgAdminCreate = $this->organisationService->updateQuickOrgAdmin($organisation, $request);
             $updateOrganisation = OrganisationData::fromRequest($request, $organisation);
             $updateOrganisationcommand = (new updateOrganisationCommand($updateOrganisation));
@@ -188,8 +189,8 @@ class OrganisationController extends Controller
             // Validate the request data
             $subscription = SubscriptionEloquentModel::findOrFail($request->b2b_subscription['subscription_id']);
             $updateSubscription = SubscriptionData::fromRequest($request, $subscription);
-            $saveOrganizaton = (new StoreOrganisationSubscriptionCommand($updateSubscription));
-            $saveOrganizaton->execute();
+            $saveOrganisation = (new StoreOrganisationSubscriptionCommand($updateSubscription));
+            $saveOrganisation->execute();
 
             return redirect()->route('organisations.index')->with('successMessage', 'Organisations Created Successfully!');
         } catch (\Exception $error) {

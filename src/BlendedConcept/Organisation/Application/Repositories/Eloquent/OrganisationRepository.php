@@ -9,7 +9,9 @@ use Src\BlendedConcept\Finance\Domain\Model\Subscription;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2bSubscriptionEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organisation\Application\DTO\OrganisationData;
+use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationAdminMapper;
 use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationMapper;
+use Src\BlendedConcept\Organisation\Domain\Model\Entities\OrganisationAdmin;
 use Src\BlendedConcept\Organisation\Domain\Model\Organisation;
 use Src\BlendedConcept\Organisation\Domain\Repositories\OrganisationRepositoryInterface;
 use Src\BlendedConcept\Organisation\Domain\Resources\OrganisationResource;
@@ -50,7 +52,7 @@ class OrganisationRepository implements OrganisationRepositoryInterface
      * @param  Organisation  $organisation The organisation object containing the necessary information.
      * @return void
      */
-    public function createOrganisation(Organisation $organisation, Subscription $subscription)
+    public function createOrganisation(Organisation $organisation, OrganisationAdmin $organisationAdmin)
     {
 
         DB::beginTransaction();
@@ -58,12 +60,12 @@ class OrganisationRepository implements OrganisationRepositoryInterface
         try {
 
             //insert data into organisation
-            $subscriptionEloquent = SubscriptionMapper::toEloquent($subscription);
-            $subscriptionEloquent->save();
             $organisationEloquent = OrganisationMapper::toEloquent($organisation);
-            $organisationEloquent->curr_subscription_id = $subscriptionEloquent->id;
             $organisationEloquent->save();
 
+            $organisationAdminEloquent = OrganisationAdminMapper::toEloquent($organisationAdmin);
+            $organisationAdminEloquent->organisation_id = $organisationEloquent->id;
+            $organisationAdminEloquent->save();
             // Upload the organisation's image if provided
             if (request()->hasFile('image') && request()->file('image')->isValid()) {
                 $organisationEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_organisation');
@@ -79,9 +81,10 @@ class OrganisationRepository implements OrganisationRepositoryInterface
                 'organisation_id' => $organisationEloquent->id,
             ]);
 
-            $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
+            $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
             DB::commit();
         } catch (\Exception $error) {
+            dd($error);
             DB::rollBack();
             dd($error->getMessage());
         }

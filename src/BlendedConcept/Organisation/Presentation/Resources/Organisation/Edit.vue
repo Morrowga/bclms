@@ -50,11 +50,11 @@ onMounted(() => {
     form.contact_name = props.organisation?.contact_name;
     form.contact_email = props.organisation?.contact_email;
     form.contact_number = props.organisation?.contact_number;
-    form.org_admin_name = props.organisation?.org_admin?.first_name;
+    form.org_admin_name = props.organisation?.org_admin?.user?.first_name;
     form.org_admin_contact_number =
-        props.organisation?.org_admin?.contact_number;
-    form.login_email = props.organisation?.org_admin?.email;
-    form.image = props.organisation?.image?.[0]?.original_url;
+        props.organisation?.org_admin?.user?.contact_number;
+    form.login_email = props.organisation?.org_admin?.user?.email;
+    form.image = props.organisation?.user?.image?.[0]?.original_url;
 });
 </script>
 

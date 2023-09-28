@@ -45,6 +45,11 @@ class B2CTeacherRoleSeeder extends Seeder
                 'stripe_price' => $planEloquent->price,
             ];
             $subscriptionEloquent = SubscriptionEloquentModel::create($subscriptionEloquent);
+            $b2cSubscripton = B2cSubscriptionEloquentModel::create([
+                "teacher_id" => $userEloquent->id,
+                "subscription_id" => $subscriptionEloquent->id,
+                "plan_id" => $planEloquent->id
+            ]);
             $teacherEloquent = TeacherEloquentModel::create([
                 "user_id" => $userEloquent->id,
                 "curr_subscription_id" => $subscriptionEloquent->id,

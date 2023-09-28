@@ -3,7 +3,7 @@
 namespace Src\BlendedConcept\Organisation\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Organisation\Application\DTO\OrganisationAdminData;
+
 
 class OrganisationAdminData
 {
@@ -20,7 +20,6 @@ class OrganisationAdminData
             org_admin_id: $organizatonAdmin->id,
             user_id: $organizatonAdmin->user_id,
             organisation_id: $organizatonAdmin->organisation_id,
-
         );
     }
 

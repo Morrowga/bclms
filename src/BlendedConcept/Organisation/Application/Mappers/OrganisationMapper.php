@@ -41,7 +41,7 @@ class OrganisationMapper
         $organizatonEloquent->contact_name = $organisation->contact_name;
         $organizatonEloquent->contact_email = $organisation->contact_email;
         $organizatonEloquent->contact_number = $organisation->contact_number;
-        $organizatonEloquent->sub_domain = $organiation->sub_domain;
+        $organizatonEloquent->sub_domain = $organisation->sub_domain;
         $organizatonEloquent->logo = $organisation->logo;
         $organizatonEloquent->status = $organisation->status ?? 'ACTIVE';
 

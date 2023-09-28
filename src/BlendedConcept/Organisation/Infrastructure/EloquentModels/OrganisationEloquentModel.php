@@ -51,7 +51,7 @@ class OrganisationEloquentModel extends Model implements HasMedia
 
     public function org_admin()
     {
-        return $this->belongsTo(OrganisationAdminEloquentModel::class, 'id', 'org_admin_id');
+        return $this->belongsTo(OrganisationAdminEloquentModel::class, 'id', 'org_admin_id')->with('user');
     }
 
     public function teachers()
