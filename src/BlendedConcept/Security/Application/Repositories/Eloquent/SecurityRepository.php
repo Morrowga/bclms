@@ -42,7 +42,7 @@ class SecurityRepository implements SecurityRepositoryInterface
     {
         //set roles
         $users = UserResource::collection(UserEloquentModel::filter($filters)
-            ->with('role', 'b2bUser')
+            ->with('role', 'b2bUser', 'parents')
             ->whereNot('role_id', 6)
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
@@ -54,8 +54,8 @@ class SecurityRepository implements SecurityRepositoryInterface
     {
         //set roles
         $b2bteachers = TeacherEloquentModel::with('user')
-        ->where('organisation_id', '!=' , null)
-        ->orderBy('teacher_id', 'desc')->get();
+            ->where('organisation_id', '!=', null)
+            ->orderBy('teacher_id', 'desc')->get();
 
         return UserResource::collection($b2bteachers->pluck('user')->flatten());
     }
@@ -63,7 +63,7 @@ class SecurityRepository implements SecurityRepositoryInterface
     public function getB2bTeachersByOrganisation($id)
     {
         $organisation = OrganisationEloquentModel::where('org_admin_id', $id)->first();
-        if (! empty($organisation)) {
+        if (!empty($organisation)) {
             $b2bteachers = TeacherEloquentModel::with('user')
                 ->where('organisation_id', $organisation->id)
                 ->orderBy('teacher_id', 'desc')->get();
@@ -76,7 +76,7 @@ class SecurityRepository implements SecurityRepositoryInterface
     {
         //set roles
         $b2cUsers = TeacherEloquentModel::with('user')
-            ->where('organisation_id', '=' , null)
+            ->where('organisation_id', '=', null)
             ->orderBy('teacher_id', 'desc')->get();
 
         return UserResource::collection($b2cUsers->pluck('user')->flatten());
@@ -159,11 +159,11 @@ class SecurityRepository implements SecurityRepositoryInterface
 
         // Add filters to the query
         if (isset($filters['name'])) {
-            $query->where('name', 'like', '%'.$filters['name'].'%');
+            $query->where('name', 'like', '%' . $filters['name'] . '%');
         }
 
         if (isset($filters['email'])) {
-            $query->where('email', 'like', '%'.$filters['email'].'%');
+            $query->where('email', 'like', '%' . $filters['email'] . '%');
         }
 
         if (isset($filters['role'])) {

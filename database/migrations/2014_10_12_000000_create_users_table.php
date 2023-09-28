@@ -20,7 +20,7 @@ return new class extends Migration
                 ->on('roles')->onDelete('cascade');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->nullable()->unique();
             $table->string('password')->nullable();
             $table->bigInteger('contact_number')->nullable();
             $table->enum('status', ['ACTIVE', 'PENDING', 'INACTIVE'])->default('PENDING');

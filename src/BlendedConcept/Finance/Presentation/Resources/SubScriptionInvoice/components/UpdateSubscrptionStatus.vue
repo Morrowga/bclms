@@ -13,7 +13,7 @@ const form = useForm({
     payment_status: "",
     stripe_status: "",
     plan_id: null,
-    user_id: null,
+    teacher_id: null,
     _method: "PUT",
 });
 // const savePlan = () => {
@@ -44,7 +44,7 @@ onUpdated(() => {
     form.stripe_status = props.subscription?.stripe_status ?? "ACTIVE";
     form.payment_status = props.subscription?.payment_status ?? "PAID";
     form.plan_id = props.subscription?.b2c_subscription?.plan_id;
-    form.user_id = props.subscription?.b2c_subscription?.user_id;
+    form.teacher_id = props.subscription?.b2c_subscription?.teacher_id;
 });
 </script>
 

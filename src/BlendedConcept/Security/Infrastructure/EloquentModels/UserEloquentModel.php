@@ -132,7 +132,13 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     }
     public function b2bUser()
     {
-        return $this->belongsTo(TeacherEloquentModel::class, 'user_id', 'id');
+        return $this->hasOne(TeacherEloquentModel::class, 'user_id', 'id')->with('organisation');
+    }
+
+
+    public function parents()
+    {
+        return $this->hasOne(ParentUserEloqeuntModel::class, 'user_id', 'id')->with('organisation');
     }
     // public function getOrganisationIdAttribute()
     // {
