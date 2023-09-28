@@ -15,6 +15,7 @@ class QuestionMapper
             survey_id: $request['survey_id'],
             question_type: $request['question_type'],
             question: $request['question'],
+            order: $request['order'],
         );
     }
 
@@ -30,6 +31,7 @@ class QuestionMapper
         $questionEloquent->survey_id = $question->survey_id;
         $questionEloquent->question_type = $question->question_type;
         $questionEloquent->question = $question->question;
+        $questionEloquent->order = $question->order;
 
         return $questionEloquent;
     }

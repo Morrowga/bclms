@@ -46,7 +46,7 @@ const userTypes = ref([
     // },
     {
         title: 'BC Staff',
-        value: 'BC STAFF',
+        value: 'BC_STAFF',
     },
     {
         title: 'Org Teacher',

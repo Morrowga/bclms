@@ -20,7 +20,10 @@ return new class extends Migration
             $table->enum('type', [
                 'USEREXP', 'PROFILING'
             ]);
-            $table->enum('apper_on',[
+            $table->enum('user_type', [
+                'BC_STAFF', 'ORG_TEACHER', 'B2C_USER'
+            ]);
+            $table->enum('appear_on',[
                 'LOG_IN',
                 'LOG_OUT',
                 'BOOK_END',
