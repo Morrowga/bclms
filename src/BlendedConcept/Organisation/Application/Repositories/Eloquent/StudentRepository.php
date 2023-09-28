@@ -18,7 +18,7 @@ class StudentRepository implements StudentRepositoryInterface
     public function getStudents($filters)
     {
         $users = StudentResource::collection(StudentEloquentModel::filter($filters)
-            ->with(['organisations', 'user', 'disability_types', 'learningneeds'])
+            ->with(['organisation', 'user', 'disability_types', 'learningneeds'])
             ->paginate($filters['perPage'] ?? 10));
 
         return $users;

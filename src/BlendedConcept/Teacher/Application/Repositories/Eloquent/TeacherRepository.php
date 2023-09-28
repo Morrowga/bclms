@@ -81,9 +81,7 @@ class TeacherRepository implements TeacherRepositoryInterface
         }
 
         return StudentEloquentModel::filter($filters)
-            ->whereHas('organisations', function ($query) {
-                $query->where('id', auth()->user()->organisation_id);
-            })
+            ->where('organisation_id', auth()->user()->organisation_id)
             ->whereHas('classrooms', function ($query) use ($classroom_ids) {
                 $query->whereIn('id', $classroom_ids);
             })

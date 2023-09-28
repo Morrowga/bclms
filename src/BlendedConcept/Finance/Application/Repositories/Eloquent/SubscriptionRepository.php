@@ -67,7 +67,7 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
             $b2bSubscriptionEloquent = new B2cSubscriptionEloquentModel();
             $b2bSubscriptionEloquent->subscription_id = $subscriptionEloquent->id;
             $b2bSubscriptionEloquent->plan_id = $subscriptionData->plan_id;
-            $b2bSubscriptionEloquent->user_id = $subscriptionData->user_id;
+            $b2bSubscriptionEloquent->teacher_id = $subscriptionData->teacher_id;
             $b2bSubscriptionEloquent->save();
         } catch (\Exception $error) {
             DB::rollBack();

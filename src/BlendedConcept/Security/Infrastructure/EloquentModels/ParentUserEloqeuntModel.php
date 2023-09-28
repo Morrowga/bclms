@@ -11,7 +11,7 @@ use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 class ParentUserEloqeuntModel extends Model
 {
     use HasFactory;
-
+    protected $table = "parents";
     protected $primaryKey = 'parent_id';
 
     protected $fillable = [

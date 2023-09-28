@@ -13,6 +13,7 @@ use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEl
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class StudentEloquentModel extends Model implements HasMedia
@@ -32,8 +33,10 @@ class StudentEloquentModel extends Model implements HasMedia
     protected $fillable = [
         'user_id',
         'device_id',
+        'parent_id',
         'gender',
         'dob',
+        'organisation_id',
         'education_level',
         'num_gold_coins',
         'num_silver_coins',
@@ -80,7 +83,7 @@ class StudentEloquentModel extends Model implements HasMedia
         });
     }
 
-    public function organisations()
+    public function organisation()
     {
         return $this->belongsTo(OrganisationEloquentModel::class, 'organisation_id', 'id');
     }
@@ -109,7 +112,10 @@ class StudentEloquentModel extends Model implements HasMedia
     {
         return $this->belongsTo(UserEloquentModel::class, 'user_id', 'id');
     }
-
+    public function parent()
+    {
+        return $this->belongsTo(ParentUserEloqeuntModel::class, 'parent_id')->with('user');
+    }
     public function groups()
     {
         return $this->belongsToMany(ClassroomGroupEloquentModel::class, 'group_students', 'student_id', 'classroom_group_id')->with('students');

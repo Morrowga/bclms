@@ -145,6 +145,12 @@ const exportUser = () => {
 const fullName = (user) => {
     return (user?.first_name ?? "") + " " + (user?.last_name ?? "");
 };
+
+const showOrg = (user) => {
+    if (user) {
+        return user.organisation?.name;
+    }
+};
 </script>
 
 <template>
@@ -221,7 +227,13 @@ const fullName = (user) => {
 
                         <div v-if="props.column.field == 'orgainzations'">
                             <p class="">
-                                {{ props.row.b2b_user?.organisation?.name }}
+                                {{
+                                    showOrg(
+                                        props.row?.b2b_user ??
+                                            props.row?.parents ??
+                                            null
+                                    )
+                                }}
                             </p>
                         </div>
 

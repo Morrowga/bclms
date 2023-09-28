@@ -28,7 +28,7 @@ class SubscribtionInvoiceController
             $b2b_subscriptions = (new GetB2bSubscriptions($filters))->handle();
             $b2c_subscriptions = (new GetB2cSubscriptions($filters))->handle();
 
-            dd($b2c_subscriptions);
+
             // Render the organisation index page with the retrieved organisations
 
             return Inertia::render(config('route.subscriptioninvoice.index'), [

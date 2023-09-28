@@ -24,7 +24,7 @@ class StudentRepository implements StudentRepositoryInterface
     {
         // dd($filters);
         $paginate_students = StudentResources::collection(
-            StudentEloquentModel::with('user', 'organisations', 'disability_types')
+            StudentEloquentModel::with('user', 'organisation', 'disability_types', 'parent')
                 ->filter($filters)
                 ->orderBy('student_id', 'desc')
                 // ->where('organisation_id', auth()->user()->organisation_id)

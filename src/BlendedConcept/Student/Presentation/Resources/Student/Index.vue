@@ -88,6 +88,7 @@ const exportUser = () => {
     if (data) exportFromJSON({ data, fileName, exportType });
     return;
 };
+const selectionChanged = () => {};
 </script>
 
 <template>
@@ -168,11 +169,13 @@ const exportUser = () => {
                             </div>
                             <div v-if="props.column.field == 'email'">
                                 <div class="d-flex flex-row gap-2">
-                                    <span>{{ props.row?.user.email }}</span>
+                                    <span>{{
+                                        props.row?.parent?.user?.email
+                                    }}</span>
                                 </div>
                             </div>
                             <div v-if="props.column.field == 'type'">
-                                <div v-if="props.row.organisations.length > 0">
+                                <div v-if="props.row.organisation">
                                     <span>Organisation</span>
                                 </div>
                                 <div v-else>
@@ -181,42 +184,22 @@ const exportUser = () => {
                             </div>
                             <div v-if="props.column.field == 'organisation'">
                                 <div class="">
-                                    <div
-                                        v-if="
-                                            props.row.organisations.length > 0
-                                        "
-                                    >
+                                    <div>
                                         <Link
                                             :href="
                                                 route('organisations.show', {
-                                                    id: props.row
-                                                        .organisations?.[0]?.id,
+                                                    id: props.row.organisation
+                                                        .id,
                                                 })
                                             "
                                         >
                                             <span
                                                 class="text-default-color cu-pointer"
                                                 >{{
-                                                    props.row.organisations?.[0]
+                                                    props.row.organisation
                                                         ?.name ?? "-"
                                                 }}</span
                                             >
-                                        </Link>
-                                    </div>
-                                    <div v-else>
-                                        <Link
-                                            :href="
-                                                route('users.show', { id: 1 })
-                                            "
-                                            class="d-flex flex-row gap-2 text-default-color"
-                                        >
-                                            <img
-                                                src="/images/defaults/avator.png"
-                                                class="user-profile-image"
-                                            />
-                                            <span>
-                                                {{ props.row.organisation }}
-                                            </span>
                                         </Link>
                                     </div>
                                 </div>
