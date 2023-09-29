@@ -63,7 +63,6 @@ Route::group([
      * GET /verification
      */
     Route::get('verification', [AuthController::class, 'verification'])->name('verification');
-
 });
 
 /****
