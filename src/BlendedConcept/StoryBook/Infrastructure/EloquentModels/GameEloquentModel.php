@@ -64,7 +64,7 @@ class GameEloquentModel extends Model implements HasMedia
 
     public function tags()
     {
-        return $this->belongsToMany(TagEloquentModel::class, 'games_tags', 'game_id', 'tag_id');
+        return $this->belongsToMany(TagEloquentModel::class, 'game_tags', 'game_id', 'tag_id');
     }
 
     public function disabilityTypes()
@@ -80,10 +80,10 @@ class GameEloquentModel extends Model implements HasMedia
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('name', 'like', '%'.$search.'%');
+            $query->where('name', 'like', '%' . $search . '%');
         });
     }
 

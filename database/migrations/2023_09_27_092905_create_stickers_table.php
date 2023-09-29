@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('stickers', function (Blueprint $table) {
             $table->id();
-            $table->string('file_src');
+            $table->string('file_src')->nullable();
             $table->string('name');
             $table->string('description');
             $table->integer('gold_coins_needed');
