@@ -55,7 +55,7 @@ test('create user experience survey with bcstaff roles', function () {
 
     $questions = [
         [
-            'id' => '1',
+            'id' => 1,
             'question_type' => 'SINGLE_CHOICE',
             'question' => 'That is question',
             'options' => ['That is options', 'That is option 2', 'That is option 3'],
@@ -65,7 +65,7 @@ test('create user experience survey with bcstaff roles', function () {
     $response = $this->post('/userexperiencesurvey', [
         'title' => 'Example Survey',
         'description' => 'Survey Description',
-        'type' => 'USERREXP',
+        'type' => 'USEREXP',
         'user_type' => 'B2C_USER',
         'appear_on' => 'LOG_OUT',
         'start_date' => Carbon::now(),
@@ -81,8 +81,6 @@ test('create user experience survey with bcstaff roles', function () {
     $postData->assertSessionHasErrors(['title', 'description', 'type', 'user_type', 'appear_on', 'start_date', 'end_date', 'questions']);
     $response->assertRedirect('/userexperiencesurvey');
     // Assert the response and any other test assertions here
-
-    // Roll back the transaction to undo any database changes made during the test
 });
 
 test('create or update user experience with missing filed bcstaff roles', function () {
@@ -128,7 +126,7 @@ test('update user experience survey with bcstaff roles', function () {
     $response = $this->post('/userexperiencesurvey', [
         'title' => 'Original Survey',
         'description' => 'Original Survey Description',
-        'type' => 'USERREXP',
+        'type' => 'USEREXP',
         'user_type' => 'B2C_USER',
         'appear_on' => 'LOG_OUT',
         'start_date' => Carbon::now(),
@@ -143,12 +141,10 @@ test('update user experience survey with bcstaff roles', function () {
     // Extract the survey ID from the response or retrieve it from the database
     $surveyId = 1; // Retrieve the survey ID as needed
 
-    // Attempt to update the survey
-
     $updateResponse = $this->put("/userexperiencesurvey/{$surveyId}", [
         'title' => 'Updated Survey',
         'description' => 'Updated Survey Description',
-        'type' => 'USERREXP',
+        'type' => 'USEREXP',
         'user_type' => 'ORG_TEACHER',
         'appear_on' => 'BOOK_END',
         'start_date' => Carbon::now()->addDay(1),
@@ -183,7 +179,7 @@ test('add new question in user experience survey with bcstaff roles', function (
     $response = $this->post('/userexperiencesurvey', [
         'title' => 'Example Survey',
         'description' => 'Survey Description',
-        'type' => 'USERREXP',
+        'type' => 'USEREXP',
         'user_type' => 'B2C_USER',
         'appear_on' => 'LOG_OUT',
         'start_date' => Carbon::now(),
@@ -207,7 +203,7 @@ test('add new question in user experience survey with bcstaff roles', function (
 
     $addQuestionData = $this->post('/questions', []);
 
-    $addQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question', 'options']);
+    $addQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question']);
 
     $questionResponse->assertStatus(302);
     // $response->assertRedirect($questionResponse->headers->get('Location'));
@@ -221,6 +217,7 @@ test('update existing question in user experience survey with bcstaff roles', fu
             'id' => '1',
             'question_type' => 'SINGLE_CHOICE',
             'question' => 'That is question',
+            'order' => 1,
             'options' => ['That is options', 'That is option 2', 'That is option 3'],
         ],
     ];
@@ -228,7 +225,7 @@ test('update existing question in user experience survey with bcstaff roles', fu
     $response = $this->post('/userexperiencesurvey', [
         'title' => 'Example Survey',
         'description' => 'Survey Description',
-        'type' => 'USERREXP',
+        'type' => 'USEREXP',
         'user_type' => 'B2C_USER',
         'appear_on' => 'LOG_OUT',
         'start_date' => Carbon::now(),
@@ -249,6 +246,7 @@ test('update existing question in user experience survey with bcstaff roles', fu
         'survey_id' => $surveyId,
         'question_type' => 'MULTIPLE_RESPONSE',
         'question' => 'That is update question',
+        'order' => 1,
         'options' => json_encode(['That is update options', 'That is update option 2', 'That is option 3']),
     ];
 
@@ -256,12 +254,12 @@ test('update existing question in user experience survey with bcstaff roles', fu
 
     $updateQuestionData = $this->put("/questions/{$questionId}", []);
 
-    $updateQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question', 'options']);
+    $updateQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question']);
 
     $questionResponse->assertStatus(302);
 });
 
-test('delete  the question in user experience survey with bcstaff roles', function () {
+test('delete the question in user experience survey with bcstaff roles', function () {
     // Start a database transaction for the test
     $this->assertTrue(Auth::check());
 
@@ -278,7 +276,7 @@ test('delete  the question in user experience survey with bcstaff roles', functi
     $response = $this->post('/userexperiencesurvey', [
         'title' => 'Survey to Delete',
         'description' => 'Survey to Delete Description',
-        'type' => 'USERREXP',
+        'type' => 'USEREXP',
         'user_type' => 'B2C_USER',
         'appear_on' => 'LOG_OUT',
         'start_date' => Carbon::now(),

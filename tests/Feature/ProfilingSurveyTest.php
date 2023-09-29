@@ -64,7 +64,7 @@ test('add new question in profiling survey with bcstaff roles', function () {
 
     $addQuestionData = $this->post('/questions', []);
 
-    $addQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question', 'options']);
+    $addQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question']);
 
     $questionResponse->assertStatus(302);
 });
@@ -78,12 +78,13 @@ test('update existing question in profiling survey with bcstaff roles', function
         'survey_id' => $surveyId,
         'question_type' => 'SINGLE_CHOICE',
         'question' => 'That is question',
+        'order' => 1,
         'options' => json_encode(['That is new options', 'That is new option 2', 'That new is option 3']),
     ]);
 
     $addQuestionData = $this->post('/questions', []);
 
-    $addQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question', 'options']);
+    $addQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question']);
 
     $questionResponse->assertStatus(302);
 
@@ -93,6 +94,7 @@ test('update existing question in profiling survey with bcstaff roles', function
         'survey_id' => $surveyId,
         'question_type' => 'MULTIPLE_RESPONSE',
         'question' => 'That is update question',
+        'order' => 1 + 1,
         'options' => json_encode(['That is update options', 'That is update option 2', 'That is option 3']),
     ];
 
@@ -100,7 +102,7 @@ test('update existing question in profiling survey with bcstaff roles', function
 
     $updateQuestionData = $this->put("/questions/{$questionId}", []);
 
-    $updateQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question', 'options']);
+    $updateQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question']);
 
     $questionResponse->assertStatus(302);
 });
@@ -115,12 +117,13 @@ test('delete the question in profiling survey with bcstaff roles', function () {
         'survey_id' => $surveyId,
         'question_type' => 'SINGLE_CHOICE',
         'question' => 'That is question',
+        'order' => 1,
         'options' => json_encode(['That is new options', 'That is new option 2', 'That new is option 3']),
     ]);
 
     $addQuestionData = $this->post('/questions', []);
 
-    $addQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question', 'options']);
+    $addQuestionData->assertSessionHasErrors(['survey_id', 'question_type', 'question']);
 
     $questionResponse->assertStatus(302);
 

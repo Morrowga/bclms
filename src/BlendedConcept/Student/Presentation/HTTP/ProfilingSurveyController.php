@@ -18,9 +18,4 @@ class ProfilingSurveyController
             return redirect()->route('teacher_students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
-
-    public function submitProfilingSurvey(ProfilingSubmitRequest $request)
-    {
-
-    }
 }

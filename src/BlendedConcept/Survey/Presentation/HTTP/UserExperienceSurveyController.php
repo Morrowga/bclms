@@ -22,7 +22,7 @@ class UserExperienceSurveyController
     {
 
         // Authorize user
-        // abort_if(authorize('view', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('view', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
             // Get filters from request
