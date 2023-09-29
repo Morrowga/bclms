@@ -59,7 +59,11 @@ interface SecurityRepositoryInterface
 
 ### SecurityRepositroy.php
 
-<strong> This below will be used for related database  inserting and updating with Eloquent </strong>
+<strong> This below will be used for related database  inserting and updating with Eloquent
+
+Notes: You need use Databse transcations for for with try catch with `DB::commit()` means when transcation is successful it will insert on the database and if some transcation fails it rollback from table current inserting.
+
+ </strong>
 
 ```.php
 
@@ -110,7 +114,10 @@ class SecurityRepository implements SecurityRepositoryInterface
     public function createUser(User $user)
     {
 
-        $userEloquent = UserMapper::toEloquent($user);
+        try {
+
+         DB::beginTransaction();
+          $userEloquent = UserMapper::toEloquent($user);
         //verify email now()
         $userEloquent->email_verified_at = now();
         $userEloquent->save();
@@ -119,12 +126,23 @@ class SecurityRepository implements SecurityRepositoryInterface
         }
 
         $userEloquent->roles()->sync(request('role'));
+
+        DB::commit();
+
+        }
+        catch(\Exception $error)
+        {
+           DB::rollback();
+          dd($error->getMessage());
+        }
+        
     }
 
     //  update user
     public function updateUser(UserData $user)
     {
 
+        try {
         $userArray = $user->toArray();
         $updateUserEloquent = UserEloquentModel::query()->findOrFail($user->id);
         $updateUserEloquent->fill($userArray);
@@ -145,6 +163,12 @@ class SecurityRepository implements SecurityRepositoryInterface
         }
 
         $updateUserEloquent->roles()->sync(request('role'));
+        }
+        catch(\Exception $error)
+        {
+           dd($error->getMessage());
+        }
+       
     }
 
     public function deleteUser(int $user_id)
