@@ -47,17 +47,17 @@ class AppServiceProvider extends ServiceProvider
     {
 
         Paginator::useBootstrapFour();
-        //set config for organisation file system
-        $organisation = OrganisationEloquentModel::all();
-        foreach ($organisation as $item) {
-            $rootPath = storage_path('app/public/organisation/'.$item->name);
-            $url = env('APP_URL').'/storage';
-            Config::set("filesystems.disks.{$item->name}", [
-                'driver' => 'local',
-                'root' => $rootPath,
-                'url' => $url,
-                'visibility' => 'public',
-            ]);
-        }
+        //     //set config for organisation file system
+        //     $organisation = OrganisationEloquentModel::all();
+        //     foreach ($organisation as $item) {
+        //         $rootPath = storage_path('app/public/organisation/'.$item->name);
+        //         $url = env('APP_URL').'/storage';
+        //         Config::set("filesystems.disks.{$item->name}", [
+        //             'driver' => 'local',
+        //             'root' => $rootPath,
+        //             'url' => $url,
+        //             'visibility' => 'public',
+        //         ]);
+        //     }
     }
 }

@@ -49,7 +49,7 @@
                                 </td>
 
                                 <td class="">
-                                    {{ $entry->get_user()->name }}
+                                    {{ auth()->user()->full_name }}
                                 </td>
 
                                 <td class="text-left">

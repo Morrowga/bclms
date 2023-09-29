@@ -14,7 +14,7 @@
         "escolasoft/h5p-editor": "dev-master",
         "guzzlehttp/guzzle": "^7.2",
         "hansschouten/laravel-pagebuilder": "0.22",
-        "hareom284/laravel-h5p": "1.0.x-dev",
+        "hareom284/laravel-h5p": "dev-main",
         "inertiajs/inertia-laravel": "^0.6.9",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.2",

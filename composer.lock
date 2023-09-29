@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cef5c3403d57f38829060ca0ad2b8cc9",
+    "content-hash": "1a7cdf3e93d5d8711c8a98bc1f3508fb",
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
@@ -1523,16 +1523,16 @@
         },
         {
             "name": "hareom284/laravel-h5p",
-            "version": "v1.0.x-dev",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/22HMM/laravel-h5p-beta.git",
-                "reference": "aef5be1a0b542d5a3e581ded3cf505fb803958ad"
+                "reference": "63279ea747b0ac7b2974a8a1ded5a87706a8b6eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/22HMM/laravel-h5p-beta/zipball/aef5be1a0b542d5a3e581ded3cf505fb803958ad",
-                "reference": "aef5be1a0b542d5a3e581ded3cf505fb803958ad",
+                "url": "https://api.github.com/repos/22HMM/laravel-h5p-beta/zipball/63279ea747b0ac7b2974a8a1ded5a87706a8b6eb",
+                "reference": "63279ea747b0ac7b2974a8a1ded5a87706a8b6eb",
                 "shasum": ""
             },
             "require": {
@@ -1547,6 +1547,7 @@
                 "mockery/mockery": "^1.6",
                 "phpunit/phpunit": "^10.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -1575,9 +1576,9 @@
             "description": "This is laravel h5p plugin that use for content edition",
             "support": {
                 "issues": "https://github.com/22HMM/laravel-h5p-beta/issues",
-                "source": "https://github.com/22HMM/laravel-h5p-beta/tree/v1.0"
+                "source": "https://github.com/22HMM/laravel-h5p-beta/tree/main"
             },
-            "time": "2023-09-14T08:50:14+00:00"
+            "time": "2023-09-14T08:53:22+00:00"
         },
         {
             "name": "inertiajs/inertia-laravel",
