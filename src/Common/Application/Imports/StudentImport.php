@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
@@ -38,31 +39,37 @@ class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithH
 
         try {
             foreach ($rows as $row) {
-                $create_data = [
+                $create_user_data = [
                     'first_name' => $row['first_name'],
                     'last_name' => $row['last_name'],
-                    'contact_number' => $row['contact_number'],
-                    'email' => $row['email'],
                     'role_id' => 6,
                 ];
-                $userEloquent = UserEloquentModel::create($create_data);
+                $create_parent_data = [
+                    'first_name' => $row['parent_first_name'],
+                    'last_name' => $row['parent_last_name'],
+                    'contact_number' => $row['contact_number'],
+                    'email' => $row['email'],
+                    'role_id' => 2
+                ];
+                $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
-                /****
-                 * This will format the data from 1 10 2014 to
-                 * 2014-10-1
-                 * to dateformat on the database
-                 */
+                $parentEloquent = ParentUserEloqeuntModel::create([
+                    "user_id" => $userParentEloquent->id,
+                    "organisation_id" => $this->request->organisation_id,
+                    "type" => "B2B"
+                ]);
+                $userEloquent = UserEloquentModel::create($create_user_data);
                 $dateFormat = Carbon::createFromFormat('j m Y', $row['dob']);
                 $dob = $dateFormat->format('Y-m-d');
-
                 $create_student = [
                     'user_id' => $userEloquent->id,
+                    'parent_id' => $parentEloquent->parent_id,
                     'gender' => $row['gender'],
                     'dob' => $dob,
                     'education_level' => $row['education_level'],
+                    'organisation_id' => $this->request->organisation_id
                 ];
                 $studentEloquent = StudentEloquentModel::create($create_student);
-                $studentEloquent->organizations()->sync([$this->request->organization_id]);
             }
             DB::commit();
         } catch (\Exception $e) {

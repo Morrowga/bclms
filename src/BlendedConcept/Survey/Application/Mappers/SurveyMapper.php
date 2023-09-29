@@ -2,6 +2,7 @@
 
 namespace Src\BlendedConcept\Survey\Application\Mappers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Src\BlendedConcept\Survey\Domain\Model\Survey;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
@@ -22,7 +23,7 @@ class SurveyMapper
             end_date: $request->end_date,
             required: $request->required,
             repeat: $request->repeat,
-            questions: $request->questions
+            questions: $request->questions,
         );
     }
 
@@ -34,6 +35,8 @@ class SurveyMapper
             $surveyEloquent = SurveyEloquentModel::query()->findOrFail($survey->id);
         }
 
+        $date_created = Carbon::now();
+
         $surveyEloquent->id = $survey->id;
         $surveyEloquent->title = $survey->title;
         $surveyEloquent->description = $survey->description;
@@ -44,6 +47,7 @@ class SurveyMapper
         $surveyEloquent->end_date = $survey->end_date;
         $surveyEloquent->required = $survey->required;
         $surveyEloquent->repeat = $survey->repeat;
+        $surveyEloquent->date_created = $date_created->toDateTimeString();
 
         return $surveyEloquent;
     }

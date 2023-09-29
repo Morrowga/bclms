@@ -16,7 +16,7 @@ class B2cSubscriptionEloquentModel extends Model
 
     protected $fillable = [
         'subscription_id',
-        'user_id',
+        'teacher_id',
         'plan_id',
     ];
 
@@ -27,6 +27,6 @@ class B2cSubscriptionEloquentModel extends Model
 
     public function user()
     {
-        return $this->belongsTo(UserEloquentModel::class, 'user_id', 'id');
+        return $this->belongsTo(UserEloquentModel::class, 'teacher_id', 'id');
     }
 }

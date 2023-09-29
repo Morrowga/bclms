@@ -10,6 +10,8 @@ const props = defineProps({
     },
 });
 
+const HideOption = ref(false);
+
 const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
 const options = ref(['']);
@@ -37,18 +39,32 @@ const dialogVisibleUpdate = (val) => {
 const items = ref([
     {
         title: "Single Choice",
-        value: "Single Choice",
+        value: "SINGLE_CHOICE",
     },
     {
         title: "Multi Response",
-        value: "Multi Response",
+        value: "MULTI_RESPONSE",
     },
     {
         title: "Rating",
-        value: "Rating",
+        value: "RATING",
+    },
+    {
+        title: "Short Answer",
+        value: "SHORT_ANSWER",
     },
 ]);
 
+watch(
+    () => props.form.question_type,
+    (newValue, oldValue) => {
+        if (newValue === "SHORT_ANSWER") {
+            HideOption.value = true;
+        } else {
+            HideOption.value = false;
+        }
+    }
+);
 
 </script>
 
@@ -96,7 +112,7 @@ const items = ref([
                                     rows="5"
                                 />
                             </VCol>
-                            <VCol cols="12" md="12">
+                            <VCol cols="12" md="12" v-if="!HideOption">
                                 <VLabel class="tiggie-label">Options</VLabel>
                                     <VRow>
                                         <VCol cols="12" v-for="(option, index) in props.form.options" :key="index">
@@ -111,7 +127,7 @@ const items = ref([
                                         </VCol>
                                     </VRow>
                                 </VCol>
-                                <VCol cols="12" md="12">
+                                <VCol cols="12" md="12" v-if="!HideOption">
                                     <VBtn
                                         variant="outlined"
                                         style="

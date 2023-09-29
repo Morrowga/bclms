@@ -107,7 +107,7 @@ watch(serverPerPage, function (value) {
                                     src="/images/icons/bcicons.svg"
                                     v-if="
                                         [
-                                            'Organization Admin',
+                                            'Organisation Admin',
                                             'BC Super Admin',
                                         ].includes(dataProps.row.name)
                                     "

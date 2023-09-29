@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 
 class StudentRoleSeeder extends Seeder
 {
@@ -15,30 +18,41 @@ class StudentRoleSeeder extends Seeder
      */
     public function run()
     {
-        $users = [
-            [
-                'role_id' => 6,
-                'first_name' => 'Student',
-                'last_name' => 'One',
-                'email' => 'studentone@mail.com',
-                'password' => bcrypt('password'),
-                'contact_number' => '1234567890',
-                'status' => 'ACTIVE',
-                'email_verification_send_on' => now(),
-                'profile_pic' => 'images/profile/profilefive.png',
-            ],
+
+        $user = [
+            'role_id' => 6,
+            'first_name' => 'Student',
+            'last_name' => 'One',
+            'email' => 'studentone@mail.com',
+            'password' => bcrypt('password'),
+            'contact_number' => '1234567890',
+            'status' => 'ACTIVE',
+            'email_verification_send_on' => now(),
+            'profile_pic' => 'images/profile/profilefive.png',
         ];
 
-        foreach ($users as $user) {
-            $userCreate = UserEloquentModel::create($user);
-            $studentData = [
-                'user_id' => $userCreate->id,
-                'dob' => now(),
-                'gender' => 'Male',
-                'education_level' => 'G1',
-            ];
-            $studentCreate = StudentEloquentModel::create($studentData);
+        $userCreate = UserEloquentModel::create($user);
 
-        }
+        $subscription = SubscriptionEloquentModel::first();
+
+        $parentData = [
+            "user_id" => $userCreate->id,
+            "organisation_id" => 1,
+            "curr_subscription_id" => $subscription->id,
+            "type" => 'B2B'
+        ];
+
+        $parentCreate = ParentEloquentModel::create($parentData);
+
+        $studentData = [
+            'user_id' => $userCreate->id,
+            'organisation_id' => 1,
+            'parent_id' => $parentCreate->parent_id,
+            'dob' => now(),
+            'gender' => 'Male',
+            'education_level' => 'G1',
+        ];
+
+        $studentCreate = StudentEloquentModel::create($studentData);
     }
 }

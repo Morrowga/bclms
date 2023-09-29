@@ -11,8 +11,9 @@ use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquent
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class StudentEloquentModel extends Model implements HasMedia
@@ -32,8 +33,10 @@ class StudentEloquentModel extends Model implements HasMedia
     protected $fillable = [
         'user_id',
         'device_id',
+        'parent_id',
         'gender',
         'dob',
+        'organisation_id',
         'education_level',
         'num_gold_coins',
         'num_silver_coins',
@@ -55,13 +58,13 @@ class StudentEloquentModel extends Model implements HasMedia
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query->whereHas('user', function ($query) use ($search) {
                 $query
-                    ->where('first_name', 'like', '%'.$search.'%')
-                    ->orWhere('last_name', 'like', '%'.$search.'%');
+                    ->where('first_name', 'like', '%' . $search . '%')
+                    ->orWhere('last_name', 'like', '%' . $search . '%');
             });
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
@@ -80,14 +83,9 @@ class StudentEloquentModel extends Model implements HasMedia
         });
     }
 
-    public function b2cUsers()
+    public function organisation()
     {
-        return $this->belongsToMany(B2cUserEloquentModel::class, 'b2c_students', 'student_id', 'b2c_user_id');
-    }
-
-    public function organizations()
-    {
-        return $this->belongsToMany(OrganizationEloquentModel::class, 'organization_students', 'student_id', 'organization_id');
+        return $this->belongsTo(OrganisationEloquentModel::class, 'organisation_id', 'id');
     }
 
     public function classrooms()
@@ -102,7 +100,7 @@ class StudentEloquentModel extends Model implements HasMedia
 
     public function disability_types()
     {
-        return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'student_disability_types', 'student_id', 'disability_type_id');
+        return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'student_disability_type', 'student_id', 'disability_type_id');
     }
 
     public function learningneeds()
@@ -114,7 +112,10 @@ class StudentEloquentModel extends Model implements HasMedia
     {
         return $this->belongsTo(UserEloquentModel::class, 'user_id', 'id');
     }
-
+    public function parent()
+    {
+        return $this->belongsTo(ParentUserEloqeuntModel::class, 'parent_id')->with('user');
+    }
     public function groups()
     {
         return $this->belongsToMany(ClassroomGroupEloquentModel::class, 'group_students', 'student_id', 'classroom_group_id')->with('students');

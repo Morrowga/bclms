@@ -28,7 +28,7 @@ let props = defineProps([
     "roles_name",
     "flash",
     "auth",
-    "organizations",
+    "organisations",
 ]);
 let flash = computed(() => usePage().props.flash);
 let users = computed(() => usePage().props.auth.data.users);
@@ -67,7 +67,7 @@ let columns = [
         sortable: false,
     },
     {
-        label: "Organizations",
+        label: "Organisations",
         field: "orgainzations",
         sortable: false,
     },
@@ -145,6 +145,12 @@ const exportUser = () => {
 const fullName = (user) => {
     return (user?.first_name ?? "") + " " + (user?.last_name ?? "");
 };
+
+const showOrg = (user) => {
+    if (user) {
+        return user.organisation?.name;
+    }
+};
 </script>
 
 <template>
@@ -187,7 +193,7 @@ const fullName = (user) => {
                                 item_title="title"
                                 item_value="value"
                             />
-                            <ImportUser :organizations="props.organizations" />
+                            <ImportUser :organisations="props.organisations" />
                         </div>
                     </div>
                 </VCardText>
@@ -221,7 +227,13 @@ const fullName = (user) => {
 
                         <div v-if="props.column.field == 'orgainzations'">
                             <p class="">
-                                {{ props.row.b2b_user?.organization?.name }}
+                                {{
+                                    showOrg(
+                                        props.row?.b2b_user ??
+                                            props.row?.parents ??
+                                            null
+                                    )
+                                }}
                             </p>
                         </div>
 
@@ -233,7 +245,7 @@ const fullName = (user) => {
                             <span
                                 v-if="
                                     props.row.role.name ==
-                                        userRole.organization_admin ||
+                                        userRole.organisation_admin ||
                                     props.row.role.name ==
                                         userRole.bcsuperadmin ||
                                     props.row.role.name == userRole.bcstaff
@@ -342,7 +354,7 @@ const fullName = (user) => {
                                     >
                                         <p class="">
                                             {{
-                                                props.row.b2b_user?.organization
+                                                props.row.b2b_user?.organisation
                                                     ?.name
                                             }}
                                         </p>
@@ -401,7 +413,7 @@ const fullName = (user) => {
                                         </VMenu>
                                     </div>
                                 </template>
-                               
+
                             </VCol>
                         </VRow>
                     </template> -->

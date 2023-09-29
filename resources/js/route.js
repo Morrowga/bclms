@@ -7,18 +7,18 @@ const pages = {
     /***
      * this below contains  Orgainzations lists that will used for superadmin
      *
-     *  Index,Create,Edit,Show Organizations
+     *  Index,Create,Edit,Show Organisations
      *
      */
-    "BlendedConcept/Organization/Presentation/Resources/Organization/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/Index.vue'),
+    "BlendedConcept/Organisation/Presentation/Resources/Organisation/Index": import('../../src/BlendedConcept/Organisation/Presentation/Resources/Organisation/Index.vue'),
 
-    "BlendedConcept/Organization/Presentation/Resources/Organization/Create": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/Create.vue'),
+    "BlendedConcept/Organisation/Presentation/Resources/Organisation/Create": import('../../src/BlendedConcept/Organisation/Presentation/Resources/Organisation/Create.vue'),
 
-    "BlendedConcept/Organization/Presentation/Resources/Organization/Edit": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/Edit.vue'),
+    "BlendedConcept/Organisation/Presentation/Resources/Organisation/Edit": import('../../src/BlendedConcept/Organisation/Presentation/Resources/Organisation/Edit.vue'),
 
-    "BlendedConcept/Organization/Presentation/Resources/Organization/Show": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/Show.vue'),
+    "BlendedConcept/Organisation/Presentation/Resources/Organisation/Show": import('../../src/BlendedConcept/Organisation/Presentation/Resources/Organisation/Show.vue'),
 
-    "BlendedConcept/Organization/Presentation/Resources/Organization/AddSubscription": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/AddSubscription.vue'),
+    "BlendedConcept/Organisation/Presentation/Resources/Organisation/AddSubscription": import('../../src/BlendedConcept/Organisation/Presentation/Resources/Organisation/AddSubscription.vue'),
 
 
     /***
@@ -111,14 +111,14 @@ const pages = {
     "BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit": import('../../src/BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit.vue'),
 
     //org teacher and student list
-    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/Index.vue'),
-    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/ViewTeacherDetail": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/ViewTeacherDetail.vue'),
-    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/EditTeacher": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/EditTeacher.vue'),
-    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/CreateTeacher": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/CreateTeacher.vue'),
+    "BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/Index": import('../../src/BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/Index.vue'),
+    "BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/ViewTeacherDetail": import('../../src/BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/ViewTeacherDetail.vue'),
+    "BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/EditTeacher": import('../../src/BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/EditTeacher.vue'),
+    "BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/CreateTeacher": import('../../src/BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfTeacher/CreateTeacher.vue'),
 
-    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail.vue'),
-    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/EditStudent": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/EditStudent.vue'),
-    "BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/CreateStudent": import('../../src/BlendedConcept/Organization/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/CreateStudent.vue'),
+    "BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail": import('../../src/BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/ViewStudentDetail.vue'),
+    "BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/EditStudent": import('../../src/BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/EditStudent.vue'),
+    "BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/CreateStudent": import('../../src/BlendedConcept/Organisation/Presentation/Resources/OrgAdminListOfUsers/components/OrgAdminListOfStudent/CreateStudent.vue'),
 
 
 
@@ -249,7 +249,7 @@ const pages = {
     //Resource
     "BlendedConcept/Library/Presentation/Resources/Resource/Index": import('../../src/BlendedConcept/Library/Presentation/Resources/Resource/Index.vue'),
 
-    //list of organization teacher
+    //list of organisation teacher
 
     "BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index" : import('../../src/BlendedConcept/Teacher/Presentation/Resources/OrgTeacher/ListOfTeachers/Index.vue'),
 

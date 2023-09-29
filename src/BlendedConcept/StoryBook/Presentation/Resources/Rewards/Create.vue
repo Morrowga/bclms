@@ -38,7 +38,7 @@ let handleSubmit = () => {
         onSuccess: (response) => {
             console.log(response);
             SuccessDialog({
-                title: "You've successfully created organization",
+                title: "You've successfully created organisation",
             });
         },
         onError: (error) => {

@@ -53,6 +53,7 @@ class HandleInertiaRequest extends Middleware
             'auth' => auth()->check() ? new AuthResource(auth()->user()) : '',
             'site_settings' => SiteSettingEloquentModel::find(1) ?? '',
             'system_themes' => SystemThemeEloquentModel::first() ?? '',
+            'route_site_url' => env("APP_URL"),
             // 'site_logo' => SiteSettingEloquentModel::find(1)->getFirstMedia('site_logo')->original_url ?? '',
             // 'fav_icon' => SiteSettingEloquentModel::find(1)->getFirstMedia('fav_icon')->original_url ?? '',
             // import error handling as csv format

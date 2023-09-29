@@ -11,6 +11,7 @@ class Question extends Entity
         public readonly int $survey_id,
         public readonly string $question_type,
         public readonly string $question,
+        public readonly int $order
     ) {
     }
 
@@ -21,6 +22,7 @@ class Question extends Entity
             'survey_id' => $this->survey_id,
             'question_type' => $this->question_type,
             'question' => $this->question,
+            'order' => $this->order,
         ];
     }
 }

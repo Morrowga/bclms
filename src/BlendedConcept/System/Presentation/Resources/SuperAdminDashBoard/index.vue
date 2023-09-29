@@ -5,7 +5,7 @@ import avatar1 from "@images/avatars/avatar-1.png";
 import avatar2 from "@images/avatars/avatar-2.png";
 import avatar3 from "@images/avatars/avatar-3.png";
 import avatar4 from "@images/avatars/avatar-4.png";
-import LatestModifiedOrganizations from "./LatestModifiedOrganizations.vue";
+import LatestModifiedOrganisations from "./LatestModifiedOrganisations.vue";
 import TotalUsers from "./TotalUsers.vue";
 
 const avatars = [avatar1, avatar2, avatar3, avatar4];
@@ -19,10 +19,10 @@ let orgainzations_users = defineProps(["orgainzations_users",'usercount']);
         <section class="role-card-section">
             <VRow>
                 <RoleCard
-                    title="Organizations"
+                    title="Organisations"
                     btnText="Manage"
-                    :totalText="`Total ${usercount?.organization_count} Organizations`"
-                    :url="route('organizations.index')"
+                    :totalText="`Total ${usercount?.organisation_count} Organisations`"
+                    :url="route('organisations.index')"
                 />
                 <RoleCard
                     title="Subscriptions"
@@ -41,15 +41,15 @@ let orgainzations_users = defineProps(["orgainzations_users",'usercount']);
         </section>
         <br />
         <br />
-        <!-- latest modified organization section -->
+        <!-- latest modified organisation section -->
         <section class="latest-modified">
             <div class="header">
-                <span class="tiggie-title">Recent Organizations</span>
+                <span class="tiggie-title">Recent Organisations</span>
                 <br />
             </div>
             <br />
-            <LatestModifiedOrganizations
-                :organization="orgainzations_users.orgainzations_users[1]"
+            <LatestModifiedOrganisations
+                :organisation="orgainzations_users.orgainzations_users[1]"
             />
         </section>
         <br />

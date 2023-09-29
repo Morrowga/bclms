@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\System\Presentation\HTTP;
 
 use Inertia\Inertia;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetB2BTeachers;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetB2bTeachersByOrganization;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetB2bTeachersByOrganisation;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetB2CUsers;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetBcStaff;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserList;
@@ -17,8 +17,8 @@ use Src\BlendedConcept\System\Application\UseCases\Commands\DeleteAnnounmentComm
 use Src\BlendedConcept\System\Application\UseCases\Commands\StoreAnnounmentCommand;
 use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateAnnounmentCommand;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetAnnounmetAllWithPagination;
-use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganizationList;
-use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganizations;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganisationList;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganisations;
 use Src\BlendedConcept\System\Application\UseCases\Queries\ShowAnnouncement;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
 use Src\Common\Infrastructure\Laravel\Controller;
@@ -30,7 +30,7 @@ class AnnouncementController extends Controller
     public function index()
     {
         // Authorize user
-        // abort_if(authorize('view', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('view', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -40,8 +40,8 @@ class AnnouncementController extends Controller
             // Get user list
             $users = (new GetUserList())->handle();
 
-            // Get organization list
-            $organizations = (new GetOrganizationList())->handle();
+            // Get organisation list
+            $organisations = (new GetOrganisationList())->handle();
 
             // Get announcements with pagination
             $announcements = (new GetAnnounmetAllWithPagination($filters))->handle();
@@ -50,7 +50,7 @@ class AnnouncementController extends Controller
             return Inertia::render(config('route.announment.index'), [
                 'announcements' => $announcements,
                 'users' => $users,
-                'organizations' => $organizations,
+                'organisations' => $organisations,
             ]);
         } catch (\Exception $e) {
             return Inertia::render(config('route.announment.index'))->with('sytemErrorMessage', $e->getMessage());
@@ -63,10 +63,10 @@ class AnnouncementController extends Controller
         $teachers = (new GetB2BTeachers())->handle();
         $b2cUsers = (new GetB2CUsers())->handle();
         $bcStaff = (new GetBcStaff())->handle();
-        $organizations = (new GetOrganizations($filers = []))->handle();
+        $organisations = (new GetOrganisations($filers = []))->handle();
 
         return Inertia::render(config('route.announment.create'), [
-            'organizations' => $organizations['default_organizations'],
+            'organisations' => $organisations['default_organisations'],
             'teachers' => $teachers,
             'b2cUsers' => $b2cUsers,
             'bcStaff' => $bcStaff,
@@ -81,8 +81,7 @@ class AnnouncementController extends Controller
      */
     public function store(StoreAnnouncementRequest $request)
     {
-
-        // abort_if(authorize('create', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('create', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $request->validated();
@@ -111,14 +110,14 @@ class AnnouncementController extends Controller
     {
 
         // $announcement = (new ShowAnnouncement($id))->handle();
-        // $organizations = (new GetOrganizationList())->handle();
+        // $organisations = (new GetOrganisationList())->handle();
         // $teachers = (new GetB2BTeachers())->handle();
         // $b2cUsers = (new GetB2CUsers())->handle();
         // $bcStaff = (new GetBcStaff())->handle();
-        // $organizations = (new GetOrganizations())->handle();
+        // $organisations = (new GetOrganisations())->handle();
 
         // return Inertia::render(config('route.announment.edit'), [
-        //     'organizations' => $organizations,
+        //     'organisations' => $organisations,
         //     'announcement' => $announcement,
         //     'teachers' => $teachers,
         //     'b2cUsers' => $b2cUsers,
@@ -128,7 +127,7 @@ class AnnouncementController extends Controller
 
     public function getB2bTeachers($orgId)
     {
-        $b2bteachers = (new GetB2bTeachersByOrganization($orgId))->handle();
+        $b2bteachers = (new GetB2bTeachersByOrganisation($orgId))->handle();
 
         return response()->json($b2bteachers);
     }

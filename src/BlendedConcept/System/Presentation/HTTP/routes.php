@@ -49,11 +49,11 @@ Route::group(['middleware' => ['auth']], function () {
     /***
      * This route handles system-related notifications.
      *
-     * It is used when the admin sends actions to users, such as organizations or individuals.
+     * It is used when the admin sends actions to users, such as organisations or individuals.
      * The purpose of this route is to retrieve notifications from the system.
      *
      * Notifications can be sent to inform users about various actions or updates within the system.
-     * Examples of such actions include changes to an organization's settings, updates on user accounts,
+     * Examples of such actions include changes to an organisation's settings, updates on user accounts,
      * or important announcements from the admin.
      * This route provides a way for users to receive these notifications and stay informed about
      * relevant activities happening within the system.

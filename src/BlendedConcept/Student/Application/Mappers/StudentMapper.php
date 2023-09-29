@@ -32,7 +32,7 @@ class StudentMapper
             $StudentEloquent = StudentEloquentModel::query()->findOrFail($student->student_id);
         }
 
-        //set organization_id according to auth's organization_id
+        //set organisation_id according to auth's organisation_id
         $StudentEloquent->user_id = auth()->user()->user_id;
         $StudentEloquent->device_id = $student->device_id;
         $StudentEloquent->gender = $student->gender;

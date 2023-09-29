@@ -7,7 +7,7 @@ namespace Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
 
 class StoryBookVersionEloquentModel extends Model
 {

@@ -7,7 +7,7 @@ import { toastAlert } from "@Composables/useToastAlert";
 
 import B2CRegister from "./B2CRegister.vue";
 import B2BRegister from "./B2BRegister.vue";
-let organization = ref(false);
+let organisation = ref(false);
 let isAlertVisible = ref(true);
 const items = [
     "California",

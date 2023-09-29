@@ -17,12 +17,13 @@ class SubscriptionData
         public readonly ?string $stripe_price,
         public readonly ?array $b2b_subscription,
         public readonly ?int $plan_id,
-        public readonly ?int $user_id
+        public readonly ?int $teacher_id
     ) {
     }
 
     public static function fromRequest(Request $request, $subscription): SubscriptionData
     {
+
         return new self(
             id: $subscription->id,
             start_date: $request->start_date,
@@ -33,7 +34,7 @@ class SubscriptionData
             stripe_price: $request->stripe_price,
             b2b_subscription: $request->b2b_subscription,
             plan_id: $request->plan_id,
-            user_id: $request->user_id
+            teacher_id: $request->teacher_id
         );
     }
 
@@ -49,7 +50,7 @@ class SubscriptionData
             stripe_price: $subscription->stripe_price,
             b2b_subscription: $subscription->b2b_subscription,
             plan_id: $subscription->b2b_subscription->plan->id,
-            user_id: $subscription->b2b_subscription->user->id
+            teacher_id: $subscription->b2b_subscription->user->id
         );
     }
 
@@ -65,7 +66,7 @@ class SubscriptionData
             'stripe_price' => $this->stripe_price,
             'b2b_subscription' => $this->b2b_subscription,
             'plan_id' => $this->plan_id,
-            'user_id' => $this->user_id,
+            'teacher_id' => $this->teacher_id,
         ];
     }
 }

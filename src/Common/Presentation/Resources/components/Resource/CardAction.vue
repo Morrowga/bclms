@@ -35,7 +35,7 @@ const publish = () => {
     });
 };
 const checkIsOrg = () => {
-    return user_role.value == "Organization Admin" ? true : false;
+    return user_role.value == "Organisation Admin" ? true : false;
 };
 </script>
 <template #activator="{ props }">
@@ -53,7 +53,7 @@ const checkIsOrg = () => {
                     </v-list-item>
                     <v-list-item @click="publish()" v-if="!checkIsOrg()">
                         <v-list-item-title
-                            >Publish to Organization</v-list-item-title
+                            >Publish to Organisation</v-list-item-title
                         >
                     </v-list-item>
                 </v-list>

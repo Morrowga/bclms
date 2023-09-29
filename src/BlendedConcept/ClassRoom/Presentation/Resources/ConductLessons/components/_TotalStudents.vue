@@ -37,7 +37,7 @@ let rows = [
         name: "User One",
         disability_types: [
             {
-                title: "Organization",
+                title: "Organisation",
             },
             {
                 title: "User",
@@ -51,7 +51,7 @@ let rows = [
         name: "User Two",
         disability_types: [
             {
-                title: "Organization",
+                title: "Organisation",
             },
             {
                 title: "User",
@@ -65,7 +65,7 @@ let rows = [
         name: "User Three",
         disability_types: [
             {
-                title: "Organization",
+                title: "Organisation",
             },
             {
                 title: "User",

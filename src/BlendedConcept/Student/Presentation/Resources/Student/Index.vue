@@ -47,7 +47,7 @@ let columns = [
     },
     {
         label: "Organisation / Parent",
-        field: "organization",
+        field: "organisation",
         sortable: false,
     },
 ];
@@ -81,13 +81,14 @@ watch(serverPerPage, function (value) {
 const exportUser = () => {
     const array = props.students.data;
     let data = array.map(
-        ({ image, media, organizations, user, deleted_at, ...rest }) => rest
+        ({ image, media, organisations, user, deleted_at, ...rest }) => rest
     );
     const fileName = "Export Students";
     const exportType = exportFromJSON.types.csv;
     if (data) exportFromJSON({ data, fileName, exportType });
     return;
 };
+const selectionChanged = () => {};
 </script>
 
 <template>
@@ -168,55 +169,37 @@ const exportUser = () => {
                             </div>
                             <div v-if="props.column.field == 'email'">
                                 <div class="d-flex flex-row gap-2">
-                                    <span>{{ props.row?.user.email }}</span>
+                                    <span>{{
+                                        props.row?.parent?.user?.email
+                                    }}</span>
                                 </div>
                             </div>
                             <div v-if="props.column.field == 'type'">
-                                <div v-if="props.row.organizations.length > 0">
-                                    <span>Organization</span>
+                                <div v-if="props.row.organisation">
+                                    <span>Organisation</span>
                                 </div>
                                 <div v-else>
                                     <span>BC</span>
                                 </div>
                             </div>
-                            <div v-if="props.column.field == 'organization'">
+                            <div v-if="props.column.field == 'organisation'">
                                 <div class="">
-                                    <div
-                                        v-if="
-                                            props.row.organizations.length > 0
-                                        "
-                                    >
+                                    <div>
                                         <Link
                                             :href="
-                                                route('organizations.show', {
-                                                    id: props.row
-                                                        .organizations?.[0]?.id,
+                                                route('organisations.show', {
+                                                    id: props.row.organisation
+                                                        .id,
                                                 })
                                             "
                                         >
                                             <span
                                                 class="text-default-color cu-pointer"
                                                 >{{
-                                                    props.row.organizations?.[0]
+                                                    props.row.organisation
                                                         ?.name ?? "-"
                                                 }}</span
                                             >
-                                        </Link>
-                                    </div>
-                                    <div v-else>
-                                        <Link
-                                            :href="
-                                                route('users.show', { id: 1 })
-                                            "
-                                            class="d-flex flex-row gap-2 text-default-color"
-                                        >
-                                            <img
-                                                src="/images/defaults/avator.png"
-                                                class="user-profile-image"
-                                            />
-                                            <span>
-                                                {{ props.row.organization }}
-                                            </span>
                                         </Link>
                                     </div>
                                 </div>

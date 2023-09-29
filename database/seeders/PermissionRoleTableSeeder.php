@@ -20,7 +20,7 @@ class PermissionRoleTableSeeder extends Seeder
             ['name' => 'BC Subscriber', 'guard_name' => 'web'],
             ['name' => 'BC Staff', 'guard_name' => 'web'],
             ['name' => 'Teacher', 'guard_name' => 'web'],
-            ['name' => 'Organization Admin', 'guard_name' => 'web'],
+            ['name' => 'Organisation Admin', 'guard_name' => 'web'],
             ['name' => 'Student', 'guard_name' => 'web'],
         ];
         foreach ($datas as $data) {
@@ -40,27 +40,27 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_library',
                         'show_user',
                         'show_role',
-                        'show_organization',
+                        'show_organisation',
                         'show_announcement',
                         'show_announcement',
                         'edit_user',
                         'edit_student',
                         'edit_role',
                         'edit_permission',
-                        'edit_organization',
+                        'edit_organisation',
                         'delete_user',
                         'delete_role',
                         'delete_permission',
-                        'delete_organization',
+                        'delete_organisation',
                         'create_user',
                         'create_role',
                         'create_permission',
-                        'create_organization',
+                        'create_organisation',
                         'access_user',
                         'access_settings',
                         'access_role',
                         'access_permission',
-                        'access_organization',
+                        'access_organisation',
                         'access_announcement',
                         'access_plan',
                         'access_pagebuilder',
@@ -119,7 +119,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_plan',
                         'access_pagebuilder',
                         'access_library',
-                        'access_bcstaffOrganization',
+                        'access_bcstaffOrganisation',
                         'access_bcstaffSubscription',
                         'access_game',
                         'delete_game',
@@ -146,7 +146,7 @@ class PermissionRoleTableSeeder extends Seeder
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
-            } elseif ($data['name'] == 'Organization Admin') {
+            } elseif ($data['name'] == 'Organisation Admin') {
                 $role = RoleEloquentModel::create($data);
                 $permission = PermissionEloquentModel::whereIn(
                     'name',

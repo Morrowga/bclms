@@ -4,12 +4,12 @@ import ImportUserTypeData from "./ImportUserTypeData.vue";
 
 const isDialogVisible = ref(false);
 
-const props = defineProps(["organizations"]);
+const props = defineProps(["organisations"]);
 
-// organization name change data format to arrary data types
-const items = [...props.organizations];
+// organisation name change data format to arrary data types
+const items = [...props.organisations];
 
-const selectedOrganization = ref(null);
+const selectedOrganisation = ref(null);
 const showSecondSelect = ref(false);
 const secondSelectItems = ref([
     { display: "2 Teachers", value: "teacher" },
@@ -18,20 +18,20 @@ const secondSelectItems = ref([
 const selectedValueForSecondSelect = ref(null);
 
 const selectedType = ref(null);
-const organization_name = ref("");
-watch(selectedOrganization, (newValue) => {
+const organisation_name = ref("");
+watch(selectedOrganisation, (newValue) => {
     if (newValue) {
         showSecondSelect.value = true;
-        let mutateSecondItem = items.map((organization) => {
-            if (organization.id == newValue) {
-                organization_name.value = organization.name;
+        let mutateSecondItem = items.map((organisation) => {
+            if (organisation.id == newValue) {
+                organisation_name.value = organisation.name;
                 secondSelectItems.value = [
                     {
-                        display: `${organization?.teachers_count} Teachers`,
+                        display: `${organisation?.teachers_count} Teachers`,
                         value: "teacher",
                     },
                     {
-                        display: `${organization?.students_count} Students`,
+                        display: `${organisation?.students_count} Students`,
                         value: "student",
                     },
                 ];
@@ -53,7 +53,7 @@ watch(selectedValueForSecondSelect, () => {
     }
 });
 const clearForm = () => {
-    selectedOrganization.value = "";
+    selectedOrganisation.value = "";
     isDialogVisible.value = false;
 };
 </script>
@@ -81,12 +81,12 @@ const clearForm = () => {
             </VCardTitle>
             <VCardText>
                 <VLabel class="tiggie-label required" v-if="!showSecondSelect"
-                    >Organization</VLabel
+                    >Organisation</VLabel
                 >
                 <div v-else>
                     <VLabel class="tiggie-label"
                         ><strong class="mr-2 l-blue">Originization:</strong>
-                        {{ organization_name }}</VLabel
+                        {{ organisation_name }}</VLabel
                     >
                     <div class="mt-2">
                         <VLabel class="tiggie-label required">User Type</VLabel>
@@ -97,10 +97,10 @@ const clearForm = () => {
                     density="compact"
                     :items="items"
                     v-if="!showSecondSelect"
-                    v-model="selectedOrganization"
+                    v-model="selectedOrganisation"
                     item-title="name"
                     item-value="id"
-                    placeholder="Select organization to import users for"
+                    placeholder="Select organisation to import users for"
                 />
                 <VSelect
                     class="mt-3 second-select-box"
@@ -130,7 +130,7 @@ const clearForm = () => {
                 </VBtn>
                 <ImportUserTypeData
                     :type="selectedType"
-                    :organization_id="selectedOrganization"
+                    :organisation_id="selectedOrganisation"
                     @closeDialog="isDialogVisible = false"
                 />
             </VCardActions>

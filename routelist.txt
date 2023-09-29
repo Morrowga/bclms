@@ -9,10 +9,10 @@ http://bc-lms.test/announcements
 http://bc-lms.test/announcements/create
 
 
-Organizations
-http://bc-lms.test/organizations/create
-http://bc-lms.test/organizations
-http://bc-lms.test/organizations/show
+Organisations
+http://bc-lms.test/organisations/create
+http://bc-lms.test/organisations
+http://bc-lms.test/organisations/show
 
 
 User Profile

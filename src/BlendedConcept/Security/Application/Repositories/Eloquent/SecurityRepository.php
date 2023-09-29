@@ -2,29 +2,30 @@
 
 namespace Src\BlendedConcept\Security\Application\Repositories\Eloquent;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
-use Src\BlendedConcept\Security\Application\DTO\PermissionData;
+use Src\BlendedConcept\Security\Domain\Model\User;
 use Src\BlendedConcept\Security\Application\DTO\RoleData;
 use Src\BlendedConcept\Security\Application\DTO\UserData;
-use Src\BlendedConcept\Security\Application\DTO\UserProfileData;
-use Src\BlendedConcept\Security\Application\Mappers\PermissionMapper;
-use Src\BlendedConcept\Security\Application\Mappers\RoleMapper;
-use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
-use Src\BlendedConcept\Security\Domain\Model\Entities\Permission;
 use Src\BlendedConcept\Security\Domain\Model\Entities\Role;
-use Src\BlendedConcept\Security\Domain\Model\User;
-use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
-use Src\BlendedConcept\Security\Domain\Resources\PermissionResource;
 use Src\BlendedConcept\Security\Domain\Resources\RoleResource;
 use Src\BlendedConcept\Security\Domain\Resources\UserResource;
+use Src\BlendedConcept\Security\Application\DTO\PermissionData;
+use Src\BlendedConcept\Security\Application\Mappers\RoleMapper;
+use Src\BlendedConcept\Security\Application\Mappers\UserMapper;
+use Src\BlendedConcept\Security\Application\DTO\UserProfileData;
+use Src\BlendedConcept\Security\Domain\Model\Entities\Permission;
+use Src\BlendedConcept\Security\Domain\Resources\PermissionResource;
+use Src\BlendedConcept\Security\Application\Mappers\PermissionMapper;
+use Src\BlendedConcept\Security\Domain\Repositories\SecurityRepositoryInterface;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\PermissionEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\RoleEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 
 class SecurityRepository implements SecurityRepositoryInterface
 {
@@ -41,7 +42,7 @@ class SecurityRepository implements SecurityRepositoryInterface
     {
         //set roles
         $users = UserResource::collection(UserEloquentModel::filter($filters)
-            ->with('role', 'b2bUser')
+            ->with('role', 'b2bUser', 'parents')
             ->whereNot('role_id', 6)
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
@@ -52,38 +53,33 @@ class SecurityRepository implements SecurityRepositoryInterface
     public function getB2bTeachers()
     {
         //set roles
-        $b2bteachers = B2bUserEloquentModel::with('users')
-            ->whereHas('users', function ($query) {
-                $query->where('role_id', 4);
-            })
-            ->orderBy('b2b_user_id', 'desc')->get();
+        $b2bteachers = TeacherEloquentModel::with('user')
+            ->where('organisation_id', '!=', null)
+            ->orderBy('teacher_id', 'desc')->get();
 
-        return UserResource::collection($b2bteachers->pluck('users')->flatten());
+        return UserResource::collection($b2bteachers->pluck('user')->flatten());
     }
 
-    public function getB2bTeachersByOrganization($id)
+    public function getB2bTeachersByOrganisation($id)
     {
-        $organization = OrganizationEloquentModel::where('org_admin_id', $id)->first();
-        if (! empty($organization)) {
-            $b2bteachers = B2bUserEloquentModel::with('users')
-                ->where('organization_id', $organization->id)
-                ->whereHas('users', function ($query) {
-                    $query->where('role_id', 4);
-                })
-                ->orderBy('b2b_user_id', 'desc')->get();
+        $organisation = OrganisationEloquentModel::where('org_admin_id', $id)->first();
+        if (!empty($organisation)) {
+            $b2bteachers = TeacherEloquentModel::with('user')
+                ->where('organisation_id', $organisation->id)
+                ->orderBy('teacher_id', 'desc')->get();
 
-            return UserResource::collection($b2bteachers->pluck('users')->flatten());
+            return UserResource::collection($b2bteachers->pluck('user')->flatten());
         }
     }
 
     public function getB2CUsers()
     {
         //set roles
-        $b2cUsers = B2cUserEloquentModel::with('users')
-            ->whereHas('users')
-            ->orderBy('b2c_user_id', 'desc')->get();
+        $b2cUsers = TeacherEloquentModel::with('user')
+            ->where('organisation_id', '=', null)
+            ->orderBy('teacher_id', 'desc')->get();
 
-        return UserResource::collection($b2cUsers->pluck('users')->flatten());
+        return UserResource::collection($b2cUsers->pluck('user')->flatten());
     }
 
     public function getBcStaff($filters = [])
@@ -163,11 +159,11 @@ class SecurityRepository implements SecurityRepositoryInterface
 
         // Add filters to the query
         if (isset($filters['name'])) {
-            $query->where('name', 'like', '%'.$filters['name'].'%');
+            $query->where('name', 'like', '%' . $filters['name'] . '%');
         }
 
         if (isset($filters['email'])) {
-            $query->where('email', 'like', '%'.$filters['email'].'%');
+            $query->where('email', 'like', '%' . $filters['email'] . '%');
         }
 
         if (isset($filters['role'])) {
@@ -261,9 +257,9 @@ class SecurityRepository implements SecurityRepositoryInterface
     public function getUserForDashBoard()
     {
         $users = UserEloquentModel::with('role')->latest()->take(5)->get();
-        $organizations = OrganizationEloquentModel::latest()->take(5)->get();
+        $organisations = OrganisationEloquentModel::latest()->take(5)->get();
 
-        return [$users, $organizations];
+        return [$users, $organisations];
     }
 
     public function changepassword($request)
@@ -299,7 +295,7 @@ class SecurityRepository implements SecurityRepositoryInterface
 
     public function getUserListCount()
     {
-        $organization_count = OrganizationEloquentModel::count();
+        $organisation_count = OrganisationEloquentModel::count();
 
         $b2csubscriper_count = UserEloquentModel::whereHas('role', function ($query) {
             $query->where('name', config('userrole.bcscubscriber'));
@@ -308,7 +304,7 @@ class SecurityRepository implements SecurityRepositoryInterface
         $user_count = UserEloquentModel::count();
 
         return [
-            'organization_count' => $organization_count,
+            'organisation_count' => $organisation_count,
             'b2csubscriper_count' => $b2csubscriper_count,
             'user_count' => $user_count,
         ];

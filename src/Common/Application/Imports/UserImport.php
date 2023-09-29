@@ -12,8 +12,8 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class UserImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithHeadingRow, WithValidation
 {
@@ -47,11 +47,10 @@ class UserImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithHead
                 ];
                 $userEloquenet = UserEloquentModel::create($create_data);
 
-                B2bUserEloquentModel::create([
+                TeacherEloquentModel::create([
                     'user_id' => $userEloquenet->id,
-                    'organization_id' => $this->request->organization_id,
+                    'organisation_id' => $this->request->organisation_id,
                     'allocated_storage_limit' => 0,
-                    'has_full_library_access' => false,
                 ]);
             }
             DB::commit();

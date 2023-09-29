@@ -9,7 +9,7 @@ use Src\BlendedConcept\Disability\Domain\Model\Entities\Device;
 use Src\BlendedConcept\Disability\Domain\Repositories\DeviceRepositoryInterface;
 use Src\BlendedConcept\Disability\Domain\Resources\DeviceResource;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
 
 class DeviceRepository implements DeviceRepositoryInterface
 {

@@ -13,6 +13,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyEmail
 {
@@ -23,7 +24,6 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     // for images
     protected $appends = [
         'image',
-        'organization_id',
         'image_url',
         'full_name',
     ];
@@ -99,13 +99,13 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     {
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query
-                ->where('first_name', 'like', '%'.$search.'%')
-                ->orWhere('email', 'like', '%'.$search.'%')
-                ->orWhere('last_name', 'like', '%'.$search.'%');
+                ->where('first_name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('last_name', 'like', '%' . $search . '%');
         });
         $query->when($filters['roles'] ?? false, function ($query, $role) {
             $query->whereHas('roles', function ($query) use ($role) {
-                $query->where('name', 'like', '%'.$role.'%');
+                $query->where('name', 'like', '%' . $role . '%');
             });
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
@@ -123,28 +123,27 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
 
     public function getFullNameAttribute()
     {
-        return $this->first_name.' '.$this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function role_user()
     {
         return $this->belongsTo(RoleEloquentModel::class, 'role_id');
     }
-
     public function b2bUser()
     {
-        return $this->belongsTo(B2bUserEloquentModel::class, 'id', 'user_id')->with('organization');
+        return $this->hasOne(TeacherEloquentModel::class, 'user_id', 'id')->with('organisation');
     }
 
-    public function b2cUser()
-    {
-        return $this->belongsTo(B2cUserEloquentModel::class, 'user_id');
-    }
 
-    public function getOrganizationIdAttribute()
+    public function parents()
     {
-        return $this->b2bUser->organization_id ?? null;
+        return $this->hasOne(ParentUserEloqeuntModel::class, 'user_id', 'id')->with('organisation');
     }
+    // public function getOrganisationIdAttribute()
+    // {
+    //     return $this->b2bUser->organisation_id ?? null;
+    // }
 
     public function classrooms()
     {

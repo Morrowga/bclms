@@ -21,7 +21,7 @@ class PlanController
 {
     public function index()
     {
-        // Authorize user to view organization
+        // Authorize user to view organisation
 
         abort_if(authorize('view', PlanPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -48,7 +48,7 @@ class PlanController
 
     public function store(StorePlanRequest $request)
     {
-        // Abort if the user is not authorized to create organizations
+        // Abort if the user is not authorized to create organisations
         // abort_if(authorize('create', PlanPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {

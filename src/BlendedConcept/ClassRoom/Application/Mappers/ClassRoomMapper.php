@@ -12,7 +12,7 @@ class ClassRoomMapper
     {
         return new ClassRoom(
             id: $classroom_id,
-            organization_id: $request->organization_id,
+            organisation_id: $request->organisation_id,
             name: $request->name,
             description: $request->description,
             classroom_photo: $request->classroom_photo,
@@ -29,7 +29,7 @@ class ClassRoomMapper
             $classRoomEloquent = ClassRoomEloquentModel::query()->findOrFail($classRoom->id);
         }
         $classRoomEloquent->id = $classRoom->id;
-        $classRoomEloquent->organization_id = auth()->user()->organization_id;
+        $classRoomEloquent->organisation_id = auth()->user()->organisation_id;
         $classRoomEloquent->name = $classRoom->name;
         $classRoomEloquent->description = $classRoom->description;
         $classRoomEloquent->classroom_photo = $classRoom->classroom_photo;

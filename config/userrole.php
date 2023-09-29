@@ -5,5 +5,5 @@ return [
     'bcscubscriber' => 'BC Subscriber',
     'bcstaff' => 'BC Staff',
     'teacher' => 'Teacher',
-    'organization_admin' => 'Organization Admin',
+    'organisation_admin' => 'Organisation Admin',
 ];

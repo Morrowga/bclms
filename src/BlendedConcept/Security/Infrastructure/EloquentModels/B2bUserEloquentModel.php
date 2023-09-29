@@ -6,7 +6,7 @@ namespace Src\BlendedConcept\Security\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\OrganizationEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 
 class B2bUserEloquentModel extends Authenticatable
 {
@@ -17,7 +17,7 @@ class B2bUserEloquentModel extends Authenticatable
     protected $fillable = [
         'b2b_user_id',
         'user_id',
-        'organization_id',
+        'organisation_id',
         'allocated_storage_limit',
         'has_full_library_access',
     ];
@@ -27,8 +27,8 @@ class B2bUserEloquentModel extends Authenticatable
         return $this->belongsTo(UserEloquentModel::class, 'user_id');
     }
 
-    public function organization()
+    public function organisation()
     {
-        return $this->hasOne(OrganizationEloquentModel::class, 'id', 'organization_id');
+        return $this->hasOne(OrganisationEloquentModel::class, 'id', 'organisation_id');
     }
 }

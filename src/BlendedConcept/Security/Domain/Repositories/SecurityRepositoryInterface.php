@@ -27,8 +27,8 @@ interface SecurityRepositoryInterface
     //bcstaff
     public function getBcStaff($filters = []);
 
-    //b2bteacherbyorganization
-    public function getB2bTeachersByOrganization($id);
+    //b2bteacherbyorganisation
+    public function getB2bTeachersByOrganisation($id);
 
     // get only user name
     public function getUsersName();

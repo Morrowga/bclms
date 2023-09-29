@@ -10,25 +10,36 @@ import {
     integerValidator,
 } from "@validators";
 import MultiSelectBox from "@mainRoot/components/MultiSelectBox/MultiSelectBox.vue";
-let props = defineProps(["organizations", "b2cUsers", "teachers", "bcStaff"]);
+let props = defineProps(["organisations", "b2cUsers", "teachers", "bcStaff", "auth"]);
 
 let groupSelectBox = ["Super Admin", "BC Staff", "Organisation Admin"];
-const tos = ref([
-    "BC Staff",
-    "Organization Admin",
-    "Organization Teacher",
-    "B2C Users",
-]);
+console.log(props.auth.data.roles.id);
+const tos = ref(null);
+if(props.auth.data.roles.id === 3){
+    tos.value = [
+        "Organisation Admin",
+        "Organisation Teacher",
+        "B2C Users",
+    ];
+} else {
+    tos.value = [
+        "BC Staff",
+        "Organisation Admin",
+        "Organisation Teacher",
+        "B2C Users",
+    ];
+}
+
 
 const visibleToSelectBox = ref(true);
 const visibleToOriginizationList = ref(true);
-const visibleToOrganizationSelectBox = ref(true);
+const visibleToOrganisationSelectBox = ref(true);
 const visibleToB2CUserSelectBox = ref(true);
 const visibleToTeacherSelectBox = ref(true);
 const visibleToBcStaffSelectBox = ref(true);
 const visibleToB2bTeacherList = ref(true);
 
-let organization_user_ids = ref([]);
+let organisation_user_ids = ref([]);
 let b2c_user_ids = ref([]);
 let b2b_teacher_ids = ref([]);
 let bc_staff_ids = ref([]);
@@ -41,7 +52,6 @@ const form = useForm({
     message: "",
     to: "",
     by: "Select Group",
-    org: [],
     users: [],
 });
 
@@ -53,7 +63,7 @@ watch(
                 visibleToOriginizationList.value = false;
                 visibleToB2bTeacherList.value = false;
                 visibleToSelectBox.value = true;
-                visibleToOrganizationSelectBox.value = true;
+                visibleToOrganisationSelectBox.value = true;
                 visibleToB2CUserSelectBox.value = true;
                 visibleToTeacherSelectBox.value = true;
                 visibleToBcStaffSelectBox.value = true;
@@ -61,7 +71,7 @@ watch(
                 visibleToSelectBox.value = false;
                 visibleToOriginizationList.value = true;
                 visibleToB2bTeacherList.value = true;
-                visibleToOrganizationSelectBox.value = true;
+                visibleToOrganisationSelectBox.value = true;
                 visibleToB2CUserSelectBox.value = true;
                 visibleToTeacherSelectBox.value = true;
                 visibleToBcStaffSelectBox.value = true;
@@ -72,34 +82,34 @@ watch(
 
 watch(orglist, (newValue, oldValue) => {
     console.log(newValue);
-    getTeacherByOrganization(newValue);
+    getTeacherByOrganisation(newValue);
 });
 
 watch(
     () => form.to,
     (newValue, oldValue) => {
         if (newValue == "All") {
-            visibleToOrganizationSelectBox.value = false;
+            visibleToOrganisationSelectBox.value = false;
             visibleToB2CUserSelectBox.value = false;
             visibleToTeacherSelectBox.value = false;
             visibleToBcStaffSelectBox.value = false;
-        } else if (newValue == "Organization Admin") {
-            visibleToOrganizationSelectBox.value = false;
+        } else if (newValue == "Organisation Admin") {
+            visibleToOrganisationSelectBox.value = false;
             visibleToB2CUserSelectBox.value = true;
             visibleToTeacherSelectBox.value = true;
             visibleToBcStaffSelectBox.value = true;
-        } else if (newValue == "Organization Teacher") {
-            visibleToOrganizationSelectBox.value = true;
+        } else if (newValue == "Organisation Teacher") {
+            visibleToOrganisationSelectBox.value = true;
             visibleToB2CUserSelectBox.value = true;
             visibleToTeacherSelectBox.value = false;
             visibleToBcStaffSelectBox.value = true;
         } else if (newValue == "B2C Users") {
-            visibleToOrganizationSelectBox.value = true;
+            visibleToOrganisationSelectBox.value = true;
             visibleToB2CUserSelectBox.value = false;
             visibleToTeacherSelectBox.value = true;
             visibleToBcStaffSelectBox.value = true;
         } else if (newValue == "BC Staff") {
-            visibleToOrganizationSelectBox.value = true;
+            visibleToOrganisationSelectBox.value = true;
             visibleToB2CUserSelectBox.value = true;
             visibleToTeacherSelectBox.value = true;
             visibleToBcStaffSelectBox.value = false;
@@ -107,13 +117,13 @@ watch(
     }
 );
 
-console.log(props.organizations);
+console.log(props.organisations);
 
 const org_array = ref([]);
-for (let i = 0; i < props.organizations.length; i++) {
+for (let i = 0; i < props.organisations.length; i++) {
     org_array.value.push({
-        id: props.organizations[i].org_admin_id,
-        name: props.organizations[i].name,
+        id: props.organisations[i].org_admin_id,
+        name: props.organisations[i].name,
     });
 }
 const org_teacher_array = ref([]);
@@ -1394,8 +1404,8 @@ watch(searchIcon, (newSearchIcon) => {
 });
 
 let onFormSubmit = () => {
-    for (let i = 0; i < organization_user_ids.value.length; i++) {
-        form.org.push(organization_user_ids.value[i]);
+    for (let i = 0; i < organisation_user_ids.value.length; i++) {
+        form.users.push(organisation_user_ids.value[i]);
     }
     for (let i = 0; i < b2bteacherbyorg_ids.value.length; i++) {
         form.users.push(b2bteacherbyorg_ids.value[i]);
@@ -1413,15 +1423,14 @@ let onFormSubmit = () => {
         form.users.push(b2c_user_ids.value[i]);
     }
 
-    let originalOrgArray = form.org;
     let originalUserArray = form.users;
 
     form.users = JSON.stringify(form.users);
-    form.org = JSON.stringify(form.org);
 
     let toArray = [];
-    organization_user_ids.value.length > 0
-        ? toArray.push("Organizations Admins")
+
+    organisation_user_ids.value.length > 0
+        ? toArray.push("Organisations Admins")
         : "";
     b2c_user_ids.value.length > 0 ? toArray.push("B2C Users") : "";
     b2b_teacher_ids.value.length > 0 ? toArray.push("B2B Teachers") : "";
@@ -1435,7 +1444,7 @@ let onFormSubmit = () => {
             SuccessDialog({ title: "You've successfully posted announcement" });
         },
         onError: (error) => {
-            form.org = originalOrgArray;
+            console.log('sad');
             form.users = originalUserArray;
             form.setError("title", error?.title);
             form.setError("icon", error?.icon);
@@ -1444,7 +1453,7 @@ let onFormSubmit = () => {
     });
 };
 
-let getTeacherByOrganization = (id) => {
+let getTeacherByOrganisation = (id) => {
     axios.get(route("announcements.getb2bteachersbyorg", id)).then((res) => {
         b2bteacherbyorg.value = [];
         for (let i = 0; i < res.data.length; i++) {
@@ -1617,7 +1626,7 @@ let getTeacherByOrganization = (id) => {
                                         item-title="name"
                                         item-value="id"
                                         density="compact"
-                                        placeholder="Select Organizations"
+                                        placeholder="Select Organisations"
                                     >
                                         <template v-slot:prepend-item>
                                             <v-text-field
@@ -1675,19 +1684,19 @@ let getTeacherByOrganization = (id) => {
                             </VCol>
                             <VCol
                                 cols="6"
-                                :hidden="visibleToOrganizationSelectBox"
+                                :hidden="visibleToOrganisationSelectBox"
                             >
                             </VCol>
                             <VCol
                                 cols="6"
-                                :hidden="visibleToOrganizationSelectBox"
+                                :hidden="visibleToOrganisationSelectBox"
                             >
                                 <VLabel class="tiggie-label required"
                                     >Announcement to Organisations</VLabel
                                 >
                                 <MultiSelectBox
                                     :items="org_array"
-                                    v-model="organization_user_ids"
+                                    v-model="organisation_user_ids"
                                 />
                             </VCol>
                             <VCol cols="6" :hidden="visibleToTeacherSelectBox">

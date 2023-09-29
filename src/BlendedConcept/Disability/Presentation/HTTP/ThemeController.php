@@ -30,7 +30,7 @@ class ThemeController
     public function store(StoreThemeRequest $request)
     {
         try {
-            // Abort if the user is not authorized to create organizations
+            // Abort if the user is not authorized to create organisations
             // abort_if(authorize('create', ThemePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             // Validate the request data
@@ -39,7 +39,7 @@ class ThemeController
             $saveTheme = (new StoreThemeCommand($themeRequest));
             $saveTheme->execute();
 
-            return redirect()->route('disability_themes.index')->with('successMessage', 'Organizations Created Successfully!');
+            return redirect()->route('disability_themes.index')->with('successMessage', 'Organisations Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('disability_type.index')
@@ -63,7 +63,7 @@ class ThemeController
             $updateThemecommand = (new UpdateThemeCommand($updateTheme));
             $updateThemecommand->execute();
 
-            return redirect()->route('disability_themes.index')->with('successMessage', 'Organizations Created Successfully!');
+            return redirect()->route('disability_themes.index')->with('successMessage', 'Organisations Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('disability_themes.index')
@@ -80,7 +80,7 @@ class ThemeController
             $deleteThemeCommand = (new DeleteThemeCommand($theme));
             $deleteThemeCommand->execute();
 
-            return redirect()->route('disability_themes.index')->with('successMessage', 'Organizations Created Successfully!');
+            return redirect()->route('disability_themes.index')->with('successMessage', 'Organisations Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('disability_themes.index')

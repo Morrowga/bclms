@@ -120,13 +120,13 @@ class TenancyServiceProvider extends ServiceProvider
 
     protected function mapRoutes()
     {
-        if (file_exists(base_path('src\BlendedConcept\Organization\Presentation\HTTP\organization.php'))) {
+        if (file_exists(base_path('src\BlendedConcept\Organisation\Presentation\HTTP\organisation.php'))) {
 
             Route::namespace(static::$controllerNamespace)
                 ->prefix('c')
                 ->name('c.')
                 ->group(function () {
-                    require base_path('src\BlendedConcept\Organization\Presentation\HTTP\organization.php');
+                    require base_path('src\BlendedConcept\Organisation\Presentation\HTTP\organisation.php');
                     // require base_path('src/BlendedConcept/System/Presentation/HTTP/routes.php');
                     // require base_path('src/BlendedConcept/Student/Presentation/HTTP/routes.php');
                     // require base_path('src/BlendedConcept/ClassRoom/Presentation/HTTP/routes.php');

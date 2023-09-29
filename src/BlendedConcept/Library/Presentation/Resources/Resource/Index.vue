@@ -43,7 +43,7 @@ const reject = () => {
     isEditMode.value = false;
 };
 const checkIsOrg = () => {
-    return user_role.value == "Organization Admin" ? true : false;
+    return user_role.value == "Organisation Admin" ? true : false;
 };
 </script>
 
@@ -56,7 +56,7 @@ const checkIsOrg = () => {
                         <span class="ruddy-bold resource">Resources</span>
                         <div class="mt-5">
                             <v-chip class="menuchip">All</v-chip>
-                            <v-chip class="ml-2">Organization</v-chip>
+                            <v-chip class="ml-2">Organisation</v-chip>
                             <v-chip class="ml-2">Me</v-chip>
                         </div>
                     </div>

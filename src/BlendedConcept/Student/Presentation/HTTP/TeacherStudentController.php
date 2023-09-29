@@ -4,10 +4,10 @@ namespace Src\BlendedConcept\Student\Presentation\HTTP;
 
 use Illuminate\Http\Response;
 use Inertia\Inertia;
-use Src\BlendedConcept\Organization\Application\DTO\StudentData;
-use Src\BlendedConcept\Organization\Application\Requests\UpdateStudentRequest;
-use Src\BlendedConcept\Organization\Application\UseCases\Commands\Student\UpdateStudentCommand;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Organisation\Application\DTO\StudentData;
+use Src\BlendedConcept\Organisation\Application\Requests\UpdateStudentRequest;
+use Src\BlendedConcept\Organisation\Application\UseCases\Commands\Student\UpdateStudentCommand;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\ShowStudent;
 use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;

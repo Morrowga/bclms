@@ -55,7 +55,7 @@ const resolveHeaderComponent = () => {
         case "Student":
             showMenubar.value = false;
             return StudentHeader;
-        case "Organization Admin":
+        case "Organisation Admin":
             showMenubar.value = false;
             return OrgAdminHeader;
         default:

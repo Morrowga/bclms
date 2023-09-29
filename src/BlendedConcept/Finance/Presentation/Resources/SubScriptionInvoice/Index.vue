@@ -1,7 +1,7 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import B2cUser from "./B2cUser.vue";
-import OrganizationUser from "./OrganizationUser.vue";
+import OrganisationUser from "./OrganisationUser.vue";
 let tabName = ref("users");
 const props = defineProps(["b2b_subscriptions", "flash", "b2c_subscriptions"]);
 const isActiveTab = (tabNameEnter) => {
@@ -30,9 +30,9 @@ const activeTab = (tabNameEnter) => {
                         <VBtn
                             variant="flat"
                             rounded
-                            :color="isActiveTab('organizations')"
-                            @click="activeTab('organizations')"
-                            >Organizations</VBtn
+                            :color="isActiveTab('organisations')"
+                            @click="activeTab('organisations')"
+                            >Organisations</VBtn
                         >
                     </div>
                 </VCol>
@@ -48,9 +48,9 @@ const activeTab = (tabNameEnter) => {
                     cols="12"
                     sm="12"
                     lg="12"
-                    v-if="tabName == 'organizations'"
+                    v-if="tabName == 'organisations'"
                 >
-                    <OrganizationUser
+                    <OrganisationUser
                         :subscriptions="props.b2b_subscriptions"
                         :flash="props.flash"
                     />
@@ -62,10 +62,10 @@ const activeTab = (tabNameEnter) => {
                     <B2cUser />
                 </VCol>
             </VRow>
-            <h4 class="tiggie-subtitle mt-5">Organizations</h4>
+            <h4 class="tiggie-subtitle mt-5">Organisations</h4>
             <VRow>
                 <VCol cols="12">
-                    <OrganizationUser />
+                    <OrganisationUser />
                 </VCol>
             </VRow> -->
         </VContainer>

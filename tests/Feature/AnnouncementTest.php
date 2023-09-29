@@ -68,8 +68,7 @@ test('form submit as announcement with superadmin role', function () {
         'message' => 'message here',
         'by' => 'Super Admin',
         'to' => 'B2B Teachers,B2C Users, Organisation Admin',
-        'org' => json_encode([]),
-        'users' => json_encode([2, 3, 4, 5, 10, 11, 12, 13, 14, 15]),
+        'users' => json_encode([2, 3, 4, 5, 6, 7, 8]),
     ]);
 
     $postData->assertStatus(302);

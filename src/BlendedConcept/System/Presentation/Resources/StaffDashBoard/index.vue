@@ -2,7 +2,7 @@
 import { defineProps } from "vue";
 
 let orgainzations_users = defineProps(["orgainzations_users",'usercount']);
-import LatestModifiedOrganizations from "./LatestModifiedOrganizations.vue";
+import LatestModifiedOrganisations from "./LatestModifiedOrganisations.vue";
 import TotalUserSurveys from "./TotalUserSurveys.vue";
 import RoleCard from "@mainRoot/components/RoleCard.vue";
 import Slider from "./components/Slider.vue";
@@ -90,10 +90,10 @@ const gameResources = [
     <VContainer fluid>
         <VRow class="match-height mb-5">
             <RoleCard
-                title="Organizations"
+                title="Organisations"
                 btnText="Manage"
-                :totalText="`Total ${usercount?.organization_count}  Organizations`"
-                :url="route('organizations.index')"
+                :totalText="`Total ${usercount?.organisation_count}  Organisations`"
+                :url="route('organisations.index')"
             />
             <RoleCard
                 title="Subscriptions"
@@ -136,7 +136,7 @@ const gameResources = [
                         </div>
                     </div>
                     <TotalUserSurveys class="mt-2"
-                        :organization="
+                        :organisation="
                             orgainzations_users.orgainzations_users[1]
                         "
                     />

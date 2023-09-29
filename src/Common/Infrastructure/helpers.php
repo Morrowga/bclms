@@ -43,13 +43,13 @@ if (! function_exists('getFileSystemWithRole')) {
     {
         try {
             if ($userrole == config('userrole.bcsuperadmin')) {
-                return ['local', 'avatars', 'media_user', 'media_organization'];
-            } elseif ($userrole == config('userrole.organization_admin')) {
+                return ['local', 'avatars', 'media_user', 'media_organisation'];
+            } elseif ($userrole == config('userrole.organisation_admin')) {
                 return ['media_students', 'media_teachers'];
             } elseif ($userrole == config('userrole.teacher')) {
                 return ['media_teachers'];
             } else {
-                return ['local', 'avatars', 'media_user', 'media_organization'];
+                return ['local', 'avatars', 'media_user', 'media_organisation'];
             }
         } catch (\Exception $error) {
 

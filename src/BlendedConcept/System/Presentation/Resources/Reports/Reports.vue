@@ -1,7 +1,7 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import UserDemographic from "./components/UserDemographic.vue";
-import Organization from "./components/Organization.vue";
+import Organisation from "./components/Organisation.vue";
 import Usage from "./components/Usage.vue";
 import BookInteractivity from "./components/BookInteractivity.vue";
 import Subscribers from "./components/Subscribers.vue";
@@ -22,7 +22,7 @@ const activeTab = (tabNameEnter) => {
 
 onMounted(() => {
     if (
-        user_role.value == "Organization Admin" ||
+        user_role.value == "Organisation Admin" ||
         user_role == "BC Super Admin" ||
         user_role == "BC Staff"
     ) {
@@ -51,7 +51,7 @@ onMounted(() => {
                     <div class="d-flex align-center flex-wrap gap-10">
                         <VBtn
                             v-if="
-                                user_role == 'Organization Admin' ||
+                                user_role == 'Organisation Admin' ||
                                 user_role == 'BC Super Admin' ||
                                 user_role == 'BC Staff'
                             "
@@ -74,20 +74,20 @@ onMounted(() => {
                         >
                         <VBtn
                             v-if="
-                                user_role == 'Organization Admin' ||
+                                user_role == 'Organisation Admin' ||
                                 user_role == 'BC Super Admin' ||
                                 user_role == 'BC Staff'
                             "
                             variant="flat"
                             rounded
-                            :color="isActiveTab('organization')"
-                            @click="activeTab('organization')"
-                            >Organization</VBtn
+                            :color="isActiveTab('organisation')"
+                            @click="activeTab('organisation')"
+                            >Organisation</VBtn
                         >
                         <VBtn
                             v-if="
                                 user_role == 'BC Super Admin' ||
-                                user_role == 'Organization Admin' ||
+                                user_role == 'Organisation Admin' ||
                                 user_role == 'BC Staff' ||
                                 user_role == 'Teacher' ||
                                 user_role == 'BC Subscriber'
@@ -101,7 +101,7 @@ onMounted(() => {
                         <VBtn
                             v-if="
                                 user_role == 'BC Super Admin' ||
-                                user_role == 'Organization Admin' ||
+                                user_role == 'Organisation Admin' ||
                                 user_role == 'BC Staff' ||
                                 user_role == 'Teacher' ||
                                 user_role == 'BC Subscriber'
@@ -122,8 +122,8 @@ onMounted(() => {
                 <VCol cols="12" v-if="tabName == 'subscriber'">
                     <Subscribers />
                 </VCol>
-                <VCol cols="12" v-if="tabName == 'organization'">
-                    <Organization />
+                <VCol cols="12" v-if="tabName == 'organisation'">
+                    <Organisation />
                 </VCol>
                 <VCol cols="12" v-if="tabName == 'usage'">
                     <Usage />

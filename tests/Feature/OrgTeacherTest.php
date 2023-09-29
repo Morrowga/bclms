@@ -20,15 +20,15 @@ beforeEach(function () {
     ]);
 });
 
-test('without login not access organization teacher', function () {
+test('without login not access organisation teacher', function () {
 
     Auth::logout();
 
-    $reponse = $this->get('/organizations-teacher');
+    $reponse = $this->get('/organisations-teacher');
     $reponse->assertRedirect('/login');
 });
 
-test('without other role not access organizations teacher', function () {
+test('without other role not access organisations teacher', function () {
 
     Auth::logout();
 
@@ -43,10 +43,10 @@ test('without other role not access organizations teacher', function () {
     ]);
 
     if (Auth::attempt(['email' => 'testinguser@gmail.com', 'password' => 'password'])) {
-        $reponse = $this->get('/organizations-teacher');
+        $reponse = $this->get('/organisations-teacher');
         $reponse->assertStatus(403);
     }
-    $reponse = $this->get('/organizations-teacher');
+    $reponse = $this->get('/organisations-teacher');
     $reponse->assertStatus(403);
 });
 
@@ -55,7 +55,7 @@ test('create org teacher with org admin roles', function () {
 
     $image = UploadedFile::fake()->image('image.jpg'); // Change 'test.jpg' to the desired file name and extension
 
-    $response = $this->post('/organizations-teacher', [
+    $response = $this->post('/organisations-teacher', [
         'first_name' => 'Example',
         'last_name' => 'Teacher',
         'email' => 'teacher@mail.com',
@@ -65,11 +65,11 @@ test('create org teacher with org admin roles', function () {
 
     $response->assertStatus(302);
 
-    $storeData = $this->post('/organizations-teacher', []);
+    $storeData = $this->post('/organisations-teacher', []);
 
     $storeData->assertSessionHasErrors(['first_name', 'last_name', 'email', 'contact_number', 'image']);
 
-    $response->assertRedirect('/organizations-teacher');
+    $response->assertRedirect('/organisations-teacher');
 
     // Roll back the transaction to undo any database changes made during the test
 });
@@ -83,7 +83,7 @@ test('update teacher with org admin roles', function () {
 
     $updateImage = UploadedFile::fake()->image('updateacher.jpg'); // Change 'test.jpg' to the desired file name and extension
 
-    $updateResponse = $this->put("/organizations-teacher/{$teacherId}", [
+    $updateResponse = $this->put("/organisations-teacher/{$teacherId}", [
         'first_name' => 'Example',
         'last_name' => 'Device',
         'email' => 'teacher@mail.com',
@@ -93,7 +93,7 @@ test('update teacher with org admin roles', function () {
 
     $updateResponse->assertStatus(302);
 
-    $updateData = $this->put("/organizations-teacher/{$teacherId}", []);
+    $updateData = $this->put("/organisations-teacher/{$teacherId}", []);
 
     $updateData->assertSessionHasErrors(['first_name', 'last_name', 'email', 'contact_number']);
 });
@@ -106,7 +106,7 @@ test('delete org teacher with org admin roles', function () {
     $teacherId = 11; // Retrieve the teacher ID as needed
 
     // Attempt to delete the teacher
-    $deleteResponse = $this->delete("/organizations-teacher/{$teacherId}");
+    $deleteResponse = $this->delete("/organisations-teacher/{$teacherId}");
 
     $deleteResponse->assertStatus(302);
 });

@@ -134,7 +134,7 @@ const deleteSurvey = (id) => {
                                     >
                                         <!-- 👉 Add User button -->
                                         <Create
-                                            :organizations="organizations"
+                                            :organisations="organisations"
                                             :roles="roles_name"
                                             :flash="flash"
                                         />
@@ -182,6 +182,10 @@ const deleteSurvey = (id) => {
                                         v-if="dataProps.column.field == 'title'"
                                     >
                                         <Link
+                                            :href="
+                                                route(
+                                                    'userexperiencesurvey.edit', dataProps.row.id
+                                                )"
                                             class="text-secondary"
                                         >
                                             <span>{{

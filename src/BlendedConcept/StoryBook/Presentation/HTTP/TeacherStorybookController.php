@@ -3,7 +3,7 @@
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Src\BlendedConcept\Organization\Application\UseCases\Queries\Student\GetStudentList;
+use Src\BlendedConcept\Organisation\Application\UseCases\Queries\Student\GetStudentList;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStoryBook;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;

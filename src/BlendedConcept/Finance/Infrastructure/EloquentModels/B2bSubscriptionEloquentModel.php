@@ -21,7 +21,7 @@ class B2bSubscriptionEloquentModel extends Model implements HasMedia
 
     protected $fillable = [
         'subscription_id',
-        'organization_id',
+        'organisation_id',
         'receipt_image',
         'storage_limit',
         'num_teacher_license',

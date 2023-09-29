@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Disability\Application\UseCases\Commands\Devices;
 
 use Src\BlendedConcept\Disability\Domain\Repositories\DeviceRepositoryInterface;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
-use Src\BlendedConcept\Organization\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\Common\Domain\CommandInterface;
 
 class SetDeviceCommand implements CommandInterface

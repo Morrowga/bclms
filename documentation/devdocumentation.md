@@ -2,28 +2,28 @@
 # How to Create CRUD with DDD pattern 
 
 
-Note : I am going to explain as an example with Organization CRUD
+Note : I am going to explain as an example with Organisation CRUD
 ## Step 1 
 
 You need to go routes.php inside these folder folder path
-`src/BlendedConcept/Organization/Presentation/HTTP/routes.php`
+`src/BlendedConcept/Organisation/Presentation/HTTP/routes.php`
 
 
 ```php 
 
-Route::get('createorganization',OrganizationController::class);
+Route::get('createorganisation',OrganisationController::class);
 
 
 ```
 
 
-then go to `OrganizationController.php`
+then go to `OrganisationController.php`
 
 ```php
 
   public function index()
   {
-    return Inertia::render(config('('route.organizations.index'));
+    return Inertia::render(config('('route.organisations.index'));
   }
 
 ```
@@ -35,9 +35,9 @@ go to route.php inside `config/route.php`
 
 return [
     
- 'organizations' => [
+ 'organisations' => [
 
-    'index' => 'BlendedConcept/Organization/Presentation/Resources/Organization/Index',
+    'index' => 'BlendedConcept/Organisation/Presentation/Resources/Organisation/Index',
 
     ],
 ]
@@ -49,14 +49,14 @@ then go to route.js inside `resources/js/route.js` and configure that route.
 ```
 const pages = { 
 
-"BlendedConcept/Organization/Presentation/Resources/Organization/Index": import('../../src/BlendedConcept/Organization/Presentation/Resources/Organization/Index.vue'),
+"BlendedConcept/Organisation/Presentation/Resources/Organisation/Index": import('../../src/BlendedConcept/Organisation/Presentation/Resources/Organisation/Index.vue'),
 
 }
 
 
 ```
 
-Then you can start writing UI  go to `src/BlendedConcept/Organization/Presentation/Resources/Organization/Index.vue` and you can start writing UI file here 
+Then you can start writing UI  go to `src/BlendedConcept/Organisation/Presentation/Resources/Organisation/Index.vue` and you can start writing UI file here 
 
 
 

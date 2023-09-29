@@ -4,6 +4,7 @@ import { SuccessDialog } from "@actions/useSuccess";
 import { useForm } from "@inertiajs/vue3";
 import ImageUpload from "@mainRoot/components/DropZone/FileUpload.vue";
 import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
+import { usePage } from "@inertiajs/vue3";
 import {
     emailValidator,
     requiredValidator,
@@ -22,7 +23,8 @@ const toggleDialog = () => {
 
 let refForm = ref();
 const isFormValid = ref(false);
-
+const page = usePage();
+const app_url = computed(() => page?.props?.route_site_url);
 //this arrary describe as multiple select for each roles
 const gameTag = ref("");
 const form = useForm({
@@ -141,7 +143,7 @@ const removeFromArray = (index) => {
                                     <VCheckbox v-model="form.is_free" />
                                 </div>
                             </VCol>
-                            <VCol cols="12" md="12" class="py-0">
+                            <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label required"
                                     >Storybook Description</VLabel
                                 >
@@ -194,7 +196,7 @@ const removeFromArray = (index) => {
                                     chips
                                 />
                             </VCol>
-                            <VCol cols="12" md="6" class="py-0">
+                            <VCol cols="12" md="6">
                                 <VLabel class="tiggie-label required"
                                     >Disability Type</VLabel
                                 >
@@ -215,7 +217,7 @@ const removeFromArray = (index) => {
                                     chips
                                 />
                             </VCol>
-                            <VCol cols="12" md="6" class="py-0">
+                            <VCol cols="12" md="6">
                                 <VLabel class="tiggie-label required">
                                     Supported Accessibility Devices
                                 </VLabel>
@@ -234,7 +236,7 @@ const removeFromArray = (index) => {
                                     chips
                                 />
                             </VCol>
-                            <VCol cols="12" md="6" class="py-0">
+                            <VCol cols="12" md="6">
                                 <VLabel class="tiggie-label required">
                                     Number of Gold Coins
                                 </VLabel>
@@ -243,7 +245,7 @@ const removeFromArray = (index) => {
                                     placeholder="Type here ..."
                                 />
                             </VCol>
-                            <VCol cols="12" md="6" class="py-0">
+                            <VCol cols="12" md="6">
                                 <VLabel class="tiggie-label required">
                                     Number of Silver Coins
                                 </VLabel>
@@ -253,7 +255,7 @@ const removeFromArray = (index) => {
                                 />
                             </VCol>
 
-                            <VCol cols="12" md="6" class="py-0">
+                            <VCol cols="12" md="6">
                                 <VLabel class="tiggie-label required"
                                     >Storybook File</VLabel
                                 >
@@ -263,7 +265,7 @@ const removeFromArray = (index) => {
                                     :id="1"
                                 />
                             </VCol>
-                            <VCol cols="12" md="6" class="py-0">
+                            <VCol cols="12" md="6">
                                 <VLabel class="tiggie-label required"
                                     >Thumbnail Picture</VLabel
                                 >
@@ -274,16 +276,18 @@ const removeFromArray = (index) => {
                                     :id="3"
                                 />
                             </VCol>
-                            <VCol cols="12" md="12" class="py-0">
+                            <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label"
-                                    >Physical Resources</VLabel
+                                    >Story Book Content</VLabel
                                 >
-                                <ImageUpload
-                                    v-model="form.physical_resource_src"
-                                    filename=".pdf/docx"
-                                />
+                                <iframe
+                                    :src="`${app_url}/admin/h5p/h5p/create`"
+                                    frameborder="0"
+                                    scrolling="auto"
+                                    class="h5p-width"
+                                ></iframe>
                             </VCol>
-                            <VCol cols="12" md="12" class="py-0">
+                            <VCol cols="12" md="12">
                                 <div
                                     class="d-flex justify-center aligns-center w-100"
                                 >
@@ -318,9 +322,10 @@ const removeFromArray = (index) => {
 </template>
 
 <style scoped>
-/* .img-header {
-
-} */
+.h5p-width {
+    width: 100%;
+    height: 1500px;
+}
 .faded-image {
     position: relative;
     display: inline-block;

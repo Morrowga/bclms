@@ -17,6 +17,8 @@ const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
 const options = ref(['']);
 
+const HideOption = ref(false);
+
 console.log(options.value);
 
 const randomCombination = ref('');
@@ -86,7 +88,22 @@ const items = ref([
         title: "Rating",
         value: "RATING",
     },
+    {
+        title: "Short Answer",
+        value: "SHORT_ANSWER",
+    },
 ]);
+
+watch(
+    () => form.question_type,
+    (newValue, oldValue) => {
+        if (newValue === "SHORT_ANSWER") {
+            HideOption.value = true;
+        } else {
+            HideOption.value = false;
+        }
+    }
+);
 </script>
 
 <template>
@@ -137,7 +154,7 @@ const items = ref([
                                     rows="5"
                                 />
                             </VCol>
-                            <VCol cols="12" md="12">
+                            <VCol cols="12" md="12" v-if="!HideOption">
                                 <VLabel class="tiggie-label">Options</VLabel>
                                     <VRow>
                                         <VCol cols="12" v-for="(option, index) in options" :key="index">
@@ -152,7 +169,7 @@ const items = ref([
                                         </VCol>
                                     </VRow>
                                 </VCol>
-                                <VCol cols="12" md="12">
+                                <VCol cols="12" md="12" v-if="!HideOption">
                                     <VBtn
                                         variant="outlined"
                                         style="
