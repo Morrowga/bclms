@@ -53,7 +53,7 @@ class OrganisationStudentController
     public function edit(StudentEloquentModel $organisations_student)
     {
 
-        $organisations_student->load(['organisations', 'user', 'disability_types', 'learningneeds']);
+        $organisations_student->load(['organisation', 'user', 'disability_types', 'learningneeds']);
         $learningNeeds = (new GetLearningNeed())->handle();
         $disabilityTypes = (new GetDisabilityTypes())->handle();
 
@@ -81,7 +81,7 @@ class OrganisationStudentController
     public function show(StudentEloquentModel $organisations_student)
     {
 
-        $organisations_student->load(['organisations', 'user', 'disability_types', 'learningneeds']);
+        $organisations_student->load(['organisation', 'user', 'disability_types', 'learningneeds']);
 
         // // return $organisations_student;
         return Inertia::render(config('route.organisations-student.show'), compact('organisations_student'));

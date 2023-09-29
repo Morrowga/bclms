@@ -23,24 +23,23 @@ class OrganisationTeacherController
     {
         // abort_if(authorize('view', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        try {
+        // try {
             $filters = request(['search', 'first_name', 'last_name', 'email', 'filter']) ?? [];
 
             $teachers = (new GetTeacherList($filters))->handle();
 
             $studentListWithPagniation = (new GetStudentList($filters))->handle();
 
-            // return $teachers;
             return Inertia::render(config('route.organisations-teacher.index'), [
                 'teachers' => $teachers,
                 'students' => $studentListWithPagniation,
             ]);
-        } catch (\Exception $e) {
-            return $e;
-            dd($e->getMessage());
+        // } catch (\Exception $e) {
+        //     return $e;
+        //     dd($e->getMessage());
 
-            return redirect()->route('organisations-teacher.index')->with('sytemErrorMessage', $e->getMessage());
-        }
+        //     return redirect()->route('organisations-teacher.index')->with('sytemErrorMessage', $e->getMessage());
+        // }
     }
 
     public function create()

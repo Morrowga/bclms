@@ -6,8 +6,6 @@ import { ref } from "vue";
 let tab = ref("student");
 let props = defineProps(["teachers",'students']);
 
-console.log(props)
-
 const changeTab = (tabName) => {
   tab.value = tabName;
 };

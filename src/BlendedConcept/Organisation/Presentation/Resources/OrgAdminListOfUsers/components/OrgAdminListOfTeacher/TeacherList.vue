@@ -2,6 +2,7 @@
 import TeacherAvatar from "@mainRoot/components/TeacherAvatar/TeacherAvatar.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+import { usePage } from "@inertiajs/vue3";
 import {
     onColumnFilter,
     serverParams,
@@ -27,6 +28,20 @@ watch(filters, (newValue) => {
         },
     });
 });
+
+const page = usePage();
+const app_url = computed(() => page?.props?.route_site_url);
+
+const formattedImageUrl = (imageUrl) => {
+  // Check if the input starts with http:// or https://
+  if (!/^https?:\/\//i.test(imageUrl)) {
+    // If not, add http:// as the default prefix
+    return app_url.value + '/' + imageUrl;
+  } else {
+    // If it already includes http:// or https://, use the input as is
+    return imageUrl;
+  }
+};
 </script>
 <template>
     <VContainer>
@@ -88,15 +103,15 @@ watch(filters, (newValue) => {
                 lg="2"
                 class="pe-2"
                 v-for="item in props.data.data"
-                :key="item"
+                :key="item.user.id"
             >
                 <!--  -->
                 <TeacherAvatar
                     class="teacherAvatar"
-                    :image="item.image_url"
-                    :route="route('organisations-teacher.show', item.id)"
-                    :title="item.first_name + ' ' + item.last_name"
-                    :phone_number="item.contact_number"
+                    :image="formattedImageUrl(item.user.profile_pic)"
+                    :route="route('organisations-teacher.show', item.user.id)"
+                    :title="item.user.first_name + ' ' + item.user.last_name"
+                    :phone_number="item.user.contact_number"
                     storage="135 MB/ 200 MB"
                 />
             </VCol>
