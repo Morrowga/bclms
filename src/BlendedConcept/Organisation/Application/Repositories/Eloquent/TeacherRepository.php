@@ -4,12 +4,12 @@ namespace Src\BlendedConcept\Organisation\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\Organisation\Application\DTO\TeacherData;
-use Src\BlendedConcept\Organisation\Application\Mappers\TeacherMapper;
 use Src\BlendedConcept\Organisation\Domain\Model\Entities\Teacher;
-use Src\BlendedConcept\Organisation\Domain\Repositories\TeacherRepositoryInterface;
 use Src\BlendedConcept\Organisation\Domain\Resources\TeacherResource;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
+use Src\BlendedConcept\Organisation\Application\Mappers\TeacherMapper;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
+use Src\BlendedConcept\Organisation\Domain\Repositories\TeacherRepositoryInterface;
 
 class TeacherRepository implements TeacherRepositoryInterface
 {
@@ -21,18 +21,13 @@ class TeacherRepository implements TeacherRepositoryInterface
     public function getTeachers($filters)
     {
         //set roles
-        $users = TeacherResource::collection(UserEloquentModel::filter($filters)
-            ->with(['role_user', 'b2bUser'])
-            // ->whereHas('b2bUser', function ($query) {
-            //     return $query->where('organisation_id', auth()->user()->b2bUser->organisation_id);
-            // })
-            ->whereHas('role_user', function ($query) {
-                return $query->where('name', 'Teacher');
-            })
-            ->orderBy('id', 'desc')
+        $teachersCollection = TeacherResource::collection(TeacherEloquentModel::filter($filters)
+            ->with(['user'])
+            ->where('organisation_id', auth()->user()->organisation->id)
+            ->orderBy('teacher_id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
-
-        return $users;
+            
+        return $teachersCollection;
     }
 
     public function showTeacher($id)
@@ -62,12 +57,11 @@ class TeacherRepository implements TeacherRepositoryInterface
                 $userEloquent->update();
             }
 
-            $b2bUserEloquent = new B2bUserEloquentModel();
-            $b2bUserEloquent->user_id = $userEloquent->id;
-            $b2bUserEloquent->organisation_id = auth()->user()->b2bUser->organisation_id;
-            $b2bUserEloquent->allocated_storage_limit = 0.0;
-            $b2bUserEloquent->has_full_library_access = 0;
-            $b2bUserEloquent->save();
+            $teacher = new TeacherEloquentModel();
+            $teacher->user_id = $userEloquent->id;
+            $teacher->organisation_id = auth()->user()->organisation->id;
+            $teacher->save();
+
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();

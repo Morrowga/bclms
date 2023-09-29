@@ -39,7 +39,6 @@ class StudentRepository implements StudentRepositoryInterface
             $StudentEloquentModel = StudentMapper::toEloquent($student);
             $StudentEloquentModel->user_id = $user->id;
             $StudentEloquentModel->save();
-            $StudentEloquentModel->organisations()->sync(auth()->user()->organisation_id);
             $StudentEloquentModel->disability_types()->sync($student->disability_types);
             $StudentEloquentModel->learningneeds()->sync($student->learning_needs);
 

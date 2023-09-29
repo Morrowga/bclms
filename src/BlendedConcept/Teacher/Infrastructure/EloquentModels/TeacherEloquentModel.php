@@ -36,4 +36,9 @@ class TeacherEloquentModel extends Authenticatable
     {
         return $this->belongsTo(SubscriptionEloquentModel::class, 'curr_subscription_id', 'id');
     }
+
+    public function scopeFilter($query, $filters)
+    {
+
+    }
 }
