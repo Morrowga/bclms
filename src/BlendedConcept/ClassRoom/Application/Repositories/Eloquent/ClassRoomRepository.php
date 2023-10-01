@@ -108,9 +108,7 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
     public function getStudents($filters)
     {
         return StudentEloquentModel::filter($filters)
-            ->whereHas('organisations', function ($query) {
-                $query->where('id', auth()->user()->organisation_id);
-            })
+            ->where('organisation_id', auth()->user()->organisation_id)
             ->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
     }
 

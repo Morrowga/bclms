@@ -59,7 +59,8 @@
                 $type.filter('input[value="create"]').attr('checked', true).change();
             }
 
-            $('#laravel-h5p-form').submit(function () {
+            $('#laravel-h5p-form').submit(function (data) {
+                console.log('data',data);
                 if (h5peditor !== undefined) {
                     var params = h5peditor.getParams();
 
@@ -72,7 +73,7 @@
                 }
 
 
-                $(this).find('.btn').button('loading');
+                // $(this).find('.btn').button('loading');
             });
 
             // Title label

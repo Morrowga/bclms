@@ -11,6 +11,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class ClassroomEloquentModel extends Model implements HasMedia
 {
@@ -39,16 +40,16 @@ class ClassroomEloquentModel extends Model implements HasMedia
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('name', 'like', '%'.$search.'%');
+            $query->where('name', 'like', '%' . $search . '%');
         });
     }
 
     public function teachers()
     {
-        return $this->belongsToMany(UserEloquentModel::class, 'classroom_teachers', 'classroom_id', 'teacher_id');
+        return $this->belongsToMany(TeacherEloquentModel::class, 'classroom_teachers', 'classroom_id', 'teacher_id');
     }
 
     public function students()

@@ -69,6 +69,7 @@ const pages = {
 
     //manage books
     "BlendedConcept/StoryBook/Presentation/Resources/Books/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Books/Index.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/Books/Create": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Books/Create.vue'),
 
     //assign rewards
     "BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Index.vue'),

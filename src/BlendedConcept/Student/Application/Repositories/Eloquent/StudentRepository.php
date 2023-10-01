@@ -10,6 +10,7 @@ use Src\BlendedConcept\Student\Domain\Model\Student;
 use Src\BlendedConcept\Student\Domain\Repositories\StudentRepositoryInterface;
 use Src\BlendedConcept\Student\Domain\Resources\StudentResources;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class StudentRepository implements StudentRepositoryInterface
 {
@@ -105,16 +106,14 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function getStudentsByOrgTeacher($filters)
     {
-        $teachers = UserEloquentModel::with('classrooms')->find(auth()->user()->id);
+        $teachers = TeacherEloquentModel::with('classrooms')->where('user_id', auth()->user()->id)->first();
+
         $classroom_ids = [];
         foreach ($teachers->classrooms as $classroom) {
             array_push($classroom_ids, $classroom->id);
         }
 
-        return StudentEloquentModel::filter($filters)
-            ->whereHas('organisations', function ($query) {
-                $query->where('id', auth()->user()->organisation_id);
-            })
+        return StudentEloquentModel::filter($filters)->where('organisation_id', auth()->user()->organisation_id)
             ->whereHas('classrooms', function ($query) use ($classroom_ids) {
                 $query->whereIn('id', $classroom_ids);
             })

@@ -34,7 +34,6 @@
                     </thead>
 
                     <tbody>
-
                         @unless (count($entrys) > 0)
                             <tr>
                                 <td colspan="5" class="h5p-noresult">{{ trans('laravel-h5p.common.no-result') }}</td>
@@ -42,6 +41,7 @@
                         @endunless
 
                         @foreach ($entrys as $n => $entry)
+                            {{-- @dd($entry->get_user()) --}}
                             <tr>
 
                                 <td class="">
@@ -49,7 +49,7 @@
                                 </td>
 
                                 <td class="">
-                                    {{ $entry->get_user()->name }}
+                                    {{ $entry->get_user()->first_name . ' ' . $entry->get_user()->last_name }}
                                 </td>
 
                                 <td class="text-left">

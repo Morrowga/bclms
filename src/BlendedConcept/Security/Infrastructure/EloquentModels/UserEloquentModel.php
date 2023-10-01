@@ -27,6 +27,7 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
         'image',
         'image_url',
         'full_name',
+        'organisation_id'
     ];
 
     protected $fillable = [
@@ -126,7 +127,12 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     {
         return $this->first_name . ' ' . $this->last_name;
     }
-
+    public function getOrganisationIdAttribute()
+    {
+        if ($this->organisation || ($this->b2bUser && $this->b2bUser->organisation)) {
+            return ($this->organisation->id ?? $this->b2bUser->organisation->id) ?? null;
+        }
+    }
     public function role_user()
     {
         return $this->belongsTo(RoleEloquentModel::class, 'role_id');
@@ -152,8 +158,5 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     //     return $this->b2bUser->organisation_id ?? null;
     // }
 
-    public function classrooms()
-    {
-        return $this->belongsToMany(ClassroomEloquentModel::class, 'classroom_teachers', 'teacher_id', 'classroom_id');
-    }
+
 }

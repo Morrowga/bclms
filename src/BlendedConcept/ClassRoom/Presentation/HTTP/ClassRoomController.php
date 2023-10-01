@@ -34,6 +34,7 @@ class ClassRoomController extends Controller
     public function index()
     {
 
+
         // Check if the user is authorized to view classrooms
 
         // abort_if(authorize('view', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -73,6 +74,7 @@ class ClassRoomController extends Controller
 
     public function editCopy(ClassRoomEloquentModel $classroom)
     {
+        // dd($classroom->load('students', 'teachers')->loadCount('students', 'teachers'));
         try {
             return Inertia::render(config('route.editCopy'), [
                 'classroom' => $classroom->load('students', 'teachers')->loadCount('students', 'teachers'),
@@ -86,7 +88,9 @@ class ClassRoomController extends Controller
 
     public function create()
     {
+
         try {
+
             return Inertia::render(config('route.createCopy'));
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -230,9 +234,9 @@ class ClassRoomController extends Controller
         try {
             $updateClassRoomGroup = ClassRoomGroupData::fromRequest($request, $classroomGroup->id);
             $updateClassRoomGroup = (new UpdateClassroomGroupCommand($updateClassRoomGroup));
+            $updateClassRoomGroup->execute();
 
             return redirect()->route('org-teacher-classroom.show', $classroomGroup->classroom_id)->with('successMessage', 'Classroom Group Updated Successfully!');
-            $updateClassRoomGroup->execute();
         } catch (\Exception $e) {
             return redirect()->route('org-teacher-classroom.show', $classroomGroup->classroom_id)->with('sytemErrorMessage', $e->getMessage());
         }

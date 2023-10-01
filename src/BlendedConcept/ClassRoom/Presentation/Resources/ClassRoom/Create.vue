@@ -7,12 +7,12 @@ import SelectStudent from "./components/SelectStudent.vue";
 import SelectTeacher from "./components/SelectTeacher.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { requiredValidator } from "@validators";
+import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
 let props = defineProps(["flash", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const isFormValid = ref(false);
 let refForm = ref();
-const selectedImage = ref(null);
 
 const form = useForm({
     name: "",
@@ -21,23 +21,6 @@ const form = useForm({
     students: [],
     teachers: [],
 });
-const profile = ref(null);
-const dragging = ref(false);
-const profileFile = ref(null);
-
-const handleThumbnailChange = (event) => {
-    const file = event.target.files[0];
-    profileFile.value = file;
-    profile.value = URL.createObjectURL(file);
-};
-
-const onDropThumbnail = (event) => {
-    event.preventDefault();
-    dragging.value = false;
-    const files = event.dataTransfer.files;
-    profile.value = URL.createObjectURL(files[0]);
-    profileFile.value = files[0];
-};
 
 const handleSubmit = () => {
     form.image = profileFile.value;
@@ -66,47 +49,7 @@ const handleSubmit = () => {
                 <span class="span-text ruddy-bold">Create Classroom</span>
                 <VRow class="mt-3">
                     <VCol cols="12" md="6">
-                        <div
-                            class="profile-drag"
-                            :class="!profile ? 'd-flex justify-center' : ''"
-                            @dragover.prevent
-                            @dragenter.prevent
-                            @dragleave="dragging = false"
-                            @drop.prevent="onDropThumbnail"
-                        >
-                            <div v-if="!profile">
-                                <div class="d-flex justify-center text-center">
-                                    <v-img
-                                        src="/images/Icons.png"
-                                        width="80"
-                                        height="80"
-                                    ></v-img>
-                                </div>
-                                <p class="pppangram-bold mt-5">
-                                    Drag your item to upload
-                                </p>
-                                <p class="mt-2 blur-p">
-                                    PNG, GIF, WebP, MP4 or MP3. Maximum file
-                                    size 100 Mb.
-                                </p>
-                            </div>
-                            <div v-else>
-                                <v-img
-                                    :src="profile"
-                                    class="profileimg"
-                                    cover
-                                />
-                                <!-- <p>File Name: {{ gameFile.name }}</p> -->
-                                <!-- <button @click="removeGameFile" class="remove-button">
-                                Remove
-                            </button> -->
-                            </div>
-                            <input
-                                type="file"
-                                style="display: none"
-                                @change="handleThumbnailChange"
-                            />
-                        </div>
+                        <LargeDropFile v-model="form.image" />
                     </VCol>
                     <VCol cols="12" sm="6" md="6">
                         <span class="semi-label pppangram-bold"
@@ -166,7 +109,7 @@ const handleSubmit = () => {
     </AdminLayout>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .app-user-search-filter {
     inline-size: 24.0625rem;
 }
@@ -294,11 +237,20 @@ const handleSubmit = () => {
     border-radius: 10px;
 }
 .profileimg {
-    object-fit: cover !important;
+    object-fit: contain !important;
     height: 440px;
     border-radius: 10px;
 }
 .profile-drag p {
     margin-bottom: 0;
+}
+.img-frame {
+    position: relative;
+}
+
+.remove-img {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 </style>

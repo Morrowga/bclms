@@ -4,6 +4,7 @@ import { SuccessDialog } from "@actions/useSuccess";
 import { useForm } from "@inertiajs/vue3";
 import ImageUpload from "@mainRoot/components/DropZone/FileUpload.vue";
 import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
+import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import {
     emailValidator,
@@ -73,255 +74,244 @@ const removeFromArray = (index) => {
 };
 </script>
 <template>
-    <div>
-        <VDialog v-model="dialog" max-width="800">
-            <template #activator="{ props }">
-                <VBtn v-bind="props">Add New Book</VBtn>
-            </template>
-
-            <VCard>
-                <VCardText class="px-10 py-0 pb-5">
-                    <VForm
-                        class="mt-6"
-                        ref="refForm"
-                        v-model="isFormValid"
-                        @submit.prevent="onFormSubmit"
-                    >
-                        <VRow>
-                            <VCol cols="12" md="6" class="pb-0">
-                                <VLabel class="tiggie-label required"
-                                    >Storybook Name</VLabel
-                                >
-                                <VTextField
-                                    type="text"
-                                    class="tiggie-resize-input-text"
-                                    v-model="form.name"
-                                    placeholder="Text here"
-                                    :error-messages="form?.errors?.name"
-                                    :rules="[requiredValidator]"
-                                    density="compact"
-                                    height="48px"
-                                />
-                            </VCol>
-                            <VCol cols="12" md="6" class="game-tag-add">
-                                <VLabel class="tiggie-label required"
-                                    >Tags</VLabel
-                                >
+    <AdminLayout>
+        <VContainer class="book-create-container">
+            <p class="heading">Add Book</p>
+            <VForm
+                class="mt-6"
+                ref="refForm"
+                v-model="isFormValid"
+                @submit.prevent="onFormSubmit"
+            >
+                <VRow>
+                    <VCol cols="12" md="6" class="pb-0">
+                        <VLabel class="tiggie-label required"
+                            >Storybook Name</VLabel
+                        >
+                        <VTextField
+                            type="text"
+                            class="tiggie-resize-input-text"
+                            v-model="form.name"
+                            placeholder="Text here"
+                            :error-messages="form?.errors?.name"
+                            :rules="[requiredValidator]"
+                            density="compact"
+                            height="48px"
+                        />
+                    </VCol>
+                    <VCol cols="12" md="6" class="game-tag-add">
+                        <VLabel class="tiggie-label required">Tags</VLabel>
+                        <div class="d-flex my-4" v-if="form.tags.length > 0">
+                            <div
+                                class="ps-relative"
+                                v-for="(tag, index) in form.tags"
+                                :key="index"
+                            >
+                                <v-chip size="small" color="primary">{{
+                                    tag
+                                }}</v-chip>
                                 <div
-                                    class="d-flex my-4"
-                                    v-if="form.tags.length > 0"
+                                    class="delete-chip"
+                                    @click="removeFromArray(index)"
                                 >
-                                    <div
-                                        class="ps-relative"
-                                        v-for="(tag, index) in form.tags"
-                                        :key="index"
-                                    >
-                                        <v-chip size="small" color="primary">{{
-                                            tag
-                                        }}</v-chip>
-                                        <div
-                                            class="delete-chip"
-                                            @click="removeFromArray(index)"
-                                        >
-                                            <span>-</span>
-                                        </div>
-                                    </div>
+                                    <span>-</span>
                                 </div>
-                                <VTextField
-                                    v-model="gameTag"
-                                    :error-messages="form?.errors?.tags"
-                                    append-inner-icon="mdi-add-circle"
-                                    @click:append-inner="addToSublearningArray"
-                                >
-                                </VTextField>
-                            </VCol>
-                            <VCol cols="12" md="6">
-                                <div class="d-flex">
-                                    <VLabel class="tiggie-label pr-5"
-                                        >Available for Free Users</VLabel
-                                    >
-                                    <VCheckbox v-model="form.is_free" />
-                                </div>
-                            </VCol>
-                            <VCol cols="12" md="12">
-                                <VLabel class="tiggie-label required"
-                                    >Storybook Description</VLabel
-                                >
-                                <VTextarea
-                                    v-model="form.description"
-                                    type="text"
-                                    rows="5"
-                                    density="compact"
-                                    :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.description"
-                                />
-                            </VCol>
-                            <VCol cols="12" md="6" class="pb-0">
-                                <VLabel class="tiggie-label required"
-                                    >Learning Needs</VLabel
-                                >
-                                <VSelect
-                                    type="text"
-                                    class="tiggie-resize-input-text"
-                                    placeholder="Select devices"
-                                    density="compact"
-                                    v-model="form.sub_learning_needs"
-                                    :items="props.learningneed"
-                                    :error-messages="
-                                        form?.errors?.sub_learning_needs
-                                    "
-                                    :rules="[requiredValidator]"
-                                    item-title="name"
-                                    item-value="id"
-                                    multiple
-                                    chips
-                                />
-                            </VCol>
-                            <VCol cols="12" md="6" class="pb-0">
-                                <VLabel class="tiggie-label required"
-                                    >Themes</VLabel
-                                >
-                                <VSelect
-                                    type="text"
-                                    class="tiggie-resize-input-text"
-                                    placeholder="Select devices"
-                                    density="compact"
-                                    v-model="form.themes"
-                                    :items="props.themes"
-                                    :error-messages="form?.errors?.themes"
-                                    :rules="[requiredValidator]"
-                                    item-title="name"
-                                    item-value="id"
-                                    multiple
-                                    chips
-                                />
-                            </VCol>
-                            <VCol cols="12" md="6">
-                                <VLabel class="tiggie-label required"
-                                    >Disability Type</VLabel
-                                >
-                                <VSelect
-                                    type="text"
-                                    class="tiggie-resize-input-text mb-14"
-                                    placeholder="Select disability type"
-                                    density="compact"
-                                    :items="props.disability_types"
-                                    v-model="form.disability_type"
-                                    :error-messages="
-                                        form?.errors?.disability_type
-                                    "
-                                    :rules="[requiredValidator]"
-                                    item-title="name"
-                                    item-value="id"
-                                    multiple
-                                    chips
-                                />
-                            </VCol>
-                            <VCol cols="12" md="6">
-                                <VLabel class="tiggie-label required">
-                                    Supported Accessibility Devices
-                                </VLabel>
-                                <VSelect
-                                    type="text"
-                                    class="tiggie-resize-input-text mb-14"
-                                    placeholder="Select devices"
-                                    density="compact"
-                                    :items="props.devices"
-                                    v-model="form.devices"
-                                    :error-messages="form?.errors?.devices"
-                                    :rules="[requiredValidator]"
-                                    item-title="name"
-                                    item-value="id"
-                                    multiple
-                                    chips
-                                />
-                            </VCol>
-                            <VCol cols="12" md="6">
-                                <VLabel class="tiggie-label required">
-                                    Number of Gold Coins
-                                </VLabel>
-                                <VTextField
-                                    v-model="form.num_gold_coins"
-                                    placeholder="Type here ..."
-                                />
-                            </VCol>
-                            <VCol cols="12" md="6">
-                                <VLabel class="tiggie-label required">
-                                    Number of Silver Coins
-                                </VLabel>
-                                <VTextField
-                                    v-model="form.num_silver_coins"
-                                    placeholder="Type here ..."
-                                />
-                            </VCol>
+                            </div>
+                        </div>
+                        <VTextField
+                            v-model="gameTag"
+                            :error-messages="form?.errors?.tags"
+                            append-inner-icon="mdi-add-circle"
+                            @click:append-inner="addToSublearningArray"
+                        >
+                        </VTextField>
+                    </VCol>
+                    <VCol cols="12" md="6">
+                        <div class="d-flex">
+                            <VLabel class="tiggie-label pr-5"
+                                >Available for Free Users</VLabel
+                            >
+                            <VCheckbox v-model="form.is_free" />
+                        </div>
+                    </VCol>
+                    <VCol cols="12" md="12">
+                        <VLabel class="tiggie-label required"
+                            >Storybook Description</VLabel
+                        >
+                        <VTextarea
+                            v-model="form.description"
+                            type="text"
+                            rows="5"
+                            density="compact"
+                            :rules="[requiredValidator]"
+                            :error-messages="form?.errors?.description"
+                        />
+                    </VCol>
+                    <VCol cols="12" md="6" class="pb-0">
+                        <VLabel class="tiggie-label required"
+                            >Learning Needs</VLabel
+                        >
+                        <VSelect
+                            type="text"
+                            class="tiggie-resize-input-text"
+                            placeholder="Select devices"
+                            density="compact"
+                            v-model="form.sub_learning_needs"
+                            :items="props.learningneed"
+                            :error-messages="form?.errors?.sub_learning_needs"
+                            :rules="[requiredValidator]"
+                            item-title="name"
+                            item-value="id"
+                            multiple
+                            chips
+                        />
+                    </VCol>
+                    <VCol cols="12" md="6" class="pb-0">
+                        <VLabel class="tiggie-label required">Themes</VLabel>
+                        <VSelect
+                            type="text"
+                            class="tiggie-resize-input-text"
+                            placeholder="Select devices"
+                            density="compact"
+                            v-model="form.themes"
+                            :items="props.themes"
+                            :error-messages="form?.errors?.themes"
+                            :rules="[requiredValidator]"
+                            item-title="name"
+                            item-value="id"
+                            multiple
+                            chips
+                        />
+                    </VCol>
+                    <VCol cols="12" md="6">
+                        <VLabel class="tiggie-label required"
+                            >Disability Type</VLabel
+                        >
+                        <VSelect
+                            type="text"
+                            class="tiggie-resize-input-text mb-14"
+                            placeholder="Select disability type"
+                            density="compact"
+                            :items="props.disability_types"
+                            v-model="form.disability_type"
+                            :error-messages="form?.errors?.disability_type"
+                            :rules="[requiredValidator]"
+                            item-title="name"
+                            item-value="id"
+                            multiple
+                            chips
+                        />
+                    </VCol>
+                    <VCol cols="12" md="6">
+                        <VLabel class="tiggie-label required">
+                            Supported Accessibility Devices
+                        </VLabel>
+                        <VSelect
+                            type="text"
+                            class="tiggie-resize-input-text mb-14"
+                            placeholder="Select devices"
+                            density="compact"
+                            :items="props.devices"
+                            v-model="form.devices"
+                            :error-messages="form?.errors?.devices"
+                            :rules="[requiredValidator]"
+                            item-title="name"
+                            item-value="id"
+                            multiple
+                            chips
+                        />
+                    </VCol>
+                    <VCol cols="12" md="6">
+                        <VLabel class="tiggie-label required">
+                            Number of Gold Coins
+                        </VLabel>
+                        <VTextField
+                            v-model="form.num_gold_coins"
+                            placeholder="Type here ..."
+                        />
+                    </VCol>
+                    <VCol cols="12" md="6">
+                        <VLabel class="tiggie-label required">
+                            Number of Silver Coins
+                        </VLabel>
+                        <VTextField
+                            v-model="form.num_silver_coins"
+                            placeholder="Type here ..."
+                        />
+                    </VCol>
 
-                            <VCol cols="12" md="6">
-                                <VLabel class="tiggie-label required"
-                                    >Storybook File</VLabel
-                                >
-                                <ImageDropFile
-                                    v-model="form.storybook_file"
-                                    memeType="video"
-                                    :id="1"
-                                />
-                            </VCol>
-                            <VCol cols="12" md="6">
-                                <VLabel class="tiggie-label required"
-                                    >Thumbnail Picture</VLabel
-                                >
+                    <VCol cols="12" md="6">
+                        <VLabel class="tiggie-label required"
+                            >Storybook File</VLabel
+                        >
+                        <ImageDropFile
+                            v-model="form.storybook_file"
+                            memeType="image"
+                            :id="1"
+                        />
+                    </VCol>
+                    <VCol cols="12" md="6">
+                        <VLabel class="tiggie-label required"
+                            >Thumbnail Picture</VLabel
+                        >
 
-                                <ImageDropFile
-                                    v-model="form.thumbnail_img"
-                                    memeType="image"
-                                    :id="3"
-                                />
-                            </VCol>
-                            <VCol cols="12" md="12">
-                                <VLabel class="tiggie-label"
-                                    >Story Book Content</VLabel
+                        <ImageDropFile
+                            v-model="form.thumbnail_img"
+                            memeType="image"
+                            :id="3"
+                        />
+                    </VCol>
+                    <VCol cols="12" md="12">
+                        <VLabel class="tiggie-label">Story Book Content</VLabel>
+                        <iframe
+                            :src="`${app_url}/admin/h5p/h5p/create`"
+                            frameborder="0"
+                            scrolling="auto"
+                            class="h5p-width"
+                        ></iframe>
+                    </VCol>
+                    <VCol cols="12" md="12">
+                        <div class="d-flex justify-center aligns-center w-100">
+                            <div>
+                                <VBtn
+                                    color="gray"
+                                    height="50"
+                                    class=""
+                                    width="200"
+                                    @click="dialog = false"
                                 >
-                                <iframe
-                                    :src="`${app_url}/admin/h5p/h5p/create`"
-                                    frameborder="0"
-                                    scrolling="auto"
-                                    class="h5p-width"
-                                ></iframe>
-                            </VCol>
-                            <VCol cols="12" md="12">
-                                <div
-                                    class="d-flex justify-center aligns-center w-100"
-                                >
-                                    <div>
-                                        <VBtn
-                                            color="gray"
-                                            height="50"
-                                            class=""
-                                            width="200"
-                                            @click="dialog = false"
-                                        >
-                                            Cancel
-                                        </VBtn>
+                                    Cancel
+                                </VBtn>
 
-                                        <VBtn
-                                            type="submit"
-                                            class="ml-10"
-                                            height="50"
-                                            width="200"
-                                        >
-                                            Add
-                                        </VBtn>
-                                    </div>
-                                </div>
-                            </VCol>
-                        </VRow>
-                    </VForm>
-                </VCardText>
-            </VCard>
-        </VDialog>
-    </div>
+                                <VBtn
+                                    type="submit"
+                                    class="ml-10"
+                                    height="50"
+                                    width="200"
+                                >
+                                    Add
+                                </VBtn>
+                            </div>
+                        </div>
+                    </VCol>
+                </VRow>
+            </VForm>
+        </VContainer>
+    </AdminLayout>
 </template>
-
 <style scoped>
+.heading {
+    margin: 0;
+    font-size: 40px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 52px !important; /* 130% */
+    text-transform: capitalize !important;
+    color: var(--tiggie-blue, #4066e4);
+}
+.book-create-container {
+    width: 75%;
+}
 .h5p-width {
     width: 100%;
     height: 1500px;

@@ -5,50 +5,31 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { useForm } from "@inertiajs/vue3";
 import {
-  emailValidator,
-  requiredValidator,
-  integerValidator,
+    emailValidator,
+    requiredValidator,
+    integerValidator,
 } from "@validators";
-
+import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
 
 const teacherForm = useForm({
     first_name: "",
     last_name: "",
     email: "",
     contact_number: "",
-    image: ""
+    image: "",
 });
-const profile = ref(null);
-const dragging = ref(false);
-const profileFile = ref(null);
-
-const handleThumbnailChange = (event) => {
-  const file = event.target.files[0];
-  profileFile.value = file;
-  profile.value = URL.createObjectURL(file);
-  console.log(profile.value);
-};
-
-const onDropThumbnail = (event) => {
-  event.preventDefault();
-  dragging.value = false;
-  const files = event.dataTransfer.files;
-  profile.value = URL.createObjectURL(files[0]);
-  console.log(profile.value);
-  profileFile.value = files[0];
-};
 
 const createTeacher = () => {
-    teacherForm.image = profileFile.value;
+    // teacherForm.image = profileFile.value;
     teacherForm.post(route("organisations-teacher.store"), {
         onSuccess: () => {
             SuccessDialog({ title: "You've successfully created a teacher." });
         },
         onError: (error) => {
-        form.setError("first_name", error?.first_name);
-        form.setError("last_name", error?.last_name);
-        form.setError("email", error?.email);
-        form.setError("contact_number", error?.contact_number);
+            form.setError("first_name", error?.first_name);
+            form.setError("last_name", error?.last_name);
+            form.setError("email", error?.email);
+            form.setError("contact_number", error?.contact_number);
         },
     });
     // SuccessDialog({
@@ -56,7 +37,6 @@ const createTeacher = () => {
     //     color: "#17CAB6",
     // });
 };
-
 </script>
 <template>
     <AdminLayout>
@@ -64,38 +44,7 @@ const createTeacher = () => {
             <VForm @submit.prevent="createTeacher">
                 <VRow justify="center">
                     <VCol cols="6">
-                        <div
-                            class="profile-drag"
-                            :class="!profile ? 'd-flex justify-center' : ''"
-                            @dragover.prevent
-                            @dragenter.prevent
-                            @dragleave="dragging = false"
-                            @drop.prevent="onDropThumbnail"
-                        >
-                            <div v-if="!profile">
-                                <div class="d-flex justify-center text-center">
-                                    <v-img src="/images/Icons.png" width="80" height="80"></v-img>
-                                </div>
-                                <p class="pppangram-bold mt-5">
-                                    Drag your item to upload
-                                </p>
-                                <p class="mt-2 blur-p">
-                                    PNG, GIF, WebP, MP4 or MP3. Maximum file size 100 Mb.
-                                </p>
-                            </div>
-                            <div v-else>
-                                <v-img :src="profile" class="profileimg" cover/>
-                                <!-- <p>File Name: {{ gameFile.name }}</p> -->
-                            <!-- <button @click="removeGameFile" class="remove-button">
-                                Remove
-                            </button> -->
-                            </div>
-                            <input
-                            type="file"
-                            style="display: none"
-                            @change="handleThumbnailChange"
-                            />
-                        </div>
+                        <LargeDropFile v-model="teacherForm.image" />
                     </VCol>
                     <VCol cols="6">
                         <VText class="teacherprofile-title">Profile</VText>
@@ -149,7 +98,9 @@ const createTeacher = () => {
                                     placeholder=""
                                     v-model="teacherForm.contact_number"
                                     :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.contact_number"
+                                    :error-messages="
+                                        form?.errors?.contact_number
+                                    "
                                 />
                             </VCol>
                         </VRow>
@@ -202,8 +153,8 @@ const createTeacher = () => {
     text-transform: capitalize !important;
 }
 
-.blur-p{
-    color: var(--Secondary2, rgba(86, 86, 96, 0.40));
+.blur-p {
+    color: var(--Secondary2, rgba(86, 86, 96, 0.4));
     text-align: center;
     font-size: 14px;
     font-style: normal;
@@ -213,20 +164,20 @@ const createTeacher = () => {
 }
 
 .profile-drag {
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  background: #f7f7f7;
-  height: 440px;
-  border: 1px solid rgb(182,182,186, 0.6);
-  border-radius: 10px;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    background: #f7f7f7;
+    height: 440px;
+    border: 1px solid rgb(182, 182, 186, 0.6);
+    border-radius: 10px;
 }
-.profileimg{
+.profileimg {
     object-fit: cover !important;
     height: 440px;
     border-radius: 10px;
 }
 .profile-drag p {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 </style>

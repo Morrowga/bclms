@@ -4,7 +4,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { onMounted, ref } from "vue";
-import ImageUpload from "@Composables/ImageUpload.vue";
+import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
 import {
     emailValidator,
     requiredValidator,
@@ -77,9 +77,9 @@ onMounted(() => {
             <v-form ref="refForm" @submit.prevent="createStudent">
                 <v-row>
                     <v-col cols="12" md="6">
-                        <ImageUpload
+                        <LargeDropFile
                             v-model="form.profile_pics"
-                            :old_image="
+                            :old_photo="
                                 organisations_student.profile_pics?.[0]
                                     ?.original_url
                             "

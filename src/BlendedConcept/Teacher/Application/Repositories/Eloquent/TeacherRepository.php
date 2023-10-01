@@ -9,6 +9,7 @@ use Src\BlendedConcept\Teacher\Application\Mappers\TeacherMapper;
 use Src\BlendedConcept\Teacher\Domain\Model\Teacher;
 use Src\BlendedConcept\Teacher\Domain\Repositories\TeacherRepositoryInterface;
 use Src\BlendedConcept\Teacher\Domain\Resources\TeacherResource;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class TeacherRepository implements TeacherRepositoryInterface
 {
@@ -74,7 +75,7 @@ class TeacherRepository implements TeacherRepositoryInterface
 
     public function getOrgTeacherStudents($filters)
     {
-        $teachers = UserEloquentModel::with('classrooms')->find(auth()->user()->id);
+        $teachers = TeacherEloquentModel::with('classrooms')->where('user_id', auth()->user()->id)->first();
         $classroom_ids = [];
         foreach ($teachers->classrooms as $classroom) {
             array_push($classroom_ids, $classroom->id);

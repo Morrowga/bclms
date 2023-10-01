@@ -88,4 +88,9 @@ class BookController
             return redirect()->route('books.index')->with('systemErrorMessage', 'Something unexpected happened');
         }
     }
+
+    public function create()
+    {
+        return Inertia::render(config('route.books.create'));
+    }
 }
