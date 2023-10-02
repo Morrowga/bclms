@@ -11,6 +11,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquentModel;
@@ -153,6 +154,17 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     {
         return $this->hasOne(ParentUserEloqeuntModel::class, 'user_id', 'id')->with('organisation');
     }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+        ->width(368)
+        ->height(232)
+        ->extractVideoFrameAtSecond(1)
+        ->performOnCollections('videos')
+        ->format('jpg'); // Specify the format as "jpg"
+    }
+
     // public function getOrganisationIdAttribute()
     // {
     //     return $this->b2bUser->organisation_id ?? null;

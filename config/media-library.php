@@ -155,8 +155,8 @@ return [
      * thumbnails and have installed the php-ffmpeg/php-ffmpeg composer
      * dependency.
      */
-    'ffmpeg_path' => env('FFMPEG_PATH', '/usr/bin/ffmpeg'),
-    'ffprobe_path' => env('FFPROBE_PATH', '/usr/bin/ffprobe'),
+    'ffmpeg_path' => env('FFMPEG_PATH', '/opt/homebrew/bin/ffmpeg'),
+    'ffprobe_path' => env('FFPROBE_PATH', '/opt/homebrew/bin/ffprobe'),
 
     /*
      * Here you can override the class names of the jobs used by this package. Make sure

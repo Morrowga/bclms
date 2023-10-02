@@ -7,21 +7,64 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    data: {
+        type: Object,
+    },
+    currentUser: {
+        type: Object
+    }
+});
+
+const type = ref(null);
+type.value = props.data.mime_type.split('/').pop()
+
+const checkMe = () =>{
+    let current = props.currentUser.data
+    let id;
+    if(props.data.organisation_id !== null && props.data.teacher_id === null){
+        if(current.id === props.data.organisation.org_admin_id){
+            return "Me"
+        }
+    }
+
+    if(props.data.organisation_id === null && props.data.teacher_id !== null){
+        if(current.id === props.data.teacher_id){
+            return "Me"
+        } else {
+            return "Teacher"
+            // return props.data.teacher.full_name
+        }
+    }
+
+    if(props.data.organisation_id !== null && props.data.teacher_id !== null){
+        if(current.id === props.data.teacher_id){
+            return "Me"
+        } else {
+            return "Teacher"
+            // return props.data.teacher.full_name
+        }
+    }
+}
+
+const fileSizeInMB = computed(() => {
+  return (props.data.size / (1024 * 1024)).toFixed(2); // Convert bytes to MB and round to 2 decimal places
 });
 </script>
 <template>
     <VCard>
-        <CardAction :hidden="isEditMode" />
+        <CardAction :data="props.data" :hidden="isEditMode" />
         <VCheckbox class="checkboxcard" v-if="isEditMode"></VCheckbox>
-        <v-img src="images/chair.jpeg" cover></v-img>
+        <v-img :src="props.data.thumb_url" height="350" cover></v-img>
         <div class="resource-label">
             <VRow>
                 <VCol cols="8" class="text-left">
-                    <span class="ruddy-bold"> "The Monkey Sad" </span>
+                    <span class="ruddy-bold"> {{ props.data.name}} </span>
                 </VCol>
                 <VCol cols="4" class="text-right">
                     <div class="resource-chip">
-                        <v-btn class="me-chip">Me</v-btn>
+                        <v-btn class="me-chip">
+                            {{ checkMe() }}
+                        </v-btn>
                     </div>
                 </VCol>
             </VRow>
@@ -38,12 +81,12 @@ const props = defineProps({
                             />
                         </div>
                         <div>
-                            <span class="media-text ml-1">JPG</span>
+                            <span class="media-text ml-1 text-capitalize">{{ type }}</span>
                         </div>
                     </div>
                 </VCol>
                 <VCol cols="4">
-                    <span class="media-text">191.03 KB</span>
+                    <span class="media-text">{{fileSizeInMB}}</span>
                 </VCol>
                 <VCol cols="4">
                     <span class="media-text">1920x1080</span>
@@ -84,8 +127,8 @@ const props = defineProps({
 
 .me-chip {
     background: #fc0 !important;
+    width: 100% !important;
     z-index: 1;
-    height: 30px !important;
 }
 .resource-label {
     height: 13vh;

@@ -218,6 +218,8 @@ return [
     ],
 
     //resource
-    'resource' => 'BlendedConcept/Library/Presentation/Resources/Resource/Index',
+    'resource' =>  [
+        'index' => 'BlendedConcept/Library/Presentation/Resources/Resource/Index'
+    ]
 
 ];

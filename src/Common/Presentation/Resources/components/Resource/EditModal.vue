@@ -157,4 +157,11 @@ const openFileInput = () => {
 :deep(#input-162) {
     border-radius: 100px !important;
 }
+
+.videoDiv{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 20px;
+}
 </style>
