@@ -1,4 +1,5 @@
 <?php
+
 namespace Src\BlendedConcept\Library\Presentation\HTTP;
 
 use Inertia\Inertia;
@@ -13,7 +14,8 @@ use Src\BlendedConcept\Library\Application\UseCases\Commands\UpdateResourceComma
 
 class ResourceController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         try {
             $resources = (new GetResources(auth()->user()))->handle();
             return Inertia::render(config('route.resource.index'), [
@@ -44,8 +46,7 @@ class ResourceController extends Controller
             $storeResourceCommand = (new StoreResourceCommand($request, auth()->user()));
             $storeResourceCommand->execute();
 
-            return redirct()->route('resource.index')->with('successMessage', 'Resource Created Successfully!');
-
+            return redirect()->route('resource.index')->with('successMessage', 'Resource Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('resource.index')
@@ -61,7 +62,7 @@ class ResourceController extends Controller
      * @param  UpdateResourceRequest  $request The request object
      * @return \Illuminate\Http\RedirectResponse The redirect response
      */
-    public function update(UpdateResourceRequest $request,MediaEloquentModel $resource )
+    public function update(UpdateResourceRequest $request, MediaEloquentModel $resource)
     {
         // abort_if(authorize('create', ResourcePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -69,11 +70,10 @@ class ResourceController extends Controller
             // Validate the request data
             $request->validated();
 
-            $updateResourceCommand = (new UpdateResourceCommand($request, auth()->user(),$resource));
+            $updateResourceCommand = (new UpdateResourceCommand($request, auth()->user(), $resource));
             $updateResourceCommand->execute();
 
             return redirect()->route('resource.index')->with('successMessage', 'Resource Updated Successfully!');
-
         } catch (\Exception $error) {
             return redirect()
                 ->route('resource.index')
@@ -83,7 +83,7 @@ class ResourceController extends Controller
         }
     }
 
-     /**
+    /**
      * Delete an resource.
      *
      * @param  UserEloquentModel  $playlist The playlist to delete.
