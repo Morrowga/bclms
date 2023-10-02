@@ -21,6 +21,7 @@ const form = useForm({
     filename: props.data.name,
     file: null,
     user_id: props.data.model_id,
+    _method: 'PUT'
 })
 
 const validateFile = (file) => {
@@ -32,9 +33,9 @@ const validateFile = (file) => {
   }
 
   // Check file size (10MB limit)
-  const maxSizeInBytes = 10 * 1024 * 1024; // 10MB
+  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB
   if (fileInput.size > maxSizeInBytes) {
-    validationError.value = 'File size exceeds the 10MB limit.';
+    validationError.value = 'File size exceeds the 100MB limit.';
     return false;
   }
 
@@ -60,12 +61,29 @@ const submitResource = () => {
     form.file = file.value
     form.post(route("resource.update", props.data.id), {
     onSuccess: () => {
-      isDialogVisible.value = false;
-      SuccessDialog({ title: "You've successfully saved a video." });
+      isEditDialogVisible.value = false;
+      SuccessDialog({ title: "You've successfully updated a video." });
     },
     onError: (error) => {
     },
   });
+}
+
+const deleteOnclick = () => {
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,delete it!",
+        onConfirm: () => {
+            router.delete('/resource/' + props.data.id, {
+                onSuccess: () => {
+                    SuccessDialog({
+                        title: "You have successfully deleted resource!",
+                        color: "#17CAB6",
+                    });
+                },
+            });
+        },
+    });
 }
 
 const fileInput = ref(null);
@@ -84,7 +102,7 @@ const openFileInput = () => {
                     <v-list-item @click="isEditDialogVisible = true">
                         <v-list-item-title>Edit</v-list-item-title>
                     </v-list-item>
-                    <v-list-item @click="onFormSubmit">
+                    <v-list-item @click="deleteOnclick">
                         <v-list-item-title>Delete</v-list-item-title>
                     </v-list-item>
                     <!-- <v-list-item @click="publish()" v-if="!checkIsOrg()">
@@ -181,7 +199,7 @@ const openFileInput = () => {
                                         varient="flat"
                                         color="#F6F6F6"
                                         class="cancel pppangram-bold"
-                                        @click="isDialogVisible = false"
+                                        @click="isEditDialogVisible = false"
                                         width="200"
                                         rounded
                                     >

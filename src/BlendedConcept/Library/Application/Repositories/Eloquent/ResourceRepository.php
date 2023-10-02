@@ -10,6 +10,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Src\BlendedConcept\Library\Domain\Repositories\ResourceRepositoryInterface;
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\ResourceEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
@@ -35,7 +36,7 @@ class ResourceRepository implements ResourceRepositoryInterface
                 break;
 
             case 'b2b':
-                $b2bUserEloquent = B2bUserEloquentModel::where('user_id', $userEloquentModel->id)->first();
+                $b2bUserEloquent = TeacherEloquentModel::where('user_id', $userEloquentModel->id)->first();
                 $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
                 ->where('organisation_id', $b2bUserEloquent->organisation_id)
                 ->where('teacher_id', $userEloquentModel->id)
@@ -44,6 +45,7 @@ class ResourceRepository implements ResourceRepositoryInterface
                 $mediaItems->each->append('video_url', 'thumb_url');
 
                 return $mediaItems;
+
                 break;
 
             case 'b2c':
@@ -55,7 +57,9 @@ class ResourceRepository implements ResourceRepositoryInterface
                 $mediaItems->each->append('video_url', 'thumb_url');
 
                 return $mediaItems;
+
                 break;
+
             default:
                 break;
         }
@@ -109,7 +113,7 @@ class ResourceRepository implements ResourceRepositoryInterface
     }
 
 
-    public function updateResource(Request $request, UserEloquentModel $userEloquentModel, $id)
+    public function updateResource(Request $request, UserEloquentModel $userEloquentModel,MediaEloquentModel $resource)
     {
         DB::beginTransaction();
         try {
@@ -117,15 +121,21 @@ class ResourceRepository implements ResourceRepositoryInterface
             switch ($userType) {
                 case 'Organisation Admin':
                     $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $userEloquentModel->id)->first();
-                    $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
-                    ->where('organisation_id', $organisationEloquent->id)
-                    ->where('id', $id)
-                    ->first();
-                    dd($mediaItems);
+                    if ($resource) {
+                       $resource->delete();
+                    }
+                    $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
+                    $media->name = $request->filename;
+                    $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
+                    $media->organisation_id = $organisationEloquent->id;
+                    $media->teacher_id = null; // You may need to set this to an appropriate value if applicable
+                    $media->save();
                     break;
 
                 case 'b2b':
-                    $b2bUserEloquent = B2bUserEloquentModel::where('user_id', $userEloquentModel->id)->first();
+                    if ($resource) {
+                        $resource->delete();
+                     }
                     $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
                     $media->name = $request->filename;
                     $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
@@ -136,6 +146,9 @@ class ResourceRepository implements ResourceRepositoryInterface
                     break;
 
                 case 'b2c':
+                    if ($resource) {
+                        $resource->delete();
+                     }
                     $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
                     $media->name = $request->filename;
                     $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
@@ -180,5 +193,10 @@ class ResourceRepository implements ResourceRepositoryInterface
         if($check_b2c && $check_b2c->organisation_id == null){
             return "b2c";
         }
+    }
+
+    public function delete(MediaEloquentModel $resource): void
+    {
+        $resource->delete();
     }
 }
