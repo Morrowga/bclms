@@ -40,5 +40,5 @@ return [
     'h5p_content_type_cache_updated_at' => 0,
     'h5p_check_h5p_requirements' => true,
     'h5p_hub_is_enabled' => false,
-    'h5p_version' => '1.24.0',
+    'h5p_version' => '1.26.0',
 ];

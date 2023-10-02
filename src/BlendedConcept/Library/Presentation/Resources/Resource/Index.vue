@@ -14,11 +14,8 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
 let props = defineProps([
-    "classrooms",
-    "students",
-    "teachers",
-    "flash",
-    "auth",
+    "resources",
+    "auth"
 ]);
 let onFormSubmit = () => {
     isConfirmedDialog({ title: "Are you sure want to delete it." });
@@ -81,7 +78,7 @@ const checkIsOrg = () => {
                                     >Reject</v-btn
                                 >
                             </div>
-                            <div v-else>
+                            <div v-else class="d-flex justify-end">
                                 <v-btn
                                     v-if="checkIsOrg()"
                                     varient="flat"
@@ -151,14 +148,16 @@ const checkIsOrg = () => {
                     <VRow>
                         <VCol
                             cols="12"
-                            v-for="item in 16"
+                            v-for="item in props.resources"
                             sm="6"
                             md="4"
                             lg="3"
                             :key="item"
                         >
                             <ResourceCard
+                                :data="item"
                                 :key="item"
+                                :currentUser="props.auth"
                                 :isEditMode="isEditMode"
                             />
                         </VCol>

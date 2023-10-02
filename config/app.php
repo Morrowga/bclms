@@ -204,6 +204,7 @@ return [
         \Src\BlendedConcept\Disability\Application\Providers\DisabilityTypeServiceProvider::class,
         \Src\BlendedConcept\Survey\Application\Providers\SurveyServiceProvider::class,
         \Src\BlendedConcept\StoryBook\Application\Providers\StoryBookServiceProvider::class,
+        \Src\BlendedConcept\Library\Application\Providers\LibraryServiceProvider::class,
 
         /*
          * Domain Routes Service Providers...

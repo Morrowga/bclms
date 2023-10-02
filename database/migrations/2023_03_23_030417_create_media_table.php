@@ -24,6 +24,8 @@ return new class extends Migration
             $table->json('custom_properties');
             $table->json('generated_conversions');
             $table->json('responsive_images');
+            $table->foreignId('teacher_id')->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('organisation_id')->nullable()->references('id')->on('organisations')->onDelete('cascade');
             $table->unsignedInteger('order_column')->nullable()->index();
 
             $table->nullableTimestamps();

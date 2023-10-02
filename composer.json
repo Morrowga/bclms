@@ -22,6 +22,7 @@
         "laravelcollective/html": "^6.4",
         "maatwebsite/excel": "^3.1",
         "nunomaduro/collision": "^6.0",
+        "php-ffmpeg/php-ffmpeg": "^1.1",
         "spatie/ignition": "^1.4",
         "spatie/laravel-medialibrary": "^10.7",
         "stancl/tenancy": "^3.7",

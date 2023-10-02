@@ -125,6 +125,12 @@ return [
             'url' => env('APP_URL').'/storage/playlists',
             'visibility' => 'public',
         ],
+        'media_resource' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/resource'),
+            'url' => env('APP_URL').'/storage/resource',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',
