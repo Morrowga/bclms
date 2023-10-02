@@ -52,7 +52,7 @@ class TeacherRepository implements TeacherRepositoryInterface
     {
 
         $teacherArray = $teacherData->toArray();
-        $updateUserEloquent = UserEloquentModel::query()->findOrFail($teacherData->id);
+        $updateUserEloquent = UserEloquentModel::query()->findOrFail($teacherData->teacher_id);
         $updateUserEloquent->fill($teacherArray);
         $updateUserEloquent->save();
 

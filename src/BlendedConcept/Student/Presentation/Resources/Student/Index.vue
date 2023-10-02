@@ -183,7 +183,7 @@ const selectionChanged = () => {};
                                 </div>
                             </div>
                             <div v-if="props.column.field == 'organisation'">
-                                <div class="">
+                                <div class="" v-if="props.row.organisation">
                                     <div>
                                         <Link
                                             :href="
