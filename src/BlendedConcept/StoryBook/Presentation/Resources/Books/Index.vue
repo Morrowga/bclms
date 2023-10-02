@@ -14,13 +14,7 @@ import {
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
 
-const props = defineProps([
-    "learningneeds",
-    "themes",
-    "disability_types",
-    "devices",
-    "storybooks",
-]);
+const props = defineProps(["storybooks"]);
 
 const searchItem = ref({
     book_name: "",

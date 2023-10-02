@@ -12,7 +12,7 @@ import {
     integerValidator,
 } from "@validators";
 const props = defineProps([
-    "learningneed",
+    "learningneeds",
     "themes",
     "disability_types",
     "devices",
@@ -72,6 +72,11 @@ const addToSublearningArray = (e) => {
 const removeFromArray = (index) => {
     form.tags = form.tags.filter((tag, i) => i != index);
 };
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) console.log(parts.pop().split(";").shift());
+}
 </script>
 <template>
     <AdminLayout>
@@ -157,7 +162,7 @@ const removeFromArray = (index) => {
                             placeholder="Select devices"
                             density="compact"
                             v-model="form.sub_learning_needs"
-                            :items="props.learningneed"
+                            :items="props.learningneeds"
                             :error-messages="form?.errors?.sub_learning_needs"
                             :rules="[requiredValidator]"
                             item-title="name"
@@ -284,7 +289,7 @@ const removeFromArray = (index) => {
                                 </VBtn>
 
                                 <VBtn
-                                    type="submit"
+                                    @click="getCookie('h5p_id')"
                                     class="ml-10"
                                     height="50"
                                     width="200"
