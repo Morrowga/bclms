@@ -75,11 +75,17 @@ class TeacherRepository implements TeacherRepositoryInterface
 
     public function getOrgTeacherStudents($filters)
     {
-        $teachers = TeacherEloquentModel::with('classrooms')->where('user_id', auth()->user()->id)->first();
+        $role_name = auth()->user()->role->name;
         $classroom_ids = [];
-        foreach ($teachers->classrooms as $classroom) {
-            array_push($classroom_ids, $classroom->id);
+        if ($role_name == 'BC Super Admin' || $role_name == 'BC Staff' || $role_name = 'Organisation Admin') {
+            $teacher = UserEloquentModel::find(auth()->user()->id);
+        } else {
+            $teachers = TeacherEloquentModel::with('classrooms')->where('user_id', auth()->user()->id)->first();
+            foreach ($teachers->classrooms as $classroom) {
+                array_push($classroom_ids, $classroom->id);
+            }
         }
+
 
         return StudentEloquentModel::filter($filters)
             ->where('organisation_id', auth()->user()->organisation_id)
