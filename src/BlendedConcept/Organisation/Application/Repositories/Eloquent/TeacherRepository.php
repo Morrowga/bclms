@@ -23,7 +23,7 @@ class TeacherRepository implements TeacherRepositoryInterface
         //set roles
         $teachersCollection = TeacherResource::collection(TeacherEloquentModel::filter($filters)
             ->with(['user'])
-            ->where('organisation_id', auth()->user()->organisation->id)
+            ->where('organisation_id', auth()->user()->organisation_id)
             ->orderBy('teacher_id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
 
@@ -59,7 +59,7 @@ class TeacherRepository implements TeacherRepositoryInterface
 
             $teacher = new TeacherEloquentModel();
             $teacher->user_id = $userEloquent->id;
-            $teacher->organisation_id = auth()->user()->organisation->id;
+            $teacher->organisation_id = auth()->user()->organisation_id;
             $teacher->save();
 
             DB::commit();
