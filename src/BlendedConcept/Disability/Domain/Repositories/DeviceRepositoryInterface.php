@@ -18,4 +18,6 @@ interface DeviceRepositoryInterface
     public function deleteDevice(DeviceEloquentModel $device);
 
     public function setDevice(StudentEloquentModel $student, DeviceEloquentModel $device);
+
+    public function getSimpleBooks();
 }

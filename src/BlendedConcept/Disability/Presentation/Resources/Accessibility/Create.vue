@@ -6,7 +6,7 @@ import { requiredValidator } from "@validators";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import SampleStorybookSlider from "./components/SampleStorybookSlider.vue";
 
-const props = defineProps(["device", "disability_types"]);
+const props = defineProps(["device", "disability_types", "books"]);
 const isFormValid = ref(false);
 let refForm = ref();
 let form = useForm({
@@ -14,6 +14,7 @@ let form = useForm({
     disability_types: [],
     description: "",
     status: "INACTIVE",
+    storybook_id: "",
 });
 
 let handleSubmit = () => {
@@ -91,6 +92,8 @@ let handleSubmit = () => {
                     <VCol cols="12" class="pt-0">
                         <SampleStorybookSlider
                             title="Select Sample Storybook"
+                            :books="props.books"
+                            :form="form"
                         />
                     </VCol>
                     <VCol cols="12" class="pt-0">

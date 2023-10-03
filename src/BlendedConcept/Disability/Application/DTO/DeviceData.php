@@ -12,7 +12,8 @@ class DeviceData
         public readonly string $name,
         public readonly ?string $descripton,
         public readonly ?string $status,
-        public readonly ?array $disability_types
+        public readonly ?array $disability_types,
+        public readonly ?int $storybook_id
     ) {
     }
 
@@ -24,7 +25,8 @@ class DeviceData
             name: $request->name,
             descripton: $request->description,
             status: $request->status,
-            disability_types: $request->disability_types
+            disability_types: $request->disability_types,
+            storybook_id: $request->storybook_id
         );
     }
 
@@ -35,7 +37,8 @@ class DeviceData
             name: $device->name,
             descripton: $device->description,
             status: $device->status,
-            disability_types: null
+            disability_types: null,
+            storybook_id: null
         );
     }
 
@@ -46,6 +49,7 @@ class DeviceData
             'name' => $this->name,
             'description' => $this->descripton,
             'disability_types' => $this->disability_types,
+            'storybook_id' => $this->storybook_id
         ];
     }
 }

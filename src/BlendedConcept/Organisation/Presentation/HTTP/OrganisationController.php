@@ -79,6 +79,7 @@ class OrganisationController extends Controller
     {
         $organisation->load('org_admin', 'subscription.b2b_subscription')->loadCount('teachers', 'students');
         // return "hello";
+        // return $organisation;
 
 
         return Inertia::render(config('route.organisations.edit'), [

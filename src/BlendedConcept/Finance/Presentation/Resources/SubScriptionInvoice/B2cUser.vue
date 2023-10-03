@@ -118,6 +118,8 @@ watch(filters, (newValue) => {
                         placeholder="Search User ..."
                         density="compact"
                         variant="solo"
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
                     />
                 </div>
                 <div class="sort-field">

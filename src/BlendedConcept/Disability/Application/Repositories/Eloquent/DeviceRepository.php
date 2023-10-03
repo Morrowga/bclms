@@ -10,6 +10,7 @@ use Src\BlendedConcept\Disability\Domain\Repositories\DeviceRepositoryInterface;
 use Src\BlendedConcept\Disability\Domain\Resources\DeviceResource;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
 
 class DeviceRepository implements DeviceRepositoryInterface
 {
@@ -34,6 +35,7 @@ class DeviceRepository implements DeviceRepositoryInterface
                 // Attach disability types with the game
                 $deviceEloquent->disabilityTypes()->attach($device->disability_types);
             }
+            $deviceEloquent->books()->sync([$device->storybook_id]);
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
@@ -97,5 +99,10 @@ class DeviceRepository implements DeviceRepositoryInterface
             DB::rollBack();
             dd($exception);
         }
+    }
+    public function getSimpleBooks()
+    {
+        $books = StoryBookEloquentModel::take(5)->get();
+        return $books;
     }
 }

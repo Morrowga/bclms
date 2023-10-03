@@ -12,6 +12,7 @@ use Src\BlendedConcept\Disability\Application\UseCases\Commands\Devices\DeleteDe
 use Src\BlendedConcept\Disability\Application\UseCases\Commands\Devices\StoreDeviceCommand;
 use Src\BlendedConcept\Disability\Application\UseCases\Commands\Devices\UpdateDeviceCommand;
 use Src\BlendedConcept\Disability\Application\UseCases\Queries\Devices\GetDevices;
+use Src\BlendedConcept\Disability\Application\UseCases\Queries\Devices\GetSimpleBooks;
 use Src\BlendedConcept\Disability\Application\UseCases\Queries\DisabilityTypes\GetDisabilityTypeForSelect;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
 
@@ -29,7 +30,7 @@ class AccessibilityDeviceController
 
     public function store(StoreDeviceRequest $request)
     {
-
+        // dd($request->all());
         try {
             // Abort if the user is not authorized to create Devices
             // abort_if(authorize('create', DevicePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -54,9 +55,11 @@ class AccessibilityDeviceController
     public function create()
     {
         $disabilityTypes = (new GetDisabilityTypeForSelect())->handle();
+        $books = (new GetSimpleBooks())->handle();
 
         return Inertia::render(config('route.accessibility_device.create'), [
             'disability_types' => $disabilityTypes,
+            'books' => $books
         ]);
     }
 

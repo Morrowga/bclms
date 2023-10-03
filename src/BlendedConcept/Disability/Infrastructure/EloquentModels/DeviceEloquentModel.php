@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Src\BlendedConcept\Disability\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Model;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
 
 class DeviceEloquentModel extends Model
 {
@@ -35,5 +36,10 @@ class DeviceEloquentModel extends Model
     public function disabilityTypes()
     {
         return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'disability_type_devices', 'device_id', 'disability_type_id');
+    }
+
+    public function books()
+    {
+        return $this->belongsToMany(StoryBookEloquentModel::class, 'storybook_devices', 'device_id', 'storybook_id');
     }
 }

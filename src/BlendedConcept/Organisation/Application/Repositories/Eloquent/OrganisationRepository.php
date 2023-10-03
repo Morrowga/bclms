@@ -66,6 +66,8 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             $organisationAdminEloquent = OrganisationAdminMapper::toEloquent($organisationAdmin);
             $organisationAdminEloquent->organisation_id = $organisationEloquent->id;
             $organisationAdminEloquent->save();
+
+
             // Upload the organisation's image if provided
             if (request()->hasFile('image') && request()->file('image')->isValid()) {
                 $organisationEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_organisation');
@@ -74,6 +76,9 @@ class OrganisationRepository implements OrganisationRepositoryInterface
                 $organisationEloquent->logo = $organisationEloquent->getMedia('image')[0]->original_url;
                 $organisationEloquent->update();
             }
+            $organisationEloquent->update([
+                "org_admin_id" => $organisationAdminEloquent->org_admin_id
+            ]);
             // dd($organisationEloquent->sub_domain);
             //this will create subdomain
             $subdomain = Tenant::create([

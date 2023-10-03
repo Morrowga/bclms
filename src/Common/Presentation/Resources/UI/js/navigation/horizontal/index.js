@@ -130,8 +130,8 @@ export default [
             { title: 'Student', url: `${PREFIX}/students`, icon: { icon: 'mdi-account-group-outline' }, route_name: 'students', access_module: "access_student" },
             { title: 'Roles', url: '/roles', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'roles', access_module: "access_role" },
             { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
-            { title: 'Organisations', url: '/organisations', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'organisations', access_module: "access_bcstaffOrganisation", },
-            { title: 'Subscriptions', url: '/subscribptioninvoice', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'subscription_invoice', access_module: "access_bcstaffSubscription", },
+            { title: 'Organisations', url: '/organisations', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'access_organisations', access_module: "access_bcstaffOrganisation", },
+            { title: 'Subscriptions', url: '/subscribptioninvoice', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'access_subscription_invoice', access_module: "access_bcstaffSubscription", },
         ],
     },
 

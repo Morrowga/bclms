@@ -25,6 +25,7 @@ class OrganisationEloquentModel extends Model implements HasMedia
     // for images
     protected $appends = [
         'image',
+        'image_url'
     ];
 
     protected $fillable = [
@@ -44,7 +45,12 @@ class OrganisationEloquentModel extends Model implements HasMedia
     {
         return $this->getMedia('image');
     }
+    public function getImageUrlAttribute()
+    {
+        $media = $this->getMedia('image')->first();
 
+        return $media ? $media->getFullUrl() : null;
+    }
     public function subscription()
     {
         return $this->belongsTo(SubscriptionEloquentModel::class, 'curr_subscription_id', 'id');

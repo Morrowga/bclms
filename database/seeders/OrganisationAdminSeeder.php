@@ -19,15 +19,15 @@ class OrganisationAdminSeeder extends Seeder
     public function run()
     {
         $user = [
-                'role_id' => 5,
-                'first_name' => 'Org',
-                'last_name' => 'One',
-                'email' => 'orgone@mail.com',
-                'password' => bcrypt('password'),
-                'contact_number' => '1234567890',
-                'status' => 'ACTIVE',
-                'email_verification_send_on' => now(),
-                'profile_pic' => 'images/profile/profilefive.png',
+            'role_id' => 5,
+            'first_name' => 'Org',
+            'last_name' => 'One',
+            'email' => 'orgone@mail.com',
+            'password' => bcrypt('password'),
+            'contact_number' => '1234567890',
+            'status' => 'ACTIVE',
+            'email_verification_send_on' => now(),
+            'profile_pic' => 'images/profile/profilefive.png',
             // [
             //     'role_id' => 5,
             //     'first_name' => 'Org',
@@ -54,20 +54,20 @@ class OrganisationAdminSeeder extends Seeder
         //     'status' => 'INACTIVE',
         // ]
 
-        $subscriptionData = [
-            'start_date' => now(),
-            'end_date' => now(),
-            'payment_date' => now(),
-            'payment_status' => 'PAID',
-            'stripe_status' => null,
-            'stripe_price' => null,
-        ];
+        // $subscriptionData = [
+        //     'start_date' => now(),
+        //     'end_date' => now(),
+        //     'payment_date' => now(),
+        //     'payment_status' => 'PAID',
+        //     'stripe_status' => null,
+        //     'stripe_price' => null,
+        // ];
 
-        $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
+        // $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
 
         $organisationData = [
-            'curr_subscription_id' => $subscriptionOne->id,
-            'org_admin_id' => $userCreate->id,
+            'curr_subscription_id' => null,
+            'org_admin_id' => null,
             'name' => 'organisation one',
             'contact_name' => 'org one',
             'contact_email' => 'orgone@mail.com',
@@ -84,11 +84,14 @@ class OrganisationAdminSeeder extends Seeder
             'organisation_id' => $organisationModel->id,
         ]);
 
-        $subdomain->domains()->create(['domain' => $subdomain->id.'.'.env('CENTERAL_DOMAIN')]);
+        $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
 
-    $org_admin = OrganisationAdminEloquentModel::create([
+        $org_admin = OrganisationAdminEloquentModel::create([
             'user_id' => $userCreate->id,
             'organisation_id' => $organisationModel->id
+        ]);
+        $organisationModel->update([
+            "org_admin_id" => $org_admin->org_admin_id
         ]);
     }
 }

@@ -26,7 +26,7 @@ class TeacherRepository implements TeacherRepositoryInterface
             ->where('organisation_id', auth()->user()->organisation->id)
             ->orderBy('teacher_id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
-            
+
         return $teachersCollection;
     }
 

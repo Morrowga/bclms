@@ -143,6 +143,8 @@ const onRowClick = (params) => {
                                         density="compact"
                                         style="width: 300px"
                                         variant="solo"
+                                        @keyup.enter="searchItems"
+                                        v-model="serverParams.search"
                                     />
                                     <SelectBox
                                         v-model="filters"

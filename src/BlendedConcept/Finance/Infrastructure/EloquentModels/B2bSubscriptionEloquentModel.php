@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 
 class B2bSubscriptionEloquentModel extends Model implements HasMedia
 {
@@ -31,5 +32,15 @@ class B2bSubscriptionEloquentModel extends Model implements HasMedia
     public function getImageAttribute()
     {
         return $this->getMedia('image');
+    }
+
+    public function organisation()
+    {
+        return $this->belongsTo(OrganisationEloquentModel::class, 'organisation_id', 'id');
+    }
+
+    public function subscription()
+    {
+        return $this->belongsTo(SubscriptionEloquentModel::class, 'subscription_id', 'id');
     }
 }

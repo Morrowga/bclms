@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+
 let model = ref(false);
 const props = defineProps({
     title: {
@@ -10,37 +12,26 @@ const props = defineProps({
         type: String,
         default: "",
     },
+    books: {
+        type: Array,
+        default: "",
+    },
+    form: {
+        type: Object,
+        default: null,
+    },
 });
-let datas = [
-    {
-        id: 1,
-        image: "/images/image1.png",
-        title: "Story 1",
-    },
-    {
-        id: 2,
-        image: "/images/image2.png",
-        title: "Story 2",
-    },
-    {
-        id: 3,
-        image: "/images/image3.png",
-        title: "Story 3",
-    },
-    {
-        id: 4,
-        image: "/images/image4.png",
-        title: "Story 4",
-    },
-    {
-        id: 5,
-        image: "/images/image5.png",
-        title: "Story 5",
-    },
-];
 const toggleDialog = (id) => {
     console.log("id", id);
     // dialog.value = !dialog.value;
+};
+let isSelected = ref("");
+const getImage = (data) => {
+    return data.thumbnail_image ?? "/images/image8.png";
+};
+const selectBook = (id) => {
+    isSelected.value = id;
+    props.form.storybook_id = isSelected.value;
 };
 </script>
 <template>
@@ -51,10 +42,10 @@ const toggleDialog = (id) => {
                 <span class="subheading">{{ subtitle }}</span>
             </div>
         </div>
-        <v-slide-group v-model="model" center-active show-arrows>
+        <!-- <v-slide-group v-model="model" center-active show-arrows>
             <v-slide-group-item
-                v-for="data in datas"
-                :key="data.image"
+                v-for="data in props.books"
+                :key="data.id"
                 v-slot="{ isSelected, toggle }"
             >
                 <div>
@@ -68,7 +59,10 @@ const toggleDialog = (id) => {
                         <div
                             class="d-flex fill-height align-center justify-center"
                         >
-                            <img class="bg-white fit-img-2" :src="data.image" />
+                            <img
+                                class="bg-white fit-img-2"
+                                :src="getImage(data)"
+                            />
                         </div>
                         <v-scale-transition class="full-icon">
                             <v-icon
@@ -78,10 +72,42 @@ const toggleDialog = (id) => {
                             ></v-icon>
                         </v-scale-transition>
                     </v-card>
-                    <p class="font-weight-bold text-center">{{ data.title }}</p>
+                    <p class="font-weight-bold text-center">{{ data.name }}</p>
                 </div>
             </v-slide-group-item>
-        </v-slide-group>
+        </v-slide-group> -->
+        <swiper :slides-per-view="3" :space-between="10">
+            <swiper-slide
+                v-for="data in props.books"
+                :key="data.id"
+                @click="selectBook(data.id)"
+            >
+                <div class="ps-relative">
+                    <v-card
+                        class="ma-4 container-style"
+                        height="200"
+                        :color="'primary'"
+                    >
+                        <div
+                            class="d-flex fill-height align-center justify-center"
+                        >
+                            <img
+                                class="bg-white fit-img-2"
+                                :src="getImage(data)"
+                            />
+                        </div>
+                        <v-scale-transition class="full-icon">
+                            <v-icon
+                                v-if="isSelected == data.id"
+                                size="48"
+                                icon="mdi-check-circle-outline"
+                            ></v-icon>
+                        </v-scale-transition>
+                    </v-card>
+                    <p class="font-weight-bold text-center">{{ data.name }}</p>
+                </div>
+            </swiper-slide>
+        </swiper>
     </div>
 </template>
 

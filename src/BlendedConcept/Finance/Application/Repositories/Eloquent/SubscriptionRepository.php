@@ -14,7 +14,7 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
 {
     public function getB2bSubscriptions($filters)
     {
-        $subscriptions = SubscriptionResource::collection(SubscriptionEloquentModel::filter($filters)->with('organisation', 'b2b_subscription')->whereHas('organisation')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $subscriptions = SubscriptionResource::collection(SubscriptionEloquentModel::filter($filters)->with(['organisation', 'b2b_subscription'])->whereHas('organisation')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
 
         return $subscriptions;
     }

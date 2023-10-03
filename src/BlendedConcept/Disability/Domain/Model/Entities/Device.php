@@ -11,7 +11,8 @@ class Device extends Entity
         public readonly string $name,
         public readonly ?string $description,
         public readonly string $status,
-        public readonly ?array $disability_types
+        public readonly ?array $disability_types,
+        public readonly ?int $storybook_id
     ) {
     }
 
@@ -23,6 +24,7 @@ class Device extends Entity
             'description' => $this->description,
             'status' => $this->status,
             'disability_types' => $this->disability_types,
+            'storybook_id' => $this->storybook_id
         ];
     }
 }

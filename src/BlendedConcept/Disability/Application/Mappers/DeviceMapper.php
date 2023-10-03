@@ -15,7 +15,8 @@ class DeviceMapper
             name: $request->name,
             description: $request->description,
             status: $request->status,
-            disability_types: $request->disability_types
+            disability_types: $request->disability_types,
+            storybook_id: $request->storybook_id
         );
     }
 

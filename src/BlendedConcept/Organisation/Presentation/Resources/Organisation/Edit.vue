@@ -205,7 +205,7 @@ onMounted(() => {
                                 <br />
                                 <ImageUpload
                                     v-model="form.image"
-                                    :old_img="form.image"
+                                    :old_img="props.organisation.image_url"
                                 />
                             </VCol>
                             <VCol

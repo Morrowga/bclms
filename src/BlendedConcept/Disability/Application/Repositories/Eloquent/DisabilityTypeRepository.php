@@ -9,6 +9,7 @@ use Src\BlendedConcept\Disability\Domain\Model\DisabilityType;
 use Src\BlendedConcept\Disability\Domain\Repositories\DisabilityTypeRepositoryInterface;
 use Src\BlendedConcept\Disability\Domain\Resources\DisabilityTypeResource;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
 
 class DisabilityTypeRepository implements DisabilityTypeRepositoryInterface
 {
