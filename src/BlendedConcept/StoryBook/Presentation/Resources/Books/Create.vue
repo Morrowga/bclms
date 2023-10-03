@@ -2,6 +2,7 @@
 import { defineProps, ref } from "vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { useForm } from "@inertiajs/vue3";
+import { router } from "@inertiajs/core";
 import ImageUpload from "@mainRoot/components/DropZone/FileUpload.vue";
 import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
@@ -18,9 +19,11 @@ const props = defineProps([
     "devices",
 ]);
 let dialog = ref(false);
+let iframeRef = ref("");
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
+let isLoading = ref(false);
 
 let refForm = ref();
 const isFormValid = ref(false);
@@ -43,21 +46,31 @@ const form = useForm({
     storybook_file: "",
     thumbnail_img: "",
     physical_resource_src: "",
+    h5p_id: "",
 });
-
+const saveToH5p = () => {
+    const saveButton =
+        iframeRef.value.contentWindow.document.getElementById("save-button");
+    saveButton.click();
+};
 let onFormSubmit = () => {
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
-            form.post(route("books.store"), {
-                onSuccess: () => {
-                    SuccessDialog({ title: props.flash?.successMessage });
-                    dialog.value = false;
-                    form.reset();
-                },
-                onError: (error) => {
-                    console.log(error);
-                },
-            });
+            saveToH5p();
+            isLoading.value = true;
+            setTimeout(() => {
+                const curr_h5p_id = getCookie("h5p_id");
+                form.h5p_id = curr_h5p_id;
+                form.post(route("books.store"), {
+                    onSuccess: () => {
+                        SuccessDialog({ title: props.flash?.successMessage });
+                        isLoading.value = false;
+                    },
+                    onError: (error) => {
+                        console.log(error);
+                    },
+                });
+            }, 10000);
         }
     });
 };
@@ -75,8 +88,49 @@ const removeFromArray = (index) => {
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) console.log(parts.pop().split(";").shift());
+    if (parts.length === 2) return parts.pop().split(";").shift();
 }
+function removeCookie(name) {
+    console.log("Attempting to remove cookie:", name);
+    document.cookie =
+        name + "=; Max-Age=0; path=/; domain=" + window.location.host;
+    console.log("Cookie removed:", document.cookie);
+}
+const backHome = () => {
+    // const curr_h5p_id = getCookie("h5p_id");
+    // if (curr_h5p_id) {
+    //     // router.delete(`${app_url.value}/admin/h5p/h5p/${curr_h5p_id}`, {
+    //     //     onSuccess: () => {
+    //     //         router.get(route("books.index"));
+    //     //     },
+    //     // });
+    //     removeCookie("h5p_id");
+    // } else {
+    //     router.get(route("books.index"));
+    // }
+    router.get(route("books.index"));
+};
+onMounted(() => {
+    iframeRef.value.style.display = "none";
+    iframeRef.value.addEventListener("load", () => {
+        iframeRef.value.style.display = "flex";
+        const cancelButton =
+            iframeRef.value.contentWindow.document.querySelector(
+                "#laravel-h5p-form fieldset div:nth-child(5) div div:nth-child(2) a"
+            );
+
+        const saveButton =
+            iframeRef.value.contentWindow.document.getElementById(
+                "save-button"
+            );
+        if (cancelButton && saveButton) {
+            cancelButton.style.display = "none";
+            saveButton.style.display = "none";
+        } else {
+            console.error("Buttons not found!");
+        }
+    });
+});
 </script>
 <template>
     <AdminLayout>
@@ -273,6 +327,7 @@ function getCookie(name) {
                             frameborder="0"
                             scrolling="auto"
                             class="h5p-width"
+                            ref="iframeRef"
                         ></iframe>
                     </VCol>
                     <VCol cols="12" md="12">
@@ -283,16 +338,20 @@ function getCookie(name) {
                                     height="50"
                                     class=""
                                     width="200"
-                                    @click="dialog = false"
+                                    @click="backHome()"
+                                    :disabled="isLoading"
+                                    :loading="isLoading"
                                 >
                                     Cancel
                                 </VBtn>
 
                                 <VBtn
-                                    @click="getCookie('h5p_id')"
+                                    type="submit"
                                     class="ml-10"
                                     height="50"
                                     width="200"
+                                    :disabled="isLoading"
+                                    :loading="isLoading"
                                 >
                                     Add
                                 </VBtn>

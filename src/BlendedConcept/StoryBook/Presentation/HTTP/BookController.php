@@ -2,6 +2,7 @@
 
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
+use Illuminate\Support\Facades\Cookie;
 use Inertia\Inertia;
 use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookData;
 use Src\BlendedConcept\StoryBook\Application\Mappers\StoryBookMapper;
@@ -27,17 +28,17 @@ class BookController
     public function index()
     {
         // Retrieve learning needs, themes, disability types, and devices
-        // $learningneeds = (new GetLearningNeed())->handle();
-        // $themes = (new GetTheme())->handle();
-        // $disability_types = (new GetDisabilityType())->handle();
-        // $devices = (new GetDevice())->handle();
+        $learningneeds = (new GetLearningNeed())->handle();
+        $themes = (new GetTheme())->handle();
+        $disability_types = (new GetDisabilityType())->handle();
+        $devices = (new GetDevice())->handle();
 
         // Retrieve storybooks based on filters
         $filters = request()->only(['search', 'name', 'perPage']) ?? [];
         $storybooks = (new GetStoryBook($filters))->handle();
 
         // Render the index page with the retrieved data
-        return Inertia::render(config('route.books.index'), compact('storybooks'));
+        return Inertia::render(config('route.books.index'), compact('storybooks', 'learningneeds', 'themes', 'disability_types', 'devices'));
     }
 
     /**
@@ -48,6 +49,8 @@ class BookController
      */
     public function store(StoreBookRequest $request)
     {
+        // $val = Cookie::get('h5p_id');
+        // dd($val);
         try {
             // Map the request data to create a new storybook
             $newStoryBook = StoryBookMapper::fromRequest($request);
@@ -97,5 +100,11 @@ class BookController
         $devices = (new GetDevice())->handle();
 
         return Inertia::render(config('route.books.create'), compact('learningneeds', 'themes', 'disability_types', 'devices',));
+    }
+
+    public function edit(StoryBookEloquentModel $book)
+    {
+        // dd($book);
+        return Inertia::render(config('route.books.edit'), compact('book'));
     }
 }

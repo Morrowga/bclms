@@ -21,9 +21,9 @@ return new class extends Migration
             $table->integer('num_gold_coins')->default(0);
             $table->integer('num_silver_coins')->default(0);
             $table->boolean('is_free');
-            // $table->foreignId('h5p_id')->nullable()
-            // ->references('id')
-            // ->on('classroom_groups')->onDelete('cascade');
+            $table->foreignId('h5p_id')->nullable()
+                ->references('id')
+                ->on('h5p_contents')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -29,7 +29,6 @@ class GameController
             $disabilityTypes = (new ShowDisabilityTypes())->handle();
             $devices = (new GetDevicesWithoutPagination())->handle();
             $games = (new GetGameList($filters))->handle();
-
             return Inertia::render(config('route.games.index'), [
                 'disabilityTypes' => $disabilityTypes,
                 'devices' => $devices,
@@ -79,6 +78,7 @@ class GameController
      */
     public function update(UpdateGameRequest $request, GameEloquentModel $game)
     {
+
         // abort_if(authorize('edit', GamePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**

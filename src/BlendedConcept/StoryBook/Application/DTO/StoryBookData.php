@@ -17,6 +17,7 @@ class StoryBookData
         public readonly ?array $themes,
         public readonly ?array $disability_type,
         public readonly ?array $devices,
+        public readonly ?int $h5p_id
     ) {
     }
 
@@ -28,11 +29,12 @@ class StoryBookData
             description: $request->description,
             thumbnail_img: $request->thumbnail_img,
             is_free: $request->is_free,
-            tags : $request->tags,
-            sub_learning_needs : $request->sub_learning_needs,
-            themes : $request->themes,
-            disability_type : $request->disability_type,
-            devices : $request->devices,
+            tags: $request->tags,
+            sub_learning_needs: $request->sub_learning_needs,
+            themes: $request->themes,
+            disability_type: $request->disability_type,
+            devices: $request->devices,
+            h5p_id: $request->h5p_id
         );
     }
 
@@ -44,6 +46,7 @@ class StoryBookData
             'description' => $this->description,
             'thumbnail_img' => $this->thumbnail_img,
             'is_free' => $this->is_free,
+            'h5p_id' => $this->h5p_id
         ];
     }
 }

@@ -76,7 +76,7 @@ return [
     'books' => [
         'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/Index',
         'create' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/Create',
-        'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/Edit',
+        'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/EditH5pBook',
     ],
 
     'assign_rewards' => [
