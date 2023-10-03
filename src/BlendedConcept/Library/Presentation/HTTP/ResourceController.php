@@ -23,7 +23,7 @@ class ResourceController extends Controller
         try {
             $resources = (new GetResources(auth()->user()))->handle();
 
-            if(auth()->user()->organisation){
+            if(auth()->user()->organisation_id !== null){
                 $requestPublishData = (new GetRequestPublishData(auth()->user()))->handle();
                 return Inertia::render(config('route.resource.index'), [
                     "resources" => $resources,
