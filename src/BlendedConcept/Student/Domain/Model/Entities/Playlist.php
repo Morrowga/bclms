@@ -21,7 +21,7 @@ class Playlist extends Entity implements \JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'student_id' => $this->student_id,
-            'teacher_id' => auth()->user()->id,
+            'teacher_id' => auth()->user()->b2bUser->teacher_id,
         ];
     }
 }

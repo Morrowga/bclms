@@ -14,7 +14,7 @@ class PlaylistMapper
             id: $playlist_id,
             name: $request->name,
             student_id: $request->student_id,
-            teacher_id: auth()->user()->id,
+            teacher_id: auth()->user()->b2bUser->teacher_id,
         );
     }
 
@@ -27,7 +27,7 @@ class PlaylistMapper
         }
 
         $PlaylistEloquent->student_id = $playlist->student_id;
-        $PlaylistEloquent->teacher_id = auth()->user()->id;
+        $PlaylistEloquent->teacher_id = auth()->user()->b2bUser->teacher_id;
         $PlaylistEloquent->name = $playlist->name;
 
         return $PlaylistEloquent;
