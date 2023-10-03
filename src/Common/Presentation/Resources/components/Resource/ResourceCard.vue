@@ -1,7 +1,7 @@
 <script setup>
 import { router } from "@inertiajs/core";
 import CardAction from "@mainRoot/components/Resource/CardAction.vue";
-import { defineProps } from "vue";
+import { defineProps,defineEmits } from "vue";
 const props = defineProps({
     isEditMode: {
         type: Boolean,
@@ -10,10 +10,21 @@ const props = defineProps({
     data: {
         type: Object,
     },
+    type: {
+        type: String,
+    },
     currentUser: {
         type: Object
     }
 });
+
+const emits = defineEmits(['checkboxChange']);
+
+const isChecked = ref(false); // Initialize checkbox state
+
+const updateSelectedData = () => {
+  emits('checkboxChange', { id: props.data.id, checked: isChecked.value });
+};
 
 const type = ref(null);
 type.value = props.data.mime_type.split('/').pop()
@@ -22,17 +33,15 @@ const checkMe = () =>{
     let current = props.currentUser.data
     let id;
     if(props.data.organisation_id !== null && props.data.teacher_id === null){
-        if(current.id === props.data.organisation.org_admin_id){
-            return "Me"
-        }
+        return 'Org'
     }
 
     if(props.data.organisation_id === null && props.data.teacher_id !== null){
         if(current.id === props.data.teacher_id){
             return "Me"
         } else {
-            return "Teacher"
-            // return props.data.teacher.full_name
+            return "Org"
+        // return props.data.teacher.full_name
         }
     }
 
@@ -40,7 +49,7 @@ const checkMe = () =>{
         if(current.id === props.data.teacher_id){
             return "Me"
         } else {
-            return "Teacher"
+            return "Org"
             // return props.data.teacher.full_name
         }
     }
@@ -49,11 +58,12 @@ const checkMe = () =>{
 const fileSizeInMB = computed(() => {
   return (props.data.size / (1024 * 1024)).toFixed(2); // Convert bytes to MB and round to 2 decimal places
 });
+
 </script>
 <template>
     <VCard>
-        <CardAction :data="props.data" :hidden="isEditMode" />
-        <VCheckbox class="checkboxcard" v-if="isEditMode"></VCheckbox>
+        <CardAction v-if="props.type === 'orgData'" :current_user="currentUser" :data="props.data" :hidden="isEditMode" />
+        <VCheckbox  v-model="isChecked" @change="updateSelectedData" class="checkboxcard" v-if="isEditMode"></VCheckbox>
         <v-img :src="props.data.thumb_url" height="350" cover></v-img>
         <div class="resource-label">
             <VRow>
@@ -62,7 +72,7 @@ const fileSizeInMB = computed(() => {
                 </VCol>
                 <VCol cols="4" class="text-right">
                     <div class="resource-chip">
-                        <v-btn class="me-chip">
+                        <v-btn class="me-chip" :class="checkMe() == 'Org' ? 'blue-chip' : 'yellow-chip'">
                             {{ checkMe() }}
                         </v-btn>
                     </div>
@@ -114,7 +124,7 @@ const fileSizeInMB = computed(() => {
     position: absolute;
     z-index: 1;
     cursor: pointer;
-    color: #000 !important;
+    color: #fff !important;
     left: 6%;
 }
 .media-text {
@@ -129,6 +139,14 @@ const fileSizeInMB = computed(() => {
     background: #fc0 !important;
     width: 100% !important;
     z-index: 1;
+}
+
+.yellow-chip {
+    background: #fc0 !important;
+}
+
+.blue-chip {
+    background: #3749e8 !important;
 }
 .resource-label {
     height: 13vh;

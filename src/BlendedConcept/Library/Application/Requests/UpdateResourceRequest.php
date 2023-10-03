@@ -17,9 +17,9 @@ class UpdateResourceRequest extends FormRequest
             'filename' => [
                 'required',
             ],
-            'file' => [
-                'required',
-            ],
+            // 'file' => [
+            //     'required',
+            // ],
         ];
     }
 

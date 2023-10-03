@@ -10,6 +10,9 @@ let props = defineProps({
     data: {
         type: Object,
     },
+    current_user: {
+        type: Object
+    }
 });
 
 const isEditDialogVisible = ref(false);
@@ -86,6 +89,37 @@ const deleteOnclick = () => {
     });
 }
 
+const checkIsOrg = () => {
+    if(props.current_user.data.organisation !== ''){
+        return true;
+    } else {
+        if(props.data.status === 'requested'){
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+const publish = () => {
+    const publishForm = useForm({});
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,publish it!",
+        icon: "success",
+        onConfirm: () => {
+            publishForm.post('/resource/request-publish/' + props.data.id, {
+                onSuccess: () => {
+                    SuccessDialog({
+                        title: "You have successfully published resource to org!",
+                        color: "#17CAB6",
+                    });
+                },
+            });
+        },
+    });
+}
+
 const fileInput = ref(null);
 
 const openFileInput = () => {
@@ -105,11 +139,11 @@ const openFileInput = () => {
                     <v-list-item @click="deleteOnclick">
                         <v-list-item-title>Delete</v-list-item-title>
                     </v-list-item>
-                    <!-- <v-list-item @click="publish()" v-if="!checkIsOrg()">
+                    <v-list-item @click="publish()" v-if="!checkIsOrg()">
                         <v-list-item-title
                             >Publish to Organization</v-list-item-title
                         >
-                    </v-list-item> -->
+                    </v-list-item>
                 </v-list>
             </v-menu>
         </span>

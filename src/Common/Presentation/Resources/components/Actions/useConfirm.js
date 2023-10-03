@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 
 let isConfirmedDialog = ({
     title = '',
+    color = '',
     icon = "warning",
     confirmButtonText ='Save',
     denyButtonText="Don't save",

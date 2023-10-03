@@ -10,38 +10,147 @@ import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+import { useForm } from "@inertiajs/vue3";
 
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
 let props = defineProps([
     "resources",
+    "requestPublishData",
     "auth"
 ]);
-let onFormSubmit = () => {
-    isConfirmedDialog({ title: "Are you sure want to delete it." });
+
+const isRequestUploadData = ref(false);
+const checkedItems = ref([]);
+let isDeleteMode = ref(false);
+let isEditMode = ref(false);
+
+let deleteMode = () => {
+    isEditMode.value = true;
+    isDeleteMode.value = true;
 };
 
-let isEditMode = ref(false);
 const activeEditMode = () => {
+    isRequestUploadData.value = true;
     isEditMode.value = true;
 };
 const approve = () => {
-    SuccessDialog({
-        title: "You have successfully added resource{s}!",
-        color: "#17CAB6",
+    const actionForm = useForm({
+        type: 'approve',
+        ids: JSON.stringify(checkedItems.value)
     });
-    isEditMode.value = false;
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,Approve it!",
+        icon: "success",
+        onConfirm: () => {
+            actionForm.post(route("resource.approve"), {
+                onSuccess: () => {
+                    SuccessDialog({
+                        title: "You have successfully approved resource to org!",
+                        color: "#17CAB6",
+                    });
+                    isEditMode.value = false;
+                },
+            });
+        },
+    });
 };
+
 const reject = () => {
-    SuccessDialog({
-        title: "You have rejected added resource{s}!",
-        color: "#17CAB6",
+    const actionForm = useForm({
+        type: 'decline',
+        ids: JSON.stringify(checkedItems.value)
     });
-    isEditMode.value = false;
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,Decline it!",
+        icon: "success",
+        onConfirm: () => {
+            actionForm.post(route("resource.decline"), {
+                onSuccess: () => {
+                    SuccessDialog({
+                        title: "You have successfully declined resource to org!",
+                        color: "#17CAB6",
+                    });
+                    reload("resource.index");
+
+                    isEditMode.value = false;
+                },
+            });
+        },
+    });
 };
+
+const multiDelete = () => {
+    const actionForm = useForm({
+        type: 'delete',
+        ids: JSON.stringify(checkedItems.value)
+    });
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,Delete it!",
+        icon: "success",
+        onConfirm: () => {
+            actionForm.post(route("resource.multipledelete"), {
+                onSuccess: () => {
+                    SuccessDialog({
+                        title: "You have successfully deleted resource!",
+                        color: "#17CAB6",
+                    });
+                    reload("resource.index");
+
+                    isEditMode.value = false;
+                },
+            });
+        },
+    });
+};
+
+const reload = (routeName, param) => {
+    if (param != null) {
+        return new Promise((resolve) => {
+            router.get(route(routeName, param), {
+                onSuccess: () => {
+                    resolve();
+                },
+            });
+        });
+    } else {
+        return new Promise((resolve) => {
+            router.get(route(routeName), {
+                onSuccess: () => {
+                    resolve();
+                },
+            });
+        });
+    }
+};
+
+const backToPage = () => {
+    isEditMode.value = false;
+    isDeleteMode.value = false;
+    isRequestUploadData.value = false;
+}
+
 const checkIsOrg = () => {
     return user_role.value == "Organisation Admin" ? true : false;
 };
+
+const handleCheckboxChange = (data) => {
+    if (data.checked) {
+        console.log('true');
+    // Checkbox is checked, add data to the array
+        checkedItems.value.push(data.id);
+    } else {
+        console.log('false');
+        // Checkbox is unchecked, remove data from the array
+        const index = checkedItems.value.indexOf(data.id);
+        if (index !== -1) {
+            checkedItems.value.splice(index, 1);
+        }
+    }
+}
 </script>
 
 <template>
@@ -60,23 +169,52 @@ const checkIsOrg = () => {
                     <div>
                         <div class="mt-5">
                             <div v-if="isEditMode">
-                                <v-btn
-                                    @click="approve()"
-                                    color="primary"
-                                    varient="flat"
-                                    class="ml-2 resourcebtn"
-                                    rounded=""
-                                    >Approve</v-btn
-                                >
-                                <v-btn
-                                    prepend-icon="mdi-trash-can-outline"
-                                    @click="reject()"
-                                    color="#ff6262"
-                                    varient="flat"
-                                    class="ml-2 resourcebtn"
-                                    rounded=""
-                                    >Reject</v-btn
-                                >
+                                <div v-if="isDeleteMode">
+                                    <v-btn
+                                        prepend-icon="mdi-trash-can-outline"
+                                        @click="multiDelete()"
+                                        color="#ff6262"
+                                        varient="flat"
+                                        class="ml-2 resourcebtn"
+                                        rounded=""
+                                        >Delete</v-btn
+                                    >
+                                    <v-btn
+                                        @click="backToPage()"
+                                        color="secondary"
+                                        varient="flat"
+                                        class="ml-2 resourcebtn"
+                                        rounded=""
+                                        >Cancel</v-btn
+                                    >
+                                </div>
+                                <div v-else>
+                                    <v-btn
+                                        @click="approve()"
+                                        color="primary"
+                                        varient="flat"
+                                        class="ml-2 resourcebtn"
+                                        rounded=""
+                                        >Approve</v-btn
+                                    >
+                                    <v-btn
+                                        prepend-icon="mdi-trash-can-outline"
+                                        @click="reject()"
+                                        color="#ff6262"
+                                        varient="flat"
+                                        class="ml-2 resourcebtn"
+                                        rounded=""
+                                        >Reject</v-btn
+                                    >
+                                    <v-btn
+                                        @click="backToPage()"
+                                        color="secondary"
+                                        varient="flat"
+                                        class="ml-2 resourcebtn"
+                                        rounded=""
+                                        >Cancel</v-btn
+                                    >
+                                </div>
                             </div>
                             <div v-else class="d-flex justify-end">
                                 <v-btn
@@ -91,7 +229,7 @@ const checkIsOrg = () => {
                                 <CreateModal />
                                 <v-btn
                                     prepend-icon="mdi-trash-can-outline"
-                                    @click="onFormSubmit"
+                                    @click="deleteMode()"
                                     color="#ff6262"
                                     varient="flat"
                                     class="ml-2 resourcebtn"
@@ -144,7 +282,7 @@ const checkIsOrg = () => {
                         </VCol>
                     </VRow>
                 </div>
-                <div class="mt-10">
+                <div class="mt-10" v-if="!isRequestUploadData">
                     <VRow>
                         <VCol
                             cols="12"
@@ -156,6 +294,29 @@ const checkIsOrg = () => {
                         >
                             <ResourceCard
                                 :data="item"
+                                @checkboxChange="handleCheckboxChange"
+                                :key="item"
+                                type="orgData"
+                                :currentUser="props.auth"
+                                :isEditMode="isEditMode"
+                            />
+                        </VCol>
+                    </VRow>
+                </div>
+                <div class="mt-10" v-if="isRequestUploadData">
+                    <VRow>
+                        <VCol
+                            cols="12"
+                            v-for="item in props.requestPublishData"
+                            sm="6"
+                            md="4"
+                            lg="3"
+                            :key="item"
+                        >
+                            <ResourceCard
+                                @checkboxChange="handleCheckboxChange"
+                                :data="item"
+                                type="requestUploads"
                                 :key="item"
                                 :currentUser="props.auth"
                                 :isEditMode="isEditMode"

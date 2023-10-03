@@ -17,5 +17,15 @@ interface ResourceRepositoryInterface
     //update resource
     public function updateResource(Request $request,UserEloquentModel $userEloquentModel, MediaEloquentModel $resource);
 
+    //delete resource
     public function delete(MediaEloquentModel $resource);
+
+    //request publish resource
+    public function requestPublish(MediaEloquentModel $resource);
+
+    //get request publish data
+    public function getRequestPublishData(UserEloquentModel $userEloquentModel);
+
+    //action resource approve, delete, decline
+    public function resourceAction(Request $request);
 }

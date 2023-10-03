@@ -14,6 +14,8 @@ const form = useForm({
     file: null
 })
 
+const disabled = ref(false);
+
 const validateFile = (file) => {
   const fileInput = file;
   // Check file format (mime type)
@@ -23,9 +25,9 @@ const validateFile = (file) => {
   }
 
   // Check file size (10MB limit)
-  const maxSizeInBytes = 10 * 1024 * 1024; // 10MB
+  const maxSizeInBytes = 100 * 1024 * 1024; // 10MB
   if (fileInput.size > maxSizeInBytes) {
-    validationError.value = 'File size exceeds the 10MB limit.';
+    validationError.value = 'File size exceeds the 100 MB limit.';
     return false;
   }
 
@@ -48,9 +50,11 @@ const removeVideo = () => {
 }
 
 const submitResource = () => {
+    disabled.value = true;
     form.file = file.value
     form.post(route("resource.store"), {
     onSuccess: () => {
+        disabled.value = false;
       isDialogVisible.value = false;
       SuccessDialog({ title: "You've successfully saved a video." });
     },
@@ -172,6 +176,7 @@ const openFileInput = () => {
                                         type="submit"
                                         varient="flat"
                                         color="#3749E9"
+                                        :disabled="disabled"
                                         class="textcolor ml-2 pppangram-bold"
                                         width="200"
                                         rounded

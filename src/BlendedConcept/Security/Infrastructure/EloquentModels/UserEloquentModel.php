@@ -128,6 +128,7 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     {
         return $this->first_name . ' ' . $this->last_name;
     }
+    
     public function getOrganisationIdAttribute()
     {
         if ($this->organisation || ($this->b2bUser && $this->b2bUser->organisation)) {
