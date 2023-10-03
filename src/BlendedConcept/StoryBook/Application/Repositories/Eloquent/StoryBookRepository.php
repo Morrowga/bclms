@@ -66,7 +66,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
 
             // Associate tags
             $storybookEloquent->associateTags(request()->tags);
-
+            setcookie("h5p_id", time() - 3600);
             // Add media to media library
             if (request()->hasFile('thumbnail_img') && request()->file('thumbnail_img')->isValid()) {
                 $storybookEloquent->addMediaFromRequest('thumbnail_img')
@@ -110,11 +110,65 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             $updateStoryBookEloquent = StoryBookEloquentModel::query()->findOrFail($storyBookData->id);
             $updateStoryBookEloquent->fill($storyBookArray);
             $updateStoryBookEloquent->update();
+            if (request()->hasFile('thumbnail_img') && request()->file('thumbnail_img')->isValid()) {
+
+                $old_thumbnail = $updateStoryBookEloquent->getFirstMedia('thumbnail_img');
+                if ($old_thumbnail != null) {
+                    $old_thumbnail->forceDelete();
+                }
+
+                $newBookMedia = $updateStoryBookEloquent->addMediaFromRequest('thumbnail_img')->toMediaCollection('thumbnail_img', 'media_game');
+
+                if ($newBookMedia->getUrl()) {
+                    $updateStoryBookEloquent->thumbnail_img = $newBookMedia->getUrl();
+                    $updateStoryBookEloquent->update();
+                }
+            }
+
+            $disabilityCollection = collect(request()->disability_type);
+            $deviceCollection = collect(request()->devices);
+            $themeCollection = collect(request()->themes);
+            $learningNeedsCollection = collect(request()->sub_learning_needs);
+
+            $disabilityLength = $disabilityCollection->count();
+            $deviceLength = $deviceCollection->count();
+            $themeLength = $themeCollection->count();
+            $learningneedsLength = $learningNeedsCollection->count();
+
+
+
+            if ($deviceLength > 0) {
+                $updateStoryBookEloquent->devices()->detach();
+
+                $updateStoryBookEloquent->devices()->attach(request()->devices);
+                // Attach new tags (assuming $request contains the new tag IDs)
+            }
+
+            if ($disabilityLength > 0) {
+                $updateStoryBookEloquent->disability_types()->detach();
+
+                $updateStoryBookEloquent->disability_types()->attach(request()->disability_type);
+                // Attach new tags (assuming $request contains the new tag IDs)
+            }
+
+            if ($themeLength > 0) {
+                $updateStoryBookEloquent->themes()->detach();
+
+                $updateStoryBookEloquent->themes()->attach(request()->themes);
+                // Attach new tags (assuming $request contains the new tag IDs)
+            }
+
+            if ($learningneedsLength > 0) {
+                $updateStoryBookEloquent->learningneeds()->detach();
+
+                $updateStoryBookEloquent->learningneeds()->attach(request()->learningneeds);
+                // Attach new tags (assuming $request contains the new tag IDs)
+            }
 
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error->getMessage());
+            dd($error);
         }
     }
 

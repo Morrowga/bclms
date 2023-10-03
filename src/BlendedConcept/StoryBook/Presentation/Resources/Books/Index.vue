@@ -14,8 +14,13 @@ import {
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
 
-const props = defineProps(["storybooks"]);
-
+let props = defineProps([
+    "storybooks",
+    "learningneeds",
+    "themes",
+    "disability_types",
+    "devices",
+]);
 const searchItem = ref({
     book_name: "",
 });
@@ -62,7 +67,13 @@ const searchItem = ref({
                     v-for="data in storybooks.data"
                     :key="data.image"
                 >
-                    <Show :data="data" />
+                    <Show
+                        :data="data"
+                        :disability_types="props.disability_types"
+                        :devices="props.devices"
+                        :themes="props.themes"
+                        :learningneeds="props.learningneeds"
+                    />
                 </VCol>
             </VRow>
         </VContainer>

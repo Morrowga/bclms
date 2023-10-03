@@ -14,8 +14,11 @@ class UpdateStoryBookRequest extends FormRequest
     public function rules()
     {
         return [
+            // 'name' => [
+            //     'required', 'string', 'unique:storybooks,name',
+            // ],
             'name' => [
-                'required', 'string', 'unique:storybooks,name',
+                'required'
             ],
             'description' => [
                 'required', 'string',

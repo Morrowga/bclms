@@ -7,12 +7,36 @@ import UploadThumbnail from "./components/UploadThumbnail.vue";
 const props = defineProps({
     datas: {
         type: Object,
-        default: null,
+        required: true,
+    },
+    disability_types: {
+        type: Object,
+        requird: true,
+    },
+    devices: {
+        type: Object,
+        requird: true,
+    },
+    themes: {
+        type: Object,
+        required: true,
+    },
+    learningneeds: {
+        type: Object,
+        required: true,
     },
 });
 let emit = defineEmits();
 let dialog = ref(false);
 let thumbnailDialog = ref(false);
+let types = ref([]);
+let devices = ref([]);
+let themes = ref([]);
+let learningneeds = ref([]);
+let systemDisabilityTypes = ref([]);
+let systemDevices = ref([]);
+let systemThemes = ref([]);
+let systemLearningneeds = ref([]);
 const getThumbFile = ref(null);
 const toggleDialog = () => {
     dialog.value = !dialog.value;
@@ -32,7 +56,85 @@ const form = useForm({
     _method: "PUT",
 });
 
+props.datas.disability_types.forEach((item) => {
+    types.value.push({
+        id: item.id,
+        name: item.name,
+    });
+});
+
+props.datas.devices.forEach((item) => {
+    devices.value.push({
+        id: item.id,
+        name: item.name,
+    });
+});
+props.datas.themes.forEach((item) => {
+    themes.value.push({
+        id: item.id,
+        name: item.name,
+    });
+});
+
+props.datas.learningneeds.forEach((item) => {
+    learningneeds.value.push({
+        id: item.id,
+        name: item.name,
+    });
+});
+
+props.disability_types.forEach((item) => {
+    systemDisabilityTypes.value.push({
+        id: item.id,
+        name: item.name,
+    });
+});
+
+props.devices.forEach((item) => {
+    systemDevices.value.push({
+        id: item.id,
+        name: item.name,
+    });
+});
+props.themes.forEach((item) => {
+    systemThemes.value.push({
+        id: item.id,
+        name: item.name,
+    });
+});
+
+props.learningneeds.forEach((item) => {
+    systemLearningneeds.value.push({
+        id: item.id,
+        name: item.name,
+    });
+});
+
 const handleUpdate = () => {
+    let typeIds = [];
+    let deviceIds = [];
+    let learningneedIds = [];
+    let themeIds = [];
+    types.value.forEach((item) => {
+        typeIds.push(item.id);
+    });
+
+    devices.value.forEach((item) => {
+        deviceIds.push(item.id);
+    });
+    themes.value.forEach((item) => {
+        themeIds.push(item.id);
+    });
+
+    learningneeds.value.forEach((item) => {
+        learningneedIds.push(item.id);
+    });
+
+    form.disability_type = typeIds;
+    form.devices = deviceIds;
+    form.sub_learning_needs = learningneedIds;
+    form.themes = themeIds;
+
     form.thumbnail_img = getThumbFile.value;
     form.post(route("books.update", form.id), {
         onSuccess: () => {
@@ -47,6 +149,58 @@ const handleUpdate = () => {
 const handleThumbnailModalSubmit = (data) => {
     getThumbFile.value = data.thumb;
 };
+const removeFromArray = (disabilityId) => {
+    types.value = types.value.filter((item) => item.id !== disabilityId);
+};
+
+const addToArray = (disability) => {
+    types.value.push(disability);
+};
+
+const isInGameDisabilityTypes = (disabilityId) => {
+    return types.value.some((type) => type.id === disabilityId);
+};
+
+const removeDeviceFromArray = (deviceId) => {
+    devices.value = devices.value.filter((item) => item.id !== deviceId);
+};
+
+const addDeviceToArray = (device) => {
+    devices.value.push(device);
+};
+
+const isInGameDevices = (deviceId) => {
+    return devices.value.some((device) => device.id === deviceId);
+};
+
+const removeThemesFromArray = (themeId) => {
+    themes.value = themes.value.filter((item) => item.id !== themeId);
+};
+
+const addThemeToArray = (theme) => {
+    themes.value.push(theme);
+};
+
+const isInBookTheme = (themeId) => {
+    return themes.value.some((theme) => theme.id === themeId);
+};
+
+const removeLearningneedsFromArray = (learningneedId) => {
+    learningneeds.value = learningneeds.value.filter(
+        (item) => item.id !== learningneedId
+    );
+};
+
+const addLearningneedToArray = (learningneed) => {
+    learningneeds.value.push(learningneed);
+};
+
+const isInBookLearningneed = (learningneedId) => {
+    return learningneeds.value.some(
+        (learningneed) => learningneed.id === learningneedId
+    );
+};
+
 onUpdated(() => {
     (form.id = props.datas.id),
         (form.name = props.datas.name),
@@ -124,23 +278,43 @@ onUpdated(() => {
                             <v-chip-group>
                                 <div
                                     class="ps-relative"
-                                    v-for="learning_need in form.sub_learning_needs"
-                                    :key="learning_need.id"
+                                    v-for="(
+                                        learningneed, index
+                                    ) in systemLearningneeds"
+                                    :key="index"
                                 >
-                                    <v-chip size="small">{{
-                                        learning_need.name
-                                    }}</v-chip>
-                                    <div class="delete-chip">
-                                        <span>-</span>
+                                    <v-chip size="small">
+                                        {{ learningneed.name }}
+                                    </v-chip>
+                                    <div
+                                        class="delete-chip"
+                                        v-if="
+                                            isInBookLearningneed(
+                                                learningneed.id
+                                            )
+                                        "
+                                    >
+                                        <span
+                                            @click="
+                                                removeLearningneedsFromArray(
+                                                    learningneed.id
+                                                )
+                                            "
+                                            >-</span
+                                        >
+                                    </div>
+                                    <div class="add-chip" v-else>
+                                        <span
+                                            @click="
+                                                addLearningneedToArray(
+                                                    learningneed
+                                                )
+                                            "
+                                            >+</span
+                                        >
                                     </div>
                                 </div>
                             </v-chip-group>
-                            <v-btn
-                                class="ml-10"
-                                size="x-small"
-                                icon="mdi-plus"
-                                color="secondary"
-                            ></v-btn>
                         </div>
                     </div>
                     <div class="themes pt-2">
@@ -150,23 +324,30 @@ onUpdated(() => {
                             <v-chip-group>
                                 <div
                                     class="ps-relative"
-                                    v-for="theme in form.themes"
-                                    :key="theme.id"
+                                    v-for="(theme, index) in systemThemes"
+                                    :key="index"
                                 >
                                     <v-chip size="small">
                                         {{ theme.name }}
                                     </v-chip>
-                                    <div class="delete-chip">
-                                        <span>-</span>
+                                    <div
+                                        class="delete-chip"
+                                        v-if="isInBookTheme(theme.id)"
+                                    >
+                                        <span
+                                            @click="
+                                                removeThemesFromArray(theme.id)
+                                            "
+                                            >-</span
+                                        >
+                                    </div>
+                                    <div class="add-chip" v-else>
+                                        <span @click="addThemeToArray(theme)"
+                                            >+</span
+                                        >
                                     </div>
                                 </div>
                             </v-chip-group>
-                            <v-btn
-                                class="ml-10"
-                                size="x-small"
-                                icon="mdi-plus"
-                                color="secondary"
-                            ></v-btn>
                         </div>
                     </div>
 
@@ -178,23 +359,39 @@ onUpdated(() => {
                             <v-chip-group>
                                 <div
                                     class="ps-relative"
-                                    v-for="disability_type in form.disability_type"
-                                    :key="disability_type.id"
+                                    v-for="(
+                                        disabilityType, index
+                                    ) in systemDisabilityTypes"
+                                    :key="index"
                                 >
                                     <v-chip size="small">
-                                        {{ disability_type.name }}
+                                        {{ disabilityType.name }}
                                     </v-chip>
-                                    <div class="delete-chip">
-                                        <span>-</span>
+                                    <div
+                                        class="delete-chip"
+                                        v-if="
+                                            isInGameDisabilityTypes(
+                                                disabilityType.id
+                                            )
+                                        "
+                                    >
+                                        <span
+                                            @click="
+                                                removeFromArray(
+                                                    disabilityType.id
+                                                )
+                                            "
+                                            >-</span
+                                        >
+                                    </div>
+                                    <div class="add-chip" v-else>
+                                        <span
+                                            @click="addToArray(disabilityType)"
+                                            >+</span
+                                        >
                                     </div>
                                 </div>
                             </v-chip-group>
-                            <v-btn
-                                class="ml-10"
-                                size="x-small"
-                                icon="mdi-plus"
-                                color="secondary"
-                            ></v-btn>
                         </div>
                     </div>
 
@@ -206,23 +403,30 @@ onUpdated(() => {
                             <v-chip-group>
                                 <div
                                     class="ps-relative"
-                                    v-for="device in form.devices"
-                                    :key="device.id"
+                                    v-for="(device, index) in systemDevices"
+                                    :key="index"
                                 >
-                                    <v-chip size="small">{{
-                                        device.name
-                                    }}</v-chip>
-                                    <div class="delete-chip">
-                                        <span>-</span>
+                                    <v-chip size="small">
+                                        {{ device.name }}
+                                    </v-chip>
+                                    <div
+                                        class="delete-chip"
+                                        v-if="isInGameDevices(device.id)"
+                                    >
+                                        <span
+                                            @click="
+                                                removeDeviceFromArray(device.id)
+                                            "
+                                            >-</span
+                                        >
+                                    </div>
+                                    <div class="add-chip" v-else>
+                                        <span @click="addDeviceToArray(device)"
+                                            >+</span
+                                        >
                                     </div>
                                 </div>
                             </v-chip-group>
-                            <v-btn
-                                class="ml-10"
-                                size="x-small"
-                                icon="mdi-plus"
-                                color="secondary"
-                            ></v-btn>
                         </div>
                     </div>
                 </v-card-text>
@@ -334,6 +538,7 @@ onUpdated(() => {
     border-radius: 50%;
     width: 15px;
     height: 15px;
+    cursor: pointer;
     color: #fff;
     text-align: center;
     position: absolute;
@@ -341,6 +546,27 @@ onUpdated(() => {
     top: 0;
 }
 .delete-chip span {
+    position: absolute;
+    top: -6px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: #fff;
+}
+
+.add-chip {
+    background: rgb(109, 120, 141);
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.add-chip span {
     position: absolute;
     top: -6px;
     left: 0;
