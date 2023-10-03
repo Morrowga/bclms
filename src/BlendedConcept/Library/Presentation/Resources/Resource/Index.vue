@@ -50,6 +50,7 @@ const approve = () => {
                         title: "You have successfully approved resource to org!",
                         color: "#17CAB6",
                     });
+                    reload("resource.index");
                     isEditMode.value = false;
                 },
             });
