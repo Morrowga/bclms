@@ -25,6 +25,7 @@ class AuthResource extends JsonResource
             'name' => $this->first_name ? $this->first_name.' '.$this->last_name : ' ',
             'email' => $this->email ?? '',
             'roles' => $this->role ?? '',
+            'organisation' => $this->organisation ?? '',
             'image' => $image,
             'permissions' => $this->role ? new AuthPermissionResource(auth()->user()) : '',
         ];

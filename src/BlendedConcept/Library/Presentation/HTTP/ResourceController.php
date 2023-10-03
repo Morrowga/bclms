@@ -3,14 +3,18 @@
 namespace Src\BlendedConcept\Library\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\Library\Application\Requests\StoreResourceRequest;
 use Src\BlendedConcept\Library\Application\UseCases\Queries\GetResources;
 use Src\BlendedConcept\Library\Application\Requests\UpdateResourceRequest;
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\Library\Application\UseCases\Commands\StoreResourceCommand;
+use Src\BlendedConcept\Library\Application\UseCases\Queries\GetRequestPublishData;
 use Src\BlendedConcept\Library\Application\UseCases\Commands\DeleteResourceCommand;
+use Src\BlendedConcept\Library\Application\UseCases\Commands\ResourceActionCommand;
 use Src\BlendedConcept\Library\Application\UseCases\Commands\UpdateResourceCommand;
+use Src\BlendedConcept\Library\Application\UseCases\Commands\RequestPublishResourceCommand;
 
 class ResourceController extends Controller
 {
@@ -18,10 +22,19 @@ class ResourceController extends Controller
     {
         try {
             $resources = (new GetResources(auth()->user()))->handle();
+
+            if(auth()->user()->organisation){
+                $requestPublishData = (new GetRequestPublishData(auth()->user()))->handle();
+                return Inertia::render(config('route.resource.index'), [
+                    "resources" => $resources,
+                    "requestPublishData" => $requestPublishData
+                ]);
+            }
+
             return Inertia::render(config('route.resource.index'), [
-                "resources" => $resources
+                "resources" => $resources,
             ]);
-            // return Inertia::render(config('route.resource'));
+
         } catch (\Exception $e) {
             dd($e->getMessage());
 
@@ -99,6 +112,65 @@ class ResourceController extends Controller
         try {
             $resourceDestroy = new DeleteResourceCommand($resource);
             $resourceDestroy->execute();
+
+            return redirect()->route('resource.index')->with('successMessage', 'Resource deleted Successfully!');
+        } catch (\Exception $e) {
+            /**
+             * Catch any exceptions and display an error message.
+             */
+            return redirect()->route('resource.index')->with('systemErrorMessage', $e->getMessage());
+        }
+    }
+
+    public function requestPublish(MediaEloquentModel $resource){
+        try {
+            $resourcePublish = new RequestPublishResourceCommand($resource);
+            $resourcePublish->execute();
+
+            return redirect()->route('resource.index')->with('successMessage', 'Resource requested Successfully!');
+        } catch (\Exception $e) {
+            /**
+             * Catch any exceptions and display an error message.
+             */
+            return redirect()->route('resource.index')->with('systemErrorMessage', $e->getMessage());
+        }
+    }
+
+    //Apprve resource
+    public function resourceApprove(Request $request){
+        try {
+            $resourceApprove = new ResourceActionCommand($request);
+            $resourceApprove->execute();
+
+            return redirect()->route('resource.index')->with('successMessage', 'Resource approved Successfully!');
+        } catch (\Exception $e) {
+            /**
+             * Catch any exceptions and display an error message.
+             */
+            return redirect()->route('resource.index')->with('systemErrorMessage', $e->getMessage());
+        }
+    }
+
+    //Decline resource
+    public function resourceDecline(Request $request){
+        try {
+            $resourceDecline = new ResourceActionCommand($request);
+            $resourceDecline->execute();
+
+            return redirect()->route('resource.index')->with('successMessage', 'Resource declined Successfully!');
+        } catch (\Exception $e) {
+            /**
+             * Catch any exceptions and display an error message.
+             */
+            return redirect()->route('resource.index')->with('systemErrorMessage', $e->getMessage());
+        }
+    }
+
+    //Decline resource
+    public function resourceMultipleDelete(Request $request){
+        try {
+            $resourceDecline = new ResourceActionCommand($request);
+            $resourceDecline->execute();
 
             return redirect()->route('resource.index')->with('successMessage', 'Resource deleted Successfully!');
         } catch (\Exception $e) {

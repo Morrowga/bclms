@@ -26,6 +26,11 @@ return new class extends Migration
             $table->json('responsive_images');
             $table->foreignId('teacher_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('organisation_id')->nullable()->references('id')->on('organisations')->onDelete('cascade');
+            $table->enum('status', [
+                "active",
+                "inactive",
+                "requested"
+            ])->default('active');
             $table->unsignedInteger('order_column')->nullable()->index();
 
             $table->nullableTimestamps();

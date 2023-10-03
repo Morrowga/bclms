@@ -15,7 +15,7 @@ class ProfillingSurveyController
     public function index()
     {
         // Authorize user
-        abort_if(authorize('view', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(authorize('view', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
             $survey = (new GetProfilingSurvey())->handle();
