@@ -63,6 +63,7 @@ class ResourceRepository implements ResourceRepositoryInterface
                 $userEloquentModel->getMedia('videos', ['teacher_id' => $userEloquentModel->id]);
                 $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
                 ->where('teacher_id', $userEloquentModel->id)
+                ->with(['teacher'])
                 ->get();
 
                 $mediaItems->each->append('video_url', 'thumb_url');
@@ -79,7 +80,6 @@ class ResourceRepository implements ResourceRepositoryInterface
 
     public function getRequestPublishData(UserEloquentModel $userEloquentModel){
         $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $userEloquentModel->id)->first();
-
         $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
         ->with(['organisation', 'teacher'])
         ->where('organisation_id', $organisationEloquent->id)
