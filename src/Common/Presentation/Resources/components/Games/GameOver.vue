@@ -1,12 +1,18 @@
 <script setup>
 import { router } from "@inertiajs/core";
 
-let props = defineProps(["route", "count", "image"]);
+let props = defineProps(["route", "count", "iframeSrc"]);
 const isDialogVisible = ref(false)
 </script>
 <template #activator="{ props }">
     <div class="d-flex justify-center">
-        <img :src="image" class="videoplayer" @click="isDialogVisible = true" alt="">
+        <iframe
+        class="videoplayer"
+        :src="iframeSrc"
+        frameborder="0"
+        allowfullscreen
+        ></iframe>
+        <!-- <img :src="image" class="videoplayer" @click="isDialogVisible = true" alt=""> -->
     </div>
     <VDialog
         v-model="isDialogVisible"
@@ -26,6 +32,10 @@ const isDialogVisible = ref(false)
     /* height: 400px; */
     background: url('/images/Game Pop Up.png') no-repeat;
     background-size: cover;
+}
+
+.videoplayer{
+    width: 100%;
 }
 
 .gameoverimg{
