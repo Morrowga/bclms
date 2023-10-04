@@ -4,8 +4,10 @@ namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
 use Exception;
 use Inertia\Inertia;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStudentStorybooks;
 use Src\Common\Infrastructure\Laravel\Controller;
+use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentPathway;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStudentStorybooks;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
 
 class StudentStoryBookController extends Controller
 {
@@ -24,7 +26,7 @@ class StudentStoryBookController extends Controller
         }
     }
 
-    public function show()
+    public function show(StoryBookEloquentModel $book)
     {
         try {
 
@@ -37,12 +39,20 @@ class StudentStoryBookController extends Controller
 
     public function pathway()
     {
-        try {
+        // $pathways = (new GetStudentPathway())->handle();
 
+        // return  $pathways;
+        try {
             // Get the filters from the request, or initialize an empty array if they are not present
             return Inertia::render(config('route.storybook-pathway'));
         } catch (Exception $e) {
             return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
+    }
+
+    public function getStudentPathways(){
+        $pathways = (new GetStudentPathway())->handle();
+
+        return response()->json($pathways);
     }
 }

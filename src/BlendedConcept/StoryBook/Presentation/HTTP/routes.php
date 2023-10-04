@@ -50,8 +50,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/assign_rewards/edit', [AssignRewardController::class, 'edit'])->name('assign_rewards.edit');
 
     Route::get('storybooks', [StudentStoryBookController::class, 'index'])->name('storybooks');
-    Route::get('storybooks/show', [StudentStoryBookController::class, 'show'])->name('storybooks.show');
+    Route::get('storybook-detail/{book}', [StudentStoryBookController::class, 'show'])->name('storybooks.show');
     Route::get('storybooks/pathway', [StudentStoryBookController::class, 'pathway'])->name('storybooks.pathway');
+    Route::get('storybooks/student-pathways', [StudentStoryBookController::class, 'getStudentPathways'])->name('storybooks.getStudentPathway');
+
     Route::get('student-games', [StudentGamesController::class, 'index'])->name('student-games');
     Route::get('student-games/{game}/show', [StudentGamesController::class, 'show'])->name('games.show');
     Route::get('student-rewards', [StudentRewardsController::class, 'index'])->name('student-rewards');

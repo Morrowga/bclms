@@ -3,6 +3,9 @@ import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps,ref } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import axios from "axios";
+
 let props = defineProps([
     "flash",
     "auth",
@@ -10,17 +13,46 @@ let props = defineProps([
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const active = ref('assigned');
+const currentPage = ref(1);
+const totalPage = ref('');
+const currentPageData = ref([]);
 
-const activeTab = (name) => {
-  active.value  = name
+// Function to handle slide change
+async function fetchData(page) {
+    try {
+    const response = await axios.get('/storybooks/student-pathways?page=' + page);
+    // Assuming the API response contains an array of data similar to props.pathways.data
+        currentPageData.value = response.data.data;
+        totalPage.value = response.data.last_page;
+        console.log(totalPage.value)
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 };
+
+function handleSlideChange(swiper) {
+    if (swiper.isEnd) {
+    // Increment the current page and fetch the next page of data
+    currentPage.value++;
+    fetchData(currentPage.value);
+  } else if (swiper.isBeginning) {
+    // Decrement the current page and fetch the previous page of data
+    currentPage.value--;
+    fetchData(currentPage.value);
+  }
+}
+
+onMounted(() => {
+  // Load initial data for page 1
+  fetchData(currentPage.value);
+});
 </script>
 <template>
     <StudentLayout class="pathway">
-        <section class="pathway-section">
+        <section class="vh-m-80 pathway-section">
             <VRow>
                 <VCol cols="1">
-                    <div class="">
+                    <div class="mx-5 mt-4">
                         <img src="/images/back.png" @click="() => router.get(route('storybooks'))" class="backarrow" alt="">
                     </div>
                 </VCol>
@@ -28,23 +60,82 @@ const activeTab = (name) => {
                     <v-chip class="inclusive-chip ruddy-bold">Inclusive Learning Stars </v-chip>
                 </VCol>
             </VRow>
-        </section>
-        <v-img src="/images/path.png" cover></v-img>
+            <div class="scroll-container">
+                <swiper
+                :slides-per-view="1"
+                @slideChange="handleSlideChange"
+                >
+                    <swiper-slide class="swiper-path" v-for="(page, index) in totalPage" :key="index">
+                        <v-img src="/images/down.png" v-if="currentPage === 1" class="startmap" width="200" height="200"></v-img>
+                        <v-img src="/images/footprint.png" class="footprint1" width="180" height="180"></v-img>
+                        <div class="card1">
+                            <VCard class="storybook-story">
+                                <v-img
+                                    :src="currentPageData[0].thumbnail_img == '' ? '/images/toycard.png' : currentPageData[0].thumbnail_img"
+                                    class="showimg-path"
+                                    cover
+                                ></v-img>
+                                <div class="d-flex justify-center">
+                                    <img
+                                        @click="
+                                            () => router.get(route('storybooks.show', currentPageData[0].id))
+                                        "
+                                        src="/images/Play Button.png"
+                                        class="playButton"
+                                        alt=""
+                                    />
+                                </div>
+                            </VCard>
+                        </div>
+                        <!-- <v-img :src="currentPageData[0].thumbnail_img == '' ? '/images/toycard.png' : currentPageData[0].thumbnail_img" class="card1" width="300" height="200"></v-img> -->
+                        <div class="card2">
+                            <VCard class="storybook-story">
+                                <v-img
+                                    :src="currentPageData[1].thumbnail_img == '' ? '/images/toycard.png' : currentPageData[1].thumbnail_img"
+                                    class="showimg-path"
+                                    cover
+                                ></v-img>
+                                <div class="d-flex justify-center">
+                                    <img
+                                        @click="
+                                            () => router.get(route('storybooks.show', currentPageData[0].id))
+                                        "
+                                        src="/images/Play Button.png"
+                                        class="playButton"
+                                        alt=""
+                                    />
+                                </div>
+                            </VCard>
+                        </div>
 
-        <div class="d-flex justify-center">
-            <div class="progress d-flex justify-center">
-                <span class="progress-text ruddy-bold ml-5 mt-2">Progress</span>
-                <div class="mt-5">
-                    <img src="/images/Progress Bars.png" class="progressimg ml-3" alt="">
-                </div>
-                <div>
-                    <span class="progress-num-text ruddy-bold ml-2"> 21</span>
-                    <img src="/images/chipcoin.png" class="ml-2" width="25" height="25" alt="">
-                    <span class="progress-num-text ruddy-bold ml-5">1</span>
-                    <img src="/images/chipcoin2.png" class="mr-5" width="30" height="25" alt="">
+                        <v-img src="/images/footprint2.png" class="footprint2" width="350" height="210"></v-img>
+                        <!-- <v-img :src="currentPageData[1].thumbnail_img == '' ? '/images/toycard.png' : currentPageData[0].thumbnail_img" class="card2" width="300" height="200"></v-img> -->
+                        <v-img src="/images/footprint4.png" class="footprint3" width="330" height="300"></v-img>
+                    </swiper-slide>
+                </swiper>
+                <!-- <div class="scroll-content">
+                    <v-img src="/images/footprint.png" class="footprint1" width="180" height="180"></v-img>
+                    <v-img src="/images/toycard.png" class="card1" width="300" height="200"></v-img>
+                    <v-img src="/images/footprint2.png" class="footprint2" width="400" height="230"></v-img>
+                    <v-img src="/images/toycard.png" class="card2" width="300" height="200"></v-img>
+                </div> -->
+            </div>
+
+            <div class="d-flex justify-center">
+                <div class="progress d-flex justify-center">
+                    <span class="progress-text ruddy-bold ml-5 mt-2">Progress</span>
+                    <div class="mt-5">
+                        <img src="/images/Progress Bars.png" class="progressimg ml-3" alt="">
+                    </div>
+                    <div>
+                        <span class="progress-num-text ruddy-bold ml-2"> 21</span>
+                        <img src="/images/chipcoin.png" class="ml-2" width="25" height="25" alt="">
+                        <span class="progress-num-text ruddy-bold ml-5">1</span>
+                        <img src="/images/chipcoin2.png" class="mr-5" width="30" height="25" alt="">
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </StudentLayout>
 </template>
 
@@ -52,6 +143,54 @@ const activeTab = (name) => {
 .pathway .layout-page-content{
     margin: 0 !important;
     padding: 0 !important;
+}
+
+// .scroll-container {
+//     overflow-x: auto;       /* Enable horizontal scrolling */
+//     white-space: nowrap;   /* Prevent content from wrapping */
+// }
+
+// .scroll-content {
+//     display: inline-block; /* Display children in a row */
+//     margin-right: 20px;    /* Add spacing between content */
+// }
+.swiper-path{
+    height: 75vh;
+}
+
+.card1{
+    position: absolute !important;
+    left: 29% !important;
+    top: 43%;
+}
+
+.card2{
+    position: absolute !important;
+    left: 69% !important;
+    top: 12%;
+}
+
+.startmap{
+    position: absolute !important;
+    top: 40%;
+}
+
+.footprint1{
+    position: absolute !important;
+    left: 15% !important;
+    top: 40%;
+}
+
+.footprint2{
+    position: absolute !important;
+    left: 48% !important;
+    top: 26%;
+}
+
+.footprint3{
+    position: absolute !important;
+    left: 91% !important;
+    top: 15.5%;
 }
 
 .progress-num-text{
@@ -77,16 +216,36 @@ const activeTab = (name) => {
 }
 
 .progress{
-    // padding: 5px;
     border-radius: 30px 30px 0px 0px;
     background: var(--primary, #3749E9);
     position: absolute;
     bottom: 0;
 }
 
-.pathway-section{
-    padding: 20px;
+.storybook-story {
+    justify-content: center;
+    width: 300px;
+    align-items: center;
+    height: auto !important;
+    border-radius: 30px;
+    border: 5px solid var(--white, #fff);
+    backdrop-filter: blur(2px);
 }
+
+.showimg-path {
+    object-fit: cover;
+    height: 230px;
+}
+
+.playButton {
+    position: absolute;
+    top: 28%;
+    z-index: 1;
+}
+
+// .pathway-section{
+//     padding: 0;
+// }
 
 .inclusive-chip{
     background: #3749e8 !important;
@@ -134,12 +293,6 @@ const activeTab = (name) => {
 .textcolor{
     color: #fff;
 }
-
-
-// .user-data-table table.vgt-table thead th {
-//     background: rgb(var(--v-theme-surface)) !important;
-//     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
-// }
 
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));

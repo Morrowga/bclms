@@ -15,4 +15,6 @@ interface PathwayRepositoryInterface
     public function updatePathway(PathwayData $pathwayData);
 
     public function deletePathway(PathwayEloquentModel $pathway);
+
+    public function getStudentPathway();
 }

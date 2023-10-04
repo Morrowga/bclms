@@ -4,11 +4,12 @@ namespace Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\StoryBook\Application\DTO\PathwayData;
-use Src\BlendedConcept\StoryBook\Application\Mappers\PathwayMapper;
 use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Pathway;
-use Src\BlendedConcept\StoryBook\Domain\Repositories\PathwayRepositoryInterface;
 use Src\BlendedConcept\StoryBook\Domain\Resources\PathwayResource;
+use Src\BlendedConcept\StoryBook\Application\Mappers\PathwayMapper;
+use Src\BlendedConcept\StoryBook\Domain\Repositories\PathwayRepositoryInterface;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\PathwayEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
 
 class PathwayRepository implements PathwayRepositoryInterface
 {
@@ -77,5 +78,18 @@ class PathwayRepository implements PathwayRepositoryInterface
 
     public function deletePathway(PathwayEloquentModel $Pathway)
     {
+    }
+
+    public function getStudentPathway()
+    {
+        $pathways = PathwayEloquentModel::with('storybooks')->orderBy('id', 'desc')->first();
+        $array = [];
+        foreach($pathways->storybooks as $storybook){
+            array_push($array, $storybook->id);
+        }
+
+        $storybooks = StoryBookEloquentModel::whereIn('id', $array)->paginate(2);
+
+        return $storybooks;
     }
 }

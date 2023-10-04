@@ -89,6 +89,11 @@ class StudentEloquentModel extends Model implements HasMedia
         return $this->belongsTo(OrganisationEloquentModel::class, 'organisation_id', 'id');
     }
 
+    public function pathway()
+    {
+        return $this->belongsToMany(PathwayEloquentModel::class, 'student_pathway', 'student_id', 'pathway_id');
+    }
+
     public function classrooms()
     {
         return $this->belongsToMany(ClassroomEloquentModel::class, 'classroom_students', 'student_id', 'classroom_id');
