@@ -39,9 +39,18 @@ const form = useForm({
   num_silver_coins: 0,
 });
 
+const game_file_validation = ref(true);
+
 const handleGameFileChange = (event) => {
   const file = event.target.files[0];
   gameFile.value = file;
+
+  if (file.type === 'application/zip' || file.name.endsWith('.zip')) {
+    // The file is a zip file
+    game_file_validation.value = true;
+  } else {
+    game_file_validation.value = false;
+  }
 };
 
 const removeGameFile = () => {
@@ -64,6 +73,13 @@ const onDropGameFile = (event) => {
   dragging.value = false;
   const files = event.dataTransfer.files;
   gameFile.value = files[0];
+
+  if (files[0].type === 'application/zip' || files[0].name.endsWith('.zip')) {
+    // The file is a zip file
+    game_file_validation.value = true;
+  } else {
+    game_file_validation.value = false;
+  }
 };
 
 const onDropThumbnail = (event) => {
@@ -217,20 +233,25 @@ const removeFromArray = (index) => {
                     @dragleave="dragging = false"
                     @drop.prevent="onDropGameFile"
                   >
-                    <p v-if="!gameFile">Drag & Drop game file</p>
-                    <div v-else>
-                      <p>File Name: {{ gameFile.name }}</p>
-                      <button @click="removeGameFile" class="remove-button">
-                        Remove
-                      </button>
+                    <div v-if="!game_file_validation">
+                        <p class="error-message">Game file must be type of .zip</p>
                     </div>
-                    <input
-                      type="file"
-                      style="display: none"
-                      @change="handleGameFileChange"
-                      :error-messages="form?.errors?.game"
-                    />
-                  </div>
+                    <div v-else>
+                        <p v-if="!gameFile">Drag & Drop game file</p>
+                        <div v-else>
+                                    <p>File Name: {{ gameFile.name }}</p>
+                                    <button @click="removeGameFile" class="remove-button">
+                                        Remove
+                                    </button>
+                            </div>
+                            <input
+                            type="file"
+                            style="display: none"
+                            @change="handleGameFileChange"
+                            :error-messages="form?.errors?.game"
+                            />
+                        </div>
+                    </div>
                 </v-col>
               </v-col>
               <v-col cols="12" md="6" class="py-0 mt-5">
@@ -335,6 +356,9 @@ const removeFromArray = (index) => {
   font-weight: 700 !important;
   line-height: 52px !important; /* 108.333% */
   text-transform: capitalize !important;
+}
+.error-message{
+    color: red !important;
 }
 
 .close-btn {

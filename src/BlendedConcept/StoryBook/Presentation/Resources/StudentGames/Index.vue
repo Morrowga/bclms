@@ -3,7 +3,7 @@ import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-let props = defineProps(["flash", "auth"]);
+let props = defineProps(["flash", "auth", "games"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 </script>
@@ -13,10 +13,10 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
         <section class="vh-m-100">
             <VContainer class="mb-3">
                 <VRow>
-                    <VCol cols="4">
+                    <VCol cols="4"  v-for="game in props.games.data" :key="game.id">
                         <VCard class="card-story">
                             <v-img
-                                src="/images/storybook1.jpeg"
+                                :src="game.thumbnail"
                                 class="showimg"
                                 cover
                             ></v-img>
@@ -24,7 +24,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 <img
                                     src="/images/Play Button.png"
                                     @click="
-                                        () => router.get(route('games.show'))
+                                        () => router.get(route('games.show', game.id))
                                     "
                                     class="playButton"
                                     alt=""
@@ -32,10 +32,10 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                             </div>
                         </VCard>
                         <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">Om Nom Rush</span>
+                            <span class="bookname ruddy-bold">{{ game.name }}</span>
                         </div>
                     </VCol>
-                    <VCol cols="4">
+                    <!-- <VCol cols="4">
                         <VCard class="card-story">
                             <v-img
                                 src="/images/storybook2.jpeg"
@@ -152,7 +152,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 >Pendguin Rush</span
                             >
                         </div>
-                    </VCol>
+                    </VCol> -->
                 </VRow>
             </VContainer>
         </section>

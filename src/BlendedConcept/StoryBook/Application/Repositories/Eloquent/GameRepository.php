@@ -2,12 +2,14 @@
 
 namespace Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent;
 
+use ZipArchive;
 use Illuminate\Support\Facades\DB;
+use Spatie\MediaLibrary\Support\MediaStream;
 use Src\BlendedConcept\StoryBook\Application\DTO\GameData;
-use Src\BlendedConcept\StoryBook\Application\Mappers\GameMapper;
 use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Game;
-use Src\BlendedConcept\StoryBook\Domain\Repositories\GameRepositoryInterface;
 use Src\BlendedConcept\StoryBook\Domain\Resources\GameResource;
+use Src\BlendedConcept\StoryBook\Application\Mappers\GameMapper;
+use Src\BlendedConcept\StoryBook\Domain\Repositories\GameRepositoryInterface;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
 
 class GameRepository implements GameRepositoryInterface
@@ -43,14 +45,37 @@ class GameRepository implements GameRepositoryInterface
             }
 
             if (request()->hasFile('game') && request()->file('game')->isValid()) {
-                $gameEloquent->addMediaFromRequest('game')->toMediaCollection('game_file', 'media_game');
+                $zipFile = request()->file('game');
+
+                // Get the original file name
+                $originalFileName = pathinfo($zipFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                // Define the desired folder name
+                $desiredFolderName = $originalFileName . $gameEloquent->id;
+
+                // Create a temporary directory to extract the ZIP contents
+                $gameDirectory = public_path('gamefiles/' . $desiredFolderName);
+                if (!file_exists($gameDirectory)) {
+                    mkdir($gameDirectory, 0755, true);
+                }
+
+                // Unzip the file
+                $zip = new ZipArchive;
+                if ($zip->open($zipFile) === true) {
+                    $zip->extractTo($gameDirectory);
+                    $zip->close();
+                }
+
+                // Check if the 'index.html' file exists in the extracted folder
+                $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
+                $gameEloquent->game_file = $indexPath;
             }
 
-            if ($gameEloquent->getMedia('thumbnail')->isNotEmpty() && $gameEloquent->getMedia('game_file')->isNotEmpty()) {
+            if ($gameEloquent->getMedia('thumbnail')->isNotEmpty()) {
                 $gameEloquent->thumbnail = $gameEloquent->getMedia('thumbnail')[0]->original_url;
-                $gameEloquent->game_file = $gameEloquent->getMedia('game_file')[0]->original_url;
                 $gameEloquent->update();
             }
+
 
             $tagCollection = collect(request()->tags);
             $disabilityCollection = collect(request()->disability_type_id);
@@ -80,6 +105,17 @@ class GameRepository implements GameRepositoryInterface
         }
     }
 
+    public function download(YourModel $yourModel)
+   {
+        // Let's get some media.
+        $downloads = $yourModel->getMedia('game_file');
+
+        // Download the files associated with the media in a streamed way.
+        // No prob if your files are very large.
+        return MediaStream::create('my-files.zip')->addMedia($downloads);
+   }
+
+
     //update game
     public function updateGame(GameData $game)
     {
@@ -104,19 +140,52 @@ class GameRepository implements GameRepositoryInterface
                 }
             }
 
+            // if (request()->hasFile('game') && request()->file('game')->isValid()) {
+
+            //     $old_game = $gameEloquent->getFirstMedia('game_file');
+            //     if ($old_game != null) {
+            //         $old_game->forceDelete();
+            //     }
+
+            //     $newGameMedia = $gameEloquent->addMediaFromRequest('game')->toMediaCollection('game_file', 'media_game');
+
+            //     if ($newGameMedia->getUrl()) {
+            //         $gameEloquent->game_file = $newGameMedia->getUrl();
+            //         $gameEloquent->update();
+            //     }
+            // }
+
             if (request()->hasFile('game') && request()->file('game')->isValid()) {
+                $oldFolderPath = public_path('gamefiles/' . $gameEloquent->game_file);
+                if (file_exists($oldFolderPath)) {
+                    \File::deleteDirectory($oldFolderPath);
+                }
+                $zipFile = request()->file('game');
 
-                $old_game = $gameEloquent->getFirstMedia('game_file');
-                if ($old_game != null) {
-                    $old_game->forceDelete();
+                // Get the original file name
+                $originalFileName = pathinfo($zipFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                // Define the desired folder name
+                $desiredFolderName = $originalFileName . $gameEloquent->id;
+
+                // Create a temporary directory to extract the ZIP contents
+                $gameDirectory = public_path('gamefiles/' . $desiredFolderName);
+                if (!file_exists($gameDirectory)) {
+                    mkdir($gameDirectory, 0755, true);
                 }
 
-                $newGameMedia = $gameEloquent->addMediaFromRequest('game')->toMediaCollection('game_file', 'media_game');
-
-                if ($newGameMedia->getUrl()) {
-                    $gameEloquent->game_file = $newGameMedia->getUrl();
-                    $gameEloquent->update();
+                // Unzip the file
+                $zip = new ZipArchive;
+                if ($zip->open($zipFile) === true) {
+                    $zip->extractTo($gameDirectory);
+                    $zip->close();
                 }
+
+                // Check if the 'index.html' file exists in the extracted folder
+                $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
+
+                $gameEloquent->game_file = $indexPath;
+                $gameEloquent->update();
             }
 
             $tagCollection = collect(request()->tags);
