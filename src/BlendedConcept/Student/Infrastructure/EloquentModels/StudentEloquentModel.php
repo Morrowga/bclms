@@ -15,6 +15,7 @@ use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEl
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
 
 class StudentEloquentModel extends Model implements HasMedia
 {
@@ -119,5 +120,10 @@ class StudentEloquentModel extends Model implements HasMedia
     public function groups()
     {
         return $this->belongsToMany(ClassroomGroupEloquentModel::class, 'group_students', 'student_id', 'classroom_group_id')->with('students');
+    }
+
+    public function book_versions()
+    {
+        return $this->belongsToMany(StoryBookVersionEloquentModel::class, 'storybook_assignments', 'student_id', 'storybook_version_id');
     }
 }

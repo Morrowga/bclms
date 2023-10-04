@@ -22,6 +22,9 @@ return new class extends Migration
                 ->nullable()
                 ->references('teacher_id')
                 ->on('teachers')->onDelete('cascade');
+            $table->foreignId('h5p_id')->nullable()
+                ->references('id')
+                ->on('h5p_contents')->onDelete('cascade');
             $table->string('name');
             $table->longText('description');
             $table->timestamps();

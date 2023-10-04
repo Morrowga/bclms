@@ -29,8 +29,9 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
 
         DB::beginTransaction();
         try {
+            $teacher_id = auth()->user()->b2bUser->teacher_id;
             $storyBookVersionEloquent = StoryBookVersionMapper::toEloquent($storyBookVersion);
-            $storyBookVersionEloquent->teacher_id = auth()->user()->id;
+            $storyBookVersionEloquent->teacher_id = $teacher_id;
             $storyBookVersionEloquent->save();
             DB::commit();
         } catch (\Exception $error) {
@@ -42,6 +43,20 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
 
     public function updateStoryBookVersion(StoryBookVersionData $storyBookVersionData)
     {
+        DB::beginTransaction();
+
+        try {
+            $storybookVersionArray = $storyBookVersionData->toArray();
+            $rewardEloquent = StoryBookVersionEloquentModel::query()->findOrFail($storyBookVersionData->id);
+            $rewardEloquent->fill($storybookVersionArray);
+            $rewardEloquent->update();
+
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            // Handle any exceptions and display the error message
+            dd($error->getMessage());
+        }
     }
 
     public function deleteStoryBookVersion()

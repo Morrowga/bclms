@@ -11,11 +11,12 @@ class StoryBookVersionMapper
     public static function fromRequest(Request $request, $storybook_version_id = null): StoryBookVersion
     {
         return new StoryBookVersion(
-            id : $storybook_version_id,
-            storybook_id : $request->storybook_id,
-            teacher_id : $request->teacher_id,
-            name : $request->name,
-            description : $request->description,
+            id: $storybook_version_id,
+            storybook_id: $request->storybook_id,
+            teacher_id: $request->teacher_id,
+            name: $request->name,
+            description: $request->description,
+            h5p_id: $request->h5p_id
         );
     }
 
@@ -31,7 +32,7 @@ class StoryBookVersionMapper
         $storyBookVersionEloquent->teacher_id = $storyBookVersion->teacher_id;
         $storyBookVersionEloquent->name = $storyBookVersion->name;
         $storyBookVersionEloquent->description = $storyBookVersion->description;
-
+        $storyBookVersionEloquent->h5p_id = $storyBookVersion->h5p_id;
         return $storyBookVersionEloquent;
     }
 }

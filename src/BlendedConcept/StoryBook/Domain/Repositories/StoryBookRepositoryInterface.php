@@ -27,4 +27,6 @@ interface StoryBookRepositoryInterface
     public function getdevice();
 
     public function getStoryBooksForSelect();
+
+    public function getStudentStorybooks();
 }

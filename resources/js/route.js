@@ -108,6 +108,8 @@ const pages = {
     "BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Show": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/Show.vue'),
     "BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/AssignStudent": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/AssignStudent.vue'),
 
+    "BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/EditH5pBookVersion": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/EditH5pBookVersion.vue'),
+
     //teacher add customisation
     "BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create": import('../../src/BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Create.vue'),
     "BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit": import('../../src/BlendedConcept/Teacher/Presentation/Resources/AddCustomisation/Edit.vue'),

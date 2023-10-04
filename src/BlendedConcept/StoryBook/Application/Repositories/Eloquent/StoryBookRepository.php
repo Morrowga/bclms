@@ -227,4 +227,17 @@ class StoryBookRepository implements StoryBookRepositoryInterface
 
         return $devices;
     }
+
+    public function getStudentStorybooks()
+    {
+        $student_id = 1;
+        // $books = StoryBookResource::collection();
+        $books = StoryBookEloquentModel::whereHas('book_versions', function ($query) {
+            $query->whereHas('storybook_assigments', function ($query) {
+                $query->where('students.student_id', 1);
+            });
+        })->orderBy('id', 'desc')
+            ->paginate($filters['perPage'] ?? 10);
+        return $books;
+    }
 }

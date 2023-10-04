@@ -12,17 +12,19 @@ class StoryBookVersionData
         public readonly ?int $teacher_id,
         public readonly string $name,
         public readonly string $description,
+        public readonly ?int $h5p_id
     ) {
     }
 
     public static function fromRequest(Request $request, $storybook_version_id): StoryBookVersionData
     {
         return new self(
-            id : $storybook_version_id,
-            storybook_id : $this->storybook_id,
-            teacher_id : $this->teacher_id,
-            name : $this->name,
-            description : $this->description,
+            id: $storybook_version_id,
+            storybook_id: $request->storybook_id,
+            teacher_id: $request->teacher_id,
+            name: $request->name,
+            description: $request->description,
+            h5p_id: $request->h5p_id
         );
     }
 
@@ -34,6 +36,7 @@ class StoryBookVersionData
             'teacher_id' => $this->teacher_id,
             'name' => $this->name,
             'description' => $this->description,
+            'h5p_id' => $this->h5p_id
         ];
     }
 }

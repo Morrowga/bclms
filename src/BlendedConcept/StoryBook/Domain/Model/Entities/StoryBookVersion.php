@@ -12,6 +12,7 @@ class StoryBookVersion extends Entity
         public readonly ?int $teacher_id,
         public readonly string $name,
         public readonly string $description,
+        public readonly ?int $h5p_id
     ) {
     }
 
@@ -23,6 +24,7 @@ class StoryBookVersion extends Entity
             'teacher_id' => $this->teacher_id,
             'name' => $this->name,
             'description' => $this->description,
+            'h5p_id' => $this->h5p_id
         ];
     }
 }

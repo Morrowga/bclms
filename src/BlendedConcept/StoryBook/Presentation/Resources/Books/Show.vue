@@ -55,7 +55,11 @@ const handleUpdate = () => {
         },
     });
 };
-
+const setImage = () => {
+    return form.thumbnail_img == "" || !form.thumbnail_img
+        ? "/images/defaults/organisation_logo.png"
+        : form.thumbnail_img;
+};
 onUpdated(() => {
     (form.id = props.data.id),
         (form.name = props.data.name),
@@ -78,7 +82,7 @@ onUpdated(() => {
             >
                 <v-img
                     @click="toggleDialog"
-                    :src="form.thumbnail_img"
+                    :src="setImage()"
                     alt="Your Image"
                     max-height="200"
                     class="p-relative img-hover"

@@ -15,7 +15,7 @@ class UpdateStoryBookVersion extends FormRequest
     {
         return [
             'storybook_id' => ['required'],
-            'teacher_id' => ['required'],
+            'teacher_id' => "",
             'name' => ['required'],
             'description' => ['required'],
         ];

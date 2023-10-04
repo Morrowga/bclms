@@ -108,4 +108,9 @@ class StoryBookEloquentModel extends Model implements HasMedia
             $this->tags()->attach($tag->id);
         }
     }
+
+    public function book_versions()
+    {
+        return $this->hasMany(StoryBookVersionEloquentModel::class, 'storybook_id');
+    }
 }
