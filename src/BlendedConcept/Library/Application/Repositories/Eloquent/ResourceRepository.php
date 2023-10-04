@@ -13,25 +13,29 @@ use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\ResourceEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 
 class ResourceRepository implements ResourceRepositoryInterface
 {
 
-    public function getResources(UserEloquentModel $userEloquentModel){
+    public function getResources(UserEloquentModel $userEloquentModel)
+    {
         $userType = $this->checkUserType($userEloquentModel->id);
 
         switch ($userType) {
             case 'Organisation Admin':
-                $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $userEloquentModel->id)->first();
+                $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
+                $organisation_id = $org_admin->organisation->id;
+                // $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $org_admin->org_admin_id)->first();
 
                 $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
-                ->with(['organisation', 'teacher'])
-                ->where('organisation_id', $organisationEloquent->id)
-                ->where('teacher_id', null)
-                ->where('status', 'active')
-                ->get();
+                    ->with(['organisation', 'teacher'])
+                    ->where('organisation_id', $organisation_id)
+                    ->where('teacher_id', null)
+                    ->where('status', 'active')
+                    ->get();
 
                 $mediaItems->each->append('video_url', 'thumb_url');
 
@@ -50,8 +54,8 @@ class ResourceRepository implements ResourceRepositoryInterface
                         })
                         ->whereIn('status', ['active', 'requested']);
                 })
-                ->with(['organisation', 'teacher'])
-                ->get();
+                    ->with(['organisation', 'teacher'])
+                    ->get();
 
                 $mediaItems->each->append('video_url', 'thumb_url');
 
@@ -62,9 +66,9 @@ class ResourceRepository implements ResourceRepositoryInterface
             case 'b2c':
                 $userEloquentModel->getMedia('videos', ['teacher_id' => $userEloquentModel->id]);
                 $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
-                ->where('teacher_id', $userEloquentModel->id)
-                ->with(['teacher'])
-                ->get();
+                    ->where('teacher_id', $userEloquentModel->id)
+                    ->with(['teacher'])
+                    ->get();
 
                 $mediaItems->each->append('video_url', 'thumb_url');
 
@@ -75,20 +79,26 @@ class ResourceRepository implements ResourceRepositoryInterface
             default:
                 break;
         }
-
     }
 
-    public function getRequestPublishData(UserEloquentModel $userEloquentModel){
-        $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $userEloquentModel->id)->first();
-        $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
-        ->with(['organisation', 'teacher'])
-        ->where('organisation_id', $organisationEloquent->id)
-        ->where('status', 'requested')
-        ->get();
+    public function getRequestPublishData(UserEloquentModel $userEloquentModel)
+    {
+        $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
+        if ($org_admin) {
+            $organisation_id = $org_admin->organisation->id;
 
-        $mediaItems->each->append('video_url', 'thumb_url');
+            $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
+                ->with(['organisation', 'teacher'])
+                ->where('organisation_id', $organisation_id)
+                ->where('status', 'requested')
+                ->get();
 
-        return $mediaItems;
+            $mediaItems->each->append('video_url', 'thumb_url');
+
+            return $mediaItems;
+        } else {
+            return [];
+        }
     }
 
     public function createResource(Request $request, UserEloquentModel $userEloquentModel)
@@ -98,11 +108,13 @@ class ResourceRepository implements ResourceRepositoryInterface
             $userType = $this->checkUserType($userEloquentModel->id);
             switch ($userType) {
                 case 'Organisation Admin':
-                    $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $userEloquentModel->id)->first();
+
+                    $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
+                    $organisation_id = $org_admin->organisation->id;
                     $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
                     $media->name = $request->filename;
                     $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
-                    $media->organisation_id = $organisationEloquent->id;
+                    $media->organisation_id = $organisation_id;
                     $media->teacher_id = null; // You may need to set this to an appropriate value if applicable
                     $media->save();
                     break;
@@ -141,63 +153,64 @@ class ResourceRepository implements ResourceRepositoryInterface
     }
 
 
-    public function updateResource(Request $request, UserEloquentModel $userEloquentModel,MediaEloquentModel $resource)
+    public function updateResource(Request $request, UserEloquentModel $userEloquentModel, MediaEloquentModel $resource)
     {
         DB::beginTransaction();
         try {
             $userType = $this->checkUserType($userEloquentModel->id);
 
-                switch ($userType) {
-                    case 'Organisation Admin':
-                        $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $userEloquentModel->id)->first();
-                        if (request()->hasFile('file') && request()->file('file')->isValid()) {
-                            if ($resource) {
+            switch ($userType) {
+                case 'Organisation Admin':
+                    $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
+                    $organisation_id = $org_admin->organisation->id;
+                    if (request()->hasFile('file') && request()->file('file')->isValid()) {
+                        if ($resource) {
                             $resource->delete();
-                            }
-                            $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
-                            $media->name = $request->filename;
-                            $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
-                            $media->organisation_id = $organisationEloquent->id;
-                            $media->teacher_id = null; // You may need to set this to an appropriate value if applicable
-                            $media->save();
                         }
-                        break;
+                        $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
+                        $media->name = $request->filename;
+                        $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
+                        $media->organisation_id = $organisation_id;
+                        $media->teacher_id = null; // You may need to set this to an appropriate value if applicable
+                        $media->save();
+                    }
+                    break;
 
-                    case 'b2b':
-                        $teacherEloquent = TeacherEloquentModel::where('user_id', $userEloquentModel->id)->first();
+                case 'b2b':
+                    $teacherEloquent = TeacherEloquentModel::where('user_id', $userEloquentModel->id)->first();
 
-                        if (request()->hasFile('file') && request()->file('file')->isValid()) {
-                            if ($resource) {
-                                $resource->delete();
-                            }
-
-                            $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
-                            $media->name = $request->filename;
-                            $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
-                            $media->organisation_id = $teacherEloquent->organisation_id;
-                            $media->teacher_id = $userEloquentModel->id;
-                            $media->save();
+                    if (request()->hasFile('file') && request()->file('file')->isValid()) {
+                        if ($resource) {
+                            $resource->delete();
                         }
-                        break;
 
-                    case 'b2c':
-                        $teacherEloquent = TeacherEloquentModel::where('user_id', $userEloquentModel->id)->first();
-                        if (request()->hasFile('file') && request()->file('file')->isValid()) {
-                            if ($resource) {
-                                $resource->delete();
-                            }
+                        $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
+                        $media->name = $request->filename;
+                        $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
+                        $media->organisation_id = $teacherEloquent->organisation_id;
+                        $media->teacher_id = $userEloquentModel->id;
+                        $media->save();
+                    }
+                    break;
 
-                            $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
-                            $media->name = $request->filename;
-                            $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
-                            $media->organisation_id = $teacherEloquent->organisation_id;
-                            $media->teacher_id = $userEloquentModel->id;
-                            $media->save();
+                case 'b2c':
+                    $teacherEloquent = TeacherEloquentModel::where('user_id', $userEloquentModel->id)->first();
+                    if (request()->hasFile('file') && request()->file('file')->isValid()) {
+                        if ($resource) {
+                            $resource->delete();
                         }
-                        break;
-                    default:
-                        break;
-                }
+
+                        $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
+                        $media->name = $request->filename;
+                        $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
+                        $media->organisation_id = $teacherEloquent->organisation_id;
+                        $media->teacher_id = $userEloquentModel->id;
+                        $media->save();
+                    }
+                    break;
+                default:
+                    break;
+            }
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
@@ -205,9 +218,14 @@ class ResourceRepository implements ResourceRepositoryInterface
         }
     }
 
-    public function checkUserType($id){
-        $organisation = OrganisationEloquentModel::where('org_admin_id', $id)->first();
-
+    public function checkUserType($id)
+    {
+        $org_admin = OrganisationAdminEloquentModel::where('user_id', $id)->first();
+        if ($org_admin) {
+            $organisation = $org_admin->organisation->id;
+        } else {
+            $organisation = null;
+        }
         if ($organisation) {
             // The user is an organisation admin
             return  'Organisation Admin';
@@ -222,12 +240,12 @@ class ResourceRepository implements ResourceRepositoryInterface
         }
 
         $check_b2b = TeacherEloquentModel::where('user_id', $user->id)->first();
-        if($check_b2b && $check_b2b->organisation_id != null){
+        if ($check_b2b && $check_b2b->organisation_id != null) {
             return "b2b";
         }
 
         $check_b2c = TeacherEloquentModel::where('user_id', $user->id)->first();
-        if($check_b2c && $check_b2c->organisation_id == null){
+        if ($check_b2c && $check_b2c->organisation_id == null) {
             return "b2c";
         }
     }
@@ -238,12 +256,14 @@ class ResourceRepository implements ResourceRepositoryInterface
         $resource->save();
     }
 
-    public function requestPublish(MediaEloquentModel $resource){
+    public function requestPublish(MediaEloquentModel $resource)
+    {
         $resource->status = 'requested';
         $resource->save();
     }
 
-    public function resourceAction(Request $request){
+    public function resourceAction(Request $request)
+    {
         $ids = json_decode($request->ids, true);
         $type = $request->type;
         switch ($type) {

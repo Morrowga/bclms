@@ -15,6 +15,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 
 class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyEmail
@@ -128,11 +129,13 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
     {
         return $this->first_name . ' ' . $this->last_name;
     }
-    
+
     public function getOrganisationIdAttribute()
     {
         if ($this->organisation || ($this->b2bUser && $this->b2bUser->organisation)) {
             return ($this->organisation->id ?? $this->b2bUser->organisation->id) ?? null;
+        } else if ($this->org_admin) {
+            return $this->org_admin->organisation_id;
         }
     }
     public function role_user()
@@ -156,14 +159,19 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
         return $this->hasOne(ParentUserEloqeuntModel::class, 'user_id', 'id')->with('organisation');
     }
 
+    public function org_admin()
+    {
+        return $this->hasOne(OrganisationAdminEloquentModel::class, 'user_id', 'id');
+    }
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-        ->width(368)
-        ->height(232)
-        ->extractVideoFrameAtSecond(1)
-        ->performOnCollections('videos')
-        ->format('jpg'); // Specify the format as "jpg"
+            ->width(368)
+            ->height(232)
+            ->extractVideoFrameAtSecond(1)
+            ->performOnCollections('videos')
+            ->format('jpg'); // Specify the format as "jpg"
     }
 
     // public function getOrganisationIdAttribute()

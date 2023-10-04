@@ -22,7 +22,9 @@ class ResourceController extends Controller
     {
         try {
             $resources = (new GetResources(auth()->user()))->handle();
-            if(auth()->user()->organisation){
+
+            if (auth()->user()->organisation_id) {
+
                 $requestPublishData = (new GetRequestPublishData(auth()->user()))->handle();
                 return Inertia::render(config('route.resource.index'), [
                     "resources" => $resources,
@@ -33,8 +35,8 @@ class ResourceController extends Controller
             return Inertia::render(config('route.resource.index'), [
                 "resources" => $resources,
             ]);
-
         } catch (\Exception $e) {
+            dd($e);
             dd($e->getMessage());
 
             return redirect()->route('resource.index')->with('sytemErrorMessage', $e->getMessage());
@@ -121,7 +123,8 @@ class ResourceController extends Controller
         }
     }
 
-    public function requestPublish(MediaEloquentModel $resource){
+    public function requestPublish(MediaEloquentModel $resource)
+    {
         try {
             $resourcePublish = new RequestPublishResourceCommand($resource);
             $resourcePublish->execute();
@@ -136,7 +139,8 @@ class ResourceController extends Controller
     }
 
     //Apprve resource
-    public function resourceApprove(Request $request){
+    public function resourceApprove(Request $request)
+    {
         try {
             $resourceApprove = new ResourceActionCommand($request);
             $resourceApprove->execute();
@@ -151,7 +155,8 @@ class ResourceController extends Controller
     }
 
     //Decline resource
-    public function resourceDecline(Request $request){
+    public function resourceDecline(Request $request)
+    {
         try {
             $resourceDecline = new ResourceActionCommand($request);
             $resourceDecline->execute();
@@ -166,7 +171,8 @@ class ResourceController extends Controller
     }
 
     //Decline resource
-    public function resourceMultipleDelete(Request $request){
+    public function resourceMultipleDelete(Request $request)
+    {
         try {
             $resourceDecline = new ResourceActionCommand($request);
             $resourceDecline->execute();
