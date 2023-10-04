@@ -90,7 +90,9 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function getStudentsByPagination($filters)
     {
-        return StudentEloquentModel::filter($filters)->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+        $organisation_id = auth()->user()->organisation_id;
+        
+        return StudentEloquentModel::filter($filters)->where('organisation_id', $organisation_id)->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
     }
 
     public function showStudent($id)
