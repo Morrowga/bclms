@@ -30,7 +30,7 @@ function getCookie(name) {
     if (parts.length === 2) return parts.pop().split(";").shift();
 }
 const backHome = () => {
-    router.get(route("books.index"));
+    router.get(route("teacher_storybook.show", props.book.storybook_id));
 };
 const saveToH5p = () => {
     const saveButton =
@@ -45,21 +45,21 @@ let onFormSubmit = () => {
     // }, 10000);
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
-            // saveToH5p();
-            // isLoading.value = true;
-            // setTimeout(() => {
-            const curr_h5p_id = getCookie("h5p_id");
-            form.h5p_id = curr_h5p_id;
-            form.post(route("storybooksversions.update", props.book.id), {
-                onSuccess: () => {
-                    SuccessDialog({ title: "Success" });
-                    isLoading.value = false;
-                },
-                onError: (error) => {
-                    console.log(error);
-                },
-            });
-            // }, 10000);
+            saveToH5p();
+            isLoading.value = true;
+            setTimeout(() => {
+                const curr_h5p_id = getCookie("h5p_id");
+                form.h5p_id = curr_h5p_id;
+                form.post(route("storybooksversions.update", props.book.id), {
+                    onSuccess: () => {
+                        SuccessDialog({ title: "Success" });
+                        isLoading.value = false;
+                    },
+                    onError: (error) => {
+                        console.log(error);
+                    },
+                });
+            }, 10000);
         }
     });
 };

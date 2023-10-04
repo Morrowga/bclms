@@ -83,6 +83,9 @@ const getImage = (item) => {
         ? "/images/image8.png"
         : item.thumbnail_img;
 };
+const backHome = () => {
+    router.get(route("teacher_storybook.show", props.storybook.id));
+};
 </script>
 <template>
     <div>
@@ -206,7 +209,7 @@ const getImage = (item) => {
                     <SecondaryBtn
                         class="mr-4"
                         title="Back"
-                        @click="router.get(route('teacher_storybook.show'))"
+                        @click="backHome()"
                     />
                     <PrimaryBtn
                         title="Assign"

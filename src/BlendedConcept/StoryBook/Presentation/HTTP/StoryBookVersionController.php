@@ -60,9 +60,9 @@ class StoryBookVersionController
         }
     }
 
-    public function update(UpdateStoryBookRequest $request, StoryBookVersion $storybookVersion)
+    public function update(UpdateStoryBookRequest $request,  $id)
     {
-        dd($storybookVersion);
+        $storybookVersion = StoryBookVersionEloquentModel::find($id);
         try {
 
             $updateStorybookVersion = StoryBookVersionData::fromRequest($request, $storybookVersion->id);
