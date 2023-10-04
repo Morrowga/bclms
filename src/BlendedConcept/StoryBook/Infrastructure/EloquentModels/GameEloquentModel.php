@@ -21,7 +21,6 @@ class GameEloquentModel extends Model implements HasMedia
     // for images
     protected $appends = [
         'thumbnail',
-        'game_file',
     ];
 
     protected $fillable = [
@@ -38,20 +37,6 @@ class GameEloquentModel extends Model implements HasMedia
     {
         // Check if there is any media associated with the 'thumbnail' collection
         $media = $this->getMedia('thumbnail');
-
-        // If there is media, return the URL of the first item
-        if ($media->isNotEmpty()) {
-            return $media[0]->getUrl();
-        }
-
-        // Return a default thumbnail URL or null if there's no media
-        return null;
-    }
-
-    public function getGameFileAttribute()
-    {
-        // Check if there is any media associated with the 'thumbnail' collection
-        $media = $this->getMedia('game_file');
 
         // If there is media, return the URL of the first item
         if ($media->isNotEmpty()) {

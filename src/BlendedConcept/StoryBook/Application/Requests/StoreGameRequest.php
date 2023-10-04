@@ -21,7 +21,7 @@ class StoreGameRequest extends FormRequest
                 'required', 'string',
             ],
             'game' => [
-                'required',
+                'required', 'mimes:zip'
             ],
             'thumb' => [
                 'required',

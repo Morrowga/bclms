@@ -13,10 +13,18 @@ const emit = defineEmits(["submit", "update:isGameFileDialogVisible"]);
 
 const gameFile = ref(null);
 const dragging = ref(false);
+const game_file_validation = ref(true);
 
 const handleGameFileChange = (event) => {
   const file = event.target.files[0];
   gameFile.value = file;
+
+  if (file.type === 'application/zip' || file.name.endsWith('.zip')) {
+    // The file is a zip file
+    game_file_validation.value = true;
+  } else {
+    game_file_validation.value = false;
+  }
 };
 
 const removeGameFile = () => {
@@ -28,6 +36,13 @@ const onDropGameFile = (event) => {
   dragging.value = false;
   const files = event.dataTransfer.files;
   gameFile.value = files[0];
+
+  if (files[0].type === 'application/zip' || files[0].name.endsWith('.zip')) {
+    // The file is a zip file
+    game_file_validation.value = true;
+  } else {
+    game_file_validation.value = false;
+  }
 };
 
 const form = useForm({
@@ -76,8 +91,12 @@ const handleFileInputClick = () => {
                         @dragleave="dragging = false"
                         @drop.prevent="onDropGameFile"
                         >
+                        <div v-if="!game_file_validation" @click="handleFileInputClick">
+                            <p class="error-message">Game file must be type of .zip</p>
+                        </div>
+                        <div v-else>
                             <p v-if="!gameFile" class="pppangram-normal" @click="handleFileInputClick">
-                                Drag & Drop <strong class="colorprimary">HTML5</strong> file here <br>
+                                Drag & Drop <strong class="colorprimary">HTML5</strong> zip file here <br>
                                 or <br>
                                 Click to browser files
                             </p>
@@ -85,6 +104,7 @@ const handleFileInputClick = () => {
                                 <p>File Name: {{ gameFile.name }}</p>
                                 <button @click="removeGameFile" class="remove-button">Remove</button>
                             </div>
+                        </div>
                             <input
                                 id="game-file-input"
                                 type="file"
@@ -152,6 +172,9 @@ const handleFileInputClick = () => {
     border-radius: 10px;
 }
 
+.error-message{
+    color: red !important;
+}
 .submit-btn-color{
     background: #4066e4 !important;
     color: #fff !important;
