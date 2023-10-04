@@ -27,11 +27,12 @@ class ResourceRepository implements ResourceRepositoryInterface
         switch ($userType) {
             case 'Organisation Admin':
                 $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
-                $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $org_admin->org_admin_id)->first();
+                $organisation_id = $org_admin->organisation->id;
+                // $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $org_admin->org_admin_id)->first();
 
                 $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
                     ->with(['organisation', 'teacher'])
-                    ->where('organisation_id', $organisationEloquent->id)
+                    ->where('organisation_id', $organisation_id)
                     ->where('teacher_id', null)
                     ->where('status', 'active')
                     ->get();
@@ -84,10 +85,11 @@ class ResourceRepository implements ResourceRepositoryInterface
     {
         $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
         if ($org_admin) {
-            $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $org_admin->org_admin_id)->first();
+            $organisation_id = $org_admin->organisation->id;
+
             $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
                 ->with(['organisation', 'teacher'])
-                ->where('organisation_id', $organisationEloquent->id)
+                ->where('organisation_id', $organisation_id)
                 ->where('status', 'requested')
                 ->get();
 
@@ -108,11 +110,11 @@ class ResourceRepository implements ResourceRepositoryInterface
                 case 'Organisation Admin':
 
                     $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
-                    $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $org_admin->org_admin_id)->first();
+                    $organisation_id = $org_admin->organisation->id;
                     $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
                     $media->name = $request->filename;
                     $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
-                    $media->organisation_id = $organisationEloquent->id;
+                    $media->organisation_id = $organisation_id;
                     $media->teacher_id = null; // You may need to set this to an appropriate value if applicable
                     $media->save();
                     break;
@@ -160,7 +162,7 @@ class ResourceRepository implements ResourceRepositoryInterface
             switch ($userType) {
                 case 'Organisation Admin':
                     $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
-                    $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $org_admin->org_admin_id)->first();
+                    $organisation_id = $org_admin->organisation->id;
                     if (request()->hasFile('file') && request()->file('file')->isValid()) {
                         if ($resource) {
                             $resource->delete();
@@ -168,7 +170,7 @@ class ResourceRepository implements ResourceRepositoryInterface
                         $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
                         $media->name = $request->filename;
                         $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
-                        $media->organisation_id = $organisationEloquent->id;
+                        $media->organisation_id = $organisation_id;
                         $media->teacher_id = null; // You may need to set this to an appropriate value if applicable
                         $media->save();
                     }
@@ -220,7 +222,7 @@ class ResourceRepository implements ResourceRepositoryInterface
     {
         $org_admin = OrganisationAdminEloquentModel::where('user_id', $id)->first();
         if ($org_admin) {
-            $organisation = OrganisationEloquentModel::where('org_admin_id', $org_admin->org_admin_id)->first();
+            $organisation = $org_admin->organisation->id;
         } else {
             $organisation = null;
         }

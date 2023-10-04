@@ -26,4 +26,9 @@ class OrganisationAdminEloquentModel extends Authenticatable
     {
         return $this->belongsTo(UserEloquentModel::class, 'user_id');
     }
+
+    public function organisation()
+    {
+        return $this->belongsTo(OrganisationEloquentModel::class, 'organisation_id');
+    }
 }
