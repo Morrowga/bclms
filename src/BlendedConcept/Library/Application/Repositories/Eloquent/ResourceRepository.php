@@ -83,17 +83,20 @@ class ResourceRepository implements ResourceRepositoryInterface
     public function getRequestPublishData(UserEloquentModel $userEloquentModel)
     {
         $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
-        $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $org_admin->org_admin_id)->first();
+        if ($org_admin) {
+            $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $org_admin->org_admin_id)->first();
+            $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
+                ->with(['organisation', 'teacher'])
+                ->where('organisation_id', $organisationEloquent->id)
+                ->where('status', 'requested')
+                ->get();
 
-        $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
-            ->with(['organisation', 'teacher'])
-            ->where('organisation_id', $organisationEloquent->id)
-            ->where('status', 'requested')
-            ->get();
+            $mediaItems->each->append('video_url', 'thumb_url');
 
-        $mediaItems->each->append('video_url', 'thumb_url');
-
-        return $mediaItems;
+            return $mediaItems;
+        } else {
+            return [];
+        }
     }
 
     public function createResource(Request $request, UserEloquentModel $userEloquentModel)
