@@ -17,7 +17,7 @@ class StudentMapper
             first_name: $request->first_name,
             last_name: $request->last_name,
             contact_number: $request->contact_number,
-            email : $request->email,
+            email: $request->email,
             gender: $request->gender,
             dob: $request->dob,
             education_level: $request->education_level,
@@ -27,6 +27,8 @@ class StudentMapper
             total_time_spent: $request->total_time_spent,
             disability_types: $request->disability_types,
             learning_needs: $request->learning_needs,
+            parent_first_name: $request->parent_first_name,
+            parent_last_name: $request->parent_last_name
         );
     }
 

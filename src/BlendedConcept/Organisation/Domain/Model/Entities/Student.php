@@ -21,6 +21,8 @@ class Student extends Entity
         public readonly ?int $num_silver_coins,
         public readonly ?string $student_code,
         public readonly ?float $total_time_spent,
+        public readonly ?string $parent_first_name,
+        public readonly ?string $parent_last_name,
         public readonly ?array $disability_types,
         public readonly ?array $learning_needs,
     ) {
@@ -45,6 +47,8 @@ class Student extends Entity
             'total_time_spent' => $this->total_time_spent,
             'disability_types' => $this->disability_types,
             'learning_needs' => $this->learning_needs,
+            'parent_first_name' => $this->parent_first_name,
+            'parent_last_name' => $this->parent_last_name
         ];
     }
 }

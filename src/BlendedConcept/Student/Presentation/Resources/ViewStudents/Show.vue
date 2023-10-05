@@ -9,36 +9,35 @@ import { SuccessDialog } from "@actions/useSuccess";
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { ref } from "vue";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 let tab = ref(null);
-let props = defineProps(['student']);
+let props = defineProps(["student"]);
 const form = useForm({});
 
-
 const deleteStudent = () => {
-  isConfirmedDialog({
-    title: "You won't be able to revert it!",
-    denyButtonText: "Yes, delete it!",
-    onConfirm: () => {
-      form.delete(
-        route(
-          "organisations-student.destroy",
-          props.student.data.student_id
-        ),
-        {
-          onSuccess: () => {
-            SuccessDialog({
-              title: "You have successfully deleted student!",
-              color: "#17CAB6",
-            });
-          },
-          onError : () => {
-            console.log(error)
-          }
-        }
-      );
-    },
-  });
+    isConfirmedDialog({
+        title: "You won't be able to revert it!",
+        denyButtonText: "Yes, delete it!",
+        onConfirm: () => {
+            form.delete(
+                route(
+                    "organisations-student.destroy",
+                    props.student.data.student_id
+                ),
+                {
+                    onSuccess: () => {
+                        SuccessDialog({
+                            title: "You have successfully deleted student!",
+                            color: "#17CAB6",
+                        });
+                    },
+                    onError: () => {
+                        console.log(error);
+                    },
+                }
+            );
+        },
+    });
 };
 
 const formatDate = (dateString) => {
@@ -46,17 +45,17 @@ const formatDate = (dateString) => {
     const date = new Date(dateString);
 
     // Format the date using date-fns with the custom format
-    return format(date, 'MMMM d, yyyy'); // "MMMM" for full month name, "d" for day, "yyyy" for year
-}
+    return format(date, "MMMM d, yyyy"); // "MMMM" for full month name, "d" for day, "yyyy" for year
+};
 
 function checkURL(input) {
-  if (input.includes('https://') && input.includes('http://')) {
-    return input;
-  } else if (input.includes('https://') || input.includes('http://')) {
-    return input;
-  } else {
-    return '/' + input;
-  }
+    if (input.includes("https://") && input.includes("http://")) {
+        return input;
+    } else if (input.includes("https://") || input.includes("http://")) {
+        return input;
+    } else {
+        return "/" + input;
+    }
 }
 </script>
 <template>
@@ -64,10 +63,23 @@ function checkURL(input) {
         <VContainer class="width-80">
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-img :src="props.student.data.user.profile_pic == '' ? '/images/teacherimg.png': checkURL(props.student.data.user.profile_pic)" />
+                    <v-img
+                        :src="
+                            props.student.data.user.profile_pic == ''
+                                ? '/images/teacherimg.png'
+                                : checkURL(props.student.data.user.profile_pic)
+                        "
+                    />
 
                     <div class="d-flex justify-center my-4">
-                        <Link :href="route('teacher_students.kidmode', props.student.data.user_id)">
+                        <Link
+                            :href="
+                                route(
+                                    'teacher_students.kidmode',
+                                    props.student.data.user_id
+                                )
+                            "
+                        >
                             <v-btn
                                 variant="flat"
                                 rounded
@@ -82,7 +94,14 @@ function checkURL(input) {
                     <div class="d-flex justify-space-between align-center">
                         <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
                         <div>
-                            <Link :href="route('teacher_students.edit', props.student.data.student_id)">
+                            <Link
+                                :href="
+                                    route(
+                                        'teacher_students.edit',
+                                        props.student.data.student_id
+                                    )
+                                "
+                            >
                                 <v-btn
                                     variant="flat"
                                     rounded
@@ -116,7 +135,9 @@ function checkURL(input) {
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Gender</p>
-                            <p class="text-h6 font-weight-bold mx-4">{{ props.student.data.gender }}</p>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                {{ props.student.data.gender }}
+                            </p>
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Date of birth</p>
@@ -126,7 +147,48 @@ function checkURL(input) {
                         </v-col>
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Education Level</p>
-                            <p class="text-h6 font-weight-bold mx-4">{{ props.student.data.education_level}}</p>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                {{ props.student.data.education_level }}
+                            </p>
+                        </v-col>
+                        <v-col cols="12">
+                            <p class="text-subtitle-1 mb-0">
+                                Parent's First Name
+                            </p>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                {{
+                                    props.student.data?.parent?.user?.first_name
+                                }}
+                            </p>
+                        </v-col>
+                        <v-col cols="12">
+                            <p class="text-subtitle-1 mb-0">
+                                Parent's Last Name
+                            </p>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                {{
+                                    props.student.data?.parent?.user?.last_name
+                                }}
+                            </p>
+                        </v-col>
+                        <v-col cols="12">
+                            <p class="text-subtitle-1 mb-0">
+                                Parent's Contact Number
+                            </p>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                {{
+                                    props.student.data?.parent?.user
+                                        ?.contact_number
+                                }}
+                            </p>
+                        </v-col>
+                        <v-col cols="12">
+                            <p class="text-subtitle-1 mb-0">
+                                Parent's Email Address
+                            </p>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                {{ props.student.data?.parent?.user?.email }}
+                            </p>
                         </v-col>
                     </v-row>
                     <!-- <v-row>
@@ -173,17 +235,19 @@ function checkURL(input) {
                                 <v-window v-model="tab">
                                     <v-window-item value="learning">
                                         <ChipWithBlueDot
-                                            v-for="item in props.student.data.learningneeds"
+                                            v-for="item in props.student.data
+                                                .learningneeds"
                                             :key="item"
-                                            title="Dyslexia"
+                                            :title="item.name"
                                         />
                                     </v-window-item>
 
                                     <v-window-item value="disability">
                                         <ChipWithBlueDot
-                                            v-for="item in props.student.data.disability_types"
+                                            v-for="item in props.student.data
+                                                .disability_types"
                                             :key="item"
-                                            title="Disability"
+                                            :title="item.name"
                                         />
                                     </v-window-item>
                                 </v-window>
@@ -192,7 +256,13 @@ function checkURL(input) {
 
                         <v-col cols="12">
                             <div>
-                                <Link :href="route('teacher_students.profiling_surveys')">
+                                <Link
+                                    :href="
+                                        route(
+                                            'teacher_students.profiling_surveys'
+                                        )
+                                    "
+                                >
                                     <v-btn
                                         variant="flat"
                                         rounded
@@ -203,7 +273,10 @@ function checkURL(input) {
                                 </Link>
                                 <Link
                                     :href="
-                                        route('set_accessibility_device.index', props.student.data.student_id)
+                                        route(
+                                            'set_accessibility_device.index',
+                                            props.student.data.student_id
+                                        )
                                     "
                                 >
                                     <v-btn
@@ -263,7 +336,7 @@ function checkURL(input) {
                 </div>
             </VContainer>
             <div>
-                <PlaylistSlider :datas="props.student.data.playlists"/>
+                <PlaylistSlider :datas="props.student.data.playlists" />
             </div>
         </div>
     </AdminLayout>

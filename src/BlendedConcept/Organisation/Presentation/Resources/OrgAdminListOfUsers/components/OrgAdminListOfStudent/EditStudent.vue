@@ -12,12 +12,14 @@ import {
 } from "@validators";
 const props = defineProps([
     "learningNeeds",
-    "disabilityTypes",
+    "disability_types",
     "organisations_student",
 ]);
 
 const form = useForm({
     student_id: props.organisations_student.student_id,
+    user_id: "",
+    parent_id: "",
     first_name: "",
     last_name: "",
     gender: "",
@@ -30,6 +32,8 @@ const form = useForm({
     profile_pics: "",
     learning_needs: [],
     disability_types: [],
+    parent_first_name: "",
+    parent_last_name: "",
     _method: "PUT",
 });
 
@@ -59,16 +63,29 @@ const createStudent = () => {
 };
 
 onMounted(() => {
-    (form.email = props.organisations_student.user.email),
-        (form.contact_number = props.organisations_student.user.contact_number),
-        (form.first_name = props.organisations_student.user.first_name),
-        (form.last_name = props.organisations_student.user.last_name),
-        (form.gender = props.organisations_student.gender),
-        (form.dob = props.organisations_student.dob),
-        (form.education_level = props.organisations_student.education_level),
-        (form.education_level = props.organisations_student.education_level),
-        (form.education_level = props.organisations_student.education_level);
-    console.log(props.organisations_student);
+    form.email = props.organisations_student.user.email;
+    form.user_id = props.organisations_student.user_id;
+    form.parent_id = props.organisations_student.parent_id;
+    form.email = props.organisations_student?.parent?.user?.email;
+    form.contact_number =
+        props.organisations_student.parent?.user?.contact_number;
+    form.first_name = props.organisations_student.user.first_name;
+    form.last_name = props.organisations_student.user.last_name;
+    form.gender = props.organisations_student.gender;
+    form.dob = props.organisations_student.dob;
+    form.education_level = props.organisations_student.education_level;
+    form.education_level = props.organisations_student.education_level;
+    form.education_level = props.organisations_student.education_level;
+    form.learning_needs = props.organisations_student?.learningneeds.map(
+        (learn) => learn.id
+    );
+    form.disability_types = props.organisations_student?.disability_types.map(
+        (dis) => dis.id
+    );
+    form.parent_first_name =
+        props.organisations_student?.parent?.user?.first_name;
+    form.parent_last_name =
+        props.organisations_student?.parent?.user?.last_name;
 });
 </script>
 <template>
@@ -79,10 +96,7 @@ onMounted(() => {
                     <v-col cols="12" md="6">
                         <LargeDropFile
                             v-model="form.profile_pics"
-                            :old_photo="
-                                organisations_student.profile_pics?.[0]
-                                    ?.original_url
-                            "
+                            :old_photo="organisations_student.user?.profile_pic"
                         />
                     </v-col>
                     <v-col cols="12" md="6" class="pa-5">
@@ -219,12 +233,12 @@ onMounted(() => {
                                         <v-window-item value="disability">
                                             <v-chip-group
                                                 filter
-                                                v-model="form.learning_needs"
+                                                v-model="form.disability_types"
                                                 multiple
                                                 column
                                             >
                                                 <v-chip
-                                                    v-for="item in learningNeeds"
+                                                    v-for="item in disability_types"
                                                     variant="outlined"
                                                     :key="item.id"
                                                     :value="item.id"

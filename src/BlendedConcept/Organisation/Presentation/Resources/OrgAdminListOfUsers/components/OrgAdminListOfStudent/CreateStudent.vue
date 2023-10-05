@@ -22,6 +22,8 @@ const form = useForm({
     email: "",
     education_level: "",
     profile_pics: "",
+    parent_first_name: "",
+    parent_last_name: "",
     learning_needs: [],
     disability_types: [],
 });
@@ -146,6 +148,34 @@ const createStudent = () => {
                                     ]"
                                     :error-messages="
                                         form?.errors?.contact_number
+                                    "
+                                />
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    Parent's First Name
+                                </p>
+                                <v-text-field
+                                    v-model="form.parent_first_name"
+                                    placeholder="e.g. 9180003"
+                                    variant="outlined"
+                                    :rules="[]"
+                                    :error-messages="
+                                        form?.errors?.parent_first_name
+                                    "
+                                />
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    Parent's Last Name
+                                </p>
+                                <v-text-field
+                                    v-model="form.parent_last_name"
+                                    placeholder="e.g. 9180003"
+                                    variant="outlined"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="
+                                        form?.errors?.parent_last_name
                                     "
                                 />
                             </v-col>

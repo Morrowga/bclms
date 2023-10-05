@@ -10,6 +10,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class StudentEloquentModel extends Model implements HasMedia
@@ -89,5 +90,9 @@ class StudentEloquentModel extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo(UserEloquentModel::class, 'user_id', 'id');
+    }
+    public function parent()
+    {
+        return $this->belongsTo(ParentUserEloqeuntModel::class, 'parent_id')->with('user');
     }
 }
