@@ -235,6 +235,7 @@ const handleSubmit = () => {
     height: 440px;
     border: 1px solid black;
     border-radius: 10px;
+    overflow: hidden;
 }
 .profileimg {
     object-fit: contain !important;

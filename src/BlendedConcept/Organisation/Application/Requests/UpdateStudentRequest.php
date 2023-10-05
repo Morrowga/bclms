@@ -24,12 +24,7 @@ class UpdateStudentRequest extends FormRequest
             'education_level' => [
                 'required',
             ],
-            'contact_number' => [
-                'required',
-            ],
-            'email' => [
-                'email' => ['required', 'email', 'unique:users,email'],
-            ],
+
         ];
     }
 

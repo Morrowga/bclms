@@ -191,6 +191,7 @@ const updatePlaylist = () => {
     height: 440px;
     border: 1px solid rgb(182, 182, 186, 0.6);
     border-radius: 10px;
+    overflow: hidden;
 }
 
 .profileimg {
