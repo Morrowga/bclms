@@ -140,55 +140,54 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function storeTeacherStudent(Student $student)
     {
-        // DB::beginTransaction();
+        DB::beginTransaction();
 
-        // try {
-        $teacher_id = auth()->user()->b2bUser->teacher_id;
-        $create_user_data = [
-            'first_name' => $student->first_name,
-            'last_name' => $student->last_name,
-            'role_id' => 6,
-        ];
-        $create_parent_data = [
-            'first_name' => $student->parent_first_name,
-            'last_name' => $student->parent_last_name,
-            'contact_number' => $student->contact_number,
-            'email' => $student->email,
-            'role_id' => 2
-        ];
-        $userParentEloquent = UserEloquentModel::create($create_parent_data);
+        try {
+            $teacher_id = auth()->user()->b2bUser->teacher_id;
+            $create_user_data = [
+                'first_name' => $student->first_name,
+                'last_name' => $student->last_name,
+                'role_id' => 6,
+            ];
+            $create_parent_data = [
+                'first_name' => $student->parent_first_name,
+                'last_name' => $student->parent_last_name,
+                'contact_number' => $student->contact_number,
+                'email' => $student->email,
+                'role_id' => 2
+            ];
+            $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
-        $parentEloquent = ParentUserEloqeuntModel::create([
-            "user_id" => $userParentEloquent->id,
-            "organisation_id" => null,
-            "type" => "B2C"
-        ]);
-        $userEloquent = UserEloquentModel::create($create_user_data);
-        $createStudentEloqoent = StudentMapper::toEloquent($student);
-        $createStudentEloqoent->user_id = $userEloquent->id;
-        $createStudentEloqoent->parent_id = $parentEloquent->parent_id;
-        $createStudentEloqoent->num_gold_coins = 0;
-        $createStudentEloqoent->num_silver_coins = 0;
-        $createStudentEloqoent->save();
-        $createStudentEloqoent->teachers()->sync([$teacher_id]);
+            $parentEloquent = ParentUserEloqeuntModel::create([
+                "user_id" => $userParentEloquent->id,
+                "organisation_id" => null,
+                "type" => "B2C"
+            ]);
+            $userEloquent = UserEloquentModel::create($create_user_data);
+            $createStudentEloqoent = StudentMapper::toEloquent($student);
+            $createStudentEloqoent->user_id = $userEloquent->id;
+            $createStudentEloqoent->parent_id = $parentEloquent->parent_id;
+            $createStudentEloqoent->num_gold_coins = 0;
+            $createStudentEloqoent->num_silver_coins = 0;
+            $createStudentEloqoent->save();
+            $createStudentEloqoent->teachers()->sync([$teacher_id]);
 
-        $createStudentEloqoent->disability_types()->sync($student->disability_types);
-        $createStudentEloqoent->learningneeds()->sync($student->learning_needs);
+            $createStudentEloqoent->disability_types()->sync($student->disability_types);
+            $createStudentEloqoent->learningneeds()->sync($student->learning_needs);
 
-        // media library save images
-        if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {
-            $createStudentEloqoent->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organisation');
-            $userEloquent->profile_pic = $createStudentEloqoent->getFirstMediaUrl('profile_pics');
-            $userEloquent->update();
+            // media library save images
+            if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {
+                $createStudentEloqoent->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organisation');
+                $userEloquent->profile_pic = $createStudentEloqoent->getFirstMediaUrl('profile_pics');
+                $userEloquent->update();
+            }
+            DB::commit();
+
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+                $createStudentEloqoent->addMediaFromRequest('image')->toMediaCollection('image', 'media_students');
+            }
+        } catch (\Exception $error) {
+            DB::rollBack();
         }
-        // DB::commit();
-
-        // if (request()->hasFile('image') && request()->file('image')->isValid()) {
-        //     $createStudentEloqoent->addMediaFromRequest('image')->toMediaCollection('image', 'media_students');
-        // }
-        // } catch (\Exception $error) {
-        //     DB::rollBack();
-        // }
-
     }
 }
