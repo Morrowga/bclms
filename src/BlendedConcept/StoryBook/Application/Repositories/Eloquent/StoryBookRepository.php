@@ -247,7 +247,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
 
     public function updatePhysicalResource($request, StoryBookEloquentModel $storybookEloquent)
     {
-        $delete_items = $request->delete_physical_resources;
+        $delete_items = $request->delete_physical_resources ?? [];
         if (count($delete_items) > 0) {
             MediaEloquentModel::whereIn('id', $delete_items)->delete();
         }
