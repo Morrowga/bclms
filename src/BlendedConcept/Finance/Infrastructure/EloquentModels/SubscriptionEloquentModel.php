@@ -71,9 +71,11 @@ class SubscriptionEloquentModel extends Model
 
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
             if ($filter == 'teachers') {
-                $query->whereHas('b2b_subscription', function ($query) {
-                    $query->orderBy('num_teacher_license', 'DESC');
-                });
+                $query->join('b2b_subscriptions', 'subscriptions.id', '=', 'b2b_subscriptions.subscription_id')
+                ->select('subscriptions.*', 'b2b_subscriptions.num_teacher_license')
+                ->orderBy('b2b_subscriptions.num_teacher_license', 'ASC');
+
+
                 // $query->join('b2b_subscriptions', 'subscriptions.id', '=', 'b2b_subscriptions.subscription_id')
                 //     ->whereExists(function ($query) {
                 //         $query->select(DB::raw(1))
@@ -82,12 +84,6 @@ class SubscriptionEloquentModel extends Model
                 //             ->orderBy('sub_b2b_subscriptions.num_teacher_license', 'asc')
                 //             ->limit(1);
                 //     });
-
-                // $query->whereHas('b2b_subscription.num_teacher_license', function ($query) {
-                //     $query->orderBy('num_teacher_license', 'asc');
-                // });
-                // $query->join('b2b_subscriptions', 'subscriptions.id', '=', 'b2b_subscriptions.subscription_id')
-                //     ->orderBy('b2b_subscriptions.num_teacher_license', config('sorting.orderBy'))->orderBy('b2b_subscriptions.created_at', 'desc');
             } elseif ($filter == 'name') {
                 // $query->join('organisations', 'subscriptions.id', '=', 'organisations.curr_subscription_id')->select('organisations.*', 'subscriptions.*')
                 //     ->orderBy('organisations.name', config('sorting.orderBy'));

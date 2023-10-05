@@ -29,7 +29,6 @@ class SubscribtionInvoiceController
 
             // Get organisations with pagination using the provided filters
             $b2b_subscriptions = (new GetB2bSubscriptions($filters))->handle();
-            return $b2b_subscriptions;
             $b2c_subscriptions = (new GetB2cSubscriptions($filters))->handle();
 
 
