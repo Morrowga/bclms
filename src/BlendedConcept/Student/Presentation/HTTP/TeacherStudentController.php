@@ -2,7 +2,6 @@
 
 namespace Src\BlendedConcept\Student\Presentation\HTTP;
 
-use Illuminate\Http\Response;
 use Inertia\Inertia;
 use Src\BlendedConcept\Organisation\Application\DTO\StudentData;
 use Src\BlendedConcept\Organisation\Application\Requests\UpdateStudentRequest;
@@ -16,7 +15,10 @@ use Src\BlendedConcept\Student\Application\UseCases\Queries\GetDisabilityTypesFo
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetLearningNeedsForStudent;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\ShowStudent;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class TeacherStudentController
 {
@@ -42,7 +44,6 @@ class TeacherStudentController
     {
         $student = (new ShowStudent($id))->handle();
 
-        // return $student;
         return Inertia::render(config('route.teacher_students.show'), compact('student'));
     }
     public function store(storeStudentRequest $request)
@@ -97,5 +98,12 @@ class TeacherStudentController
         $student = (new ShowStudent($id))->handle();
 
         return Inertia::render(config('route.teacher_students.edit'), compact('student'));
+    }
+
+    public function kidMode(UserEloquentModel $user){
+        Auth::logout();
+        Auth::login($user);
+
+        return redirect()->route('dashboard'); // Redirect to the kid's home page.
     }
 }

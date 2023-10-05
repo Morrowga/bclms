@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps } from "vue";
 import { router } from "@inertiajs/core";
+import { usePage } from "@inertiajs/vue3";
 import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
 let props = defineProps({
     isOpenMenu: {
@@ -8,6 +9,10 @@ let props = defineProps({
         default: true,
     },
 });
+const page = usePage();
+const user = computed(() => page.props.auth.data);
+const userData = user.value
+console.log(userData);
 </script>
 
 <template>
@@ -27,18 +32,18 @@ let props = defineProps({
                         </div>
                         <div class="mt-2">
                             <p class="studentname pppangram-bold">
-                                Francisco Maia
+                                {{ user.name }}
                             </p>
-                            <p class="semi-text pppangram-medium">Female</p>
+                            <p class="semi-text pppangram-medium">{{ userData.student.gender}}</p>
                         </div>
                         <VRow class="mx-2 my-2">
-                            <VCol cols="5" class="text-left">
+                            <VCol cols="5" class="text-left mt-3">
                                 <p class="label-student pppangram-bold">DOB</p>
                             </VCol>
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
-                                        January 1, 2012
+                                        {{userData.student.dob}}
                                     </p>
                                 </div>
                             </VCol>
@@ -59,7 +64,7 @@ let props = defineProps({
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
-                                        K1
+                                        {{userData.student.education_level}}
                                     </p>
                                 </div>
                             </VCol>
@@ -78,9 +83,14 @@ let props = defineProps({
                                 </div>
                             </VCol>
                             <VCol cols="7" class="text-left">
-                                <div class="ml-5">
+                                <div class="ml-5" v-if="userData.student.disability_types.length > 0">
+                                    <p class="value-student pppangram-medium" v-for="diabilitytype in userData.student.disability_types" :key="diabilitytype.id">
+                                        {{ diabilitytype.name  }}
+                                    </p>
+                                </div>
+                                <div class="ml-5" v-else>
                                     <p class="value-student pppangram-medium">
-                                        Down Syndrome
+                                        No Disability Type
                                     </p>
                                 </div>
                             </VCol>
@@ -115,7 +125,7 @@ let props = defineProps({
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <span class="value-student pppangram-medium"
-                                        >128, 274</span
+                                        >{{ userData.student.student_code ?? 'No Code' }}</span
                                     >
                                 </div>
                             </VCol>
@@ -126,19 +136,19 @@ let props = defineProps({
                             </p>
                         </div>
                         <VRow class="mx-2 my-4">
-                            <VCol cols="5" class="text-left">
+                            <VCol cols="5" class="text-left mt-3">
                                 <p class="label-student pppangram-bold">Name</p>
                             </VCol>
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
-                                        Jane Ang
+                                        {{ userData.student.parent.user.full_name }}
                                     </p>
                                 </div>
                             </VCol>
                         </VRow>
                         <VRow class="mx-2 my-0">
-                            <VCol cols="5" class="text-left">
+                            <VCol cols="5" class="text-left mt-3">
                                 <p class="label-student pppangram-bold">
                                     Relationship
                                 </p>
@@ -146,13 +156,13 @@ let props = defineProps({
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
-                                        Mother
+                                        Parent
                                     </p>
                                 </div>
                             </VCol>
                         </VRow>
                         <VRow class="mx-2 my-0">
-                            <VCol cols="5" class="text-left">
+                            <VCol cols="5" class="text-left mt-3">
                                 <p class="label-student pppangram-bold">
                                     Contact No.
                                 </p>
@@ -160,13 +170,13 @@ let props = defineProps({
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
-                                        9123 4567
+                                        {{ userData.student.parent.user.contact_number }}
                                     </p>
                                 </div>
                             </VCol>
                         </VRow>
                         <VRow class="mx-2 my-0">
-                            <VCol cols="5" class="text-left">
+                            <VCol cols="5" class="text-left mt-3">
                                 <p class="label-student pppangram-bold">
                                     Email
                                 </p>
@@ -174,7 +184,7 @@ let props = defineProps({
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
-                                        jane.ang@gmail.com
+                                        {{ userData.student.parent.user.email }}
                                     </p>
                                 </div>
                             </VCol>
@@ -265,7 +275,7 @@ let props = defineProps({
 .value-student {
     color: #000 !important;
     font-size: 13px !important;
-    line-height: 0.1 !important;
+    /* line-height:  !important; */
 }
 
 .semi-text {

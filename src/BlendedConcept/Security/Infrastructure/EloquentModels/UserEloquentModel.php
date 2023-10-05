@@ -13,10 +13,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquentModel;
-use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
 
 class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyEmail
 {
@@ -172,6 +173,11 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
             ->extractVideoFrameAtSecond(1)
             ->performOnCollections('videos')
             ->format('jpg'); // Specify the format as "jpg"
+    }
+
+    public function student()
+    {
+        return $this->hasOne(StudentEloquentModel::class, 'user_id', 'id')->with(['disability_types', 'parent']);
     }
 
     // public function getOrganisationIdAttribute()

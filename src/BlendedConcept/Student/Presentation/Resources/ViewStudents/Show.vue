@@ -67,7 +67,7 @@ function checkURL(input) {
                     <v-img :src="props.student.data.user.profile_pic == '' ? '/images/teacherimg.png': checkURL(props.student.data.user.profile_pic)" />
 
                     <div class="d-flex justify-center my-4">
-                        <Link href="#">
+                        <Link :href="route('teacher_students.kidmode', props.student.data.user_id)">
                             <v-btn
                                 variant="flat"
                                 rounded

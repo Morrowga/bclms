@@ -20,7 +20,7 @@ class StudentGamesController extends Controller
             ]);
         } catch (Exception $e) {
             return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
-        }
+    }
     }
 
     public function show(GameEloquentModel $game)
