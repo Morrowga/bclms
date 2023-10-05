@@ -1,18 +1,37 @@
 <script setup>
 import { defineProps } from "vue";
 import { router } from "@inertiajs/core";
-import { usePage } from "@inertiajs/vue3";
+import { usePage,useForm } from "@inertiajs/vue3";
 import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
+
 let props = defineProps({
     isOpenMenu: {
         type: Boolean,
         default: true,
     },
 });
+const teacher_id = ref(null);
 const page = usePage();
 const user = computed(() => page.props.auth.data);
 const userData = user.value
-console.log(userData);
+
+const getCookie = () => {
+  const cookieName = "teacher_id"; // Replace with your cookie name
+  const cookies = document.cookie.split("; ");
+  for (const cookie of cookies) {
+    const [name, value] = cookie.split("=");
+    if (name === cookieName) {
+        teacher_id.value = value;
+      return;
+    }
+  }
+};
+
+
+onMounted(() => {
+  // Load initial data for page 1
+  getCookie();
+});
 </script>
 
 <template>
@@ -190,7 +209,7 @@ console.log(userData);
                             </VCol>
                         </VRow>
                         <div class="mt-1 my-3 mx-3">
-                            <ExitMode />
+                            <ExitMode :teacher_id="teacher_id" :student_id="userData.student.student_id" />
                         </div>
                     </VCard>
                 </VFadeTransition>

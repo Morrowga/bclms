@@ -4,23 +4,27 @@ namespace Src\BlendedConcept\Student\Presentation\HTTP;
 
 use Inertia\Inertia;
 
-use Src\BlendedConcept\Organisation\Application\Requests\UpdateStudentRequest;
-use Src\BlendedConcept\Organisation\Application\UseCases\Commands\Student\UpdateStudentCommand;
-use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
-use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
-use Src\BlendedConcept\Student\Application\Requests\storeStudentRequest;
-use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreStudentCommand;
-use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreTeacherStudentCommand;
-use Src\BlendedConcept\Student\Application\UseCases\Queries\GetDisabilityTypesForStudent;
-use Src\BlendedConcept\Student\Application\UseCases\Queries\GetLearningNeedsForStudent;
-use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
-use Src\BlendedConcept\Student\Application\UseCases\Queries\ShowStudent;
+
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
+use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
+use Src\BlendedConcept\Student\Application\Requests\PasswordRequest;
+use Src\BlendedConcept\Student\Application\Requests\storeStudentRequest;
+use Src\BlendedConcept\Student\Application\UseCases\Queries\ShowStudent;
+use Src\BlendedConcept\Organisation\Application\Requests\UpdateStudentRequest;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Application\DTO\StudentData;
 use Src\BlendedConcept\Student\Application\UseCases\Commands\UpdateTeacherStudentCommand;
+use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreStudentCommand;
+use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Student\Application\UseCases\Queries\GetLearningNeedsForStudent;
+use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreTeacherStudentCommand;
+use Src\BlendedConcept\Student\Application\UseCases\Queries\GetDisabilityTypesForStudent;
+use Src\BlendedConcept\Organisation\Application\UseCases\Commands\Student\UpdateStudentCommand;
 
 class TeacherStudentController
 {
@@ -34,9 +38,7 @@ class TeacherStudentController
             // Retrieve users with pagination using the provided filters
             $students = (new GetStudentWithPagination($filters))->handle()['paginate_students'];
 
-            // return $students;
             return Inertia::render(config('route.teacher_students.index'), compact('students'));
-            // return Inertia::render(config('route.students'), compact('students'));
         } catch (\Exception $e) {
             return redirect()->route('teacher_students.index')->with('sytemErrorMessage', $e->getMessage());
         }
@@ -69,12 +71,16 @@ class TeacherStudentController
 
     public function create()
     {
-        $disabilityTypes = (new GetDisabilityTypesForStudent())->handle();
-        $learningNeeds = (new GetLearningNeedsForStudent())->handle();
-        return Inertia::render(config('route.teacher_students.create'), [
-            'disabilityTypes' => $disabilityTypes,
-            'learningNeeds' => $learningNeeds
-        ]);
+        try {
+            $disabilityTypes = (new GetDisabilityTypesForStudent())->handle();
+            $learningNeeds = (new GetLearningNeedsForStudent())->handle();
+            return Inertia::render(config('route.teacher_students.create'), [
+                'disabilityTypes' => $disabilityTypes,
+                'learningNeeds' => $learningNeeds
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('teacher_students.index')->with('sytemErrorMessage', $e->getMessage());
+        }
     }
 
     public function update(UpdateStudentRequest $request, StudentEloquentModel $teacher_student)
@@ -108,9 +114,39 @@ class TeacherStudentController
 
     public function kidMode(UserEloquentModel $user)
     {
-        Auth::logout();
-        Auth::login($user);
+        try {
+            $teacher_id = Auth::user()->id;
 
-        return redirect()->route('dashboard'); // Redirect to the kid's home page.
+            setcookie('teacher_id', $teacher_id, time() + (86400 * 30), "/");
+
+            Auth::logout();
+            Auth::login($user);
+
+            return redirect()->route('dashboard'); // Redirect to the kid's home page.
+        } catch (\Exception $error) {
+            return redirect()
+                ->route('teacher_students.index')
+                ->with([
+                    'systemErrorMessage' => $error->getCode(),
+                ]);
+        }
+    }
+
+    public function exitMode(PasswordRequest $request, UserEloquentModel $user)
+    {
+        try {
+            $request->validated();
+
+            Auth::logout();
+            Auth::login($user);
+
+            return redirect()->route('teacher_students.show', $request->student_id); // Redirect to the kid's home page.
+        } catch (\Exception $error) {
+            return redirect()
+                ->route('dashboard')
+                ->with([
+                    'systemErrorMessage' => $error->getCode(),
+                ]);
+        }
     }
 }
