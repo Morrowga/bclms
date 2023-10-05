@@ -148,13 +148,15 @@ class StudentRepository implements StudentRepositoryInterface
                 'first_name' => $student->first_name,
                 'last_name' => $student->last_name,
                 'role_id' => 6,
+                'password' => 'password'
             ];
             $create_parent_data = [
                 'first_name' => $student->parent_first_name,
                 'last_name' => $student->parent_last_name,
                 'contact_number' => $student->contact_number,
                 'email' => $student->email,
-                'role_id' => 2
+                'role_id' => 2,
+                'password' => 'password'
             ];
             $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
@@ -218,7 +220,8 @@ class StudentRepository implements StudentRepositoryInterface
                 'first_name' => $studentData->parent_first_name,
                 'last_name' => $studentData->parent_last_name,
                 'email' => $studentData->email,
-                'contact_number' => $studentData->contact_number
+                'contact_number' => $studentData->contact_number,
+
             ]);
             //for media file upload 
 
