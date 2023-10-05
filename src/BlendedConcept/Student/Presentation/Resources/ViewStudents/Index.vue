@@ -91,7 +91,7 @@ watch(filters, (newValue) => {
                         :studentInfo="{
                             id: item.student_id,
                             name: item.user.full_name,
-                            contact_number: item.user.contact_number,
+                            contact_number: item.parent.contact_number,
                             img: item.user.profile_pic,
                         }"
                     />
