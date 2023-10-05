@@ -170,6 +170,7 @@ const updateTeacher = () => {
     background: #f7f7f7;
     height: 440px;
     border-radius: 10px;
+    overflow: hidden;
 }
 .profileimg {
     object-fit: cover !important;

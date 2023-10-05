@@ -5,6 +5,7 @@ namespace Src\BlendedConcept\Student\Application\Repositories\Eloquent;
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Application\DTO\StudentData;
@@ -66,7 +67,7 @@ class StudentRepository implements StudentRepositoryInterface
         DB::beginTransaction();
         try {
             $studentDataArray = $studentData->toArray();
-            $updateStudentEloquent = StudentEloquentModel::findOrFail($studentData->id);
+            $updateStudentEloquent = StudentEloquentModel::findOrFail($studentData->student_id);
             $updateStudentEloquent->fill($studentDataArray);
             $updateStudentEloquent->save();
 
@@ -83,26 +84,25 @@ class StudentRepository implements StudentRepositoryInterface
                     $updateStudentEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_students');
                 }
             }
+            DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());
         }
-
-        DB::commit();
     }
 
     public function getStudentsByPagination($filters)
     {
         $organisation_id = auth()->user()->organisation_id;
 
-        return StudentEloquentModel::filter($filters)->where('organisation_id', $organisation_id)->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+        return StudentEloquentModel::filter($filters)->where('organisation_id', $organisation_id)->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
     }
 
     public function showStudent($id)
     {
 
         $student = new StudentResources(StudentEloquentModel::where('student_id', $id)
-            ->with(['user', 'learningneeds', 'disability_types', 'playlists.storybooks'])
+            ->with(['user', 'learningneeds', 'disability_types', 'playlists.storybooks', 'parent'])
             ->orderBy('student_id', 'desc')
             ->first());
 
@@ -188,6 +188,59 @@ class StudentRepository implements StudentRepositoryInterface
             }
         } catch (\Exception $error) {
             DB::rollBack();
+        }
+    }
+
+    public function updateTeacherStudent(StudentData $studentData)
+    {
+        // dd($studentData);
+        DB::beginTransaction();
+        try {
+            $studentDataArrary = $studentData->toArray();
+
+            $studentEloquentModel = StudentEloquentModel::query()->findOrFail($studentData->student_id);
+            $user_id = $studentEloquentModel->user_id;
+            $parent_id = $studentEloquentModel->parent_id;
+            $studentEloquentModel->fill($studentDataArrary);
+            $studentEloquentModel->update();
+            $studentEloquentModel->disability_types()->sync($studentData->disability_types);
+            $studentEloquentModel->learningneeds()->sync($studentData->learning_needs);
+
+            $userEloquentModel = UserEloquentModel::find($user_id);
+            $userEloquentModel->update([
+                'first_name' => $studentData->first_name,
+                'last_name' => $studentData->last_name,
+            ]);
+            $parentEloquentModel = ParentEloquentModel::find($parent_id);
+
+            $parentUserEloquemtModel = UserEloquentModel::find($parentEloquentModel->user_id);
+            $parentUserEloquemtModel->update([
+                'first_name' => $studentData->parent_first_name,
+                'last_name' => $studentData->parent_last_name,
+                'email' => $studentData->email,
+                'contact_number' => $studentData->contact_number
+            ]);
+            //for media file upload 
+
+            if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {
+                $old_image = $studentEloquentModel->getFirstMedia('profile_pics');
+                if ($old_image !== null) {
+                    $old_image->delete();
+                }
+
+                $newMediaItem = $studentEloquentModel->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organisation');
+
+                if ($newMediaItem->getUrl()) {
+                    $userEloquentModel = UserEloquentModel::find($studentData->user_id);
+                    $userEloquentModel->profile_pic = $newMediaItem->getUrl();
+                    $userEloquentModel->update();
+                }
+            }
+
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            dd($error->getMessage());
         }
     }
 }

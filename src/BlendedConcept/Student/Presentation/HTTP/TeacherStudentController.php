@@ -3,7 +3,7 @@
 namespace Src\BlendedConcept\Student\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Src\BlendedConcept\Organisation\Application\DTO\StudentData;
+
 use Src\BlendedConcept\Organisation\Application\Requests\UpdateStudentRequest;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\Student\UpdateStudentCommand;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
@@ -19,6 +19,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Student\Application\DTO\StudentData;
+use Src\BlendedConcept\Student\Application\UseCases\Commands\UpdateTeacherStudentCommand;
 
 class TeacherStudentController
 {
@@ -43,7 +45,6 @@ class TeacherStudentController
     public function show($id)
     {
         $student = (new ShowStudent($id))->handle();
-
         return Inertia::render(config('route.teacher_students.show'), compact('student'));
     }
     public function store(storeStudentRequest $request)
@@ -51,19 +52,19 @@ class TeacherStudentController
 
         // abort_if(authorize('create', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($request->all());
-        // try {
+        try {
 
-        $request->validated();
-        $newUser = StudentMapper::fromRequest($request);
+            $request->validated();
+            $newUser = StudentMapper::fromRequest($request);
 
-        $createNewUser = new StoreTeacherStudentCommand($newUser);
-        $createNewUser->execute();
+            $createNewUser = new StoreTeacherStudentCommand($newUser);
+            $createNewUser->execute();
 
-        return redirect()->route('teacher_students.index')->with('successMessage', 'Student created successfully!');
-        // } catch (\Exception $e) {
-        //     // Handle the exception, log the error, or display a user-friendly error message.
-        //     return redirect()->route('teacher_students.index')->with('sytemErrorMessage', $e->getMessage());
-        // }
+            return redirect()->route('teacher_students.index')->with('successMessage', 'Student created successfully!');
+        } catch (\Exception $e) {
+            // Handle the exception, log the error, or display a user-friendly error message.
+            return redirect()->route('teacher_students.index')->with('sytemErrorMessage', $e->getMessage());
+        }
     }
 
     public function create()
@@ -79,28 +80,34 @@ class TeacherStudentController
     public function update(UpdateStudentRequest $request, StudentEloquentModel $teacher_student)
     {
         // abort_if(authorize('edit', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // dd($request->all());
+        try {
+            $updateStudent = StudentData::fromRequest($request, $teacher_student->student_id);
+            $updateStudent = (new UpdateTeacherStudentCommand($updateStudent));
+            $updateStudent->execute();
 
-        // try {
-        $updateStudent = StudentData::fromRequest($request, $teacher_student);
-        $updateStudent = (new UpdateStudentCommand($updateStudent));
-        $updateStudent->execute();
+            return redirect()->route('teacher_students.show', $teacher_student->student_id)->with('successMessage', 'Student Updated Successfully!');
+        } catch (\Exception $e) {
 
-        return redirect()->route('teacher_students.show', $teacher_student->student_id)->with('successMessage', 'Student Updated Successfully!');
-
-        // } catch (\Exception $e) {
-
-        //     return redirect()->route('teacher_students.show', $teacher_student->student_id)->with('sytemErrorMessage', $e->getMessage());
-        // }
+            return redirect()->route('teacher_students.show', $teacher_student->student_id)->with('sytemErrorMessage', $e->getMessage());
+        }
     }
 
     public function edit($id)
     {
         $student = (new ShowStudent($id))->handle();
 
-        return Inertia::render(config('route.teacher_students.edit'), compact('student'));
+        $disabilityTypes = (new GetDisabilityTypesForStudent())->handle();
+        $learningNeeds = (new GetLearningNeedsForStudent())->handle();
+        return Inertia::render(config('route.teacher_students.edit'), [
+            'student' => $student,
+            'disabilityTypes' => $disabilityTypes,
+            'learningNeeds' => $learningNeeds
+        ]);
     }
 
-    public function kidMode(UserEloquentModel $user){
+    public function kidMode(UserEloquentModel $user)
+    {
         Auth::logout();
         Auth::login($user);
 
