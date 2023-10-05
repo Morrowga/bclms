@@ -71,9 +71,19 @@ class SubscriptionEloquentModel extends Model
 
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
             if ($filter == 'teachers') {
-                $query->join('b2b_subscriptions', 'subscriptions.id', '=', 'b2b_subscriptions.subscription_id')
-                ->select('subscriptions.*', 'b2b_subscriptions.num_teacher_license')
-                ->orderBy('b2b_subscriptions.num_teacher_license', 'ASC');
+                $query->select('subscriptions.*', 'latest_b2b_subscriptions.num_teacher_license')
+                ->from('subscriptions')
+                ->joinSub(function ($joinSub) {
+                    $joinSub->select('subscription_id', 'num_teacher_license', DB::raw('MAX(created_at) as max_created_at'))
+                        ->from('b2b_subscriptions')
+                        ->groupBy('subscription_id', 'num_teacher_license');
+                }, 'latest_b2b_subscriptions', function ($join) {
+                    $join->on('subscriptions.id', '=', 'latest_b2b_subscriptions.subscription_id');
+                    $join->on('subscriptions.created_at', '=', 'latest_b2b_subscriptions.max_created_at');
+                })
+                ->orderBy('latest_b2b_subscriptions.num_teacher_license', 'DESC')
+                ->distinct();
+
 
 
                 // $query->join('b2b_subscriptions', 'subscriptions.id', '=', 'b2b_subscriptions.subscription_id')
