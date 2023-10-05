@@ -238,7 +238,7 @@ function checkURL(input) {
                                             v-for="item in props.student.data
                                                 .learningneeds"
                                             :key="item"
-                                            title="Dyslexia"
+                                            :title="item.name"
                                         />
                                     </v-window-item>
 
@@ -247,7 +247,7 @@ function checkURL(input) {
                                             v-for="item in props.student.data
                                                 .disability_types"
                                             :key="item"
-                                            title="Disability"
+                                            :title="item.name"
                                         />
                                     </v-window-item>
                                 </v-window>
