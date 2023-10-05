@@ -85,7 +85,6 @@ const dialogVisibleUpdate = (val) => {
 const onFormSubmit = () => {
     form.post(route("books.update_physical_resources", props.book_id), {
         onSuccess: () => {
-            SuccessDialog({ title: "Updated Successfully" });
             emit("update:isPhysicalDialog", false);
         },
         onError: (error) => {
