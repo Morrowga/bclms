@@ -24,12 +24,16 @@ class StoreOrganisationRequest extends FormRequest
                 'email',
                 'unique:organisations,contact_email',
             ],
+            'contact_number' => [
+                'required',
+                'max:8'
+            ],
             'org_admin_name' => [
                 'required',
             ],
             'org_admin_contact_number' => [
-
                 'required',
+                'max:8'
             ],
             'login_email' => [
                 'required',
@@ -46,6 +50,8 @@ class StoreOrganisationRequest extends FormRequest
     {
         return [
             'name' => 'This organisation name already exist',
+            'org_admin_contact_number.max' => 'This organisation contact number maximum 8.',
+            'contact_number.max' => 'This organisation contact number maximum 8.',
         ];
     }
 }
