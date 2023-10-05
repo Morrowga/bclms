@@ -17,6 +17,6 @@ class GetB2bSubscriptions implements QueryInterface
 
     public function handle()
     {
-        return $this->repository->getB2bSubscriptions($this->filters);
+    return $this->repository->getB2bSubscriptions($this->filters);
     }
 }

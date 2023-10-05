@@ -71,6 +71,9 @@ class SubscriptionEloquentModel extends Model
 
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
             if ($filter == 'teachers') {
+                $query->whereHas('b2b_subscription', function ($query) {
+                    $query->orderBy('num_teacher_license', 'DESC');
+                });
                 // $query->join('b2b_subscriptions', 'subscriptions.id', '=', 'b2b_subscriptions.subscription_id')
                 //     ->whereExists(function ($query) {
                 //         $query->select(DB::raw(1))

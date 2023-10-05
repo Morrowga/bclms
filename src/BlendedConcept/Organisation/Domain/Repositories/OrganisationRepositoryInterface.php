@@ -21,4 +21,7 @@ interface OrganisationRepositoryInterface
     public function getOrganisationNameWithCount();
 
     public function addOrganisationSubscription(SubscriptionData $subscriptionData);
+
+    public function newOrganisationSubscription(Subscription $subscription);
+
 }

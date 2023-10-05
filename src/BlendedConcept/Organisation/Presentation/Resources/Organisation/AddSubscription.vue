@@ -24,7 +24,7 @@ let form = useForm({
         num_teacher_license: "",
         num_student_license: "",
         organisation_id: props.organisation?.id,
-        subscription_id: props.organisation?.subscription?.id,
+        subscription_id: props.organisation?.subscription?.id ?? null,
         image: "",
     },
     _method: "PUT",

@@ -3,27 +3,28 @@
 namespace Src\BlendedConcept\Organisation\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
-use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
-use Src\BlendedConcept\Organisation\Application\DTO\OrganisationData;
-use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationAdminMapper;
-use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationMapper;
-use Src\BlendedConcept\Organisation\Application\Requests\StoreOrganisationRequest;
-use Src\BlendedConcept\Organisation\Application\Requests\StoreOrganisationSubscriptionRequest;
-use Src\BlendedConcept\Organisation\Application\Requests\UpdateOrganisationRequest;
-use Src\BlendedConcept\Organisation\Application\UseCases\Commands\DeleteOrganisationCommand;
-use Src\BlendedConcept\Organisation\Application\UseCases\Commands\StoreOrganisationCommand;
-use Src\BlendedConcept\Organisation\Application\UseCases\Commands\StoreOrganisationSubscriptionCommand;
-use Src\BlendedConcept\Organisation\Application\UseCases\Commands\UpdateOrganisationCommand;
-use Src\BlendedConcept\Organisation\Application\UseCases\Queries\GetOrganisationWithPagination;
-use Src\BlendedConcept\Organisation\Domain\Services\OrganisationService;
-use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
-use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\Tenant;
-use Src\BlendedConcept\System\Application\Policies\OrganisationPolicy;
-use Src\Common\Infrastructure\Laravel\Controller;
 use Stancl\Tenancy\Database\Models\Domain;
 use Symfony\Component\HttpFoundation\Response;
+use Src\Common\Infrastructure\Laravel\Controller;
+use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
+use Src\BlendedConcept\Organisation\Application\DTO\OrganisationData;
+use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
+use Src\BlendedConcept\System\Application\Policies\OrganisationPolicy;
+use Src\BlendedConcept\Organisation\Domain\Services\OrganisationService;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\Tenant;
+use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationMapper;
+use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationAdminMapper;
+use Src\BlendedConcept\Organisation\Application\Requests\StoreOrganisationRequest;
+use Src\BlendedConcept\Organisation\Application\Requests\UpdateOrganisationRequest;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
+use Src\BlendedConcept\Organisation\Application\UseCases\Commands\StoreOrganisationCommand;
+use Src\BlendedConcept\Organisation\Application\UseCases\Commands\DeleteOrganisationCommand;
+use Src\BlendedConcept\Organisation\Application\UseCases\Commands\UpdateOrganisationCommand;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
+use Src\BlendedConcept\Organisation\Application\Requests\StoreOrganisationSubscriptionRequest;
+use Src\BlendedConcept\Organisation\Application\UseCases\Queries\GetOrganisationWithPagination;
+use Src\BlendedConcept\Organisation\Application\UseCases\Commands\NewOrganisationSubscriptionCommand;
+use Src\BlendedConcept\Organisation\Application\UseCases\Commands\StoreOrganisationSubscriptionCommand;
 
 class OrganisationController extends Controller
 {
@@ -182,24 +183,31 @@ class OrganisationController extends Controller
 
     public function storeSubscription(StoreOrganisationSubscriptionRequest $request)
     {
-        try {
+        // try {
 
             // Abort if the user is not authorized to create organisations
             // abort_if(authorize('create', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             // Validate the request data
-            $subscription = SubscriptionEloquentModel::findOrFail($request->b2b_subscription['subscription_id']);
-            $updateSubscription = SubscriptionData::fromRequest($request, $subscription);
-            $saveOrganisation = (new StoreOrganisationSubscriptionCommand($updateSubscription));
-            $saveOrganisation->execute();
+            $subscription = SubscriptionEloquentModel::find($request->b2b_subscription['subscription_id']);
+            if($subscription){
+                $updateSubscription = SubscriptionData::fromRequest($request, $subscription);
+                $saveOrganisation = (new StoreOrganisationSubscriptionCommand($updateSubscription));
+                $saveOrganisation->execute();
+            } else {
+                $storeSubscription = SubscriptionMapper::fromRequest($request);
+                $saveOrganisation = (new NewOrganisationSubscriptionCommand($storeSubscription));
+                $saveOrganisation->execute();
+            }
+
 
             return redirect()->route('organisations.index')->with('successMessage', 'Organisations Created Successfully!');
-        } catch (\Exception $error) {
-            return redirect()
-                ->route('organisations.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
-        }
+        // } catch (\Exception $error) {
+        //     return redirect()
+        //         ->route('organisations.index')
+        //         ->with([
+        //             'systemErrorMessage' => $error->getCode(),
+        //         ]);
+        // }
     }
 }

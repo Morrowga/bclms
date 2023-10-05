@@ -195,7 +195,6 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function updateTeacherStudent(StudentData $studentData)
     {
-        // dd($studentData);
         DB::beginTransaction();
         try {
             $studentDataArrary = $studentData->toArray();
@@ -223,7 +222,7 @@ class StudentRepository implements StudentRepositoryInterface
                 'contact_number' => $studentData->contact_number,
 
             ]);
-            //for media file upload 
+            //for media file upload
 
             if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {
                 $old_image = $studentEloquentModel->getFirstMedia('profile_pics');

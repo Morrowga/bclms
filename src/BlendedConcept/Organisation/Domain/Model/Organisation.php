@@ -13,7 +13,7 @@ class Organisation extends AggregateRoot
         public readonly ?string $name,
         public readonly ?string $contact_name,
         public readonly ?string $contact_email,
-        public readonly ?string $contact_number,
+        public readonly ?int $contact_number,
         public readonly ?string $sub_domain,
         public readonly ?string $logo,
         public readonly ?string $status,

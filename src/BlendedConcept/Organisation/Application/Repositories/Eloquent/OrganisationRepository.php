@@ -140,6 +140,7 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             $subscriptionEloquent = SubscriptionEloquentModel::query()->findOrFail($subscriptionData->id);
             $subscriptionEloquent->fill($subscriptionDataArray);
             $subscriptionEloquent->update();
+
             $b2bSubscriptionEloquent = new B2bSubscriptionEloquentModel();
             $b2bSubscriptionEloquent->subscription_id = $subscriptionEloquent->id;
             $b2bSubscriptionEloquent->organisation_id = $subscriptionDataArray['b2b_subscription']['organisation_id'];
@@ -147,6 +148,42 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             $b2bSubscriptionEloquent->num_student_license = $subscriptionDataArray['b2b_subscription']['num_student_license'];
             $b2bSubscriptionEloquent->num_teacher_license = $subscriptionDataArray['b2b_subscription']['num_teacher_license'];
             $b2bSubscriptionEloquent->save();
+            //  delete image if reupload or insert if does not exit
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+                $b2bSubscriptionEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_payment_receipt');
+            }
+            if ($b2bSubscriptionEloquent->getMedia('image')->isNotEmpty()) {
+                $b2bSubscriptionEloquent->logo = $b2bSubscriptionEloquent->getMedia('image')[0]->original_url;
+                $b2bSubscriptionEloquent->update();
+            }
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            dd($error);
+        }
+    }
+
+    public function newOrganisationSubscription(Subscription $subscription)
+    {
+        DB::beginTransaction();
+
+        try {
+            $subscriptionEloquent = SubscriptionMapper::toEloquent($subscription);
+            $subscriptionEloquent->save();
+
+
+            $b2bSubscriptionEloquent = new B2bSubscriptionEloquentModel();
+            $b2bSubscriptionEloquent->subscription_id = $subscriptionEloquent->id;
+            $b2bSubscriptionEloquent->organisation_id = request()->b2b_subscription['organisation_id'];
+            $b2bSubscriptionEloquent->storage_limit = request()->b2b_subscription['storage_limit'];
+            $b2bSubscriptionEloquent->num_student_license = request()->b2b_subscription['num_student_license'];
+            $b2bSubscriptionEloquent->num_teacher_license = request()->b2b_subscription['num_teacher_license'];
+            $b2bSubscriptionEloquent->save();
+
+
+            $organisationEloquent = OrganisationEloquentModel::find(request()->b2b_subscription['organisation_id']);
+            $organisationEloquent->curr_subscription_id = $subscriptionEloquent->id;
+            $organisationEloquent->save();
             //  delete image if reupload or insert if does not exit
             if (request()->hasFile('image') && request()->file('image')->isValid()) {
                 $b2bSubscriptionEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_payment_receipt');

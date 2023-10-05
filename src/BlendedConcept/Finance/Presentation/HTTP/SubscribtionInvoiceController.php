@@ -17,6 +17,9 @@ class SubscribtionInvoiceController
 {
     public function index()
     {
+        // return SubscriptionEloquentModel::with('b2b_subscription')->whereHas('b2b_subscription', function ($query) {
+        //     $query->orderBy('num_teacher_license', 'asc');
+        // })->get();
         try {
 
             // Get filters from the request
@@ -26,6 +29,7 @@ class SubscribtionInvoiceController
 
             // Get organisations with pagination using the provided filters
             $b2b_subscriptions = (new GetB2bSubscriptions($filters))->handle();
+            return $b2b_subscriptions;
             $b2c_subscriptions = (new GetB2cSubscriptions($filters))->handle();
 
 
