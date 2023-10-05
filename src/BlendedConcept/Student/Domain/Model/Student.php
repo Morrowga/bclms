@@ -9,20 +9,22 @@ class Student extends AggregateRoot implements \JsonSerializable
     public function __construct(
         public readonly ?string $first_name,
         public readonly ?string $last_name,
-        public readonly int $student_id,
-        public readonly int $user_id,
-        public readonly int $device_id,
+        public readonly ?int $student_id,
+        public readonly ?int $user_id,
+        public readonly ?int $device_id,
         public readonly string $gender,
         public readonly string $dob,
         public readonly string $education_level,
-        public readonly int $num_gold_coins,
-        public readonly int $num_silver_coins,
-        public readonly int $student_code,
+        public readonly ?int $num_gold_coins,
+        public readonly ?int $num_silver_coins,
+        public readonly ?int $student_code,
         public readonly ?int $contact_number,
-        public readonly float $total_time_spent,
+        public readonly ?float $total_time_spent,
         public readonly ?string $parent_first_name,
         public readonly ?string $parent_last_name,
-        public readonly ?string $email
+        public readonly ?string $email,
+        public readonly ?array $learning_needs,
+        public readonly ?array $disability_types
     ) {
     }
 
@@ -44,7 +46,9 @@ class Student extends AggregateRoot implements \JsonSerializable
             'total_time_spent' => $this->total_time_spent,
             'parent_first_name' => $this->parent_first_name,
             'parent_last_name' => $this->parent_last_name,
-            'email' => $this->email
+            'email' => $this->email,
+            'learning_needs' => $this->learning_needs,
+            'disability_types' => $this->disability_types
         ];
     }
 }

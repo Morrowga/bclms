@@ -11,6 +11,7 @@ use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquen
 use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
 use Src\BlendedConcept\Student\Application\Requests\storeStudentRequest;
 use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreStudentCommand;
+use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreTeacherStudentCommand;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetDisabilityTypesForStudent;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetLearningNeedsForStudent;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
@@ -48,20 +49,20 @@ class TeacherStudentController
     {
 
         // abort_if(authorize('create', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // dd($request->all());
+        // try {
 
-        try {
+        $request->validated();
+        $newUser = StudentMapper::fromRequest($request);
 
-            $request->validated();
-            $newUser = StudentMapper::fromRequest($request);
+        $createNewUser = new StoreTeacherStudentCommand($newUser);
+        $createNewUser->execute();
 
-            $createNewUser = new StoreStudentCommand($newUser);
-            $createNewUser->execute();
-
-            return redirect()->route('teacher_students.index')->with('successMessage', 'Student created successfully!');
-        } catch (\Exception $e) {
-            // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route('teacher_students.index')->with('sytemErrorMessage', $e->getMessage());
-        }
+        return redirect()->route('teacher_students.index')->with('successMessage', 'Student created successfully!');
+        // } catch (\Exception $e) {
+        //     // Handle the exception, log the error, or display a user-friendly error message.
+        //     return redirect()->route('teacher_students.index')->with('sytemErrorMessage', $e->getMessage());
+        // }
     }
 
     public function create()

@@ -32,13 +32,13 @@ let refForm = ref();
 
 const gender = ref(["Male", "Female"]);
 let tab = ref(null);
-const updateStudent = () => {
-    form.post(route("teacher_students.create"), {
+const createStudent = () => {
+    form.post(route("teacher_students.store"), {
         onSuccess: () => {
             SuccessDialog({ title: "You've successfully updated a student." });
         },
         onError: (error) => {
-            cosole.log(error);
+            console.log(error);
         },
     });
     // SuccessDialog({
@@ -128,7 +128,6 @@ const updateStudent = () => {
                                     Parent's First Name
                                 </p>
                                 <v-text-field
-                                    type="number"
                                     v-model="form.parent_first_name"
                                     placeholder="e.g. 9180003"
                                     variant="outlined"
@@ -143,7 +142,6 @@ const updateStudent = () => {
                                     Parent's Last Name
                                 </p>
                                 <v-text-field
-                                    type="number"
                                     v-model="form.parent_last_name"
                                     placeholder="e.g. 9180003"
                                     variant="outlined"

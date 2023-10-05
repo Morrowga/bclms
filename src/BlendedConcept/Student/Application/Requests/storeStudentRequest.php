@@ -14,9 +14,8 @@ class storeStudentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
+            'first_name' => [
                 'string',
-                'unique:permissions,name',
                 'required',
             ],
         ];
