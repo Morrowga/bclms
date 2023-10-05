@@ -1,194 +1,267 @@
 <script setup>
-import StudentProfile from "./components/StudentInfo.vue";
+import { Link, useForm } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import StoryBookSlider from "./components/StoryBookSlider.vue";
-import PlaylistSlider from "./components/PlaylistSlider.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { SuccessDialog } from "@actions/useSuccess";
-import { useForm } from "@inertiajs/vue3";
-
 import { ref } from "vue";
+// import ImageUpload from "@Composables/ImageUpload.vue";
+import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
+import {
+    emailValidator,
+    requiredValidator,
+    integerValidator,
+} from "@validators";
+const props = defineProps(["learningNeeds", "disabilityTypes"]);
+console.log(props.disabilityTypes);
+const form = useForm({
+    first_name: "",
+    last_name: "",
+    gender: "",
+    dob: "",
+    contact_number: "",
+    email: "",
+    education_level: "",
+    profile_pics: "",
+    learning_needs: [],
+    disability_types: [],
+    parent_first_name: "",
+    parent_last_name: "",
+});
+
+let refForm = ref();
+
+const gender = ref(["Male", "Female"]);
 let tab = ref(null);
-let form = useForm({
-    first_name: null,
-    last_name: null
-})
-
-const item = ['male','female'];
-
-const isPasswordVisible = ref(false);
-const saveStudent = () => {
-    SuccessDialog({
-        title: "You have successfully created a student",
-        color: "#17CAB6",
+const updateStudent = () => {
+    form.post(route("teacher_students.create"), {
+        onSuccess: () => {
+            SuccessDialog({ title: "You've successfully updated a student." });
+        },
+        onError: (error) => {
+            cosole.log(error);
+        },
     });
+    // SuccessDialog({
+    //     title: "You have successfully create a playlist!",
+    //     color: "#17CAB6",
+    // });
 };
 </script>
 <template>
     <AdminLayout>
         <VContainer class="width-80">
-            <v-row>
-                <v-col cols="12" md="6">
-                    <v-img src="/images/student_pf.png" />
-                </v-col>
-                <v-col cols="12" md="6" class="pa-5">
-                    <div class="d-flex justify-space-between align-center">
-                        <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
-                    </div>
-                    <v-row>
-                        <v-col cols="12" class="mt-10">
-                            <p class="text-h5 font-weight-bold mb-0">
-                                Student Details
-                            </p>
-                        </v-col>
-                        <v-col cols="6">
-                            <p class="text-subtitle-1 mb-0">First Name</p>
-                            <v-text-field
-                                placeholder="e.g. Wren"
-                                variant="outlined"
-                            >
-                            </v-text-field>
-                        </v-col>
-                        <v-col cols="6">
-                            <p class="text-subtitle-1 mb-0">Last Name</p>
-                            <v-text-field
-                                placeholder="e.g. Clark"
-                                variant="outlined"
-                            >
-                            </v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <p class="text-subtitle-1 mb-0">Gender</p>
-                            <v-select placeholder="Select" :items="item" variant="outlined">
-                            </v-select>
-                        </v-col>
-                        <v-col cols="12">
-                            <p class="text-subtitle-1 mb-0">Date of birth</p>
-                            <v-text-field
-                                placeholder="e.g January 24, 2010"
-                                variant="outlined"
-                            >
-                            </v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <p class="text-subtitle-1 mb-0">Education Level</p>
-                            <v-text-field
-                                placeholder="e.g K1"
-                                variant="outlined"
-                            ></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="12" class="mt-3">
-                            <p class="text-h5 font-weight-bold mb-0">
-                                Parent Details
-                            </p>
-                        </v-col>
-                        <v-col cols="12">
-                            <p class="text-subtitle-1 mb-0">Fullname</p>
-                            <v-text-field
-                                placeholder="e.g. Fransico Maia"
-                                variant="outlined"
-                            >
-                            </v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <p class="text-subtitle-1 mb-0">
-                                Relationship To Child
-                            </p>
-                            <v-text-field
-                                placeholder="e.g. Mother"
-                                variant="outlined"
-                            >
-                            </v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <p class="text-subtitle-1 mb-0">Contact Number</p>
-                            <v-text-field
-                                placeholder="e.g. 9180003"
-                                variant="outlined"
-                            >
-                            </v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <p class="text-subtitle-1 mb-0">Email Address</p>
-                            <v-text-field
-                                placeholder="e.g. @fransico@gmail.com"
-                                variant="outlined"
-                            >
-                            </v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <p class="text-subtitle-1 mb-0">Login Password</p>
-                            <v-text-field
-                                variant="outlined"
-                                :type="isPasswordVisible ? 'text' : 'password'"
-                                :append-inner-icon="
-                                    isPasswordVisible
-                                        ? 'mdi-eye-off-outline'
-                                        : 'mdi-eye-outline'
-                                "
-                                @click:append-inner="
-                                    isPasswordVisible = !isPasswordVisible
-                                "
-                            ></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="12">
-                            <v-tabs v-model="tab">
-                                <v-tab value="learning">Learning Need</v-tab>
-                                <v-tab value="disability"
-                                    >Disability Types</v-tab
+            <v-form ref="refForm" @submit.prevent="createStudent">
+                <v-row>
+                    <v-col cols="12" md="6">
+                        <LargeDropFile v-model="form.profile_pics" />
+                    </v-col>
+                    <v-col cols="12" md="6" class="pa-5">
+                        <div class="d-flex justify-space-between align-center">
+                            <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
+                        </div>
+                        <v-row>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    First Name
+                                </p>
+                                <v-text-field
+                                    v-model="form.first_name"
+                                    placeholder="e.g. Wren"
+                                    variant="outlined"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.first_name"
+                                />
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    Last Name
+                                </p>
+                                <v-text-field
+                                    v-model="form.last_name"
+                                    placeholder="e.g. Clark"
+                                    variant="outlined"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.last_name"
+                                />
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    Gender
+                                </p>
+                                <v-select
+                                    placeholder="Select"
+                                    v-model="form.gender"
+                                    :items="gender"
+                                    variant="outlined"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.gender"
+                                />
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0">
+                                    Date of birth
+                                </p>
+                                <AppDateTimePicker
+                                    placeholder="Select End Date"
+                                    v-model="form.dob"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.dob"
+                                    density="compact"
+                                />
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    Education Level
+                                </p>
+                                <v-text-field
+                                    v-model="form.education_level"
+                                    placeholder="e.g K1"
+                                    variant="outlined"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="
+                                        form?.errors?.education_level
+                                    "
+                                />
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    Parent's First Name
+                                </p>
+                                <v-text-field
+                                    type="number"
+                                    v-model="form.parent_first_name"
+                                    placeholder="e.g. 9180003"
+                                    variant="outlined"
+                                    :rules="[]"
+                                    :error-messages="
+                                        form?.errors?.parent_first_name
+                                    "
+                                />
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    Parent's Last Name
+                                </p>
+                                <v-text-field
+                                    type="number"
+                                    v-model="form.parent_last_name"
+                                    placeholder="e.g. 9180003"
+                                    variant="outlined"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="
+                                        form?.errors?.parent_last_name
+                                    "
+                                />
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    Parent's Contact Number
+                                </p>
+                                <v-text-field
+                                    type="number"
+                                    v-model="form.contact_number"
+                                    placeholder="e.g. 9180003"
+                                    variant="outlined"
+                                    :rules="[
+                                        requiredValidator,
+                                        integerValidator,
+                                    ]"
+                                    :error-messages="
+                                        form?.errors?.contact_number
+                                    "
+                                />
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    Parent's Email Address
+                                </p>
+                                <v-text-field
+                                    v-model="form.email"
+                                    placeholder="e.g. @fransico@gmail.com"
+                                    variant="outlined"
+                                    :rules="[requiredValidator, emailValidator]"
+                                    :error-messages="form?.errors?.email"
                                 >
-                            </v-tabs>
+                                </v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col cols="12">
+                                <v-tabs v-model="tab">
+                                    <v-tab value="learning"
+                                        >Learning Need</v-tab
+                                    >
+                                    <v-tab value="disability"
+                                        >Disability Types</v-tab
+                                    >
+                                </v-tabs>
+                                <div>
+                                    <v-window v-model="tab">
+                                        <v-window-item value="learning">
+                                            <v-chip-group
+                                                filter
+                                                v-model="form.learning_needs"
+                                                multiple
+                                                column
+                                            >
+                                                <v-chip
+                                                    v-for="item in learningNeeds"
+                                                    variant="outlined"
+                                                    :key="item.id"
+                                                    :value="item.id"
+                                                >
+                                                    {{ item.name }}
+                                                </v-chip>
+                                            </v-chip-group>
+                                        </v-window-item>
 
-                            <div>
-                                <v-window v-model="tab">
-                                    <v-window-item value="learning">
-                                        <ChipWithBlueDot
-                                            v-for="item in 5"
-                                            :key="item"
-                                            title="Dyslexia"
-                                        />
-                                    </v-window-item>
-
-                                    <v-window-item value="disability">
-                                        <ChipWithBlueDot
-                                            v-for="item in 5"
-                                            :key="item"
-                                            title="Disability"
-                                        />
-                                    </v-window-item>
-                                </v-window>
-                            </div>
-                        </v-col>
-                    </v-row>
-                </v-col>
-                <v-col cols="12">
-                    <div class="d-flex justify-center">
-                        <Link :href="route('teacher_students.index')">
+                                        <v-window-item value="disability">
+                                            <v-chip-group
+                                                filter
+                                                v-model="form.disability_types"
+                                                multiple
+                                                column
+                                            >
+                                                <v-chip
+                                                    v-for="item in props.disabilityTypes"
+                                                    variant="outlined"
+                                                    :key="item.id"
+                                                    :value="item.id"
+                                                >
+                                                    {{ item.name }}
+                                                </v-chip>
+                                            </v-chip-group>
+                                        </v-window-item>
+                                    </v-window>
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                    <v-col cols="12">
+                        <div class="d-flex justify-center">
+                            <Link :href="route('organisations-teacher.index')">
+                                <v-btn
+                                    variant="flat"
+                                    rounded
+                                    class="mr-4 text-primary"
+                                    width="200"
+                                    color="rgba(55, 73, 233, 0.10)"
+                                    >Cancel</v-btn
+                                >
+                            </Link>
                             <v-btn
+                                type="submit"
                                 variant="flat"
                                 rounded
-                                class="mr-4 text-primary"
                                 width="200"
-                                color="rgba(55, 73, 233, 0.10)"
-                                >Cancel</v-btn
+                                color="primary"
+                                class="text-white"
+                                >Save</v-btn
                             >
-                        </Link>
-                        <v-btn
-                            variant="flat"
-                            rounded
-                            width="200"
-                            color="primary"
-                            class="text-white"
-                            @click="saveStudent"
-                            >Save</v-btn
-                        >
-                    </div>
-                </v-col>
-            </v-row>
+                        </div>
+                    </v-col>
+                </v-row>
+            </v-form>
         </VContainer>
     </AdminLayout>
 </template>

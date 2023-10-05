@@ -12,6 +12,8 @@ class StudentMapper
     {
         return new Student(
             student_id: $student_id,
+            first_name: $request->first_name,
+            last_name: $request->last_name,
             user_id: $request->user_id,
             device_id: $request->device_id,
             gender: $request->gender,
@@ -20,7 +22,11 @@ class StudentMapper
             num_gold_coins: $request->num_gold_coins,
             num_silver_coins: $request->num_silver_coins,
             student_code: $request->student_code,
+            contact_number: $request->contact_number,
             total_time_spent: $request->total_time_spent,
+            parent_first_name: $request->parent_first_name,
+            parent_last_name: $request->parent_last_name,
+            email: $request->email
         );
     }
 

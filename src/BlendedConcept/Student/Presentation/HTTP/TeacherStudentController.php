@@ -8,6 +8,11 @@ use Src\BlendedConcept\Organisation\Application\DTO\StudentData;
 use Src\BlendedConcept\Organisation\Application\Requests\UpdateStudentRequest;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\Student\UpdateStudentCommand;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
+use Src\BlendedConcept\Student\Application\Requests\storeStudentRequest;
+use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreStudentCommand;
+use Src\BlendedConcept\Student\Application\UseCases\Queries\GetDisabilityTypesForStudent;
+use Src\BlendedConcept\Student\Application\UseCases\Queries\GetLearningNeedsForStudent;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\ShowStudent;
 use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
@@ -39,10 +44,34 @@ class TeacherStudentController
         // return $student;
         return Inertia::render(config('route.teacher_students.show'), compact('student'));
     }
+    public function store(storeStudentRequest $request)
+    {
+
+        // abort_if(authorize('create', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        try {
+
+            $request->validated();
+            $newUser = StudentMapper::fromRequest($request);
+
+            $createNewUser = new StoreStudentCommand($newUser);
+            $createNewUser->execute();
+
+            return redirect()->route('teacher_students.index')->with('successMessage', 'Student created successfully!');
+        } catch (\Exception $e) {
+            // Handle the exception, log the error, or display a user-friendly error message.
+            return redirect()->route('teacher_students.index')->with('sytemErrorMessage', $e->getMessage());
+        }
+    }
 
     public function create()
     {
-        return Inertia::render(config('route.teacher_students.create'));
+        $disabilityTypes = (new GetDisabilityTypesForStudent())->handle();
+        $learningNeeds = (new GetLearningNeedsForStudent())->handle();
+        return Inertia::render(config('route.teacher_students.create'), [
+            'disabilityTypes' => $disabilityTypes,
+            'learningNeeds' => $learningNeeds
+        ]);
     }
 
     public function update(UpdateStudentRequest $request, StudentEloquentModel $teacher_student)

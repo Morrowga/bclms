@@ -16,4 +16,10 @@ interface StudentRepositoryInterface
     public function getStudentsByPagination($filers);
 
     public function getStudentsByOrgTeacher($filers);
+
+    public function getDisabilityTypesForStudent();
+
+    public function getLearningNeedsForStudent();
+
+    public function storeTeacherStudent(Student $student);
 }

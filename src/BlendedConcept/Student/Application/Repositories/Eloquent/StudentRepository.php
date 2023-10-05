@@ -3,6 +3,9 @@
 namespace Src\BlendedConcept\Student\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Application\DTO\StudentData;
 use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
@@ -91,7 +94,7 @@ class StudentRepository implements StudentRepositoryInterface
     public function getStudentsByPagination($filters)
     {
         $organisation_id = auth()->user()->organisation_id;
-        
+
         return StudentEloquentModel::filter($filters)->where('organisation_id', $organisation_id)->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
     }
 
@@ -121,5 +124,57 @@ class StudentRepository implements StudentRepositoryInterface
             })
 
             ->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+    }
+
+    public function getDisabilityTypesForStudent()
+    {
+        $disabilitys = DisabilityTypeEloquentModel::get();
+        return $disabilitys;
+    }
+
+    public function getLearningNeedsForStudent()
+    {
+        $learning_types = SubLearningTypeEloquentModel::get();
+        return $learning_types;
+    }
+
+    public function storeTeacherStudent(Student $student)
+    {
+
+        DB::beginTransaction();
+
+        try {
+            $create_user_data = [
+                'first_name' => $student->first_name,
+                'last_name' => $student->last_name,
+                'role_id' => 6,
+            ];
+            $create_parent_data = [
+                'first_name' => $student->parent_first_name,
+                'last_name' => $student->parent_last_name,
+                'contact_number' => $student->contact_number,
+                'email' => $student->email,
+                'role_id' => 2
+            ];
+            $userParentEloquent = UserEloquentModel::create($create_parent_data);
+
+            $parentEloquent = ParentUserEloqeuntModel::create([
+                "user_id" => $userParentEloquent->id,
+                "organisation_id" => null,
+                "type" => "B2C"
+            ]);
+            $userEloquent = UserEloquentModel::create($create_user_data);
+            $createStudentEloqoent = StudentMapper::toEloquent($student);
+            $createStudentEloqoent->user_id = $userEloquent->id;
+            $createStudentEloqoent->parent_id = $parentEloquent->id;
+            $createStudentEloqoent->save();
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+                $createStudentEloqoent->addMediaFromRequest('image')->toMediaCollection('image', 'media_students');
+            }
+        } catch (\Exception $error) {
+            DB::rollBack();
+        }
+
+        DB::commit();
     }
 }

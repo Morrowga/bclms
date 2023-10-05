@@ -2,7 +2,10 @@
 import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+import { usePage } from "@inertiajs/vue3";
 let props = defineProps(["students"]);
+let page = usePage();
+let user_role = computed(() => page.props.user_info.user_role.name);
 import {
     onColumnFilter,
     serverParams,
@@ -33,7 +36,10 @@ watch(filters, (newValue) => {
             <div class="d-flex justify-space-between align-center mb-10">
                 <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
 
-                <!-- <Link :href="route('teacher_students.create')">
+                <Link
+                    :href="route('teacher_students.create')"
+                    v-if="user_role == 'BC Subscriber'"
+                >
                     <v-btn
                         variant="flat"
                         rounded
@@ -43,7 +49,7 @@ watch(filters, (newValue) => {
                     >
                         Add
                     </v-btn>
-                </Link> -->
+                </Link>
             </div>
             <div class="d-flex justify-end mb-4 align-center">
                 <v-spacer></v-spacer>
