@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('games', GameController::class);
     // storybook resources
     Route::resource('books', BookController::class);
+    Route::put('/update/physical_resources/{book}', [BookController::class, 'updatePhysicalResources'])->name('books.update_physical_resources');
     Route::resource('pathways', PathwayController::class);
     Route::resource('bookreviews', BookReviewController::class);
 
@@ -37,6 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('teacher_storybook/{teacher_storybook}/v/{version}', [TeacherStorybookController::class, 'assign_student'])->name('teacher_storybook_version.show');
 
     Route::resource('teacher_storybook', TeacherStorybookController::class);
+
 
     //teacher storybook version
     Route::resource('storybooksversions', StoryBookVersionController::class);

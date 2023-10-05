@@ -1,7 +1,9 @@
 <script setup>
 import PhysicalResourcesCard from "./PhysicalResourcesCard.vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
 import { ref } from "vue";
 let model = ref(false);
+const props = defineProps(["physical_resources"]);
 </script>
 <template>
     <div>
@@ -9,11 +11,22 @@ let model = ref(false);
             <span> Physical Resources </span>
         </div>
         <div class="body-sec">
-            <v-slide-group v-model="model" center-active show-arrows mandatory>
-                <v-slide-group-item v-for="item in 10" :key="item">
-                    <PhysicalResourcesCard />
+            <!-- <v-slide-group v-model="model" center-active show-arrows mandatory>
+                <v-slide-group-item
+                    v-for="(data, key) in props.physical_resources"
+                    :key="key"
+                >
+                    <PhysicalResourcesCard :data="data" />
                 </v-slide-group-item>
-            </v-slide-group>
+            </v-slide-group> -->
+            <swiper :slides-per-view="4" :space-between="100">
+                <swiper-slide
+                    v-for="(data, key) in props.physical_resources"
+                    :key="key"
+                >
+                    <PhysicalResourcesCard :data="data" />
+                </swiper-slide>
+            </swiper>
         </div>
     </div>
 </template>

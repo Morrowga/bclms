@@ -81,7 +81,7 @@ onMounted(() => {
     } else if (props.memeType == "video") {
         memeName.value = "MP4";
     } else {
-        memeName.value = "H5P";
+        memeName.value = "";
     }
 });
 </script>

@@ -133,6 +133,7 @@ class OrganisationRepository implements OrganisationRepositoryInterface
 
     public function addOrganisationSubscription(SubscriptionData $subscriptionData)
     {
+
         DB::beginTransaction();
 
         try {
@@ -148,14 +149,25 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             $b2bSubscriptionEloquent->num_student_license = $subscriptionDataArray['b2b_subscription']['num_student_license'];
             $b2bSubscriptionEloquent->num_teacher_license = $subscriptionDataArray['b2b_subscription']['num_teacher_license'];
             $b2bSubscriptionEloquent->save();
+            if (request()->hasFile('image')) {
+                foreach (request()->file('image') as $file) {
+                    if ($file->isValid()) {
+                        $uploadFile = $b2bSubscriptionEloquent->addMedia($file)
+                            ->toMediaCollection('image', 'media_payment_receipt');
+                        // $b2bSubscriptionEloquent->receipt_image = $uploadFile->getFirstMediaUrl('image'); // Corrected the method to get the media URL
+                        // $b2bSubscriptionEloquent->update();
+                    }
+                }
+            }
+            // if ($b2bSubscriptionEloquent->getMedia('image')->isNotEmpty()) {
+            //     $b2bSubscriptionEloquent->receipt_image = $b2bSubscriptionEloquent->getMedia('image')[0]->original_url;
+            //     $b2bSubscriptionEloquent->update();
+            // }
             //  delete image if reupload or insert if does not exit
-            if (request()->hasFile('image') && request()->file('image')->isValid()) {
-                $b2bSubscriptionEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_payment_receipt');
-            }
-            if ($b2bSubscriptionEloquent->getMedia('image')->isNotEmpty()) {
-                $b2bSubscriptionEloquent->logo = $b2bSubscriptionEloquent->getMedia('image')[0]->original_url;
-                $b2bSubscriptionEloquent->update();
-            }
+            // if (request()->hasFile('image') && request()->file('image')->isValid()) {
+            //     $b2bSubscriptionEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_payment_receipt');
+            // }
+
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();

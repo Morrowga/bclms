@@ -113,9 +113,16 @@ const getImage = (item) => {
                     <RecommendedGames :games="games" />
                 </v-col>
             </v-row>
-            <v-row class="physical mtop">
+            <v-row
+                class="physical mtop"
+                v-if="teacher_storybook.physical_resources.length > 0"
+            >
                 <v-col cols="12">
-                    <PhysicalResources />
+                    <PhysicalResources
+                        :physical_resources="
+                            teacher_storybook.physical_resources
+                        "
+                    />
                 </v-col>
             </v-row>
             <v-row class="recommended-books mtop">

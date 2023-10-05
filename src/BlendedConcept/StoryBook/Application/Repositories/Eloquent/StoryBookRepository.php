@@ -7,6 +7,7 @@ use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentMo
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\ThemeEloquentModel;
+use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookData;
 use Src\BlendedConcept\StoryBook\Application\Mappers\StoryBookMapper;
 use Src\BlendedConcept\StoryBook\Domain\Model\StoryBook;
@@ -27,7 +28,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
     {
         // Retrieve storybooks with relationships, order by id in descending order, and paginate the results
         $storyBooks = StoryBookResource::collection(
-            StoryBookEloquentModel::filter($filters)->with(['learningneeds', 'themes', 'disability_types', 'devices', 'physical_resources', 'tags'])
+            StoryBookEloquentModel::filter($filters)->with(['learningneeds', 'themes', 'disability_types', 'devices', 'tags'])
                 ->orderBy('id', 'desc')
                 ->paginate($filters['perPage'] ?? 10)
         );
@@ -76,13 +77,16 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                 $storybookEloquent->addMediaFromRequest('storybook_file')
                     ->toMediaCollection('storybook_file', 'media_storybook');
             }
-            if (request()->hasFile('physical_resource_src') && request()->file('physical_resource_src')->isValid()) {
-                $storybookEloquent->addMediaFromRequest('physical_resource_src')
-                    ->toMediaCollection('physical_resource_src', 'media_storybook');
 
-                $storybookEloquent->physical_resources()->create([
-                    'file_src' => $storybookEloquent->getMedia('physical_resource_src')[0]->original_url,
-                ]);
+            if (request()->hasFile('image')) {
+                foreach (request()->file('image') as $file) {
+                    if ($file->isValid()) {
+                        $uploadFile = $storybookEloquent->addMedia($file)
+                            ->toMediaCollection('physical_resource_src', 'media_storybook');
+                        // $storybookEloquent->file_src = $uploadFile->getFirstMediaUrl('physical_resource_src'); // Corrected the method to get the media URL
+                        // $storybookEloquent->update();
+                    }
+                }
             }
 
             DB::commit();
@@ -239,5 +243,22 @@ class StoryBookRepository implements StoryBookRepositoryInterface
         })->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10);
         return $books;
+    }
+
+    public function updatePhysicalResource($request, StoryBookEloquentModel $storybookEloquent)
+    {
+        $delete_items = $request->delete_physical_resources;
+        if (count($delete_items) > 0) {
+            MediaEloquentModel::whereIn('id', $delete_items)->delete();
+        }
+
+        if ($request->hasFile('physical_resources')) {
+            foreach ($request->file('physical_resources') as $file) {
+                if ($file->isValid()) {
+                    $uploadFile = $storybookEloquent->addMedia($file)
+                        ->toMediaCollection('physical_resource_src', 'media_storybook');
+                }
+            }
+        }
     }
 }
