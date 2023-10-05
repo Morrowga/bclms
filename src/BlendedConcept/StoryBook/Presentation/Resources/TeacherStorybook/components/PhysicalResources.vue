@@ -11,15 +11,7 @@ const props = defineProps(["physical_resources"]);
             <span> Physical Resources </span>
         </div>
         <div class="body-sec">
-            <!-- <v-slide-group v-model="model" center-active show-arrows mandatory>
-                <v-slide-group-item
-                    v-for="(data, key) in props.physical_resources"
-                    :key="key"
-                >
-                    <PhysicalResourcesCard :data="data" />
-                </v-slide-group-item>
-            </v-slide-group> -->
-            <swiper :slides-per-view="4" :space-between="100">
+            <swiper :slides-per-view="3" :space-between="0">
                 <swiper-slide
                     v-for="(data, key) in props.physical_resources"
                     :key="key"

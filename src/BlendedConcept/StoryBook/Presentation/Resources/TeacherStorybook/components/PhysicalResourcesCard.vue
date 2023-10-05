@@ -29,6 +29,7 @@ const imageType = (type) => {
                 <div
                     v-if="isHovering"
                     class="physicalresourcepdfbar pa-1 px-2 d-flex align-center"
+                    v-bind="props"
                 >
                     <div class="physicalresource-child-content">
                         <div class="d-flex align-center">
