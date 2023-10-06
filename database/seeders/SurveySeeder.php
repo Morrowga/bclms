@@ -31,7 +31,6 @@ class SurveySeeder extends Seeder
             'title' => 'Profiling Survey',
             'description' => "Answer these questions to identify the best educational pathway for the student's unique needs and abilities.",
             'type' => 'PROFILING',
-            'user_type' => 'B2C_USER',
             'appear_on' => 'LOG_IN',
             'start_date' => Carbon::now(),
             'end_date' => Carbon::now(),

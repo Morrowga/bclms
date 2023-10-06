@@ -34,7 +34,7 @@ let columns = [
     },
     {
         label: "User Types",
-        field: "user_type",
+        field: "survey_settings",
         sortable: false,
     },
     {
@@ -196,18 +196,19 @@ const deleteSurvey = (id) => {
                                     <div
                                         v-if="
                                             dataProps.column.field ==
-                                            'user_type'
+                                            'survey_settings'
                                         "
                                     >
                                         <!-- v-for="user_type in dataProps.row
                                                 .user_type" -->
                                         <!-- :key="user_type" -->
                                         <v-chip
+                                            v-for="setting in dataProps.row.survey_settings" :key="setting.id"
                                             class="ma-2"
                                             color="primary"
                                             size="small"
                                         >
-                                            {{ dataProps.row.user_type }}
+                                            {{ setting.user_type }}
                                         </v-chip>
                                     </div>
                                     <div

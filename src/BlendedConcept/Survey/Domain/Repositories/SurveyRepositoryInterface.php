@@ -15,7 +15,7 @@ interface SurveyRepositoryInterface
 
     public function showSurvey($id);
 
-    public function createSurvey(Survey $survey);
+public function createSurvey(Survey $survey);
 
     public function updateSurvey(SurveyData $survey);
 

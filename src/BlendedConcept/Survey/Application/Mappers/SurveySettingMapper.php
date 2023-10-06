@@ -9,13 +9,13 @@ use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveySettingEloquen
 
 class SurveySettingMapper
 {
-    public static function fromRequest(Request $request, $survey_setting_id = null): SurveySetting
+    public static function fromRequest(Array $request, $survey_setting_id = null): SurveySetting
     {
 
         return new SurveySetting(
             id: $survey_setting_id,
-            survey_id: $request->survey_id,
-            user_type: $request->user_type,
+            survey_id: $request['survey_id'],
+            user_type: $request['user_type'],
         );
     }
 

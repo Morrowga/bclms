@@ -10,6 +10,7 @@ use Src\BlendedConcept\Survey\Domain\Resources\SurveyResource;
 use Src\BlendedConcept\Survey\Application\Mappers\SurveyMapper;
 use Src\BlendedConcept\Survey\Application\Mappers\QuestionMapper;
 use Src\BlendedConcept\Survey\Domain\Resources\SurveyResultResource;
+use Src\BlendedConcept\Survey\Application\Mappers\SurveySettingMapper;
 use Src\BlendedConcept\Survey\Application\Mappers\QuestionOptionMapper;
 use Src\BlendedConcept\Survey\Domain\Repositories\SurveyRepositoryInterface;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
@@ -20,7 +21,7 @@ class SurveyRepository implements SurveyRepositoryInterface
 {
     public function getUserExperienceSurveyList($filters = [])
     {
-        $surveys = SurveyResource::collection(SurveyEloquentModel::filter($filters)->where('type', 'USEREXP')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $surveys = SurveyResource::collection(SurveyEloquentModel::filter($filters)->where('type', 'USEREXP')->orderBy('id', 'desc')->with(['survey_settings'])->paginate($filters['perPage'] ?? 10));
 
         return $surveys;
     }
@@ -44,6 +45,17 @@ class SurveyRepository implements SurveyRepositoryInterface
             $survey_id = $surveyEloquent->id;
 
             $questions = json_decode($request->questions, true);
+            $user_types = json_decode(request()->user_type);
+
+            foreach($user_types as $type){
+                $setting = [
+                    "user_type" => $type,
+                    "survey_id" => $survey_id
+                ];
+                $surveySettingRequest = SurveySettingMapper::fromRequest($setting);
+                $surveySettingEloquent = SurveySettingMapper::toEloquent($surveySettingRequest);
+                $surveySettingEloquent->save();
+            }
 
             foreach ($questions as $key => $question) {
                 $questionArray = [
@@ -73,6 +85,7 @@ class SurveyRepository implements SurveyRepositoryInterface
                     }
                 }
             }
+
 
             DB::commit();
         } catch (\Exception $error) {

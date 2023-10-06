@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Src\BlendedConcept\Survey\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Model;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveySettingEloquentModel;
 
 class SurveyEloquentModel extends Model
 {
@@ -24,6 +25,11 @@ class SurveyEloquentModel extends Model
     public function questions()
     {
         return $this->hasMany(QuestionEloquentModel::class, 'survey_id', 'id');
+    }
+
+    public function survey_settings()
+    {
+        return $this->hasMany(SurveySettingEloquentModel::class, 'survey_id', 'id');
     }
 
     public function scopeFilter($query, $filters)

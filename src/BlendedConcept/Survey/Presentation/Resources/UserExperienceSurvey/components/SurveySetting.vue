@@ -47,10 +47,6 @@ const userTypes = ref([
         id: 'ORG_ADMIN',
     },
     {
-        name: 'BC Staff',
-        id: 'BC_STAFF',
-    },
-    {
         name: 'Parent',
         id: 'PARENT',
     },
