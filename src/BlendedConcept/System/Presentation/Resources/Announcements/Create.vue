@@ -117,13 +117,16 @@ watch(
     }
 );
 
-console.log(props.organisations);
+console.log(props.organisations.data);
 
 const org_array = ref([]);
-for (let i = 0; i < props.organisations.length; i++) {
+const orgAdminData = ref(props.organisations.data);
+
+for (let i = 0; i < orgAdminData.value.length; i++) {
     org_array.value.push({
-        id: props.organisations[i].org_admin_id,
-        name: props.organisations[i].name,
+        id: orgAdminData.value[i].user.id,
+        name: orgAdminData.value[i].user.full_name,
+        org_id: orgAdminData.value[i].organisation.id
     });
 }
 const org_teacher_array = ref([]);
@@ -1423,6 +1426,9 @@ let onFormSubmit = () => {
         form.users.push(b2c_user_ids.value[i]);
     }
 
+    const uniqueUsersSet = new Set(form.users);
+    form.users = Array.from(uniqueUsersSet);
+
     let originalUserArray = form.users;
 
     form.users = JSON.stringify(form.users);
@@ -1441,10 +1447,11 @@ let onFormSubmit = () => {
     // refForm.value?.resetValidation();
     form.post(route("announcements.store"), {
         onSuccess: () => {
+            form.users = originalUserArray;
             SuccessDialog({ title: "You've successfully posted announcement" });
         },
         onError: (error) => {
-            console.log('sad');
+            console.log(originalUserArray);
             form.users = originalUserArray;
             form.setError("title", error?.title);
             form.setError("icon", error?.icon);
@@ -1624,7 +1631,7 @@ let getTeacherByOrganisation = (id) => {
                                         v-model="orglist"
                                         :items="org_array"
                                         item-title="name"
-                                        item-value="id"
+                                        item-value="org_id"
                                         density="compact"
                                         placeholder="Select Organisations"
                                     >

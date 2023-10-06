@@ -3,26 +3,27 @@
 namespace Src\BlendedConcept\System\Presentation\HTTP;
 
 use Inertia\Inertia;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetB2BTeachers;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetB2bTeachersByOrganisation;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetB2CUsers;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetBcStaff;
-use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserList;
+use Symfony\Component\HttpFoundation\Response;
+use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\System\Application\DTO\AnnounmentData;
 use Src\BlendedConcept\System\Application\Mappers\AnnounmentMapper;
 use Src\BlendedConcept\System\Application\Policies\AnnouncementPolicy;
 use Src\BlendedConcept\System\Application\Requests\StoreAnnouncementRequest;
-use Src\BlendedConcept\System\Application\Requests\UpdateAnnouncementRequest;
-use Src\BlendedConcept\System\Application\UseCases\Commands\DeleteAnnounmentCommand;
-use Src\BlendedConcept\System\Application\UseCases\Commands\StoreAnnounmentCommand;
-use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateAnnounmentCommand;
-use Src\BlendedConcept\System\Application\UseCases\Queries\GetAnnounmetAllWithPagination;
-use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganisationList;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganisations;
 use Src\BlendedConcept\System\Application\UseCases\Queries\ShowAnnouncement;
+use Src\BlendedConcept\System\Application\Requests\UpdateAnnouncementRequest;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetBcStaff;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetB2CUsers;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserList;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganisationList;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetOrganisationAdmins;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetB2BTeachers;
+use Src\BlendedConcept\System\Application\UseCases\Commands\StoreAnnounmentCommand;
+use Src\BlendedConcept\System\Application\UseCases\Commands\DeleteAnnounmentCommand;
+use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateAnnounmentCommand;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\AnnouncementEloquentModel;
-use Src\Common\Infrastructure\Laravel\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetAnnounmetAllWithPagination;
+use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetB2bTeachersByOrganisation;
 
 class AnnouncementController extends Controller
 {
@@ -63,10 +64,10 @@ class AnnouncementController extends Controller
         $teachers = (new GetB2BTeachers())->handle();
         $b2cUsers = (new GetB2CUsers())->handle();
         $bcStaff = (new GetBcStaff())->handle();
-        $organisations = (new GetOrganisations($filers = []))->handle();
+        $organisations = (new GetOrganisationAdmins($filers = []))->handle();
 
         return Inertia::render(config('route.announment.create'), [
-            'organisations' => $organisations['default_organisations'],
+            'organisations' => $organisations,
             'teachers' => $teachers,
             'b2cUsers' => $b2cUsers,
             'bcStaff' => $bcStaff,

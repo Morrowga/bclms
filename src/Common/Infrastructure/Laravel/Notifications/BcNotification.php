@@ -57,6 +57,7 @@ class BcNotification extends Notification implements ShouldQueue
             'message' => $this->data['message'],
             'from' => $this->data['from'],
             'to' => $this->data['to'],
+            'icon' => $this->data['icon'],
             'type' => $this->data['type'],
         ];
     }

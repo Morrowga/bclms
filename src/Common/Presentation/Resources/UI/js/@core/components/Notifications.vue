@@ -119,16 +119,10 @@ onMounted(() => {
                     <template #append>
                         <IconBtn v-show="allNotifications.length">
                             <VIcon :icon="'mdi-email-outline'" />
-
-                            <!-- <VTooltip activator="parent" location="start">
-                  {{
-                    isAllMarkRead ? "Mark all as read" : "Mark all as unread"
-                  }}
-                </VTooltip> -->
                         </IconBtn>
                     </template>
                 </VCardItem>
-
+                <!-- <VTooltip activator="parent" location="start">{{isAllMarkRead ? "Mark all as read" : "Mark all as unread"}}</VTooltip> -->
                 <VDivider />
 
                 <!-- 👉 Notifications list -->
@@ -151,8 +145,10 @@ onMounted(() => {
                                 <!-- Handles Avatar: Image, Icon, Text -->
                                 <template #prepend>
                                     <VListItemAction start>
-                                        <VAvatar size="40" variant="tonal">
-                                        </VAvatar>
+                                        <!-- <VAvatar size="40" variant="tonal">
+
+                                        </VAvatar> -->
+                                        <VIcon :icon="notification.data.icon" size="40"></VIcon>
                                     </VListItemAction>
                                 </template>
 
@@ -160,11 +156,11 @@ onMounted(() => {
                                     notification.data.message
                                 }}</VListItemTitle>
                                 <!-- <VListItemSubtitle>{{
-                    notification.subtitle
-                  }}</VListItemSubtitle> -->
-                                <!-- <span class="text-xs text-disabled">{{
-                    notification.time
-                  }}</span> -->
+                                notification.subtitle
+                                }}</VListItemSubtitle> -->
+                                                <!-- <span class="text-xs text-disabled">{{
+                                    notification.time
+                                }}</span> -->
 
                                 <!-- Slot: Append -->
                                 <template #append>
@@ -172,17 +168,17 @@ onMounted(() => {
                                         class="d-flex flex-column align-center gap-4"
                                     >
                                         <!-- <VBadge
-                        dot
-                        :color="notification.isRead ? 'primary' : '#a8aaae'"
-                        :class="`${
-                          !notification.isRead ? 'visible-in-hover' : ''
-                        } ms-1`"
-                        @click.stop="
-                          $emit(notification.isRead ? 'unread' : 'read', [
-                            notification.id,
-                          ])
-                        "
-                      /> -->
+                                            dot
+                                            :color="notification.isRead ? 'primary' : '#a8aaae'"
+                                            :class="`${
+                                            !notification.isRead ? 'visible-in-hover' : ''
+                                            } ms-1`"
+                                            @click.stop="
+                                            $emit(notification.isRead ? 'unread' : 'read', [
+                                                notification.id,
+                                            ])
+                                            "
+                                        /> -->
 
                                         <div style="width: 28px; height: 28px">
                                             <IconBtn

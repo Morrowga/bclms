@@ -14,6 +14,8 @@ interface OrganisationRepositoryInterface
 
     public function getOrganisations($filers);
 
+    public function getOrganisationAdmins();
+
     public function createOrganisation(Organisation $organisation, OrganisationAdmin $organisationAdmin);
 
     public function updateOrganisation(OrganisationData $organisationData);

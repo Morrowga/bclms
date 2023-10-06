@@ -3,20 +3,22 @@
 namespace Src\BlendedConcept\Organisation\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
-use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
-use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
 use Src\BlendedConcept\Finance\Domain\Model\Subscription;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2bSubscriptionEloquentModel;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
+use Src\BlendedConcept\Organisation\Domain\Model\Organisation;
+use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Organisation\Application\DTO\OrganisationData;
-use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationAdminMapper;
+use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\Tenant;
+use Src\BlendedConcept\Organisation\Domain\Resources\OrganisationResource;
 use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationMapper;
 use Src\BlendedConcept\Organisation\Domain\Model\Entities\OrganisationAdmin;
-use Src\BlendedConcept\Organisation\Domain\Model\Organisation;
+use Src\BlendedConcept\Organisation\Domain\Resources\OrganisationAdminResource;
+use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationAdminMapper;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organisation\Domain\Repositories\OrganisationRepositoryInterface;
-use Src\BlendedConcept\Organisation\Domain\Resources\OrganisationResource;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2bSubscriptionEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
-use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\Tenant;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
 
 class OrganisationRepository implements OrganisationRepositoryInterface
 {
@@ -44,6 +46,14 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             'paginate_organisations' => $paginate_organisations,
             'default_organisations' => $default_organisations,
         ];
+    }
+
+
+    public function getOrganisationAdmins()
+    {
+        $default_organisations = OrganisationAdminResource::collection(OrganisationAdminEloquentModel::with(['user', 'organisation'])->orderBy('org_admin_id', 'desc')->get());
+
+        return $default_organisations;
     }
 
     /**

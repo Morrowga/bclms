@@ -47,6 +47,7 @@ const getNotifications = () => {
         .then((resp) => {
             console.log(resp);
             notifications.value = resp.data.notifications.data;
+            console.log(notifications.value)
         });
 };
 
