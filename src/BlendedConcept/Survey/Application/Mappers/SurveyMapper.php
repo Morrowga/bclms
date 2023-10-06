@@ -17,7 +17,6 @@ class SurveyMapper
             title: $request->title,
             description: $request->description,
             type: $request->type,
-            user_type: $request->user_type,
             appear_on: $request->appear_on,
             start_date: $request->start_date,
             end_date: $request->end_date,
@@ -41,7 +40,6 @@ class SurveyMapper
         $surveyEloquent->title = $survey->title;
         $surveyEloquent->description = $survey->description;
         $surveyEloquent->type = $survey->type;
-        $surveyEloquent->user_type = $survey->user_type;
         $surveyEloquent->appear_on = $survey->appear_on;
         $surveyEloquent->start_date = $survey->start_date;
         $surveyEloquent->end_date = $survey->end_date;

@@ -51,6 +51,7 @@ function filterItems() {
         class="blue-outline-field"
         variant="plain"
         density="compact"
+        placeholder="Select"
         :items="filteredItems"
         multiple
         item-title="name"
@@ -61,7 +62,7 @@ function filterItems() {
         <template v-slot:prepend-item>
         <v-text-field
             v-model="search"
-            placeholder="Search Organisations"
+            placeholder="Search"
             class="select-search"
             type="text"
             prepend-inner-icon="mdi-magnify"

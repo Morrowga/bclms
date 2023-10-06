@@ -6,12 +6,13 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import ClassroomCard from "@mainRoot/components/ClassroomCard/ClassroomCard.vue";
 import { defineProps } from "vue";
 import TotalStudents from "./TotalStudents.vue";
-let props = defineProps(["org_teacher_students", "org_teacher_classrooms"]);
+let props = defineProps(["org_teacher_students", "org_teacher_classrooms", "user_survey"]);
 const showCount = (classroom) => {
     return classroom?.students_count + "/" + classroom?.teachers_count;
 };
-</script>
 
+console.log(props.user_survey);
+</script>
 <template>
     <section>
         <VContainer>
@@ -58,7 +59,7 @@ const showCount = (classroom) => {
                 </VCol>
             </VRow>
         </VContainer>
-        <UserExperienceSurvey />
+        <UserExperienceSurvey :data="props.user_survey" />
     </section>
 </template>
 

@@ -224,4 +224,33 @@ class SurveyRepository implements SurveyRepositoryInterface
 
         return $surveyResults;
     }
+
+    public function getSurveyByRole($appear_on){
+        $user = auth()->user();
+        $user_type = $this->checkRole($user->role->name);
+
+        $surveyEloquentModel = SurveyEloquentModel::where('user_type', $user_type)->where('appear_on', $appear_on)->where('type', 'USEREXP')->with(['questions.options'])->first();
+
+        return $surveyEloquentModel;
+    }
+
+    public function checkRole($role){
+        switch($role){
+            case 'Teacher':
+                return 'ORG_TEACHER';
+                // Code to handle the 'teacher' role
+                break;
+            case 'BC Subscriber':
+                return 'B2C_USER';
+                // Code to handle the 'staff' role
+                break;
+            case 'BC Staff':
+                return 'BC_STAFF';
+                // Code to handle the 'user' role
+                break;
+            default:
+                // Code to handle roles other than 'teacher', 'staff', and 'user'
+                break;
+        }
+    }
 }

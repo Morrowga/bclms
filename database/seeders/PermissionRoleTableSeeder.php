@@ -125,6 +125,10 @@ class PermissionRoleTableSeeder extends Seeder
                         'delete_game',
                         'edit_game',
                         'create_game',
+                        'access_survey',
+                        'delete_survey',
+                        'edit_survey',
+                        'create_survey',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);

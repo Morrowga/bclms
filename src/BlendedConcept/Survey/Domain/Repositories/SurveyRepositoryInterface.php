@@ -32,4 +32,6 @@ interface SurveyRepositoryInterface
     public function storeOrder(Request $request, SurveyEloquentModel $survey);
 
     public function getSurveyResults($filters);
+
+    public function getSurveyByRole($appear_on);
 }

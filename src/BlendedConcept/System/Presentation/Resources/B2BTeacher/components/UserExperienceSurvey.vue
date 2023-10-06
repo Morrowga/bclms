@@ -2,6 +2,32 @@
 const isDialogVisible = ref(true);
 import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
 import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
+
+const props = defineProps({
+    data: {
+        type: Object,
+    },
+});
+
+const selectedOptions = ref([]);
+
+const questionsExist = computed(() => {
+  return props.data && props.data && props.data.questions;
+});
+
+const addSurveyForm = ref(questionsExist.value ? props.data.questions : []);
+
+addSurveyForm.value.forEach((item) => {
+  selectedOptions.value[item.id] = [];
+});
+
+const radioClick = (questionId, optionId) => {
+    console.log(questionId);
+  // Reset the selectedOptions array for this question
+  selectedOptions.value[questionId] = [optionId];
+  console.log(selectedOptions.value);
+};
+
 </script>
 
 <template>
@@ -20,71 +46,68 @@ import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
             />
 
             <VCardTitle class="">
-                <h1 class="tiggie-label fs-40">User Experience Survey</h1>
+                <h1 class="tiggie-label fs-40">{{ props.data.title}}</h1>
             </VCardTitle>
 
-            <VCardText>
-                <h4 class="tiggie-label mt-16 mb-10 fs-24">
-                    How would you rate your overall satisfaction with TiggieKids
-                    on a scale of 1 to 5? <span class="text-candy-red">*</span>
-                </h4>
+            <VCardText v-for="(question,i) in addSurveyForm" :key="i">
+                <div v-if="question.question_type == 'SINGLE_CHOICE'">
+                    <h4 class="tiggie-label mt-10 mb-10 fs-24">
+                       {{question.question}} <span class="text-candy-red">*</span>
+                    </h4>
 
-                <VRow class="mt-10" align="center">
-                    <VCol cols="3">
-                        <VLabel class="tiggie-label-custome fs-20"
-                            >Not satisfied at all
-                        </VLabel>
-                    </VCol>
-                    <VCol cols="6">
-                        <VRow>
-                            <VCol cols="2">
-                                <div class="d-flex flex-column justify-center">
-                                    <VLabel class="tiggie-label-custome fs-20"
-                                        >1</VLabel
-                                    >
-                                    <VRadio value="1" size="20" />
-                                </div>
-                            </VCol>
-                            <VCol cols="2">
-                                <div class="d-flex flex-column justify-center">
-                                    <VLabel class="tiggie-label-custome fs-20"
-                                        >2</VLabel
-                                    >
-                                    <VRadio value="1" size="20" />
-                                </div>
-                            </VCol>
-                            <VCol cols="2">
-                                <div class="d-flex flex-column justify-center">
-                                    <VLabel class="tiggie-label-custome fs-20"
-                                        >3</VLabel
-                                    >
-                                    <VRadio value="1" size="20" />
-                                </div>
-                            </VCol>
-                            <VCol cols="2">
-                                <div class="d-flex flex-column justify-center">
-                                    <VLabel class="tiggie-label-custome fs-20"
-                                        >4</VLabel
-                                    >
-                                    <VRadio value="1" size="20" />
-                                </div>
-                            </VCol>
-                            <VCol cols="2">
-                                <div class="d-flex flex-column justify-center">
-                                    <VLabel class="tiggie-label-custome fs-20"
-                                        >5</VLabel
-                                    >
-                                    <VRadio value="1" size="20" />
-                                </div>
-                            </VCol>
-                        </VRow>
-                    </VCol>
-                    <VCol cols="2">
-                        <VLabel class="tiggie-label-custome fs-20"
-                            >Extremely Satisfied
-                        </VLabel>
-                    </VCol>
-                </VRow>
+                    <VRow class="mt-10" align="center">
+                        <VCol cols="6">
+                            <VRow>
+                                <VCol v-for="(option,index) in question.options" :key="index" cols="2">
+                                    <div class="d-flex flex-column justify-center">
+                                        <VLabel class="tiggie-label-custome fs-20"
+                                            >{{  option.content  }}</VLabel
+                                        >
+                                        <VRadio
+                                        v-model="selectedOptions[question.id]"
+                                        :value="option.id"
+                                        @click="radioClick(question.id, option.id)"
+                                         />
+                                    </div>
+                                </VCol>
+                            </VRow>
+                        </VCol>
+                    </VRow>
+                </div>
+                <div v-if="question.question_type == 'RATING'">
+                    <h4 class="tiggie-label mt-5 fs-24">
+                        {{ question.question }} <span class="text-candy-red">*</span>
+                    </h4>
+
+                    <VRow class="mt-10" align="center">
+                        <VCol cols="3">
+                            <VLabel class="tiggie-label-custome fs-20">
+                                Not likely at all
+                            </VLabel>
+                        </VCol>
+                        <VCol cols="6">
+                            <VRow>
+                                <VCol v-for="(option,index) in question.options" :key="index" cols="2">
+                                    <div class="d-flex flex-column justify-center">
+                                        <VLabel class="tiggie-label-custome fs-20"
+                                            >{{ option.content }}</VLabel
+                                        >
+                                        <VRadio
+                                        v-model="selectedOptions[question.id]"
+                                        :value="option.id"
+                                        @click="radioClick(question.id, option.id)"
+                                         />
+                                    </div>
+                                </VCol>
+                            </VRow>
+                        </VCol>
+                        <VCol cols="2">
+                            <VLabel class="tiggie-label-custome fs-20">
+                                Extremely Likely
+                            </VLabel>
+                        </VCol>
+                    </VRow>
+                </div>
             </VCardText>
 
             <VCardText>
@@ -101,14 +124,14 @@ import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
                         <v-radio label="No" value="no" class="ma-0"></v-radio>
                     </VCol>
                 </VRow>
-                <VTextarea
+                <!-- <VTextarea
                     placeholder="Please Type here ...."
                     auto-grow
                     rows="5"
-                />
+                /> -->
             </VCardText>
 
-            <VCardText>
+            <!-- <VCardText>
                 <h4 class="tiggie-label mt-16 fs-24">
                     How likely are you to recommend TiggieKids to a friend or
                     colleague? <span class="text-candy-red">*</span>
@@ -170,7 +193,7 @@ import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
                         </VLabel>
                     </VCol>
                 </VRow>
-            </VCardText>
+            </VCardText> -->
 
             <VCardText>
                 <h4 class="tiggie-label mt-16 mb-10 fs-24">

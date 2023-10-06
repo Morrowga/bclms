@@ -23,6 +23,7 @@ let props = defineProps([
     "UserCount",
     "classrooms",
     "org_teacher_students",
+    "user_survey",
     "org_teacher_classrooms",
 ]);
 
@@ -31,7 +32,7 @@ let form = useForm({});
 let notifications = ref([]);
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
-console.log(user_role, "testing 23");
+let user_detail = computed(() => page.props.user_info.user_detail.full_name);
 let reactiveNoti = computed(() => page.props.notifications?.data);
 let watchNoti = watch(reactiveNoti, (value) => {
     getNotifications();
@@ -88,7 +89,7 @@ onMounted(() => {
         -->
         <VContainer v-if="!checkUserRole()" :fluid="checkUserRole()">
             <span class="welcome-text ruddy-bold"
-                >Welcome, Isabella Taylor</span
+                >Welcome, {{ user_detail }}</span
             >
             <br /><br />
             <SystemAlert
@@ -128,6 +129,7 @@ onMounted(() => {
             <B2BTeacherDashboard
                 :org_teacher_students="props.org_teacher_students"
                 :org_teacher_classrooms="props.org_teacher_classrooms"
+                :user_survey="props.user_survey"
             ></B2BTeacherDashboard>
         </div>
         <div v-else>

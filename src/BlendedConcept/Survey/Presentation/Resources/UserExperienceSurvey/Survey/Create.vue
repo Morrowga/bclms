@@ -14,6 +14,7 @@ import {
     requiredValidator,
     integerValidator,
 } from "@validators";
+const drag = ref(false);
 
 let form = useForm({
     title: 'Untitled Survey',
@@ -70,9 +71,10 @@ const handleModalSubmit = (data) => {
         "question": data.question,
         "options": data.question_type == 'SHORT_ANSWER' ? [] : data.options
     })
+    console.log(addSurveyForm.value)
 };
 const handleSettingModalSubmit = (data) => {
-    form.user_type = data.user_type
+    form.user_type = JSON.stringify(data.user_type);
     form.appear_on = data.appear_on
     form.start_date = data.start_date
     form.end_date = data.end_date
@@ -94,6 +96,7 @@ const handleSettingModalSubmit = (data) => {
         },
     })
 };
+
 </script>
 <template>
     <AdminLayout>
@@ -144,8 +147,12 @@ const handleSettingModalSubmit = (data) => {
                     v-model="form.description" auto-grow rows="5" />
                 </VCol>
                 <div v-if="addSurveyForm.length > 0">
-                    <draggable v-model="addSurveyForm" :options="{ handle: '.drag-handle' }">
-                        <template v-slot:item="{ element, index }">
+                    <draggable
+                    v-model="addSurveyForm"
+                    @start="drag=true"
+                    @end="drag=false"
+                    item-key="id">
+                        <template #item="{ element, index }">
                             <Vcol cols="12" :key="index">
                                 <VCard style="width:81vw" class="mt-4">
                                     <VCardTitle class="tiggie-subtitle">
