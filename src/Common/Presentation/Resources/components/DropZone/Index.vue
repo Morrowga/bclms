@@ -2,7 +2,7 @@
 import { defineProps, ref, defineEmits } from "vue";
 
 const uploadedImages = ref([]);
-
+const modelValues = ref([]);
 const props = defineProps({
     data_type: {
         type: String,
@@ -15,29 +15,60 @@ const props = defineProps({
 });
 
 let emit = defineEmits("update:modelValue");
-const handleDrop = (event) => {
+const handleFileUpload = (event) => {
     event.preventDefault();
-    const files = event.dataTransfer.files;
-
+    const files = event.target.files;
     if (files.length > 0) {
-        emit("update:modelValue", event.dataTransfer.files[0]);
+        // emit("update:modelValue", event.dataTransfer.files[0]);
         for (const file of files) {
             uploadedImages.value.push({
                 file: file,
                 src: URL.createObjectURL(file),
                 name: file.name,
             });
+            modelValues.value.push(file);
         }
     }
+    emit("update:modelValue", modelValues.value);
+};
+const handleDrop = (event) => {
+    event.preventDefault();
+    const files = event.dataTransfer.files;
+
+    if (files.length > 0) {
+        for (const file of files) {
+            uploadedImages.value.push({
+                file: file,
+                src: URL.createObjectURL(file),
+                name: file.name,
+            });
+            modelValues.value.push(file);
+        }
+    }
+    emit("update:modelValue", modelValues.value);
 };
 
 const removeUploadedItem = (index) => {
-    emit("update:modelValue", null);
     uploadedImages.value.splice(index, 1);
+    modelValues.value.splice(index, 1);
+    emit("update:modelValue", modelValues.value);
+};
+const handleFileInputClick = () => {
+    const fileInput = document.getElementById("file-input");
+    fileInput.click();
+};
+let truncatedText = (text) => {
+    if (text) {
+        if (text?.length <= 30) {
+            return text;
+        } else {
+            return text?.substring(0, 30) + "...";
+        }
+    }
 };
 </script>
 <template>
-    <VCardText class="pa-0">
+    <VCardText class="pa-0 file-drop">
         <p class="pppangram-bold ml-5 fs-20 t-black" :hidden="props.hide_count">
             <strong class="fs-20 l-blue">2</strong>
             {{ type }} Remaining
@@ -54,7 +85,7 @@ const removeUploadedItem = (index) => {
                             :src="image.src"
                             class="import-file-img mt-2 ml-3"
                         />
-                        <p class="ml-3 mt-3">{{ image.name }}</p>
+                        <p class="ml-3 mt-3">{{ truncatedText(image.name) }}</p>
                     </div>
 
                     <div class="mt-3 mr-3">
@@ -65,17 +96,13 @@ const removeUploadedItem = (index) => {
                     </div>
                 </div>
             </div>
-            <div
-                :class="
-                    props.data_type === 'user'
-                        ? 'import-card-text mt-6 mx-5'
-                        : 'imprt-path-text mt-6 mx-5'
-                "
-                @dragover.prevent
-                @drop="handleDrop"
-            >
-                <div class="text-center" v-if="props.data_type == 'user'">
-                    <div class="mt-2">
+            <div class="coming-soon mt-4" @dragover.prevent @drop="handleDrop">
+                <div
+                    class="text-center"
+                    v-if="props.data_type == 'user'"
+                    @click="handleFileInputClick()"
+                >
+                    <!-- <div class="mt-2">
                         <span class="import-fade-text">
                             Drag and Drop
                             <span class="text-tiggie-blue text-lowercase px-1"
@@ -90,10 +117,21 @@ const removeUploadedItem = (index) => {
                         <span class="import-fade-text">
                             Click to browse files
                         </span>
-                    </div>
+                    </div> -->
+                    <p v-if="!file" class="pppangram-normal">
+                        Drag & Drop
+                        <strong class="colorprimary"></strong> file here
+                        <br />
+                        or <br />
+                        Click to browser files
+                    </p>
                 </div>
 
-                <div class="text-center" v-if="props.data_type == 'pathway'">
+                <div
+                    class="text-center"
+                    v-if="props.data_type == 'pathway'"
+                    @click="handleFileInputClick()"
+                >
                     <div class="mt-2">
                         <span class="import-fade-text">
                             Drag and Drop to add
@@ -105,9 +143,11 @@ const removeUploadedItem = (index) => {
                 </div>
             </div>
             <input
+                id="file-input"
                 type="file"
                 ref="fileInput"
                 class="d-none"
+                multiple="multiple"
                 @change="handleFileUpload"
             />
         </div>
@@ -170,5 +210,19 @@ const removeUploadedItem = (index) => {
     line-height: 42px;
     /* 140% */
     text-transform: capitalize;
+}
+.file-drop {
+    height: 100%;
+}
+
+.coming-soon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 200px;
+    border: 1px dashed black;
+    border-radius: 10px;
 }
 </style>

@@ -4,6 +4,7 @@ import { useForm } from "@inertiajs/vue3";
 import Upload from "./components/Upload.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import UploadThumbnail from "./components/UploadThumbnail.vue";
+import UploadPhysicalResources from "./components/UploadPhysicalResources.vue";
 const props = defineProps({
     datas: {
         type: Object,
@@ -29,6 +30,7 @@ const props = defineProps({
 let emit = defineEmits();
 let dialog = ref(false);
 let thumbnailDialog = ref(false);
+let physicalDialog = ref(false);
 let types = ref([]);
 let devices = ref([]);
 let themes = ref([]);
@@ -242,13 +244,21 @@ onUpdated(() => {
                                 color="secondary"
                                 @click="thumbnailDialog = true"
                             ></v-btn>
+
                             <v-btn
                                 icon="mdi-content-save"
                                 size="x-small"
                                 color="secondary"
                                 @click="handleUpdate"
                             ></v-btn>
-                            <Upload />
+
+                            <v-btn
+                                icon="mdi-paperclip"
+                                size="x-small"
+                                color="secondary"
+                                @click="physicalDialog = true"
+                            ></v-btn>
+                            <!-- <Upload /> -->
                         </div>
                         <div class="close-btn">
                             <v-btn
@@ -440,6 +450,11 @@ onUpdated(() => {
         <UploadThumbnail
             v-model:isThumbnailDialogVisible="thumbnailDialog"
             @submit="handleThumbnailModalSubmit"
+        />
+        <UploadPhysicalResources
+            v-model:isPhysicalDialog="physicalDialog"
+            :physical_resources="props.datas.physical_resources"
+            :book_id="props.datas.id"
         />
     </div>
 </template>

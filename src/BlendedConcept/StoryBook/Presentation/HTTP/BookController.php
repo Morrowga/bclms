@@ -2,13 +2,16 @@
 
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Inertia\Inertia;
+use Src\BlendedConcept\Library\Application\UseCases\Commands\UpdateResourceCommand;
 use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookData;
 use Src\BlendedConcept\StoryBook\Application\Mappers\StoryBookMapper;
 use Src\BlendedConcept\StoryBook\Application\Requests\StoreBookRequest;
 use Src\BlendedConcept\StoryBook\Application\Requests\UpdateStoryBookRequest;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\CreateStoreStoryBookCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\UpdatePhysicalResourcesCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\UpdateStoryBookCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetDevice;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetDisabilityType;
@@ -107,5 +110,16 @@ class BookController
     {
         // dd($book);
         return Inertia::render(config('route.books.edit'), compact('book'));
+    }
+
+    public function updatePhysicalResources(Request $request, StoryBookEloquentModel $book)
+    {
+        try {
+            $updateResources = new UpdatePhysicalResourcesCommand($request, $book);
+            $updateResources->execute();
+            return redirect()->back()->with('successMessage', 'StoryBook updated Successfully!');
+        } catch (\Exception $ex) {
+            return redirect()->back()->with('systemErrorMessage', 'Something unexpected happened');
+        }
     }
 }

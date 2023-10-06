@@ -3,7 +3,7 @@ import { defineProps, ref } from "vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import ImageUpload from "@mainRoot/components/DropZone/FileUpload.vue";
+import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
 import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
@@ -45,7 +45,7 @@ const form = useForm({
     devices: [],
     storybook_file: "",
     thumbnail_img: "",
-    physical_resource_src: "",
+    image: "",
     h5p_id: "",
 });
 const saveToH5p = () => {
@@ -298,17 +298,6 @@ onMounted(() => {
                             placeholder="Type here ..."
                         />
                     </VCol>
-
-                    <VCol cols="12" md="6">
-                        <VLabel class="tiggie-label required"
-                            >Storybook File</VLabel
-                        >
-                        <ImageDropFile
-                            v-model="form.storybook_file"
-                            memeType="image"
-                            :id="1"
-                        />
-                    </VCol>
                     <VCol cols="12" md="6">
                         <VLabel class="tiggie-label required"
                             >Thumbnail Picture</VLabel
@@ -320,6 +309,17 @@ onMounted(() => {
                             :id="3"
                         />
                     </VCol>
+                    <VCol cols="12" md="6">
+                        <VLabel class="tiggie-label required"
+                            >Physical Resource</VLabel
+                        >
+                        <ImageUpload
+                            :hide_count="true"
+                            data_type="user"
+                            v-model="form.image"
+                        />
+                    </VCol>
+
                     <VCol cols="12" md="12">
                         <VLabel class="tiggie-label">Story Book Content</VLabel>
                         <iframe

@@ -19,13 +19,13 @@ let form = useForm({
     payment_date: "",
     payment_status: "UNPAID",
     stripe_price: "",
+    image: "",
     b2b_subscription: {
         storage_limit: "",
         num_teacher_license: "",
         num_student_license: "",
         organisation_id: props.organisation?.id,
         subscription_id: props.organisation?.subscription?.id ?? null,
-        image: "",
     },
     _method: "PUT",
 });
@@ -205,9 +205,7 @@ let handleSubmit = () => {
                                         <ImageUpload
                                             :hide_count="true"
                                             data_type="user"
-                                            v-model="
-                                                form.b2b_subscription.image
-                                            "
+                                            v-model="form.image"
                                         />
                                     </VCol>
                                 </VRow>

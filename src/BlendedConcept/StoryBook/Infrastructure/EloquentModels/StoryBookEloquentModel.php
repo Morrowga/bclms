@@ -26,6 +26,7 @@ class StoryBookEloquentModel extends Model implements HasMedia
     // for images
     protected $appends = [
         'thumbnail_img',
+        'physical_resources'
     ];
 
     protected $fillable = [
@@ -42,6 +43,22 @@ class StoryBookEloquentModel extends Model implements HasMedia
     public function getThumbnailImgAttribute()
     {
         return $this->getFirstMedia('thumbnail_img')->original_url ?? '';
+    }
+
+    public function getPhysicalResourcesAttribute()
+    {
+        $media = $this->getMedia('physical_resource_src');
+
+        return $media->map(function ($psy) {
+            return [
+                "id" => $psy->id,
+                "name" => $psy->name ?? '',
+                "file_name" => $psy->file_name ?? '',
+                "type" => $psy->mime_type,
+                "size" => $psy->size,
+                "url" => $psy->original_url ?? ''
+            ];
+        });
     }
 
     public function scopeFilter($query, $filters)

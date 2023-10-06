@@ -2,8 +2,10 @@
 
 namespace Src\BlendedConcept\StoryBook\Domain\Repositories;
 
+use Illuminate\Http\Request;
 use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookData;
 use Src\BlendedConcept\StoryBook\Domain\Model\StoryBook;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
 
 interface StoryBookRepositoryInterface
 {
@@ -29,4 +31,6 @@ interface StoryBookRepositoryInterface
     public function getStoryBooksForSelect();
 
     public function getStudentStorybooks();
+
+    public function updatePhysicalResource(Request $request, StoryBookEloquentModel $storyBook);
 }
