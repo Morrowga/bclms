@@ -48,7 +48,7 @@ const getNotifications = () => {
         .then((resp) => {
             console.log(resp);
             notifications.value = resp.data.notifications.data;
-            console.log(notifications.value)
+            console.log(notifications.value);
         });
 };
 
@@ -110,10 +110,7 @@ onMounted(() => {
     -->
 
         <div v-if="current_user_role == 'BC Super Admin'">
-            <SuperAdminDashboard
-                :usercount="props.UserCount"
-                :orgainzations_users="props.orgainzations_users"
-            >
+            <SuperAdminDashboard :usercount="props.UserCount">
             </SuperAdminDashboard>
         </div>
         <div v-else-if="current_user_role == 'BC Subscriber'">

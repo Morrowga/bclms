@@ -5,8 +5,17 @@ import { computed, defineProps } from "vue";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-
-let props = defineProps(["users"]);
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+    datas,
+    routeName,
+} from "./useUsersDatatable.js";
 //## start datatable section
 let columns = [
     {
@@ -41,8 +50,6 @@ let columns = [
     },
 ];
 
-let rows = props.users;
-
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
@@ -56,6 +63,24 @@ const handleSetInActive = () => {
     });
 };
 let selectedRole = ref("");
+let options = ref({
+    enabled: true,
+    mode: "pages",
+    perPage: datas?.value.per_page,
+    setCurrentPage: datas?.value.current_page,
+    perPageDropdown: [10, 20, 50, 100],
+    dropdownAllowAll: false,
+});
+
+routeName.value = "admin.get-recent-users";
+
+serverPage.value = ref(datas.value?.current_page ?? 1);
+serverPerPage.value = ref(10);
+
+watch(serverPerPage, function (value) {
+    onPerPageChange(value);
+});
+const users = computed(() => datas.value);
 </script>
 <template>
     <section>
@@ -76,6 +101,8 @@ let selectedRole = ref("");
                         placeholder="Search User ..."
                         density="compact"
                         variant="solo"
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
                     />
                 </div>
 
@@ -110,11 +137,13 @@ let selectedRole = ref("");
                 styleClass="vgt-table"
                 v-on:selected-rows-change="selectionChanged"
                 :columns="columns"
-                :rows="rows"
+                :rows="users"
                 :select-options="{
                     enabled: true,
                 }"
-                :pagination-options="{ enabled: true }"
+                mode="remote"
+                :totalRows="datas.total"
+                :pagination-options="options"
             >
                 <template #table-row="dataProps">
                     <div
@@ -134,7 +163,10 @@ let selectedRole = ref("");
                             <VListItemSubtitle
                                 class="text-xs text-no-wrap d-flex align-center"
                             >
-                                <span> {{ dataProps.row.first_name  }} {{ dataProps.row.last_name }}</span>
+                                <span>
+                                    {{ dataProps.row.first_name }}
+                                    {{ dataProps.row.last_name }}</span
+                                >
                             </VListItemSubtitle>
                         </VListItem>
                     </div>

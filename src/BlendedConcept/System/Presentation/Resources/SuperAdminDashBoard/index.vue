@@ -9,8 +9,7 @@ import LatestModifiedOrganisations from "./LatestModifiedOrganisations.vue";
 import TotalUsers from "./TotalUsers.vue";
 
 const avatars = [avatar1, avatar2, avatar3, avatar4];
-let orgainzations_users = defineProps(["orgainzations_users",'usercount']);
-
+let orgainzations_users = defineProps(["usercount"]);
 </script>
 
 <template>
@@ -48,9 +47,7 @@ let orgainzations_users = defineProps(["orgainzations_users",'usercount']);
                 <br />
             </div>
             <br />
-            <LatestModifiedOrganisations
-                :organisation="orgainzations_users.orgainzations_users[1]"
-            />
+            <LatestModifiedOrganisations />
         </section>
         <br />
         <br />
@@ -62,7 +59,7 @@ let orgainzations_users = defineProps(["orgainzations_users",'usercount']);
                 <br />
             </div>
             <br />
-            <TotalUsers :users="orgainzations_users.orgainzations_users[0]" />
+            <TotalUsers />
         </section>
     </VContainer>
 </template>

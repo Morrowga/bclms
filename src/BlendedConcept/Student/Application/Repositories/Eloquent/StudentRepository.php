@@ -5,6 +5,9 @@ namespace Src\BlendedConcept\Student\Application\Repositories\Eloquent;
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
@@ -158,14 +161,28 @@ class StudentRepository implements StudentRepositoryInterface
                 'role_id' => 2,
                 'password' => 'password'
             ];
+            $planEloquent = PlanEloquentModel::find(1);
+
+            $subscriptionEloquent = [
+                'start_date' => now(),
+                'end_date' => now(),
+                'payment_date' => now(),
+                'payment_status' => 'PAID',
+                'stripe_status' => 'ACTIVE',
+                'stripe_price' => 0,
+            ];
+            $subscriptionEloquent = SubscriptionEloquentModel::create($subscriptionEloquent);
+
             $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
             $parentEloquent = ParentUserEloqeuntModel::create([
                 "user_id" => $userParentEloquent->id,
+                "curr_subscription_id" => $subscriptionEloquent->id,
                 "organisation_id" => null,
                 "type" => "B2C"
             ]);
             $userEloquent = UserEloquentModel::create($create_user_data);
+
             $createStudentEloqoent = StudentMapper::toEloquent($student);
             $createStudentEloqoent->user_id = $userEloquent->id;
             $createStudentEloqoent->parent_id = $parentEloquent->parent_id;

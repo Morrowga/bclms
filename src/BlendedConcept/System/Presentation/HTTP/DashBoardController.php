@@ -14,6 +14,9 @@ use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetUs
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetStudentForAdminDashBoard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgAdminDashboard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgTeacherDashboard;
+use Src\BlendedConcept\System\Application\UseCases\Queries\SuperAdminDashboard\GetRecentOrganisations;
+use Src\BlendedConcept\System\Application\UseCases\Queries\SuperAdminDashboard\GetRecentUsers;
+use Src\BlendedConcept\System\Domain\Repositories\DashboardRepositoryInterface;
 
 class DashBoardController extends Controller
 {
@@ -21,12 +24,16 @@ class DashBoardController extends Controller
 
     private $ClassRoomRepositoryInterface;
 
+    private DashboardRepositoryInterface $dashboardInterface;
+
     public function __construct(
         PageBuilderInterface $pageBuilderInterface,
-        ClassRoomRepositoryInterface $ClassRoomRepositoryInterface
+        ClassRoomRepositoryInterface $ClassRoomRepositoryInterface,
+        DashboardRepositoryInterface $dashboardInterface
     ) {
         $this->pageBuilderInterface = $pageBuilderInterface;
         $this->ClassRoomRepositoryInterface = $ClassRoomRepositoryInterface;
+        $this->dashboardInterface = $dashboardInterface;
     }
 
     public function superAdminDashboard()
@@ -41,7 +48,6 @@ class DashBoardController extends Controller
         $user_survey = (new GetUserSurveyByRole('LOG_IN'))->handle();
         // return $userSurvey;
         $orgainzations_users = (new GetUserForAdminDashBoard())->handle();
-
         $students = (new GetStudentForAdminDashBoard())->handle();
 
         $UserCount = (new GetSuperAdminListCount())->handle();
@@ -111,5 +117,29 @@ class DashBoardController extends Controller
     {
 
         return Inertia::render(config('route.edit-profiles.org-teacher'));
+    }
+
+    public function getRecentOrganisations()
+    {
+        try {
+            $filters = request(['search', 'page', 'perPage', 'filter']);
+            $organisations = (new GetRecentOrganisations($filters));
+            $datas = $organisations->handle();
+            return response()->json($datas);
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
+
+    public function getRecentUsers()
+    {
+        try {
+            $filters = request(['search', 'page', 'perPage', 'filter']);
+            $users = (new GetRecentUsers($filters));
+            $datas = $users->handle();
+            return response()->json($datas);
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
     }
 }

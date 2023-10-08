@@ -181,11 +181,11 @@ watch(filters, (newValue) => {
                 <vue-good-table
                     class="user-data-table"
                     mode="remote"
-                    @column-filter="onColumnFilter"
                     :totalRows="props.organisations.meta.total"
+                    :pagination-options="options"
+                    @column-filter="onColumnFilter"
                     :selected-rows-change="selectionChanged"
                     styleClass="vgt-table "
-                    :pagination-options="options"
                     :rows="props.organisations.data"
                     :columns="columns"
                     :select-options="{

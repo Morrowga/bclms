@@ -5,8 +5,17 @@ import { computed, defineProps } from "vue";
 import avatar4 from "@images/avatars/avatar-4.png";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { isConfirmedDialog } from "@actions/useConfirm";
-
-let props = defineProps(["organisation"]);
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+    datas,
+    routeName,
+} from "./useOrganisationsDatatable.js";
 
 //## start datatable section
 let columns = [
@@ -42,9 +51,6 @@ let columns = [
     },
 ];
 
-let rows = props.organisation;
-
-
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
@@ -57,7 +63,26 @@ const deleteOrganisation = () => {
         denyButtonText: "Yes,delete it",
     });
 };
+
+let options = ref({
+    enabled: true,
+    mode: "pages",
+    perPage: datas?.value.per_page,
+    setCurrentPage: datas?.value.current_page,
+    perPageDropdown: [10, 20, 50, 100],
+    dropdownAllowAll: false,
+});
+
 let selectedRole = ref("");
+routeName.value = "admin.get-recent-organisations";
+
+serverPage.value = ref(datas.value?.current_page ?? 1);
+serverPerPage.value = ref(10);
+
+watch(serverPerPage, function (value) {
+    onPerPageChange(value);
+});
+const organisations = computed(() => datas.value);
 </script>
 <template>
     <section>
@@ -80,6 +105,8 @@ let selectedRole = ref("");
                         density="compact"
                         width="100"
                         variant="solo"
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
                     />
                 </div>
 
@@ -115,13 +142,13 @@ let selectedRole = ref("");
                 styleClass="vgt-table"
                 v-on:selected-rows-change="selectionChanged"
                 :columns="columns"
-                :rows="rows"
+                :rows="organisations"
                 :select-options="{
                     enabled: true,
                 }"
-                :pagination-options="{
-                    enabled: true,
-                }"
+                mode="remote"
+                :totalRows="datas.total"
+                :pagination-options="options"
             >
                 <template #table-row="dataProps">
                     <div
@@ -195,7 +222,16 @@ let selectedRole = ref("");
                             </template>
                             <VList>
                                 <VListItem
-                                    @click="() => router.get(route('organisations.edit',dataProps.row.id))">
+                                    @click="
+                                        () =>
+                                            router.get(
+                                                route(
+                                                    'organisations.edit',
+                                                    dataProps.row.id
+                                                )
+                                            )
+                                    "
+                                >
                                     <VListItemTitle>Edit</VListItemTitle>
                                 </VListItem>
                                 <VListItem @click="deleteOrganisation()">
@@ -228,6 +264,4 @@ let selectedRole = ref("");
     border-radius: 50% !important;
     /* Adjust the border radius as needed */
 }
-
-
 </style>

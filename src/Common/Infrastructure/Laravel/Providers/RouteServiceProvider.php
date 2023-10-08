@@ -42,6 +42,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(function () {
                     require base_path('src/Auth/Presentation/HTTP/routes.php');
                     require base_path('src/BlendedConcept/System/Presentation/HTTP/routes.php');
+                    require base_path('src/BlendedConcept/System/Presentation/API/api.php');
+
                     require base_path('src/BlendedConcept/Security/Presentation/HTTP/routes.php');
                     require base_path('src/BlendedConcept/Organisation/Presentation/HTTP/routes.php');
                     require base_path('src/BlendedConcept/Student/Presentation/HTTP/routes.php');

@@ -1,7 +1,9 @@
 <script setup>
 import PhysicalResourcesCard from "./PhysicalResourcesCard.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
+
 import { ref } from "vue";
+
 let model = ref(false);
 const props = defineProps(["physical_resources"]);
 </script>
