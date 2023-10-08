@@ -200,6 +200,24 @@ class PermissionRoleTableSeeder extends Seeder
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
+            } elseif ($data['name'] == 'Parent'){
+                $role = RoleEloquentModel::create($data);
+                $permission = PermissionEloquentModel::whereIn(
+                    'name',
+                    [
+                        'access_resources',
+                        'access_reports',
+                        'access_viewStudents',
+                        'access_teacherStorybook',
+                        'access_playlists',
+                        'access_orgClassroom',
+                        'access_playlist',
+                        'delete_playlist',
+                        'edit_playlist',
+                        'create_playlist',
+                    ]
+                )->pluck('id');
+                $role->permissions()->sync($permission);
             }
         }
     }

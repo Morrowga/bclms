@@ -2,6 +2,7 @@
 
 namespace Src\BlendedConcept\Survey\Application\Repositories\Eloquent;
 
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\Survey\Application\DTO\SurveyData;
@@ -30,7 +31,7 @@ class SurveyRepository implements SurveyRepositoryInterface
     {
         $survey = new SurveyResource(SurveyEloquentModel::with(['questions' => function ($query) {
             $query->orderBy('order', 'asc'); // Replace 'your_question_column' with the actual column name in the questions table
-        }, 'questions.options'])->find($id));
+        }, 'questions.options', 'survey_settings'])->find($id));
 
         return $survey;
     }
@@ -102,6 +103,24 @@ class SurveyRepository implements SurveyRepositoryInterface
             $surveyEloquent = SurveyEloquentModel::query()->find($survey->id);
             $surveyEloquent->fill($surveyArray);
             $surveyEloquent->save();
+
+            $user_types = json_decode(request()->user_type);
+
+            if(count($user_types) > 0){
+                foreach ($surveyEloquent->survey_settings as $oldUserType) {
+                    $oldUserType->delete();
+                }
+
+                foreach($user_types as $type){
+                    $setting = [
+                        "user_type" => $type,
+                        "survey_id" => $surveyEloquent->id
+                    ];
+                    $surveySettingRequest = SurveySettingMapper::fromRequest($setting);
+                    $surveySettingEloquent = SurveySettingMapper::toEloquent($surveySettingRequest);
+                    $surveySettingEloquent->save();
+                }
+            }
 
             $questions = json_decode(request()->questions, true);
             foreach($questions as $key => $question){
@@ -242,7 +261,17 @@ class SurveyRepository implements SurveyRepositoryInterface
         $user = auth()->user();
         $user_type = $this->checkRole($user->role->name);
 
-        $surveyEloquentModel = SurveyEloquentModel::where('user_type', $user_type)->where('appear_on', $appear_on)->where('type', 'USEREXP')->with(['questions.options'])->first();
+        $dateFormat = new DateTime(); // Current date and time
+        $currentDate =  $dateFormat->format('Y-m-d H:i:s'); // Current date and time in 'YYYY-MM-DD HH:MM:SS' format
+
+        $surveyEloquentModel = SurveyEloquentModel::where('appear_on', $appear_on)->where('type', 'USEREXP')
+        ->whereHas('survey_settings', function ($query) use ($user_type) {
+            $query->where('user_type', $user_type);
+        })
+        ->whereDate('start_date', '<=', $currentDate)
+        ->whereDate('end_date', '>=', $currentDate)
+        ->orderBy('date_created', 'desc') // Order by the created_at column in descending order
+        ->with(['questions.options'])->first();
 
         return $surveyEloquentModel;
     }
@@ -257,8 +286,16 @@ class SurveyRepository implements SurveyRepositoryInterface
                 return 'B2C_USER';
                 // Code to handle the 'staff' role
                 break;
-            case 'BC Staff':
-                return 'BC_STAFF';
+            case 'Organisation Admin':
+                return 'ORG_ADMIN';
+                // Code to handle the 'user' role
+                break;
+            case 'Student':
+                return 'STUDENT';
+                // Code to handle the 'user' role
+                break;
+            case 'Parent':
+                return 'PARENT';
                 // Code to handle the 'user' role
                 break;
             default:

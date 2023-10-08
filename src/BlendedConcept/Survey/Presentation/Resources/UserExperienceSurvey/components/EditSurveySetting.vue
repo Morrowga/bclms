@@ -5,6 +5,7 @@ import {
     requiredValidator,
     integerValidator,
 } from "@validators";
+import MultiSelectBox from "@mainRoot/components/MultiSelectBox/MultiSelectBox.vue";
 
 const props = defineProps({
     isDialogVisible: {
@@ -22,11 +23,17 @@ const emit = defineEmits([
     'submit',
     'update:isDialogVisible',
 ])
+const survey_settings_user_types  = ref(props.setting.survey_settings);
+let user_types = ref([]);
+
+survey_settings_user_types.value.forEach(item => {
+    user_types.value.push(item.user_type)
+});
 
 let form = useForm({
     required: props.setting.required == 1 ? true : false,
     repeat: props.setting.repeat == 1 ? true : false,
-    user_type: props.setting.user_type,
+    user_type: user_types.value,
     appear_on: props.setting.appear_on,
     start_date: props.setting.start_date,
     end_date: props.setting.end_date,
@@ -45,21 +52,25 @@ const dialogVisibleUpdate = val => {
 }
 
 const userTypes = ref([
-    // {
-    //     title: 'All',
-    //     value: 'All',
-    // },
     {
-        title: 'BC Staff',
-        value: 'BC STAFF',
+        name: 'ORG Admin',
+        id: 'ORG_ADMIN',
     },
     {
-        title: 'Org Teacher',
-        value: 'ORG_TEACHER',
+        name: 'Parent',
+        id: 'PARENT',
     },
     {
-        title: 'B2C User',
-        value: 'B2C_USER',
+        name: 'Student',
+        id: 'STUDENT',
+    },
+    {
+        name: 'Org Teacher',
+        id: 'ORG_TEACHER',
+    },
+    {
+        name: 'B2C User',
+        id: 'B2C_USER',
     },
 ])
 
@@ -101,10 +112,12 @@ const appearOn = ref([
                 <VForm class="mt-6" @submit.prevent="onFormSubmit">
                     <VContainer>
                         <VRow justify="center">
-
                             <VCol cols="6" md="6">
                                 <VLabel class="tiggie-label">Set User Type</VLabel>
-                                <VSelect :items="userTypes" v-model="form.user_type" :rules="[requiredValidator]"  :error-messages="form?.errors?.user_type" placeholder="Select User Types" rounded="50%" density="compact" />
+                                <MultiSelectBox
+                                    :items="userTypes"
+                                    v-model="form.user_type"
+                                />
                             </VCol>
                             <VCol cols="6" md="6">
                                 <VLabel class="tiggie-label">Survery Start Date</VLabel>
@@ -148,3 +161,27 @@ const appearOn = ref([
         </VCard>
     </VDialog>
 </template>
+
+<style scoped>
+.blue-outline-field {
+    border: 1px solid var(--Primary, rgb(0,0,0,0.2));
+    border-radius: 5px;
+    background: var(--White, #fff);
+    padding: 3px 10px;
+}
+
+:deep(.blue-outline-field .v-field__input) {
+    padding: 0 !important;
+}
+
+.select-search {
+    padding: 10px !important;
+}
+.searchcard-icon {
+    padding: 10px;
+}
+
+:deep(.blue-outline-field .v-field__input input) {
+    line-height: 38px !important;
+}
+</style>

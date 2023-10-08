@@ -11,7 +11,6 @@ const showCount = (classroom) => {
     return classroom?.students_count + "/" + classroom?.teachers_count;
 };
 
-console.log(props.user_survey);
 </script>
 <template>
     <section>
@@ -59,7 +58,7 @@ console.log(props.user_survey);
                 </VCol>
             </VRow>
         </VContainer>
-        <UserExperienceSurvey :data="props.user_survey" />
+        <UserExperienceSurvey v-if="props.user_survey ?? false" :data="props.user_survey" />
     </section>
 </template>
 

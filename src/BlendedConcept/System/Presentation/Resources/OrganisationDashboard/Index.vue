@@ -26,7 +26,7 @@ const statisticsWithImages = [
     },
 ];
 
-const props = defineProps(["classrooms"]);
+const props = defineProps(["classrooms","user_survey"]);
 const showCount = (classroom) => {
     return classroom?.students_count + "/" + classroom?.teachers_count;
 };
@@ -75,7 +75,7 @@ onMounted(() => {
                 <TotalTeachers />
             </VCol>
         </VRow>
-        <UserExperienceSurvey />
+        <UserExperienceSurvey v-if="props.user_survey ?? false" :data="props.user_survey" />
     </v-container>
 </template>
 
