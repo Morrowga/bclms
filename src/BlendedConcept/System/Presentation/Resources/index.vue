@@ -115,7 +115,12 @@ onMounted(() => {
             <SuperAdminDashboard :usercount="props.UserCount">
             </SuperAdminDashboard>
         </div>
-        <div v-else-if="current_user_role == 'BC Subscriber'">
+        <div
+            v-else-if="
+                current_user_role == 'BC Subscriber' ||
+                current_user_role == 'Parent'
+            "
+        >
             <TeacherOrParentDashboard :students="students">
             </TeacherOrParentDashboard>
         </div>

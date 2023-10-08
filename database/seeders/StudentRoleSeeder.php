@@ -18,25 +18,34 @@ class StudentRoleSeeder extends Seeder
      */
     public function run()
     {
-
-        $user = [
-            'role_id' => 6,
-            'first_name' => 'Student',
+        $parent = [
+            'role_id' => 7,
+            'first_name' => 'Parent',
             'last_name' => 'One',
-            'email' => 'studentone@mail.com',
+            'email' => 'parentone@mail.com',
             'password' => bcrypt('password'),
             'contact_number' => '1234567890',
             'status' => 'ACTIVE',
             'email_verification_send_on' => now(),
             'profile_pic' => 'images/profile/profilefive.png',
         ];
+        $user = [
+            'role_id' => 6,
+            'first_name' => 'Student',
+            'password' => bcrypt('password'),
+            'last_name' => 'One',
+            'status' => 'ACTIVE',
+            'email_verification_send_on' => now(),
+            'profile_pic' => 'images/profile/profilefive.png',
+        ];
 
         $userCreate = UserEloquentModel::create($user);
+        $parentUserCreate = UserEloquentModel::create($parent);
 
         $subscription = SubscriptionEloquentModel::first();
 
         $parentData = [
-            "user_id" => $userCreate->id,
+            "user_id" => $parentUserCreate->id,
             "organisation_id" => 1,
             "curr_subscription_id" => $subscription->id,
             "type" => 'B2B'

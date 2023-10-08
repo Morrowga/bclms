@@ -23,6 +23,7 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
         $paginate_classrooms
             = ClassRoomResource::collection(ClassRoomEloquentModel::filter($filters)
                 ->withCount('teachers', 'students')
+                ->with('students.parent')
                 ->where('organisation_id', auth()->user()->organisation_id)
                 ->orderBy('id', 'desc')
                 ->paginate($filters['perPage'] ?? 10));
@@ -109,7 +110,7 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
     {
         return StudentEloquentModel::filter($filters)
             ->where('organisation_id', auth()->user()->organisation_id)
-            ->with('user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+            ->with('user', 'disability_types', 'parent')->paginate($filters['perPage'] ?? 10);
     }
 
     public function getOrgTeacherClassrooms($filters)

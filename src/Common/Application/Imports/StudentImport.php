@@ -49,7 +49,7 @@ class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithH
                     'last_name' => $row['parent_last_name'],
                     'contact_number' => $row['contact_number'],
                     'email' => $row['email'],
-                    'role_id' => 2
+                    'role_id' => 7
                 ];
                 $userParentEloquent = UserEloquentModel::create($create_parent_data);
 

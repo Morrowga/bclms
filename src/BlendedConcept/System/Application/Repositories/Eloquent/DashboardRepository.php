@@ -45,16 +45,20 @@ class DashboardRepository implements DashboardRepositoryInterface
 
     public function getRecentStudents($filters)
     {
-        $teacher_id = auth()->user()->b2bUser->teacher_id;
-        $students =
-            StudentEloquentModel::with('user', 'organisation', 'disability_types', 'parent')
+        $curr_role_name = auth()->user()->role->name;
+        $query =  StudentEloquentModel::with('user', 'organisation', 'disability_types', 'parent')
             ->filter($filters)
-            ->whereHas('teachers', function ($query) use ($teacher_id) {
-                $query->where('teachers.teacher_id', $teacher_id);
-            })
-            ->orderBy('student_id', 'desc')
-            // ->where('organisation_id', auth()->user()->organisation_id)
-            ->paginate($filters['perPage'] ?? 10);
+            ->orderBy('student_id', 'desc');
+        $students = [];
+        if ($curr_role_name == "BC Subscriber" || $curr_role_name == "Teacher") {
+            $user_id = auth()->user()->b2bUser->teacher_id;
+            $students = $query->whereHas('teachers', function ($query) use ($user_id) {
+                $query->where('teachers.teacher_id', $user_id);
+            })->paginate($filters['perPage'] ?? 10);
+        } else if ($curr_role_name == "Parent") {
+            $user_id = auth()->user()->parents->parent_id;
+            $students = $query->where('parent_id', $user_id)->paginate($filters['perPage'] ?? 10);
+        }
         return $students;
     }
 }

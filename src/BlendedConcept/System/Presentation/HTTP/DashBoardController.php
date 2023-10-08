@@ -48,20 +48,33 @@ class DashBoardController extends Controller
          */
         $current_user_role = auth()->user()->role->name;
         $user = Auth::user();
+        $user_survey = [];
+        $orgainzations_users = [];
+        $students = [];
+        $UserCount = [];
+        $recent_books = [];
+        $recent_games = [];
+        $classrooms = [];
+        $org_teacher_classrooms = [];
+        $org_teacher_students = [];
 
+        if ($current_user_role == "BC Super Admin" || $current_user_role == "BC Staff") {
+            $UserCount = (new GetSuperAdminListCount())->handle();
+            $recent_books = (new GetRecentBooks())->handle();
+            $recent_games = (new GetRecentGames())->handle();
+        } else if ($current_user_role == "Organisation Admin") {
+            $classrooms = (new GetClassroomForOrgAdminDashboard($filters = request(['search', 'perPage', 'page'])))->handle()['paginate_classrooms'];
+        } else if ($current_user_role == "Teacher") {
+            $org_teacher_classrooms = (new GetClassroomForOrgTeacherDashboard($filters = []))->handle();
+            $org_teacher_students = (new GetStudentsForOrgTeacherDashboard($filters = request(['search', 'perPage', 'page'])))->handle();
+        } else if ($current_user_role == "Student") {
+
+            $orgainzations_users = (new GetUserForAdminDashBoard())->handle();
+        } else if ($current_user_role == "BC Subscriber") {
+
+            $students = (new GetRecentStudents($filters = request(['search', 'perPage', 'page'])))->handle();
+        }
         $user_survey = (new GetUserSurveyByRole('LOG_IN'))->handle();
-
-        $orgainzations_users = (new GetUserForAdminDashBoard())->handle();
-        $students = (new GetRecentStudents($filters = request(['search', 'perPage', 'page'])))->handle();
-
-        $UserCount = (new GetSuperAdminListCount())->handle();
-
-        $recent_books = (new GetRecentBooks())->handle();
-        $recent_games = (new GetRecentGames())->handle();
-        $classrooms = (new GetClassroomForOrgAdminDashboard($filters = request(['search', 'perPage', 'page'])))->handle()['paginate_classrooms'];
-        $org_teacher_classrooms = (new GetClassroomForOrgTeacherDashboard($filters = []))->handle();
-        $org_teacher_students = (new GetStudentsForOrgTeacherDashboard($filters = request(['search', 'perPage', 'page'])))->handle();
-
         //here I render it inside
         return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students', 'UserCount', 'classrooms', 'org_teacher_classrooms', 'org_teacher_students', 'user_survey', 'recent_books', 'recent_games'));
     }

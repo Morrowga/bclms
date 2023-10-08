@@ -45,7 +45,7 @@ class StudentRepository implements StudentRepositoryInterface
                 'last_name' => $student->parent_last_name,
                 'contact_number' => $student->contact_number,
                 'email' => $student->email,
-                'role_id' => 2,
+                'role_id' => 7,
                 'password' => 'password'
             ];
             $userParentEloquent = UserEloquentModel::create($create_parent_data);
