@@ -42,7 +42,6 @@ class SurveyData
             'title' => $this->title,
             'description' => $this->description,
             'type' => $this->type,
-            'user_type' => $this->user_type,
             'appear_on' => $this->appear_on,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,

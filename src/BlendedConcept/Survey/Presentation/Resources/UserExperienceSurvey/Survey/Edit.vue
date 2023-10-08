@@ -147,7 +147,7 @@ const handleModalSubmit = (data) => {
 };
 
 const handleSettingModalSubmit = (data) => {
-    form.user_type = data.user_type
+    form.user_type = JSON.stringify(data.user_type);
     form.appear_on = data.appear_on
     form.start_date = data.start_date
     form.end_date = data.end_date

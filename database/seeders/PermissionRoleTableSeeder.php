@@ -22,6 +22,7 @@ class PermissionRoleTableSeeder extends Seeder
             ['name' => 'Teacher', 'guard_name' => 'web'],
             ['name' => 'Organisation Admin', 'guard_name' => 'web'],
             ['name' => 'Student', 'guard_name' => 'web'],
+            ['name' => 'Parent', 'guard_name' => 'web'],
         ];
         foreach ($datas as $data) {
             // $role = RoleEloquentModel::create($data);
@@ -182,6 +183,24 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_studentRewards',
                         'access_studentGames',
                         'access_studentStorybook',
+                    ]
+                )->pluck('id');
+                $role->permissions()->sync($permission);
+            } elseif ($data['name'] == 'Parent'){
+                $role = RoleEloquentModel::create($data);
+                $permission = PermissionEloquentModel::whereIn(
+                    'name',
+                    [
+                        'access_resources',
+                        'access_reports',
+                        'access_viewStudents',
+                        'access_teacherStorybook',
+                        'access_playlists',
+                        'access_orgClassroom',
+                        'access_playlist',
+                        'delete_playlist',
+                        'edit_playlist',
+                        'create_playlist',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
