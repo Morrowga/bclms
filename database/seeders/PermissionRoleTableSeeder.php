@@ -22,6 +22,7 @@ class PermissionRoleTableSeeder extends Seeder
             ['name' => 'Teacher', 'guard_name' => 'web'],
             ['name' => 'Organisation Admin', 'guard_name' => 'web'],
             ['name' => 'Student', 'guard_name' => 'web'],
+            ['name' => 'Parent', 'guard_name' => 'web'],
         ];
         foreach ($datas as $data) {
             // $role = RoleEloquentModel::create($data);
@@ -70,6 +71,20 @@ class PermissionRoleTableSeeder extends Seeder
                 )->pluck('id');
                 $role->permissions()->sync($permission);
             } elseif ($data['name'] == 'BC Subscriber') {
+                $role = RoleEloquentModel::create($data);
+                $permission = PermissionEloquentModel::whereIn(
+                    'name',
+                    [
+                        'access_plan',
+                        'access_teacherStorybook',
+                        'access_resources',
+                        'access_viewStudents',
+                        'access_reports',
+                        'access_playlists',
+                    ]
+                )->pluck('id');
+                $role->permissions()->sync($permission);
+            } elseif ($data['name'] == 'Parent') {
                 $role = RoleEloquentModel::create($data);
                 $permission = PermissionEloquentModel::whereIn(
                     'name',
