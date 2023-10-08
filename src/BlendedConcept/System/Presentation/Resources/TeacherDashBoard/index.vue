@@ -6,7 +6,7 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { defineProps } from "vue";
 import TotalStudents from "./TotalStudent.vue";
 
-const props = defineProps(["students"]);
+const props = defineProps(["students", "user_survey"]);
 </script>
 
 <template>
@@ -18,7 +18,7 @@ const props = defineProps(["students"]);
                 </VCol>
             </VRow>
         </VContainer>
-        <UserExperiencSurvey />
+        <UserExperienceSurvey v-if="props.user_survey ?? false" :data="props.user_survey" />
     </section>
 </template>
 

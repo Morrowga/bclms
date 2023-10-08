@@ -32,6 +32,16 @@ class SurveyEloquentModel extends Model
         return $this->hasMany(SurveySettingEloquentModel::class, 'survey_id', 'id');
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($survey) {
+            $survey->start_date = now()->setTime(12, 0, 0);
+            $survey->end_date = now()->setTime(12, 0, 0);
+        });
+    }
+
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['search'] ?? false, function ($query, $search) {

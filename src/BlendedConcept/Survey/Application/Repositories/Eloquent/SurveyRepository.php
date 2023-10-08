@@ -262,7 +262,7 @@ class SurveyRepository implements SurveyRepositoryInterface
         $user_type = $this->checkRole($user->role->name);
 
         $dateFormat = new DateTime(); // Current date and time
-        $currentDate =  $dateFormat->format('Y-m-d H:i:s'); // Current date and time in 'YYYY-MM-DD HH:MM:SS' format
+        $currentDate =  $dateFormat->format('Y-m-d'); // Current date and time in 'YYYY-MM-DD HH:MM:SS' format
 
         $surveyEloquentModel = SurveyEloquentModel::where('appear_on', $appear_on)->where('type', 'USEREXP')
         ->whereHas('survey_settings', function ($query) use ($user_type) {

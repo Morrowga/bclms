@@ -3,12 +3,16 @@ import { defineProps } from "vue";
 import { router } from "@inertiajs/core";
 import { usePage,useForm } from "@inertiajs/vue3";
 import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
+import UserExperienceSurvey from "./components/UserExperienceSurvey.vue";
 
 let props = defineProps({
     isOpenMenu: {
         type: Boolean,
         default: true,
     },
+    user_survey: {
+        type: Object
+    }
 });
 const teacher_id = ref(null);
 const page = usePage();
@@ -251,6 +255,7 @@ onMounted(() => {
                 </div>
             </VCol>
         </VRow>
+        <UserExperienceSurvey v-if="props.user_survey ?? false" :data="props.user_survey" />
     </section>
 </template>
 
