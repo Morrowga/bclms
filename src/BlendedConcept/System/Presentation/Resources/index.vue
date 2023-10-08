@@ -25,6 +25,8 @@ let props = defineProps([
     "org_teacher_students",
     "user_survey",
     "org_teacher_classrooms",
+    "recent_games",
+    "recent_books",
 ]);
 
 const isAlertVisible = ref(true);
@@ -131,7 +133,8 @@ onMounted(() => {
         </div>
         <div v-else>
             <StaffDashboard
-                :orgainzations_users="props.orgainzations_users"
+                :recent_books="props.recent_books"
+                :recent_games="props.recent_games"
                 :usercount="props.UserCount"
             ></StaffDashboard>
         </div>

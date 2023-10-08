@@ -143,6 +143,11 @@ const formatDate = (dateString) => {
     // Format the date using date-fns
     return format(date, "d MMM yyyy h:mm  a"); // Customize the format string as needed
 };
+const setImage = () => {
+    return props.datas.thumbnail == "" || !props.datas.thumbnail
+        ? "/images/defaults/organisation_logo.png"
+        : props.datas.thumbnail;
+};
 </script>
 <template>
     <div>
@@ -152,15 +157,17 @@ const formatDate = (dateString) => {
             size="x-small"
             color="secondary"
         ></v-btn>
-        <v-dialog v-model="dialog" width="100%" max-width="800" persistent>
-            <VForm @submit.prevent="updateformSubmit">
+        <v-dialog v-model="dialog" max-width="800" min-width="800" persistent>
+            <VForm @submit.prevent="updateformSubmit" class="game-dialog">
                 <v-card>
                     <v-card-title class="pa-0">
                         <div class="faded-image">
-                            <img
-                                :src="'/images/teacherbanner.png'"
+                            <v-img
+                                :src="setImage()"
                                 class="img-header"
                                 alt="Faded Image"
+                                aspect-ratio="16/9"
+                                cover
                             />
                             <div class="faded-overlay"></div>
                             <div class="book-title">
@@ -447,5 +454,9 @@ const formatDate = (dateString) => {
     bottom: 0;
     right: 0;
     color: #fff;
+}
+
+.game-dialog {
+    overflow: auto !important;
 }
 </style>

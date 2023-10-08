@@ -230,7 +230,7 @@ onUpdated(() => {
                         <v-img
                             :src="form.thumbnail_img"
                             :aspect-ratio="16 / 9"
-                            fill
+                            cover
                             alt="Faded Image"
                         />
                         <div class="faded-overlay"></div>

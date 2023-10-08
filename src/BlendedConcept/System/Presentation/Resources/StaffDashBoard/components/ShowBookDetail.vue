@@ -10,77 +10,132 @@ let dialog = ref(false);
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
+const setImage = () => {
+    return props.data.thumbnail_img == "" || !props.data.thumbnail_img
+        ? "/images/defaults/organisation_logo.png"
+        : props.data.thumbnail_img;
+};
 </script>
 <template>
-    <div>
-        <v-card class="my-4" height="200" width="300" @click="toggleDialog">
-            <div class="d-flex fill-height align-center justify-center">
-                <img class="bg-white fit-img" :src="data.image" />
-            </div>
-        </v-card>
-        <v-dialog v-model="dialog" width="auto" max-width="800">
+    <div class="h-100 w-100">
+        <v-hover v-slot="{ isHovering, props }" open-delay="200">
+            <v-card
+                class="item-frame h-100"
+                v-bind="props"
+                :class="{ 'on-hover': isHovering }"
+            >
+                <v-img
+                    @click="toggleDialog"
+                    :src="setImage()"
+                    alt="Your Image"
+                    :width="500"
+                    :max-height="160"
+                    aspect-ratio="16/9"
+                    cover
+                    class="p-relative img-hover"
+                >
+                    <!-- show free storybook is free -->
+                    <div class="free-bar" v-if="data.is_free">
+                        <div class="pppangram-bold">FREE</div>
+                    </div>
+                </v-img>
+            </v-card>
+        </v-hover>
+        <!-- noted this dialog module is used for both show and edit on one page -->
+        <v-dialog v-model="dialog" width="auto" max-width="800" min-width="800">
             <v-card>
-                <div class="faded-image">
-                    <img
-                        :src="'/images/teacherbanner.png'"
-                        class="img-header"
-                        alt="Faded Image"
-                    />
-                    <div class="faded-overlay"></div>
-                    <div class="book-title">
-                        <span>Boj Giggly Park Adventure</span>
-                    </div>
-                    <div class="close-btn">
-                        <v-btn
-                            @click="dialog = false"
-                            color="default"
-                            variant="elevated"
-                            icon="$close"
-                            :rounded="false"
+                <v-card-title class="pa-0">
+                    <div class="faded-image">
+                        <v-img
+                            :src="setImage()"
+                            :aspect-ratio="16 / 9"
+                            cover
+                            alt="Faded Image"
                         >
-                        </v-btn>
+                            <div class="pa-2 ml-10 mt-4 coins-bg">
+                                <div class="d-flex space-between align-center">
+                                    <img
+                                        src="/images/icons/goldcoins.png"
+                                        class="coin-image"
+                                    />
+                                    <span class="coin-text pl-1">{{
+                                        data.num_gold_coins
+                                    }}</span>
+                                </div>
+                                <div class="d-flex space-between align-center">
+                                    <img
+                                        src="/images/icons/silvercoins.png"
+                                        class="coin-image"
+                                    />
+                                    <span class="coin-text pl-2">
+                                        {{ data.num_silver_coins }}
+                                    </span>
+                                </div>
+                            </div>
+                        </v-img>
+                        <div class="faded-overlay"></div>
+                        <div class="book-title">
+                            <span>{{ data.name }}</span>
+                        </div>
+                        <div class="close-btn">
+                            <v-btn
+                                @click="dialog = false"
+                                color="default"
+                                variant="elevated"
+                                icon="$close"
+                                :rounded="false"
+                            >
+                            </v-btn>
+                        </div>
                     </div>
-                </div>
-                <!-- <v-card-title class="pa-0">
-                </v-card-title> -->
+                </v-card-title>
                 <v-card-text class="px-10 py-0 pb-5">
                     <div class="paragraph">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
+                        {{ data.description }}
                     </div>
+
                     <div class="learning pt-2">
                         <span class="font-weight-black text-black"
                             >Learning Needs</span
                         >
                         <v-chip-group>
-                            <v-chip size="small">Social Awareness</v-chip>
-
-                            <v-chip size="small">Self Awareness</v-chip>
-                            <v-chip size="small"
-                                >Responsible Decision Making</v-chip
+                            <v-chip
+                                size="small"
+                                v-for="(
+                                    learningneed, index
+                                ) in data.learingneeds"
+                                :key="index"
                             >
-                            <v-chip size="small">Mobility</v-chip>
+                                {{ learningneed.name }}
+                            </v-chip>
                         </v-chip-group>
                     </div>
+
                     <div class="themes pt-2">
                         <span class="font-weight-black text-black">Themes</span>
                         <v-chip-group>
-                            <v-chip size="small">Social Skills</v-chip>
-
-                            <v-chip size="small">Life Skills</v-chip>
+                            <v-chip
+                                size="small"
+                                v-for="theme in data.themes"
+                                :key="theme.id"
+                            >
+                                {{ theme.name }}
+                            </v-chip>
                         </v-chip-group>
                     </div>
+
                     <div class="disability pt-2">
                         <span class="font-weight-black text-black"
                             >Disability Types</span
                         >
                         <v-chip-group>
-                            <v-chip size="small">Dyspraxia</v-chip>
-
-                            <v-chip size="small">Hyperactive Disorder</v-chip>
+                            <v-chip
+                                size="small"
+                                v-for="disability in data.disability_types"
+                                :key="disability.id"
+                            >
+                                {{ disability.name }}
+                            </v-chip>
                         </v-chip-group>
                     </div>
 
@@ -89,13 +144,13 @@ const toggleDialog = () => {
                             >Supported Accessibility Devices</span
                         >
                         <v-chip-group>
-                            <v-chip size="small">Mouse/Keyboard</v-chip>
-
-                            <v-chip size="small">Switch-Single</v-chip>
-
-                            <v-chip size="small">Switch-Double</v-chip>
-
-                            <v-chip size="small">Touch</v-chip>
+                            <v-chip
+                                size="small"
+                                v-for="device in data.devices"
+                                :key="device.id"
+                            >
+                                {{ device.name }}
+                            </v-chip>
                         </v-chip-group>
                     </div>
                 </v-card-text>
@@ -106,12 +161,13 @@ const toggleDialog = () => {
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <!-- noted this dialog module is used for both show and edit on one page -->
     </div>
 </template>
 
 <style scoped>
 /* .img-header {
-   
+
 } */
 .faded-image {
     position: relative;
@@ -121,9 +177,9 @@ const toggleDialog = () => {
 
 .faded-image img {
     display: block;
-    /* height: 270px; */
+    height: 270px;
     width: 100%;
-    object-fit: cover;
+    object-fit: fill;
     position: relative;
 }
 
@@ -161,7 +217,7 @@ const toggleDialog = () => {
 
     right: 0;
 }
-.v-btn--icon {
+.close-btn .v-btn--icon {
     border-radius: 10px;
     scale: 0.7;
 }
@@ -176,5 +232,73 @@ const toggleDialog = () => {
 .chip-3 {
     background: rgba(72, 255, 0, 0.464);
     color: #fff !important;
+}
+.v-card {
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0.8;
+}
+
+.v-card:not(.on-hover) {
+    opacity: 1;
+}
+
+.edit-icon {
+    position: absolute;
+    bottom: -5px;
+    right: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+/* coin images class */
+
+.coins-bg {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 300px !important;
+    height: 80px;
+    border-radius: 30px !important;
+    background: rgba(0, 0, 0, 0.75) !important;
+    background-color: transparent;
+}
+.coin-image {
+    width: 50px !important;
+    height: 50px !important;
+}
+.coin-text {
+    color: #fff !important;
+    text-align: center !important;
+    font-family: "ruddy-bold";
+    font-size: 45px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 74px !important; /* 123.333% */
+    text-transform: capitalize !important;
+}
+
+.p-relative {
+    position: relative;
+}
+.free-bar {
+    position: absolute;
+    width: 160px;
+    height: 37.191px;
+    top: 15px;
+    right: -40px;
+    transform: rotate(40.242deg);
+    flex-shrink: 0;
+    background: #d7f2f0;
+    text-align: center;
+    padding-top: 5px;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    color: #000 !important;
+    line-height: 32px;
+}
+.img-hover:hover {
+    fill: #282828;
+    fill-opacity: 0.5;
 }
 </style>

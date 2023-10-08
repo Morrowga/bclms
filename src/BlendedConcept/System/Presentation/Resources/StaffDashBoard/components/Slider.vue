@@ -36,11 +36,12 @@ const toggleDialog = (id) => {
     console.log("id", id);
     // dialog.value = !dialog.value;
 };
-const resolveComponent = (item) => {
+const resolveComponent = () => {
     if (props.type == "games") return ShowDetail;
 
     return ShowBookDetail;
 };
+console.log("datas", props.datas);
 </script>
 <template>
     <div class="control-position">
@@ -55,9 +56,9 @@ const resolveComponent = (item) => {
                 </Link>
             </div>
         </div>
-        <swiper :slides-per-view="5" :space-between="200" class="d-flex">
-            <swiper-slide v-for="data in datas" :key="data.image">
-                <Component :is="resolveComponent(item)" :data="data" />
+        <swiper :slides-per-view="5" :space-between="10" class="mt-4">
+            <swiper-slide v-for="data in datas" :key="data.id">
+                <Component :is="resolveComponent()" :data="data" />
             </swiper-slide>
         </swiper>
     </div>

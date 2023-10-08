@@ -101,9 +101,9 @@ onUpdated(() => {
                 <v-card-title class="pa-0">
                     <div class="faded-image">
                         <v-img
-                            :src="data.thumbnail_img"
+                            :src="setImage()"
                             :aspect-ratio="16 / 9"
-                            fill
+                            cover
                             alt="Faded Image"
                         >
                             <div class="pa-2 ml-10 mt-4 coins-bg">

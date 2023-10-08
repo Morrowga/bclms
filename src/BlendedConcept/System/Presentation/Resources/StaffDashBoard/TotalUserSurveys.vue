@@ -1,34 +1,51 @@
 <script setup>
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
+import { format } from "date-fns";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
+import {
+    serverParams,
+    onColumnFilter,
+    searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPage,
+    serverPerPage,
+    datas,
+    routeName,
+} from "./useSurveyDatatable.js";
 import avatar4 from "@images/avatars/avatar-4.png";
-import { toastAlert } from "@Composables/useToastAlert";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 
-let props = defineProps(["users"]);
+const formatDate = (dateString) => {
+    // Parse the date string into a Date object
+    const date = new Date(dateString);
+    // Format the date using date-fns
+    return format(date, "dd/M/yyyy"); // Customize the format string as needed
+};
 //## start datatable section
 let columns = [
     {
         label: "Name",
-        field: "name",
+        field: "title",
         sortable: false,
     },
     {
         label: "User Types",
-        field: "user_types",
+        field: "survey_settings",
         sortable: false,
     },
     {
         label: "Completion Status",
-        field: "status",
+        field: "completion_status",
         sortable: false,
     },
     {
         label: "Date Created",
-        field: "date",
+        field: "created_at",
         sortable: false,
     },
     {
@@ -38,47 +55,19 @@ let columns = [
     },
 ];
 
-let rows = [
+const items = ref([
     {
-        name: "User One",
-        user_types: [
-            {
-                title: "Organisation",
-            },
-            {
-                title: "User",
-            },
-        ],
-        status: "success",
-        date: "17/11/2023",
+        title: "User Type",
+        value: "edit",
     },
     {
-        name: "User Two",
-        user_types: [
-            {
-                title: "Organisation",
-            },
-            {
-                title: "User",
-            },
-        ],
-        status: "success",
-        date: "17/11/2023",
+        title: "Date",
+        value: "delete",
     },
-    {
-        name: "User Three",
-        user_types: [
-            {
-                title: "Organisation",
-            },
-            {
-                title: "User",
-            },
-        ],
-        status: "success",
-        date: "17/11/2023",
-    },
-];
+]);
+
+const isDiability = ref(false);
+const isEditDiability = ref(false);
 
 //## truncatedText
 let truncatedText = (text) => {
@@ -90,146 +79,230 @@ let truncatedText = (text) => {
         }
     }
 };
-
+let filters = ref(null);
+let filterDatas = ref([
+    { title: "Name", value: "title" },
+    { title: "Date Created", value: "created_at" },
+    { title: "Completion Status", value: "completion_status" },
+]);
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
-const deleteOrganisation = (id) => {
+const deleteSurvey = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",
-        denyButtonText: "Yes, delete it!",
+        denyButtonText: "Yes,delete it!",
+        onConfirm: () => {
+            router.delete(route("userexperiencesurvey.destroy", id), {
+                onSuccess: () => {},
+            });
+        },
     });
 };
+let options = ref({
+    enabled: true,
+    mode: "pages",
+    perPage: datas?.value.per_page,
+    setCurrentPage: datas?.value.current_page,
+    perPageDropdown: [10, 20, 50, 100],
+    dropdownAllowAll: false,
+});
+
+let selectedRole = ref("");
+routeName.value = "admin.get-recent-surveys";
+
+serverPage.value = ref(datas.value?.current_page ?? 1);
+serverPerPage.value = ref(10);
+
+watch(serverPerPage, function (value) {
+    onPerPageChange(value);
+});
+const surveys = computed(() => datas.value);
 </script>
 <template>
-    <section>
-        <VCard>
-            <VCardText class="d-flex flex-wrap gap-4">
-                <!-- 👉 Export button -->
-                <div class="d-flex align-center">
-                    <v-btn
-                        prepend-icon="mdi-export"
-                        variant="outlined"
-                        color="secondary"
-                        >Export</v-btn
-                    >
-                </div>
-
-                <VSpacer />
-                <div class="d-flex align-center gap-6">
-                    <div class="sort-field">
-                        <SelectBox
-                            placeholder="Sort By"
-                            density="compact"
-                            :datas="[
-                                'Name',
-                                'Date Created',
-                                'Completion Status',
-                            ]"
-                        ></SelectBox>
-                    </div>
-
-                    <Link :href="route('userexperiencesurvey.index')">
-                        <v-btn>Manage Surveys</v-btn>
-                    </Link>
-                </div>
-            </VCardText>
-
-            <VDivider />
-
-            <vue-good-table
-                class="role-data-table"
-                styleClass="vgt-table"
-                v-on:selected-rows-change="selectionChanged"
-                :columns="columns"
-                :rows="rows"
-                :select-options="{
-                    enabled: true,
-                }"
-                :pagination-options="{
-                    enabled: true,
-                }"
-            >
-                <template #table-row="dataProps">
-                    <div v-if="dataProps.column.field == 'name'">
-                        <Link
-                            class="text-secondary"
-                            :href="route('userexperiencesurvey.create')"
-                        >
-                            <span>{{ dataProps.row.name }}</span>
-                        </Link>
-                    </div>
-                    <div
-                        v-if="dataProps.column.field == 'user_types'"
-                        class="flex flex-nowrap"
-                    >
-                        <VChip
-                            v-for="data in dataProps.row.user_types"
-                            :key="data.title"
-                            size="small"
-                            class="info"
-                            color="info"
-                            >{{ data.title }}</VChip
-                        >
-                    </div>
-                    <div v-if="dataProps.column.field == 'status'">
-                        <VProgressLinear
-                            color="primary"
-                            model-value="80"
-                            :height="8"
-                        ></VProgressLinear>
-                        <span>30/50 Users </span>
-                    </div>
-                    <div v-if="dataProps.column.field == 'action'">
-                        <VMenu location="end">
-                            <template #activator="{ props }">
-                                <VIcon
-                                    v-bind="props"
-                                    size="24"
-                                    icon="mdi-dots-horizontal"
-                                    color="black"
-                                    class="mt-n4"
+    <VContainer fluid>
+        <VRow justify="end">
+            <VCol cols="12" sm="12" lg="12">
+                <section>
+                    <VCard>
+                        <VCardText class="d-flex flex-wrap gap-4 align-center">
+                            <VSpacer />
+                            <div class="search-field">
+                                <VTextField
+                                    @keyup.enter="searchItems"
+                                    v-model="serverParams.search"
+                                    placeholder="Search Surveys"
+                                    density="compact"
+                                    variant="solo"
                                 />
-                            </template>
-                            <VList>
-                                <VListItem
-                                    @click="
-                                        deleteOrganisation(dataProps.row.id)
-                                    "
-                                >
-                                    <VListItemTitle>Delete</VListItemTitle>
-                                </VListItem>
-                                <VListItem
-                                    @click="
-                                        router.get(route('survey_results.view'))
-                                    "
-                                >
-                                    <VListItemTitle>Result</VListItemTitle>
-                                </VListItem>
-                            </VList>
-                        </VMenu>
-                    </div>
-                </template>
-            </vue-good-table>
+                            </div>
 
-            <VDivider />
-        </VCard>
-    </section>
+                            <div class="d-flex">
+                                <div
+                                    class="app-user-search-filter d-flex align-center justify-end gap-3"
+                                >
+                                    <!-- 👉 Add User button -->
+                                    <Create
+                                        :organisations="organisations"
+                                        :roles="roles_name"
+                                        :flash="flash"
+                                    />
+                                    <selectBox
+                                        v-model="filters"
+                                        placeholder="Sort By"
+                                        :datas="filterDatas"
+                                        density="compact"
+                                        item_title="title"
+                                        item_value="value"
+                                    />
+                                    <Link
+                                        :href="
+                                            route('userexperiencesurvey.create')
+                                        "
+                                    >
+                                        <VBtn>
+                                            <span class="text-white pl-4 pr-4">
+                                                Add Survey
+                                            </span>
+                                        </VBtn>
+                                    </Link>
+                                </div>
+                            </div>
+                        </VCardText>
+                        <VDivider />
+
+                        <vue-good-table
+                            class="role-data-table"
+                            styleClass="vgt-table"
+                            v-on:selected-rows-change="selectionChanged"
+                            :columns="columns"
+                            :rows="surveys"
+                            :select-options="{
+                                enabled: true,
+                            }"
+                            mode="remote"
+                            :totalRows="datas.total"
+                            :pagination-options="options"
+                        >
+                            <template #table-row="dataProps">
+                                <div v-if="dataProps.column.field == 'title'">
+                                    <Link
+                                        :href="
+                                            route(
+                                                'userexperiencesurvey.edit',
+                                                dataProps.row.id
+                                            )
+                                        "
+                                        class="text-secondary"
+                                    >
+                                        <span>{{ dataProps.row.title }}</span>
+                                    </Link>
+                                </div>
+                                <div
+                                    v-if="
+                                        dataProps.column.field ==
+                                        'survey_settings'
+                                    "
+                                >
+                                    <!-- v-for="user_type in dataProps.row
+                                                .user_type" -->
+                                    <!-- :key="user_type" -->
+                                    <v-chip
+                                        v-for="setting in dataProps.row
+                                            .survey_settings"
+                                        :key="setting.id"
+                                        class="ma-2"
+                                        color="primary"
+                                        size="small"
+                                    >
+                                        {{ setting.user_type }}
+                                    </v-chip>
+                                </div>
+                                <div
+                                    v-if="
+                                        dataProps.column.field ==
+                                        'completion_status'
+                                    "
+                                >
+                                    <VProgressLinear
+                                        color="yellow-darken-2"
+                                        class="custom-progress"
+                                        model-value="80"
+                                        :height="8"
+                                    >
+                                    </VProgressLinear>
+                                    <span
+                                        ><span class="text-warning">8 </span
+                                        >/10</span
+                                    >
+                                    Users
+                                </div>
+                                <div
+                                    v-if="
+                                        dataProps.column.field == 'created_at'
+                                    "
+                                >
+                                    {{ formatDate(dataProps.row.created_at) }}
+                                </div>
+                                <div v-if="dataProps.column.field == 'action'">
+                                    <VMenu location="end">
+                                        <template #activator="{ props }">
+                                            <VIcon
+                                                v-bind="props"
+                                                size="24"
+                                                icon="mdi-dots-horizontal"
+                                                color="black"
+                                                class="mt-n4"
+                                            />
+                                        </template>
+                                        <VList>
+                                            <VListItem
+                                                @click="
+                                                    deleteSurvey(
+                                                        dataProps.row.id
+                                                    )
+                                                "
+                                            >
+                                                <VListItemTitle
+                                                    >Delete</VListItemTitle
+                                                >
+                                            </VListItem>
+                                            <VListItem
+                                                @click="
+                                                    router.get(
+                                                        route(
+                                                            'survey_results.view'
+                                                        )
+                                                    )
+                                                "
+                                            >
+                                                <VListItemTitle
+                                                    >Result</VListItemTitle
+                                                >
+                                            </VListItem>
+                                        </VList>
+                                    </VMenu>
+                                </div>
+                            </template>
+                        </vue-good-table>
+
+                        <VDivider />
+                    </VCard>
+                </section>
+            </VCol>
+        </VRow>
+    </VContainer>
 </template>
 
-<style lang="scss">
-.vgt-table th {
-    font-size: 10pt !important;
-}
-.vgt-table th.vgt-checkbox-col {
-    background: rgb(var(--v-theme-surface)) !important;
-    padding: 15px;
-    border-right: none;
-    border-bottom: 1px solid #dcdfe6;
-}
-.vgt-wrap__footer {
-    background: rgb(var(--v-theme-surface)) !important;
-    border: none;
-    color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+<style scoped>
+.custom-progress {
+    width: 70%;
 }
 </style>

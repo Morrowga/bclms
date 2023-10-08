@@ -36,7 +36,12 @@ const getImage = (item) => {
                     v-bind="props"
                 >
                     <v-card-title class="ps-relative">
-                        <v-img :src="getImage(item)" min-width="200" />
+                        <v-img
+                            :src="getImage(item)"
+                            aspect-ratio="16/9"
+                            min-width="200"
+                            min-height="100"
+                        />
                         <div class="chip-page" v-if="is_chip">
                             <div class="chip-content">14 pages</div>
                         </div>

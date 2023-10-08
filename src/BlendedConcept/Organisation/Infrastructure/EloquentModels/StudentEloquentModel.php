@@ -12,6 +12,7 @@ use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEl
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class StudentEloquentModel extends Model implements HasMedia
 {
@@ -85,6 +86,11 @@ class StudentEloquentModel extends Model implements HasMedia
     public function disability_types(): BelongsToMany
     {
         return $this->belongsToMany(DisabilityTypeEloquentModel::class, 'student_disability_type', 'student_id', 'disability_type_id');
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(TeacherEloquentModel::class, 'teacher_students', 'student_id', 'teacher_id');
     }
 
     public function user()

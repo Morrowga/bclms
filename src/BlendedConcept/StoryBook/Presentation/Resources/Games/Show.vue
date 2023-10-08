@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps, ref } from "vue";
 import Edit from "./Edit.vue";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 const props = defineProps({
     data: {
         type: Object,
@@ -9,12 +9,12 @@ const props = defineProps({
     },
     disabilitytypes: {
         type: Object,
-        required: true
+        required: true,
     },
     devices: {
         type: Object,
-        required: true
-    }
+        required: true,
+    },
 });
 
 let dialog = ref(false);
@@ -25,11 +25,16 @@ const toggleDialog = () => {
 console.log(props.data.devices);
 
 const formatDate = (dateString) => {
-      // Parse the date string into a Date object
+    // Parse the date string into a Date object
     const date = new Date(dateString);
     // Format the date using date-fns
-    return format(date, 'd MMM yyyy h:mm  a'); // Customize the format string as needed
-}
+    return format(date, "d MMM yyyy h:mm  a"); // Customize the format string as needed
+};
+const setImage = () => {
+    return props.data.thumbnail == "" || !props.data.thumbnail
+        ? "/images/defaults/organisation_logo.png"
+        : props.data.thumbnail;
+};
 </script>
 <template>
     <div>
@@ -41,28 +46,34 @@ const formatDate = (dateString) => {
             >
                 <v-img
                     @click="toggleDialog"
-                    :src="data.thumbnail"
+                    :src="setImage()"
                     alt="Your Image"
                     max-height="200"
                     cover
                 ></v-img>
             </v-card>
         </v-hover>
-        <v-dialog v-model="dialog" width="auto" max-width="800">
+        <v-dialog v-model="dialog" width="auto" max-width="800" min-width="800">
             <v-card>
                 <v-card-title class="pa-0">
                     <div class="faded-image">
-                        <img
-                            :src="'/images/teacherbanner.png'"
+                        <v-img
+                            :src="setImage()"
                             class="img-header"
                             alt="Faded Image"
+                            cover
+                            aspect-ratio="16/9"
                         />
                         <div class="faded-overlay"></div>
                         <div class="book-title">
                             <span>{{ data.name }}</span>
                         </div>
                         <div class="edit-icon">
-                            <Edit :datas="props.data" :disabilitytypes="props.disabilitytypes" :devices="props.devices" />
+                            <Edit
+                                :datas="props.data"
+                                :disabilitytypes="props.disabilitytypes"
+                                :devices="props.devices"
+                            />
                         </div>
                         <div class="close-btn">
                             <v-btn
@@ -78,7 +89,7 @@ const formatDate = (dateString) => {
                 </v-card-title>
                 <v-card-text class="px-10 py-0 pb-5">
                     <div class="paragraph">
-                       {{data.description}}
+                        {{ data.description }}
                     </div>
                     <br />
                     <div class="disability">
@@ -86,10 +97,14 @@ const formatDate = (dateString) => {
                             >Disability Types</span
                         ><br />
                         <v-chip-group>
-                            <v-chip size="small" v-for="(disability,index) in data.disability_types"
-                            :key="index"
+                            <v-chip
+                                size="small"
+                                v-for="(
+                                    disability, index
+                                ) in data.disability_types"
+                                :key="index"
                             >
-                                {{disability.name}}
+                                {{ disability.name }}
                             </v-chip>
                         </v-chip-group>
                     </div>
@@ -99,13 +114,19 @@ const formatDate = (dateString) => {
                             >Supported Accessibility Devices</span
                         ><br />
                         <v-chip-group>
-                            <v-chip size="small" v-for="(device,index) in data.devices" :key="index">{{device.name}}</v-chip>
+                            <v-chip
+                                size="small"
+                                v-for="(device, index) in data.devices"
+                                :key="index"
+                                >{{ device.name }}</v-chip
+                            >
                         </v-chip-group>
                     </div>
                 </v-card-text>
                 <v-card-actions class="d-flex justify-end">
                     <span class="text-caption"
-                        >Last updated on {{ formatDate(props.data.updated_at) }}</span
+                        >Last updated on
+                        {{ formatDate(props.data.updated_at) }}</span
                     >
                 </v-card-actions>
             </v-card>

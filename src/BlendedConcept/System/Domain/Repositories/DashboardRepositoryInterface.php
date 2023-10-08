@@ -9,4 +9,8 @@ interface DashboardRepositoryInterface
 
     public function getRecentOrganisations($filters);
     public function getRecentUsers($filters);
+    public function getRecentBooks();
+    public function getRecentGames();
+    public function getRecentSurveys($filters);
+    public function getRecentStudents($filters);
 }

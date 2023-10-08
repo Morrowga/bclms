@@ -1,86 +1,118 @@
 <script setup>
 import { defineProps, ref } from "vue";
+import { format } from "date-fns";
 const props = defineProps({
     data: {
         type: Object,
         required: true,
     },
 });
+
 let dialog = ref(false);
+
 const toggleDialog = () => {
     dialog.value = !dialog.value;
+};
+console.log(props.data.devices);
+
+const formatDate = (dateString) => {
+    // Parse the date string into a Date object
+    const date = new Date(dateString);
+    // Format the date using date-fns
+    return format(date, "d MMM yyyy h:mm  a"); // Customize the format string as needed
+};
+const setImage = () => {
+    return props.data.thumbnail == "" || !props.data.thumbnail
+        ? "/images/defaults/organisation_logo.png"
+        : props.data.thumbnail;
 };
 </script>
 <template>
     <div>
-        <v-card class="my-4" height="200" width="300" @click="toggleDialog">
-            <div class="d-flex fill-height align-center justify-center h-100">
-                <img class="bg-white fit-img h-100" :src="data.image" />
-            </div>
-        </v-card>
-        <v-dialog v-model="dialog" width="auto" max-width="800">
+        <v-hover v-slot="{ isHovering, props }" open-delay="200">
+            <v-card
+                class="item-frame"
+                v-bind="props"
+                :class="{ 'on-hover': isHovering }"
+            >
+                <v-img
+                    @click="toggleDialog"
+                    :src="data.thumbnail"
+                    alt="Your Image"
+                    :width="500"
+                    :max-height="160"
+                    aspect-ratio="16/9"
+                    cover
+                ></v-img>
+            </v-card>
+        </v-hover>
+        <v-dialog v-model="dialog" width="auto" max-width="800" min-width="800">
             <v-card>
-                <div class="faded-image">
-                    <img
-                        :src="'/images/teacherbanner.png'"
-                        class="img-header"
-                        alt="Faded Image"
-                    />
-                    <div class="faded-overlay"></div>
-                    <div class="book-title">
-                        <span>Boj Giggly Park Adventure</span>
+                <v-card-title class="pa-0">
+                    <div class="faded-image">
+                        <v-img
+                            :src="setImage()"
+                            class="img-header"
+                            alt="Faded Image"
+                            :aspect-ratio="16 / 9"
+                            cover
+                        />
+                        <div class="faded-overlay"></div>
+                        <div class="book-title">
+                            <span>{{ data.name }}</span>
+                        </div>
+                        <div class="close-btn">
+                            <v-btn
+                                @click="dialog = false"
+                                color="default"
+                                variant="elevated"
+                                icon="$close"
+                                :rounded="false"
+                            >
+                            </v-btn>
+                        </div>
                     </div>
-                    <div class="close-btn">
-                        <v-btn
-                            @click="dialog = false"
-                            color="default"
-                            variant="elevated"
-                            icon="$close"
-                            :rounded="false"
-                        >
-                        </v-btn>
-                    </div>
-                </div>
-                <!-- <v-card-title class="pa-0">
-                </v-card-title> -->
+                </v-card-title>
                 <v-card-text class="px-10 py-0 pb-5">
                     <div class="paragraph">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.
+                        {{ data.description }}
                     </div>
-
-                    <div class="disability pt-2">
+                    <br />
+                    <div class="disability">
                         <span class="font-weight-black text-black"
                             >Disability Types</span
-                        >
+                        ><br />
                         <v-chip-group>
-                            <v-chip size="small">Dyspraxia</v-chip>
-
-                            <v-chip size="small">Hyperactive Disorder</v-chip>
+                            <v-chip
+                                size="small"
+                                v-for="(
+                                    disability, index
+                                ) in data.disability_types"
+                                :key="index"
+                            >
+                                {{ disability.name }}
+                            </v-chip>
                         </v-chip-group>
                     </div>
-
-                    <div class="supported pt-2">
+                    <br />
+                    <div class="supported">
                         <span class="font-weight-black text-black"
                             >Supported Accessibility Devices</span
-                        >
+                        ><br />
                         <v-chip-group>
-                            <v-chip size="small">Mouse/Keyboard</v-chip>
-
-                            <v-chip size="small">Switch-Single</v-chip>
-
-                            <v-chip size="small">Switch-Double</v-chip>
-
-                            <v-chip size="small">Touch</v-chip>
+                            <v-chip
+                                size="small"
+                                v-for="(device, index) in data.devices"
+                                :key="index"
+                                >{{ device.name }}</v-chip
+                            >
                         </v-chip-group>
                     </div>
                 </v-card-text>
                 <v-card-actions class="d-flex justify-end">
                     <span class="text-caption"
-                        >Last updated on 14 Aug 2023 1:04Am</span
+                        >Last updated on
+                        {{ formatDate(props.data.updated_at) }}</span
                     >
                 </v-card-actions>
             </v-card>
@@ -90,7 +122,7 @@ const toggleDialog = () => {
 
 <style scoped>
 /* .img-header {
-   
+
 } */
 .faded-image {
     position: relative;
@@ -100,9 +132,9 @@ const toggleDialog = () => {
 
 .faded-image img {
     display: block;
-    /* height: 270px; */
+    height: 270px;
     width: 100%;
-    object-fit: cover;
+    object-fit: fill;
     position: relative;
 }
 
@@ -140,7 +172,7 @@ const toggleDialog = () => {
 
     right: 0;
 }
-.v-btn--icon {
+.close-btn .v-btn--icon {
     border-radius: 10px;
     scale: 0.7;
 }
@@ -155,5 +187,19 @@ const toggleDialog = () => {
 .chip-3 {
     background: rgba(72, 255, 0, 0.464);
     color: #fff !important;
+}
+.v-card {
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0.8;
+}
+
+.v-card:not(.on-hover) {
+    opacity: 1;
+}
+
+.edit-icon {
+    position: absolute;
+    bottom: 7px;
+    right: 40px;
 }
 </style>

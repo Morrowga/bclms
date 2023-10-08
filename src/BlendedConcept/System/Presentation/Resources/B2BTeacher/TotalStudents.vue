@@ -57,7 +57,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                 <StudentAvatar
                     :image="userImage(student)"
                     :title="student?.user?.full_name"
-                    :phone_number="student?.user?.contact_number"
+                    :phone_number="student?.parent?.user?.contact_number"
                 />
             </v-col>
         </VRow>

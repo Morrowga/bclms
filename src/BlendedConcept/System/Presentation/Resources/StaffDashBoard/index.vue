@@ -1,12 +1,8 @@
 <script setup>
 import { defineProps } from "vue";
-
-let orgainzations_users = defineProps(["orgainzations_users",'usercount']);
-import LatestModifiedOrganisations from "./LatestModifiedOrganisations.vue";
 import TotalUserSurveys from "./TotalUserSurveys.vue";
 import RoleCard from "@mainRoot/components/RoleCard.vue";
 import Slider from "./components/Slider.vue";
-
 
 const bookResources = [
     {
@@ -82,8 +78,9 @@ const gameResources = [
     {
         image: "/images/image10.png",
     },
-]
+];
 
+const props = defineProps(["recent_books", "recent_games", "usercount"]);
 </script>
 
 <template>
@@ -112,18 +109,18 @@ const gameResources = [
         <div class="slider-stction">
             <p class="pppangram-bold stafftitle">Books</p>
             <Slider
-                subtitle="Show 8 of 18 books"
+                :subtitle="`Show ${props.recent_books.data.length} of ${props.recent_books.total} books`"
                 btnText="Manage Books"
                 :url="route('books.index')"
-                :datas="bookResources"
+                :datas="props.recent_books.data"
                 type="books"
             /><br />
             <p class="pppangram-bold stafftitle">Games</p>
             <Slider
-                subtitle="Show 8 of 18 games"
+                :subtitle="`Show ${props.recent_games.data.length} of ${props.recent_games.total} games`"
                 btnText="Manage Games"
                 :url="route('games.index')"
-                :datas="gameResources"
+                :datas="props.recent_games.data"
                 type="games"
             /><br />
         </div>
@@ -135,11 +132,7 @@ const gameResources = [
                             <p class="heading pppangram-bold">User Surveys</p>
                         </div>
                     </div>
-                    <TotalUserSurveys class="mt-2"
-                        :organisation="
-                            orgainzations_users.orgainzations_users[1]
-                        "
-                    />
+                    <TotalUserSurveys class="mt-2" />
                     <br />
                 </div>
                 <br />
@@ -155,8 +148,8 @@ const gameResources = [
     align-items: center;
 }
 
-.stafftitle{
-    color: var(--Tiggie-Blue, #4066E4);
+.stafftitle {
+    color: var(--Tiggie-Blue, #4066e4);
     font-size: 40px !important;
     font-style: normal;
     font-weight: 700;
