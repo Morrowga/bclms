@@ -87,10 +87,10 @@ return [
         'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Edit',
     ],
 
-    'survey_results' => [
-        'index' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResults/Index',
-        'show' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResults/Show',
-        'view' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResults/View',
+    'surveyresponse' => [
+        'index' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResponses/Index',
+        'show' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResponses/Show',
+        'view' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResponses/View',
     ],
 
     'conduct_lessons' => [

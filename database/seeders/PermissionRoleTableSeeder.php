@@ -103,7 +103,6 @@ class PermissionRoleTableSeeder extends Seeder
                 $permission = PermissionEloquentModel::whereIn(
                     'name',
                     [
-                        'access_surveyResults',
                         'access_userSurveys',
                         'access_profillingSurveys',
                         'access_surveys',
@@ -144,6 +143,10 @@ class PermissionRoleTableSeeder extends Seeder
                         'delete_survey',
                         'edit_survey',
                         'create_survey',
+                        'access_surveyresponses',
+                        'create_surveyresponses',
+                        'edit_surveyresponses',
+                        'delete_surveyresponses'
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);

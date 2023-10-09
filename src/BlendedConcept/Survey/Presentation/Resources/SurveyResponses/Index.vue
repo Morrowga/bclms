@@ -19,7 +19,7 @@ import {
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
 // import Edit from "./Edit.vue";
-let props = defineProps(["surveyResults"]);
+let props = defineProps(["surveyResponses"]);
 
 //## start datatable section
 let columns = [
@@ -108,7 +108,7 @@ const deleteItem = () => {
 <template>
     <AdminLayout>
         <VContainer fluid>
-            <h1 class="tiggie-title mb-4">Survey Results</h1>
+            <h1 class="tiggie-title mb-4">Survey Responses</h1>
             <VRow>
                 <VCol cols="12" sm="12" lg="12">
                     <section>
@@ -144,7 +144,7 @@ const deleteItem = () => {
                                 styleClass="vgt-table"
                                 v-on:selected-rows-change="selectionChanged"
                                 :columns="columns"
-                                :rows="props.surveyResults.data"
+                                :rows="props.surveyResponses.data"
                                 :select-options="{
                                     enabled: false,
                                 }"
