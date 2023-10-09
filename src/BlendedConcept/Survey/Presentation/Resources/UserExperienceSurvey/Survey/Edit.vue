@@ -157,7 +157,7 @@ const handleSettingModalSubmit = (data) => {
     form.questions = addSurveyForm.value.length > 0 ? JSON.stringify(addSurveyForm.value) : null;
     form.post(route("userexperiencesurvey.update", props.survey.data.id), {
         onSuccess: () => {
-            reload('userexperiencesurvey.edit', props.survey.data.id);
+            reload('userexperiencesurvey.index');
             SuccessDialog({ title: "You've successfully updated user experience survey." });
         },
         onError: (error) => {

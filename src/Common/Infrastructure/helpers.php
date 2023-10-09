@@ -20,6 +20,18 @@ if (! function_exists('getNotifications')) {
     }
 }
 
+//Remove null in array
+if (! function_exists('removeNullInArray')) {
+    function removeNullInArray($array)
+    {
+        $filteredArray = array_filter($array, function ($value) {
+            return $value !== null;
+        });
+
+        return $filteredArray;
+    }
+}
+
 //this is global function that check which user has access
 
 if (! function_exists('authorize')) {

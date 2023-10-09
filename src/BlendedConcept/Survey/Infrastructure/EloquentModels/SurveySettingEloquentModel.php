@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Src\BlendedConcept\Survey\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Model;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class SurveySettingEloquentModel extends Model
 {

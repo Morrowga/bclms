@@ -2,6 +2,15 @@
 const isDialogVisible = ref(true);
 import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
 import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
+import { useForm,usePage } from "@inertiajs/vue3";
+import { SuccessDialog } from "@actions/useSuccess";
+import {
+    emailValidator,
+    requiredValidator,
+    integerValidator,
+} from "@validators";
+
+let page = usePage();
 
 const props = defineProps({
     data: {
@@ -9,7 +18,17 @@ const props = defineProps({
     },
 });
 
+let user_id = computed(() => page.props.user_info.user_detail.id);
+
+const form = useForm({
+    results: null,
+    shortanswer: null,
+    survey_id: props.data.id,
+    user_id: user_id.value
+})
+
 const selectedOptions = ref([]);
+const  shortanswer = ref([]);
 
 const questionsExist = computed(() => {
   return props.data && props.data && props.data.questions;
@@ -18,7 +37,14 @@ const questionsExist = computed(() => {
 const addSurveyForm = ref(questionsExist.value ? props.data.questions : []);
 
 addSurveyForm.value.forEach((item) => {
-  selectedOptions.value[item.id] = [];
+    if(item.question_type != 'SHORT_ANSWER'){
+        selectedOptions.value[item.id] = [];
+    } else {
+        shortanswer.value[item.id] = {
+            "id": item.id,
+            "answer" : ''
+        };
+    }
 });
 
 const checkboxClick = (questionId, optionId) => {
@@ -43,132 +69,154 @@ const radioClick = (questionId, optionId) => {
   console.log(selectedOptions.value);
 };
 
+const onFormSubmit = () => {
+    // Convert the filteredSelectedOptions to JSON
+    form.results = JSON.stringify(selectedOptions.value);
+    form.shortanswer = JSON.stringify(shortanswer.value);
+
+    form.post(route("surveyresponse.store"), {
+        onSuccess: () => {
+            isDialogVisible.value = false;
+            SuccessDialog({ title: "You've successfully submited user experience survey." });
+        },
+        onError: (error) => {
+            form.results = selectedOptions.value;
+            form.shortanswer = shortanswer.value;
+        }
+    })
+}
+
+
 </script>
 
 <template>
-    <VDialog v-model="isDialogVisible" width="70%">
+    <VDialog v-model="isDialogVisible" width="70%" :persistent="props.data.required == true">
         <!-- Activator -->
         <!-- <template #activator="{ props }">
-            <VBtn v-bind="props"> UserExperiencSurvey </VBtn>
+            <VBtn v-bind="props"> UserExperienceSurvey </VBtn>
         </template> -->
-
         <!-- Dialog Content -->
-        <VCard class="pa-16">
-            <DialogCloseBtn
-                variant="text"
-                size="small"
-                @click="isDialogVisible = false"
-            />
+            <VCard class="pa-16">
+                <DialogCloseBtn
+                    variant="text"
+                    size="small"
+                    @click="isDialogVisible = false"
+                />
 
-            <VCardTitle class="">
-                <h1 class="tiggie-label fs-40">{{ props.data.title}}</h1>
-            </VCardTitle>
+                <VCardTitle class="">
+                    <h1 class="tiggie-label fs-40">{{ props.data.title}}</h1>
+                </VCardTitle>
 
-            <VCardText v-for="(question,i) in addSurveyForm" :key="i">
-                <div v-if="question.question_type == 'SINGLE_CHOICE'">
-                    <h4 class="tiggie-label mt-10 mb-10 fs-24">
-                       {{question.question}} <span class="text-candy-red">*</span>
-                    </h4>
-
-                    <VRow class="mt-10" align="center">
-                        <VCol cols="12">
-                            <VRow>
-                                <VCol v-for="(option,index) in question.options" :key="index" cols="6">
-                                    <div class="d-flex flex-column justify-center">
-                                        <VLabel class="tiggie-label-custome fs-20"
-                                            >{{  option.content  }}</VLabel
-                                        >
-                                        <VRadio
-                                        v-model="selectedOptions[question.id]"
-                                        :value="option.id"
-                                        @click="radioClick(question.id, option.id)"
-                                         />
-                                    </div>
-                                </VCol>
-                            </VRow>
-                        </VCol>
-                    </VRow>
-                </div>
-                <div v-if="question.question_type == 'RATING'">
-                    <h4 class="tiggie-label mt-5 fs-24">
-                        {{ question.question }} <span class="text-candy-red">*</span>
-                    </h4>
-
-                    <VRow class="mt-10" align="center">
-                        <VCol cols="3">
-                            <VLabel class="tiggie-label-custome fs-20">
-                                Not likely at all
-                            </VLabel>
-                        </VCol>
-                        <VCol cols="6">
-                            <VRow>
-                                <VCol v-for="(option,index) in question.options" :key="index" cols="2">
-                                    <div class="d-flex flex-column justify-center">
-                                        <VLabel class="tiggie-label-custome fs-20"
-                                            >{{ option.content }}</VLabel
-                                        >
-                                        <VRadio
-                                        v-model="selectedOptions[question.id]"
-                                        :value="option.id"
-                                        @click="radioClick(question.id, option.id)"
-                                         />
-                                    </div>
-                                </VCol>
-                            </VRow>
-                        </VCol>
-                        <VCol cols="2">
-                            <VLabel class="tiggie-label-custome fs-20">
-                                Extremely Likely
-                            </VLabel>
-                        </VCol>
-                    </VRow>
-                </div>
-                <div v-if="question.question_type == 'MULTIPLE_RESPONSE'">
-                    <h4 class="tiggie-label mt-5 fs-24">
-                        {{ question.question }} <span class="text-candy-red">*</span>
-                    </h4>
-
-                    <VRow class="mt-10" align="center">
-                        <VCol cols="6">
-                            <VRow>
-                                <VCol v-for="(option,index) in question.options" :key="index" cols="2">
-                                    <div class="d-flex flex-column justify-center">
-                                        <VLabel class="tiggie-label-custome fs-20"
-                                            >{{ option.content }}</VLabel
-                                        >
-                                        <VCheckbox @click="checkboxClick(question.id, option.id)" :value="option.id" />
-                                    </div>
-                                </VCol>
-                            </VRow>
-                        </VCol>
-                    </VRow>
-                </div>
-                <div v-if="question.question_type == 'SHORT_ANSWER'">
-                    <VCardText>
-                        <h4 class="tiggie-label mt-16 mb-10 fs-24">
-                            {{ question.question }}
-                            <span class="text-candy-red">*</span>
+                <VCardText v-for="(question,i) in addSurveyForm" :key="i">
+                    <div v-if="question.question_type == 'SINGLE_CHOICE'">
+                        <h4 class="tiggie-label mt-10 mb-10 fs-24">
+                        {{question.question}} <span class="text-candy-red">*</span>
                         </h4>
-                        <VTextarea
-                            placeholder="Please Type here ...."
-                            auto-grow
-                            rows="5"
-                        />
-                    </VCardText>
-                </div>
-            </VCardText>
 
-            <VCardActions>
-                <VRow justify="center">
-                    <VCol cols="3">
-                        <SecondaryBtn @click="isDialogVisible = false" title="Cancel"  />
-                    </VCol>
-                    <VCol cols="3">
-                        <PrimaryBtn title="Submit" />
-                    </VCol>
-                </VRow>
-            </VCardActions>
-        </VCard>
+                        <VRow class="mt-10" align="center">
+                            <VCol cols="12">
+                                <VRow>
+                                    <VCol v-for="(option,index) in question.options" :key="index" cols="6">
+                                        <div class="d-flex flex-column justify-center">
+                                            <VLabel class="tiggie-label-custome fs-20"
+                                                >{{  option.content  }}</VLabel
+                                            >
+                                            <VRadio
+                                            v-model="selectedOptions[question.id]"
+                                            :value="option.id"
+                                            @click="radioClick(question.id, option.id)"
+                                            />
+                                        </div>
+                                    </VCol>
+                                </VRow>
+                            </VCol>
+                        </VRow>
+                    </div>
+                    <div v-if="question.question_type == 'RATING'">
+                        <h4 class="tiggie-label mt-5 fs-24">
+                            {{ question.question }} <span class="text-candy-red">*</span>
+                        </h4>
+
+                        <VRow class="mt-10" align="center">
+                            <VCol cols="3">
+                                <VLabel class="tiggie-label-custome fs-20">
+                                    Not likely at all
+                                </VLabel>
+                            </VCol>
+                            <VCol cols="6">
+                                <VRow>
+                                    <VCol v-for="(option,index) in question.options" :key="index" cols="2">
+                                        <div class="d-flex flex-column justify-center">
+                                            <VLabel class="tiggie-label-custome fs-20"
+                                                >{{ option.content }}</VLabel
+                                            >
+                                            <VRadio
+                                            v-model="selectedOptions[question.id]"
+                                            :value="option.id"
+                                            @click="radioClick(question.id, option.id)"
+                                            />
+                                        </div>
+                                    </VCol>
+                                </VRow>
+                            </VCol>
+                            <VCol cols="2">
+                                <VLabel class="tiggie-label-custome fs-20">
+                                    Extremely Likely
+                                </VLabel>
+                            </VCol>
+                        </VRow>
+                    </div>
+                    <div v-if="question.question_type == 'MULTIPLE_RESPONSE'">
+                        <h4 class="tiggie-label mt-5 fs-24">
+                            {{ question.question }} <span class="text-candy-red">*</span>
+                        </h4>
+
+                        <VRow class="mt-10" align="center">
+                            <VCol cols="6">
+                                <VRow>
+                                    <VCol v-for="(option,index) in question.options" :key="index" cols="2">
+                                        <div class="d-flex flex-column justify-center">
+                                            <VLabel class="tiggie-label-custome fs-20"
+                                                >{{ option.content }}</VLabel
+                                            >
+                                            <VCheckbox @click="checkboxClick(question.id, option.id)" :value="option.id" />
+                                        </div>
+                                    </VCol>
+                                </VRow>
+                            </VCol>
+                        </VRow>
+                    </div>
+                    <div v-if="question.question_type == 'SHORT_ANSWER'">
+                        <VCardText>
+                            <h4 class="tiggie-label mt-16 mb-10 fs-24">
+                                {{ question.question }}
+                                <span class="text-candy-red">*</span>
+                            </h4>
+
+                            <VTextarea
+                                v-model="shortanswer[question.id].answer"
+                                placeholder="Please Type here ...."
+                                auto-grow
+                                rows="5"
+                                :rules="[requiredValidator]" :error-messages="form?.errors?.answer"
+                            />
+                        </VCardText>
+                    </div>
+                </VCardText>
+
+                <VCardActions>
+                    <VRow justify="center">
+                        <VCol cols="3" v-if="props.data.required == false">
+                            <SecondaryBtn type="button" @click="isDialogVisible = false" title="Cancel"  />
+                        </VCol>
+                        <VCol :cols="props.data.required == true ? '6' : '3'">
+                            <PrimaryBtn :block="props.data.required"
+                            @click="onFormSubmit" :isLink="false"
+                            type="button" title="Submit" />
+                        </VCol>
+                    </VRow>
+                </VCardActions>
+            </VCard>
     </VDialog>
 </template>
 

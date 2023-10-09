@@ -14,6 +14,7 @@ use Src\BlendedConcept\Survey\Domain\Resources\SurveyResultResource;
 use Src\BlendedConcept\Survey\Application\Mappers\SurveySettingMapper;
 use Src\BlendedConcept\Survey\Application\Mappers\QuestionOptionMapper;
 use Src\BlendedConcept\Survey\Domain\Repositories\SurveyRepositoryInterface;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\QuestionEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\ResponseEloquentModel;
@@ -22,7 +23,32 @@ class SurveyRepository implements SurveyRepositoryInterface
 {
     public function getUserExperienceSurveyList($filters = [])
     {
-        $surveys = SurveyResource::collection(SurveyEloquentModel::filter($filters)->where('type', 'USEREXP')->orderBy('id', 'desc')->with(['survey_settings'])->paginate($filters['perPage'] ?? 10));
+
+        $surveys = SurveyEloquentModel::filter($filters)
+        ->where('type', 'USEREXP')
+        ->orderBy('id', 'desc')
+        ->with(['survey_settings'])
+        ->withCount([
+            'responses as completion' => function ($query) {
+                $query->select(DB::raw('COUNT(DISTINCT user_id)'));
+            },
+        ])
+        ->paginate($filters['perPage'] ?? 10);
+
+        foreach ($surveys as $survey) {
+            // Get unique user_type values for each survey
+            $userTypes = $survey->survey_settings->pluck('user_type')->unique();
+            $totalcount = 0;
+            foreach ($userTypes as $userType) {
+                $userCount = UserEloquentModel::where('role_id', $this->checkRoleIDs($userType))->count();
+                $totalcount += $userCount;
+            }
+
+            // Now, $userCounts contains the counts of users for each unique user_type value for the current survey
+            // You can use $userCounts as needed for each survey
+            $survey->total_count = $totalcount;
+            $totalcount = 0;
+        }
 
         return $surveys;
     }
@@ -102,7 +128,7 @@ class SurveyRepository implements SurveyRepositoryInterface
             $surveyArray = $survey->toArray();
             $surveyEloquent = SurveyEloquentModel::query()->find($survey->id);
             $surveyEloquent->fill($surveyArray);
-            $surveyEloquent->save();
+            $surveyEloquent->update();
 
             $user_types = json_decode(request()->user_type);
 
@@ -250,56 +276,75 @@ class SurveyRepository implements SurveyRepositoryInterface
 
     }
 
-    public function getSurveyResults($filters)
-    {
-        $surveyResults = SurveyResultResource::collection(ResponseEloquentModel::filter($filters)->with(['user', 'student', 'question.survey'])->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
-
-        return $surveyResults;
-    }
-
     public function getSurveyByRole($appear_on){
         $user = auth()->user();
         $user_type = $this->checkRole($user->role->name);
+        if($user_type != 'BC'){
+            $currentDateTime = now()->format('Y-m-d H:i:s'); // Format current datetime
+            $surveyEloquentModel = SurveyEloquentModel::where('appear_on', $appear_on)
+            ->where('type', 'USEREXP')
+            ->whereHas('survey_settings', function ($query) use ($user_type) {
+                $query->where('user_type', $user_type);
+            })
+            ->where('start_date', '<=', $currentDateTime) // Check if start_date is less than or equal to the current datetime
+            ->where('end_date', '>=', $currentDateTime) // Check if end_date is greater than or equal to the current datetime
+            ->with([
+                'questions.options',
+                'responses' => function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                }
+            ])
+            ->latest()->first();
 
-        $dateFormat = new DateTime(); // Current date and time
-        $currentDate =  $dateFormat->format('Y-m-d'); // Current date and time in 'YYYY-MM-DD HH:MM:SS' format
-
-        $surveyEloquentModel = SurveyEloquentModel::where('appear_on', $appear_on)->where('type', 'USEREXP')
-        ->whereHas('survey_settings', function ($query) use ($user_type) {
-            $query->where('user_type', $user_type);
-        })
-        ->whereDate('start_date', '<=', $currentDate)
-        ->whereDate('end_date', '>=', $currentDate)
-        ->orderBy('date_created', 'desc') // Order by the created_at column in descending order
-        ->with(['questions.options'])->first();
-
-        return $surveyEloquentModel;
+            return $surveyEloquentModel->responses->count() == 0 ? $surveyEloquentModel : '';
+        }
     }
 
     public function checkRole($role){
         switch($role){
             case 'Teacher':
                 return 'ORG_TEACHER';
-                // Code to handle the 'teacher' role
                 break;
             case 'BC Subscriber':
                 return 'B2C_USER';
-                // Code to handle the 'staff' role
                 break;
             case 'Organisation Admin':
                 return 'ORG_ADMIN';
-                // Code to handle the 'user' role
                 break;
             case 'Student':
                 return 'STUDENT';
-                // Code to handle the 'user' role
                 break;
             case 'Parent':
                 return 'PARENT';
+                break;
+            case 'BC Staff' || 'BC Super Admin':
+                return 'BC';
                 // Code to handle the 'user' role
                 break;
             default:
                 // Code to handle roles other than 'teacher', 'staff', and 'user'
+                break;
+        }
+    }
+
+    public function checkRoleIDs($userType){
+        switch($userType){
+            case 'ORG_TEACHER':
+                return 4;
+                break;
+            case 'B2C_USER':
+                return 2;
+                break;
+            case 'ORG_ADMIN':
+                return 5;
+                break;
+            case 'STUDENT':
+                return 6;
+                break;
+            case 'PARENT':
+                return 7;
+                break;
+            default:
                 break;
         }
     }

@@ -121,11 +121,14 @@ onMounted(() => {
                 current_user_role == 'Parent'
             "
         >
-            <TeacherOrParentDashboard :students="students">
+            <TeacherOrParentDashboard
+            :user_survey="props.user_survey"
+            :students="students">
             </TeacherOrParentDashboard>
         </div>
         <div v-else-if="current_user_role == 'Organisation Admin'">
             <OrganizatinDashBoard
+                :user_survey="props.user_survey"
                 :classrooms="props.classrooms"
             ></OrganizatinDashBoard>
         </div>
@@ -146,6 +149,7 @@ onMounted(() => {
     </AdminLayout>
     <StudentLayout v-else @openMenu="toggleMenu()">
         <StudentDashboard
+            :user_survey="props.user_survey"
             :orgainzations_users="props.orgainzations_users"
             :isOpenMenu="isOpenMenu"
         >

@@ -45,8 +45,8 @@ class SurveyData
             'appear_on' => $this->appear_on,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'requried' => $this->required,
-            'repeat' => $this->repeat,
+            'required' => $this->required,
+            'repeat' =>  $this->repeat,
         ];
     }
 }

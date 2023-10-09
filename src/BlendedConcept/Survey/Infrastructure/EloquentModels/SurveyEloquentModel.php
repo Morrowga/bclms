@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Src\BlendedConcept\Survey\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Model;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\ResponseEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveySettingEloquentModel;
 
 class SurveyEloquentModel extends Model
@@ -22,24 +23,33 @@ class SurveyEloquentModel extends Model
         'repeat',
     ];
 
+    public function setRequiredAttribute($value)
+    {
+        // You can perform any necessary modifications here
+        // For example, you can ensure the value is always a boolean
+        $this->attributes['required'] = (bool) $value;
+    }
+
+    public function setRepeatAttribute($value)
+    {
+        // You can perform any necessary modifications here
+        // For example, you can ensure the value is always a boolean
+        $this->attributes['repeat'] = (bool) $value;
+    }
+
     public function questions()
     {
         return $this->hasMany(QuestionEloquentModel::class, 'survey_id', 'id');
     }
 
+    public function responses()
+    {
+        return $this->hasMany(ResponseEloquentModel::class, 'survey_id', 'id');
+    }
+
     public function survey_settings()
     {
         return $this->hasMany(SurveySettingEloquentModel::class, 'survey_id', 'id');
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($survey) {
-            $survey->start_date = now()->setTime(12, 0, 0);
-            $survey->end_date = now()->setTime(12, 0, 0);
-        });
     }
 
     public function scopeFilter($query, $filters)

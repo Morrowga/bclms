@@ -30,7 +30,6 @@ class UserExperienceSurveyController
 
             // Get user list
             $surveys = (new GetUserExperienceSurveyList($filters))->handle();
-
             // Render Inertia view
             return Inertia::render(config('route.userexperiencesurvey.index'), [
                 'surveys' => $surveys,
@@ -109,13 +108,14 @@ class UserExperienceSurveyController
             $updateSurveyCommand = (new UpdateSurveyCommand($surveyData));
             $updateSurveyCommand->execute();
 
-            return redirect()->route('userexperiencesurvey.index')->with('successMessage', 'Survey updated Successfully!');
         } catch (\Exception $e) {
             /**
              * Catch any exceptions and display an error message.
              */
             return redirect()->route('userexperiencesurvey.index')->with('SystemErrorMessage', $e->getMessage());
         }
+
+        return redirect()->route('userexperiencesurvey.index')->with('successMessage', 'Survey updated Successfully!');
     }
 
     /**

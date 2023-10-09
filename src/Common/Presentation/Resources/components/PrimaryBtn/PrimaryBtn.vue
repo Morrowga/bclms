@@ -22,6 +22,10 @@ let props = defineProps({
         type: String,
         default: "#",
     },
+    block: {
+        type: Boolean,
+        default: false,
+    },
     isLink: {
         type: Boolean,
         default: true,
@@ -48,6 +52,7 @@ let clicked = () => {
             color="primary"
             :width="width"
             @click="clicked"
+            block
             >{{ title }}</v-btn
         >
     </div>

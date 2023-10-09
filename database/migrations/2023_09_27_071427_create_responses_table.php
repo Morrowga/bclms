@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('survey_id')->references('id')->on('surveys')->onDelete('cascade');
             $table->foreignId('question_id')->references('id')->on('questions')->onDelete('cascade');
-            $table->foreignId('student_id')->references('student_id')->on('students')->onDelete('cascade');
-            $table->longText('answer');
+            $table->foreignId('student_id')->nullable()->references('student_id')->on('students')->onDelete('cascade');
+            $table->longText('answer')->nullable();
             $table->dateTime('response_datetime');
             $table->timestamps();
         });

@@ -91,9 +91,7 @@ const handleSettingModalSubmit = (data) => {
             form.setError("title", error?.title);
             form.setError("description", error?.description);
             form.setError("questions", error?.questions);
-            // form.setError("icon", error?.icon);
-            // form.setError("message", error?.message);
-        },
+        }
     })
 };
 

@@ -220,13 +220,14 @@ const deleteSurvey = (id) => {
                                         <VProgressLinear
                                             color="yellow-darken-2"
                                             class="custom-progress"
-                                            model-value="80"
+                                            :max="dataProps.row.total_count"
+                                            :model-value="dataProps.row.completion"
                                             :height="8"
                                         >
                                         </VProgressLinear>
                                         <span
-                                            ><span class="text-warning">8 </span
-                                            >/10</span
+                                            ><span class="text-warning">{{dataProps.row.completion}} </span
+                                            >/{{dataProps.row.total_count}}</span
                                         >
                                         Users
                                     </div>

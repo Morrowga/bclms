@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Survey\Domain\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SurveyResultResource extends JsonResource
+class SurveyResponseResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

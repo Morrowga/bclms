@@ -15,7 +15,7 @@ interface SurveyRepositoryInterface
 
     public function showSurvey($id);
 
-public function createSurvey(Survey $survey);
+    public function createSurvey(Survey $survey);
 
     public function updateSurvey(SurveyData $survey);
 
@@ -30,8 +30,6 @@ public function createSurvey(Survey $survey);
     public function getProfilingSurvey();
 
     public function storeOrder(Request $request, SurveyEloquentModel $survey);
-
-    public function getSurveyResults($filters);
 
     public function getSurveyByRole($appear_on);
 }

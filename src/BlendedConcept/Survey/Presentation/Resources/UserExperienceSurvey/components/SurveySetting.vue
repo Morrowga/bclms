@@ -12,6 +12,9 @@ const props = defineProps({
         type: Boolean,
         required: true,
     },
+    sendError: {
+        type: Object,
+    }
 })
 
 const emit = defineEmits([
@@ -29,7 +32,6 @@ let form = useForm({
 })
 
 const onFormSubmit = () => {
-    console.log(form);
     emit('submit', form)
 }
 

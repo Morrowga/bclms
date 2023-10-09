@@ -1,12 +1,14 @@
 <script setup>
 import StudentProfile from "./components/StudentProfile.vue";
 import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue";
-import UserExperiencSurvey from "./components/UserExperiencSurvey.vue";
+import UserExperienceSurvey from "./components/UserExperienceSurvey.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { defineProps } from "vue";
 import TotalStudents from "./TotalStudent.vue";
 
 const props = defineProps(["students", "user_survey"]);
+
+console.log(props.user_survey);
 </script>
 
 <template>

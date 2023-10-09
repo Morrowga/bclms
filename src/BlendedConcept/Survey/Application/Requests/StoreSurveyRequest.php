@@ -2,8 +2,9 @@
 
 namespace Src\BlendedConcept\Survey\Application\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
+use Src\BlendedConcept\Survey\Application\Rules\StartEndDateValidationRule;
 
 class StoreSurveyRequest extends FormRequest
 {
@@ -23,8 +24,8 @@ class StoreSurveyRequest extends FormRequest
             ],
             'user_type' => ['required', 'string'],
             'appear_on' => ['required', 'string'],
-            'start_date' => ['required'],
-            'end_date' => ['required'],
+            'start_date' => ['required', new StartEndDateValidationRule],
+            'end_date' => ['required','different:start_date', new StartEndDateValidationRule],
             'required' => ['required', 'boolean'],
             'repeat' => ['required', 'boolean'],
             'questions' => ['required'],
@@ -39,6 +40,7 @@ class StoreSurveyRequest extends FormRequest
             'user_type' => 'User Type is required',
             'appear_on' => 'Appear on is required',
             'start_date' => 'Start Date on is required',
+            'end_date.different' => 'The end date must be different from the start date.',
             'end_date' => 'End Date on is required',
         ];
     }

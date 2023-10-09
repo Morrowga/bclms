@@ -21,6 +21,12 @@ const props = defineProps({
   }),
 })
 
+const datePickerConfig = ref({
+  enableTime: true, // Enable time input
+  dateFormat: 'Y-m-d H:i', // Specify the date and time format
+  minDate: 'today', // Set minDate to 'today' to prevent selecting past dates
+});
+
 const emit = defineEmits([
   'update:modelValue',
   'click:clear',
@@ -105,6 +111,8 @@ const emitModelValue = val => {
           <div v-bind="vFieldProps">
             <!-- flat-picker  -->
             <FlatPickr
+              :enableTime="datePickerConfig.enableTime"
+              :config="datePickerConfig"
               v-if="!isInlinePicker"
               v-bind="compAttrs"
               ref="refFlatPicker"
