@@ -3,22 +3,25 @@
 namespace Src\BlendedConcept\Survey\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Src\BlendedConcept\Survey\Domain\Policies\SurveyResponsePolicy;
 use Src\BlendedConcept\Survey\Application\Requests\StoreSurveyResponseRequest;
-use Src\BlendedConcept\Survey\Application\UseCases\Queries\SurveyResults\GetSurveyResponses;
 use Src\BlendedConcept\Survey\Application\UseCases\Commands\Survey\StoreSurveyResponseCommand;
+use Src\BlendedConcept\Survey\Application\UseCases\Queries\SurveyResponses\GetSurveyResponses;
+use Symfony\Component\HttpFoundation\Response;
 
 class SurveyResponseController
 {
     public function index()
     {
+        // abort_if(authorize('view', SurveyResponsePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
             $filters = request()->only(['question', 'search', 'perPage', 'filter']);
 
-            $surveyResults = (new GetSurveyResponses($filters))->handle();
+            $surveyResponses = (new GetSurveyResponses($filters))->handle();
 
             return Inertia::render(config('route.surveyresponse.index'), [
-                'surveyResults' => $surveyResults,
+                'surveyResponses' => $surveyResponses,
             ]);
         } catch (\Exception $e) {
             dd($e);
@@ -28,11 +31,15 @@ class SurveyResponseController
 
     public function show()
     {
+        // abort_if(authorize('view', SurveyResponsePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return Inertia::render(config('route.surveyresponse.show'));
     }
 
     public function view()
     {
+        // abort_if(authorize('view', SurveyResponsePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return Inertia::render(config('route.surveyresponse.view'));
     }
 

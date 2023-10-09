@@ -142,7 +142,7 @@ export default [
         access_module: "access_surveys",
         children: [
             { title: 'User Surveys', url: '/userexperiencesurvey', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'userexperiencesurvey', access_module: "access_userSurveys", },
-            { title: 'Survey Results', url: '/surveyresponse', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'surveyresponse', access_module: "access_surveyResults", },
+            { title: 'Survey Responses', url: '/surveyresponse', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'surveyresponse', access_module: "access_surveyresponses", },
             { title: 'Profilling Surveys', url: '/profilling_survey', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'profilling_survey', access_module: "access_profillingSurveys", },
         ],
     },

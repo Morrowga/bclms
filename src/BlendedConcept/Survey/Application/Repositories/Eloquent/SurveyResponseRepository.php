@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\Survey\Domain\Resources\SurveyResponseResource;
 use Src\BlendedConcept\Survey\Application\Mappers\SurveyResponseMapper;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\ResponseEloquentModel;
 use Src\BlendedConcept\Survey\Domain\Repositories\SurveyResponseRepositoryInterface;
 
 
@@ -14,9 +15,9 @@ class SurveyResponseRepository implements SurveyResponseRepositoryInterface
 {
     public function GetSurveyResponses($filters)
     {
-        $surveyResults = SurveyResponseResource::collection(ResponseEloquentModel::filter($filters)->with(['user', 'student', 'question.survey'])->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $surveyResponses = SurveyResponseResource::collection(ResponseEloquentModel::filter($filters)->with(['user', 'student', 'question.survey'])->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
 
-        return $surveyResults;
+        return $surveyResponses;
     }
 
 

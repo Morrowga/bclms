@@ -78,9 +78,9 @@ const pages = {
     "BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Edit": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Edit.vue'),
 
     //survey results
-    "BlendedConcept/Survey/Presentation/Resources/SurveyResults/Index": import('../../src/BlendedConcept/Survey/Presentation/Resources/SurveyResults/Index.vue'),
-    "BlendedConcept/Survey/Presentation/Resources/SurveyResults/Show": import('../../src/BlendedConcept/Survey/Presentation/Resources/SurveyResults/Show.vue'),
-    "BlendedConcept/Survey/Presentation/Resources/SurveyResults/View": import('../../src/BlendedConcept/Survey/Presentation/Resources/SurveyResults/View.vue'),
+    "BlendedConcept/Survey/Presentation/Resources/SurveyResponses/Index": import('../../src/BlendedConcept/Survey/Presentation/Resources/SurveyResponses/Index.vue'),
+    "BlendedConcept/Survey/Presentation/Resources/SurveyResponses/Show": import('../../src/BlendedConcept/Survey/Presentation/Resources/SurveyResponses/Show.vue'),
+    "BlendedConcept/Survey/Presentation/Resources/SurveyResponses/View": import('../../src/BlendedConcept/Survey/Presentation/Resources/SurveyResponses/View.vue'),
 
     //conduct lesson
     "BlendedConcept/ClassRoom/Presentation/Resources/ConductLessons/Index": import('../../src/BlendedConcept/ClassRoom/Presentation/Resources/ConductLessons/Index.vue'),

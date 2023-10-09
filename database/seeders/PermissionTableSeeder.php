@@ -305,11 +305,6 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Users can access userSurveys and their configurations within the application.',
             ],
             [
-                'name' => 'access_surveyResults',
-                'guard_name' => 'web',
-                'description' => 'Users can access surveyResults and their configurations within the application.',
-            ],
-            [
                 'name' => 'access_orgusers',
                 'guard_name' => 'web',
                 'description' => 'Users can access orgusers and their configurations within the application.',
@@ -463,6 +458,26 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'delete_b2bteacher',
                 'guard_name' => 'web',
                 'description' => 'Users can delete b2b teacher.',
+            ],
+             [
+                'name' => 'access_surveyresponses',
+                'guard_name' => 'web',
+                'description' => 'Users can access SurveyResponses and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_surveyresponses',
+                'guard_name' => 'web',
+                'description' => 'Users can create survey responses and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_surveyresponses',
+                'guard_name' => 'web',
+                'description' => 'Users can update survey responses and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_surveyresponses',
+                'guard_name' => 'web',
+                'description' => 'Users can delete survey responses.',
             ],
         ];
         foreach ($permissions as $permission) {
