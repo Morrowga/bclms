@@ -4,10 +4,7 @@ import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import Rolling from "@mainRoot/components/Rewards/Rolling.vue";
 import { computed, defineProps } from "vue";
-let props = defineProps([
-    "flash",
-    "auth",
-]);
+let props = defineProps(["flash", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 </script>
@@ -17,44 +14,67 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
         <section>
             <VRow>
                 <VCol cols="1">
-                    <img src="/images/back.png" @click="() => router.get(route('student-rewards'))" class="backarrow ml-2" alt="">
+                    <img
+                        src="/images/back.png"
+                        @click="() => router.get(route('reward-store'))"
+                        class="backarrow ml-2"
+                        alt=""
+                    />
                 </VCol>
                 <VCol cols="11">
                     <div class="d-flex justify-center">
                         <div class="postercard">
-                            <img src="/images/blankpage.png" alt="" class="reward-img">
+                            <img
+                                src="/images/blankpage.png"
+                                alt=""
+                                class="reward-img"
+                            />
                             <!-- <div class="d-flex justify-center"> -->
-                                <div class="b3 mt-15">
-                                    <VRow>
-                                        <VCol cols="5" class="text-left">
-                                           <div class="d-flex justify-center">
-                                                <div>
-                                                    <div class="text-center">
-                                                    <span class="adtext  ruddy-bold">Get It Today!</span>
-                                                    </div>
-                                                    <div class="d-flex justify-center">
-                                                        <img class="poster" src="/images/tiger.png">
-                                                    </div>
-                                                    <div class="mt-3 text-center">
-                                                        <span class="rewardimagetext  ruddy-bold">
-                                                            Super Rare
-                                                            <br>
-                                                            WarriorTiggie
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                           </div>
-                                        </VCol>
-                                        <VCol cols="7" class="text-left">
+                            <div class="b3 mt-15">
+                                <VRow>
+                                    <VCol cols="5" class="text-left">
+                                        <div class="d-flex justify-center">
                                             <div>
-                                                <div class="mt-15 text-center">
-                                                    <img src="/images/posterbg.png" class="posterbg" alt="">
+                                                <div class="text-center">
+                                                    <span
+                                                        class="adtext ruddy-bold"
+                                                        >Get It Today!</span
+                                                    >
                                                 </div>
-                                                <Rolling />
+                                                <div
+                                                    class="d-flex justify-center"
+                                                >
+                                                    <img
+                                                        class="poster"
+                                                        src="/images/tiger.png"
+                                                    />
+                                                </div>
+                                                <div class="mt-3 text-center">
+                                                    <span
+                                                        class="rewardimagetext ruddy-bold"
+                                                    >
+                                                        Super Rare
+                                                        <br />
+                                                        WarriorTiggie
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </VCol>
-                                    </VRow>
-                                </div>
+                                        </div>
+                                    </VCol>
+                                    <VCol cols="7" class="text-left">
+                                        <div>
+                                            <div class="mt-15 text-center">
+                                                <img
+                                                    src="/images/posterbg.png"
+                                                    class="posterbg"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <Rolling />
+                                        </div>
+                                    </VCol>
+                                </VRow>
+                            </div>
                             <!-- </div> -->
                         </div>
                     </div>
@@ -75,11 +95,11 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 //     background-position: center !important;
 // }
 
-.postercard{
+.postercard {
     position: relative;
 }
 
-.rolltext{
+.rolltext {
     color: #000 !important;
     font-size: 20px !important;
     text-transform: capitalize !important;
@@ -89,7 +109,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 }
 
 .rolltext > strong {
-    color: #FF6262 !important;
+    color: #ff6262 !important;
     font-size: 20px !important;
     font-style: normal !important;
     font-weight: 700 !important;
@@ -97,7 +117,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     text-transform: capitalize !important;
 }
 
-.rewardimagetext{
+.rewardimagetext {
     color: var(--graphite, #282828) !important;
     font-size: 30px !important;
     font-style: normal !important;
@@ -105,17 +125,17 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     text-transform: capitalize !important;
 }
 
-.rollbtn{
+.rollbtn {
     border-radius: 23px !important;
     color: #fff;
 }
 
-.posterbg{
+.posterbg {
     height: 15vh;
 }
 
-.adtext{
-    color: #F80808 !important;
+.adtext {
+    color: #f80808 !important;
     font-size: 30px !important;
     font-style: normal !important;
     font-weight: 700 !important;
@@ -123,7 +143,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     text-transform: capitalize !important;
 }
 
-.b3{
+.b3 {
     position: absolute;
     top: 10% !important;
     z-index: 1;
@@ -135,29 +155,28 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     height: 35vh;
 }
 
-.backarrow{
+.backarrow {
     cursor: pointer;
     width: 40px !important;
     height: 40px !important;
 }
 
-.reward-img{
+.reward-img {
     position: relative;
     height: 85vh;
 }
 
 .overlay-container {
-//   z-index: 1;
-  position: absolute;
-  top: 8%;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    //   z-index: 1;
+    position: absolute;
+    top: 8%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
 
 .user-data-table table.vgt-table {
     background-color: rgb(var(--v-theme-surface));
@@ -168,7 +187,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
 
-.textcolor{
+.textcolor {
     color: #fff;
 }
 

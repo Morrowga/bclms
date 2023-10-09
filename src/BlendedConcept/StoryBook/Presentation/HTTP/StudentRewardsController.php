@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
 use Exception;
 use Inertia\Inertia;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\RewardEloquentModel;
 use Src\Common\Infrastructure\Laravel\Controller;
 
 class StudentRewardsController extends Controller
@@ -13,7 +14,8 @@ class StudentRewardsController extends Controller
         try {
             return Inertia::render(config('route.student-rewards'));
         } catch (Exception $e) {
-            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
+            dd($e);
+            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
@@ -22,7 +24,8 @@ class StudentRewardsController extends Controller
         try {
             return Inertia::render(config('route.reward-store'));
         } catch (Exception $e) {
-            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
+            dd($e);
+            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
@@ -31,16 +34,21 @@ class StudentRewardsController extends Controller
         try {
             return Inertia::render(config('route.be-lucky'));
         } catch (Exception $e) {
-            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
+            dd($e);
+            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
     public function buySticker()
     {
         try {
-            return Inertia::render(config('route.buy-sticker'));
+            $stickers = RewardEloquentModel::where('status', 'ACTIVE')->get();
+            return Inertia::render(config('route.buy-sticker', [
+                "stickers" => $stickers
+            ]));
         } catch (Exception $e) {
-            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
+            dd($e);
+            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 }

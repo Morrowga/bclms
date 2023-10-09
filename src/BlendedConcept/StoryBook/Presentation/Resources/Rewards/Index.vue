@@ -140,6 +140,10 @@ const setInactive = (id) => {
         },
     });
 };
+
+const showName = (status) => {
+    return status == "ACTIVE" ? "Set Inactive" : "Set Active";
+};
 </script>
 <template>
     <AdminLayout>
@@ -273,10 +277,11 @@ const setInactive = (id) => {
                                                         )
                                                     "
                                                 >
-                                                    <VListItemTitle
-                                                        >Set
-                                                        Inactive</VListItemTitle
-                                                    >
+                                                    <VListItemTitle>{{
+                                                        showName(
+                                                            dataProps.row.status
+                                                        )
+                                                    }}</VListItemTitle>
                                                 </VListItem>
                                             </VList>
                                         </VMenu>

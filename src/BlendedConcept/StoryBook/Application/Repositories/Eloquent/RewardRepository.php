@@ -103,7 +103,6 @@ class RewardRepository implements RewaredRepositoryInterface
             DB::rollBack();
             // Handle any exceptions and display the error message
             dd($error->getMessage());
-
         }
     }
 
@@ -121,8 +120,14 @@ class RewardRepository implements RewaredRepositoryInterface
     public function changeStatus($reward)
     {
         // Update the status of the reward to 'INACTIVE'
-        $reward->update([
-            'status' => 'INACTIVE',
-        ]);
+        if ($reward->status == "INACTIVE") {
+            $reward->update([
+                'status' => 'ACTIVE',
+            ]);
+        } else {
+            $reward->update([
+                'status' => 'INACTIVE',
+            ]);
+        }
     }
 }

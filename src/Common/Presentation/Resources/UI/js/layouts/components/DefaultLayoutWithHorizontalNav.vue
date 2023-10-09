@@ -145,7 +145,7 @@ onMounted(() => {
         </template>
         <!-- :point_right: Pages -->
         <Transition :name="appRouteTransition" mode="out-in">
-            <main class="" style="min-height: 485px">
+            <main class="h-100">
                 <slot> </slot>
             </main>
         </Transition>

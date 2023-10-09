@@ -137,7 +137,11 @@ let handleSubmit = () => {
                         <VCol cols="6" class="pt-5">
                             <span class="tiggie-title">Sticker</span>
                             <br />
-                            <ImageUpload v-model="form.image" />
+
+                            <ImageUpload
+                                v-model="form.image"
+                                :old_img="form.image"
+                            />
                         </VCol>
                         <VCol
                             cols="12"

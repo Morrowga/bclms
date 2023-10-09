@@ -4,19 +4,19 @@ import { usePage } from "@inertiajs/vue3";
 import StickerDetail from "@mainRoot/components/Rewards/StickerDetail.vue";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-let props = defineProps(["flash", "auth"]);
+let props = defineProps(["auth", "stickers"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 </script>
 
 <template>
     <StudentLayout>
-        <section>
+        <section class="buy-sticker-frame">
             <VRow>
                 <VCol cols="1">
                     <img
                         src="/images/back.png"
-                        @click="() => router.get(route('student-rewards'))"
+                        @click="() => router.get(route('reward-store'))"
                         class="backarrow ml-2"
                         alt=""
                     />
@@ -30,6 +30,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 class="reward-img"
                             /> -->
                             <!-- <div class="d-flex justify-center"> -->
+                            {{ props.stickers }}
                             <div class="b4">
                                 <VRow class="mt-4">
                                     <VCol
@@ -38,89 +39,13 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                         md="4"
                                         lg="3"
                                         class="text-center"
+                                        v-for="sticker in props.stickers"
+                                        :key="sticker.id"
                                     >
                                         <StickerDetail
                                             class="height-100"
-                                            title="SecretAgent Tiggie"
-                                            image="/images/stickerb1.png"
-                                        />
-                                    </VCol>
-                                    <VCol
-                                        cols="12"
-                                        sm="6"
-                                        md="4"
-                                        lg="3"
-                                        class="text-center"
-                                    >
-                                        <StickerDetail
-                                            class="height-100"
-                                            title="Warrior Tiggie"
-                                            image="/images/stick6.png"
-                                        />
-                                    </VCol>
-                                    <VCol
-                                        cols="12"
-                                        sm="6"
-                                        md="4"
-                                        lg="3"
-                                        class="text-center"
-                                    >
-                                        <StickerDetail
-                                            class="height-100"
-                                            title="Great Work Tiggie"
-                                            image="/images/stick4.png"
-                                        />
-                                    </VCol>
-                                    <VCol
-                                        cols="12"
-                                        sm="6"
-                                        md="4"
-                                        lg="3"
-                                        class="text-center"
-                                    >
-                                        <StickerDetail
-                                            class="height-100"
-                                            title="Streak Tiggie"
-                                            image="/images/stick1.png"
-                                        />
-                                    </VCol>
-                                    <VCol
-                                        cols="12"
-                                        sm="6"
-                                        md="4"
-                                        lg="3"
-                                        class="text-center"
-                                    >
-                                        <StickerDetail
-                                            class="height-100"
-                                            title="Streak Tiggie"
-                                            image="/images/stick3.png"
-                                        />
-                                    </VCol>
-                                    <VCol
-                                        cols="12"
-                                        sm="6"
-                                        md="4"
-                                        lg="3"
-                                        class="text-center"
-                                    >
-                                        <StickerDetail
-                                            class="height-100"
-                                            title="Streak Tiggie"
-                                            image="/images/stick5.png"
-                                        />
-                                    </VCol>
-                                    <VCol
-                                        cols="12"
-                                        sm="6"
-                                        md="6"
-                                        lg="3"
-                                        class="text-center"
-                                    >
-                                        <StickerDetail
-                                            class="height-100"
-                                            title="Streak Tiggie"
-                                            image="/images/stick7.png"
+                                            :title="sticker.name"
+                                            :image="sticker.image_url"
                                         />
                                     </VCol>
                                 </VRow>
@@ -305,5 +230,9 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
+
+.buy-sticker-frame {
+    height: 100vh;
 }
 </style>

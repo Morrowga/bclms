@@ -5,7 +5,7 @@ import {
     integerValidator,
 } from "@validators";
 import axios from "axios";
-import { useForm,usePage } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 const props = defineProps({
     isDialogVisible: {
         type: Boolean,
@@ -15,55 +15,56 @@ const props = defineProps({
 
 const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
-const options = ref(['']);
+const options = ref([""]);
 
 console.log(options.value);
 
-const randomCombination = ref('');
+const randomCombination = ref("");
 
 const generateRandomCombination = () => {
-  const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  let result = '';
+    const characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let result = "";
 
-  for (let i = 0; i < 4; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters.charAt(randomIndex);
-  }
+    for (let i = 0; i < 4; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters.charAt(randomIndex);
+    }
 
-  randomCombination.value = result;
+    randomCombination.value = result;
 };
 
-generateRandomCombination()
+generateRandomCombination();
 
 const form = useForm({
-  id: randomCombination.value,
-  question_type: null,
-  question: "",
-  options: options.value
+    id: randomCombination.value,
+    question_type: null,
+    question: "",
+    options: options.value,
 });
 
 const addOption = () => {
-  options.value.push('');
+    options.value.push("");
 };
 
 const removeOption = (index) => {
-  options.value.splice(index, 1);
+    options.value.splice(index, 1);
 };
 const refForm = ref(null); // Define refForm
 
 const onFormSubmit = () => {
+    form.options = options.value;
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
             emit("submit", form);
             generateRandomCombination();
             form.id = randomCombination.value; // Assuming id should be cleared
             form.question_type = null;
-            form.question = '';
-            options.value = ['']; // Reset options as needed
+            form.question = "";
+            options.value = [""]; // Reset options as needed
             form.options = options.value;
             emit("update:isDialogVisible", false);
         }
-    })
+    });
 };
 
 const onFormReset = () => {
@@ -104,7 +105,6 @@ watch(
         }
     }
 );
-
 </script>
 
 <template>
@@ -125,7 +125,11 @@ watch(
 
             <VCardText>
                 <!-- 👉 Form -->
-                <VForm class="mt-6" ref="refForm" @submit.prevent="onFormSubmit">
+                <VForm
+                    class="mt-6"
+                    ref="refForm"
+                    @submit.prevent="onFormSubmit"
+                >
                     <VContainer>
                         <VRow justify="center">
                             <!-- 👉 Contact -->
@@ -139,7 +143,9 @@ watch(
                                     :items="items"
                                     rounded="50%"
                                     :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.question_type"
+                                    :error-messages="
+                                        form?.errors?.question_type
+                                    "
                                     placeholder="Select Question Type"
                                     density="compact"
                                 />
@@ -148,7 +154,8 @@ watch(
                             <!-- 👉 Contact -->
                             <VCol cols="12" md="12">
                                 <VLabel class="tiggie-label">Question</VLabel>
-                                <VTextarea v-model="form.question"
+                                <VTextarea
+                                    v-model="form.question"
                                     placeholder="Type here ...."
                                     :rules="[requiredValidator]"
                                     :error-messages="form?.errors?.question"
@@ -157,32 +164,46 @@ watch(
                             </VCol>
                             <VCol cols="12" md="12" v-if="!HideOption">
                                 <VLabel class="tiggie-label">Options</VLabel>
-                                    <VRow>
-                                        <VCol cols="12" v-for="(option, index) in options" :key="index">
-                                            <div class="option-container">
-                                                <VIcon @click="removeOption(index)"  icon="mdi-minus-circle" size="md"  class="removeoption-btn"></VIcon>
-                                                <!-- <VBtn  size="sm" append-icon="mdi-minus-circle" rounded></VBtn> -->
-                                                <VTextField v-model="options[index]"
+                                <VRow>
+                                    <VCol
+                                        cols="12"
+                                        v-for="(option, index) in options"
+                                        :key="index"
+                                    >
+                                        <div class="option-container">
+                                            <VIcon
+                                                @click="removeOption(index)"
+                                                icon="mdi-minus-circle"
+                                                size="md"
+                                                class="removeoption-btn"
+                                            ></VIcon>
+                                            <!-- <VBtn  size="sm" append-icon="mdi-minus-circle" rounded></VBtn> -->
+                                            <VTextField
+                                                v-model="options[index]"
                                                 :rules="[requiredValidator]"
-                                                :error-messages="form?.errors?.options"
-                                                />
-                                            </div>
-                                        </VCol>
-                                    </VRow>
-                                </VCol>
-                                <VCol cols="12" md="12" v-if="!HideOption">
-                                    <VBtn
-                                        variant="outlined"
-                                        style="
+                                                :error-messages="
+                                                    form?.errors?.options
+                                                "
+                                            />
+                                        </div>
+                                    </VCol>
+                                </VRow>
+                            </VCol>
+                            <VCol cols="12" md="12" v-if="!HideOption">
+                                <VBtn
+                                    variant="outlined"
+                                    style="
                                         border-radius: 5px;
                                         border: 1px dashed rgba(40, 40, 40, 0.5);
-                                        "
-                                        block
-                                        @click="addOption"
+                                    "
+                                    block
+                                    @click="addOption"
+                                >
+                                    <span class="typemore pppangram-bold"
+                                        >Type to add more options</span
                                     >
-                                        <span class="typemore pppangram-bold">Type to add more options</span>
-                                    </VBtn>
-                                </VCol>
+                                </VBtn>
+                            </VCol>
 
                             <!-- 👉 Submit and Cancel -->
                             <VCol
@@ -220,8 +241,8 @@ watch(
     border: 1px dashed rgba(40, 40, 40, 0.5) !important;
 }
 
-.typemore{
-    color: rgba(40, 40, 40, 0.50) !important;
+.typemore {
+    color: rgba(40, 40, 40, 0.5) !important;
     font-size: 16px !important;
     font-style: normal !important;
     font-weight: 500 !important;
@@ -229,19 +250,19 @@ watch(
 }
 
 .option-container {
-  position: relative; /* Make the container a positioning context */
+    position: relative; /* Make the container a positioning context */
 }
 .removeoption-btn {
-  position: absolute;
-  right: -1%;
-  top: -20%;
-  width: 20px;
-  cursor: pointer;
-  z-index: 1;
-  height: 20px;
-  color: #000;
-  border-radius: 50%; /* Makes the button circular */
-  /* padding: 5px !important; */
-  text-align: center;
+    position: absolute;
+    right: -1%;
+    top: -20%;
+    width: 20px;
+    cursor: pointer;
+    z-index: 1;
+    height: 20px;
+    color: #000;
+    border-radius: 50%; /* Makes the button circular */
+    /* padding: 5px !important; */
+    text-align: center;
 }
 </style>

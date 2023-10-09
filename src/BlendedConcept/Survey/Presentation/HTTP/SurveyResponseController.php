@@ -17,25 +17,27 @@ class SurveyResponseController
 
             $surveyResults = (new GetSurveyResponses($filters))->handle();
 
-            return Inertia::render(config('route.survey_results.index'), [
+            return Inertia::render(config('route.surveyresponse.index'), [
                 'surveyResults' => $surveyResults,
             ]);
         } catch (\Exception $e) {
-            return redirect()->route('survey_results.index')->with('sytemErrorMessage', $e->getMessage());
+            dd($e);
+            return redirect()->route('surveyresponse.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 
     public function show()
     {
-        return Inertia::render(config('route.survey_results.show'));
+        return Inertia::render(config('route.surveyresponse.show'));
     }
 
     public function view()
     {
-        return Inertia::render(config('route.survey_results.view'));
+        return Inertia::render(config('route.surveyresponse.view'));
     }
 
-    public function store(StoreSurveyResponseRequest $request){
+    public function store(StoreSurveyResponseRequest $request)
+    {
         // return $request->all();
         try {
             $request->validated();
@@ -51,5 +53,4 @@ class SurveyResponseController
          */
         return redirect()->route('dashboard');
     }
-
 }

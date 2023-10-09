@@ -52,7 +52,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     </StudentLayout>
 </template>
 
-<style lang="scss">
+<style lang="scss" scope>
 .app-user-search-filter {
     inline-size: 24.0625rem;
 }
@@ -82,6 +82,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 .reward-img {
     height: 85vh;
+    width: 100%;
 }
 
 .overlay-container {
