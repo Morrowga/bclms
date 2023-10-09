@@ -25,15 +25,15 @@ class SurveyRepository implements SurveyRepositoryInterface
     {
 
         $surveys = SurveyEloquentModel::filter($filters)
-        ->where('type', 'USEREXP')
-        ->orderBy('id', 'desc')
-        ->with(['survey_settings'])
-        ->withCount([
-            'responses as completion' => function ($query) {
-                $query->select(DB::raw('COUNT(DISTINCT user_id)'));
-            },
-        ])
-        ->paginate($filters['perPage'] ?? 10);
+            ->where('type', 'USEREXP')
+            ->orderBy('id', 'desc')
+            ->with(['survey_settings'])
+            ->withCount([
+                'responses as completion' => function ($query) {
+                    $query->select(DB::raw('COUNT(DISTINCT user_id)'));
+                },
+            ])
+            ->paginate($filters['perPage'] ?? 10);
 
         foreach ($surveys as $survey) {
             // Get unique user_type values for each survey
@@ -74,7 +74,7 @@ class SurveyRepository implements SurveyRepositoryInterface
             $questions = json_decode($request->questions, true);
             $user_types = json_decode(request()->user_type);
 
-            foreach($user_types as $type){
+            foreach ($user_types as $type) {
                 $setting = [
                     "user_type" => $type,
                     "survey_id" => $survey_id
@@ -97,7 +97,7 @@ class SurveyRepository implements SurveyRepositoryInterface
 
                 $question_id = $questionEloquent->id;
 
-                if($questionEloquent->question_type != 'SHORT_ANSWER'){
+                if ($questionEloquent->question_type != 'SHORT_ANSWER') {
                     $options = $question['options'];
                     foreach ($options as $option) {
                         if ($option !== '') {
@@ -132,12 +132,12 @@ class SurveyRepository implements SurveyRepositoryInterface
 
             $user_types = json_decode(request()->user_type);
 
-            if(count($user_types) > 0){
+            if (count($user_types) > 0) {
                 foreach ($surveyEloquent->survey_settings as $oldUserType) {
                     $oldUserType->delete();
                 }
 
-                foreach($user_types as $type){
+                foreach ($user_types as $type) {
                     $setting = [
                         "user_type" => $type,
                         "survey_id" => $surveyEloquent->id
@@ -149,7 +149,7 @@ class SurveyRepository implements SurveyRepositoryInterface
             }
 
             $questions = json_decode(request()->questions, true);
-            foreach($questions as $key => $question){
+            foreach ($questions as $key => $question) {
                 $questionEloquent = QuestionEloquentModel::find($question['id']);
                 $questionEloquent->order = $key;
                 $questionEloquent->update();
@@ -187,7 +187,7 @@ class SurveyRepository implements SurveyRepositoryInterface
 
             $question_id = $questionEloquent->id;
 
-            if($questionEloquent->question_type != 'SHORT_ANSWER'){
+            if ($questionEloquent->question_type != 'SHORT_ANSWER') {
                 $options = json_decode($request->options, true);
 
                 foreach ($options as $option) {
@@ -225,7 +225,7 @@ class SurveyRepository implements SurveyRepositoryInterface
             $questionEloquent->fill($questionArray);
             $questionEloquent->save();
 
-            if($questionEloquent->question_type != 'SHORT_ANSWER'){
+            if ($questionEloquent->question_type != 'SHORT_ANSWER') {
                 $oldOptions = $questionEloquent->options;
 
                 foreach ($oldOptions as $oldOption) {
@@ -268,40 +268,42 @@ class SurveyRepository implements SurveyRepositoryInterface
     {
         $questions = json_decode($request->questions, true);
 
-        foreach($questions as $key => $question){
+        foreach ($questions as $key => $question) {
             $questionEloquent = QuestionEloquentModel::find($question['id']);
             $questionEloquent->order = $key;
             $questionEloquent->update();
         }
-
     }
 
-    public function getSurveyByRole($appear_on){
+    public function getSurveyByRole($appear_on)
+    {
         $user = auth()->user();
         $user_type = $this->checkRole($user->role->name);
-        if($user_type != 'BC'){
+        if ($user_type != 'BC') {
             $currentDateTime = now()->format('Y-m-d H:i:s'); // Format current datetime
+            // dd($currentDateTime);
             $surveyEloquentModel = SurveyEloquentModel::where('appear_on', $appear_on)
-            ->where('type', 'USEREXP')
-            ->whereHas('survey_settings', function ($query) use ($user_type) {
-                $query->where('user_type', $user_type);
-            })
-            ->where('start_date', '<=', $currentDateTime) // Check if start_date is less than or equal to the current datetime
-            ->where('end_date', '>=', $currentDateTime) // Check if end_date is greater than or equal to the current datetime
-            ->with([
-                'questions.options',
-                'responses' => function ($query) use ($user) {
-                    $query->where('user_id', $user->id);
-                }
-            ])
-            ->latest()->first();
+                ->where('type', 'USEREXP')
+                ->whereHas('survey_settings', function ($query) use ($user_type) {
+                    $query->where('user_type', $user_type);
+                })
+                ->where('start_date', '<=', $currentDateTime) // Check if start_date is less than or equal to the current datetime
+                ->where('end_date', '>=', $currentDateTime) // Check if end_date is greater than or equal to the current datetime
+                ->with([
+                    'questions.options',
+                    'responses' => function ($query) use ($user) {
+                        $query->where('user_id', $user->id);
+                    }
+                ])
+                ->latest()->first();
 
-            return $surveyEloquentModel->responses->count() == 0 ? $surveyEloquentModel : '';
+            return ($surveyEloquentModel && $surveyEloquentModel->responses->count() == 0) ? $surveyEloquentModel : '';
         }
     }
 
-    public function checkRole($role){
-        switch($role){
+    public function checkRole($role)
+    {
+        switch ($role) {
             case 'Teacher':
                 return 'ORG_TEACHER';
                 break;
@@ -327,8 +329,9 @@ class SurveyRepository implements SurveyRepositoryInterface
         }
     }
 
-    public function checkRoleIDs($userType){
-        switch($userType){
+    public function checkRoleIDs($userType)
+    {
+        switch ($userType) {
             case 'ORG_TEACHER':
                 return 4;
                 break;

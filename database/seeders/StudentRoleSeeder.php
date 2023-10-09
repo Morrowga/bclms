@@ -32,7 +32,8 @@ class StudentRoleSeeder extends Seeder
         $user = [
             'role_id' => 6,
             'first_name' => 'Student',
-            'password' => bcrypt('password'),
+            'password' => 'password',
+            'email' => 'studentone@mail.com',
             'last_name' => 'One',
             'status' => 'ACTIVE',
             'email_verification_send_on' => now(),

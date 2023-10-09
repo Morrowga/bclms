@@ -184,8 +184,10 @@ const deleteSurvey = (id) => {
                                         <Link
                                             :href="
                                                 route(
-                                                    'userexperiencesurvey.edit', dataProps.row.id
-                                                )"
+                                                    'userexperiencesurvey.edit',
+                                                    dataProps.row.id
+                                                )
+                                            "
                                             class="text-secondary"
                                         >
                                             <span>{{
@@ -203,7 +205,9 @@ const deleteSurvey = (id) => {
                                                 .user_type" -->
                                         <!-- :key="user_type" -->
                                         <v-chip
-                                            v-for="setting in dataProps.row.survey_settings" :key="setting.id"
+                                            v-for="setting in dataProps.row
+                                                .survey_settings"
+                                            :key="setting.id"
                                             class="ma-2"
                                             color="primary"
                                             size="small"
@@ -221,13 +225,20 @@ const deleteSurvey = (id) => {
                                             color="yellow-darken-2"
                                             class="custom-progress"
                                             :max="dataProps.row.total_count"
-                                            :model-value="dataProps.row.completion"
+                                            :model-value="
+                                                dataProps.row.completion
+                                            "
                                             :height="8"
                                         >
                                         </VProgressLinear>
                                         <span
-                                            ><span class="text-warning">{{dataProps.row.completion}} </span
-                                            >/{{dataProps.row.total_count}}</span
+                                            ><span class="text-warning"
+                                                >{{
+                                                    dataProps.row.completion
+                                                }} </span
+                                            >/{{
+                                                dataProps.row.total_count
+                                            }}</span
                                         >
                                         Users
                                     </div>
@@ -272,7 +283,7 @@ const deleteSurvey = (id) => {
                                                     @click="
                                                         router.get(
                                                             route(
-                                                                'survey_results.view'
+                                                                'surveyresponse.view'
                                                             )
                                                         )
                                                     "

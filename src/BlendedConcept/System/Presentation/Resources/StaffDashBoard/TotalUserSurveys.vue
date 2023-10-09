@@ -278,7 +278,7 @@ const surveys = computed(() => datas.value);
                                                 @click="
                                                     router.get(
                                                         route(
-                                                            'survey_results.view'
+                                                            'surveyresponse.view'
                                                         )
                                                     )
                                                 "
