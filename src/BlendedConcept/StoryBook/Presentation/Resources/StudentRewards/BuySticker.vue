@@ -11,7 +11,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 <template>
     <StudentLayout>
-        <section class="buy-sticker-frame">
+        <section>
             <VRow>
                 <VCol cols="1">
                     <img
@@ -30,7 +30,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                 class="reward-img"
                             /> -->
                             <!-- <div class="d-flex justify-center"> -->
-                            {{ props.stickers }}
+
                             <div class="b4">
                                 <VRow class="mt-4">
                                     <VCol
@@ -44,8 +44,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                                     >
                                         <StickerDetail
                                             class="height-100"
-                                            :title="sticker.name"
-                                            :image="sticker.image_url"
+                                            :data="sticker"
                                         />
                                     </VCol>
                                 </VRow>
@@ -72,14 +71,14 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 .sticker-chip-or-text {
     color: var(--candy-red, #ff6262) !important;
-    font-size: 25px !important;
+    font-size: 18px !important;
     font-style: normal !important;
     text-transform: capitalize !important;
 }
 
 .sticker-chip-text {
     padding: 0 !important;
-    font-size: 20px !important;
+    font-size: 16px !important;
     font-style: normal !important;
     font-weight: 700 !important;
     text-transform: capitalize !important;
@@ -111,12 +110,15 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     color: #fff;
     background: #000;
     gap: 6px;
+    width: fit-content;
 }
 
 .postercard {
+    width: 100%;
     position: relative;
     display: flex;
     justify-content: center;
+    min-height: 85vh;
 }
 
 .rolltext {
@@ -230,9 +232,5 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
-}
-
-.buy-sticker-frame {
-    height: 100vh;
 }
 </style>

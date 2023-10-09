@@ -1,33 +1,29 @@
-<template>
-    <div
-        class="draggable-image"
-        :style="{
-            position: 'absolute',
-            top: `${positionY}px`,
-            left: `${positionX}px`,
-        }"
-        @mousedown="startDragging"
-    >
-        <img :src="imageSrc" alt="Draggable Image" />
-    </div>
-</template>
-
 <script setup>
 import { ref, onMounted, onUnmounted, defineEmits, defineProps } from "vue";
+import { usePage, useForm } from "@inertiajs/vue3";
+import { SuccessDialog } from "@actions/useSuccess";
+let flash = computed(() => usePage().props.flash);
 
 const isDragging = ref(false);
+const form = useForm({
+    x_axis_position: 0,
+    y_axis_position: 0,
+    _method: "PUT",
+});
 const props = defineProps({
     imageSrc: {
         type: String,
         default: "",
     },
     pox: {
-        type: Number,
         default: 0,
     },
     poy: {
-        type: Number,
         default: 0,
+    },
+    data: {
+        type: Object,
+        default: null,
     },
 });
 const positionX = ref(props.pox);
@@ -57,9 +53,26 @@ const dragImage = (event) => {
 };
 
 const stopDragging = () => {
-    isDragging.value = false;
-    emit("isDragging", false);
-    // Remove event listeners from the document
+    if (positionX.value > 100) {
+        isDragging.value = false;
+        emit("isDragging", false);
+        form.x_axis_position = positionX.value;
+        form.y_axis_position = positionY.value;
+        form.post(route("drop-sticker", { reward: props.data.id }), {
+            onSuccess: () => {
+                if (flash.value.errorMessage) {
+                    alert(flash.value.errorMessage);
+                } else {
+                }
+            },
+        });
+        // Remove event listeners from the document
+    } else {
+        isDragging.value = false;
+        emit("isDragging", false);
+        positionX.value = props.pox;
+        positionY.value = props.poy;
+    }
     document.removeEventListener("mousemove", dragImage);
     document.removeEventListener("mouseup", stopDragging);
 };
@@ -69,13 +82,32 @@ onUnmounted(() => {
     document.removeEventListener("mousemove", dragImage);
     document.removeEventListener("mouseup", stopDragging);
 });
+
+onMounted(() => {
+    positionX.value = positionX.value;
+    positionY.value = positionY.value;
+});
 </script>
+<template>
+    <div
+        class="draggable-image"
+        :style="{
+            position: 'absolute',
+            top: `${positionY}px`,
+            left: `${positionX}px`,
+        }"
+        @mousedown="startDragging"
+    >
+        <img :src="imageSrc" alt="Draggable Image" />
+    </div>
+</template>
 
 <style scoped>
 .draggable-image {
     position: fixed;
     cursor: grab;
     user-select: none; /* Prevent text selection while dragging */
+    z-index: 1;
 }
 
 .draggable-image img {

@@ -5,27 +5,27 @@ import { router } from "@inertiajs/core";
 
 import DraggableSticker from "./DraggableSticker.vue";
 import { ref, defineProps } from "vue";
-let props = defineProps(["flash", "auth"]);
+let props = defineProps(["flash", "auth", "stickers"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const isDrag = ref(false);
 const isDragging = (isDragging) => {
     isDrag.value = isDragging;
 };
-const images = [
-    "/images/s5.png",
-    "/images/s6.png",
-    "/images/s1.png",
-    "/images/s2.png",
-    "/images/s7.png",
-    "/images/s8.png",
-    "/images/s4.png",
-    "/images/s3.png",
-    "/images/s3.png",
-];
 let isOpen = ref(true);
 const toggleBar = () => {
     isOpen.value = !isOpen.value;
+};
+const getXPosition = (sticker) => {
+    return sticker.students[0]?.pivot.x_axis_position
+        ? sticker.students[0]?.pivot.x_axis_position
+        : 13;
+};
+
+const getYPosition = (sticker, index) => {
+    return sticker.students[0]?.pivot.y_axis_position
+        ? sticker.students[0]?.pivot.y_axis_position
+        : index * 80;
 };
 </script>
 
@@ -42,14 +42,25 @@ const toggleBar = () => {
         <section>
             <!-- <v-navigation-drawer floating permanent class="reward-sidebar"> -->
             <!-- <v-slide-x-transition> -->
-            <div v-if="isOpen" class="left-panel reward-sidebar">
-                <div class="mt-3" v-for="(image, index) in images" :key="index">
-                    <div class="vlis" value="home">
+            <div>
+                <div v-if="isOpen" class="left-panel reward-sidebar"></div>
+                <div class="sticker-bar">
+                    <div
+                        class="vlist"
+                        value="home"
+                        v-for="(sticker, index) in stickers"
+                        :key="sticker.id"
+                    >
                         <div class="d-flex justify-center mt-1">
                             <DraggableSticker
-                                :imageSrc="image"
-                                :pox="30"
-                                :poy="index * 70"
+                                :hidden="
+                                    isOpen == false &&
+                                    getXPosition(sticker) < 100
+                                "
+                                :data="sticker"
+                                :imageSrc="sticker.file_src"
+                                :pox="getXPosition(sticker)"
+                                :poy="getYPosition(sticker, index)"
                                 class="icon-reward-sidebar"
                                 @isDragging="isDragging"
                             />
@@ -66,7 +77,7 @@ const toggleBar = () => {
     </StudentLayout>
 </template>
 
-<style lang="scss">
+<style lang="scss" scope>
 .app-user-search-filter {
     inline-size: 24.0625rem;
 }
@@ -127,18 +138,6 @@ const toggleBar = () => {
     border-bottom-right-radius: 17px;
     background: var(--gray, #bfc0c1);
 }
-.reward-sidebar-drag {
-    margin-top: 3%;
-    margin-bottom: 3%;
-    height: 630px !important;
-    width: 130px !important;
-    border-top: 4px solid #fff;
-    border-bottom: 4px solid #fff;
-    border-right: 4px solid #fff;
-    border-top-right-radius: 17px;
-    border-bottom-right-radius: 17px;
-    background: var(--gray, #bfc0c1);
-}
 
 .rewardsidebartext {
     font-size: 10px !important;
@@ -182,5 +181,11 @@ const toggleBar = () => {
 .store-reward-img {
     width: 214px;
     height: 234px;
+}
+
+.sticker-bar {
+    margin-top: 5% !important;
+    position: relative !important;
+    height: 630px !important;
 }
 </style>
