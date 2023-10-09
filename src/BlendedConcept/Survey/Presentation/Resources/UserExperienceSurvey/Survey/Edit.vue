@@ -73,9 +73,8 @@ function deleteSurveyForm(id) {
 }
 
 const handleEditSurveyFormSubmit = (data) => {
-    console.log(data);
     let newOptions = [];
-    if(data.question_type == 'SHORT_ANSWER'){
+    if(data.question_type != 'SHORT_ANSWER'){
         data.options.forEach((item) => {
             newOptions.push(item);
         });
