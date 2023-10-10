@@ -30,12 +30,12 @@ const ownSticker = (id) => {
                 <v-chip class="sticker-chip text-left">
                     <img src="/images/chipcoin.png" class="coin-size" />
                     <span class="sticker-chip-text ruddy-bold">
-                        {{ data.gold_coins_needed }}</span
+                        {{ data.silver_coins_needed }}</span
                     >
                     <span class="sticker-chip-or-text mx-2 ruddy-bold">OR</span>
                     <img src="/images/chipcoin2.png" class="coin-size" />
                     <span class="sticker-chip-text ruddy-bold">{{
-                        data.silver_coins_needed
+                        data.gold_coins_needed
                     }}</span>
                 </v-chip>
             </div>
