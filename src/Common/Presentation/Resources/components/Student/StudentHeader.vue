@@ -94,7 +94,7 @@ const openStdMenu = () => {
                 <v-chip class="pa-0 ma-0">
                     <img src="/images/chipcoin.png" width="16" height="16" />
                     <span class="header-coin-chip ml-1 ruddy-bold">{{
-                        student.num_gold_coins
+                        student.num_silver_coins
                     }}</span>
                     <img
                         src="/images/chipcoin2.png"
@@ -103,7 +103,7 @@ const openStdMenu = () => {
                         height="16"
                     />
                     <span class="header-coin-chip ruddy-bold">{{
-                        student.num_silver_coins
+                        student.num_gold_coins
                     }}</span>
                 </v-chip>
             </div>

@@ -16,7 +16,7 @@ const isDialogVisible = ref(false)
             <VCol cols="6" class="text-center">
                 <v-btn @click="isDialogVisible = true" variant="flat" color="#282828" width="200" height="100" class="rollbtn mx-3 pppangram-bold">Roll 10 Times</v-btn>
                 <div class="text-center">
-                    <span class="rolltext ruddy-bold">Spend <strong class="ruddy-bold">1 Gold Coin</strong></span>
+                    <span class="rolltext ruddy-bold">Spend <strong class="ruddy-bold">8 Gold Coin</strong></span>
                 </div>
             </VCol>
         </VRow>

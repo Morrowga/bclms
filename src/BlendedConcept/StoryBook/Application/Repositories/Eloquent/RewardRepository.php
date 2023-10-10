@@ -180,4 +180,59 @@ class RewardRepository implements RewaredRepositoryInterface
             DB::rollBack();
         }
     }
+
+    public function getStickerRollData()
+    {
+        DB::beginTransaction();
+        try {
+            $student = auth()->user()->student;
+
+            $stickers = $this->rollSystem(10);
+
+            return $stickers;
+            DB::commit();
+        } catch (\Exception $e) {
+            return throw new \Exception($e->getMessage());
+            DB::rollBack();
+        }
+    }
+
+    public function rollSystem($time)
+    {
+        $numberOfRolls = $time;
+
+        $rarityProbabilities = [
+            'legendary' => 0.01,
+            'epic' => 0.05,
+            'super_rare' => 0.10,
+            'rare' => 0.20,
+            'common' => 0.64,
+        ];
+
+        $selectedRarities = [];
+
+        // Generate the selected rarities based on probabilities
+        for ($i = 0; $i < $numberOfRolls; $i++) {
+            $randomNumber = mt_rand() / mt_getrandmax();
+            $selectedRarity = '';
+
+            foreach ($rarityProbabilities as $rarity => $probability) {
+                if ($randomNumber < $probability) {
+                    $selectedRarity = $rarity;
+                    break;
+                } else {
+                    $randomNumber -= $probability;
+                }
+            }
+
+            $selectedRarities[] = $selectedRarity;
+        }
+
+        // Fetch records based on the selected rarities
+        $records = RewardEloquentModel::whereIn('rarity', $selectedRarities)
+            ->inRandomOrder()
+            ->get();
+
+        return $records;
+    }
 }

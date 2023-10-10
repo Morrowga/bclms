@@ -7,11 +7,12 @@ use Src\BlendedConcept\StoryBook\Application\DTO\RewardData;
 use Src\BlendedConcept\StoryBook\Application\Mappers\RewardMapper;
 use Src\BlendedConcept\StoryBook\Application\Requests\StoreRewardRequest;
 use Src\BlendedConcept\StoryBook\Application\Requests\UpdateRewardRequest;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\ChangeRewardStatusCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetRewardQuery;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStickerRollData;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoreRewardCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\UpdateRewardCommand;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetRewardQuery;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\RewardEloquentModel;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\ChangeRewardStatusCommand;
 
 class RewardController
 {
@@ -96,11 +97,9 @@ class RewardController
      */
     public function update(UpdateRewardRequest $request, RewardEloquentModel $reward)
     {
-
         try {
             // Map the reward data from the request
-            $rewardData = RewardData::fromRequest($request, $reward);
-
+            $rewardData = RewardData::fromRequest($request, $reward->id);
             // Update the reward using a command
             $updateReward = new UpdateRewardCommand($rewardData);
             $updateReward->execute();

@@ -4,12 +4,13 @@ namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
 use Exception;
 use Inertia\Inertia;
+use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\StoryBook\Application\DTO\RewardData;
 use Src\BlendedConcept\StoryBook\Application\Requests\UpdateStickerRequest;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StudentRewards\DropStickerCommand;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StudentRewards\OwnStickerCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStickerRollData;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\RewardEloquentModel;
-use Src\Common\Infrastructure\Laravel\Controller;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StudentRewards\OwnStickerCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StudentRewards\DropStickerCommand;
 
 class StudentRewardsController extends Controller
 {
@@ -83,5 +84,12 @@ class StudentRewardsController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('errorMessage', $e->getMessage());
         }
+    }
+
+
+    public function stickerRoll(){
+        $stickers = (new GetStickerRollData())->handle();
+
+        return $stickers;
     }
 }

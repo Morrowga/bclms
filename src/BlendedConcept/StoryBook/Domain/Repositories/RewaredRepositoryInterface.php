@@ -22,4 +22,7 @@ interface RewaredRepositoryInterface
     public function ownSticker($reward);
 
     public function dropSticker(RewardData $rewardData);
+
+    public function getStickerRollData();
+
 }
