@@ -120,11 +120,10 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
                 ->withCount('teachers', 'students')
                 ->where('organisation_id', auth()->user()->organisation_id)
                 ->whereHas('teachers', function ($query) {
-                    $query->where('id', auth()->user()->id);
+                    $query->where('user_id', auth()->user()->id);
                 })
                 ->orderBy('id', 'desc')
                 ->paginate($filters['perPage'] ?? 10));
-
         return $classrooms;
     }
 

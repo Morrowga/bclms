@@ -24,7 +24,7 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
             ->whereDoesntHave('organisation')
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
-
+        // dd($subscriptions);
         return $subscriptions;
     }
 
@@ -67,6 +67,7 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
             $b2bSubscriptionEloquent->subscription_id = $subscriptionEloquent->id;
             $b2bSubscriptionEloquent->plan_id = $subscriptionData->plan_id;
             $b2bSubscriptionEloquent->teacher_id = $subscriptionData->teacher_id;
+            $b2bSubscriptionEloquent->parent_id = $subscriptionData->parent_id;
             $b2bSubscriptionEloquent->save();
         } catch (\Exception $error) {
             DB::rollBack();

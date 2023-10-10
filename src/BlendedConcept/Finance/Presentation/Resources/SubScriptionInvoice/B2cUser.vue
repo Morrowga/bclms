@@ -89,7 +89,19 @@ const selectionChanged = (data) => {
 };
 
 const fullName = (user) => {
-    return (user?.first_name ?? "") + " " + (user?.last_name ?? "");
+    if (user.parent) {
+        return (
+            (user?.parent?.user?.first_name ?? "") +
+            " " +
+            (user?.parent?.user?.last_name ?? "")
+        );
+    } else {
+        return (
+            (user?.teacher?.user?.first_name ?? "") +
+            " " +
+            (user?.teacher?.user?.last_name ?? "")
+        );
+    }
 };
 
 let filterDatas = ref([
@@ -164,8 +176,9 @@ watch(filters, (newValue) => {
                                 src="/images/defaults/avator.png"
                                 class="user-profile-image"
                             />
+
                             <span>{{
-                                fullName(dataProps.row.b2c_subscription?.user)
+                                fullName(dataProps.row.b2c_subscription)
                             }}</span>
                         </div>
                     </div>

@@ -14,6 +14,7 @@ const form = useForm({
     stripe_status: "",
     plan_id: null,
     teacher_id: null,
+    parent_id: null,
     _method: "PUT",
 });
 // const savePlan = () => {
@@ -45,6 +46,7 @@ onUpdated(() => {
     form.payment_status = props.subscription?.payment_status ?? "PAID";
     form.plan_id = props.subscription?.b2c_subscription?.plan_id;
     form.teacher_id = props.subscription?.b2c_subscription?.teacher_id;
+    form.parent_id = props.subscription?.b2c_subscription?.parent_id;
 });
 </script>
 

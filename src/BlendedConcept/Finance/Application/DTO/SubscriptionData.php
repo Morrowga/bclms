@@ -17,7 +17,8 @@ class SubscriptionData
         public readonly ?string $stripe_price,
         public readonly ?array $b2b_subscription,
         public readonly ?int $plan_id,
-        public readonly ?int $teacher_id
+        public readonly ?int $teacher_id,
+        public readonly ?int $parent_id,
     ) {
     }
 
@@ -34,7 +35,8 @@ class SubscriptionData
             stripe_price: $request->stripe_price,
             b2b_subscription: $request->b2b_subscription,
             plan_id: $request->plan_id,
-            teacher_id: $request->teacher_id
+            teacher_id: $request->teacher_id,
+            parent_id: $request->parent_id
         );
     }
 
@@ -49,8 +51,9 @@ class SubscriptionData
             stripe_status: $subscription->stripe_status,
             stripe_price: $subscription->stripe_price,
             b2b_subscription: $subscription->b2b_subscription,
-            plan_id: $subscription->b2b_subscription->plan->id,
-            teacher_id: $subscription->b2b_subscription->user->id
+            plan_id: $subscription->b2c_subscription->plan->id,
+            teacher_id: $subscription->b2c_subscription->teacher_id,
+            parent_id: $subscription->b2c_subscription->parent_id
         );
     }
 
@@ -67,6 +70,7 @@ class SubscriptionData
             'b2b_subscription' => $this->b2b_subscription,
             'plan_id' => $this->plan_id,
             'teacher_id' => $this->teacher_id,
+            'parent_id' => $this->parent_id
         ];
     }
 }

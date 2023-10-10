@@ -30,7 +30,9 @@ let srcImage = computed(
         props.classroom.classroom_photo ??
         "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
 );
-const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
+const userImage = (user) => {
+    return user.profile_pic ?? "/images/profile/profilefive.png";
+};
 </script>
 
 <template>
@@ -102,13 +104,13 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                         >
                             <div>
                                 <v-img
-                                    :src="userImage(teacher)"
+                                    :src="userImage(teacher.user)"
                                     class="profile-img"
                                     cover
                                 ></v-img>
                                 <div class="mt-2">
                                     <span class="label-text pppangram-bold">{{
-                                        teacher.full_name
+                                        teacher.user.full_name
                                     }}</span>
                                 </div>
                             </div>
@@ -200,7 +202,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                             >
                                 <div>
                                     <v-img
-                                        :src="userImage(student)"
+                                        :src="userImage(student.user)"
                                         class="profile-img"
                                         cover
                                     ></v-img>
@@ -223,7 +225,8 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                                             class="label-text-two ml-1 pppangram-bold"
                                         >
                                             {{
-                                                student?.user?.contact_number
+                                                student?.parent?.user
+                                                    ?.contact_number
                                             }}</span
                                         >
                                     </div>
@@ -250,7 +253,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                         >
                             <div>
                                 <v-img
-                                    :src="userImage(student)"
+                                    :src="userImage(student.user)"
                                     class="profile-img"
                                     cover
                                 ></v-img>
@@ -270,7 +273,8 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                                         class="label-text-two ml-1 pppangram-bold"
                                     >
                                         {{
-                                            student?.user?.contact_number
+                                            student?.parent?.user
+                                                ?.contact_number
                                         }}</span
                                     >
                                 </div>

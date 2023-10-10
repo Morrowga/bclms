@@ -58,6 +58,7 @@ class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithH
                     "organisation_id" => $this->request->organisation_id,
                     "type" => "B2B"
                 ]);
+
                 $userEloquent = UserEloquentModel::create($create_user_data);
                 $dateFormat = Carbon::createFromFormat('j m Y', $row['dob']);
                 $dob = $dateFormat->format('Y-m-d');
