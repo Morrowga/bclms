@@ -15,6 +15,7 @@ use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEl
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\RewardEloquentModel;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
@@ -136,5 +137,10 @@ class StudentEloquentModel extends Model implements HasMedia
     public function teachers()
     {
         return $this->belongsToMany(TeacherEloquentModel::class, 'teacher_students', 'student_id', 'teacher_id');
+    }
+
+    public function stickers()
+    {
+        return $this->belongsToMany(RewardEloquentModel::class, 'student_sticker', 'student_id', 'sticker_id');
     }
 }

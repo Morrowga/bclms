@@ -3,32 +3,37 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import LearningActivity from "./components/LearningActivity.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { ref } from "vue";
+let props = defineProps(["storybook"]);
 let tab = ref(false);
+const setImage = () => {
+    return props.storybook.thumbnail_img == "" || !props.storybook.thumbnail_img
+        ? "/images/defaults/organisation_logo.png"
+        : props.storybook.thumbnail_img;
+};
 </script>
 <template>
     <AdminLayout>
         <VContainer class="width-80">
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-img src="/images/imgbook.png" />
+                    <v-img :src="setImage()" />
                 </v-col>
                 <v-col cols="12" md="6">
-                    <h1 class="tiggie-sub-subtitle ml-10 fs-40">Toy Story 2</h1>
+                    <h1 class="tiggie-sub-subtitle ml-10 fs-40">
+                        {{ storybook.name }}
+                    </h1>
                     <p class="text-subtitle-1">
-                        When Woody is kidnapped by a greedy toy collector and is
-                        nowhere to be found, Buzz and his friends set out to
-                        rescue him.
+                        {{ storybook.description }}
                     </p>
                     <br />
                     <div class="learning-chip-group">
-                        <v-chip variant="outlined" color="success" class="mr-4"
-                            >Switch</v-chip
-                        >
-                        <v-chip variant="outlined" color="success" class="mr-4"
-                            >Eye-Gaze</v-chip
-                        >
-                        <v-chip variant="outlined" color="success" class="mr-4"
-                            >Touch</v-chip
+                        <v-chip
+                            v-for="device in storybook.devices"
+                            :key="device.id"
+                            variant="outlined"
+                            color="success"
+                            class="mr-4"
+                            >{{ device.name }}</v-chip
                         >
                     </div>
                     <div class="learning-tabs mt-10">
@@ -44,24 +49,24 @@ let tab = ref(false);
                             <v-window v-model="tab">
                                 <v-window-item value="learning">
                                     <ChipWithBlueDot
-                                        v-for="item in 5"
-                                        :key="item"
-                                        title="Dyslexia"
+                                        v-for="learningneed in storybook.learningneeds"
+                                        :key="learningneed.id"
+                                        :title="learningneed.name"
                                     />
                                 </v-window-item>
                                 <v-window-item value="themes">
                                     <ChipWithBlueDot
-                                        v-for="item in 5"
-                                        :key="item"
-                                        title="Themes"
+                                        v-for="theme in storybook.themes"
+                                        :key="theme.id"
+                                        :title="theme.name"
                                     />
                                 </v-window-item>
 
                                 <v-window-item value="disability">
                                     <ChipWithBlueDot
-                                        v-for="item in 5"
-                                        :key="item"
-                                        title="Disability"
+                                        v-for="dt in storybook.disability_types"
+                                        :key="dt.id"
+                                        :title="dt.name"
                                     />
                                 </v-window-item>
                             </v-window>

@@ -10,7 +10,7 @@ class LearningActivityController
     public function index(StoryBookEloquentModel $storybook)
     {
         return Inertia::render(config('route.learning_activities.index'), [
-            "storybook" => $storybook
+            "storybook" => $storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions'])
         ]);
     }
 }
