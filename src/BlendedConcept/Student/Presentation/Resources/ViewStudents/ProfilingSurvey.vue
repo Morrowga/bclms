@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm,usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { SuccessDialog } from "@actions/useSuccess";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
@@ -13,20 +13,55 @@ import {
     integerValidator,
 } from "@validators";
 
-let props = defineProps(['profilingSurvey']);
+let page = usePage();
+
+let props = defineProps(['profilingSurvey', 'user']);
 const selectedOptions = ref([]);
+const  shortanswer = ref([]);
 
 const questionsExist = computed(() => {
   return props.profilingSurvey && props.profilingSurvey.data && props.profilingSurvey.data.questions;
 });
 
+const user_id = ref(props.user.id);
+
+const form = useForm({
+    results: null,
+    shortanswer: null,
+    type: 'PROFILING',
+    survey_id: props.profilingSurvey.data.id,
+    user_id: user_id.value
+})
+
 const addSurveyForm = ref(questionsExist.value ? props.profilingSurvey.data.questions : []);
 
 
 addSurveyForm.value.forEach((item) => {
-  selectedOptions.value[item.id] = [];
+    if(item.question_type != 'SHORT_ANSWER'){
+        selectedOptions.value[item.id] = [];
+    } else {
+        shortanswer.value[item.id] = {
+            "id": item.id,
+            "answer" : ''
+        };
+    }
 });
 
+const onFormSubmit = () => {
+
+    // Convert the filteredSelectedOptions to JSON
+    form.results = JSON.stringify(selectedOptions.value);
+    form.shortanswer = JSON.stringify(shortanswer.value);
+    form.post(route("surveyresponse.store"), {
+        onSuccess: () => {
+            SuccessDialog({ title: "You've successfully submited profiling survey." });
+        },
+        onError: (error) => {
+            form.results = selectedOptions.value;
+            form.shortanswer = shortanswer.value;
+        }
+    })
+}
 // let addNewQuestionForm = useForm({
 //     "survey_id" : props.profilingSurvey.data.id,
 //     "question_type" : null,
@@ -71,7 +106,7 @@ const questionType = (questionType) => {
 <template>
     <AdminLayout>
         <VContainer>
-            <VForm @submit.prevent="submitProfiling">
+            <VForm>
                 <v-row>
                     <v-col
                         cols="12"
@@ -122,6 +157,17 @@ const questionType = (questionType) => {
                                     </VList>
                                 </VCol>
                             </VRow>
+                            <VRow no-gutters justify="start" v-else>
+                                <VCol cols="12">
+                                    <VTextarea
+                                        v-model="shortanswer[item.id].answer"
+                                        placeholder="Please Type here ...."
+                                        auto-grow
+                                        rows="5"
+                                        :rules="[requiredValidator]" :error-messages="form?.errors?.answer"
+                                    />
+                                </VCol>
+                            </VRow>
                         </VCard>
                     </VCol>
                     <v-col cols="12">
@@ -137,7 +183,7 @@ const questionType = (questionType) => {
                                 >
                             </Link>
                             <v-btn
-                                type="submit"
+                                @click="onFormSubmit"
                                 variant="flat"
                                 rounded
                                 width="200"

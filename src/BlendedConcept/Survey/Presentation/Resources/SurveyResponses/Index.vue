@@ -4,6 +4,7 @@ import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import Swal from "sweetalert2";
+import { format } from "date-fns";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
@@ -21,21 +22,27 @@ import {
 // import Edit from "./Edit.vue";
 let props = defineProps(["surveyResponses"]);
 
+const formatDate = (dateString) => {
+    // Parse the date string into a Date object
+    const date = new Date(dateString);
+    // Format the date using date-fns
+    return format(date, "dd/M/yyyy"); // Customize the format string as needed
+};
 //## start datatable section
 let columns = [
     {
         label: "Users",
-        field: "users",
+        field: "user",
         sortable: false,
     },
-    // {
-    //     label: "User Type",
-    //     field: "user_type",
-    //     sortable: false,
-    // },
+    {
+        label: "User Type",
+        field: "user_type",
+        sortable: false,
+    },
     {
         label: "Name of Survey",
-        field: "question",
+        field: "user_type",
         sortable: false,
     },
     {
@@ -95,12 +102,14 @@ const selectionChanged = (data) => {
 const goRoute = (route) => {
     router.get(route);
 };
-const deleteItem = () => {
+const deleteItem = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",
-        denyButtonText: "Yes, delete it!",
+        denyButtonText: "Yes,delete it!",
         onConfirm: () => {
-            // alert("good to go");
+            router.delete(route("surveyresponse.destroy", id), {
+                onSuccess: () => {},
+            });
         },
     });
 };
@@ -155,19 +164,17 @@ const deleteItem = () => {
                                         v-if="dataProps.column.field == 'user'"
                                     >
                                         <span>{{
-                                            dataProps.row.user.name
+                                            dataProps.row.user.full_name
                                         }}</span>
                                     </div>
                                     <div
                                         v-if="
-                                            dataProps.column.field == 'question'
+                                            dataProps.column.field == 'user_type'
                                         "
                                     >
                                         {{
-                                            formatDate(
-                                                dataProps.row.question.survey
-                                                    .title
-                                            )
+
+                                            dataProps.row.user.role.name
                                         }}
                                     </div>
                                     <div
@@ -193,7 +200,7 @@ const deleteItem = () => {
                                             icon="mdi-trash"
                                             class="ml-2"
                                             color="secondary"
-                                            @click="deleteItem()"
+                                            @click="deleteItem(dataProps.row.id)"
                                         >
                                         </VBtn>
                                     </div>

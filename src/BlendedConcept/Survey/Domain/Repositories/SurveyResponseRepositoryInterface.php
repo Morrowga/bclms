@@ -13,4 +13,5 @@ interface SurveyResponseRepositoryInterface
     public function createSurveyResponse(Request $request);
 
 
+    public function deleteResponse(int $response_id);
 }

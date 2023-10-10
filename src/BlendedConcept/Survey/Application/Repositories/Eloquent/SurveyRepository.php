@@ -165,6 +165,11 @@ class SurveyRepository implements SurveyRepositoryInterface
     public function delete(int $survey_id): void
     {
         $survey = SurveyEloquentModel::query()->findOrFail($survey_id);
+        if($survey->responses->count() > 0){
+            foreach($survey->responses as $response){
+                $response->delete();
+            }
+        }
         $survey->delete();
     }
 
@@ -281,7 +286,7 @@ class SurveyRepository implements SurveyRepositoryInterface
         $user_type = $this->checkRole($user->role->name);
         if ($user_type != 'BC') {
             $currentDateTime = now()->format('Y-m-d H:i:s'); // Format current datetime
-            // dd($currentDateTime);
+            
             $surveyEloquentModel = SurveyEloquentModel::where('appear_on', $appear_on)
                 ->where('type', 'USEREXP')
                 ->whereHas('survey_settings', function ($query) use ($user_type) {

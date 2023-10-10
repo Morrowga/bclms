@@ -6,6 +6,7 @@ namespace Src\BlendedConcept\Survey\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Model;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\QuestionOptionEloquentModel;
 
@@ -32,6 +33,11 @@ class ResponseEloquentModel extends Model
         return $this->belongsToMany(QuestionOptionEloquentModel::class, 'response_options', 'response_id', 'option_id');
     }
 
+    public function survey()
+    {
+        return $this->belongsTo(SurveyEloquentModel::class, 'survey_id', 'id');
+    }
+
     public function question()
     {
         return $this->belongsTo(QuestionEloquentModel::class, 'question_id', 'id');
@@ -39,7 +45,7 @@ class ResponseEloquentModel extends Model
 
     public function student()
     {
-        return $this->belongsTo(StudentEloquentModel::class, 'student_id', 'id');
+        return $this->belongsTo(StudentEloquentModel::class, 'student_id', 'student_id');
     }
 
     public function scopeFilter($query, $filters)
