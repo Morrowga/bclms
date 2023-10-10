@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
 use Exception;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\StoryBook\Application\DTO\RewardData;
 use Src\BlendedConcept\StoryBook\Application\Requests\UpdateStickerRequest;
@@ -87,9 +88,9 @@ class StudentRewardsController extends Controller
     }
 
 
-    public function stickerRoll(){
-        $stickers = (new GetStickerRollData())->handle();
+    public function stickerRoll(Request $request){
+        $stickers = (new GetStickerRollData($request->query('count')))->handle();
 
-        return $stickers;
+        return response()->json($stickers);
     }
 }
