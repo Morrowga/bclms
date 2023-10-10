@@ -65,9 +65,10 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
 
     public function assigmentAssigment()
     {
+
         DB::beginTransaction();
         try {
-            $storybookversion = StoryBookVersionEloquentModel::where('storybook_id', request()->storybook_version_id)->first();
+            $storybookversion = StoryBookVersionEloquentModel::find(request()->storybook_version_id);
             $storybookversion->storybook_assigments()->sync(request()->student_ids);
             DB::commit();
         } catch (\Exception $error) {

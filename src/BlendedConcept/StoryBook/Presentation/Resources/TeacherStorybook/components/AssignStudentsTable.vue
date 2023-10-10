@@ -60,7 +60,7 @@ let columns = [
 ];
 
 const form = useForm({
-    storybook_version_id: props.storybook.id,
+    storybook_version_id: props.version.id,
     student_ids: [],
 });
 

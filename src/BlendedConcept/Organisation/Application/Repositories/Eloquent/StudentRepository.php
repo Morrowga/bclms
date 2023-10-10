@@ -26,7 +26,6 @@ class StudentRepository implements StudentRepositoryInterface
 
         return $users;
     }
-
     public function createStudent(Student $student)
     {
 

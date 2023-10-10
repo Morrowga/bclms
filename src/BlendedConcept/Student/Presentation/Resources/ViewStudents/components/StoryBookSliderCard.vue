@@ -1,8 +1,14 @@
 <script setup>
 import { ref } from "vue";
+import { router } from "@inertiajs/core";
 let is_description = ref(false);
 let is_chip = ref(true);
-import { router } from "@inertiajs/core";
+const props = defineProps(["data"]);
+const setImage = () => {
+    return props.data.thumbnail_img == "" || !props.data.thumbnail_img
+        ? "/images/defaults/organisation_logo.png"
+        : props.data.thumbnail_img;
+};
 </script>
 <template>
     <v-card
@@ -10,18 +16,17 @@ import { router } from "@inertiajs/core";
         @click="router.get(route('learning_activities.index'))"
     >
         <v-card-title class="ps-relative">
-            <v-img src="/images/image4.png" />
+            <v-img :src="setImage()" />
             <div class="chip-page" v-if="is_chip">
                 <div class="chip-content">70%</div>
             </div>
         </v-card-title>
         <v-card-text>
             <h1 class="font-weight-bold text-h6 text-center pb-4">
-                Toy Story 1
+                {{ data.name }}
             </h1>
             <p v-if="is_description">
-                When Woody is kidnapped by a greedy toy collector and is nowhere
-                to be found, Buzz and his friends set out to rescue him.
+                {{ data.description }}
             </p>
             <div class="chip-group">
                 <div class="chip green">

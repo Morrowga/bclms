@@ -313,7 +313,7 @@ function checkURL(input) {
                 </div>
             </VContainer>
             <div>
-                <StoryBookSlider />
+                <StoryBookSlider :datas="props.student.data.book_versions" />
             </div>
         </div>
 

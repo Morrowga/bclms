@@ -18,7 +18,7 @@ const props = defineProps(["dataStoryBook"]);
 const page = usePage();
 const isLoading = ref(false);
 let iframeRef = ref("");
-const app_url = computed(() => page?.props?.route_site_url);
+const app_url = ref("");
 const form = useForm({
     storybook_id: props.dataStoryBook.id,
     teacher_id: "",
@@ -48,11 +48,11 @@ const CreateStoryBookVersion = () => {
                     title: "You've successfully created organisation",
                 });
                 dialog.value = false;
-                isLoading.value = true;
+                isLoading.value = false;
             },
             onError: (error) => {
                 console.log(error);
-                isLoading.value = true;
+                isLoading.value = false;
             },
         });
     }, 10000);
@@ -66,7 +66,7 @@ const iframeLink = () => {
     }
 };
 onMounted(() => {
-    console.log("bb", props.dataStoryBook);
+    app_url.value = page?.props?.route_site_url;
 });
 </script>
 <template>
@@ -82,7 +82,7 @@ onMounted(() => {
         </v-btn>
 
         <v-dialog v-model="dialog" width="auto" min-width="800">
-            {{ iframeLink() }}
+            <!-- {{ iframeLink() }} -->
             <v-card>
                 <v-card-title>
                     <div class="d-flex justify-space-between align-center">

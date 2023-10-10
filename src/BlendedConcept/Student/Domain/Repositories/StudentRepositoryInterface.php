@@ -21,6 +21,8 @@ interface StudentRepositoryInterface
 
     public function getLearningNeedsForStudent();
 
+    public function showStudent($id);
+
     public function storeTeacherStudent(Student $student);
 
     public function updateTeacherStudent(StudentData $studentData);

@@ -38,4 +38,9 @@ class StoryBookVersionEloquentModel extends Model
     {
         return $this->belongsToMany(StudentEloquentModel::class, 'storybook_assignments', 'storybook_version_id', 'student_id');
     }
+
+    public function storybook()
+    {
+        return $this->belongsTo(StoryBookEloquentModel::class, 'storybook_id');
+    }
 }

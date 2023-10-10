@@ -224,7 +224,7 @@ const getYPosition = (sticker, index) => {
 .scrollable {
     position: relative;
     height: 100%;
-    width: 150px;
+
     overflow-y: scroll;
 }
 

@@ -174,12 +174,13 @@ onUpdated(() => {
                         <span class="font-weight-black text-black"
                             >Learning Needs</span
                         >
+
                         <v-chip-group>
                             <v-chip
                                 size="small"
                                 v-for="(
                                     learningneed, index
-                                ) in data.learingneeds"
+                                ) in data.learningneeds"
                                 :key="index"
                             >
                                 {{ learningneed.name }}

@@ -37,7 +37,7 @@ class TeacherStudentController
 
             // Retrieve users with pagination using the provided filters
             $students = (new GetStudentWithPagination($filters))->handle()['paginate_students'];
-            
+
             return Inertia::render(config('route.teacher_students.index'), compact('students'));
         } catch (\Exception $e) {
             return redirect()->route('teacher_students.index')->with('sytemErrorMessage', $e->getMessage());
@@ -142,7 +142,7 @@ class TeacherStudentController
 
             return redirect()->route('teacher_students.show', $request->student_id); // Redirect to the kid's home page.
         } catch (\Exception $error) {
-        return redirect()
+            return redirect()
                 ->route('dashboard')
                 ->with([
                     'systemErrorMessage' => $error->getCode(),
