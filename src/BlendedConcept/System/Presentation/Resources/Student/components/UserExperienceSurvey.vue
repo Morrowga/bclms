@@ -23,6 +23,7 @@ let user_id = computed(() => page.props.user_info.user_detail.id);
 const form = useForm({
     results: null,
     shortanswer: null,
+    type: 'USEREXP',
     survey_id: props.data.id,
     user_id: user_id.value
 })

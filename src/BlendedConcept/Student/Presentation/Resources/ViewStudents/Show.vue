@@ -259,7 +259,7 @@ function checkURL(input) {
                                 <Link
                                     :href="
                                         route(
-                                            'teacher_students.profiling_surveys'
+                                            'teacher_students.profiling_surveys', props.student.data.user.id
                                         )
                                     "
                                 >
