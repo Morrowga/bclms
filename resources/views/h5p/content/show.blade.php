@@ -6,7 +6,6 @@
         <div class="row">
 
             <div class="col-md-12">
-
                 <div class="h5p-content-wrap">
                     {!! $embed_code !!}
                 </div>

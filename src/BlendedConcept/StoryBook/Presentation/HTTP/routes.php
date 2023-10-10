@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('storybooks', [StudentStoryBookController::class, 'index'])->name('storybooks');
     Route::get('storybook-detail/{book}', [StudentStoryBookController::class, 'show'])->name('storybooks.show');
+    Route::get('storybook-detail/version/{book_version}', [StudentStoryBookController::class, 'showVersion'])->name('storybooks.version');
     Route::get('storybooks/pathway', [StudentStoryBookController::class, 'pathway'])->name('storybooks.pathway');
     Route::get('storybooks/student-pathways', [StudentStoryBookController::class, 'getStudentPathways'])->name('storybooks.getStudentPathway');
 
@@ -66,5 +67,4 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/own-sticker/{reward}', [StudentRewardsController::class, 'ownSticker'])->name('own-sticker');
     Route::put('/drop-sticker/{reward}', [StudentRewardsController::class, 'dropSticker'])->name('drop-sticker');
     Route::get('/roll-sticker', [StudentRewardsController::class, 'stickerRoll'])->name('roll-sticker');
-
 });

@@ -10,7 +10,6 @@ import RecommendedBooks from "./components/RecommendedBooks.vue";
 import ReviewDialog from "./components/ReviewDialog.vue";
 import { router } from "@inertiajs/core";
 import { ref } from "vue";
-import VersionCard from "@mainRoot/components/Teacher/VersionCard.vue";
 
 const props = defineProps(["teacher_storybook", "storybooks", "games"]);
 
@@ -138,7 +137,6 @@ const getImage = (item) => {
                     />
                 </v-col>
             </v-row>
-            <VersionCard />
         </VContainer>
     </AdminLayout>
 </template>

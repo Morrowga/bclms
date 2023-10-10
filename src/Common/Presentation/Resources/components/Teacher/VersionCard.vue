@@ -1,106 +1,178 @@
 <script setup>
 import { router } from "@inertiajs/core";
 
-let props = defineProps(["route", "count", "label"]);
-const isDialogVisible = ref(true)
+let props = defineProps(["book"]);
+const isDialogVisible = ref(false);
+const setImage = (book) => {
+    return book.thumbnail_img == "" || !book.thumbnail_img
+        ? "/images/defaults/organisation_logo.png"
+        : book.thumbnail_img;
+};
+const userImage = (user) => {
+    return user.profile_pic ?? "/images/profile/profilefive.png";
+};
+
+const clickBook = (versions) => {
+    if (versions.length > 0) {
+        isDialogVisible.value = true;
+    } else {
+        router.get(route("storybooks.show", { book: props.book.id }));
+    }
+};
+const readOrginal = () => {
+    router.get(route("storybooks.show", { book: props.book.id }));
+};
+
+const readVersion = (book_version_id) => {
+    router.get(route("storybooks.version", { book_version: book_version_id }));
+};
 </script>
-<template #activator="{ props }">
-    <VDialog
-        v-model="isDialogVisible"
-        width="500"
-    >
-        <!-- Activator -->
-        <!-- Dialog Content -->
-        <VCard class="version-card">
-        <VCardText>
-            <span class="ruddy-bold versiontext">Choose a version for Toy Story 2</span>
-        </VCardText>
-        <div class="px-7 my-6">
-            <VRow>
-                <VCol cols="4">
-                    <VCard class="version-mini-card">
-                        <div class="text-center">
-                            <span class="ruddy-bold versiontext">Original</span>
+<template>
+    <div>
+        <VCard class="card-story" @click="clickBook(book.book_versions)">
+            <v-img :src="setImage(book)" class="showimg" cover></v-img>
+            <div class="d-flex justify-center">
+                <img
+                    src="/images/Play Button.png"
+                    @click="() => router.get(route('storybooks.show'))"
+                    class="playButton"
+                    alt=""
+                />
+            </div>
+            <div class="d-flex justify-center">
+                <div class="goldCoin">
+                    <v-chip class="coinChip text-center">
+                        <div class="mt-2 text-center">
+                            <span class="chipText">{{
+                                book.num_gold_coins
+                            }}</span>
                         </div>
-                        <v-img src="/images/image1.png" class="mx-2" cover></v-img>
-                        <div class="text-center">
-                            <span class="original">The Original Copy</span>
+                        <div class="text-center mt-2">
+                            <img
+                                src="/images/Gold Coin.png"
+                                width="30"
+                                height="30"
+                                alt=""
+                            />
                         </div>
-                    </VCard>
-                </VCol>
-                <VCol cols="4">
-                    <VCard class="version-mini-card">
-                        <div class="text-center">
-                            <span class="ruddy-bold versiontext">V3</span>
-                        </div>
-                        <v-img src="/images/image1.png" class="mx-2" cover></v-img>
-                        <div class="text-left">
-                            <p class="original ml-2 mt-2">Version 3 ww interactive elements</p>
-                        </div>
-
-                        <div class="ml-2 mt-9">
-                            <v-avatar size="25">
-                                <img src="/images/classroom5.jpeg" alt="">
-                            </v-avatar>
-                            <span class="version-profile-text ml-2">Example</span>
-                        </div>
-                    </VCard>
-                </VCol>
-                <VCol cols="4">
-                    <VCard class="version-mini-card">
-                        <div class="text-center">
-                            <span class="ruddy-bold versiontext">V4</span>
-                        </div>
-                        <v-img src="/images/image1.png" class="mx-2" cover></v-img>
-                        <div class="text-left">
-                            <p class="original ml-2 mt-2">Version 4 ww interactive elements</p>
-                        </div>
-
-                        <div class="ml-2 mt-9">
-                            <v-avatar size="25">
-                                <img src="/images/classroom5.jpeg" alt="">
-                            </v-avatar>
-                            <span class="version-profile-text ml-2">Example</span>
-                        </div>
-                    </VCard>
-                </VCol>
-            </VRow>
+                    </v-chip>
+                </div>
+            </div>
+        </VCard>
+        <div class="text-center mt-3">
+            <span class="bookname ruddy-bold">{{ book.name }}</span>
         </div>
-        <!-- <VCardActions>
+        <VDialog v-model="isDialogVisible" width="700">
+            <!-- Activator -->
+            <!-- Dialog Content -->
+            <VCard class="version-card">
+                <VCardText>
+                    <span class="ruddy-bold versiontext"
+                        >Choose a version for {{ book.name }}</span
+                    >
+                </VCardText>
+                <div class="px-7 my-6">
+                    <VRow>
+                        <!-- <VCol cols="4">
+                            <VCard
+                                class="version-mini-card"
+                                @click="readOrginal()"
+                            >
+                                <div class="text-center">
+                                    <span class="ruddy-bold versiontext"
+                                        >Original</span
+                                    >
+                                </div>
+                                <v-img
+                                    :src="setImage(book)"
+                                    class="mx-2"
+                                    cover
+                                ></v-img>
+                                <div class="text-center">
+                                    <span class="original"
+                                        >The Original Copy</span
+                                    >
+                                </div>
+                            </VCard>
+                        </VCol> -->
+                        <VCol
+                            cols="4"
+                            v-for="book_version in book.book_versions"
+                            :key="book_version.id"
+                        >
+                            <VCard
+                                class="version-mini-card"
+                                @click="readVersion(book_version.id)"
+                            >
+                                <div class="text-center">
+                                    <span class="ruddy-bold versiontext">{{
+                                        book_version.name
+                                    }}</span>
+                                </div>
+                                <v-img
+                                    :src="setImage(book)"
+                                    class="mx-2"
+                                    cover
+                                ></v-img>
+                                <div class="text-left">
+                                    <p class="original ml-2 mt-2">
+                                        {{ book_version.description }}
+                                    </p>
+                                </div>
+
+                                <div class="ml-2 mt-9 mb-5">
+                                    <v-avatar size="30">
+                                        <v-img
+                                            :src="
+                                                userImage(
+                                                    book_version.teacher.user
+                                                )
+                                            "
+                                            alt=""
+                                        />
+                                    </v-avatar>
+                                    <span class="version-profile-text ml-2">{{
+                                        book_version.teacher.user.full_name
+                                    }}</span>
+                                </div>
+                            </VCard>
+                        </VCol>
+                    </VRow>
+                </div>
+                <!-- <VCardActions>
             <VSpacer />
             <VBtn @click="isDialogVisible = false">
             I accept
             </VBtn>
         </VCardActions> -->
-        </VCard>
-    </VDialog>
+            </VCard>
+        </VDialog>
+    </div>
 </template>
 
 <style scoped>
-.version-profile-text{
+.version-profile-text {
     font-size: 10px !important;
     font-weight: bold !important;
     color: #000 !important;
 }
-.original{
+.original {
     font-weight: bold !important;
     line-height: 1.5 !important;
     color: #000 !important;
     font-size: 10px !important;
 }
-.versiontext{
+.versiontext {
     color: #000 !important;
 }
-.version-card{
+.version-card {
     border: 3px solid #000;
-    background: #FFF2CE;
+    background: #fff2ce;
 }
 
-.version-mini-card{
+.version-mini-card {
     border: 3px solid #000;
     background: #fff;
-    height:  210px;
+    height: 100%;
 }
-
-
 </style>

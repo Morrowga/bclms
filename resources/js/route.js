@@ -262,6 +262,7 @@ const pages = {
     "BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Index.vue'),
     "BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Pathway": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Pathway.vue'),
     "BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Show": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Show.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Version": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Version.vue'),
 
     //Student game
     "BlendedConcept/StoryBook/Presentation/Resources/StudentGames/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentGames/Index.vue'),
