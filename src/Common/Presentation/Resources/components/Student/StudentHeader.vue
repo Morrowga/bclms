@@ -21,6 +21,7 @@ let emit = defineEmits();
 let page = usePage();
 let tiggieImage = "";
 let user_role = computed(() => page.props.user_info.user_role.name);
+let student = computed(() => page.props.auth.data.student);
 let toggle = () => {
     emit("openDrawer");
 };
@@ -92,14 +93,18 @@ const openStdMenu = () => {
             <div>
                 <v-chip class="pa-0 ma-0">
                     <img src="/images/chipcoin.png" width="16" height="16" />
-                    <span class="header-coin-chip ml-1 ruddy-bold">47</span>
+                    <span class="header-coin-chip ml-1 ruddy-bold">{{
+                        student.num_gold_coins
+                    }}</span>
                     <img
                         src="/images/chipcoin2.png"
                         class="ml-2"
                         width="16"
                         height="16"
                     />
-                    <span class="header-coin-chip ruddy-bold">13</span>
+                    <span class="header-coin-chip ruddy-bold">{{
+                        student.num_silver_coins
+                    }}</span>
                 </v-chip>
             </div>
         </div>

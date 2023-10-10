@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
 class RewardEloquentModel extends Model implements HasMedia
 {
@@ -60,11 +61,11 @@ class RewardEloquentModel extends Model implements HasMedia
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->orWhere('name', 'like', '%'.$search.'%')
-                ->orWhere('status', 'like', '%'.$search.'%');
+            $query->orWhere('name', 'like', '%' . $search . '%')
+                ->orWhere('status', 'like', '%' . $search . '%');
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
             if ($filter == 'reviewers') {
@@ -72,5 +73,10 @@ class RewardEloquentModel extends Model implements HasMedia
                 $query->orderBy($filter, config('sorting.orderBy'));
             }
         });
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(StudentEloquentModel::class, 'student_sticker', 'sticker_id', 'student_id')->withPivot('x_axis_position', 'y_axis_position');
     }
 }

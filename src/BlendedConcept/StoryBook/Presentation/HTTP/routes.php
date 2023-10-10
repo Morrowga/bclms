@@ -62,4 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('reward-store', [StudentRewardsController::class, 'store'])->name('reward-store');
     Route::get('be-lucky', [StudentRewardsController::class, 'beLucky'])->name('be-lucky');
     Route::get('buy-sticker', [StudentRewardsController::class, 'buySticker'])->name('buy-sticker');
+
+    Route::post('/own-sticker/{reward}', [StudentRewardsController::class, 'ownSticker'])->name('own-sticker');
+    Route::put('/drop-sticker/{reward}', [StudentRewardsController::class, 'dropSticker'])->name('drop-sticker');
 });

@@ -1,11 +1,11 @@
 <script setup>
 import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
-import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-let props = defineProps(["flash", "auth"]);
+import { router } from "@inertiajs/core";
+
+let props = defineProps(["flash"]);
 let flash = computed(() => usePage().props.flash);
-let permissions = computed(() => usePage().props.auth.data.permissions);
 </script>
 
 <template>
