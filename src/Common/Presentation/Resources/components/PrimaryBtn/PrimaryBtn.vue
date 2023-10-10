@@ -10,6 +10,10 @@ let props = defineProps({
         type: String,
         default: "",
     },
+    height: {
+        type: String,
+        default: "",
+    },
     color: {
         type: String,
         default: "primary",
@@ -46,6 +50,7 @@ let clicked = () => {
         </Link>
         <v-btn
             v-else
+            :height="height"
             :type="props.type"
             variant="flat"
             rounded

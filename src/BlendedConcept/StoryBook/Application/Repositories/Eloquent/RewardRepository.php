@@ -4,9 +4,10 @@ namespace Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\StoryBook\Application\DTO\RewardData;
+use Src\BlendedConcept\StoryBook\Domain\Resources\RewardResource;
 use Src\BlendedConcept\StoryBook\Application\Mappers\RewardMapper;
 use Src\BlendedConcept\StoryBook\Domain\Repositories\RewaredRepositoryInterface;
-use Src\BlendedConcept\StoryBook\Domain\Resources\RewardResource;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\RewardEloquentModel;
 
 class RewardRepository implements RewaredRepositoryInterface
@@ -179,5 +180,85 @@ class RewardRepository implements RewaredRepositoryInterface
             return throw new \Exception($e->getMessage());
             DB::rollBack();
         }
+    }
+
+    public function getStickerRollData($count)
+    {
+        DB::beginTransaction();
+        try {
+            $student = auth()->user()->student;
+
+            $stickers = $this->rollSystem($count);
+
+            DB::commit();
+
+            return $stickers;
+        } catch (\Exception $e) {
+            return throw new \Exception($e->getMessage());
+            DB::rollBack();
+        }
+    }
+
+    public function rollSystem($time)
+    {
+        $numberOfRolls = $time;
+
+        $rarityProbabilities = [
+            'LEGENDARY' => 0.01,
+            'EPIC' => 0.05,
+            'SUPERRARE' => 0.10,
+            'RARE' => 0.20,
+            'COMMON' => 0.64,
+        ];
+
+        $selectedRarities = [];
+
+        // Generate the selected rarities based on probabilities
+        for ($i = 0; $i < $numberOfRolls; $i++) {
+            $randomNumber = mt_rand() / mt_getrandmax();
+            $selectedRarity = '';
+
+            foreach ($rarityProbabilities as $rarity => $probability) {
+                if ($randomNumber < $probability) {
+                    $selectedRarity = $rarity;
+                    break;
+                } else {
+                    $randomNumber -= $probability;
+                }
+            }
+
+            $selectedRarities[] = $selectedRarity;
+        }
+
+        if($time == 1){
+            // $student
+            $records = RewardEloquentModel::whereIn('rarity', $selectedRarities)
+            ->where('status', 'ACTIVE')
+            ->inRandomOrder()
+            ->first();
+
+            $student = auth()->user()->student;
+            $student->stickers()->syncWithoutDetaching([$records->id]);
+
+            $coinUpdate = StudentEloquentModel::find($student->student_id);
+            $coinUpdate->num_gold_coins -= 1;
+            $coinUpdate->save();
+        } else {
+            $records = RewardEloquentModel::whereIn('rarity', $selectedRarities)
+            ->where('status', 'ACTIVE')
+            ->inRandomOrder()
+            ->limit($time)->get();
+
+            $ids = $records->pluck('id');
+
+            $student = auth()->user()->student;
+            $student->stickers()->syncWithoutDetaching($ids);
+
+            $coinUpdate = StudentEloquentModel::find($student->student_id);
+            $coinUpdate->num_gold_coins -= 8;
+            $coinUpdate->save();
+        }
+        // Fetch records based on the selected rarities
+        return $records;
     }
 }

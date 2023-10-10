@@ -65,4 +65,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/own-sticker/{reward}', [StudentRewardsController::class, 'ownSticker'])->name('own-sticker');
     Route::put('/drop-sticker/{reward}', [StudentRewardsController::class, 'dropSticker'])->name('drop-sticker');
+    Route::get('/roll-sticker', [StudentRewardsController::class, 'stickerRoll'])->name('roll-sticker');
+
 });
