@@ -174,7 +174,7 @@ onMounted(() => {
 .storereward {
     cursor: pointer;
     position: absolute;
-    left: 41.8%;
+    left: 39.8%;
     top: 12.7%;
     z-index: 2;
 }

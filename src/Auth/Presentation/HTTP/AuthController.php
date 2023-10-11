@@ -107,7 +107,8 @@ class AuthController extends Controller
                 if (tenant('id')) {
                     return redirect()->route('c.organisationaadmin');
                 }
-
+                $student = json_encode(auth()->user()->student);
+                setcookie('student', $student, time() + (86400 * 30), "/");
                 return redirect()->route('dashboard');
             } else {
                 // Render the login page with an error message
