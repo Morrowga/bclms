@@ -39,7 +39,7 @@ onMounted(() => {
 </script>
 <template>
     <StudentLayout>
-        <section>
+        <section class="book_view">
             <div class="">
                 <img
                     src="/images/back.png"
@@ -61,6 +61,9 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+.book_view {
+    min-height: 100vh;
+}
 .backarrow {
     cursor: pointer;
     width: 40px !important;

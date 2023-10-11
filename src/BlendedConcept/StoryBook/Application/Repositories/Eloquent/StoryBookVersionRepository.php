@@ -44,11 +44,12 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
     public function updateStoryBookVersion(StoryBookVersionData $storyBookVersionData)
     {
         DB::beginTransaction();
-
+        $teacher_id = auth()->user()->b2bUser->teacher_id;
         try {
             $storybookVersionArray = $storyBookVersionData->toArray();
             $rewardEloquent = StoryBookVersionEloquentModel::query()->findOrFail($storyBookVersionData->id);
             $rewardEloquent->fill($storybookVersionArray);
+            $rewardEloquent->teacher_id = $teacher_id;
             $rewardEloquent->update();
 
             DB::commit();
