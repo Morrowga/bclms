@@ -9,6 +9,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquentModel;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
@@ -142,5 +143,9 @@ class StudentEloquentModel extends Model implements HasMedia
     public function stickers()
     {
         return $this->belongsToMany(RewardEloquentModel::class, 'student_sticker', 'student_id', 'sticker_id')->withPivot('id', 'x_axis_position', 'y_axis_position');
+    }
+    public function device()
+    {
+        return $this->belongsTo(DeviceEloquentModel::class, 'device_id', 'id');
     }
 }

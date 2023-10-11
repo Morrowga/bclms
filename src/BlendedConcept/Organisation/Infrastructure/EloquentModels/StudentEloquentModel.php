@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
@@ -96,6 +97,10 @@ class StudentEloquentModel extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo(UserEloquentModel::class, 'user_id', 'id');
+    }
+    public function device()
+    {
+        return $this->belongsTo(DeviceEloquentModel::class, 'device_id', 'id');
     }
     public function parent()
     {
