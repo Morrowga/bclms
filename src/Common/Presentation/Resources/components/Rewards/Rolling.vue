@@ -17,6 +17,7 @@ let goldCoin = computed(() => page.props.auth.data.student.num_gold_coins);
 const rolledData = ref(null);
 
 const currentTime = ref(null);
+const errorText = ref("You don't have enough to roll the Sticker");
 
 const roll = (num) => {
   if(goldCoin.value >= num){
@@ -42,8 +43,13 @@ async function fetchData(num) {
         isDialogVisible.value = false;
         const response = await axios.get('/roll-sticker?count=' + num);
         console.log(response.data);
-        rolledData.value = response.data
-        isRewardVisible.value = true;
+        if(response.data !== ''){
+            rolledData.value = response.data
+            isRewardVisible.value = true;
+        } else {
+            errorText.value = 'Something went Wrong! roll again please.'
+            isInsufficientVisible.value = true;
+        }
     } catch (error) {
         console.error('Error fetching data:', error);
     }
@@ -87,7 +93,7 @@ async function fetchData(num) {
         <VCard class="rolling-card">
             <VCardText>
                     <div class="d-flex justify-center">
-                        <span class="ruddy-bold notenough">You don't have enough to roll the Sticker</span>
+                        <span class="ruddy-bold notenough">{{ errorText  }}</span>
                     </div>
             </VCardText>
         </VCard>

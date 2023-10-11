@@ -233,7 +233,7 @@ class RewardRepository implements RewaredRepositoryInterface
             $records = RewardEloquentModel::whereIn('rarity', $selectedRarities)
                 ->where('status', 'ACTIVE')
                 ->inRandomOrder()
-                ->first();
+                ->firstOrFail();
 
             $student = auth()->user()->student;
             $student->stickers()->attach([$records->id]);
@@ -257,7 +257,7 @@ class RewardRepository implements RewaredRepositoryInterface
             $coinUpdate->save();
         }
         // Fetch records based on the selected rarities
-        return $records;
+        return $records ?? '';
     }
 
     public function getStudentsReward()
