@@ -5,22 +5,26 @@ namespace Src\BlendedConcept\System\Presentation\HTTP;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Src\Common\Infrastructure\Laravel\Controller;
+use Src\BlendedConcept\Security\Application\DTO\UserProfileData;
 use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
+use Src\BlendedConcept\Security\Application\Requests\UpdateUserProfileRequest;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetUserSurveyByRole;
+use Src\BlendedConcept\System\Domain\Repositories\DashboardRepositoryInterface;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetSuperAdminListCount;
+use Src\BlendedConcept\System\Application\UseCases\Queries\BCStaffDashboard\GetRecentBooks;
+use Src\BlendedConcept\System\Application\UseCases\Queries\BCStaffDashboard\GetRecentGames;
+use Src\BlendedConcept\System\Application\UseCases\Queries\SuperAdminDashboard\GetRecentUsers;
 use Src\BlendedConcept\Teacher\Application\UseCases\Queries\GetStudentsForOrgTeacherDashboard;
+use Src\BlendedConcept\System\Application\UseCases\Queries\BCStaffDashboard\GetRecentUserSurveys;
+use Src\BlendedConcept\Security\Application\UseCases\Commands\UserProfile\UpdateUserProfileCommand;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetUserForAdminDashBoard;
+use Src\BlendedConcept\System\Application\UseCases\Queries\TeacherParentDashboard\GetRecentStudents;
+use Src\BlendedConcept\System\Application\UseCases\Queries\SuperAdminDashboard\GetRecentOrganisations;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetStudentForAdminDashBoard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgAdminDashboard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgTeacherDashboard;
-use Src\BlendedConcept\System\Application\UseCases\Queries\BCStaffDashboard\GetRecentBooks;
-use Src\BlendedConcept\System\Application\UseCases\Queries\BCStaffDashboard\GetRecentGames;
-use Src\BlendedConcept\System\Application\UseCases\Queries\BCStaffDashboard\GetRecentUserSurveys;
-use Src\BlendedConcept\System\Application\UseCases\Queries\SuperAdminDashboard\GetRecentOrganisations;
-use Src\BlendedConcept\System\Application\UseCases\Queries\SuperAdminDashboard\GetRecentUsers;
-use Src\BlendedConcept\System\Application\UseCases\Queries\TeacherParentDashboard\GetRecentStudents;
-use Src\BlendedConcept\System\Domain\Repositories\DashboardRepositoryInterface;
 
 class DashBoardController extends Controller
 {
@@ -136,6 +140,16 @@ class DashBoardController extends Controller
     {
 
         return Inertia::render(config('route.edit-profiles.org-teacher'));
+    }
+
+    public function teacherUpdateProfile(UpdateUserProfileRequest $request)
+    {
+        $user = UserEloquentModel::query()->findOrFail(auth()->user()->id);
+        $updateUser = UserProfileData::fromRequest($request, $user->id);
+        $updatedUserCommand = (new UpdateUserProfileCommand($updateUser));
+        $updatedUserCommand->execute();
+
+        return redirect()->route('profiles.org-teacher')->with('successMessage', 'Your Profile Was Updated Successfully!');
     }
 
     public function getRecentOrganisations()

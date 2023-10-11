@@ -7,12 +7,15 @@ import { SuccessDialog } from "@actions/useSuccess";
 import ChangePasswordDialog from "./components/ChangePasswordDialog.vue";
 import ProfileEditDialog from "./components/ProfileEditDialog.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+import { router } from "@inertiajs/core";
 
 //## start variable section
 let props = defineProps(["auth", "flash", 'user_info']);
 const page = usePage();
 
 const flash = "Password Updated Successfully";
+console.log(props.auth.data);
+const profileImage = ref(props.auth.data.image ?? null);
 
 const isUserPasswordChange = ref(false);
 const isUserProfileEdit = ref(false);
@@ -23,6 +26,7 @@ let passwordForm = useForm({
 });
 
 const profileForm = useForm({
+    image: null,
     first_name: props.user_info.user_detail.first_name,
     last_name: props.user_info.user_detail.last_name,
     email: props.user_info.user_detail.email,
@@ -57,6 +61,27 @@ const handleUpdateProfile = (data) => {
         }
     });
 };
+
+const uploadImage = () => {
+    const fileInput = document.getElementById('profile-upload-input');
+    fileInput.click();
+}
+
+
+const handleProfileFileChange = (event) => {
+  const file = event.target.files[0];
+  profileImage.value = URL.createObjectURL(file);
+  profileForm.image = file
+
+  isConfirmedDialog({
+    title: "You want to change this profile ?",
+    denyButtonText: "Yes,change it!",
+    onConfirm: () => {
+        handleUpdateProfile()
+    },
+  });
+};
+
 </script>
 
 <template>
@@ -68,7 +93,19 @@ const handleUpdateProfile = (data) => {
                 </VCol>
                 <VCol cols="6"></VCol>
                 <VCol cols="6">
-                    <img src="/images/defaults/avator.png" />
+                    <v-avatar @click="uploadImage" size="130">
+                        <v-img
+                            :src="profileImage == null || profileImage == '' ? '/images/defaults/avator.png' : profileImage" class="profileAvatar"
+                        ></v-img>
+                    </v-avatar>
+                    <!-- <img :src="profileImage == null ? '/images/defaults/avator.png' : profileImage" width="100" @click="uploadImage" /> -->
+                    <input
+                        id="profile-upload-input"
+                        type="file"
+                        style="display: none"
+                        @change="handleProfileFileChange"
+                        :error-messages="profileForm?.errors?.image"
+                    />
                 </VCol>
             </VRow>
             <VRow justify="center" align-content="right">
@@ -139,9 +176,13 @@ const handleUpdateProfile = (data) => {
     />
 </template>
 
-<style scopted>
+<style scoped>
 .card-list {
     --v-card-list-gap: 0.8rem;
+}
+
+:deep(.profileAvatar .v-img__img--contain) {
+    object-fit: cover !important;
 }
 
 .current-plan {

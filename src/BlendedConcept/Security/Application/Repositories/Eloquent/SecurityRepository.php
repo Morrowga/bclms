@@ -181,6 +181,20 @@ class SecurityRepository implements SecurityRepositoryInterface
         $updateUserEloquent = UserEloquentModel::query()->findOrFail($user->id);
         $updateUserEloquent->fill($userArray);
         $updateUserEloquent->save();
+
+        if (request()->hasFile('image') && request()->file('image')->isValid()) {
+            $old_image = $updateUserEloquent->getFirstMedia('image');
+            if ($old_image != null) {
+                $old_image->forceDelete();
+            }
+
+            $newProfileMedia = $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_profile');
+
+            if ($newProfileMedia->getUrl()) {
+                $updateUserEloquent->profile_pic = $newProfileMedia->getUrl();
+                $updateUserEloquent->update();
+            }
+        }
     }
 
     // get permission

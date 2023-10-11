@@ -73,6 +73,9 @@ Route::group(['middleware' => ['auth']], function () {
     //edit org teacher profile
     Route::get('/profiles/org-teacher/edit', [DashBoardController::class, 'editOrgTeacherProfile'])->name('edit-profiles.org-teacher');
 
+    //update org teacher profile
+    Route::post('/profiles/org-teacher/update', [DashBoardController::class, 'teacherUpdateProfile'])->name('update-profiles.org-teacher');
+
     //reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 

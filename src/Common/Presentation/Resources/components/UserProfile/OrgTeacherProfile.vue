@@ -1,13 +1,16 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
+let props = defineProps(["auth", "flash", 'user_info']);
+const profileImage = ref(props.auth.data.image ?? null);
+console.log(props.auth.data);
 </script>
 <template>
     <AdminLayout>
         <VContainer>
             <VRow justify="center">
                 <VCol cols="6">
-                    <VImg src="/images/teacherimg.png" />
+                    <VImg :src="profileImage == null || profileImage == '' ? '/images/teacherimg.png' : profileImage" class="profileAvatar" />
                 </VCol>
                 <VCol cols="6">
                     <VText class="teacherprofile-title">Profile</VText>
@@ -29,19 +32,19 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                     <VRow>
                         <VCol cols="12" class="py-2">
                             <h6 class="tiggie-small-label">FullName</h6>
-                            <p class="tiggie-p">Tyler Covington</p>
+                            <p class="tiggie-p">{{ props.auth.data.name }}</p>
                         </VCol>
                         <VCol cols="12" class="py-2">
                             <h6 class="tiggie-small-label">Work Email</h6>
-                            <p class="tiggie-p">tyler.covington@work.sg</p>
+                            <p class="tiggie-p">{{ props.auth.data.email }}</p>
                         </VCol>
                         <VCol cols="12" class="py-2">
                             <h6 class="tiggie-small-label">Contact Number</h6>
-                            <p class="tiggie-p">9123 4567</p>
+                            <p class="tiggie-p">{{ props.auth.data.contact_number }}</p>
                         </VCol>
                     </VRow>
                     <!-- contact user plan -->
-                    <h1 class="teacherprofile-title">Subscription</h1>
+                    <!-- <h1 class="teacherprofile-title">Subscription</h1>
 
                     <VRow>
                         <VCol cols="12" class="py-2">
@@ -60,7 +63,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
                             <h6 class="tiggie-small-label">Email Address</h6>
                             <p class="tiggie-p">francisco_maia@gmail.com</p>
                         </VCol>
-                    </VRow>
+                    </VRow> -->
                 </VCol>
             </VRow>
             <VRow justify="center">
