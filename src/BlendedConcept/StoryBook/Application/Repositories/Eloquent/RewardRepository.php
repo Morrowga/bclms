@@ -186,8 +186,6 @@ class RewardRepository implements RewaredRepositoryInterface
     {
         DB::beginTransaction();
         try {
-            $student = auth()->user()->student;
-
             $stickers = $this->rollSystem($count);
 
             DB::commit();
@@ -238,7 +236,7 @@ class RewardRepository implements RewaredRepositoryInterface
             ->first();
 
             $student = auth()->user()->student;
-            $student->stickers()->syncWithoutDetaching([$records->id]);
+            $student->stickers()->attach([$records->id]);
 
             $coinUpdate = StudentEloquentModel::find($student->student_id);
             $coinUpdate->num_gold_coins -= 1;
@@ -252,7 +250,7 @@ class RewardRepository implements RewaredRepositoryInterface
             $ids = $records->pluck('id');
 
             $student = auth()->user()->student;
-            $student->stickers()->syncWithoutDetaching($ids);
+            $student->stickers()->attach($ids);
 
             $coinUpdate = StudentEloquentModel::find($student->student_id);
             $coinUpdate->num_gold_coins -= 8;
