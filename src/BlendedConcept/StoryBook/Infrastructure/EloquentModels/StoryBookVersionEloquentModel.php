@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class StoryBookVersionEloquentModel extends Model
 {
@@ -42,5 +43,9 @@ class StoryBookVersionEloquentModel extends Model
     public function storybook()
     {
         return $this->belongsTo(StoryBookEloquentModel::class, 'storybook_id');
+    }
+    public function teacher()
+    {
+        return $this->belongsTo(TeacherEloquentModel::class, 'teacher_id')->with('user');
     }
 }

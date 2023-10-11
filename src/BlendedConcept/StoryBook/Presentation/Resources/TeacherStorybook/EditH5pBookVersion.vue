@@ -84,7 +84,7 @@ onMounted(() => {
         }
     });
 
-    form.storybook_id = props.book.id;
+    form.storybook_id = props.book.storybook_id;
     form.name = props.book.name;
     form.description = props.book.description;
     form.h5p_id = props.book.h5p_id;

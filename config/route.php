@@ -193,6 +193,7 @@ return [
     //Storybook student
     'storybooks' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Index',
     'storybook-show' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Show',
+    'storybook-version' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Version',
     'storybook-pathway' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentStorybook/Pathway',
 
     //Game student

@@ -151,7 +151,7 @@ class RewardRepository implements RewaredRepositoryInterface
                     "num_gold_coins" => $rest_gold_coins,
                     "num_silver_coins" => $rest_silver_coins
                 ]);
-                $data = $reward->students()->sync([$student->student_id]);
+                $data = $reward->students()->attach([$student->student_id]);
             }
             DB::commit();
             return $data;
@@ -165,18 +165,18 @@ class RewardRepository implements RewaredRepositoryInterface
     {
         DB::beginTransaction();
         try {
+
             $student = auth()->user()->student;
             $rewardArray = $rewardData->toArray();
-            $rewardEloquent = RewardEloquentModel::query()->findOrFail($rewardData->id);
-            $studentData = [
-                $student->student_id => [
-                    'x_axis_position' => $rewardArray['x_axis_position'],
-                    'y_axis_position' => $rewardArray['y_axis_position']
-                ]
-            ];
-            $data = $rewardEloquent->students()->sync($studentData);
+            $sticker = DB::table('student_sticker')->where('id', $rewardData->sticker_id);
+
+            $sticker->update([
+                'x_axis_position' => $rewardArray['x_axis_position'],
+                'y_axis_position' => $rewardArray['y_axis_position']
+            ]);
             DB::commit();
         } catch (\Exception $e) {
+            dd($e);
             return throw new \Exception($e->getMessage());
             DB::rollBack();
         }
@@ -228,12 +228,12 @@ class RewardRepository implements RewaredRepositoryInterface
             $selectedRarities[] = $selectedRarity;
         }
 
-        if($time == 1){
+        if ($time == 1) {
             // $student
             $records = RewardEloquentModel::whereIn('rarity', $selectedRarities)
-            ->where('status', 'ACTIVE')
-            ->inRandomOrder()
-            ->first();
+                ->where('status', 'ACTIVE')
+                ->inRandomOrder()
+                ->first();
 
             $student = auth()->user()->student;
             $student->stickers()->attach([$records->id]);
@@ -243,9 +243,9 @@ class RewardRepository implements RewaredRepositoryInterface
             $coinUpdate->save();
         } else {
             $records = RewardEloquentModel::whereIn('rarity', $selectedRarities)
-            ->where('status', 'ACTIVE')
-            ->inRandomOrder()
-            ->limit($time)->get();
+                ->where('status', 'ACTIVE')
+                ->inRandomOrder()
+                ->limit($time)->get();
 
             $ids = $records->pluck('id');
 
@@ -258,5 +258,18 @@ class RewardRepository implements RewaredRepositoryInterface
         }
         // Fetch records based on the selected rarities
         return $records;
+    }
+
+    public function getStudentsReward()
+    {
+        $student = auth()->user()->student;
+        // $stickers = RewardEloquentModel::with('students')->whereHas('students', function ($query) use ($student) {
+        //     $query->where('students.student_id', $student->student_id);
+        // })->get();
+        $studentEloquent = StudentEloquentModel::with('stickers')->whereHas('stickers', function ($query) use ($student) {
+            $query->where('student_sticker.student_id', $student->student_id);
+        })->find($student->student_id);
+        $stickers = $studentEloquent->stickers;
+        return $stickers;
     }
 }

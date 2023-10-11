@@ -23,7 +23,6 @@ const form = useForm({
 });
 
 const handleSubmit = () => {
-    form.image = profileFile.value;
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
             form.post(route("classrooms.store"), {

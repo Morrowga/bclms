@@ -6,6 +6,7 @@ let flash = computed(() => usePage().props.flash);
 
 const isDragging = ref(false);
 const form = useForm({
+    sticker_id: null,
     x_axis_position: 0,
     y_axis_position: 0,
     _method: "PUT",
@@ -56,8 +57,10 @@ const stopDragging = () => {
     if (positionX.value > 100) {
         isDragging.value = false;
         emit("isDragging", false);
+
         form.x_axis_position = positionX.value;
         form.y_axis_position = positionY.value;
+        form.sticker_id = props.data.pivot.id;
         form.post(route("drop-sticker", { reward: props.data.id }), {
             onSuccess: () => {
                 if (flash.value.errorMessage) {

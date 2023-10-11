@@ -42,7 +42,7 @@ class SubscriptionEloquentModel extends Model
 
     public function b2c_subscription()
     {
-        return $this->hasOne(B2cSubscriptionEloquentModel::class, 'subscription_id', 'id')->with('plan', 'user')->orderBy('created_at', 'desc');
+        return $this->hasOne(B2cSubscriptionEloquentModel::class, 'subscription_id', 'id')->with('plan', 'parent', 'teacher')->orderBy('created_at', 'desc');
     }
 
     public function organisation()

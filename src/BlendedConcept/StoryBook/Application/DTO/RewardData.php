@@ -15,7 +15,8 @@ class RewardData
         public readonly ?int $silver_coins_needed,
         public readonly ?string $rarity,
         public readonly ?float $x_axis_position,
-        public readonly ?float $y_axis_position
+        public readonly ?float $y_axis_position,
+        public readonly ?int $sticker_id
     ) {
     }
 
@@ -30,7 +31,8 @@ class RewardData
             silver_coins_needed: $request->silver_coins_needed,
             rarity: $request->rarity,
             x_axis_position: $request->x_axis_position,
-            y_axis_position: $request->y_axis_position
+            y_axis_position: $request->y_axis_position,
+            sticker_id: $request->sticker_id
         );
     }
 
@@ -45,7 +47,8 @@ class RewardData
             'silver_coins_needed' => $this->silver_coins_needed,
             'rarity' => $this->rarity,
             'x_axis_position' => $this->x_axis_position,
-            'y_axis_position' => $this->y_axis_position
+            'y_axis_position' => $this->y_axis_position,
+            'sticker_id' => $this->sticker_id
         ];
     }
 }

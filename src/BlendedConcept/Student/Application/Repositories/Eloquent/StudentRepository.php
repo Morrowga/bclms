@@ -180,6 +180,11 @@ class StudentRepository implements StudentRepositoryInterface
                 "organisation_id" => null,
                 "type" => "B2C"
             ]);
+            $b2cSubscriptionEloquent = B2cSubscriptionEloquentModel::create([
+                "parent_id" => $parentEloquent->parent_id,
+                "subscription_id" => $subscriptionEloquent->id,
+                "plan_id" => 1
+            ]);
             $userEloquent = UserEloquentModel::create($create_user_data);
 
             $createStudentEloqoent = StudentMapper::toEloquent($student);

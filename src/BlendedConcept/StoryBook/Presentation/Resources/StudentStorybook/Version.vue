@@ -13,18 +13,16 @@ const activeTab = (name) => {
     active.value = name;
 };
 const page = usePage();
-const app_url = ref("");
+const app_url = computed(() => page?.props?.route_site_url);
 onMounted(() => {
     iframeRef.value.style.display = "none";
     iframeRef.value.addEventListener("load", () => {
-        app_url.value = page?.props?.route_site_url;
         iframeRef.value.style.display = "flex";
         let subIframe =
             iframeRef.value.contentWindow.document.querySelector(".h5p-iframe");
         let actionBar = subIframe.contentWindow.document.querySelector(
             ".h5p-iframe body div > .h5p-actions"
         );
-
         const cancelbutton =
             iframeRef.value.contentWindow.document.querySelector(
                 "body > div > div > div p"

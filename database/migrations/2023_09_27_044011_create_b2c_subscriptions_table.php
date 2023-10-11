@@ -20,6 +20,9 @@ return new class extends Migration
             $table->foreignId('teacher_id')->nullable()
                 ->references('teacher_id')
                 ->on('teachers')->onDelete('cascade');
+            $table->foreignId('parent_id')->nullable()
+                ->references('parent_id')
+                ->on('parents')->onDelete('cascade');
             $table->foreignId('plan_id')->nullable()
                 ->references('id')
                 ->on('plans')->onDelete('cascade');

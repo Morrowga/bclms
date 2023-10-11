@@ -115,14 +115,14 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                         >
                             <div>
                                 <v-img
-                                    :src="userImage(teacher)"
+                                    :src="userImage(teacher.user)"
                                     class="profile-img"
                                     cover
                                 ></v-img>
                                 <div class="mt-2">
                                     <span
                                         class="label-text pppangram-bold nowrap"
-                                        >{{ teacher.full_name }}</span
+                                        >{{ teacher.user.full_name }}</span
                                     >
                                 </div>
                                 <div class="mt-1 d-flex justify-center">
@@ -135,7 +135,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                                     <span
                                         class="label-text-two ml-1 pppangram-bold"
                                     >
-                                        {{ teacher?.contact_number }}</span
+                                        {{ teacher?.user.contact_number }}</span
                                     >
                                 </div>
                                 <!-- {{ teacher }} -->
@@ -172,7 +172,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                         >
                             <div>
                                 <v-img
-                                    :src="userImage(student)"
+                                    :src="userImage(student.user)"
                                     class="profile-img"
                                     cover
                                 ></v-img>
@@ -192,7 +192,8 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                                         class="label-text-two ml-1 pppangram-bold"
                                     >
                                         {{
-                                            student?.user?.contact_number
+                                            student?.parent?.user
+                                                ?.contact_number
                                         }}</span
                                     >
                                 </div>
@@ -218,7 +219,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                         >
                             <div>
                                 <v-img
-                                    :src="userImage(student)"
+                                    :src="userImage(student.user)"
                                     class="profile-img"
                                     cover
                                 ></v-img>
@@ -238,7 +239,8 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                                         class="label-text-two ml-1 pppangram-bold"
                                     >
                                         {{
-                                            student?.user?.contact_number
+                                            student?.parent?.user
+                                                ?.contact_number
                                         }}</span
                                     >
                                 </div>
