@@ -1,7 +1,11 @@
 <script setup>
 import { defineProps, ref, onUpdated } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
+
 import Edit from "./Edit.vue";
+import { router } from "@inertiajs/core";
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+
 const props = defineProps({
     data: {
         type: Object,
@@ -25,6 +29,7 @@ const props = defineProps({
     },
 });
 let dialog = ref(false);
+let flash = computed(() => usePage().props.flash);
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
@@ -59,6 +64,20 @@ const setImage = () => {
     return form.thumbnail_img == "" || !form.thumbnail_img
         ? "/images/defaults/organisation_logo.png"
         : form.thumbnail_img;
+};
+const deleteBook = (id) => {
+    dialog.value = false;
+    isConfirmedDialog({
+        title: "You won't be able to revert it!",
+        denyButtonText: "Yes, delete it!",
+        onConfirm: () => {
+            router.delete(route("books.destroy", id), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.successMessage });
+                },
+            });
+        },
+    });
 };
 onUpdated(() => {
     (form.id = props.data.id),
@@ -152,6 +171,13 @@ onUpdated(() => {
                                     color="secondary"
                                 ></v-btn>
                             </Link>
+
+                            <v-btn
+                                icon="mdi-bin"
+                                size="x-small"
+                                color="secondary"
+                                @click="deleteBook(data.id)"
+                            ></v-btn>
                         </div>
                         <div class="close-btn">
                             <v-btn

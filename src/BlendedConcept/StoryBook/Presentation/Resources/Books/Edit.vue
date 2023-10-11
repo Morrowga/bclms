@@ -258,6 +258,7 @@ onUpdated(() => {
                                 color="secondary"
                                 @click="physicalDialog = true"
                             ></v-btn>
+
                             <!-- <Upload /> -->
                         </div>
                         <div class="close-btn">
