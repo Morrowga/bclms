@@ -187,12 +187,12 @@ class RewardRepository implements RewaredRepositoryInterface
         DB::beginTransaction();
         try {
             $stickers = $this->rollSystem($count);
-
             DB::commit();
 
             return $stickers;
         } catch (\Exception $e) {
-            return throw new \Exception($e->getMessage());
+
+            return throw new \Exception($e);
             DB::rollBack();
         }
     }
@@ -234,10 +234,8 @@ class RewardRepository implements RewaredRepositoryInterface
                 ->where('status', 'ACTIVE')
                 ->inRandomOrder()
                 ->first();
-
             $student = auth()->user()->student;
             $student->stickers()->attach([$records->id]);
-
             $coinUpdate = StudentEloquentModel::find($student->student_id);
             $coinUpdate->num_gold_coins -= 1;
             $coinUpdate->save();
@@ -269,7 +267,9 @@ class RewardRepository implements RewaredRepositoryInterface
         $studentEloquent = StudentEloquentModel::with('stickers')->whereHas('stickers', function ($query) use ($student) {
             $query->where('student_sticker.student_id', $student->student_id);
         })->find($student->student_id);
-        $stickers = $studentEloquent->stickers;
-        return $stickers;
+        $placed_stickers = $studentEloquent->stickers;
+        $stickers = $studentEloquent->stickers()->paginate(7);
+
+        return ["stickers" => $stickers, "placed_stickers" => $placed_stickers];
     }
 }

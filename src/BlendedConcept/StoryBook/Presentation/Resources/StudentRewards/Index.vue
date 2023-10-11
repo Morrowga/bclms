@@ -5,10 +5,12 @@ import { router } from "@inertiajs/core";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import DraggableSticker from "./DraggableSticker.vue";
 import { ref, defineProps } from "vue";
-let props = defineProps(["flash", "auth", "stickers"]);
+let props = defineProps(["flash", "auth", "stickers", "placed_stickers"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const isDrag = ref(false);
+const currentPage = ref(1);
+const totalPages = ref(10);
 const isDragging = (isDragging) => {
     isDrag.value = isDragging;
 };
@@ -17,7 +19,7 @@ const toggleBar = () => {
     isOpen.value = !isOpen.value;
 };
 const getXPosition = (sticker) => {
-    return sticker.pivot.x_axis_position ? sticker.pivot.x_axis_position : 13;
+    return sticker.pivot.x_axis_position ? sticker.pivot.x_axis_position : 0;
 };
 
 const getYPosition = (sticker, index) => {
@@ -25,6 +27,25 @@ const getYPosition = (sticker, index) => {
         ? sticker.pivot.y_axis_position
         : index * 80;
 };
+const loadData = () => {
+    router.get(route("student-rewards", { page: currentPage.value }));
+};
+const moveBackWard = () => {
+    if (currentPage.value > 1) {
+        currentPage.value--;
+        loadData(); // Call a function to load data for the new page
+    }
+};
+const moveForWard = () => {
+    if (currentPage.value < totalPages.value) {
+        currentPage.value++;
+        loadData(); // Call a function to load data for the new page
+    }
+};
+onMounted(() => {
+    currentPage.value = props.stickers.current_page;
+    totalPages.value = props.stickers.last_page;
+});
 </script>
 
 <template>
@@ -41,13 +62,33 @@ const getYPosition = (sticker, index) => {
             <!-- <v-navigation-drawer floating permanent class="reward-sidebar"> -->
             <!-- <v-slide-x-transition> -->
             <div>
-                <div v-if="isOpen" class="left-panel reward-sidebar"></div>
+                <div v-if="isOpen" class="left-panel reward-sidebar">
+                    <div
+                        class="d-flex justify-space-around align-center pagination-arrow"
+                    >
+                        <v-icon
+                            class="clickable-icon"
+                            @click="moveBackWard()"
+                            size="30"
+                            >mdi-arrow-left-drop-circle</v-icon
+                        >
+                        <div>
+                            <span>{{ currentPage }} of {{ totalPages }}</span>
+                        </div>
+                        <v-icon
+                            class="clickable-icon"
+                            @click="moveForWard()"
+                            size="30"
+                            >mdi-arrow-right-drop-circle</v-icon
+                        >
+                    </div>
+                </div>
                 <div class="sticker-bar">
                     <div class="scrollable">
                         <div
                             class="vlist"
                             value="home"
-                            v-for="(sticker, index) in stickers"
+                            v-for="(sticker, index) in stickers.data"
                             :key="sticker.id"
                         >
                             <div
@@ -73,7 +114,7 @@ const getYPosition = (sticker, index) => {
                     <div
                         class="vlist-2"
                         value="home"
-                        v-for="(sticker, index) in stickers"
+                        v-for="(sticker, index) in placed_stickers"
                         :key="sticker.id"
                     >
                         <div
@@ -133,7 +174,7 @@ const getYPosition = (sticker, index) => {
 .storereward {
     cursor: pointer;
     position: absolute;
-    left: 39.8%;
+    left: 41.8%;
     top: 12.7%;
     z-index: 2;
 }
@@ -160,7 +201,7 @@ const getYPosition = (sticker, index) => {
     margin-top: 3%;
     margin-bottom: 3%;
     height: 630px !important;
-    width: 130px !important;
+    width: 144px !important;
     border-top: 4px solid #fff;
     border-bottom: 4px solid #fff;
     border-right: 4px solid #fff;
@@ -222,8 +263,7 @@ const getYPosition = (sticker, index) => {
 .scrollable {
     position: relative;
     height: 100%;
-
-    overflow-y: scroll;
+    // overflow-y: scroll;
 }
 
 /* Hiding scrollbar for Chrome, Safari and Opera */
@@ -235,5 +275,16 @@ const getYPosition = (sticker, index) => {
 .scrollable {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
+}
+
+.pagination-arrow {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 0;
+}
+.clickable-icon {
+    cursor: pointer;
 }
 </style>

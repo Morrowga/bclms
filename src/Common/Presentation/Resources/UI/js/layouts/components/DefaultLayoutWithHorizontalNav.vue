@@ -25,7 +25,7 @@ import { HorizontalNav } from "@layouts/components";
 import HorizontalMobileNav from "@layouts/components/HorizontalMobileNav.vue";
 import MobileNavLink from "@mainRoot/components/MobileNavLink/MobileNavLink.vue";
 import MobileGroupNavLink from "@mainRoot/components/MobileGroupNavLink/MobileGroupNavLink.vue";
-import { onColumnFilter } from "@Composables/useServerSideDatable.js";
+import { serverParams } from "@Composables/useServerSideDatable.js";
 // import HorizontalMobileNav from "./HorizontalMobileNav.vue";
 // import HorizontalMobileNavLink from "./HorizontalMobileNavLink.vue";
 // import HorizontalMobileNavGroup from "./HorizontalMobileNavGroup.vue";
@@ -80,11 +80,12 @@ const openMenu = () => {
     emit("openMenu");
 };
 onMounted(() => {
-    onColumnFilter({
-        columnFilters: {
-            filter: "",
-        },
-    });
+    serverParams.value.columnFilters = {};
+    // onColumnFilter({
+    //     columnFilters: {
+    //         filter: "",
+    //     },
+    // });
 });
 </script>
 <template>

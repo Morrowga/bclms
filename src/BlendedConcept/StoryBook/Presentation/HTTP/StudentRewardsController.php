@@ -22,7 +22,8 @@ class StudentRewardsController extends Controller
             $stickers = (new GetStudentsReward())->handle();
 
             return Inertia::render(config('route.student-rewards'), [
-                "stickers" => $stickers
+                "stickers" => $stickers['stickers'],
+                "placed_stickers" => $stickers['placed_stickers']
             ]);
         } catch (Exception $e) {
             dd($e);

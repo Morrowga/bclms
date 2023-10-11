@@ -54,7 +54,7 @@ const dragImage = (event) => {
 };
 
 const stopDragging = () => {
-    if (positionX.value > 100) {
+    if (positionX.value > 110) {
         isDragging.value = false;
         emit("isDragging", false);
 
