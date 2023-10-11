@@ -33,4 +33,6 @@ interface StoryBookRepositoryInterface
     public function getStudentStorybooks();
 
     public function updatePhysicalResource(Request $request, StoryBookEloquentModel $storyBook);
+
+    public function deleteBook(StoryBookEloquentModel $storyBook);
 }

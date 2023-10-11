@@ -10,6 +10,7 @@ use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookData;
 use Src\BlendedConcept\StoryBook\Application\Mappers\StoryBookMapper;
 use Src\BlendedConcept\StoryBook\Application\Requests\StoreBookRequest;
 use Src\BlendedConcept\StoryBook\Application\Requests\UpdateStoryBookRequest;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\Books\DeleteBookCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\CreateStoreStoryBookCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\UpdatePhysicalResourcesCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\UpdateStoryBookCommand;
@@ -120,6 +121,21 @@ class BookController
             return redirect()->back()->with('successMessage', 'StoryBook updated Successfully!');
         } catch (\Exception $ex) {
             return redirect()->back()->with('systemErrorMessage', 'Something unexpected happened');
+        }
+    }
+    public function destroy(StoryBookEloquentModel $book)
+    {
+        try {
+            $deleteBookCommand = (new DeleteBookCommand($book));
+            $deleteBookCommand->execute();
+
+            return redirect()->route('books.index')->with('successMessage', 'Book Deleted Successfully!');
+        } catch (\Exception $error) {
+            return redirect()
+                ->route('books.index')
+                ->with([
+                    'systemErrorMessage' => $error->getCode(),
+                ]);
         }
     }
 }

@@ -261,4 +261,13 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             }
         }
     }
+
+    public function deleteBook(StoryBookEloquentModel $storyBook)
+    {
+        try {
+            $storyBook->delete();
+        } catch (\Exception $e) {
+            dd($e);
+        }
+    }
 }
