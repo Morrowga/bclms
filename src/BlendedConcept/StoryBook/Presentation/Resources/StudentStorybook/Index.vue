@@ -4,7 +4,7 @@ import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps, ref } from "vue";
 import VersionCard from "@mainRoot/components/Teacher/VersionCard.vue";
-let props = defineProps(["flash", "auth", "books"]);
+let props = defineProps(["flash", "auth", "books", "playlists"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const active = ref("assigned");
@@ -97,276 +97,36 @@ const activeTab = (name) => {
                 </div>
             </VContainer>
             <VContainer class="mb-3" v-if="active === 'playlist'">
-                <div class="text-center d-flex justify-center">
-                    <div class="title-chip">
-                        <span class="title-chip-text ruddy-bold"
-                            >Self-Love (3 Books)</span
-                        >
+                <div
+                    v-for="playlist in props.playlists.data"
+                    :key="playlist.id"
+                >
+                    <div class="text-center d-flex justify-center">
+                        <div class="title-chip">
+                            <span class="title-chip-text ruddy-bold"
+                                >{{ playlist.name }} ({{
+                                    playlist.storybooks.length
+                                }}
+                                Books)</span
+                            >
+                        </div>
                     </div>
-                </div>
-                <VRow class="mt-5">
-                    <VCol cols="12" sm="6" md="4" lg="4">
-                        <VCard class="card-story">
-                            <v-img
-                                src="/images/21.jpg"
-                                class="showimg"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    @click="
-                                        () =>
-                                            router.get(route('storybooks.show'))
-                                    "
-                                    class="playButton"
-                                    alt=""
-                                />
-                            </div>
-                            <div class="d-flex justify-center">
-                                <div class="goldCoin">
-                                    <v-chip class="coinChip text-center">
-                                        <div class="mt-2 text-center">
-                                            <span class="chipText">1</span>
-                                        </div>
-                                        <div class="text-center mt-2">
-                                            <img
-                                                src="/images/Gold Coin.png"
-                                                width="30"
-                                                height="30"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </v-chip>
-                                </div>
-                            </div>
-                        </VCard>
-                        <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold"
-                                >It's Ok To Lose</span
-                            >
-                        </div>
-                    </VCol>
-                    <VCol cols="12" sm="6" md="4" lg="4">
-                        <VCard class="card-story">
-                            <v-img
-                                src="/images/3.jpg"
-                                class="showimg"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    @click="
-                                        () =>
-                                            router.get(route('storybooks.show'))
-                                    "
-                                    class="playButton"
-                                    alt=""
-                                />
-                            </div>
-                            <div class="d-flex justify-center">
-                                <div class="goldCoin">
-                                    <v-chip class="coinChip text-center">
-                                        <div class="mt-2 text-center">
-                                            <span class="chipText">1</span>
-                                        </div>
-                                        <div class="text-center mt-2">
-                                            <img
-                                                src="/images/Gold Coin.png"
-                                                width="30"
-                                                height="30"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </v-chip>
-                                </div>
-                            </div>
-                        </VCard>
-                        <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold"
-                                >Jack And The Beanstalk</span
-                            >
-                        </div>
-                    </VCol>
-                    <VCol cols="12" sm="6" md="4" lg="4">
-                        <VCard class="card-story">
-                            <v-img
-                                src="/images/sample2.png"
-                                class="showimg"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    @click="
-                                        () =>
-                                            router.get(route('storybooks.show'))
-                                    "
-                                    class="playButton"
-                                    alt=""
-                                />
-                            </div>
-                            <div class="d-flex justify-center">
-                                <div class="goldCoin">
-                                    <v-chip class="coinChip text-center">
-                                        <div class="mt-2 text-center">
-                                            <span class="chipText">1</span>
-                                        </div>
-                                        <div class="text-center mt-2">
-                                            <img
-                                                src="/images/Gold Coin.png"
-                                                width="30"
-                                                height="30"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </v-chip>
-                                </div>
-                            </div>
-                        </VCard>
-                        <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold"
-                                >Denver The River</span
-                            >
-                        </div>
-                    </VCol>
-                </VRow>
-                <div class="text-center d-flex justify-center mt-5">
-                    <div class="title-chip">
-                        <span class="title-chip-text ruddy-bold"
-                            >Bravery (2 Books)</span
+                    <VRow class="mt-5">
+                        <VCol
+                            v-for="play_book in playlist.storybooks"
+                            :key="play_book.id"
+                            cols="12"
+                            sm="6"
+                            md="4"
+                            lg="4"
                         >
-                    </div>
+                            <VersionCard
+                                :key="play_book.id"
+                                :book="play_book"
+                            />
+                        </VCol>
+                    </VRow>
                 </div>
-                <VRow class="mt-5">
-                    <VCol cols="12" sm="6" md="4" lg="4">
-                        <VCard class="card-story">
-                            <v-img
-                                src="/images/21.jpg"
-                                class="showimg"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    @click="
-                                        () =>
-                                            router.get(route('storybooks.show'))
-                                    "
-                                    class="playButton"
-                                    alt=""
-                                />
-                            </div>
-                            <div class="d-flex justify-center">
-                                <div class="goldCoin">
-                                    <v-chip class="coinChip text-center">
-                                        <div class="mt-2 text-center">
-                                            <span class="chipText">1</span>
-                                        </div>
-                                        <div class="text-center mt-2">
-                                            <img
-                                                src="/images/Gold Coin.png"
-                                                width="30"
-                                                height="30"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </v-chip>
-                                </div>
-                            </div>
-                        </VCard>
-                        <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold"
-                                >It's Ok To Lose</span
-                            >
-                        </div>
-                    </VCol>
-                    <VCol cols="12" sm="6" md="4" lg="4">
-                        <VCard class="card-story">
-                            <v-img
-                                src="/images/3.jpg"
-                                class="showimg"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    @click="
-                                        () =>
-                                            router.get(route('storybooks.show'))
-                                    "
-                                    class="playButton"
-                                    alt=""
-                                />
-                            </div>
-                            <div class="d-flex justify-center">
-                                <div class="goldCoin">
-                                    <v-chip class="coinChip text-center">
-                                        <div class="mt-2 text-center">
-                                            <span class="chipText">1</span>
-                                        </div>
-                                        <div class="text-center mt-2">
-                                            <img
-                                                src="/images/Gold Coin.png"
-                                                width="30"
-                                                height="30"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </v-chip>
-                                </div>
-                            </div>
-                        </VCard>
-                        <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold"
-                                >Jack And The Beanstalk</span
-                            >
-                        </div>
-                    </VCol>
-                    <VCol cols="12" sm="6" md="4" lg="4">
-                        <VCard class="card-story">
-                            <v-img
-                                src="/images/sample2.png"
-                                class="showimg"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    @click="
-                                        () =>
-                                            router.get(route('storybooks.show'))
-                                    "
-                                    class="playButton"
-                                    alt=""
-                                />
-                            </div>
-                            <div class="d-flex justify-center">
-                                <div class="goldCoin">
-                                    <v-chip class="coinChip text-center">
-                                        <div class="mt-2 text-center">
-                                            <span class="chipText">1</span>
-                                        </div>
-                                        <div class="text-center mt-2">
-                                            <img
-                                                src="/images/Gold Coin.png"
-                                                width="30"
-                                                height="30"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </v-chip>
-                                </div>
-                            </div>
-                        </VCard>
-                        <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold"
-                                >Denver The River</span
-                            >
-                        </div>
-                    </VCol>
-                </VRow>
             </VContainer>
         </section>
     </StudentLayout>

@@ -53,7 +53,7 @@ const dragImage = (event) => {
     }
 };
 
-const stopDragging = () => {
+const stopDragging = (event) => {
     if (positionX.value > 110) {
         isDragging.value = false;
         emit("isDragging", false);
@@ -62,7 +62,8 @@ const stopDragging = () => {
         form.y_axis_position = positionY.value;
         form.sticker_id = props.data.pivot.id;
         form.post(route("drop-sticker", { reward: props.data.id }), {
-            onSuccess: () => {
+            preserveScroll: true,
+            onSuccess: (e) => {
                 if (flash.value.errorMessage) {
                     alert(flash.value.errorMessage);
                 } else {

@@ -14,6 +14,7 @@ use Src\BlendedConcept\StoryBook\Domain\Model\StoryBook;
 use Src\BlendedConcept\StoryBook\Domain\Repositories\StoryBookRepositoryInterface;
 use Src\BlendedConcept\StoryBook\Domain\Resources\StoryBookResource;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\PlaylistEloquentModel;
 
 class StoryBookRepository implements StoryBookRepositoryInterface
 {
@@ -232,17 +233,24 @@ class StoryBookRepository implements StoryBookRepositoryInterface
         return $devices;
     }
 
-    public function getStudentStorybooks()
+    public function getStudentStorybooks($filters)
     {
         $student_id = auth()->user()->student->student_id;
         // $books = StoryBookResource::collection();
-        $books = StoryBookEloquentModel::whereHas('book_versions', function ($query) {
-            $query->whereHas('storybook_assigments', function ($query) {
-                $query->where('students.student_id', 1);
+        $books = StoryBookEloquentModel::whereHas('book_versions', function ($query) use ($student_id) {
+            $query->whereHas('storybook_assigments', function ($query) use ($student_id) {
+                $query->where('students.student_id', $student_id);
             });
         })->with('book_versions')->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10);
         return $books;
+    }
+
+    public function getStudentPlaylists($filters)
+    {
+        $student_id = auth()->user()->student->student_id;
+        $book_playlists =  PlaylistEloquentModel::where('student_id', $student_id)->with('storybooks')->paginate($filters['perPage'] ?? 10);
+        return $book_playlists;
     }
 
     public function updatePhysicalResource($request, StoryBookEloquentModel $storybookEloquent)

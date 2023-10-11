@@ -16,6 +16,7 @@ use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentMo
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\ThemeEloquentModel;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\PlaylistEloquentModel;
 
 class StoryBookEloquentModel extends Model implements HasMedia
 {
@@ -129,5 +130,10 @@ class StoryBookEloquentModel extends Model implements HasMedia
     public function book_versions()
     {
         return $this->hasMany(StoryBookVersionEloquentModel::class, 'storybook_id')->with('teacher');
+    }
+
+    public function playlists()
+    {
+        return $this->hasMany(PlaylistEloquentModel::class, 'student_id');
     }
 }

@@ -13,7 +13,7 @@ const userImage = (user) => {
 };
 
 const clickBook = (versions) => {
-    if (versions.length > 0) {
+    if (versions && versions.length > 0) {
         isDialogVisible.value = true;
     } else {
         router.get(route("storybooks.show", { book: props.book.id }));

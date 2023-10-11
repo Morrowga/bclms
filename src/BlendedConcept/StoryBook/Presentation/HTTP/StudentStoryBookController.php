@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
 use Exception;
 use Inertia\Inertia;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStudentPlaylists;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentPathway;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStudentStorybooks;
@@ -17,10 +18,12 @@ class StudentStoryBookController extends Controller
         try {
             $filters = request()->only(['search', 'name', 'perPage']) ?? [];
             $books = (new GetStudentStorybooks($filters))->handle();
+            $playlists = (new GetStudentPlaylists($filters))->handle();
 
             // Get the filters from the request, or initialize an empty array if they are not present
             return Inertia::render(config('route.storybooks'), [
-                'books' => $books
+                'books' => $books,
+                'playlists' => $playlists
             ]);
         } catch (Exception $e) {
             dd($e);

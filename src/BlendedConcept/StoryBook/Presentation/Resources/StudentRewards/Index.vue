@@ -1,6 +1,6 @@
 <script setup>
 import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
-import { usePage } from "@inertiajs/vue3";
+import { usePage, useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import DraggableSticker from "./DraggableSticker.vue";
@@ -8,6 +8,8 @@ import { ref, defineProps } from "vue";
 let props = defineProps(["flash", "auth", "stickers", "placed_stickers"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
+let isDisabled = ref(false);
+let form = useForm({});
 const isDrag = ref(false);
 const currentPage = ref(1);
 const totalPages = ref(10);
@@ -28,7 +30,15 @@ const getYPosition = (sticker, index) => {
         : index * 80;
 };
 const loadData = () => {
-    router.get(route("student-rewards", { page: currentPage.value }));
+    isDisabled.value = true;
+    form.get(route("student-rewards", { page: currentPage.value }), {
+        onSuccess: () => {
+            isDisabled.value = false;
+        },
+        onError: () => {
+            isDisabled.value = false;
+        },
+    });
 };
 const moveBackWard = () => {
     if (currentPage.value > 1) {
@@ -66,21 +76,31 @@ onMounted(() => {
                     <div
                         class="d-flex justify-space-around align-center pagination-arrow"
                     >
-                        <v-icon
-                            class="clickable-icon"
+                        <v-btn
+                            :disabled="isDisabled"
+                            variant="text"
+                            icon
+                            color="secondary"
                             @click="moveBackWard()"
-                            size="30"
-                            >mdi-arrow-left-drop-circle</v-icon
                         >
+                            <v-icon class="clickable-icon" size="30"
+                                >mdi-arrow-left-drop-circle</v-icon
+                            >
+                        </v-btn>
                         <div>
                             <span>{{ currentPage }} of {{ totalPages }}</span>
                         </div>
-                        <v-icon
-                            class="clickable-icon"
+                        <v-btn
+                            :disabled="isDisabled"
+                            variant="text"
+                            icon
+                            color="secondary"
                             @click="moveForWard()"
-                            size="30"
-                            >mdi-arrow-right-drop-circle</v-icon
                         >
+                            <v-icon class="clickable-icon" size="30"
+                                >mdi-arrow-right-drop-circle</v-icon
+                            >
+                        </v-btn>
                     </div>
                 </div>
                 <div class="sticker-bar">

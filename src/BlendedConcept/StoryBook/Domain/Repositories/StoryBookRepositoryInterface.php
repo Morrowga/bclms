@@ -30,7 +30,8 @@ interface StoryBookRepositoryInterface
 
     public function getStoryBooksForSelect();
 
-    public function getStudentStorybooks();
+    public function getStudentStorybooks($filters);
+    public function getStudentPlaylists($filters);
 
     public function updatePhysicalResource(Request $request, StoryBookEloquentModel $storyBook);
 
