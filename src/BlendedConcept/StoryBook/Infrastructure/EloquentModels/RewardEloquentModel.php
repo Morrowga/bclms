@@ -77,6 +77,6 @@ class RewardEloquentModel extends Model implements HasMedia
 
     public function students()
     {
-        return $this->belongsToMany(StudentEloquentModel::class, 'student_sticker', 'sticker_id', 'student_id')->withPivot('x_axis_position', 'y_axis_position');
+        return $this->belongsToMany(StudentEloquentModel::class, 'student_sticker', 'sticker_id', 'student_id')->withPivot('id', 'x_axis_position', 'y_axis_position');
     }
 }

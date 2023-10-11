@@ -141,6 +141,6 @@ class StudentEloquentModel extends Model implements HasMedia
 
     public function stickers()
     {
-        return $this->belongsToMany(RewardEloquentModel::class, 'student_sticker', 'student_id', 'sticker_id')->withPivot('x_axis_position', 'y_axis_position');
+        return $this->belongsToMany(RewardEloquentModel::class, 'student_sticker', 'student_id', 'sticker_id')->withPivot('id', 'x_axis_position', 'y_axis_position');
     }
 }

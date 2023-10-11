@@ -12,16 +12,15 @@ use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStickerRollData
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\RewardEloquentModel;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StudentRewards\OwnStickerCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StudentRewards\DropStickerCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\Rewards\GetStudentsReward;
 
 class StudentRewardsController extends Controller
 {
     public function index()
     {
         try {
-            $student = auth()->user()->student;
-            $stickers = RewardEloquentModel::with('students')->whereHas('students', function ($query) use ($student) {
-                $query->where('students.student_id', $student->student_id);
-            })->get();
+            $stickers = (new GetStudentsReward())->handle();
+
             return Inertia::render(config('route.student-rewards'), [
                 "stickers" => $stickers
             ]);
@@ -88,7 +87,8 @@ class StudentRewardsController extends Controller
     }
 
 
-    public function stickerRoll(Request $request){
+    public function stickerRoll(Request $request)
+    {
         $stickers = (new GetStickerRollData($request->query('count')))->handle();
 
         return response()->json($stickers);

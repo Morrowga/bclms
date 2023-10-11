@@ -17,14 +17,12 @@ const toggleBar = () => {
     isOpen.value = !isOpen.value;
 };
 const getXPosition = (sticker) => {
-    return sticker.students[0]?.pivot.x_axis_position
-        ? sticker.students[0]?.pivot.x_axis_position
-        : 13;
+    return sticker.pivot.x_axis_position ? sticker.pivot.x_axis_position : 13;
 };
 
 const getYPosition = (sticker, index) => {
-    return sticker.students[0]?.pivot.y_axis_position
-        ? sticker.students[0]?.pivot.y_axis_position
+    return sticker.pivot.y_axis_position
+        ? sticker.pivot.y_axis_position
         : index * 80;
 };
 </script>

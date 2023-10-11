@@ -18,11 +18,10 @@ interface RewaredRepositoryInterface
     public function delete(int $annountment_id);
 
     public function changeStatus($reward);
-
+    public function getStudentsReward();
     public function ownSticker($reward);
 
     public function dropSticker(RewardData $rewardData);
 
     public function getStickerRollData(int $count);
-
 }
