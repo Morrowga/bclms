@@ -268,7 +268,7 @@ class RewardRepository implements RewaredRepositoryInterface
         $studentEloquent = StudentEloquentModel::with('stickers')->whereHas('stickers', function ($query) use ($student) {
             $query->where('student_sticker.student_id', $student->student_id);
         })->find($student->student_id);
-        $placed_stickers = $studentEloquent->stickers ?? null;
+        $placed_stickers = $studentEloquent ? $studentEloquent->stickers : null;
         $stickers = $studentEloquent->stickers()->paginate(7);
 
         return ["stickers" => $stickers, "placed_stickers" => $placed_stickers];
