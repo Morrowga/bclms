@@ -222,4 +222,12 @@ class GameRepository implements GameRepositoryInterface
             return $error->getMessage();
         }
     }
+
+    public function deleteGame(GameEloquentModel $game){
+        $gamePath = public_path('gamefiles/' . $game->game_file);
+        if (file_exists($gamePath)) {
+            \File::deleteDirectory($gamePath);
+        }
+        $game->delete();
+    }
 }

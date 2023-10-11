@@ -2,6 +2,9 @@
 import { defineProps, ref } from "vue";
 import Edit from "./Edit.vue";
 import { format } from "date-fns";
+import { isConfirmedDialog } from "@actions/useConfirm";
+import { router } from "@inertiajs/core";
+
 const props = defineProps({
     data: {
         type: Object,
@@ -34,6 +37,19 @@ const setImage = () => {
     return props.data.thumbnail == "" || !props.data.thumbnail
         ? "/images/defaults/organisation_logo.png"
         : props.data.thumbnail;
+};
+
+const deleteGame = () => {
+  dialog.value = false
+  isConfirmedDialog({
+    title: "You won't be able to revert this!",
+    denyButtonText: "Yes,delete it!",
+    onConfirm: () => {
+      router.delete("games/" + props.data.id, {
+        onSuccess: () => {},
+      });
+    },
+  });
 };
 </script>
 <template>
@@ -74,6 +90,13 @@ const setImage = () => {
                                 :disabilitytypes="props.disabilitytypes"
                                 :devices="props.devices"
                             />
+                            <v-btn
+                                @click="deleteGame"
+                                class="mt-1"
+                                icon="mdi-trash"
+                                size="x-small"
+                                color="secondary"
+                            ></v-btn>
                         </div>
                         <div class="close-btn">
                             <v-btn

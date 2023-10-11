@@ -2,20 +2,21 @@
 
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Src\BlendedConcept\Disability\Application\UseCases\Queries\Devices\GetDevicesWithoutPagination;
-use Src\BlendedConcept\Disability\Application\UseCases\Queries\DisabilityTypes\ShowDisabilityTypes;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Src\BlendedConcept\StoryBook\Application\DTO\GameData;
+use Src\BlendedConcept\StoryBook\Domain\Policies\GamePolicy;
 use Src\BlendedConcept\StoryBook\Application\Mappers\GameMapper;
 use Src\BlendedConcept\StoryBook\Application\Requests\StoreGameRequest;
 use Src\BlendedConcept\StoryBook\Application\Requests\UpdateGameRequest;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoreGameCommand;
-use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\UpdateGameCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
-use Src\BlendedConcept\StoryBook\Domain\Policies\GamePolicy;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoreGameCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\DeleteGameCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\UpdateGameCommand;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
-use Symfony\Component\HttpFoundation\Response;
+use Src\BlendedConcept\Disability\Application\UseCases\Queries\Devices\GetDevicesWithoutPagination;
+use Src\BlendedConcept\Disability\Application\UseCases\Queries\DisabilityTypes\ShowDisabilityTypes;
 
 class GameController
 {
@@ -101,6 +102,23 @@ class GameController
              * Catch any exceptions and display an error message.
              */
             return redirect()->route('games.index')->with('SystemErrorMessage', $e->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $game = GameEloquentModel::findOrFail($id);
+            $deleteGameCommand = (new DeleteGameCommand($game));
+            $deleteGameCommand->execute();
+
+            return redirect()->route('games.index')->with('successMessage', 'Game Deleted Successfully!');
+        } catch (\Exception $error) {
+            return redirect()
+                ->route('games.index')
+                ->with([
+                    'systemErrorMessage' => $error->getCode(),
+                ]);
         }
     }
 }

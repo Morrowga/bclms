@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\StoryBook\Domain\Repositories;
 
 use Src\BlendedConcept\StoryBook\Application\DTO\GameData;
 use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Game;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
 
 interface GameRepositoryInterface
 {
@@ -15,4 +16,7 @@ interface GameRepositoryInterface
 
     //update game
     public function updateGame(GameData $game);
+
+    //delete game
+    public function deleteGame(GameEloquentModel $game);
 }
