@@ -269,7 +269,7 @@ class RewardRepository implements RewaredRepositoryInterface
             $query->where('student_sticker.student_id', $student->student_id);
         })->find($student->student_id);
         $placed_stickers = $studentEloquent ? $studentEloquent->stickers : null;
-        $stickers = $studentEloquent->stickers()->paginate(7);
+        $stickers = $studentEloquent ? $studentEloquent->stickers()->paginate(7) : null;
 
         return ["stickers" => $stickers, "placed_stickers" => $placed_stickers];
     }
