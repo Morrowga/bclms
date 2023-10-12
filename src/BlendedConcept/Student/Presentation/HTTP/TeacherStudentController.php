@@ -117,11 +117,11 @@ class TeacherStudentController
         try {
             $teacher_id = Auth::user()->id;
 
-            $student = json_encode(auth()->user()->student);
             setcookie('teacher_id', $teacher_id, time() + (86400 * 30), "/");
-            setcookie('student', $student, time() + (86400 * 30), "/");
             Auth::logout();
             Auth::login($user);
+            $student = json_encode(auth()->user()->student);
+            setcookie('student', $student, time() + (86400 * 30), "/");
 
             return redirect()->route('dashboard'); // Redirect to the kid's home page.
         } catch (\Exception $error) {
