@@ -3,7 +3,7 @@ import { router } from "@inertiajs/core";
 import { usePage } from "@inertiajs/vue3";
 
 const auth = computed(() => usePage().props.auth);
-defineProps(["item"]);
+let props = defineProps(["item"]);
 let isLinkActive = (currentRoute) => {
     return route()?.current()?.includes(currentRoute);
 };
@@ -19,6 +19,17 @@ let goLink = (item) => {
         router.get(item.url);
     }
 };
+const filterItem = computed(() =>
+    props.item.children.filter((sitem) => {
+        if (
+            !auth?.value?.data?.permissions?.includes(sitem?.access_module) &&
+            props.item?.access_module != "access_dashboard"
+        ) {
+            return false;
+        }
+        return true;
+    })
+);
 </script>
 <template>
     <v-list-group :value="item.title">
@@ -38,19 +49,16 @@ let goLink = (item) => {
             ></v-list-item>
         </template>
         <v-list-item
-            v-for="(sitem, sindex) in item.children"
+            v-for="(sitem, sindex) in filterItem"
             :key="sindex"
             :value="sitem.title"
-            :title="sitem.title"
             @click="goLink(sitem)"
             :class="isLinkActive(sitem.route_name) ? 'active-list' : ''"
-            :v-if="
-                !auth?.data?.permissions?.includes(sitem?.access_module) &&
-                item?.access_module != 'access_dashboard'
-                    ? false
-                    : true
-            "
-        ></v-list-item>
+        >
+            <v-list-item-title>
+                {{ sitem.title }}
+            </v-list-item-title>
+        </v-list-item>
     </v-list-group>
 </template>
 

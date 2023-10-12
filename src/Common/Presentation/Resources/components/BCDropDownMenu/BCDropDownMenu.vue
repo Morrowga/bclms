@@ -40,9 +40,18 @@ let goLink = (item) => {
         router.get(item.url);
     }
 };
-onMounted(() => {
-    console.log(auth?.value?.data?.permissions);
-});
+
+const filterItem = computed(() =>
+    props.item.children.filter((sitem) => {
+        if (
+            !auth?.value?.data?.permissions?.includes(sitem?.access_module) &&
+            props.item?.access_module != "access_dashboard"
+        ) {
+            return false;
+        }
+        return true;
+    })
+);
 </script>
 <template>
     <div class="text-center">
@@ -71,21 +80,13 @@ onMounted(() => {
 
             <v-list density="compact">
                 <v-list-item
-                    v-for="(sitem, sindex) in item.children"
+                    v-for="(sitem, sindex) in filterItem"
                     :key="sindex"
                     :value="sitem"
                     @click="goLink(sitem)"
-                    :title="sitem.title"
                     :variant="isLinkActive(sitem.route_name) ? 'tonal' : 'text'"
-                    v-if="
-                        !auth?.data?.permissions?.includes(
-                            sitem?.access_module
-                        ) && item?.access_module != 'access_dashboard'
-                            ? false
-                            : true
-                    "
                 >
-                    <!-- <v-list-item-title>{{ sitem.title }}</v-list-item-title> -->
+                    <v-list-item-title>{{ sitem.title }}</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>

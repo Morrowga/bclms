@@ -2,7 +2,7 @@
 import { router } from "@inertiajs/core";
 import { usePage } from "@inertiajs/vue3";
 const auth = computed(() => usePage().props.auth);
-defineProps(["item"]);
+let props = defineProps(["item"]);
 let isLinkActive = (currentRoute) => {
     return route()?.current()?.includes(currentRoute);
 };
