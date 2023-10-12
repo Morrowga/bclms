@@ -37,19 +37,22 @@ let goLink = (url) => {
         :class="isLinkActive(item.route_name) ? '' : ''"
         :color="isLinkActive(item.route_name) ? '' : ''"
         @click="goLink(item.url)"
-        :hidden="
+        v-if="
             !auth?.data?.permissions?.includes(item?.access_module) &&
             item?.access_module != 'access_dashboard'
-                ? true
-                : false
+                ? false
+                : true
         "
     >
-        <v-icon :icon="item.icon.icon" class="ma-2" :color="isLinkActive(item.route_name) ? '#FF8015': '#fff'"></v-icon>
-        <span class="ruddy-bold"
+        <v-icon
+            :icon="item.icon.icon"
+            class="ma-2"
+            :color="isLinkActive(item.route_name) ? '#FF8015' : '#fff'"
+        ></v-icon>
+        <span
+            class="ruddy-bold"
             :style="
-                isLinkActive(item.route_name)
-                    ? 'color: #FF8015'
-                    : 'color:#fff'
+                isLinkActive(item.route_name) ? 'color: #FF8015' : 'color:#fff'
             "
         >
             {{ item.title }}

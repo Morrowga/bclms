@@ -7,6 +7,7 @@ import DefineOptions from 'unplugin-vue-define-options/vite'
 import { defineConfig } from 'vite'
 import vuetify from 'vite-plugin-vuetify'
 import laravel from 'laravel-vite-plugin'
+
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [

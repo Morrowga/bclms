@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
+use Devleaptech\LaravelH5p\Eloquents\H5pResult;
 
 class StoryBookVersionEloquentModel extends Model
 {
@@ -47,5 +48,9 @@ class StoryBookVersionEloquentModel extends Model
     public function teacher()
     {
         return $this->belongsTo(TeacherEloquentModel::class, 'teacher_id')->with('user');
+    }
+    public function result()
+    {
+        return $this->hasOne(H5pResult::class, 'content_id', 'h5p_id');
     }
 }

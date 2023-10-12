@@ -7,11 +7,11 @@
                 :title="item.title"
                 :class="isParentActive(item.children) ? 'bg-primary' : ''"
                 :color="isParentActive(item.children) ? '#fff' : ''"
-                :hidden="
+                v-if="
                     !auth?.data?.permissions?.includes(item?.access_module) &&
                     item?.access_module != 'access_dashboard'
-                        ? true
-                        : false
+                        ? false
+                        : true
                 "
             ></v-list-item>
         </template>
@@ -22,11 +22,11 @@
             :title="sitem.title"
             @click="goLink(sitem)"
             :class="isLinkActive(sitem.route_name) ? 'active-list' : ''"
-            :hidden="
+            v-if="
                 !auth?.data?.permissions?.includes(sitem?.access_module) &&
                 item?.access_module != 'access_dashboard'
-                    ? true
-                    : false
+                    ? false
+                    : true
             "
         ></v-list-item>
     </v-list-group>

@@ -241,8 +241,9 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             $query->whereHas('storybook_assigments', function ($query) use ($student_id) {
                 $query->where('students.student_id', $student_id);
             });
-        })->with('book_versions')->orderBy('id', 'desc')
+        })->with('book_versions', 'result')->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10);
+        // dd($books[0]);
         return $books;
     }
 

@@ -40,7 +40,9 @@ let goLink = (item) => {
         router.get(item.url);
     }
 };
-
+onMounted(() => {
+    console.log(auth?.value?.data?.permissions);
+});
 </script>
 <template>
     <div class="text-center">
@@ -48,6 +50,13 @@ let goLink = (item) => {
             <template v-slot:activator="{ props }">
                 <v-list-item
                     v-bind="props"
+                    v-if="
+                        !auth?.data?.permissions?.includes(
+                            item?.access_module
+                        ) && item?.access_module != 'access_dashboard'
+                            ? false
+                            : true
+                    "
                     :prepend-icon="item.icon.icon"
                     append-icon="mdi-chevron-down"
                     :title="item.title"
@@ -55,13 +64,6 @@ let goLink = (item) => {
                     :class="isParentActive(item.children) ? '' : ''"
                     :color="
                         isParentActive(item.children) ? '#4066E4' : '#282828'
-                    "
-                    :hidden="
-                        !auth?.data?.permissions?.includes(
-                            item?.access_module
-                        ) && item?.access_module != 'access_dashboard'
-                            ? true
-                            : false
                     "
                 >
                 </v-list-item>
@@ -75,12 +77,12 @@ let goLink = (item) => {
                     @click="goLink(sitem)"
                     :title="sitem.title"
                     :variant="isLinkActive(sitem.route_name) ? 'tonal' : 'text'"
-                    :hidden="
+                    v-if="
                         !auth?.data?.permissions?.includes(
                             sitem?.access_module
                         ) && item?.access_module != 'access_dashboard'
-                            ? true
-                            : false
+                            ? false
+                            : true
                     "
                 >
                     <!-- <v-list-item-title>{{ sitem.title }}</v-list-item-title> -->

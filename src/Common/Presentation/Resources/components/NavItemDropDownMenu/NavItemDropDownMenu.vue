@@ -69,12 +69,12 @@ let goLink = (item) => {
                     :color="
                         isParentActive(item.children) ? '#4066E4' : '#282828'
                     "
-                    :hidden="
+                    v-if="
                         !auth?.data?.permissions?.includes(
                             item?.access_module
                         ) && item?.access_module != 'access_dashboard'
-                            ? true
-                            : false
+                            ? false
+                            : true
                     "
                 >
                 </v-list-item>
@@ -87,12 +87,12 @@ let goLink = (item) => {
                     :value="sitem"
                     @click="goLink(sitem)"
                     :variant="isLinkActive(sitem.route_name) ? 'tonal' : 'text'"
-                    :hidden="
+                    v-if="
                         !auth?.data?.permissions?.includes(
                             sitem?.access_module
                         ) && item?.access_module != 'access_dashboard'
-                            ? true
-                            : false
+                            ? false
+                            : true
                     "
                 >
                     <template v-slot:prepend>
