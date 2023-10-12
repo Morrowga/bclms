@@ -27,8 +27,11 @@ class TeacherStorybookController
 
     public function show(StoryBookEloquentModel $teacher_storybook)
     {
+        $teacher_id = auth()->user()->b2bUser->teacher_id;
         $filters = request(['search', 'filter', 'perPage', 'page']);
-        $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions']);
+        $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($teacher_id) {
+            $query->where('teacher_id', $teacher_id);
+        }]);
         $games = (new GetGameList($filters))->handle();
 
         $storybooks = (new GetStoryBook($filters = []))->handle();

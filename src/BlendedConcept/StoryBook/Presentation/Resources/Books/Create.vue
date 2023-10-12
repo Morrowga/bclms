@@ -286,6 +286,7 @@ onMounted(() => {
                         </VLabel>
                         <VTextField
                             v-model="form.num_gold_coins"
+                            type="number"
                             placeholder="Type here ..."
                         />
                     </VCol>
@@ -294,6 +295,7 @@ onMounted(() => {
                             Number of Silver Coins
                         </VLabel>
                         <VTextField
+                            type="number"
                             v-model="form.num_silver_coins"
                             placeholder="Type here ..."
                         />
