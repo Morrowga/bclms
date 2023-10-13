@@ -9,9 +9,25 @@ let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const active = ref("assigned");
 
+const setCookie = (type) => {
+    var cookieName = "storybook_type";
+    var cookieValue = type;
+    var expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 1);
+    var expires = "expires=" + expirationDate.toUTCString();
+
+    var cookieString =
+        cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+
+    document.cookie = cookieString;
+};
 const activeTab = (name) => {
     active.value = name;
+    setCookie(name);
 };
+onMounted(() => {
+    setCookie("assigned");
+});
 </script>
 <template>
     <StudentLayout>

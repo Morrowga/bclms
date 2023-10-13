@@ -55,7 +55,7 @@ const saveToH5p = () => {
 };
 let onFormSubmit = () => {
     refForm.value?.validate().then(({ valid }) => {
-        if (valid) {
+        if (valid && form.tags.length > 0) {
             saveToH5p();
             isLoading.value = true;
             setTimeout(() => {
