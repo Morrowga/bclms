@@ -19,7 +19,7 @@ class OrganisationMapper
             contact_name: $request->contact_name,
             contact_email: $request->contact_email,
             contact_number: $request->contact_number,
-            sub_domain: $request->sub_domain,
+            sub_domain: preg_replace('/[^\p{L}\p{N}]+/u', '', $request->name),
             logo: $request->logo,
             status: $request->status,
 

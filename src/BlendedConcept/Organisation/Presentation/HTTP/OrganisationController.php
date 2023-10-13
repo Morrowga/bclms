@@ -155,7 +155,7 @@ class OrganisationController extends Controller
 
     public function destroy(OrganisationEloquentModel $organisation)
     {
-        try {
+        // try {
 
             // abort_if(authorize('destroy', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
             // $tenant = Tenant::get();
@@ -165,13 +165,13 @@ class OrganisationController extends Controller
             $deleteOrganisation->execute();
 
             return redirect()->route('organisations.index')->with('successMessage', 'Organisations Deleted Successfully!');
-        } catch (\Exception $error) {
-            return redirect()
-                ->route('organisations.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
-        }
+        // } catch (\Exception $error) {
+        //     return redirect()
+        //         ->route('organisations.index')
+        //         ->with([
+        //             'systemErrorMessage' => $error->getCode(),
+        //         ]);
+        // }
     }
 
     public function addSubscription(OrganisationEloquentModel $organisation)

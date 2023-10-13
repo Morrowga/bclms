@@ -3,13 +3,14 @@
 namespace Src\Common\Infrastructure\Laravel\Kernel;
 
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Src\Common\Presentation\CLI\CreateQueryCmd;
+use Src\Common\Presentation\CLI\CreateDomainCmd;
+use Src\Common\Presentation\CLI\CreateRoutesCmd;
 use Src\Common\Presentation\CLI\CreateCommandCmd;
 use Src\Common\Presentation\CLI\CreateControllerCmd;
-use Src\Common\Presentation\CLI\CreateDomainCmd;
 use Src\Common\Presentation\CLI\CreateLaravelSetupCmd;
-use Src\Common\Presentation\CLI\CreateQueryCmd;
-use Src\Common\Presentation\CLI\CreateRoutesCmd;
+use Src\Common\Presentation\CLI\CreateSubDomainCommand;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Console extends ConsoleKernel
 {
@@ -20,6 +21,7 @@ class Console extends ConsoleKernel
      */
     protected $commands = [
         CreateDomainCmd::class,
+        CreateSubDomainCommand::class,
         CreateCommandCmd::class,
         CreateQueryCmd::class,
         CreateControllerCmd::class,
