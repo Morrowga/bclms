@@ -244,7 +244,7 @@ H5P.MultiChoice = function (options, contentId, contentData) {
         appendTo: $myDom
       });
     }  
-    
+    console.log("Multichoice");
     self.setContent($myDom, {
       'class': params.behaviour.singleAnswer ? 'h5p-radio' : 'h5p-check'
     });
@@ -403,7 +403,90 @@ H5P.MultiChoice = function (options, contentId, contentData) {
       }
     };
 
+    $(document).ready(function() {
+      // Select the first option
+      var $firstOption = $answers.first();
+      toggleCheck($firstOption);
+    });
+    
+    function getCookie(name) {
+      var value = "; " + document.cookie;
+      var parts = value.split("; " + name + "=");
+      if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+    function handleSpacebarKeydown($element) {
+    $element.keydown(function (e) {
+        if (e.keyCode === 32) { // Space bar
+            // Navigate to next item
+            var $next = $(this).next();
+            if ($next.length) {
+                $next.focus();
+                toggleCheck($next);
+            } else {
+                // If no next item, loop back to the first item
+                var $first = $element.first();
+                $first.focus();
+                toggleCheck($first);
+            }
+            return false;
+        }
+    });
+    }
+    
+    function handleEnterKeyForChecking() {
+    document.addEventListener('keydown', function(e) {
+      if (e.keyCode === 13) {  // Check for "Enter" key press
+          // Ensure the Check button is enabled before triggering it
+          var checkButton = document.querySelector(".h5p-question-check-answer");
+          
+          if (checkButton && !checkButton.disabled) {
+              self.answered = true;
+              checkAnswer();
+              $myDom.find('.h5p-answer:first-child').focus();
+          }
+      }
+    });
+    }
+    
+    function handleDelayedSelection($element) {
+    var currentIndex = 0; // Start with the first element
+    
+    function selectNext() {
+      var $current = $element.eq(currentIndex);
+    
+      if ($current.length) {
+          toggleCheck($current);
+          currentIndex++;
+      } else {
+          currentIndex = 0; // Reset the index to loop back to the first element
+          selectNext(); // Start from the first element
+          return; 
+      }
+    
+      setTimeout(selectNext, 2000); // Call this function again after 2 seconds
+    }
+    
+    selectNext(); // Start the sequence
+    }
+    
+    $(document).ready(function() {
+    var studentCookie = getCookie("student");
+    if (studentCookie) {
+      var studentData = JSON.parse(decodeURIComponent(studentCookie));
+      var device_id = studentData.device_id;
+    
+      if (device_id === 2) {
+          handleSpacebarKeydown($answers);
+          handleEnterKeyForChecking();
+      } else if (device_id === 3) {
+          handleDelayedSelection($answers);
+          handleEnterKeyForChecking();
+      }
+    }
+    });
+    
 
+    
     $answers.keydown(function (e) {
       if (params.behaviour.singleAnswer) {
         switch (e.keyCode) {
@@ -1100,4 +1183,5 @@ H5P.MultiChoice = function (options, contentId, contentData) {
 H5P.MultiChoice.prototype = Object.create(H5P.Question.prototype);
 H5P.MultiChoice.prototype.constructor = H5P.MultiChoice;
 
-console.log("not this");
+console.log("MultiChoice");
+    
