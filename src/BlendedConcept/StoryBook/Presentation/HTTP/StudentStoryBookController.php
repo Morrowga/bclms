@@ -68,8 +68,13 @@ class StudentStoryBookController extends Controller
         try {
             // Get the filters from the request, or initialize an empty array if they are not present
             setcookie('pathway_id', $pathway->id, time() + (86400 * 30), "/");
+            $student_id = auth()->user()->student->student_id;
+
+            $data = $pathway->load(['students' => function ($query) use ($student_id) {
+                $query->where('students.student_id', $student_id);
+            }]);
             return Inertia::render(config('route.storybook-pathway'), [
-                "pathway" => $pathway
+                "pathway" => $data
             ]);
         } catch (Exception $e) {
             dd($e);

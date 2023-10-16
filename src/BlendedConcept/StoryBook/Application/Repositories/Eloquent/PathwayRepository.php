@@ -101,7 +101,9 @@ class PathwayRepository implements PathwayRepositoryInterface
             array_push($array, $storybook->id);
         }
 
-        $storybooks = StoryBookEloquentModel::whereIn('id', $array)->paginate(2);
+        $storybooks = StoryBookEloquentModel::with(['pathways' => function ($query) use ($pathway_id) {
+            $query->where('pathway_id', $pathway_id);
+        }])->whereIn('id', $array)->paginate(2);
 
         return $storybooks;
     }

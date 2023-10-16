@@ -145,6 +145,6 @@ class StoryBookEloquentModel extends Model implements HasMedia
 
     public function pathways()
     {
-        return $this->belongsToMany(PathwayEloquentModel::class, 'pathway_storybook', 'storybook_id', 'pathway_id');
+        return $this->belongsToMany(PathwayEloquentModel::class, 'pathway_storybook', 'storybook_id', 'pathway_id')->withPivot('sequence');
     }
 }

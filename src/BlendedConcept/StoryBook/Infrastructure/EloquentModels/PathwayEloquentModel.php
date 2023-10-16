@@ -48,6 +48,6 @@ class PathwayEloquentModel extends Model implements HasMedia
 
     public function students()
     {
-        return $this->belongsToMany(StudentEloquentModel::class, 'student_pathway', 'pathway_id', 'storybook_id');
+        return $this->belongsToMany(StudentEloquentModel::class, 'student_pathway', 'pathway_id', 'student_id')->withPivot('progress');
     }
 }
