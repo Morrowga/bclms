@@ -936,16 +936,34 @@ H5P.VideoHtml5 = (function ($) {
   // Register video handler
   H5P.videoHandlers = H5P.videoHandlers || [];
   H5P.videoHandlers.push(H5P.VideoHtml5);
-  
+
   console.log("Html-5");
+
+  //Select multi choice and handle multiple icon
   document.addEventListener('keydown', function(event) {
     if (event.code === "Space") {
         var button = document.querySelector('.h5p-interaction-button');
         if (button) {
             button.click();
+
+            //Remove button after clicking
+            button.parentElement.remove();
         }
         event.preventDefault();  
     }
   });
-  
+
+  //Select multi choice and handle multiple icon
+  document.addEventListener('keydown', function(event) {
+    if (event.code === "Enter") {
+        var button = document.querySelector('.h5p-interaction-button');
+        if (button) {
+            button.click();
+
+            //Remove button after clicking
+            button.parentElement.remove();
+        }
+        event.preventDefault();  
+    }
+  });
   

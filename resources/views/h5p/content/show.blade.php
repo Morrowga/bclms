@@ -83,8 +83,6 @@
 
 
 
-    {{--    core script       --}}
-
    @foreach ($settings['core']['scripts'] as $script)
     {{ Html::script($script) }}
     <script>

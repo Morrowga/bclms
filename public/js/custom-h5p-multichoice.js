@@ -403,86 +403,180 @@ H5P.MultiChoice = function (options, contentId, contentData) {
       }
     };
 
+    //When multi choice opens, select first option
     $(document).ready(function() {
       // Select the first option
       var $firstOption = $answers.first();
       toggleCheck($firstOption);
     });
     
+    //Get cookie
     function getCookie(name) {
       var value = "; " + document.cookie;
       var parts = value.split("; " + name + "=");
       if (parts.length == 2) return parts.pop().split(";").shift();
     }
+
     function handleSpacebarKeydown($element) {
-    $element.keydown(function (e) {
+      $element.keydown(function (e) {
         if (e.keyCode === 32) { // Space bar
-            // Navigate to next item
-            var $next = $(this).next();
-            if ($next.length) {
-                $next.focus();
-                toggleCheck($next);
-            } else {
-                // If no next item, loop back to the first item
-                var $first = $element.first();
-                $first.focus();
-                toggleCheck($first);
+          e.preventDefault(); // Prevent default space bar action
+          // Navigate to next item
+          var $next = $(this).next();
+          if ($next.length) {
+            $next.focus();
+            toggleCheck($next);
+          } else {
+            // If no next item, loop back to the first item
+            var $first = $element.first();
+            $first.focus();
+            toggleCheck($first);
             }
-            return false;
         }
-    });
+      });
     }
-    
+
+
+     // Function to handle space bar keydown for navigation and selection
+     function handleTab() {
+      let currentButtonIndex = 0; 
+      document.addEventListener('keydown', function(e) {
+          if (e.keyCode === 32) { // Check for "Tab" key press
+              e.preventDefault(); // Prevent default tab action
+              var checkButton = document.querySelector(".h5p-question-check-answer");
+
+              // List buttons in the order you want to tab through
+              const buttons = [
+                  ".h5p-question-show-solution",
+                  ".h5p-question-try-again",
+                  ".h5p-question-iv-continue",
+              ];
+  
+              // Get the buttons that are currently available in the DOM
+              const availableButtons = buttons.filter(selector => document.querySelector(selector) !== null);
+              
+              if(!checkButton) {
+                if (availableButtons.length > 0) {
+                    // Focus the next available button
+                    const nextButton = document.querySelector(availableButtons[currentButtonIndex]);
+                    if (nextButton) {
+                        nextButton.focus();
+                    }
+                    // Increment index to get the next button
+                    currentButtonIndex = (currentButtonIndex + 1) % availableButtons.length;
+                    
+                }
+              }
+              return false;
+          }
+      });
+  }
+  
+
+    //Submit answer && click one of 3 buttons
     function handleEnterKeyForChecking() {
-    document.addEventListener('keydown', function(e) {
-      if (e.keyCode === 13) {  // Check for "Enter" key press
-          // Ensure the Check button is enabled before triggering it
-          var checkButton = document.querySelector(".h5p-question-check-answer");
-          
-          if (checkButton && !checkButton.disabled) {
+      document.addEventListener('keydown', function(e) {
+        if (e.keyCode === 13) {  // Check for "Enter" key press
+            e.preventDefault(); // Prevent default tab action
+            // Ensure the Check button is enabled before triggering it
+            var checkButton = document.querySelector(".h5p-question-check-answer");
+            var showSolutionButton = document.querySelector(".h5p-question-show-solution");
+            var tryAgainButton = document.querySelector(".h5p-question-try-again");
+            var continueButton = document.querySelector(".h5p-question-iv-continue");
+            if (checkButton && !checkButton.disabled) {
               self.answered = true;
               checkAnswer();
               $myDom.find('.h5p-answer:first-child').focus();
-          }
-      }
-    });
+              handleDelayedTabs();
+            }
+            else if (showSolutionButton === this.activeElement) {
+              showSolutionButton.click();
+            }
+            else if (tryAgainButton === this.activeElement) {
+              tryAgainButton.click();
+            }
+            else if (continueButton === this.activeElement) {
+              continueButton.click();
+              document.activeElement.blur();
+            }
+            return false;
+        }
+      });
     }
     
+    //If only one switch, selection will be change delayed
     function handleDelayedSelection($element) {
-    var currentIndex = 0; // Start with the first element
-    
-    function selectNext() {
-      var $current = $element.eq(currentIndex);
-    
-      if ($current.length) {
-          toggleCheck($current);
-          currentIndex++;
-      } else {
-          currentIndex = 0; // Reset the index to loop back to the first element
-          selectNext(); // Start from the first element
-          return; 
-      }
-    
-      setTimeout(selectNext, 2000); // Call this function again after 2 seconds
+      var currentIndex = 0; // Start with the first element
+        function selectNext() {
+          var $current = $element.eq(currentIndex);
+          if ($current.length) {
+              toggleCheck($current);
+              currentIndex++;
+          } else {
+              currentIndex = 0; // Reset the index to loop back to the first element
+              selectNext(); // Start from the first element
+              return; 
+          }
+          setTimeout(selectNext, 2000); // Call this function again after 2 seconds
+        }
+        selectNext(); // Start the sequence
     }
+
+    // Function to handle space bar keydown for navigation and selection
+    function handleDelayedTabs() {
+      // Check if the check button exists
+      var currentButtonIndex = 0;
+     
+      // List buttons in the order you want to tab through
+      const buttons = [
+          ".h5p-question-show-solution",
+          ".h5p-question-try-again",
+          ".h5p-question-iv-continue",
+      ];
+  
+      // Function to select the next tab
+      function selectNextTab() {
+              const availableButtons = buttons.filter(selector => document.querySelector(selector) !== null);
+              var checkButton = document.querySelector(".h5p-question-check-answer");
+                if (availableButtons.length > 0) {
+                    // Focus the next available button
+                    const nextButton = document.querySelector(availableButtons[currentButtonIndex]);
+                    if (nextButton) {
+                        nextButton.focus();
+                    }
+                    // Increment index to get the next button
+                    currentButtonIndex = (currentButtonIndex + 1) % availableButtons.length;
+                }
+                if(!checkButton) {
+                  setTimeout(selectNextTab, 2000); // Call this function again after 2 seconds
+                }
+            }
+        selectNextTab(); // Start the sequence
+  }
+  
     
-    selectNext(); // Start the sequence
-    }
-    
+    //Get device id from student cookie
     $(document).ready(function() {
     var studentCookie = getCookie("student");
-    if (studentCookie) {
-      var studentData = JSON.parse(decodeURIComponent(studentCookie));
-      var device_id = studentData.device_id;
-    
-      if (device_id === 2) {
+      //If  student cookie exists
+      if (studentCookie) {
+        var studentData = JSON.parse(decodeURIComponent(studentCookie));
+        var device_id = studentData.device_id;
+        console.log(device_id);
+        //If two switch
+        if (device_id === 2) {
+          console.log("Two switch")
           handleSpacebarKeydown($answers);
           handleEnterKeyForChecking();
-      } else if (device_id === 3) {
+          handleTab();
+        }
+        //If single switch
+        else if (device_id === 3) {
+          console.log("Single switch");
           handleDelayedSelection($answers);
           handleEnterKeyForChecking();
+        }
       }
-    }
     });
     
 
@@ -799,7 +893,7 @@ H5P.MultiChoice = function (options, contentId, contentData) {
       }
     });
   };
-
+ 
   /**
    * Determine which feedback text to display
    *
@@ -814,6 +908,8 @@ H5P.MultiChoice = function (options, contentId, contentData) {
 
     return feedback.replace('@score', score).replace('@total', max);
   };
+
+ 
 
   /**
    * Shows feedback on the selected fields.
