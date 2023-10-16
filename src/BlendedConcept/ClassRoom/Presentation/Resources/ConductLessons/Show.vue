@@ -46,7 +46,7 @@ const app_url = computed(() => page?.props?.route_site_url);
                 </div>
                 <div v-else>
                     <video controls class="classmode">
-                    <source :src="videoSrc" type="video/mp4">
+                    <source :src="videoSrc" type="video/youtube">
                         Your browser does not support the video tag.
                     </video>
                 </div>
