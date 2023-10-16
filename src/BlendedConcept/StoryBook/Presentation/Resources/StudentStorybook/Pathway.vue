@@ -10,21 +10,22 @@ let props = defineProps(["flash", "auth", "pathway"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const active = ref("assigned");
-const currentPage = ref(1);
+const currentPage = ref(0);
 const totalPage = ref("");
 const totalBook = ref(0);
 const progress = computed(() => props.pathway?.students?.[0]?.pivot?.progress);
 const currentPageData = ref([]);
-
+const datas = ref([]);
 // Function to handle slide change
-async function fetchData(page) {
+async function fetchData() {
     try {
         const response = await axios.get(
-            `/storybooks/student-pathways?page=${page}&pathway_id=${props.pathway.id}`
+            `/storybooks/student-pathways?pathway_id=${props.pathway.id}`
         );
         // Assuming the API response contains an array of data similar to props.pathways.data
-        let datas = response.data.data;
-        let results = datas.map((book, index) => {
+        datas.value = response.data.data;
+        totalPage.value = response.data.total;
+        let results = datas.value[0].map((book, index) => {
             return {
                 id: book.id,
                 thumbnail_img: book.thumbnail_img,
@@ -36,22 +37,29 @@ async function fetchData(page) {
         });
         currentPageData.value = results;
         totalBook.value = response.data.total;
-        totalPage.value = response.data.last_page;
+        // currentPageData.value = results;
+        // if (totalPage.value == "") {
+        //     totalPage.value = response.data.last_page + 1;
+        // }
     } catch (error) {
         console.error("Error fetching data:", error);
     }
 }
 
 function handleSlideChange(swiper) {
-    if (swiper.isEnd) {
-        // Increment the current page and fetch the next page of data
-        currentPage.value++;
-        fetchData(currentPage.value);
-    } else if (swiper.isBeginning) {
-        // Decrement the current page and fetch the previous page of data
-        currentPage.value--;
-        fetchData(currentPage.value);
-    }
+    currentPage.value = swiper.activeIndex;
+    console.log(totalPage.value);
+    let results = datas.value[swiper.activeIndex].map((book, index) => {
+        return {
+            id: book.id,
+            thumbnail_img: book.thumbnail_img,
+            own_progress: calculatePercentageByCount(
+                book.pathways?.[0]?.pivot?.sequence,
+                totalPage.value
+            ),
+        };
+    });
+    currentPageData.value = results;
 }
 
 function calculatePercentageByCount(specificCount, totalCount) {
@@ -134,9 +142,18 @@ const dynamicClass = (book_progress) => {
         return "storybook-story";
     }
 };
+const swiperOptions = {
+    slidesPerView: 1,
+    on: {
+        slideChange: function () {
+            handleSlideChange(this);
+        },
+    },
+    // Other Swiper configuration options
+};
 onMounted(() => {
     // Load initial data for page 1
-    fetchData(currentPage.value);
+    fetchData();
 });
 </script>
 <template>
@@ -160,7 +177,7 @@ onMounted(() => {
                 </VCol>
             </VRow>
             <div class="scroll-container">
-                <swiper :slides-per-view="1" @slideChange="handleSlideChange">
+                <swiper :slide-per-view="1" @slideChange="handleSlideChange">
                     <swiper-slide
                         class="swiper-path"
                         v-for="(page, index) in totalPage"
@@ -168,7 +185,7 @@ onMounted(() => {
                     >
                         <v-img
                             src="/images/down.png"
-                            v-if="currentPage === 1"
+                            v-if="currentPage === 0"
                             class="startmap"
                             width="200"
                             height="200"
@@ -250,7 +267,11 @@ onMounted(() => {
                         ></v-img>
                         <!-- <v-img :src="currentPageData[1].thumbnail_img == '' ? '/images/toycard.png' : currentPageData[0].thumbnail_img" class="card2" width="300" height="200"></v-img> -->
                         <v-img
-                            v-if="currentPageData.length > 1"
+                            :class="
+                                currentPage.length > 1
+                                    ? 'curerntfp' + currentPage + ' d-none'
+                                    : 'currentfp' + currentPage
+                            "
                             src="/images/footprint4.png"
                             class="footprint3"
                             width="330"
@@ -482,5 +503,8 @@ onMounted(() => {
 
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
+}
+.d-none {
+    display: none;
 }
 </style>
