@@ -30,7 +30,7 @@ const getCookie = () => {
     }
   }
 };
-
+console.log(getCookie()+ 'teacher_id')
 
 onMounted(() => {
   // Load initial data for page 1
