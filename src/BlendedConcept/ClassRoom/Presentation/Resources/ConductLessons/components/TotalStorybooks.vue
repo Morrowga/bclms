@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
+import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 
 import axios from "axios";
 import {
@@ -156,6 +157,15 @@ const selectVersion = (id) => {
             <VCardText v-else>
                 <h1 class="text-center">No StoryBook Version</h1>
             </VCardText>
+
+            <div>
+                <div class="d-flex justify-center mt-5 mb-5">
+                    <PrimaryBtn :block="true"
+                    @click="isDialogVisible = false"
+                    :isLink="false"
+                    type="button" title="Confirm" />
+                </div>
+            </div>
         </VCard>
         </VDialog>
     </section>
