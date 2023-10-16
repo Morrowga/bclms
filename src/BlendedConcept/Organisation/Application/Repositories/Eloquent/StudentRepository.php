@@ -87,7 +87,9 @@ class StudentRepository implements StudentRepositoryInterface
             $studentEloquentModel = StudentEloquentModel::query()->findOrFail($studentData->student_id);
             $user_id = $studentEloquentModel->user_id;
             $parent_id = $studentEloquentModel->parent_id;
+            $org_id = $studentEloquentModel->organisation_id;
             $studentEloquentModel->fill($studentDataArrary);
+            $studentEloquentModel->organisation_id = $org_id;
             $studentEloquentModel->update();
             $studentEloquentModel->disability_types()->sync($studentData->disability_types);
             $studentEloquentModel->learningneeds()->sync($studentData->learning_needs);

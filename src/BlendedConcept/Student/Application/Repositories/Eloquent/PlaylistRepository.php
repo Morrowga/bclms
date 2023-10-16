@@ -14,8 +14,11 @@ class PlaylistRepository implements PlaylistRepositoryInterface
 {
     public function getPlaylist($filters = [])
     {
+        $teacher_id = auth()->user()->b2bUser->teacher_id;
+
         $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
             ->with(['storybooks', 'student.user'])
+            ->where('teacher_id', $teacher_id)
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
 
@@ -110,5 +113,9 @@ class PlaylistRepository implements PlaylistRepositoryInterface
         $playlist = PlaylistEloquentModel::query()->findOrFail($playlist_id);
         $playlist->clearMediaCollection('image'); // Replace with the actual collection name
         $playlist->delete();
+    }
+
+    public function getStorybooksForPlaylist($filters)
+    {
     }
 }

@@ -5,12 +5,11 @@ import { SuccessDialog } from "@actions/useSuccess";
 import SelectStudent from "./components/SelectStudent.vue";
 import SelectStorybook from "./components/SelectStorybook.vue";
 import { useForm } from "@inertiajs/vue3";
+import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
 
 let props = defineProps(["playlist"]);
 
 const playlist = ref(props.playlist.data.playlist_photo);
-const dragging = ref(false);
-const playlistFile = ref(null);
 const storybookids = ref([]);
 
 for (const item of props.playlist.data.storybooks) {
@@ -25,23 +24,7 @@ const form = useForm({
     _method: "PUT",
 });
 
-const handlePlaylistChange = (event) => {
-    const file = event.target.files[0];
-    playlistFile.value = file;
-    playlist.value = URL.createObjectURL(file);
-    console.log(profile.value);
-};
-
-const onDropPlaylist = (event) => {
-    event.preventDefault();
-    dragging.value = false;
-    const files = event.dataTransfer.files;
-    playlist.value = URL.createObjectURL(files[0]);
-    playlistFile.value = files[0];
-};
-
 const updatePlaylist = () => {
-    form.image = playlistFile.value;
     form.post(route("playlists.update", props.playlist.data.id), {
         onSuccess: () => {
             SuccessDialog({
@@ -54,6 +37,7 @@ const updatePlaylist = () => {
         },
     });
 };
+// onMounted(() => {});
 </script>
 
 <template>
@@ -68,47 +52,10 @@ const updatePlaylist = () => {
                         <h4 class="tiggie-teacher-title">Edit Playlist</h4>
                     </VCol>
                     <VCol cols="6" class="pr-10">
-                        <div
-                            class="profile-drag"
-                            :class="!playlist ? 'd-flex justify-center' : ''"
-                            @dragover.prevent
-                            @dragenter.prevent
-                            @dragleave="dragging = false"
-                            @drop.prevent="onDropPlaylist"
-                        >
-                            <div v-if="!playlist">
-                                <div class="d-flex justify-center text-center">
-                                    <v-img
-                                        src="/images/Icons.png"
-                                        width="80"
-                                        height="80"
-                                    ></v-img>
-                                </div>
-                                <p class="pppangram-bold mt-5">
-                                    Drag your item to upload
-                                </p>
-                                <p class="mt-2 blur-p">
-                                    PNG, GIF, WebP, MP4 or MP3. Maximum file
-                                    size 100 Mb.
-                                </p>
-                            </div>
-                            <div v-else>
-                                <v-img
-                                    :src="playlist"
-                                    class="profileimg"
-                                    cover
-                                />
-                                <!-- <p>File Name: {{ gameFile.name }}</p> -->
-                                <!-- <button @click="removeGameFile" class="remove-button">
-                                Remove
-                            </button> -->
-                            </div>
-                            <input
-                                type="file"
-                                style="display: none"
-                                @change="handlePlaylistChange"
-                            />
-                        </div>
+                        <LargeDropFile
+                            v-model="form.image"
+                            :old_photo="playlist"
+                        />
                     </VCol>
 
                     <VCol cols="6">

@@ -51,6 +51,7 @@ class StoryBookVersionController
 
     public function storybookassignment(StoreStoryBookAssignmentRequest $request)
     {
+
         try {
             $createNewStoryBook = (new CreateStoryBookAssigmentCommand())->execute();
 

@@ -30,6 +30,8 @@ let srcImage = computed(
         "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
 );
 const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
+const stdImage = (user) =>
+    user.profile_pic ?? "/images/profile/profilefive.png";
 </script>
 
 <template>
@@ -172,7 +174,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                         >
                             <div>
                                 <v-img
-                                    :src="userImage(student.user)"
+                                    :src="stdImage(student.user)"
                                     class="profile-img"
                                     cover
                                 ></v-img>
@@ -219,7 +221,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                         >
                             <div>
                                 <v-img
-                                    :src="userImage(student.user)"
+                                    :src="stdImage(student.user)"
                                     class="profile-img"
                                     cover
                                 ></v-img>
