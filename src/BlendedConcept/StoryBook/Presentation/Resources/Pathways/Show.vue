@@ -6,292 +6,83 @@ import AddBook from "./components/AddBook.vue";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
 
-const props = defineProps(["data_type", "storybooks", "pathway"]);
-const isFormValid = ref(false);
-let refForm = ref();
-const isShowBook = ref(false);
-const selectedImage = ref(null);
-let draggedImageIndex = null;
-const uploadedImages = ref([]);
-const targetRef = ref(null);
-const containerRef = ref(null);
-const form = useForm({
-    name: "",
-    description: "",
-    num_gold_coins: "",
-    num_silver_coins: "",
-    need_complete_in_order: false,
-    storybooks: [],
-    _method: "PUT",
-});
+const props = defineProps(["data_type", "pathway"]);
+
 let flash = computed(() => usePage().props.flash);
 let search = ref("");
-const handleDrop = (event) => {
-    event.preventDefault();
-    const selectedFile = event.dataTransfer.files[0];
-    if (selectedFile) {
-        selectedImage.value = URL.createObjectURL(selectedFile);
-    }
-};
-function startDrag(index, id) {
-    // Store the index of the dragged image
-    if (!form.storybooks.includes(id)) {
-        form.storybooks.push(id);
-    }
-    draggedImageIndex = index;
-}
-
-function handleDropp(event) {
-    event.preventDefault();
-    const files = event.dataTransfer.files;
-    if (files.length > 0) {
-        for (const file of files) {
-            uploadedImages.value.push({
-                file: file,
-                src: URL.createObjectURL(file),
-                name: file.name,
-            });
-        }
-    } else {
-        const droppedImage = datas[draggedImageIndex];
-
-        // Check if the dropped item is an image card
-        if (droppedImage) {
-            // Add the dropped image to the uploadedImages array
-            uploadedImages.value.push({
-                file: "",
-                src: "http://bc-lms.test" + droppedImage.image,
-                name: droppedImage.title,
-            });
-
-            draggedImageIndex = null;
-        }
-    }
-    scrollToTarget();
-}
-
-const removeUploadedItem = (index) => {
-    uploadedImages.value.splice(index, 1);
-    form.storybooks.splice(index, 1);
-};
-function showBook() {
-    isShowBook.value = !isShowBook.value;
-}
-const scrollToTarget = () => {
-    const container = containerRef.value;
-    const target = targetRef.value;
-
-    const containerRect = container.getBoundingClientRect();
-    const targetRect = target.getBoundingClientRect();
-
-    container.scrollTo({
-        left: targetRect.left - containerRect.left,
-        behavior: "smooth",
-    });
-};
-const savePathway = () => {
-    SuccessDialog({ title: "You have successfully saved Pathway" });
-};
-let handleSubmit = () => {
-    refForm.value?.validate().then(({ valid }) => {
-        if (valid) {
-            form.post(route("pathways.update", { id: props.pathway.id }), {
-                onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
-                },
-                onError: (error) => {},
-            });
-        }
-    });
-};
-onMounted(() => {
-    form.name = props.pathway.name;
-    form.description = props.pathway.description;
-    form.num_gold_coins = props.pathway.num_gold_coins;
-    form.num_silver_coins = props.pathway.num_silver_coins;
-    form.need_complete_in_order = props.pathway.need_complete_in_order
-        ? true
-        : false;
-    uploadedImages.value = props.pathway.storybooks.map((storybook) => {
-        return {
-            file: null,
-            src: storybook.thumbnail_img,
-            name: storybook.name,
-        };
-    });
-    form.storybooks = props.pathway.storybooks.map((storybook) => storybook.id);
-});
-const storybooks = (datas) => {
-    let searchTerm = search.value.toLowerCase();
-
-    return datas.filter((data) => {
-        return data.name.toLowerCase().includes(searchTerm);
-    });
-};
 </script>
 <template>
     <AdminLayout>
-        <VForm
-            ref="refForm"
-            v-model="isFormValid"
-            @submit.prevent="handleSubmit"
-        >
-            <VContainer>
-                <VRow>
-                    <VCol cols="12">
-                        <div class="d-flex justify-space-between align-center">
-                            <div>
-                                <h1 class="tiggie-title">
-                                    Inclusive Learning Stars
-                                </h1>
-                                <p class="tiggie-p">
-                                    Fostering inclusive education and
-                                    personalized support
-                                </p>
-                            </div>
-                            <div class="d-flex align-center gap-4">
-                                <Link :href="route('pathways.index')">
-                                    <VBtn color="gray" width="150">Back</VBtn>
-                                </Link>
-                                <VBtn type="submit" color="success" width="150"
-                                    >Save</VBtn
-                                >
-                            </div>
+        <VContainer>
+            <VRow>
+                <VCol cols="12">
+                    <div class="d-flex justify-space-between align-center">
+                        <div>
+                            <h1 class="tiggie-title">
+                                Inclusive Learning Stars
+                            </h1>
+                            <p class="tiggie-p">
+                                Fostering inclusive education and personalized
+                                support
+                            </p>
                         </div>
-
-                        <h3 class="tiggie-title">Current Flow</h3>
-                    </VCol>
-                </VRow>
-                <VRow>
-                    <VCol cols="12" class="pt-0">
-                        <div class="scroll-container" ref="containerRef">
-                            <div
-                                class="ps-relative card-container"
-                                v-for="(image, index) in uploadedImages"
-                                :key="index"
-                                :draggable="true"
-                                @dragend="startDrag(index)"
+                        <div class="d-flex align-center gap-4">
+                            <Link :href="route('pathways.index')">
+                                <VBtn color="gray" width="150">Back</VBtn>
+                            </Link>
+                            <VBtn type="submit" color="success" width="150"
+                                >Save</VBtn
                             >
-                                <p
-                                    class="font-weight-bold text-right storybook-ps"
+                        </div>
+                    </div>
+
+                    <h3 class="tiggie-title">Current Flow</h3>
+                </VCol>
+            </VRow>
+            <VRow>
+                <VCol cols="12" class="pt-0">
+                    <div class="scroll-container" ref="containerRef">
+                        <div
+                            class="ps-relative card-container"
+                            v-for="(image, index) in uploadedImages"
+                            :key="index"
+                        >
+                            <p
+                                class="font-weight-bold text-right text-white storybook-ps-2"
+                            >
+                                <VBtn
+                                    color="#fff"
+                                    icon="dd"
+                                    size="x-small"
+                                    class="black-border"
                                 >
-                                    <VIcon
-                                        @click="removeUploadedItem(index)"
-                                        icon="mdi-minus-circle"
-                                        size="20"
-                                        color="#282828"
-                                        class="mb-2 ml-2"
+                                    <span class="text-dark">{{
+                                        index + 1
+                                    }}</span>
+                                </VBtn>
+                            </p>
+                            <v-card
+                                class="ma-4 ps-index"
+                                height="200"
+                                :color="'primary'"
+                            >
+                                <div
+                                    class="d-flex fill-height align-center justify-center"
+                                >
+                                    <img
+                                        class="bg-white fit-img-2"
+                                        :src="image.src"
                                     />
-                                </p>
-
-                                <p
-                                    class="font-weight-bold text-right text-white storybook-ps-2"
-                                >
-                                    <VBtn
-                                        color="#fff"
-                                        icon="dd"
-                                        size="x-small"
-                                        class="black-border"
-                                    >
-                                        <span class="text-dark">{{
-                                            index + 1
-                                        }}</span>
-                                    </VBtn>
-                                </p>
-                                <v-card
-                                    class="ma-4 ps-index"
-                                    height="200"
-                                    :color="'primary'"
-                                >
-                                    <div
-                                        class="d-flex fill-height align-center justify-center"
-                                    >
-                                        <img
-                                            class="bg-white fit-img-2"
-                                            :src="image.src"
-                                        />
-                                    </div>
-                                </v-card>
-                                <p class="font-weight-bold text-center">
-                                    {{ image.name }}
-                                </p>
-                            </div>
-                            <div
-                                class="imprt-path-text mt-4 mx-5"
-                                @dragover.prevent
-                                @drop="handleDropp"
-                            >
-                                <div class="text-center">
-                                    <div class="mt-2">
-                                        <span class="import-fade-text">
-                                            Drag and Drop to add
-                                        </span>
-                                        <div class="mt-2" ref="targetRef">
-                                            <span class="text-tiggie-blue"
-                                                >Books</span
-                                            >
-                                            Here
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
+                            </v-card>
+                            <p class="font-weight-bold text-center">
+                                {{ image.name }}
+                            </p>
                         </div>
-                    </VCol>
-                    <VCol>
-                        <div class="d-flex justify-space-between align-center">
-                            <VBtn color="primary" @click="showBook"
-                                >Add Books</VBtn
-                            >
-                            <div class="search-field">
-                                <v-text-field
-                                    density="compact"
-                                    placeholder="Search book"
-                                    variant="solo"
-                                    v-model="search"
-                                ></v-text-field>
-                            </div>
-                        </div>
-                    </VCol>
-                    <VCol cols="12">
-                        <div class="scroll-container">
-                            <div
-                                v-for="(data, index) in storybooks(
-                                    props.storybooks
-                                )"
-                                :key="index"
-                                :draggable="true"
-                                @dragend="startDrag(index, data.id)"
-                                class="card-container"
-                            >
-                                <v-card
-                                    class="ma-4 container-style pa-0"
-                                    height="200"
-                                    :color="'primary'"
-                                >
-                                    <div
-                                        class="d-flex fill-height align-center justify-center"
-                                    >
-                                        <img
-                                            class="bg-white fit-img-2"
-                                            :src="data.thumbnail_img"
-                                        />
-                                    </div>
-                                    <v-scale-transition class="full-icon">
-                                        <!-- <v-icon
-                                                size="48"
-                                                icon="mdi-check-circle-outline"
-                                            ></v-icon> -->
-                                    </v-scale-transition>
-                                </v-card>
-                                <p class="font-weight-bold text-center">
-                                    {{ data.name }}
-                                </p>
-                            </div>
-                        </div>
-                    </VCol>
-                </VRow>
-            </VContainer>
-        </VForm>
+                    </div>
+                </VCol>
+            </VRow>
+        </VContainer>
     </AdminLayout>
 </template>
 

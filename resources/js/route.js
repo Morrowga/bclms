@@ -180,6 +180,8 @@ const pages = {
 
     "BlendedConcept/StoryBook/Presentation/Resources/Pathways/Show": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Pathways/Show.vue'),
 
+    "BlendedConcept/StoryBook/Presentation/Resources/Pathways/Edit": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/Pathways/Edit.vue'),
+
 
     //bookreview
 

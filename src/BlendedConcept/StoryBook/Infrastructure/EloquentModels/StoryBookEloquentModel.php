@@ -142,4 +142,9 @@ class StoryBookEloquentModel extends Model implements HasMedia
     {
         return $this->hasOne(H5pResult::class, 'content_id', 'h5p_id');
     }
+
+    public function pathways()
+    {
+        return $this->belongsToMany(PathwayEloquentModel::class, 'pathway_storybook', 'storybook_id', 'pathway_id');
+    }
 }
