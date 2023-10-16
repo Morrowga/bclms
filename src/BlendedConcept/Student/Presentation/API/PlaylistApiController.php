@@ -58,4 +58,27 @@ class PlaylistApiController extends Controller
             ]);
         }
     }
+
+    public function geVersionBytStorybook($id)
+    {
+
+        try {
+
+            // Get the filters from the request, or initialize an empty array if they are not present
+            $filters = request()->only(['name', 'search', 'perPage']) ?? [];
+
+            // Retrieve users with pagination using the provided filters
+            $storybooks = (new GetStoryBook($filters))->handle();
+
+            return response()->json([
+                'data' => $storybooks,
+            ]);
+        } catch (\Exception $e) {
+            return $e;
+
+            return response()->json([
+                'data' => $e,
+            ]);
+        }
+    }
 }

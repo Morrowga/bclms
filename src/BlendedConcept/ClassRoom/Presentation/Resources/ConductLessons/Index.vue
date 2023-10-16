@@ -9,9 +9,22 @@ const form = useForm({
     name: "",
     image: null,
     student_id: "",
-    storybooks: [],
+    storybooks: "",
     students: [],
 });
+
+const showCondult = () => {
+    let storybook_id = form.storybooks;
+    let students = form.students;
+
+    // Replace 'your.route.name' with the actual Ziggy route name you want to call
+    const url = route('conduct_lessons.show', {
+        storybook_id: storybook_id,
+    });
+
+    // Now you can use 'url' to navigate to the route or perform any other actions with it
+    window.location.href = url; // Navigate to the URL
+}
 </script>
 
 <template>
@@ -45,15 +58,13 @@ const form = useForm({
                                 Cancel
                             </VBtn>
                         </Link>
-
+                        <!-- router.get(route('conduct_lessons.show')) -->
                         <VBtn
                             type="submit"
                             class="ml-10"
                             height="50"
                             width="200"
-                            @click="
-                                () => router.get(route('conduct_lessons.show'))
-                            "
+                            @click="showCondult()"
                         >
                             Start Lesson
                         </VBtn>
