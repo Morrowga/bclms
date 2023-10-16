@@ -45,10 +45,13 @@ const app_url = computed(() => page?.props?.route_site_url);
                     ></iframe>
                 </div>
                 <div v-else>
-                    <video controls class="classmode">
-                    <source :src="videoSrc" type="video/youtube">
-                        Your browser does not support the video tag.
-                    </video>
+                    <iframe
+                    :src="videoSrc"
+                    frameborder="0"
+                    scrolling="auto"
+                    class="h5p-width"
+                    >
+                    </iframe>
                 </div>
             </div>
             <br />
