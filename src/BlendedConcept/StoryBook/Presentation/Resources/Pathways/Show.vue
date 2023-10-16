@@ -10,6 +10,16 @@ const props = defineProps(["data_type", "pathway"]);
 
 let flash = computed(() => usePage().props.flash);
 let search = ref("");
+const uploadedImages = ref([]);
+onMounted(() => {
+    uploadedImages.value = props.pathway.storybooks.map((storybook) => {
+        return {
+            file: null,
+            src: storybook.thumbnail_img,
+            name: storybook.name,
+        };
+    });
+});
 </script>
 <template>
     <AdminLayout>
@@ -30,9 +40,11 @@ let search = ref("");
                             <Link :href="route('pathways.index')">
                                 <VBtn color="gray" width="150">Back</VBtn>
                             </Link>
-                            <VBtn type="submit" color="success" width="150"
-                                >Save</VBtn
+                            <Link
+                                :href="route('pathways.edit', props.pathway.id)"
                             >
+                                <VBtn color="success" width="150">Edit</VBtn>
+                            </Link>
                         </div>
                     </div>
 

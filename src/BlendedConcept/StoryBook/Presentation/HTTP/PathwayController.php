@@ -52,9 +52,6 @@ class PathwayController
 
     public function show(PathwayEloquentModel $pathway)
     {
-
-        $storybooks = (new GetStorybookForSelect())->handle();
-
         return Inertia::render(config('route.pathways.show'), [
             'pathway' => $pathway->load('storybooks'),
         ]);
@@ -65,7 +62,7 @@ class PathwayController
 
         $storybooks = (new GetStorybookForSelect())->handle();
 
-        return Inertia::render(config('route.pathways.show'), [
+        return Inertia::render(config('route.pathways.edit'), [
             'storybooks' => $storybooks,
             'pathway' => $pathway->load('storybooks'),
         ]);

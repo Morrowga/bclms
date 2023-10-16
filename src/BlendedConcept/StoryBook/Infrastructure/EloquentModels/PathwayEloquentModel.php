@@ -7,13 +7,18 @@ namespace Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class PathwayEloquentModel extends Model
+class PathwayEloquentModel extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
+
 
     protected $table = 'pathways';
-
+    protected $appends = [
+        'image_url'
+    ];
     protected $fillable = [
         'id',
         'name',
@@ -22,7 +27,10 @@ class PathwayEloquentModel extends Model
         'num_silver_coins',
         'need_complete_in_order',
     ];
-
+    public function getImageUrlAttribute()
+    {
+        return $this->getFirstMedia('pathway_img')->original_url ?? '';
+    }
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {

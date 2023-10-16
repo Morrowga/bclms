@@ -5,6 +5,8 @@ import SampleStorybookSlider from "./components/SampleStoryBookSlider.vue";
 import AddBook from "./components/AddBook.vue";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
+import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
+import { requiredValidator } from "@validators";
 
 const props = defineProps(["data_type", "storybooks", "pathway"]);
 const isFormValid = ref(false);
@@ -22,6 +24,7 @@ const form = useForm({
     num_silver_coins: "",
     need_complete_in_order: false,
     storybooks: [],
+    image: null,
     _method: "PUT",
 });
 let flash = computed(() => usePage().props.flash);
@@ -138,28 +141,106 @@ const storybooks = (datas) => {
         >
             <VContainer>
                 <VRow>
+                    <VCol cols="6">
+                        <h1 class="tiggie-title">Edit Pathway</h1>
+                    </VCol>
+                    <VCol cols="6" class="text-end">
+                        <Link :href="route('pathways.index')">
+                            <VBtn
+                                color="secondary"
+                                text-color="white"
+                                density="compact"
+                                variant="tonal"
+                                class="pl-16 pr-16"
+                                height="30"
+                            >
+                                <span class="text-dark">Back</span>
+                            </VBtn>
+                        </Link>
+                        <VBtn height="30" class="ml-4 w-25" type="submit">
+                            Save
+                        </VBtn>
+                    </VCol>
+                </VRow>
+                <VRow>
+                    <VCol cols="6">
+                        <VLabel class="tiggie-label required"
+                            >Thumbnail Picture</VLabel
+                        >
+                        <ImageDropFile
+                            v-model="form.image"
+                            :old_photo="props.pathway.image_url"
+                            memeType="image"
+                            :id="3"
+                        />
+                    </VCol>
                     <VCol cols="12">
-                        <div class="d-flex justify-space-between align-center">
-                            <div>
-                                <h1 class="tiggie-title">
-                                    Inclusive Learning Stars
-                                </h1>
-                                <p class="tiggie-p">
-                                    Fostering inclusive education and
-                                    personalized support
-                                </p>
-                            </div>
-                            <div class="d-flex align-center gap-4">
-                                <Link :href="route('pathways.index')">
-                                    <VBtn color="gray" width="150">Back</VBtn>
-                                </Link>
-                                <VBtn type="submit" color="success" width="150"
-                                    >Save</VBtn
+                        <VRow>
+                            <VCol cols="12" sm="6" md="4">
+                                <VLabel class="tiggie-label required"
+                                    >Path Name</VLabel
                                 >
-                            </div>
-                        </div>
+                                <VTextField
+                                    placeholder="Type here ..."
+                                    density="compact"
+                                    v-model="form.name"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.name"
+                                />
+                            </VCol>
+                            <VCol cols="12" sm="6" md="4">
+                                <VLabel class="tiggie-label required"
+                                    >Description</VLabel
+                                >
+                                <VTextField
+                                    placeholder="Type here ..."
+                                    density="compact"
+                                    v-model="form.description"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.description"
+                                />
+                            </VCol>
+                            <VCol cols="12" sm="6" md="4"> </VCol>
 
-                        <h3 class="tiggie-title">Current Flow</h3>
+                            <VCol cols="12" sm="6" md="4">
+                                <VLabel class="tiggie-label required"
+                                    >Number Of Gold Coins for Completion</VLabel
+                                >
+                                <VTextField
+                                    placeholder="Type here ..."
+                                    density="compact"
+                                    type="number"
+                                    v-model="form.num_gold_coins"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="
+                                        form?.errors?.num_gold_coins
+                                    "
+                                />
+                            </VCol>
+
+                            <VCol cols="12" sm="6" md="4">
+                                <VLabel class="tiggie-label required"
+                                    >Number Of Silver Coins for Replay</VLabel
+                                >
+                                <VTextField
+                                    placeholder="Type here ..."
+                                    density="compact"
+                                    type="number"
+                                    v-model="form.num_silver_coins"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="
+                                        form?.errors?.num_silver_coins
+                                    "
+                                />
+                            </VCol>
+                            <VCol cols="12" sm="6" md="4">
+                                <VLabel class="tiggie-label required"
+                                    >Must Complete Books In Order</VLabel
+                                >
+                                <VSwitch v-model="form.need_complete_in_order">
+                                </VSwitch>
+                            </VCol>
+                        </VRow>
                     </VCol>
                 </VRow>
                 <VRow>

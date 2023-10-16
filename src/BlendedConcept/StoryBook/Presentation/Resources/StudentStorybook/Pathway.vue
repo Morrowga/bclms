@@ -6,7 +6,7 @@ import { computed, defineProps, ref } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import axios from "axios";
 
-let props = defineProps(["flash", "auth"]);
+let props = defineProps(["flash", "auth", "pathway"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const active = ref("assigned");
@@ -18,7 +18,7 @@ const currentPageData = ref([]);
 async function fetchData(page) {
     try {
         const response = await axios.get(
-            "/storybooks/student-pathways?page=" + page
+            `/storybooks/student-pathways?page=${page}&pathway_id=${props.pathway.id}`
         );
         // Assuming the API response contains an array of data similar to props.pathways.data
         currentPageData.value = response.data.data;
