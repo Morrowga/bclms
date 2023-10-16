@@ -2,45 +2,15 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 
-let props = defineProps(["version"]);
+let props = defineProps(["version", "video"]);
 const is_interactive = ref(true);
-const videoSrc = ref(null);
+const videoSrc = ref(props.video);
 const h5pIframe = ref(null);
 
 const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
 
-const getVideoLink = () => {
-  const iframe = h5pIframe.value;
-  if (iframe) {
-    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-    console.log(iframeDocument);
-    const outerIframe = iframeDocument.getElementById('h5p-iframe-' + props.version.h5p_id); // Select the outer iframe
-    if (outerIframe) {
-        console.log(outerIframe);
-        const innerIframeDocument = outerIframe.contentDocument || outerIframe.contentWindow.document;
-        const innerVideoElement = innerIframeDocument.querySelector('.h5p-video-wrapper video');
-        if (innerVideoElement) {
-            const videoSource = innerVideoElement.getAttribute('src');
-
-            return videoSource
-        } else {
-            console.log('No video element found inside the inner iframe.');
-        }
-    } else {
-    console.log('No outer iframe found.');
-    }
-  } else {
-    console.log('Iframe element not found.');
-  }
-};
-
-
  const changeMode = (bool) => {
-    if(bool == false){
-       let videoLink = getVideoLink();
-       videoSrc.value = videoLink
-    }
     is_interactive.value = bool;
  }
 </script>
