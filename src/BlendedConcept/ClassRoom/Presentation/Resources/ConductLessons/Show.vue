@@ -64,7 +64,7 @@ const getVideoLink = () => {
                 <div class="mt-10" v-if="is_interactive">
                     <iframe
                         ref="videoIframe"
-                        :src="app_url + '/admin/h5p/show/' + props.version.h5p_id"
+                        :src="app_url + '/admin/h5p/h5p/' + props.version.h5p_id"
                         frameborder="0"
                         scrolling="auto"
                         class="h5p-width"
