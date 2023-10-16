@@ -67,10 +67,12 @@ class StudentStoryBookController extends Controller
         // return  $pathways;
         try {
             // Get the filters from the request, or initialize an empty array if they are not present
+            setcookie('pathway_id', $pathway->id, time() + (86400 * 30), "/");
             return Inertia::render(config('route.storybook-pathway'), [
                 "pathway" => $pathway
             ]);
         } catch (Exception $e) {
+            dd($e);
             return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
