@@ -13,11 +13,11 @@ const app_url = computed(() => page?.props?.route_site_url);
 const getVideoLink = () => {
   const iframe = h5pIframe.value;
   if (iframe) {
-    // Access the iframe's content document
     const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
     console.log(iframeDocument);
     const outerIframe = iframeDocument.getElementById('h5p-iframe-' + props.version.h5p_id); // Select the outer iframe
     if (outerIframe) {
+        console.log(outerIframe);
         const innerIframeDocument = outerIframe.contentDocument || outerIframe.contentWindow.document;
         const innerVideoElement = innerIframeDocument.querySelector('.h5p-video-wrapper video');
         if (innerVideoElement) {
