@@ -5,32 +5,36 @@ import { usePage } from "@inertiajs/vue3";
 let props = defineProps(["version"]);
 const is_interactive = ref(true);
 const videoSrc = ref(null);
-const videoIframe = ref(null);
+const h5pIframe = ref(null);
 
 const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
 
 const getVideoLink = () => {
-  const iframe = videoIframe.value;
+  const iframe = h5pIframe.value;
   if (iframe) {
     // Access the iframe's content document
     const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+    console.log(iframeDocument);
+    const outerIframe = iframeDocument.getElementById('h5p-iframe-' + props.version.h5p_id); // Select the outer iframe
+    if (outerIframe) {
+        const innerIframeDocument = outerIframe.contentDocument || outerIframe.contentWindow.document;
+        const innerVideoElement = innerIframeDocument.querySelector('.h5p-video-wrapper video');
+        if (innerVideoElement) {
+            const videoSource = innerVideoElement.getAttribute('src');
 
-    // Assuming the video is inside the iframe content, you can select it by its tag or attributes
-    const videoElement = iframeDocument.querySelector('video');
-
-    if (videoElement) {
-      // Get the video source URL
-      const videoSource = videoElement.getAttribute('src');
-
-      return videoSource;
+            return videoSource
+        } else {
+            console.log('No video element found inside the inner iframe.');
+        }
     } else {
-      console.log('No video element found inside the iframe.');
+    console.log('No outer iframe found.');
     }
   } else {
     console.log('Iframe element not found.');
   }
 };
+
 
  const changeMode = (bool) => {
     if(bool == false){
@@ -63,7 +67,7 @@ const getVideoLink = () => {
                 <br />
                 <div class="mt-10" v-if="is_interactive">
                     <iframe
-                        ref="videoIframe"
+                        ref="h5pIframe"
                         :src="app_url + '/admin/h5p/h5p/' + props.version.h5p_id"
                         frameborder="0"
                         scrolling="auto"
@@ -72,7 +76,7 @@ const getVideoLink = () => {
                 </div>
                 <div v-else>
                     <video controls class="classmode">
-                    <source :src="''" type="video/mp4">
+                    <source :src="videoSrc" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
