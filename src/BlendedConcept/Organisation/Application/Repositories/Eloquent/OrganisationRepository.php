@@ -3,6 +3,7 @@
 namespace Src\BlendedConcept\Organisation\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
 use Src\BlendedConcept\Finance\Domain\Model\Subscription;
 use Src\BlendedConcept\Organisation\Domain\Model\Organisation;
 use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
@@ -94,6 +95,10 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             $subdomain = Tenant::create([
                 'id' => $organisationEloquent->sub_domain,
                 'organisation_id' => $organisationEloquent->id,
+            ]);
+
+            Artisan::call('run:subdomain', [
+                'subdomain' => $organisationEloquent->sub_domain, // Pass the subdomain as an argument
             ]);
 
             $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
@@ -219,5 +224,9 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             DB::rollBack();
             dd($error);
         }
+    }
+
+    public function delete(OrganisationEloquentModel $organisation){
+        $organisation->delete();
     }
 }

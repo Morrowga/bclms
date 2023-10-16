@@ -6,6 +6,7 @@ namespace Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
 class StoryBookAssignmentEloquentModel extends Model
 {
@@ -17,6 +18,8 @@ class StoryBookAssignmentEloquentModel extends Model
         'id',
         'storybook_version_id',
         'student_id',
+        'curr_timestamp',
+        'completed_once',
     ];
 
     // public function scopeFilter($query, $filters)
@@ -28,4 +31,14 @@ class StoryBookAssignmentEloquentModel extends Model
     //         $query->where('name', 'like', '%' . $search . '%');
     //     });
     // }
+
+    public function book_version()
+    {
+        return $this->belongsTo(StoryBookVersionEloquentModel::class, 'storybook_version_id');
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(StudentEloquentModel::class, 'student_id');
+    }
 }

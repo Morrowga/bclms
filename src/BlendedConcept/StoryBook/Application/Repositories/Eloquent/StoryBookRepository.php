@@ -237,19 +237,33 @@ class StoryBookRepository implements StoryBookRepositoryInterface
     {
         $student_id = auth()->user()->student->student_id;
         // $books = StoryBookResource::collection();
-        $books = StoryBookEloquentModel::whereHas('book_versions', function ($query) use ($student_id) {
-            $query->whereHas('storybook_assigments', function ($query) use ($student_id) {
-                $query->where('students.student_id', $student_id);
+        $books = StoryBookEloquentModel::whereHas("book_versions", function ($query) use ($student_id) {
+            $query->whereHas('storybook_assigments', function ($queryTwo) use ($student_id) {
+                $queryTwo->where('storybook_assignments.student_id', $student_id);
             });
-        })->with('book_versions')->orderBy('id', 'desc')
+        })->with(['book_versions' => function ($query) use ($student_id) {
+            $query->whereHas('storybook_assigments', function ($queryTwo) use ($student_id) {
+                $queryTwo->where('storybook_assignments.student_id', $student_id);
+            });
+        }, 'result'])->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10);
+
+        // dd($books[0]);
         return $books;
     }
 
     public function getStudentPlaylists($filters)
     {
         $student_id = auth()->user()->student->student_id;
-        $book_playlists =  PlaylistEloquentModel::where('student_id', $student_id)->with('storybooks')->paginate($filters['perPage'] ?? 10);
+        $book_playlists =  PlaylistEloquentModel::where('student_id', $student_id)
+            ->with(['storybooks' => function ($query) use ($student_id) {
+                $query->with(['book_versions' => function ($query) use ($student_id) {
+                    $query->whereHas('storybook_assigments', function ($queryTwo) use ($student_id) {
+                        $queryTwo->where('storybook_assignments.student_id', $student_id);
+                    });
+                }]);
+            }])->paginate($filters['perPage'] ?? 10);
+
         return $book_playlists;
     }
 

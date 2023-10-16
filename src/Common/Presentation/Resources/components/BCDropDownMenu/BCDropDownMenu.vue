@@ -41,6 +41,17 @@ let goLink = (item) => {
     }
 };
 
+const filterItem = computed(() =>
+    props.item.children.filter((sitem) => {
+        if (
+            !auth?.value?.data?.permissions?.includes(sitem?.access_module) &&
+            props.item?.access_module != "access_dashboard"
+        ) {
+            return false;
+        }
+        return true;
+    })
+);
 </script>
 <template>
     <div class="text-center">
@@ -48,6 +59,13 @@ let goLink = (item) => {
             <template v-slot:activator="{ props }">
                 <v-list-item
                     v-bind="props"
+                    v-if="
+                        !auth?.data?.permissions?.includes(
+                            item?.access_module
+                        ) && item?.access_module != 'access_dashboard'
+                            ? false
+                            : true
+                    "
                     :prepend-icon="item.icon.icon"
                     append-icon="mdi-chevron-down"
                     :title="item.title"
@@ -56,34 +74,19 @@ let goLink = (item) => {
                     :color="
                         isParentActive(item.children) ? '#4066E4' : '#282828'
                     "
-                    :hidden="
-                        !auth?.data?.permissions?.includes(
-                            item?.access_module
-                        ) && item?.access_module != 'access_dashboard'
-                            ? true
-                            : false
-                    "
                 >
                 </v-list-item>
             </template>
 
             <v-list density="compact">
                 <v-list-item
-                    v-for="(sitem, sindex) in item.children"
+                    v-for="(sitem, sindex) in filterItem"
                     :key="sindex"
                     :value="sitem"
                     @click="goLink(sitem)"
-                    :title="sitem.title"
                     :variant="isLinkActive(sitem.route_name) ? 'tonal' : 'text'"
-                    :hidden="
-                        !auth?.data?.permissions?.includes(
-                            sitem?.access_module
-                        ) && item?.access_module != 'access_dashboard'
-                            ? true
-                            : false
-                    "
                 >
-                    <!-- <v-list-item-title>{{ sitem.title }}</v-list-item-title> -->
+                    <v-list-item-title>{{ sitem.title }}</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>

@@ -66,8 +66,8 @@ class OrganisationStudentController
     public function update(StudentEloquentModel $organisations_student, UpdateStudentRequest $request)
     {
 
-        try {
 
+        try {
             $updateStudent = StudentData::fromRequest($request, $organisations_student);
             (new UpdateStudentCommand($updateStudent))->execute();
 

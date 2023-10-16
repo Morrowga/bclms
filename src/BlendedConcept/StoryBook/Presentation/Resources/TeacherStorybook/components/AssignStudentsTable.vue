@@ -86,6 +86,14 @@ const getImage = (item) => {
 const backHome = () => {
     router.get(route("teacher_storybook.show", props.storybook.id));
 };
+const userImage = (user) =>
+    user.profile_pic ?? "/images/profile/profilefive.png";
+
+onMounted(() => {
+    form.student_ids = props.version?.storybook_assigments?.map(
+        (storybook) => storybook.student_id
+    );
+});
 </script>
 <template>
     <div>
@@ -105,101 +113,91 @@ const backHome = () => {
                 </v-card-text>
             </v-card>
         </section>
-        <section>
-            <h1 class="assign-std my-4">Assign Students</h1>
+        <section class="mt-8">
             <VCard>
-                <VCardText class="d-flex flex-wrap gap-4">
-                    <v-text-field
-                        @keyup.enter="searchItems"
-                        v-model="serverParams.search"
-                        density="compact"
-                        variant="solo"
-                        label="Search templates"
-                        append-inner-icon="mdi-magnify"
-                        single-line
-                        hide-details
-                    ></v-text-field>
-                </VCardText>
                 <VDivider />
 
-                <vue-good-table
-                    class="role-data-table"
-                    styleClass="vgt-table"
-                    v-on:selected-rows-change="selectionChanged"
-                    @column-filter="onColumnFilter"
-                    :totalRows="props.students.meta.total"
-                    :pagination-options="options"
-                    :columns="columns"
-                    :rows="students.data"
-                    :select-options="{
-                        enabled: true,
-                    }"
-                >
-                    <template #table-row="dataProps">
-                        <div
-                            v-if="dataProps.column.field == 'name'"
-                            class="d-flex flex-nowrap align-center gap-10"
-                        >
-                            <img
-                                :src="dataProps.row.image"
-                                class="assign-std-width-high"
-                            />
-                            <span>{{ dataProps.row.full_name }}</span>
-                        </div>
-                        <div v-if="dataProps.column.field == 'age'">
-                            <span>10</span>
-                        </div>
-                        <div
-                            v-if="dataProps.column.field == 'disability_types'"
-                            class="flex flex-nowrap"
-                        >
-                            <div
-                                v-for="data in dataProps.row.disability_types"
-                                :key="data.id"
-                                class="chip mr-2"
-                            >
-                                <v-chip prepend-icon="mdi-circle-outline">
-                                    {{ data.name }}
-                                </v-chip>
-                            </div>
-                        </div>
-                    </template>
-                    <template #pagination-bottom>
-                        <VRow class="pa-4">
-                            <VCol
-                                cols="12"
-                                class="d-flex justify-space-between"
-                            >
-                                <span>
-                                    Showing {{ props.students.meta.from }} to
-                                    {{ props.students.meta.to }} of
-                                    {{ props.students.meta.total }} entries
-                                </span>
-                                <div>
-                                    <div class="d-flex align-center">
-                                        <span class="me-2">Show</span>
-                                        <VSelect
-                                            v-model="serverPerPage"
-                                            density="compact"
-                                            :items="options.perPageDropdown"
-                                        ></VSelect>
-                                        <VPagination
-                                            v-model="serverPage"
-                                            size="small"
-                                            :total-visible="5"
-                                            :length="
-                                                props.students.meta.last_page
-                                            "
-                                            @next="onPageChange"
-                                            @prev="onPageChange"
-                                            @click="onPageChange"
-                                        />
-                                    </div>
+                <VCol cols="12">
+                    <VRow class="bg-line mx-1 rounded pa-1 mb-5" align="center">
+                        <VCol cols="3" class="d-flex justify-center">
+                            <VLabel class="tiggie-label"> Name </VLabel>
+                            <VIcon icon="mdi-menu-down"></VIcon>
+                        </VCol>
+                        <VCol cols="3">
+                            <VLabel class="tiggie-label">
+                                Education Level
+                            </VLabel>
+                        </VCol>
+                        <VCol cols="3">
+                            <VLabel class="tiggie-label"> Age </VLabel>
+                            <VIcon icon="mdi-menu-down"></VIcon>
+                        </VCol>
+
+                        <VCol cols="3">
+                            <VLabel class="tiggie-label">
+                                Disability Type
+                            </VLabel>
+                            <VIcon icon="mdi-menu-down"></VIcon>
+                        </VCol>
+                    </VRow>
+
+                    <VRow
+                        class="bg-line mx-1 rounded pa-1 my-2"
+                        v-for="data in props.students.data"
+                        :key="data.student_id"
+                        align="center"
+                    >
+                        <VCol cols="3">
+                            <div class="d-flex align-center">
+                                <div class="d-flex align-center">
+                                    <v-checkbox
+                                        v-model="form.student_ids"
+                                        :value="data.student_id"
+                                    />
+                                    <v-img
+                                        width="100"
+                                        :aspect-ratio="16 / 9"
+                                        :src="userImage(data.user)"
+                                    />
                                 </div>
-                            </VCol>
-                        </VRow>
-                    </template>
-                </vue-good-table>
+                                <span>
+                                    {{ data.user?.full_name }}
+                                </span>
+                            </div>
+                        </VCol>
+                        <VCol cols="3">
+                            <span>
+                                {{ data.education_level }}
+                            </span>
+                        </VCol>
+                        <VCol cols="3">
+                            <p class="tiggie-p">
+                                {{ data.age ? data.age : "---" }}
+                            </p>
+                        </VCol>
+
+                        <VCol cols="3">
+                            <ChipWithBlueDot
+                                v-for="item in data.disability_types"
+                                :key="item.id"
+                                :title="item.name"
+                            />
+                        </VCol>
+                    </VRow>
+                    <VRow justify="center" align="center">
+                        <VPagination
+                            v-model="serverPage"
+                            size="small"
+                            :total-visible="5"
+                            :length="props.students.meta.last_page"
+                            @next="onPageChange"
+                            @prev="onPageChange"
+                            @click="onPageChange"
+                            variant="outlined"
+                        />
+                    </VRow>
+                </VCol>
+
                 <VDivider />
             </VCard>
         </section>

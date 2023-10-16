@@ -2,11 +2,12 @@
 
 namespace Src\BlendedConcept\Organisation\Domain\Repositories;
 
-use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Finance\Domain\Model\Subscription;
+use Src\BlendedConcept\Organisation\Domain\Model\Organisation;
+use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Organisation\Application\DTO\OrganisationData;
 use Src\BlendedConcept\Organisation\Domain\Model\Entities\OrganisationAdmin;
-use Src\BlendedConcept\Organisation\Domain\Model\Organisation;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 
 interface OrganisationRepositoryInterface
 {
@@ -26,4 +27,5 @@ interface OrganisationRepositoryInterface
 
     public function newOrganisationSubscription(Subscription $subscription);
 
+    public function delete(OrganisationEloquentModel $organisation);
 }

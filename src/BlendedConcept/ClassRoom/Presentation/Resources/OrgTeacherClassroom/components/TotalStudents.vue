@@ -46,7 +46,8 @@ watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
 
-const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
+const userImage = (user) =>
+    user.profile_pic ?? "/images/profile/profilefive.png";
 </script>
 <template>
     <section>
@@ -89,7 +90,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                                 <v-img
                                     width="100"
                                     :aspect-ratio="16 / 9"
-                                    :src="userImage(data)"
+                                    :src="userImage(data.user)"
                                 />
                             </div>
                             <span>

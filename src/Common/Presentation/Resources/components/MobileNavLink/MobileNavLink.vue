@@ -2,7 +2,7 @@
 import { router } from "@inertiajs/core";
 import { usePage } from "@inertiajs/vue3";
 const auth = computed(() => usePage().props.auth);
-defineProps(["item"]);
+let props = defineProps(["item"]);
 let isLinkActive = (currentRoute) => {
     return route()?.current()?.includes(currentRoute);
 };
@@ -18,11 +18,11 @@ let goLink = (url) => {
         :class="isLinkActive(item.route_name) ? 'bg-primary' : ''"
         :color="isLinkActive(item.route_name) ? '#fff' : ''"
         @click="goLink(item.url)"
-        :hidden="
+        v-if="
             !auth?.data?.permissions?.includes(item?.access_module) &&
             item?.access_module != 'access_dashboard'
-                ? true
-                : false
+                ? false
+                : true
         "
     ></v-list-item>
 </template>

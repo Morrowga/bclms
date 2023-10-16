@@ -16,4 +16,6 @@ interface PlaylistRepositoryInterface
     public function updatePlaylist(PlaylistData $playlistData);
 
     public function delete(int $playlist_id);
+
+    public function getStorybooksForPlaylist($filters);
 }
