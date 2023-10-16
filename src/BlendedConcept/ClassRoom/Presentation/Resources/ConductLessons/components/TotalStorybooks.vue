@@ -132,16 +132,16 @@ const selectVersion = (id) => {
                     <VCol cols="3">
                         <VCard v-for="version in versions" :key="version.id" :class="isBordered === version.id ? 'blue-border' : ''" @click="selectVersion(version.id)">
                             <VCardText>
-                                <!-- <VImg
+                                <VImg
                                     :src="selectedStorybook.thumbnail_img == '' || selectedStorybook.thumbnail_img == null  ? '/images/2.jpg' : selectedStorybook.thumbnail_img"
                                     height="282px"
                                     cover
-                                /> -->
-                                <VImg
+                                />
+                                <!-- <VImg
                                     :src="'/images/2.jpg'"
                                     height="282px"
                                     cover
-                                />
+                                /> -->
                                 <div class="text-center mt-4">
                                     <span class="pppangram-bold">{{ version.name }}</span>
                                 </div>
