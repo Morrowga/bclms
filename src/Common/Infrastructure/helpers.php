@@ -4,16 +4,16 @@ use Illuminate\Support\Facades\Cache;
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 
 //Notification Helper to Vue Component
-if (! function_exists('getNotifications')) {
+if (!function_exists('getNotifications')) {
     function getNotifications()
     {
-        $notification = Cache::remember('unread_notifications_'.auth()->id(), 60, function () {
+        $notification = Cache::remember('unread_notifications_' . auth()->id(), 60, function () {
             return auth()->user()
-            ? auth()->user()->unreadNotifications()
+                ? auth()->user()->unreadNotifications()
                 ->whereJsonDoesntContain('data->type', 'HomeAnnounce')
                 ->with('notifiable')
                 ->paginate(7)
-            : null;
+                : null;
         });
 
         $notification = $notification
@@ -25,7 +25,7 @@ if (! function_exists('getNotifications')) {
 }
 
 //Remove null in array
-if (! function_exists('removeNullInArray')) {
+if (!function_exists('removeNullInArray')) {
     function removeNullInArray($array)
     {
         $filteredArray = array_filter($array, function ($value) {
@@ -38,7 +38,7 @@ if (! function_exists('removeNullInArray')) {
 
 //this is global function that check which user has access
 
-if (! function_exists('authorize')) {
+if (!function_exists('authorize')) {
     /* @throws UnauthorizedUserException */
     function authorize($ability, $policy, $arguments = []): bool
     {
@@ -54,7 +54,7 @@ if (! function_exists('authorize')) {
  *  get disk space according to disk array
  */
 
-if (! function_exists('getFileSystemWithRole')) {
+if (!function_exists('getFileSystemWithRole')) {
     function getFileSystemWithRole($userrole)
     {
         try {
@@ -70,6 +70,17 @@ if (! function_exists('getFileSystemWithRole')) {
         } catch (\Exception $error) {
 
             return ['local'];
+        }
+    }
+}
+
+if (!function_exists('isEvenOdd')) {
+    function isEvenOdd($number)
+    {
+        if ($number % 2 == 0) {
+            return 'even';
+        } else {
+            return 'odd';
         }
     }
 }

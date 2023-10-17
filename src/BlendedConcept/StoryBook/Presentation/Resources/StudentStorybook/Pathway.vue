@@ -23,7 +23,8 @@ async function fetchData() {
         );
         // Assuming the API response contains an array of data similar to props.pathways.data
         datas.value = response.data.data;
-        totalPage.value = response.data.total;
+        totalPage.value = response.data.data.length;
+        console.log(response.data);
         let results = datas.value[0].map((book, index) => {
             return {
                 id: book.id,
@@ -160,7 +161,7 @@ onMounted(() => {
                         />
                     </div>
                 </VCol>
-                <VCol cols="11" class="text-center">
+                <VCol cols="11" class="text-center my-4">
                     <v-chip class="inclusive-chip ruddy-bold"
                         >Inclusive Learning Stars
                     </v-chip>
@@ -170,6 +171,9 @@ onMounted(() => {
                 <swiper :slide-per-view="1" @slideChange="handleSlideChange">
                     <swiper-slide
                         class="swiper-path"
+                        :class="{
+                            'footprint3-hidden': index === totalPage - 1,
+                        }"
                         v-for="(page, index) in totalPage"
                         :key="index"
                     >
@@ -186,8 +190,15 @@ onMounted(() => {
                             width="180"
                             height="180"
                         ></v-img>
-                        <div class="card1">
+                        <div
+                            :class="
+                                currentPageData[0].id == 'complete'
+                                    ? 'box-container-2'
+                                    : 'card1'
+                            "
+                        >
                             <VCard
+                                v-if="currentPageData[0].id != 'complete'"
                                 :class="
                                     dynamicClass(
                                         currentPageData[0].own_progress
@@ -205,6 +216,9 @@ onMounted(() => {
                                 ></v-img>
                                 <div class="d-flex justify-center">
                                     <img
+                                        v-if="
+                                            currentPageData[0].id != 'complete'
+                                        "
                                         @click="
                                             readPathwayBook(currentPageData[0])
                                         "
@@ -214,10 +228,41 @@ onMounted(() => {
                                     />
                                 </div>
                             </VCard>
+                            <div class="box" v-else>
+                                <v-img
+                                    :src="
+                                        currentPageData[0].thumbnail_img == ''
+                                            ? '/images/toycard.png'
+                                            : currentPageData[0].thumbnail_img
+                                    "
+                                    class="showimg-path"
+                                ></v-img>
+                                <div class="d-flex justify-center">
+                                    <img
+                                        v-if="
+                                            currentPageData[0].id != 'complete'
+                                        "
+                                        @click="
+                                            readPathwayBook(currentPageData[0])
+                                        "
+                                        :src="changePhoto(currentPageData[0])"
+                                        class="playButton"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
                         </div>
                         <!-- <v-img :src="currentPageData[0].thumbnail_img == '' ? '/images/toycard.png' : currentPageData[0].thumbnail_img" class="card1" width="300" height="200"></v-img> -->
-                        <div class="card2" v-if="currentPageData.length > 1">
+                        <div
+                            :class="
+                                currentPageData[1].id == 'complete'
+                                    ? 'box-container'
+                                    : 'card2'
+                            "
+                            v-if="currentPageData.length > 1"
+                        >
                             <VCard
+                                v-if="currentPageData[1].id != 'complete'"
                                 :class="
                                     dynamicClass(
                                         currentPageData[1].own_progress
@@ -235,6 +280,9 @@ onMounted(() => {
                                 ></v-img>
                                 <div class="d-flex justify-center">
                                     <img
+                                        v-if="
+                                            currentPageData[1].id != 'complete'
+                                        "
                                         @click="
                                             readPathwayBook(currentPageData[1])
                                         "
@@ -244,6 +292,29 @@ onMounted(() => {
                                     />
                                 </div>
                             </VCard>
+                            <div class="box" v-else>
+                                <v-img
+                                    :src="
+                                        currentPageData[1].thumbnail_img == ''
+                                            ? '/images/toycard.png'
+                                            : currentPageData[1].thumbnail_img
+                                    "
+                                    class="showimg-path"
+                                ></v-img>
+                                <div class="d-flex justify-center">
+                                    <img
+                                        v-if="
+                                            currentPageData[1].id != 'complete'
+                                        "
+                                        @click="
+                                            readPathwayBook(currentPageData[1])
+                                        "
+                                        :src="changePhoto(currentPageData[1])"
+                                        class="playButton"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
                         </div>
                         <v-img
                             v-if="currentPageData.length > 1"
@@ -253,12 +324,8 @@ onMounted(() => {
                             height="210"
                         ></v-img>
                         <!-- <v-img :src="currentPageData[1].thumbnail_img == '' ? '/images/toycard.png' : currentPageData[0].thumbnail_img" class="card2" width="300" height="200"></v-img> -->
+
                         <v-img
-                            :class="
-                                currentPage.length > 1
-                                    ? 'curerntfp' + currentPage + ' d-none'
-                                    : 'currentfp' + currentPage
-                            "
                             src="/images/footprint4.png"
                             class="footprint3"
                             width="330"
@@ -466,5 +533,27 @@ onMounted(() => {
 }
 .d-none {
     display: none;
+}
+.footprint3-hidden .footprint3 {
+    display: none;
+}
+.box {
+    justify-content: center;
+    width: 300px;
+    align-items: center;
+    height: auto !important;
+    border-radius: 30px;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+.box-container {
+    position: absolute !important;
+    left: 66% !important;
+    top: -7% !important;
+}
+.box-container-2 {
+    position: absolute !important;
+    left: 26.5% !important;
+    top: 26%;
 }
 </style>

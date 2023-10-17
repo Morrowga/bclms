@@ -100,13 +100,29 @@ class PathwayRepository implements PathwayRepositoryInterface
         foreach ($pathways->storybooks as $storybook) {
             array_push($array, $storybook->id);
         }
-
         $storybooks = StoryBookEloquentModel::with(['pathways' => function ($query) use ($pathway_id) {
             $query->where('pathway_id', $pathway_id);
         }])->whereIn('id', $array)->get();
         $total_book_count = count($storybooks);
         $datas = array_chunk($storybooks->toArray(), 2);
-
+        // array_push($datas, []);
+        $last_index = end($datas);
+        $last_count = count($last_index);
+        if (isEvenOdd($last_count) == 'even') {
+            array_push($datas, [
+                [
+                    "id" => "complete",
+                    "thumbnail_img" => "/images/box.png"
+                ]
+            ]);
+        } else {
+            $last_index[1] = [
+                "id" => "complete",
+                "thumbnail_img" => "/images/box.png"
+            ];
+            array_pop($datas);
+            array_push($datas, $last_index);
+        }
         return [
             "data" => $datas,
             "total" => $total_book_count
