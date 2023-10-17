@@ -6,6 +6,8 @@ import { toastAlert } from "@Composables/useToastAlert";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
+import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
+
 const isFormValid = ref(false);
 const isDialogVisible = ref(false);
 let refForm = ref();
@@ -202,10 +204,15 @@ let handleSubmit = () => {
                                         <VLabel class="tiggie-label required"
                                             >Payment Receipt</VLabel
                                         >
-                                        <ImageUpload
+                                        <!-- <ImageUpload
                                             :hide_count="true"
                                             data_type="user"
                                             v-model="form.image"
+                                        /> -->
+                                        <ImageDropFile
+                                            v-model="form.image"
+                                            memeType="image"
+                                            :id="3"
                                         />
                                     </VCol>
                                 </VRow>

@@ -149,6 +149,7 @@ class OrganisationRepository implements OrganisationRepositoryInterface
     public function addOrganisationSubscription(SubscriptionData $subscriptionData)
     {
 
+
         DB::beginTransaction();
 
         try {
@@ -192,6 +193,7 @@ class OrganisationRepository implements OrganisationRepositoryInterface
 
     public function newOrganisationSubscription(Subscription $subscription)
     {
+
         DB::beginTransaction();
 
         try {
@@ -215,10 +217,10 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             if (request()->hasFile('image') && request()->file('image')->isValid()) {
                 $b2bSubscriptionEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_payment_receipt');
             }
-            if ($b2bSubscriptionEloquent->getMedia('image')->isNotEmpty()) {
-                $b2bSubscriptionEloquent->logo = $b2bSubscriptionEloquent->getMedia('image')[0]->original_url;
-                $b2bSubscriptionEloquent->update();
-            }
+            // if ($b2bSubscriptionEloquent->getMedia('image')->isNotEmpty()) {
+            //     $b2bSubscriptionEloquent->receipt_image = $b2bSubscriptionEloquent->getMedia('image')[0]->original_url;
+            //     $b2bSubscriptionEloquent->update();
+            // }
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
@@ -226,7 +228,8 @@ class OrganisationRepository implements OrganisationRepositoryInterface
         }
     }
 
-    public function delete(OrganisationEloquentModel $organisation){
+    public function delete(OrganisationEloquentModel $organisation)
+    {
         $organisation->delete();
     }
 }
