@@ -125,6 +125,10 @@ watch(filters, (newValue) => {
         },
     });
 });
+const showInfo = (e) => {
+    // console.log(e);
+    router.get(route("organisations.show", e.row.id));
+};
 </script>
 
 <template>

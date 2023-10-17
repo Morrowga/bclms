@@ -62,6 +62,10 @@ const maxStorage = (organisation) => {
 const getPrice = (organisation) => {
     return organisation?.subscription?.stripe_price * 1000 ?? 0;
 };
+
+onMounted(() => {
+    console.log(props.organisation);
+});
 </script>
 <template>
     <AdminLayout>
@@ -126,10 +130,12 @@ const getPrice = (organisation) => {
                         </VCol>
                         <VCol cols="10">
                             <h4 class="tiggie-label pb-3">
-                                props.Organisation Admin Name
+                                Organisation Admin Name
                             </h4>
                             <p class="tiggie-p">
-                                {{ fullName(props.organisation) }}
+                                {{
+                                    fullName(props.organisation.org_admin.user)
+                                }}
                             </p>
                         </VCol>
                         <VCol cols="10">
@@ -138,7 +144,7 @@ const getPrice = (organisation) => {
                             </h4>
                             <p class="tiggie-p">
                                 {{
-                                    props.organisation?.org_admin
+                                    props.organisation?.org_admin?.user
                                         ?.contact_number
                                 }}
                             </p>
@@ -146,7 +152,7 @@ const getPrice = (organisation) => {
                         <VCol cols="10">
                             <h4 class="tiggie-label pb-3">Login Email</h4>
                             <p class="tiggie-p">
-                                {{ props.organisation?.org_admin?.email }}
+                                {{ props.organisation?.org_admin?.user?.email }}
                             </p>
                         </VCol>
                         <VCol cols="10">
