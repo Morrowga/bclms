@@ -15,6 +15,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/add_customisation/edit', [AddCustomisationController::class, 'edit'])->name('add_customisation.edit');
 
     Route::get('listoforgteacher', [TeacherController::class, 'listofteacher'])->name('listoforgteacher');
+    Route::put('listoforgteacher/{teacher}', [TeacherController::class, 'listofteacherUpdateStorage'])->name('listoforgteacher.update_storage');
 
     Route::post('/teacher/import', [TeacherController::class, 'import_excel'])->name('teachers.import');
 });

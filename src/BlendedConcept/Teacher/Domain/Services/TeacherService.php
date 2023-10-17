@@ -32,4 +32,12 @@ class TeacherService
     {
         $teacher->delete();
     }
+
+    public function updateTeacherStorage($teacher, $request)
+    {
+
+        $teacher->update([
+            "allocated_storage_limit" => $request->storage
+        ]);
+    }
 }

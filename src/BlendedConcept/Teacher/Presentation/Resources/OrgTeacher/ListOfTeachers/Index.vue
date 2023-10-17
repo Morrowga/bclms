@@ -1,6 +1,29 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import TeacherStorageField from "./components/TeacherStorageField.vue";
+
+const props = defineProps(["organisation"]);
+
+const getOrgStorageLimit = () => {
+    if (props.organisation?.subscription?.b2b_subscription) {
+        return props.organisation?.subscription?.b2b_subscription
+            ?.storage_limit;
+    } else {
+        return 0;
+    }
+};
+
+const totalTeacherUsage = () => {
+    // const limit_array = props.organisation?.teachers?.map(
+    //     (teacher) => teacher.allocated_storage_limit
+    // );
+    // let sum = 0;
+    // limit_array.forEach((num) => {
+    //     sum += num;
+    // });
+    // return sum;
+    return 0;
+};
 </script>
 
 <template>
@@ -30,7 +53,9 @@ import TeacherStorageField from "./components/TeacherStorageField.vue";
                         Total Storage Usage
                     </h1>
                     <div class="tiggie-subtitle">
-                        1.23GB of 2GB allocated to teachers,130MB available
+                        {{ totalTeacherUsage() }} MB of
+                        {{ getOrgStorageLimit() }} MB allocated to
+                        teachers,130MB available
                     </div>
                 </div>
                 <div class="d-flex justify-space-between align-center">
@@ -97,8 +122,12 @@ import TeacherStorageField from "./components/TeacherStorageField.vue";
             <div class="padding-block"></div>
 
             <VRow>
-                <VCol cols="6" v-for="(item,index) in 6" :key="index">
-                    <TeacherStorageField />
+                <VCol
+                    cols="6"
+                    v-for="(teacher, index) in props.organisation.teachers"
+                    :key="index"
+                >
+                    <TeacherStorageField :key="index" :data="teacher" />
                 </VCol>
             </VRow>
         </VContainer>

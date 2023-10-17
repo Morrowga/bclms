@@ -45,7 +45,7 @@ class OrganisationEloquentModel extends Model implements HasMedia
     {
         return $this->getMedia('image');
     }
-    
+
     public function getImageUrlAttribute()
     {
         $media = $this->getMedia('image')->first();

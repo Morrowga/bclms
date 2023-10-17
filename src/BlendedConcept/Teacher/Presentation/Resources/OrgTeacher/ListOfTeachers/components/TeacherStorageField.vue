@@ -1,21 +1,27 @@
 <script setup>
 import { ref } from "vue";
-const storage = ref(200);
 import EditTeacherStorage from "./EditTeacherStorage.vue";
+
+const storage = ref(200);
+const props = defineProps(["data"]);
+
+const setImage = () => {
+    return props.data?.user?.profile_pic == "" || !props.data?.user?.profile_pic
+        ? "/images/teacherimg.png"
+        : props.data?.user?.profile_pic;
+};
 </script>
 <template>
     <VCard>
         <VRow justify="space-between" class="pa-5">
             <VCol cols="4" class="teacher-profile">
-                <img
-                    src="/images/teacherimg.png"
-                    class="tggie-student-img storage-img"
-                />
+                <img :src="setImage()" class="tggie-student-img storage-img" />
             </VCol>
             <VCol cols="8" class="allocated-storage">
                 <div class="d-flex align-center justify-space-between">
                     <p class="tiggie-teacher-label fs-24 t-black">
-                        Allocated Storage:200 MB
+                        Allocated Storage:
+                        {{ props.data.allocated_storage_limit }} MB
                     </p>
                     <!-- <div class="d-flex">
                         <VLabel class="tiggie-teacher-label">200 MB</VLabel>
@@ -48,10 +54,12 @@ import EditTeacherStorage from "./EditTeacherStorage.vue";
                 </div>
             </VCol>
             <VCol cols="6">
-                <p class="tiggie-subtitle">Tyler Covington</p>
+                <p class="tiggie-subtitle">
+                    {{ props.data?.user?.full_name }}
+                </p>
             </VCol>
             <VCol cols="6" class="text-end pr-3">
-                <EditTeacherStorage />
+                <EditTeacherStorage :data="props.data" />
             </VCol>
         </VRow>
     </VCard>

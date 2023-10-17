@@ -75,11 +75,11 @@ class TeacherRepository implements TeacherRepositoryInterface
         DB::beginTransaction();
 
         try {
-
             $teacherArray = $teacherData->toArray();
             $updateUserEloquent = UserEloquentModel::query()->findOrFail($teacherData->id);
             $updateUserEloquent->fill($teacherArray);
             $updateUserEloquent->update();
+            // dd($updateUserEloquent);
 
             //  delete image if reupload or insert if does not exit
             if (request()->hasFile('image') && request()->file('image')->isValid()) {

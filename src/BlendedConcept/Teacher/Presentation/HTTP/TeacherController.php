@@ -4,13 +4,16 @@ namespace Src\BlendedConcept\Teacher\Presentation\HTTP;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserName;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Teacher\Application\Requests\UpdateTeacherRequest;
+use Src\BlendedConcept\Teacher\Application\Requests\UpdateTeacherStorage;
 use Src\BlendedConcept\Teacher\Application\UseCases\Queries\GetTeachersWithPagination;
 use Src\BlendedConcept\Teacher\Domain\Policies\TeacherPolicy;
 use Src\BlendedConcept\Teacher\Domain\Services\TeacherService;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Src\Common\Application\Imports\StudentImport;
 use Src\Common\Application\Imports\UserImport;
 use Src\Common\Infrastructure\Laravel\Controller;
@@ -113,7 +116,27 @@ class TeacherController extends Controller
 
     public function listofteacher()
     {
-        return Inertia::render(config('route.listofteacher.index'));
+        $organisation_id = auth()->user()->organisation_id;
+        $organisation = OrganisationEloquentModel::find($organisation_id);
+        $organisation = $organisation->load('teachers.user', 'subscription.b2b_subscription');
+        return Inertia::render(config('route.listofteacher.index'), [
+            'organisation' => $organisation
+        ]);
+    }
+
+    public function listofteacherUpdateStorage(TeacherEloquentModel $teacher, UpdateTeacherStorage $request)
+    {
+        try {
+
+            $this->teacherService->updateTeacherStorage($teacher, $request);
+
+            return redirect()->route('listoforgteacher')->with('successMessage', 'Teacher storage updated successfully!');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+
+            // Handle the exception, log the error, or display a user-friendly error message.
+            return redirect()->route('listoforgteacher')->with('sytemErrorMessage', $e->getMessage());
+        }
     }
 
     public function import_excel(Request $request)
@@ -131,7 +154,7 @@ class TeacherController extends Controller
                 foreach ($import->failures() as $failure) {
                     $currentRow = $failure->row();
                     if ($currentRow == $failure->row()) {
-                        if (! in_array($failure->values(), $errorRows)) {
+                        if (!in_array($failure->values(), $errorRows)) {
                             array_push($errorRows, $failure->values());
                         }
                     }
