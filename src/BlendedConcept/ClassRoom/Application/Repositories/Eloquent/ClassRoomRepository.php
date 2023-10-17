@@ -73,6 +73,9 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
             $updateClassRoomEloquent = ClassRoomEloquentModel::findOrFail($classRoomData->id);
             $updateClassRoomEloquent->fill($classRoomArray);
             $updateClassRoomEloquent->update();
+            $existingStudents = $updateClassRoomEloquent->students->pluck('student_id')->toArray();
+            $newStudents = array_diff($classRoomData->students, $existingStudents);
+
             $updateClassRoomEloquent->students()->sync($classRoomData->students);
             $updateClassRoomEloquent->teachers()->sync($classRoomData->teachers);
             if (request()->hasFile('image') && request()->file('image')->isValid()) {
@@ -91,7 +94,7 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
 
             $org = $updateClassRoomEloquent->organisation->org_admin->user;
 
-            foreach($classRoomData->students as $student){
+            foreach($newStudents as $student){
                 $studentUser = StudentEloquentModel::where('student_id', $student)->first();
                 $user = $studentUser->user;
                 $org->notify(new BcNotification(['message' => 'New Student ' . $user->full_name . ' joined class ' . $updateClassRoomEloquent->name, 'from' => 'System', 'to' => 'Organisation','icon' => 'fa:fa-light fa-user', 'type' => 'HomeAnnounce']));
