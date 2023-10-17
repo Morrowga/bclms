@@ -19,7 +19,8 @@ serverPerPage.value = ref(10);
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
-const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
+const userImage = (user) =>
+    user.profile_pic ?? "/images/profile/profilefive.png";
 </script>
 <template>
     <div class="header">
@@ -55,7 +56,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                 :key="student.id"
             >
                 <StudentAvatar
-                    :image="userImage(student)"
+                    :image="userImage(student.user)"
                     :title="student?.user?.full_name"
                     :phone_number="student?.parent?.user?.contact_number"
                 />

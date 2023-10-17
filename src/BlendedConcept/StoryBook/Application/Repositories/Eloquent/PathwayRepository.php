@@ -43,6 +43,10 @@ class PathwayRepository implements PathwayRepositoryInterface
                     return [$storybook => ['sequence' => $index + 1]];
                 })
             );
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+                $pathwayEloquent->addMediaFromRequest('image')
+                    ->toMediaCollection('pathway_img', 'media_storybook');
+            }
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());
@@ -68,6 +72,14 @@ class PathwayRepository implements PathwayRepositoryInterface
                     return [$storybook => ['sequence' => $index + 1]];
                 })
             );
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+
+                $old_thumbnail = $pathwayEloquent->getFirstMedia('pathway_img');
+                if ($old_thumbnail != null) {
+                    $old_thumbnail->forceDelete();
+                }
+                $pathwayEloquent->addMediaFromRequest('image')->toMediaCollection('pathway_img', 'media_game');
+            }
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error);
@@ -82,14 +94,22 @@ class PathwayRepository implements PathwayRepositoryInterface
 
     public function getStudentPathway()
     {
-        $pathways = PathwayEloquentModel::with('storybooks')->orderBy('id', 'desc')->first();
+        $pathway_id = request('pathway_id');
+        $pathways = PathwayEloquentModel::where('id', $pathway_id)->with('storybooks')->orderBy('id', 'desc')->first();
         $array = [];
-        foreach($pathways->storybooks as $storybook){
+        foreach ($pathways->storybooks as $storybook) {
             array_push($array, $storybook->id);
         }
 
-        $storybooks = StoryBookEloquentModel::whereIn('id', $array)->paginate(2);
+        $storybooks = StoryBookEloquentModel::with(['pathways' => function ($query) use ($pathway_id) {
+            $query->where('pathway_id', $pathway_id);
+        }])->whereIn('id', $array)->get();
+        $total_book_count = count($storybooks);
+        $datas = array_chunk($storybooks->toArray(), 2);
 
-        return $storybooks;
+        return [
+            "data" => $datas,
+            "total" => $total_book_count
+        ];
     }
 }

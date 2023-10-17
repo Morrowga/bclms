@@ -4,7 +4,7 @@ import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps, ref } from "vue";
 import VersionCard from "@mainRoot/components/Teacher/VersionCard.vue";
-let props = defineProps(["flash", "auth", "books", "playlists"]);
+let props = defineProps(["flash", "auth", "books", "playlists", "pathways"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const active = ref("assigned");
@@ -25,6 +25,7 @@ const activeTab = (name) => {
     active.value = name;
     setCookie(name);
 };
+const getImage = (pathway) => pathway.image_url ?? "images/Pathway Card.png";
 onMounted(() => {
     setCookie("assigned");
 });
@@ -103,10 +104,19 @@ onMounted(() => {
                 </VRow>
             </VContainer>
             <VContainer class="mb-3" v-if="active === 'pathway'">
-                <div class="d-flex justify-center">
+                <div
+                    class="d-flex justify-center my-6"
+                    v-for="pathway in pathways.data"
+                    :key="pathway.id"
+                >
                     <img
-                        src="images/Pathway Card.png"
-                        @click="() => router.get(route('storybooks.pathway'))"
+                        :src="getImage(pathway)"
+                        @click="
+                            () =>
+                                router.get(
+                                    route('storybooks.pathway', pathway.id)
+                                )
+                        "
                         class="pathwayimg"
                         alt=""
                     />
@@ -185,7 +195,7 @@ onMounted(() => {
 }
 
 .pathwayimg {
-    height: 80vh;
+    width: 100vh;
     cursor: pointer;
 }
 

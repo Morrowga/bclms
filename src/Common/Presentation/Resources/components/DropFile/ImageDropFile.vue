@@ -5,6 +5,7 @@ const emit = defineEmits();
 const file = ref(null);
 const thumbnail = ref(null);
 const dragging = ref(false);
+const old_image = ref("");
 let memeName = ref("");
 const props = defineProps({
     modelValue: {
@@ -17,6 +18,10 @@ const props = defineProps({
     id: {
         type: Number,
         default: 1,
+    },
+    old_photo: {
+        type: String,
+        default: "",
     },
 });
 
@@ -83,6 +88,10 @@ onMounted(() => {
     } else {
         memeName.value = "";
     }
+
+    if (props.old_photo) {
+        old_image.value = props.old_photo;
+    }
 });
 </script>
 <template>
@@ -94,22 +103,33 @@ onMounted(() => {
         @dragleave="dragging = false"
         @drop.prevent="onDropGameFile"
     >
-        <p v-if="!file" class="pppangram-normal" @click="handleFileInputClick">
+        <p
+            v-if="!file && !old_image"
+            class="pppangram-normal"
+            @click="handleFileInputClick"
+        >
             Drag & Drop
             <strong class="colorprimary">{{ memeName }}</strong> file here
             <br />
             or <br />
             Click to browser files
         </p>
+        <div v-else-if="old_image">
+            <v-img :src="old_image" alt="Thumbnail" cover width="200" />
+            <button type="button" @click="() => (old_image = '')">
+                Remove
+            </button>
+        </div>
         <div v-else>
             <v-img
                 v-if="memeType == 'image'"
+                width="200"
                 :src="thumbnail"
                 alt="Thumbnail"
                 cover
             />
             <p v-else>File Name: {{ file.name }}</p>
-            <button @click="removeGameFile" class="remove-button">
+            <button type="button" @click="removeGameFile" class="remove-button">
                 Remove
             </button>
         </div>

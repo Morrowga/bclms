@@ -6,6 +6,8 @@ import { SuccessDialog } from "@actions/useSuccess";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { requiredValidator } from "@validators";
 import AddBook from "./components/AddBook.vue";
+import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
+
 const props = defineProps(["data_type", "storybooks"]);
 let flash = computed(() => usePage().props.flash);
 const isFormValid = ref(false);
@@ -107,6 +109,7 @@ const form = useForm({
     num_silver_coins: "",
     need_complete_in_order: false,
     storybooks: [],
+    image: null,
 });
 const scrollToTarget = () => {
     const container = containerRef.value;
@@ -174,6 +177,16 @@ const storybooks = (datas) => {
                 </VRow>
 
                 <VRow>
+                    <VCol cols="6">
+                        <VLabel class="tiggie-label required"
+                            >Thumbnail Picture</VLabel
+                        >
+                        <ImageDropFile
+                            v-model="form.image"
+                            memeType="image"
+                            :id="3"
+                        />
+                    </VCol>
                     <VCol cols="12">
                         <VRow>
                             <VCol cols="12" sm="6" md="4">
@@ -237,7 +250,7 @@ const storybooks = (datas) => {
                                 <VLabel class="tiggie-label required"
                                     >Must Complete Books In Order</VLabel
                                 >
-                                <VSwitch v-model="form.num_silver_coins">
+                                <VSwitch v-model="form.need_complete_in_order">
                                 </VSwitch>
                             </VCol>
                             <VCol cols="12" sm="6" md="12" class="py-4">

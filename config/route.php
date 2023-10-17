@@ -29,6 +29,7 @@ return [
         'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Pathways/Index',
         'create' => 'BlendedConcept/StoryBook/Presentation/Resources/Pathways/Create',
         'show' => 'BlendedConcept/StoryBook/Presentation/Resources/Pathways/Show',
+        'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/Pathways/Edit',
     ],
 
     'bookreviews' => [

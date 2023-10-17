@@ -44,7 +44,8 @@ class TeacherStorybookController
         $filters = request(['search', 'first_name', 'last_name']) ?? [];
         $students = (new GetStudentList($filters))->handle();
         $teacher_storybook->load(['learningneeds', 'themes', 'disability_types', 'devices']);
-
+        $version = $version->load('storybook_assigments');
+        // dd($students);
         return Inertia::render(config('route.teacher_storybook.assign_student'), compact('teacher_storybook', 'version', 'students'));
     }
 }

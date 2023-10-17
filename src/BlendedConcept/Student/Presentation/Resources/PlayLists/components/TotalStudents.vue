@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
-import { format, differenceInYears } from 'date-fns';
+import { format, differenceInYears } from "date-fns";
 
 import axios from "axios";
 import {
@@ -69,18 +69,18 @@ watch(serverPerPage, function (value) {
 });
 
 const extractStudentId = (studentId) => {
-      // Handle the student ID here, for example, you can log it
+    // Handle the student ID here, for example, you can log it
     props.form.student_id = studentId;
     // You can also perform other actions with the student ID as needed
-}
+};
 function calculateAge(dateOfBirth) {
-  const currentDate = new Date();
-  const formattedDob = format(new Date(dateOfBirth), 'yyyy-MM-dd');
-  return differenceInYears(currentDate, new Date(formattedDob));
+    const currentDate = new Date();
+    const formattedDob = format(new Date(dateOfBirth), "yyyy-MM-dd");
+    return differenceInYears(currentDate, new Date(formattedDob));
 }
 
-
-const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
+const userImage = (user) =>
+    user.profile_pic ?? "/images/profile/profilefive.png";
 </script>
 <template>
     <section>
@@ -124,7 +124,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                                 <v-img
                                     width="100"
                                     :aspect-ratio="16 / 9"
-                                    :src="userImage(data)"
+                                    :src="userImage(data.user)"
                                 />
                             </div>
                             <span>

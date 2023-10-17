@@ -5,6 +5,7 @@ import { router } from "@inertiajs/core";
 import { computed, ref } from "vue";
 import SelectStudent from "./components/SelectStudent.vue";
 import SelectTeacher from "./components/SelectTeacher.vue";
+import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
 let props = defineProps(["flash", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
@@ -31,7 +32,8 @@ const openFileInput = () => {
                 <span class="span-text ruddy-bold">Create Classroom</span>
                 <VRow class="mt-3">
                     <VCol cols="12" sm="6" md="6">
-                        <VCard class="upload-card" @click="openFileInput">
+                        <!-- <LargeDropFile v-model="form.image" /> -->
+                        <!-- <VCard class="upload-card" @click="openFileInput">
                             <v-img
                                 v-if="selectedImage"
                                 :src="selectedImage"
@@ -64,7 +66,7 @@ const openFileInput = () => {
                             ref="fileInput"
                             class="d-none"
                             @change="handleFileUpload"
-                        />
+                        /> -->
                     </VCol>
                     <VCol cols="12" sm="6" md="4">
                         <span class="semi-label pppangram-bold"

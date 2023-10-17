@@ -29,7 +29,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
     {
         // Retrieve storybooks with relationships, order by id in descending order, and paginate the results
         $storyBooks = StoryBookResource::collection(
-            StoryBookEloquentModel::filter($filters)->with(['learningneeds', 'themes', 'disability_types', 'devices', 'tags'])
+            StoryBookEloquentModel::filter($filters)->with(['learningneeds', 'themes', 'disability_types', 'devices', 'tags', 'book_versions'])
                 ->orderBy('id', 'desc')
                 ->paginate($filters['perPage'] ?? 10)
         );
@@ -255,7 +255,15 @@ class StoryBookRepository implements StoryBookRepositoryInterface
     public function getStudentPlaylists($filters)
     {
         $student_id = auth()->user()->student->student_id;
-        $book_playlists =  PlaylistEloquentModel::where('student_id', $student_id)->with('storybooks')->paginate($filters['perPage'] ?? 10);
+        $book_playlists =  PlaylistEloquentModel::where('student_id', $student_id)
+            ->with(['storybooks' => function ($query) use ($student_id) {
+                $query->with(['book_versions' => function ($query) use ($student_id) {
+                    $query->whereHas('storybook_assigments', function ($queryTwo) use ($student_id) {
+                        $queryTwo->where('storybook_assignments.student_id', $student_id);
+                    });
+                }]);
+            }])->paginate($filters['perPage'] ?? 10);
+
         return $book_playlists;
     }
 

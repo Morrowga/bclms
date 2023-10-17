@@ -24,7 +24,7 @@ class PermissionRoleTableSeeder extends Seeder
             ['name' => 'Student', 'guard_name' => 'web'],
             ['name' => 'Parent', 'guard_name' => 'web'],
         ];
-        foreach ($datas as $data) {
+        foreach ($datas as $data) { 
             // $role = RoleEloquentModel::create($data);
             // $role->permissions()->sync([25, 26, 27, 28, 29]);
             if ($data['name'] == 'BC Super Admin') {

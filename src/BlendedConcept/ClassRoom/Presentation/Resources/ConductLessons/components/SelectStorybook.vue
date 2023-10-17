@@ -14,7 +14,7 @@ const props = defineProps({
             name: "",
             image: "",
             student_id: "",
-            storybooks: [],
+            storybooks: "",
         },
     },
 });
@@ -24,9 +24,9 @@ const props = defineProps({
         <v-expansion-panel-title>
             <h2 class="font-weight-bold ruddy-bold fs-25">
                 Step 1: Select Storybooks
-                <v-chip class="chip-count">{{
+                <!-- <v-chip class="chip-count">{{
                     props.form.storybooks.length
-                }}</v-chip>
+                }}</v-chip> -->
             </h2>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
