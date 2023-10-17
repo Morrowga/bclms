@@ -63,16 +63,17 @@ const removeVideo = () => {
     file.value = null
 }
 
-const submitResource = () => {
+const updateResource = () => {
     form.file = file.value
     form.post(route("resource.update", props.data.id), {
-    onSuccess: () => {
-      isEditDialogVisible.value = false;
-      SuccessDialog({ title: "You've successfully updated a video." });
-    },
-    onError: (error) => {
-    },
-  });
+        onSuccess: () => {
+            isEditDialogVisible.value = false;
+        SuccessDialog({ title: "You've successfully updated a video." });
+        },
+        onError: (error) => {
+            SuccessDialog({ title: error?.file, icon: 'warning',color: '#ff6262', mainTitle: 'Failed!' });
+        },
+    });
 }
 
 const deleteOnclick = () => {
@@ -159,9 +160,7 @@ const openFileInput = () => {
             </v-menu>
         </span>
         <VDialog v-model="isEditDialogVisible" width="1000">
-            <!-- Activator -->
-            <!-- Dialog Content -->
-            <VForm @submit.prevent="submitResource">
+            <VForm @submit.prevent="updateResource">
                 <VCard class="rolling-card">
                     <VCardText>
                         <div class="d-flex justify-space-between">
@@ -299,6 +298,10 @@ const openFileInput = () => {
     cursor: pointer;
     color: #000 !important;
     right: 3%;
+}
+
+.error_text {
+    color: red !important;
 }
 
 .image-resource {

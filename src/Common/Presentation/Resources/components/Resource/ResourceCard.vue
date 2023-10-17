@@ -23,7 +23,7 @@ const emits = defineEmits(['checkboxChange']);
 const isChecked = ref(false); // Initialize checkbox state
 
 const updateSelectedData = () => {
-  emits('checkboxChange', { id: props.data.id, checked: isChecked.value });
+  emits('checkboxChange', { id: props.data.id, checked: isChecked.value, size: props.data.size});
 };
 
 const type = ref(null);

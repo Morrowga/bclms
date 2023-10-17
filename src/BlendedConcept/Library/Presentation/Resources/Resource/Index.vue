@@ -25,6 +25,7 @@ const chosen = ref('all');
 
 const isRequestUploadData = ref(false);
 const checkedItems = ref([]);
+const totalSize = ref(0);
 let isDeleteMode = ref(false);
 let isEditMode = ref(false);
 
@@ -40,8 +41,10 @@ const activeEditMode = () => {
 const approve = () => {
     const actionForm = useForm({
         type: 'approve',
+        size: parseInt(totalSize.value / 1024),
         ids: JSON.stringify(checkedItems.value)
     });
+
     isConfirmedDialog({
         title: "You won't be able to revert this!",
         denyButtonText: "Yes,Approve it!",
@@ -55,6 +58,9 @@ const approve = () => {
                     });
                     reload("resource.index");
                     isEditMode.value = false;
+                },
+                onError: (error) => {
+                    SuccessDialog({ title: error?.size, icon: 'warning',color: '#ff6262', mainTitle: 'Failed!' });
                 },
             });
         },
@@ -143,11 +149,11 @@ const checkIsOrg = () => {
 
 const handleCheckboxChange = (data) => {
     if (data.checked) {
-        console.log('true');
+        totalSize.value += data.size;
     // Checkbox is checked, add data to the array
         checkedItems.value.push(data.id);
     } else {
-        console.log('false');
+        totalSize.value -= data.size;
         // Checkbox is unchecked, remove data from the array
         const index = checkedItems.value.indexOf(data.id);
         if (index !== -1) {
@@ -388,6 +394,10 @@ const calculateProgress = (used, total) => {
 <style lang="scss">
 .app-user-search-filter {
     inline-size: 24.0625rem;
+}
+
+.error_text {
+    color: red !important;
 }
 
 .resourcebtn {
