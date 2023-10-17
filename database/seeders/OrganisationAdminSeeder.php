@@ -54,16 +54,16 @@ class OrganisationAdminSeeder extends Seeder
         //     'status' => 'INACTIVE',
         // ]
 
-        // $subscriptionData = [
-        //     'start_date' => now(),
-        //     'end_date' => now(),
-        //     'payment_date' => now(),
-        //     'payment_status' => 'PAID',
-        //     'stripe_status' => null,
-        //     'stripe_price' => null,
-        // ];
+        $subscriptionData = [
+            'start_date' => now(),
+            'end_date' => now(),
+            'payment_date' => now(),
+            'payment_status' => 'PAID',
+            'stripe_status' => null,
+            'stripe_price' => null,
+        ];
 
-        // $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
+        $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
 
         $organisationData = [
             'curr_subscription_id' => null,

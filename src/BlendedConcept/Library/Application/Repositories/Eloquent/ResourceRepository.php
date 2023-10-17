@@ -88,8 +88,11 @@ class ResourceRepository implements ResourceRepositoryInterface
         switch ($userType) {
             case 'Organisation Admin':
                 $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
-
-                $totalStorage = $org_admin->organisation->subscription->b2b_subscription === null ? 0  : $org_admin->organisation->subscription->b2b_subscription->storage_limit;
+                if($org_admin->organisation->subscription !== null){
+                    $totalStorage = $org_admin->organisation->subscription->b2b_subscription === null ? 0  : $org_admin->organisation->subscription->b2b_subscription->storage_limit;
+                } else {
+                    $totalStorage = 0;
+                }
 
                 $organisation_id = $org_admin->organisation->id;
                 $teacherStorages = TeacherEloquentModel::where('organisation_id', $organisation_id)->sum('allocated_storage_limit');
