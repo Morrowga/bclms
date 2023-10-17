@@ -3,6 +3,7 @@ import { router } from "@inertiajs/core";
 
 let props = defineProps(["book"]);
 const isDialogVisible = ref(false);
+const isClaimed = ref(false);
 const setImage = (book) => {
     return book.thumbnail_img == "" || !book.thumbnail_img
         ? "/images/defaults/organisation_logo.png"
@@ -26,6 +27,28 @@ const readOrginal = () => {
 const readVersion = (book_version_id) => {
     router.get(route("storybooks.version", { book_version: book_version_id }));
 };
+const setIsClaimed = (student_assigns) => {
+    console.log(student_assigns);
+    let condition = student_assigns?.find(
+        (assign) => assign.pivot.completed_once == 1
+    );
+    if (condition) {
+        isClaimed.value = true;
+    } else {
+        isClaimed.value = false;
+    }
+};
+const dynamicPhoto = () => {
+    return isClaimed.value
+        ? "/images/Silver Coin.png"
+        : "/images/Gold Coin.png";
+};
+onMounted(() => {
+    let data = props.book.book_versions;
+    for (let i = 0; i < data.length; i++) {
+        setIsClaimed(data[i].storybook_assigments);
+    }
+});
 </script>
 <template>
     <div>
@@ -43,13 +66,16 @@ const readVersion = (book_version_id) => {
                 <div class="goldCoin">
                     <v-chip class="coinChip text-center">
                         <div class="mt-2 text-center">
-                            <span class="chipText">{{
+                            <span v-if="isClaimed" class="chipText">{{
+                                book.num_silver_coins
+                            }}</span>
+                            <span v-else class="chipText">{{
                                 book.num_gold_coins
                             }}</span>
                         </div>
                         <div class="text-center mt-2">
                             <img
-                                src="/images/Gold Coin.png"
+                                :src="dynamicPhoto()"
                                 width="30"
                                 height="30"
                                 alt=""

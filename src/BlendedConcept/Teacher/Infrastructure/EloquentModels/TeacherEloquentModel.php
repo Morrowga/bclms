@@ -6,7 +6,7 @@ namespace Src\BlendedConcept\Teacher\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquentModel;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassroomEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;

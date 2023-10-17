@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('student_pathway', function (Blueprint $table) {
-            $table->string('progress')->nullable();
+            $table->integer('progress')->default(0);
         });
     }
 

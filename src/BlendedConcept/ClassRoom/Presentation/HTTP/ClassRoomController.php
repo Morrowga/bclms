@@ -18,7 +18,7 @@ use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetClassRoomWithPa
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetOrgStudentsWithPagination;
 use Src\BlendedConcept\ClassRoom\Domain\Policies\ClassRoomPolicy;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
-use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgTeacherDashboard;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;

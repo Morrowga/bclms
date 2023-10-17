@@ -3,6 +3,8 @@ import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps, ref } from "vue";
+import { onMounted, nextTick } from 'vue';
+
 let props = defineProps(["book"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
@@ -16,25 +18,22 @@ const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
 onMounted(() => {
     iframeRef.value.style.display = "none";
+
     iframeRef.value.addEventListener("load", () => {
-        iframeRef.value.style.display = "flex";
-        let subIframe =
-            iframeRef.value.contentWindow.document.querySelector(".h5p-iframe");
-        let actionBar = subIframe.contentWindow.document.querySelector(
-            ".h5p-iframe body div > .h5p-actions"
-        );
-        const cancelbutton =
-            iframeRef.value.contentWindow.document.querySelector(
-                "body > div > div > div p"
-            );
-        if (actionBar && cancelbutton) {
-            actionBar.style.display = "none";
-            cancelbutton.style.display = "none";
-        } else {
-            console.log("Buttons not found!");
-        }
+        // Access the content of the iframe
+            // Handle case where no video is found, but still want to show iframe
+            iframeRef.value.style.display = "flex";
+
+            // Wait for the DOM to update and then scroll to the iframe
+            nextTick(() => {
+                iframeRef.value.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            iframeRef.value.focus();
     });
 });
+
+
 </script>
 <template>
     <StudentLayout>
@@ -53,6 +52,7 @@ onMounted(() => {
                     frameborder="0"
                     class="h5p-width"
                     ref="iframeRef"
+                    id = "myIframe"
                 ></iframe>
             </div>
         </section>

@@ -7,8 +7,8 @@ namespace Src\BlendedConcept\Student\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomEloquentModel;
-use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassroomEloquentModel;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomGroupEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
@@ -127,7 +127,7 @@ class StudentEloquentModel extends Model implements HasMedia
     }
     public function groups()
     {
-        return $this->belongsToMany(ClassroomGroupEloquentModel::class, 'group_students', 'student_id', 'classroom_group_id')->with('students');
+        return $this->belongsToMany(ClassRoomGroupEloquentModel::class, 'group_students', 'student_id', 'classroom_group_id')->with('students');
     }
 
     public function book_versions()

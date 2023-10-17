@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\BlendedConcept\Classroom\Infrastructure\EloquentModels;
+namespace Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels;
 
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;

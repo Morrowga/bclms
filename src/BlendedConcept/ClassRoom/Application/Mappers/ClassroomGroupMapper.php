@@ -3,8 +3,8 @@
 namespace Src\BlendedConcept\ClassRoom\Application\Mappers;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Classroom\Domain\Model\Entities\ClassRoomGroup;
-use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassRoomGroupEloquentModel;
+use Src\BlendedConcept\ClassRoom\Domain\Model\Entities\ClassRoomGroup;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomGroupEloquentModel;
 
 class ClassRoomGroupMapper
 {

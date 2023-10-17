@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Classroom\Presentation\HTTP;
+namespace Src\BlendedConcept\ClassRoom\Presentation\HTTP;
 
 use Inertia\Inertia;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;

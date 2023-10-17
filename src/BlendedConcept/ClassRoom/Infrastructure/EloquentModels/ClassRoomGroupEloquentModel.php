@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Src\BlendedConcept\Classroom\Infrastructure\EloquentModels;
+namespace Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
-class ClassroomGroupEloquentModel extends Model
+class ClassRoomGroupEloquentModel extends Model
 {
     use HasFactory;
 

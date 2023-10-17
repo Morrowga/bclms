@@ -103,8 +103,13 @@ class PathwayRepository implements PathwayRepositoryInterface
 
         $storybooks = StoryBookEloquentModel::with(['pathways' => function ($query) use ($pathway_id) {
             $query->where('pathway_id', $pathway_id);
-        }])->whereIn('id', $array)->paginate(2);
+        }])->whereIn('id', $array)->get();
+        $total_book_count = count($storybooks);
+        $datas = array_chunk($storybooks->toArray(), 2);
 
-        return $storybooks;
+        return [
+            "data" => $datas,
+            "total" => $total_book_count
+        ];
     }
 }
