@@ -48,7 +48,6 @@ async function fetchData() {
 
 function handleSlideChange(swiper) {
     currentPage.value = swiper.activeIndex;
-    console.log(totalPage.value);
     let results = datas.value[swiper.activeIndex].map((book, index) => {
         return {
             id: book.id,
@@ -150,6 +149,9 @@ const swiperOptions = {
         },
     },
     // Other Swiper configuration options
+};
+const printCons = (index) => {
+    console.log(index);
 };
 onMounted(() => {
     // Load initial data for page 1
@@ -268,9 +270,9 @@ onMounted(() => {
                         <!-- <v-img :src="currentPageData[1].thumbnail_img == '' ? '/images/toycard.png' : currentPageData[0].thumbnail_img" class="card2" width="300" height="200"></v-img> -->
                         <v-img
                             :class="
-                                currentPage.length > 1
-                                    ? 'curerntfp' + currentPage + ' d-none'
-                                    : 'currentfp' + currentPage
+                                currentPageData.length > 1
+                                    ? 'currentfp' + index
+                                    : 'currentfp' + index + ' d-none'
                             "
                             src="/images/footprint4.png"
                             class="footprint3"
