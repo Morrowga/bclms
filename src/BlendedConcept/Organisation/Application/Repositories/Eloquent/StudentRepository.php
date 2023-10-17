@@ -34,50 +34,55 @@ class StudentRepository implements StudentRepositoryInterface
         try {
             $org_id = auth()->user()->organisation_id;
             $organisation = OrganisationEloquentModel::find($org_id);
-            dd($organisation->load('subscription.b2b_subscription'));
+            $organisation->load('subscription.b2b_subscription');
+            $total_students_licenses = $organisation->subscription->b2b_subscription->num_student_license;
+            $current_student_count = StudentEloquentModel::where('organisation_id', $org_id)->count();
+            $coming_student_count = $current_student_count + 1;
+            if ($total_students_licenses >= $coming_student_count) {
+                $create_user_data = [
+                    'first_name' => $student->first_name,
+                    'last_name' => $student->last_name,
 
-            $create_user_data = [
-                'first_name' => $student->first_name,
-                'last_name' => $student->last_name,
+                    'role_id' => 6,
+                    'password' => 'password'
+                ];
+                $create_parent_data = [
+                    'first_name' => $student->parent_first_name,
+                    'last_name' => $student->parent_last_name,
+                    'contact_number' => $student->contact_number,
+                    'email' => $student->email,
+                    'role_id' => 7,
+                    'password' => 'password'
+                ];
+                $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
-                'role_id' => 6,
-                'password' => 'password'
-            ];
-            $create_parent_data = [
-                'first_name' => $student->parent_first_name,
-                'last_name' => $student->parent_last_name,
-                'contact_number' => $student->contact_number,
-                'email' => $student->email,
-                'role_id' => 7,
-                'password' => 'password'
-            ];
-            $userParentEloquent = UserEloquentModel::create($create_parent_data);
+                $parentEloquent = ParentUserEloqeuntModel::create([
+                    "user_id" => $userParentEloquent->id,
+                    "organisation_id" => $org_id,
+                    "type" => "B2B"
+                ]);
+                $userEloquent = UserEloquentModel::create($create_user_data);
+                $StudentEloquentModel = StudentMapper::toEloquent($student);
+                $StudentEloquentModel->user_id = $userEloquent->id;
+                $StudentEloquentModel->parent_id = $parentEloquent->parent_id;
+                $StudentEloquentModel->organisation_id = $org_id;
+                $StudentEloquentModel->save();
+                $StudentEloquentModel->disability_types()->sync($student->disability_types);
+                $StudentEloquentModel->learningneeds()->sync($student->learning_needs);
 
-            $parentEloquent = ParentUserEloqeuntModel::create([
-                "user_id" => $userParentEloquent->id,
-                "organisation_id" => $org_id,
-                "type" => "B2B"
-            ]);
-            $userEloquent = UserEloquentModel::create($create_user_data);
-            $StudentEloquentModel = StudentMapper::toEloquent($student);
-            $StudentEloquentModel->user_id = $userEloquent->id;
-            $StudentEloquentModel->parent_id = $parentEloquent->parent_id;
-            $StudentEloquentModel->organisation_id = $org_id;
-            $StudentEloquentModel->save();
-            $StudentEloquentModel->disability_types()->sync($student->disability_types);
-            $StudentEloquentModel->learningneeds()->sync($student->learning_needs);
-
-            // media library save images
-            if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {
-                $StudentEloquentModel->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organisation');
-                $userEloquent->profile_pic = $StudentEloquentModel->getFirstMediaUrl('profile_pics');
-                $userEloquent->update();
+                // media library save images
+                if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {
+                    $StudentEloquentModel->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organisation');
+                    $userEloquent->profile_pic = $StudentEloquentModel->getFirstMediaUrl('profile_pics');
+                    $userEloquent->update();
+                }
+                DB::commit();
+            } else {
+                return throw new \Exception("License not enough to create student");
             }
-
-            DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error->getMessage());
+            return throw new \Exception($error->getMessage());
         }
     }
 

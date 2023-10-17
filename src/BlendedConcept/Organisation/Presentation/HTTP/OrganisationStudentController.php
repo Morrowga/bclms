@@ -44,9 +44,7 @@ class OrganisationStudentController
 
             return to_route('organisations-teacher.index')->with('successMessage', 'Student Created Successfully!');
         } catch (\Exception $error) {
-            dd($error->getMessage());
-
-            return Inertia::render(config('route.organisations-student.create'));
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
