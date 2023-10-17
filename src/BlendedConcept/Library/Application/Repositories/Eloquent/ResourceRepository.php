@@ -96,10 +96,9 @@ class ResourceRepository implements ResourceRepositoryInterface
 
                 $usedStorageBytes = MediaEloquentModel::where('collection_name', 'videos')
                     ->where('organisation_id', $organisation_id)
-                    ->where('teacher_id', '!=', null)
+                    ->where('teacher_id', null)
                     ->where('status', 'active')
                     ->sum('size');
-
 
                 $totalStorageLimit = $totalStorage - $teacherStorages;
 

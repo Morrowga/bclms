@@ -156,8 +156,8 @@ return [
      * dependency.
      */
 
-    'ffmpeg_path' => env('FFMPEG_PATH', 'C:\ffmpeg\bin\ffmpeg.exe'),
-    'ffprobe_path' => env('FFPROBE_PATH', 'C:\ffmpeg\bin\ffprobe.exe'),
+    'ffmpeg_path' => env('FFMPEG_PATH', '/opt/homebrew/bin/ffmpeg'),
+    'ffprobe_path' => env('FFPROBE_PATH', '/opt/homebrew/bin/ffprobe'),
     // /opt/homebrew/bin/ffmpeg
     /*
      * Here you can override the class names of the jobs used by this package. Make sure

@@ -261,7 +261,7 @@ const calculateProgress = (used, total) => {
                                 <VCol cols="6">
                                     <VTextField
                                         rounded
-                                        placeholder="Search User ..."
+                                        placeholder="Search Resource ..."
                                         density="compact"
                                     />
                                 </VCol>
