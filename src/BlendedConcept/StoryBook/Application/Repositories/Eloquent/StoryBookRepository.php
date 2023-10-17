@@ -245,7 +245,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             $query->whereHas('storybook_assigments', function ($queryTwo) use ($student_id) {
                 $queryTwo->where('storybook_assignments.student_id', $student_id);
             });
-        }, 'result'])->orderBy('id', 'desc')
+        }, 'result', 'book_versions.storybook_assigments'])->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10);
 
         // dd($books[0]);
@@ -261,7 +261,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                     $query->whereHas('storybook_assigments', function ($queryTwo) use ($student_id) {
                         $queryTwo->where('storybook_assignments.student_id', $student_id);
                     });
-                }]);
+                }, 'book_versions.storybook_assigments']);
             }])->paginate($filters['perPage'] ?? 10);
 
         return $book_playlists;
