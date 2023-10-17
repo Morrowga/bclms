@@ -359,7 +359,7 @@ onMounted(() => {
                             color="#FF6262"
                         ></v-progress-linear>
                     </div>
-                    <div>
+                    <div class="coin-section">
                         <span class="progress-num-text ruddy-bold ml-2">
                             {{ props.pathway.num_silver_coins }}</span
                         >
@@ -555,5 +555,8 @@ onMounted(() => {
     position: absolute !important;
     left: 26.5% !important;
     top: 26%;
+}
+.coin-section {
+    padding: 0 15px;
 }
 </style>
