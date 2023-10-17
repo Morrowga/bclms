@@ -5,13 +5,14 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps, ref } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import axios from "axios";
-
-let props = defineProps(["flash", "auth"]);
+let props = defineProps(["flash", "auth", "pathway"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const active = ref("assigned");
 const currentPage = ref(0);
 const totalPage = ref("");
+const totalBook = ref(0);
+const progress = computed(() => props.pathway?.students?.[0]?.pivot?.progress);
 const currentPageData = ref([]);
 const datas = ref([]);
 // Function to handle slide change
@@ -43,9 +44,9 @@ async function fetchData() {
         console.error("Error fetching data:", error);
     }
 }
-
 function handleSlideChange(swiper) {
     currentPage.value = swiper.activeIndex;
+    console.log(totalPage.value);
     let results = datas.value[swiper.activeIndex].map((book, index) => {
         return {
             id: book.id,
@@ -58,15 +59,12 @@ function handleSlideChange(swiper) {
     });
     currentPageData.value = results;
 }
-
 function calculatePercentageByCount(specificCount, totalCount) {
     if (totalCount === 0) {
         return 0; // To avoid division by zero error
     }
-
     return (specificCount / totalCount) * 100;
 }
-
 function calculateCountFromPercentage(percent, totalCount) {
     return Math.round((percent / 100) * totalCount);
 }
@@ -77,7 +75,6 @@ const bookType = (book_progress) => {
         totalBook.value
     );
     let prev_count = current_count - 1;
-
     let previous_progress = calculatePercentageByCount(
         prev_count,
         totalBook.value
@@ -95,7 +92,6 @@ const bookType = (book_progress) => {
         }
     } else {
         let first_progress = calculatePercentageByCount(1, totalBook.value);
-
         if (book_progress > first_progress) {
             return "lock";
         }
@@ -108,10 +104,8 @@ const setCookie = (value) => {
     var expirationDate = new Date();
     expirationDate.setDate(expirationDate.getDate() + 1);
     var expires = "expires=" + expirationDate.toUTCString();
-
     var cookieString =
         cookieName + "=" + cookieValue + ";" + expires + ";path=/";
-
     document.cookie = cookieString;
 };
 const readPathwayBook = (book) => {
@@ -130,7 +124,6 @@ const changePhoto = (book) => {
         return "/images/Play Button.png";
     }
 };
-
 const dynamicClass = (book_progress) => {
     let value = bookType(book_progress);
     if (value == "lock") {
@@ -147,9 +140,6 @@ const swiperOptions = {
         },
     },
     // Other Swiper configuration options
-};
-const printCons = (index) => {
-    console.log(index);
 };
 onMounted(() => {
     // Load initial data for page 1
@@ -197,7 +187,13 @@ onMounted(() => {
                             height="180"
                         ></v-img>
                         <div class="card1">
-                            <VCard class="storybook-story">
+                            <VCard
+                                :class="
+                                    dynamicClass(
+                                        currentPageData[0].own_progress
+                                    )
+                                "
+                            >
                                 <v-img
                                     :src="
                                         currentPageData[0].thumbnail_img == ''
@@ -210,15 +206,9 @@ onMounted(() => {
                                 <div class="d-flex justify-center">
                                     <img
                                         @click="
-                                            () =>
-                                                router.get(
-                                                    route(
-                                                        'storybooks.show',
-                                                        currentPageData[0].id
-                                                    )
-                                                )
+                                            readPathwayBook(currentPageData[0])
                                         "
-                                        src="/images/Play Button.png"
+                                        :src="changePhoto(currentPageData[0])"
                                         class="playButton"
                                         alt=""
                                     />
@@ -226,9 +216,14 @@ onMounted(() => {
                             </VCard>
                         </div>
                         <!-- <v-img :src="currentPageData[0].thumbnail_img == '' ? '/images/toycard.png' : currentPageData[0].thumbnail_img" class="card1" width="300" height="200"></v-img> -->
-
                         <div class="card2" v-if="currentPageData.length > 1">
-                            <VCard class="storybook-story">
+                            <VCard
+                                :class="
+                                    dynamicClass(
+                                        currentPageData[1].own_progress
+                                    )
+                                "
+                            >
                                 <v-img
                                     :src="
                                         currentPageData[1].thumbnail_img == ''
@@ -241,22 +236,15 @@ onMounted(() => {
                                 <div class="d-flex justify-center">
                                     <img
                                         @click="
-                                            () =>
-                                                router.get(
-                                                    route(
-                                                        'storybooks.show',
-                                                        currentPageData[0].id
-                                                    )
-                                                )
+                                            readPathwayBook(currentPageData[1])
                                         "
-                                        src="/images/Play Button.png"
+                                        :src="changePhoto(currentPageData[1])"
                                         class="playButton"
                                         alt=""
                                     />
                                 </div>
                             </VCard>
                         </div>
-
                         <v-img
                             v-if="currentPageData.length > 1"
                             src="/images/footprint2.png"
@@ -267,9 +255,9 @@ onMounted(() => {
                         <!-- <v-img :src="currentPageData[1].thumbnail_img == '' ? '/images/toycard.png' : currentPageData[0].thumbnail_img" class="card2" width="300" height="200"></v-img> -->
                         <v-img
                             :class="
-                                currentPageData.length > 1
-                                    ? 'currentfp' + index
-                                    : 'currentfp' + index + ' d-none'
+                                currentPage.length > 1
+                                    ? 'curerntfp' + currentPage + ' d-none'
+                                    : 'currentfp' + currentPage
                             "
                             src="/images/footprint4.png"
                             class="footprint3"
@@ -285,22 +273,28 @@ onMounted(() => {
                     <v-img src="/images/toycard.png" class="card2" width="300" height="200"></v-img>
                 </div> -->
             </div>
-
             <div class="d-flex justify-center">
                 <div class="progress d-flex justify-center">
                     <span class="progress-text ruddy-bold ml-5 mt-2"
                         >Progress</span
                     >
-                    <div class="mt-5">
-                        <img
+                    <div class="mt-5 progressimg">
+                        <!-- <img
                             src="/images/Progress Bars.png"
                             class="progressimg ml-3"
                             alt=""
-                        />
+                        /> -->
+                        <v-progress-linear
+                            class="mt-3 mx-2"
+                            v-model="progress"
+                            height="10"
+                            bg-color="#FF6262"
+                            color="#FF6262"
+                        ></v-progress-linear>
                     </div>
                     <div>
                         <span class="progress-num-text ruddy-bold ml-2">
-                            21</span
+                            {{ props.pathway.num_silver_coins }}</span
                         >
                         <img
                             src="/images/chipcoin.png"
@@ -309,7 +303,9 @@ onMounted(() => {
                             height="25"
                             alt=""
                         />
-                        <span class="progress-num-text ruddy-bold ml-5">1</span>
+                        <span class="progress-num-text ruddy-bold ml-5">
+                            {{ props.pathway.num_gold_coins }}</span
+                        >
                         <img
                             src="/images/chipcoin2.png"
                             class="mr-5"
@@ -323,18 +319,15 @@ onMounted(() => {
         </section>
     </StudentLayout>
 </template>
-
 <style lang="scss">
 .pathway .layout-page-content {
     margin: 0 !important;
     padding: 0 !important;
 }
-
 // .scroll-container {
 //     overflow-x: auto;       /* Enable horizontal scrolling */
 //     white-space: nowrap;   /* Prevent content from wrapping */
 // }
-
 // .scroll-content {
 //     display: inline-block; /* Display children in a row */
 //     margin-right: 20px;    /* Add spacing between content */
@@ -342,42 +335,35 @@ onMounted(() => {
 .swiper-path {
     height: 75vh;
 }
-
 .card1 {
     position: absolute !important;
     left: 29% !important;
     top: 43%;
 }
-
 .card2 {
     position: absolute !important;
     left: 69% !important;
     top: 12%;
 }
-
 .startmap {
     position: absolute !important;
     top: 40%;
 }
-
 .footprint1 {
     position: absolute !important;
     left: 15% !important;
     top: 40%;
 }
-
 .footprint2 {
     position: absolute !important;
     left: 48% !important;
     top: 26%;
 }
-
 .footprint3 {
     position: absolute !important;
     left: 91% !important;
     top: 15.5%;
 }
-
 .progress-num-text {
     color: #fff !important;
     font-size: 30px !important;
@@ -386,7 +372,6 @@ onMounted(() => {
     line-height: 74px !important; /* 123.333% */
     text-transform: capitalize;
 }
-
 .progress-text {
     color: var(--white, #fff) !important;
     font-size: 30px !important;
@@ -395,18 +380,15 @@ onMounted(() => {
     line-height: 52px !important; /* 130% */
     text-transform: capitalize;
 }
-
 .progressimg {
     width: 170px;
 }
-
 .progress {
     border-radius: 30px 30px 0px 0px;
     background: var(--primary, #3749e9);
     position: absolute;
     bottom: 0;
 }
-
 .storybook-story {
     justify-content: center;
     width: 300px;
@@ -416,22 +398,30 @@ onMounted(() => {
     border: 5px solid var(--white, #fff);
     backdrop-filter: blur(2px);
 }
-
+.storybook-story-lock {
+    justify-content: center;
+    width: 300px;
+    align-items: center;
+    height: auto !important;
+    border-radius: 30px;
+    border: 5px solid var(--pathway, #ff6262);
+    backdrop-filter: blur(2px);
+    background: black;
+}
 .showimg-path {
     object-fit: cover;
     height: 230px;
 }
-
 .playButton {
     position: absolute;
     top: 28%;
     z-index: 1;
+    width: 108px;
+    height: 109px;
 }
-
 // .pathway-section{
 //     padding: 0;
 // }
-
 .inclusive-chip {
     background: #3749e8 !important;
     padding: 20px !important;
@@ -443,17 +433,14 @@ onMounted(() => {
     line-height: 74px !important; /* 123.333% */
     text-transform: capitalize;
 }
-
 .backarrow {
     cursor: pointer;
     width: 40px !important;
     height: 40px !important;
 }
-
 .app-user-search-filter {
     inline-size: 24.0625rem;
 }
-
 .overlay-container {
     position: absolute;
     top: 8%;
@@ -464,20 +451,16 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
 }
-
 .user-data-table table.vgt-table {
     background-color: rgb(var(--v-theme-surface));
     border-color: rgb(var(--v-theme-surface));
 }
-
 .user-data-table table.vgt-table td {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
-
 .textcolor {
     color: #fff;
 }
-
 .user-list-name:not(:hover) {
     color: rgba(var(--v-theme-on-background), var(--v-high-emphasis-opacity));
 }
