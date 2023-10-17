@@ -28,7 +28,6 @@ class StoreResourceRequest extends FormRequest
                 ],
             ];
         }
-        dd($this->checkOrgStorageLimit());
         return [
             'filename' => [
                 'required',
