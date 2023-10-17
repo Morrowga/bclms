@@ -15,7 +15,7 @@ class StoreResourceRequest extends FormRequest
 
     public function rules()
     {
-        if(auth()->user()->role->name == 'Teacher') {
+        if (auth()->user()->role->name == 'Teacher') {
             return [
                 'filename' => [
                     'required',
@@ -27,7 +27,6 @@ class StoreResourceRequest extends FormRequest
                 ],
             ];
         }
-
         return [
             'filename' => [
                 'required',
@@ -38,8 +37,6 @@ class StoreResourceRequest extends FormRequest
                 'max:' . $this->checkOrgStorageLimit() // Validate file size against the storage size
             ],
         ];
-
-
     }
 
     public function messages()
@@ -74,11 +71,12 @@ class StoreResourceRequest extends FormRequest
         return (int) $leftStorageLimit;
     }
 
-    public function checkTeacherStorageLimit(){
+    public function checkTeacherStorageLimit()
+    {
         $allocatedStorage = auth()->user()->b2bUser->allocated_storage_limit === null ?  0 : (int) auth()->user()->b2bUser->allocated_storage_limit * 1024; // Retrieve the allocated storage size for the user
         $teacherEloquent = auth()->user()->b2bUser;
         $userEloquentModel = auth()->user();
-        if($allocatedStorage > 0) {
+        if ($allocatedStorage > 0) {
             $usedStorage = MediaEloquentModel::where(function ($query) use ($teacherEloquent, $userEloquentModel) {
                 $query->where('collection_name', 'videos')
                     ->where('organisation_id', $teacherEloquent->organisation_id)
@@ -86,10 +84,10 @@ class StoreResourceRequest extends FormRequest
                         $innerQuery->where('teacher_id', $userEloquentModel->id);
                     })
                     ->whereIn('status', ['active', 'requested']);
-                })
+            })
                 ->sum('size');
 
-            if($usedStorage > 0) {
+            if ($usedStorage > 0) {
                 $usedKilobytes = $usedStorage / 1024;
 
                 $leftStorageLimit = $allocatedStorage - $usedKilobytes;
