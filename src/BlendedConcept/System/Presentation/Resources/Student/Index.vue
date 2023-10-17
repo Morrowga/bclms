@@ -133,9 +133,9 @@ onMounted(() => {
                             </VCol>
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
-                                    <p class="value-student pppangram-medium">
-                                        Switch Single
-                                    </p>
+                                    <span class="value-student pppangram-medium"
+                                        >{{ userData.student.device.name ?? 'No Device' }}</span
+                                    >
                                 </div>
                             </VCol>
                         </VRow>
