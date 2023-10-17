@@ -10,6 +10,7 @@ use Src\BlendedConcept\Organisation\Application\Mappers\StudentMapper;
 use Src\BlendedConcept\Organisation\Domain\Model\Entities\Student;
 use Src\BlendedConcept\Organisation\Domain\Repositories\StudentRepositoryInterface;
 use Src\BlendedConcept\Organisation\Domain\Resources\StudentResource;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
@@ -32,6 +33,9 @@ class StudentRepository implements StudentRepositoryInterface
         DB::beginTransaction();
         try {
             $org_id = auth()->user()->organisation_id;
+            $organisation = OrganisationEloquentModel::find($org_id);
+            dd($organisation->load('subscription.b2b_subscription'));
+
             $create_user_data = [
                 'first_name' => $student->first_name,
                 'last_name' => $student->last_name,

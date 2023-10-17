@@ -28,6 +28,7 @@ class StoreResourceRequest extends FormRequest
                 ],
             ];
         }
+        dd($this->checkOrgStorageLimit());
         return [
             'filename' => [
                 'required',
@@ -70,7 +71,7 @@ class StoreResourceRequest extends FormRequest
             $totalStorageLimit = $totalStorage - $teacherStorageKiloBytes;
 
             $usedKilobytes = $usedStorage / 1024;
-
+            dd($usedKilobytes);
             $leftStorageLimit = $totalStorageLimit - $usedKilobytes;
         };
 
