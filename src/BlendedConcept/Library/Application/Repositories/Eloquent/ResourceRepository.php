@@ -92,6 +92,7 @@ class ResourceRepository implements ResourceRepositoryInterface
                 $totalStorage = $org_admin->organisation->subscription->b2b_subscriptions->isEmpty() ? 0  : $org_admin->organisation->subscription->b2b_subscriptions->first()->storage_limit;
 
                 $organisation_id = $org_admin->organisation->id;
+                $teacherStorages = TeacherEloquentModel::where('organisation_id', $organisation_id)->sum('allocated_storage_limit');
 
                 $usedStorageBytes = MediaEloquentModel::where('collection_name', 'videos')
                     ->where('organisation_id', $organisation_id)
@@ -99,13 +100,16 @@ class ResourceRepository implements ResourceRepositoryInterface
                     ->where('status', 'active')
                     ->sum('size');
 
+
+                $totalStorageLimit = $totalStorage - $teacherStorages;
+
                 $usedStorage = $usedStorageBytes / 1024 / 1024;
 
-                $leftStorage = $totalStorage - $usedStorage;
+                $leftStorage = $totalStorageLimit - $usedStorage;
 
                 return [
                     "total" => $totalStorage,
-                    "used" => number_format($usedStorage, 2),
+                    "used" => number_format($usedStorage + $teacherStorages, 2),
                     "left" => $leftStorage
                 ];
                 break;
