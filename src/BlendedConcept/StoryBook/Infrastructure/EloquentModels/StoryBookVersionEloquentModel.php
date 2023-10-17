@@ -43,7 +43,7 @@ class StoryBookVersionEloquentModel extends Model
 
     public function storybook()
     {
-        return $this->belongsTo(StoryBookEloquentModel::class, 'storybook_id');
+        return $this->belongsTo(StoryBookEloquentModel::class, 'storybook_id')->with('devices');
     }
     public function teacher()
     {

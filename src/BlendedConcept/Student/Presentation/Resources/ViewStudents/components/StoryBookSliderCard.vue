@@ -33,15 +33,12 @@ const setImage = () => {
                 {{ data.description }}
             </p>
             <div class="chip-group">
-                <div class="chip green">
-                    <div class="chip-content">Chip Content</div>
-                </div>
-
-                <div class="chip green">
-                    <div class="chip-content">Chip Content</div>
-                </div>
-                <div class="chip green">
-                    <div class="chip-content">Chip Content</div>
+                <div
+                    class="chip green"
+                    v-for="device in data.devices"
+                    :key="device.id"
+                >
+                    <div class="chip-content">{{ device.name }}</div>
                 </div>
             </div>
         </v-card-text>

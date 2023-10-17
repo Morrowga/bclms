@@ -107,7 +107,7 @@ class StudentRepository implements StudentRepositoryInterface
     {
 
         $student = new StudentResources(StudentEloquentModel::where('student_id', $id)
-            ->with(['user', 'learningneeds', 'disability_types', 'playlists.storybooks', 'parent', 'book_versions.storybook'])
+            ->with(['user', 'learningneeds', 'disability_types', 'playlists.storybooks', 'parent', 'book_versions.storybook', 'device'])
             ->orderBy('student_id', 'desc')
             ->first());
         return $student;
