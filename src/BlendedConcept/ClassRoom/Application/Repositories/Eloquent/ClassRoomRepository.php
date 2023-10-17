@@ -4,12 +4,13 @@ namespace Src\BlendedConcept\ClassRoom\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
-use Src\BlendedConcept\ClassRoom\Domain\Model\Entities\ClassRoomGroup;
-use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
+use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
 use Src\BlendedConcept\ClassRoom\Domain\Resources\ClassRoomResource;
 use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
+use Src\BlendedConcept\ClassRoom\Domain\Model\Entities\ClassRoomGroup;
 use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomGroupMapper;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
@@ -138,7 +139,7 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
         return $classrooms;
     }
 
-    public function createClassRoomGroup(ClassroomGroup $classroomGroup)
+    public function createClassRoomGroup(ClassRoomGroup $classroomGroup)
     {
 
         DB::beginTransaction();

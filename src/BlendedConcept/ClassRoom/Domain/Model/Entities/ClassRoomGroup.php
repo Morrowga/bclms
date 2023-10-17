@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\ClassRoom\Domain\Model\Entities;
 
 use Src\Common\Domain\Entity;
 
-class ClassroomGroup extends Entity
+class ClassRoomGroup extends Entity
 {
     public function __construct(
         public readonly ?int $id,
