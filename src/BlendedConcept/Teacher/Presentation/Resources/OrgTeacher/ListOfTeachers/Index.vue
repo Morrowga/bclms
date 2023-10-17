@@ -2,7 +2,12 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import TeacherStorageField from "./components/TeacherStorageField.vue";
 
-const props = defineProps(["organisation"]);
+const props = defineProps([
+    "organisation",
+    "org_used_storage",
+    "teacher_used_storage",
+    "teachers",
+]);
 
 const getOrgStorageLimit = () => {
     if (props.organisation?.subscription?.b2b_subscription) {
@@ -13,16 +18,35 @@ const getOrgStorageLimit = () => {
     }
 };
 
-const totalTeacherUsage = () => {
-    // const limit_array = props.organisation?.teachers?.map(
-    //     (teacher) => teacher.allocated_storage_limit
-    // );
-    // let sum = 0;
-    // limit_array.forEach((num) => {
-    //     sum += num;
-    // });
-    // return sum;
-    return 0;
+const calculatePercent = (specific) => {
+    let total = getOrgStorageLimit();
+    if (total === 0) {
+        return 0; // To avoid division by zero error
+    }
+
+    return (specific / total) * 100;
+};
+
+const allTeacherLeftStorage = () => {
+    let array = props.teachers.map((teacher) => teacher.left_storage);
+    let totalStorage = array.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+    );
+    return totalStorage;
+};
+const getTotalUsed = () => {
+    return (
+        props.org_used_storage +
+        props.teacher_used_storage +
+        allTeacherLeftStorage()
+    );
+};
+
+const getAvaliableStorage = () => {
+    let totalStorage = getOrgStorageLimit();
+    let usedStorage = getTotalUsed();
+    return totalStorage - usedStorage;
 };
 </script>
 
@@ -53,9 +77,9 @@ const totalTeacherUsage = () => {
                         Total Storage Usage
                     </h1>
                     <div class="tiggie-subtitle">
-                        {{ totalTeacherUsage() }} MB of
-                        {{ getOrgStorageLimit() }} MB allocated to
-                        teachers,130MB available
+                        {{ getTotalUsed() }} MB of {{ getOrgStorageLimit() }} MB
+                        allocated to teachers,{{ getAvaliableStorage() }} MB
+                        available
                     </div>
                 </div>
                 <div class="d-flex justify-space-between align-center">
@@ -68,19 +92,31 @@ const totalTeacherUsage = () => {
                         <v-sheet
                             color="primary"
                             height="100%"
-                            :width="`${(20 / 100) * 100}%`"
+                            :width="`${
+                                (calculatePercent(props.org_used_storage) /
+                                    100) *
+                                100
+                            }%`"
                         />
                         <v-sheet
                             v-if="10"
                             color="teal"
                             height="100%"
-                            :width="`${(30 / 100) * 100}%`"
+                            :width="`${
+                                (calculatePercent(props.teacher_used_storage) /
+                                    100) *
+                                100
+                            }%`"
                         />
                         <v-sheet
                             v-if="10"
                             color="sun-yellow"
                             height="100%"
-                            :width="`${(30 / 100) * 100}%`"
+                            :width="`${
+                                (calculatePercent(allTeacherLeftStorage()) /
+                                    100) *
+                                100
+                            }%`"
                         />
                     </v-sheet>
                 </div>
@@ -124,7 +160,7 @@ const totalTeacherUsage = () => {
             <VRow>
                 <VCol
                     cols="6"
-                    v-for="(teacher, index) in props.organisation.teachers"
+                    v-for="(teacher, index) in props.teachers"
                     :key="index"
                 >
                     <TeacherStorageField :key="index" :data="teacher" />

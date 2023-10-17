@@ -10,6 +10,13 @@ const setImage = () => {
         ? "/images/teacherimg.png"
         : props.data?.user?.profile_pic;
 };
+const calculatePercent = (specific, total) => {
+    if (total === 0) {
+        return 0; // To avoid division by zero error
+    }
+
+    return (specific / total) * 100;
+};
 </script>
 <template>
     <VCard>
@@ -21,7 +28,7 @@ const setImage = () => {
                 <div class="d-flex align-center justify-space-between">
                     <p class="tiggie-teacher-label fs-24 t-black">
                         Allocated Storage:
-                        {{ props.data.allocated_storage_limit }} MB
+                        {{ props.data.allocated_storage_limit ?? 0 }} MB
                     </p>
                     <!-- <div class="d-flex">
                         <VLabel class="tiggie-teacher-label">200 MB</VLabel>
@@ -35,10 +42,17 @@ const setImage = () => {
                         class="d-flex my-4 rounded overflow-hidden"
                     >
                         <v-sheet
-                            class="pt-3 pl-3"
+                            class="pt-3"
                             color="teal"
                             height="100%"
-                            :width="`${(50 / 100) * 100}%`"
+                            :width="`${
+                                (calculatePercent(
+                                    props.data.used_storage,
+                                    props.data.allocated_storage_limit
+                                ) /
+                                    100) *
+                                100
+                            }%`"
                         />
                     </v-sheet>
                 </div>

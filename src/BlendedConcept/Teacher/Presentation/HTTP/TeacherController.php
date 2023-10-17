@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\Teacher\Presentation\HTTP;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\Users\GetUserName;
@@ -118,9 +119,46 @@ class TeacherController extends Controller
     {
         $organisation_id = auth()->user()->organisation_id;
         $organisation = OrganisationEloquentModel::find($organisation_id);
+        $orgusedStorage = MediaEloquentModel::where('collection_name', 'videos')
+            ->where('organisation_id', $organisation_id)
+            ->where('teacher_id', null)
+            ->where('status', 'active')
+            ->sum('size');
+
+        $teacherUsedStorage = MediaEloquentModel::where('collection_name', 'videos')
+            ->where('organisation_id', $organisation_id)
+            ->whereNotNull('teacher_id')
+            ->where('status', 'active')
+            ->sum('size');
         $organisation = $organisation->load('teachers.user', 'subscription.b2b_subscription');
+        $org_used_storage = $orgusedStorage == 0 ? $orgusedStorage : (int)($orgusedStorage / 1024 / 1024);
+        $teacher_used_storage = $teacherUsedStorage == 0 ? $teacherUsedStorage : (int)($teacherUsedStorage / 1024 / 1024);
+
+        $data = $organisation->teachers;
+        $array_data = $data->map(function ($teacher) use ($organisation_id) {
+            $usedStorage = MediaEloquentModel::where(function ($query) use ($organisation_id, $teacher) {
+                $query->where('collection_name', 'videos')
+                    ->where('organisation_id', $organisation_id)
+                    ->where('teacher_id', $teacher->user->id)
+                    ->whereIn('status', ['active', 'requested']);
+            })
+                ->sum('size');
+            $used_storage_mb = $usedStorage == 0 ? $usedStorage : (int)($usedStorage / 1024 / 1024);
+            $left_storage = $teacher->allocated_storage_limit - $used_storage_mb;
+            return [
+                "id" => $teacher->teacher_id,
+                "used_storage" => $used_storage_mb,
+                "allocated_storage_limit" => $teacher->allocated_storage_limit,
+                "user" => $teacher->user,
+                "organisation_id" => $teacher->organisation_id,
+                "left_storage" => $left_storage
+            ];
+        });
         return Inertia::render(config('route.listofteacher.index'), [
-            'organisation' => $organisation
+            'organisation' => $organisation,
+            'org_used_storage' => $org_used_storage,
+            'teacher_used_storage' => $teacher_used_storage,
+            'teachers' => $array_data
         ]);
     }
 

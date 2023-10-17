@@ -34,6 +34,14 @@ const setImage = () => {
         ? "/images/teacherimg.png"
         : props.data?.user?.profile_pic;
 };
+
+const calculatePercent = (specific, total) => {
+    if (total === 0) {
+        return 0; // To avoid division by zero error
+    }
+
+    return (specific / total) * 100;
+};
 </script>
 
 <template>
@@ -75,16 +83,25 @@ const setImage = () => {
                                 width="100%"
                                 height="42px"
                                 color="#BFC0C1"
-                                class="d-flex my-4 rounded overflow-hidden"
+                                class="d-flex my-4 rounded overflow-hidden edit-percent"
                             >
                                 <v-sheet
-                                    class="pt-3 ml-3"
-                                    color="primary"
+                                    class="pt-3"
+                                    color="teal"
                                     height="100%"
-                                    :width="`${(0 / 100) * 100}%`"
+                                    :width="`${
+                                        (calculatePercent(
+                                            props.data.used_storage,
+                                            props.data.allocated_storage_limit
+                                        ) /
+                                            100) *
+                                        100
+                                    }%`"
                                 >
-                                    0 MB
                                 </v-sheet>
+                                <span class="mx-3 text-white storage-value"
+                                    >{{ props.data.used_storage }} MB</span
+                                >
                             </v-sheet>
                         </div>
                         <div class="d-flex gap-3 align-center">
@@ -122,3 +139,14 @@ const setImage = () => {
         </VForm>
     </VDialog>
 </template>
+<style scoped>
+.edit-percent {
+    position: relative;
+}
+.storage-value {
+    position: absolute;
+    left: 0 !important;
+    right: 0 !important;
+    top: 10px !important;
+}
+</style>
