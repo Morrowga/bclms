@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
-class ClassroomGroupEloquentModel extends Model
+class ClassRoomGroupEloquentModel extends Model
 {
     use HasFactory;
 
