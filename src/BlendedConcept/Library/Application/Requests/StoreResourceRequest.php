@@ -5,6 +5,7 @@ namespace Src\BlendedConcept\Library\Application\Requests;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class StoreResourceRequest extends FormRequest
 {
@@ -70,7 +71,7 @@ class StoreResourceRequest extends FormRequest
             $teacherStorageKiloBytes = $teacherStorages * 1024;
 
             $totalStorageLimit = $totalStorage - $teacherStorageKiloBytes;
-            
+
             $usedKilobytes = $usedStorage / 1024;
 
             $leftStorageLimit = $totalStorageLimit - $usedKilobytes;
