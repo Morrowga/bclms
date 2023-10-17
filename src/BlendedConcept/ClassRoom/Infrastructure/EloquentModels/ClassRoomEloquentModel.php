@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomGroupEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 
 class ClassroomEloquentModel extends Model implements HasMedia
@@ -66,6 +67,6 @@ class ClassroomEloquentModel extends Model implements HasMedia
 
     public function groups()
     {
-        return $this->hasMany(ClassroomGroupEloquentModel::class, 'classroom_id')->with('students');
+        return $this->hasMany(ClassRoomGroupEloquentModel::class, 'classroom_id')->with('students');
     }
 }

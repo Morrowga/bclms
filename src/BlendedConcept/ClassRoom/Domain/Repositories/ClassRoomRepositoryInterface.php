@@ -5,7 +5,7 @@ namespace Src\BlendedConcept\ClassRoom\Domain\Repositories;
 use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomData;
 use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomGroupData;
 use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
-use Src\BlendedConcept\ClassRoom\Domain\Model\Entities\ClassroomGroup;
+use Src\BlendedConcept\ClassRoom\Domain\Model\Entities\ClassRoomGroup;
 
 interface ClassRoomRepositoryInterface
 {
@@ -21,7 +21,7 @@ interface ClassRoomRepositoryInterface
 
     public function getOrgTeacherClassrooms($filters);
 
-    public function createClassRoomGroup(ClassroomGroup $classroomGroup);
+    public function createClassRoomGroup(ClassRoomGroup $classroomGroup);
 
     public function updateClassRoomGroup(ClassRoomGroupData $classroomGroupData);
 }

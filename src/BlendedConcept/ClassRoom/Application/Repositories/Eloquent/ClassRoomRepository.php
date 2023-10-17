@@ -13,7 +13,7 @@ use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
-use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomGroupEloquentModel;
 
 class ClassRoomRepository implements ClassRoomRepositoryInterface
 {

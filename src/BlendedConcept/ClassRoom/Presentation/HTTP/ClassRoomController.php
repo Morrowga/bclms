@@ -18,7 +18,7 @@ use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetClassRoomWithPa
 use Src\BlendedConcept\ClassRoom\Application\UseCases\Queries\GetOrgStudentsWithPagination;
 use Src\BlendedConcept\ClassRoom\Domain\Policies\ClassRoomPolicy;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
-use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomGroupEloquentModel;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgTeacherDashboard;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -229,7 +229,7 @@ class ClassRoomController extends Controller
         }
     }
 
-    public function orgTeacherUpdateGroup(StoreGroupRequest $request, ClassroomGroupEloquentModel $classroomGroup)
+    public function orgTeacherUpdateGroup(StoreGroupRequest $request, ClassRoomGroupEloquentModel $classroomGroup)
     {
         try {
             $updateClassRoomGroup = ClassRoomGroupData::fromRequest($request, $classroomGroup->id);
@@ -242,7 +242,7 @@ class ClassRoomController extends Controller
         }
     }
 
-    public function orgTeacherEditGroup(ClassroomGroupEloquentModel $classroomGroup)
+    public function orgTeacherEditGroup(ClassRoomGroupEloquentModel $classroomGroup)
     {
 
         $filters = request(['search', 'page', 'perPage']);
@@ -254,7 +254,7 @@ class ClassRoomController extends Controller
         ]);
     }
 
-    public function orgTeacherDeleteGroup(ClassroomGroupEloquentModel $classroomGroup)
+    public function orgTeacherDeleteGroup(ClassRoomGroupEloquentModel $classroomGroup)
     {
         try {
             //code...

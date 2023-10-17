@@ -11,7 +11,7 @@ class StoreClassroomGroupCommand implements CommandInterface
     private ClassRoomRepositoryInterface $repository;
 
     public function __construct(
-        private readonly ClassroomGroup $classroomGroup
+        private readonly ClassRoomGroup $classroomGroup
     ) {
         $this->repository = app()->make(ClassRoomRepositoryInterface::class);
     }
