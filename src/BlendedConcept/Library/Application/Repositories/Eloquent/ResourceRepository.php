@@ -108,7 +108,7 @@ class ResourceRepository implements ResourceRepositoryInterface
 
                 return [
                     "total" => $totalStorage,
-                    "used" => number_format($usedStorage + $teacherStorages, 2),
+                    "used" => (int) $usedStorage + $teacherStorages,
                     "left" => $leftStorage
                 ];
                 break;
