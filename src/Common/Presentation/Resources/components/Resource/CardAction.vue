@@ -120,6 +120,23 @@ const publish = () => {
     });
 }
 
+const copyLink = () => {
+    const linkToCopy = props.data.video_url;
+
+    const inputElement = document.createElement('input');
+    inputElement.value = linkToCopy;
+
+    document.body.appendChild(inputElement);
+
+    inputElement.select();
+    inputElement.setSelectionRange(0, 99999);
+
+    document.execCommand('copy');
+
+    document.body.removeChild(inputElement);
+    // props.data.video_url
+}
+
 const fileInput = ref(null);
 
 const openFileInput = () => {
@@ -133,6 +150,9 @@ const openFileInput = () => {
 
             <v-menu activator="parent">
                 <v-list>
+                    <v-list-item @click="copyLink">
+                        <v-list-item-title>Copy Link</v-list-item-title>
+                    </v-list-item>
                     <v-list-item @click="isEditDialogVisible = true">
                         <v-list-item-title>Edit</v-list-item-title>
                     </v-list-item>
