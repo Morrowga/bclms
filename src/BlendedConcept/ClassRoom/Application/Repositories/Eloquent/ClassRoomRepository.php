@@ -4,7 +4,9 @@ namespace Src\BlendedConcept\ClassRoom\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
+use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomData;
 use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
+use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomGroupData;
 use Src\BlendedConcept\ClassRoom\Domain\Resources\ClassRoomResource;
 use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
 use Src\BlendedConcept\ClassRoom\Domain\Model\Entities\ClassRoomGroup;
