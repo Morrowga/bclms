@@ -5,9 +5,11 @@ namespace Src\BlendedConcept\Library\Presentation\HTTP;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Src\Common\Infrastructure\Laravel\Controller;
+use Src\BlendedConcept\Library\Application\Requests\CheckStorageRequest;
 use Src\BlendedConcept\Library\Application\Requests\StoreResourceRequest;
 use Src\BlendedConcept\Library\Application\UseCases\Queries\GetResources;
 use Src\BlendedConcept\Library\Application\Requests\UpdateResourceRequest;
+use Src\BlendedConcept\Library\Application\UseCases\Queries\GetResourceStorage;
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\Library\Application\UseCases\Commands\StoreResourceCommand;
 use Src\BlendedConcept\Library\Application\UseCases\Queries\GetRequestPublishData;
@@ -22,12 +24,14 @@ class ResourceController extends Controller
     {
         try {
             $resources = (new GetResources(auth()->user()))->handle();
+            $resourceStorage = (new GetResourceStorage(auth()->user()))->handle();
 
             if (auth()->user()->organisation_id) {
 
                 $requestPublishData = (new GetRequestPublishData(auth()->user()))->handle();
                 return Inertia::render(config('route.resource.index'), [
                     "resources" => $resources,
+                    "resourceStorage" => $resourceStorage,
                     "requestPublishData" => $requestPublishData
                 ]);
             }
@@ -139,7 +143,7 @@ class ResourceController extends Controller
     }
 
     //Apprve resource
-    public function resourceApprove(Request $request)
+    public function resourceApprove(CheckStorageRequest $request)
     {
         try {
             $resourceApprove = new ResourceActionCommand($request);

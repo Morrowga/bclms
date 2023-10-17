@@ -81,6 +81,84 @@ class ResourceRepository implements ResourceRepositoryInterface
         }
     }
 
+    public function getResourceStorage(UserEloquentModel $userEloquentModel)
+    {
+        $userType = $this->checkUserType($userEloquentModel->id);
+
+        switch ($userType) {
+            case 'Organisation Admin':
+                $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
+
+                $totalStorage = $org_admin->organisation->subscription->b2b_subscriptions->isEmpty() ? 0  : $org_admin->organisation->subscription->b2b_subscriptions->first()->storage_limit;
+
+                $organisation_id = $org_admin->organisation->id;
+
+                $usedStorageBytes = MediaEloquentModel::where('collection_name', 'videos')
+                    ->where('organisation_id', $organisation_id)
+                    ->where('teacher_id', null)
+                    ->where('status', 'active')
+                    ->sum('size');
+
+                $usedStorage = $usedStorageBytes / 1024 / 1024;
+                $leftStorage = $totalStorage - $usedStorage;
+
+                return [
+                    "total" => $totalStorage,
+                    "used" => number_format($usedStorage, 2),
+                    "left" => $leftStorage
+                ];
+                break;
+
+            case 'b2b':
+                $teacherEloquent = TeacherEloquentModel::where('user_id', $userEloquentModel->id)->first();
+
+                $totalStorage = $teacherEloquent->allocated_storage_limit;
+
+                $usedStorageBytes = MediaEloquentModel::where(function ($query) use ($teacherEloquent, $userEloquentModel) {
+                    $query->where('collection_name', 'videos')
+                        ->where('organisation_id', $teacherEloquent->organisation_id)
+                        ->where('teacher_id', $userEloquentModel->id)
+                        ->whereIn('status', ['active', 'requested']);
+                })
+                ->sum('size');
+
+                $usedStorage = $usedStorageBytes / 1024 / 1024;
+
+                $leftStorage = $totalStorage - $usedStorage;
+
+                return [
+                    "total" => $totalStorage,
+                    "used" => number_format($usedStorage, 2),
+                    "left" => $leftStorage
+                ];
+
+                break;
+
+            case 'b2c':
+                $teacherEloquent = TeacherEloquentModel::where('user_id', $userEloquentModel->id)->first();
+
+                $totalStorage = $teacherEloquent->allocated_storage_limit;
+
+                $usedStorageBytes = MediaEloquentModel::where('collection_name', 'videos')
+                    ->where('teacher_id', $userEloquentModel->id)
+                    ->sum('size');
+
+                $usedStorage = $usedStorageBytes / 1024 / 1024;
+
+                $leftStorage = $totalStorage - $usedStorage;
+
+                return [
+                    "total" => $totalStorage,
+                    "used" => number_format($usedStorage, 2),
+                    "left" => $leftStorage
+                ];
+                break;
+
+            default:
+                break;
+        }
+    }
+
     public function getRequestPublishData(UserEloquentModel $userEloquentModel)
     {
         $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
@@ -270,7 +348,6 @@ class ResourceRepository implements ResourceRepositoryInterface
             case 'approve':
                 MediaEloquentModel::whereIn('id', $ids)->update(['status' => 'active', 'teacher_id' => null]);
                 break;
-
             case 'decline':
                 MediaEloquentModel::whereIn('id', $ids)->update(['status' => 'active']);
                 break;
