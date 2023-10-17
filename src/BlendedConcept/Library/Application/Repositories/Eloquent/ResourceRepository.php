@@ -89,7 +89,7 @@ class ResourceRepository implements ResourceRepositoryInterface
             case 'Organisation Admin':
                 $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
 
-                $totalStorage = $org_admin->organisation->subscription->b2b_subscriptions->isEmpty() ? 0  : $org_admin->organisation->subscription->b2b_subscriptions->first()->storage_limit;
+                $totalStorage = $org_admin->organisation->subscription->b2b_subscription === null ? 0  : $org_admin->organisation->subscription->b2b_subscription->storage_limit;
 
                 $organisation_id = $org_admin->organisation->id;
                 $teacherStorages = TeacherEloquentModel::where('organisation_id', $organisation_id)->sum('allocated_storage_limit');

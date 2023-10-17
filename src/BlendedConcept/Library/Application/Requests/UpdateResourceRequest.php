@@ -49,11 +49,11 @@ class UpdateResourceRequest extends FormRequest
 
     public function checkOrgStorageLimit()
     {
-        $subscription = auth()->user()->org_admin->organisation->subscription->b2b_subscriptions;
-        if ($subscription->isEmpty()) {
+        $subscription = auth()->user()->org_admin->organisation->subscription->b2b_subscription;
+        if ($subscription === null) {
             $storageLimit = 1; // Default value when the subscription is empty
         } else {
-            $totalStorage = $subscription->first()->storage_limit * 1024;
+            $totalStorage = $subscription->storage_limit * 1024;
             $organisation_id = auth()->user()->org_admin->organisation->id;
             $teacherStorages = TeacherEloquentModel::where('organisation_id', $organisation_id)->sum('allocated_storage_limit');
             // $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $org_admin->org_admin_id)->first();
