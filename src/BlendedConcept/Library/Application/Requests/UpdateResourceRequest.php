@@ -51,7 +51,7 @@ class UpdateResourceRequest extends FormRequest
     {
         $subscription = auth()->user()->org_admin->organisation->subscription->b2b_subscription;
         if ($subscription === null) {
-            $storageLimit = 1; // Default value when the subscription is empty
+            $leftStorageLimit = 1; // Default value when the subscription is empty
         } else {
             $totalStorage = $subscription->storage_limit * 1024;
             $organisation_id = auth()->user()->org_admin->organisation->id;
