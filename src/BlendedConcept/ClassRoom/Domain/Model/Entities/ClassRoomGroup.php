@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Classroom\Domain\Model\Entities;
+namespace Src\BlendedConcept\ClassRoom\Domain\Model\Entities;
 
 use Src\Common\Domain\Entity;
 

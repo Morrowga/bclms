@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Src\BlendedConcept\ClassRoom\Presentation\HTTP\ClassRoomController;
-use Src\BlendedConcept\Classroom\Presentation\HTTP\ConductLessonController;
-use Src\BlendedConcept\Classroom\Presentation\HTTP\LearningActivityController;
+use Src\BlendedConcept\ClassRoom\Presentation\HTTP\ConductLessonController;
+use Src\BlendedConcept\ClassRoom\Presentation\HTTP\LearningActivityController;
 
 Route::group(['middleware' => ['auth']], function () {
 

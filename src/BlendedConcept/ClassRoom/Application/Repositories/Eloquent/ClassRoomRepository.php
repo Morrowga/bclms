@@ -8,11 +8,11 @@ use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomGroupData;
 use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomGroupMapper;
 use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
 use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
-use Src\BlendedConcept\Classroom\Domain\Model\Entities\ClassroomGroup;
+use Src\BlendedConcept\ClassRoom\Domain\Model\Entities\ClassroomGroup;
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\ClassRoom\Domain\Resources\ClassRoomResource;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
-use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
