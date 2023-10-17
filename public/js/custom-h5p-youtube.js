@@ -570,13 +570,6 @@ H5P.VideoYouTube = (function ($) {
 H5P.videoHandlers = H5P.videoHandlers || [];
 H5P.videoHandlers.push(H5P.VideoYouTube);
 console.log("Youtube");
-document.addEventListener('keydown', function(event) {
-  if (event.code === "Space") {
-      var button = document.querySelector('.h5p-interaction-button');
-      if (button) {
-          button.click();
-      }
-      event.preventDefault();  
-  }
-});
+
+
 

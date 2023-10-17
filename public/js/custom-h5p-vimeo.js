@@ -570,14 +570,3 @@ H5P.VideoVimeo = (function ($) {
   H5P.videoHandlers = H5P.videoHandlers || [];
   H5P.videoHandlers.push(H5P.VideoVimeo);
   console.log("Vimeo");
-  document.addEventListener('keydown', function(event) {
-    if (event.code === "Space") {
-        var button = document.querySelector('.h5p-interaction-button');
-        if (button) {
-            button.click();
-        }
-        event.preventDefault();  
-    }
-  });
-  
-  

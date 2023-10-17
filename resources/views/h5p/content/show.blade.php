@@ -64,7 +64,8 @@
                     "{{ asset('js/custom-h5p-youtube.js') }}",
                     "{{ asset('js/custom-h5p-video.js') }}",
                     "{{ asset('js/custom-h5p-vimeo.js') }}",
-                    "{{ asset('js/custom-h5p-panopto.js') }}"
+                    "{{ asset('js/custom-h5p-panopto.js') }}",
+                    "{{ asset('js/custom-h5p-keydown.js') }}"
                 ];
                 
                 // Add custom scripts
@@ -74,8 +75,56 @@
                 
                 // Output for debugging
                 console.log(H5PIntegration.contents[key].scripts);
+
+                
             }
         });
+        //The ^ means "starts with", so this will select elements with an id that starts with h5p-iframe-.
+        let iframe = document.querySelector('[id^="h5p-iframe-"]');
+
+        function handleKeydown(event) {
+            if (event.code === "Space" || event.code === "Enter") {
+                event.preventDefault();
+                let fullscreenButton = iframe.contentDocument.querySelector('.h5p-control.h5p-fullscreen');
+
+                if (fullscreenButton) {
+                    fullscreenButton.click();
+                } 
+                else {
+                    console.warn('Fullscreen button not found inside the iframe.');
+                }
+
+                //Click screen
+                let playButton = iframe.contentDocument.querySelector('.h5p-splash-outer');
+                if (playButton) {
+                    playButton.click();
+
+                    //Delay and focus the video
+                    setTimeout(() => {
+                        let overlayDiv = iframe.contentDocument.querySelector('.h5p-overlay');
+                        if (overlayDiv) {
+                            // Make it focusable by setting its tabindex
+                            overlayDiv.setAttribute('tabindex', '0');
+                            overlayDiv.focus();
+                            document.removeEventListener('keydown', handleKeydown); // Remove the listener once the job is done
+                        } else {
+                            console.log('Overlay div not found.');
+                        }
+                    }, 500); // 0.5 seconds delay
+                } else {
+                    console.log('Play button not found.');
+                }
+            }
+        }
+
+//on iframe load
+iframe.addEventListener('load', function() {
+    //add space and enter
+    document.addEventListener('keydown', handleKeydown);
+});
+
+
+
     } else {
         console.warn('H5PIntegration.contents is not defined!');
     }

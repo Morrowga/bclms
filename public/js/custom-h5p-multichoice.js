@@ -417,6 +417,7 @@ H5P.MultiChoice = function (options, contentId, contentData) {
       if (parts.length == 2) return parts.pop().split(";").shift();
     }
 
+        //-------------------Dual switch functions-------------------//
     function handleSpacebarKeydown($element) {
       $element.keydown(function (e) {
         if (e.keyCode === 32) { // Space bar
@@ -483,11 +484,10 @@ H5P.MultiChoice = function (options, contentId, contentData) {
             var showSolutionButton = document.querySelector(".h5p-question-show-solution");
             var tryAgainButton = document.querySelector(".h5p-question-try-again");
             var continueButton = document.querySelector(".h5p-question-iv-continue");
+
             if (checkButton && !checkButton.disabled) {
               self.answered = true;
-              checkAnswer();
-              $myDom.find('.h5p-answer:first-child').focus();
-              handleDelayedTabs();
+              checkAnswer();             
             }
             else if (showSolutionButton === this.activeElement) {
               showSolutionButton.click();
@@ -503,7 +503,7 @@ H5P.MultiChoice = function (options, contentId, contentData) {
         }
       });
     }
-    
+    //-------------------Single switch functions-------------------//
     //If only one switch, selection will be change delayed
     function handleDelayedSelection($element) {
       var currentIndex = 0; // Start with the first element
@@ -517,7 +517,7 @@ H5P.MultiChoice = function (options, contentId, contentData) {
               selectNext(); // Start from the first element
               return; 
           }
-          setTimeout(selectNext, 2000); // Call this function again after 2 seconds
+          setTimeout(selectNext, 5000); // Call this function again after 2 seconds
         }
         selectNext(); // Start the sequence
     }
@@ -548,12 +548,43 @@ H5P.MultiChoice = function (options, contentId, contentData) {
                     currentButtonIndex = (currentButtonIndex + 1) % availableButtons.length;
                 }
                 if(!checkButton) {
-                  setTimeout(selectNextTab, 2000); // Call this function again after 2 seconds
+                  setTimeout(selectNextTab, 5000); // Call this function again after * seconds
                 }
             }
         selectNextTab(); // Start the sequence
   }
   
+    //Submit answer && click one of 3 buttons
+    function handleEnterKeyForCheckingSingle() {
+      document.addEventListener('keydown', function(e) {
+        if (e.keyCode === 13) {  // Check for "Enter" key press
+            e.preventDefault(); // Prevent default tab action
+            // Ensure the Check button is enabled before triggering it
+            var checkButton = document.querySelector(".h5p-question-check-answer");
+            var showSolutionButton = document.querySelector(".h5p-question-show-solution");
+            var tryAgainButton = document.querySelector(".h5p-question-try-again");
+            var continueButton = document.querySelector(".h5p-question-iv-continue");
+
+            if (checkButton && !checkButton.disabled) {
+              self.answered = true;
+              checkAnswer();
+              handleDelayedTabs();
+            }
+            else if (showSolutionButton === this.activeElement) {
+              showSolutionButton.click();
+            }
+            else if (tryAgainButton === this.activeElement) {
+              tryAgainButton.click();
+            }
+            else if (continueButton === this.activeElement) {
+              continueButton.click();
+              document.activeElement.blur();
+            }
+            return false;
+        }
+      });
+    }
+    
     
     //Get device id from student cookie
     $(document).ready(function() {
@@ -574,7 +605,7 @@ H5P.MultiChoice = function (options, contentId, contentData) {
         else if (device_id === 3) {
           console.log("Single switch");
           handleDelayedSelection($answers);
-          handleEnterKeyForChecking();
+          handleEnterKeyForCheckingSingle();
         }
       }
     });

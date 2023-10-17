@@ -495,14 +495,3 @@ H5P.VideoPanopto = (function ($) {
   H5P.videoHandlers = H5P.videoHandlers || [];
   H5P.videoHandlers.push(H5P.VideoPanopto);
   console.log("Panopto");
-  document.addEventListener('keydown', function(event) {
-    if (event.code === "Space") {
-        var button = document.querySelector('.h5p-interaction-button');
-        if (button) {
-            button.click();
-        }
-        event.preventDefault();  
-    }
-  });
-  
-  

@@ -237,14 +237,3 @@ H5P.Video = (function ($, ContentCopyrights, MediaCopyright, handlers) {
 
   
   console.log("Video");
-  document.addEventListener('keydown', function(event) {
-    if (event.code === "Space") {
-        var button = document.querySelector('.h5p-interaction-button');
-        if (button) {
-            button.click();
-        }
-        event.preventDefault();  
-    }
-  });
-  
-  
