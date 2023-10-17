@@ -75,7 +75,6 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
             $updateClassRoomEloquent->update();
             $existingStudents = $updateClassRoomEloquent->students->pluck('student_id')->toArray();
             $newStudents = array_diff($classRoomData->students, $existingStudents);
-
             $updateClassRoomEloquent->students()->sync($classRoomData->students);
             $updateClassRoomEloquent->teachers()->sync($classRoomData->teachers);
             if (request()->hasFile('image') && request()->file('image')->isValid()) {

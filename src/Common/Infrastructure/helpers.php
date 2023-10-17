@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Cache;
+use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 
 //Notification Helper to Vue Component
 if (! function_exists('getNotifications')) {

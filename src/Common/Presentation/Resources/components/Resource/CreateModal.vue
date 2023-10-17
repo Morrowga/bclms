@@ -50,7 +50,7 @@ const removeVideo = () => {
 }
 
 const submitResource = () => {
-    disabled.value = true;
+    // disabled.value = true;
     form.file = file.value
     form.post(route("resource.store"), {
     onSuccess: () => {
