@@ -97,7 +97,11 @@ const getAvaliableStorage = () => {
                                     100) *
                                 100
                             }%`"
-                        />
+                        >
+                            <v-tooltip activator="parent" location="top"
+                                >{{ props.org_used_storage }} MB</v-tooltip
+                            >
+                        </v-sheet>
                         <v-sheet
                             v-if="10"
                             color="teal"
@@ -107,7 +111,11 @@ const getAvaliableStorage = () => {
                                     100) *
                                 100
                             }%`"
-                        />
+                        >
+                            <v-tooltip activator="parent" location="top"
+                                >{{ props.teacher_used_storage }} MB</v-tooltip
+                            >
+                        </v-sheet>
                         <v-sheet
                             v-if="10"
                             color="sun-yellow"
@@ -117,7 +125,11 @@ const getAvaliableStorage = () => {
                                     100) *
                                 100
                             }%`"
-                        />
+                        >
+                            <v-tooltip activator="parent" location="top"
+                                >{{ allTeacherLeftStorage() }} MB</v-tooltip
+                            >
+                        </v-sheet>
                     </v-sheet>
                 </div>
                 <VRow>
