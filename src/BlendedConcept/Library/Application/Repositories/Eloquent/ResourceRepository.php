@@ -111,8 +111,8 @@ class ResourceRepository implements ResourceRepositoryInterface
 
                 return [
                     "total" => $totalStorage,
-                    "used" => (int) $usedStorage + $teacherStorages,
-                    "left" => $leftStorage
+                    "used" => $totalStorage == 0 ? 0 : (int) $usedStorage + $teacherStorages,
+                    "left" => $totalStorage == 0 ? 0 : $leftStorage
                 ];
                 break;
 

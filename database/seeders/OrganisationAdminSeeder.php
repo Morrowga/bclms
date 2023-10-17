@@ -66,7 +66,7 @@ class OrganisationAdminSeeder extends Seeder
         $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
 
         $organisationData = [
-            'curr_subscription_id' => null,
+            'curr_subscription_id' => $subscriptionOne->id,
             'org_admin_id' => null,
             'name' => 'organisation one',
             'contact_name' => 'org one',
