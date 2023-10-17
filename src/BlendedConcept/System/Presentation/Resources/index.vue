@@ -27,6 +27,7 @@ let props = defineProps([
     "org_teacher_classrooms",
     "recent_games",
     "recent_books",
+    "homeNotifications"
 ]);
 
 const isAlertVisible = ref(true);
@@ -55,6 +56,7 @@ const getNotifications = () => {
 };
 
 const removeNotification = (notificationId) => {
+    console.log('asda');
     form.post(route("markAsRead", { id: notificationId }), {
         onSuccess: () => {
             notifications.value = notifications.value.filter(
@@ -73,6 +75,7 @@ let isOpenMenu = ref(true);
 let toggleMenu = () => {
     isOpenMenu.value = !isOpenMenu.value;
 };
+
 onMounted(() => {
     getNotifications();
 });
@@ -94,16 +97,18 @@ onMounted(() => {
                 >Welcome, {{ user_detail }}</span
             >
             <br /><br />
-            <SystemAlert
+            <SystemAlert v-for="homeNotification in homeNotifications" :key="homeNotification.id"
                 class="pb-4"
-                icon="fa:fa-light fa-user"
-                text="New student “Mary Tan” joined Class 1A"
+                @submit="removeNotification"
+                :id="homeNotification.id"
+                :icon="homeNotification.data.icon"
+                :text="homeNotification.data.message"
             />
-            <SystemAlert
+            <!-- <SystemAlert
                 class="pb-4"
                 icon="fa:fa-solid fa-book"
                 text="New storybook “Toy Story” has been added"
-            />
+            /> -->
         </VContainer>
 
         <!--

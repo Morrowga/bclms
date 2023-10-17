@@ -3,18 +3,19 @@
 namespace Src\BlendedConcept\ClassRoom\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
-use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomData;
-use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomGroupData;
-use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomGroupMapper;
-use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
 use Src\BlendedConcept\ClassRoom\Domain\Model\ClassRoom;
-use Src\BlendedConcept\Classroom\Domain\Model\Entities\ClassroomGroup;
-use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
+use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomData;
+use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
+use Src\BlendedConcept\ClassRoom\Application\DTO\ClassRoomGroupData;
 use Src\BlendedConcept\ClassRoom\Domain\Resources\ClassRoomResource;
+use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomMapper;
+use Src\BlendedConcept\Classroom\Domain\Model\Entities\ClassroomGroup;
+use Src\BlendedConcept\ClassRoom\Application\Mappers\ClassRoomGroupMapper;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
 use Src\BlendedConcept\Classroom\Infrastructure\EloquentModels\ClassroomGroupEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
 class ClassRoomRepository implements ClassRoomRepositoryInterface
 {
@@ -87,6 +88,19 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
                     $updateClassRoomEloquent->update();
                 }
             }
+
+            $org = $updateClassRoomEloquent->organisation->org_admin->user;
+
+            foreach($classRoomData->students as $student){
+                $studentUser = StudentEloquentModel::where('student_id', $student)->first();
+                $user = $studentUser->user;
+                $org->notify(new BcNotification(['message' => 'New Student ' . $user->full_name . ' joined class ' . $updateClassRoomEloquent->name, 'from' => 'System', 'to' => 'Organisation','icon' => 'fa:fa-light fa-user', 'type' => 'HomeAnnounce']));
+                foreach($updateClassRoomEloquent->teachers as $teacher){
+                    $orgteacher = $teacher->user;
+                    $orgteacher->notify(new BcNotification(['message' => 'New Student ' . $user->full_name . ' joined class ' . $updateClassRoomEloquent->name, 'from' => 'System', 'to' => 'Teacher','icon' => 'fa:fa-light fa-user', 'type' => 'HomeAnnounce']));
+                }
+            }
+
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();

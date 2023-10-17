@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Classroom\Infrastructure\EloquentModels;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 
 class ClassroomEloquentModel extends Model implements HasMedia
 {
@@ -50,6 +51,12 @@ class ClassroomEloquentModel extends Model implements HasMedia
     public function teachers()
     {
         return $this->belongsToMany(TeacherEloquentModel::class, 'classroom_teachers', 'classroom_id', 'teacher_id')->with('user');
+    }
+
+
+    public function organisation()
+    {
+        return $this->belongsTo(OrganisationEloquentModel::class, 'organisation_id', 'id');
     }
 
     public function students()

@@ -152,7 +152,7 @@ onMounted(() => {
                                     </VListItemAction>
                                 </template>
 
-                                <VListItemTitle>{{
+                                <VListItemTitle class="noti-title">{{
                                     notification.data.message
                                 }}</VListItemTitle>
                                 <!-- <VListItemSubtitle>{{
@@ -230,6 +230,10 @@ onMounted(() => {
 <style lang="scss">
 .notification-section {
     padding: 14px !important;
+}
+
+.noti-title{
+    white-space: normal;
 }
 
 .notification-footer {

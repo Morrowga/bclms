@@ -6,37 +6,24 @@ import { computed, defineProps, ref } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import axios from "axios";
 
-let props = defineProps(["flash", "auth", "pathway"]);
+let props = defineProps(["flash", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 const active = ref("assigned");
 const currentPage = ref(1);
 const totalPage = ref("");
-const totalBook = ref(0);
-const progress = computed(() => props.pathway?.students?.[0]?.pivot?.progress);
 const currentPageData = ref([]);
 
 // Function to handle slide change
 async function fetchData(page) {
     try {
         const response = await axios.get(
-            `/storybooks/student-pathways?page=${page}&pathway_id=${props.pathway.id}`
+            "/storybooks/student-pathways?page=" + page
         );
         // Assuming the API response contains an array of data similar to props.pathways.data
-        let datas = response.data.data;
-        let results = datas.map((book, index) => {
-            return {
-                id: book.id,
-                thumbnail_img: book.thumbnail_img,
-                own_progress: calculatePercentageByCount(
-                    book.pathways?.[0]?.pivot?.sequence,
-                    response.data.total
-                ),
-            };
-        });
-        currentPageData.value = results;
-        totalBook.value = response.data.total;
+        currentPageData.value = response.data.data;
         totalPage.value = response.data.last_page;
+        console.log(currentPageData.value);
     } catch (error) {
         console.error("Error fetching data:", error);
     }
@@ -54,86 +41,6 @@ function handleSlideChange(swiper) {
     }
 }
 
-function calculatePercentageByCount(specificCount, totalCount) {
-    if (totalCount === 0) {
-        return 0; // To avoid division by zero error
-    }
-
-    return (specificCount / totalCount) * 100;
-}
-
-function calculateCountFromPercentage(percent, totalCount) {
-    return Math.round((percent / 100) * totalCount);
-}
-const bookType = (book_progress) => {
-    let pathway_progress = progress.value;
-    let current_count = calculateCountFromPercentage(
-        book_progress,
-        totalBook.value
-    );
-    let prev_count = current_count - 1;
-
-    let previous_progress = calculatePercentageByCount(
-        prev_count,
-        totalBook.value
-    );
-    if (pathway_progress) {
-        if (book_progress <= pathway_progress) {
-            return "complete";
-        } else if (
-            previous_progress > pathway_progress &&
-            book_progress > pathway_progress
-        ) {
-            return "lock";
-        } else {
-            return "unlock";
-        }
-    } else {
-        let first_progress = calculatePercentageByCount(1, totalBook.value);
-
-        if (book_progress > first_progress) {
-            return "lock";
-        }
-        return "unlock";
-    }
-};
-const setCookie = (value) => {
-    var cookieName = "current_pathway_book";
-    var cookieValue = value;
-    var expirationDate = new Date();
-    expirationDate.setDate(expirationDate.getDate() + 1);
-    var expires = "expires=" + expirationDate.toUTCString();
-
-    var cookieString =
-        cookieName + "=" + cookieValue + ";" + expires + ";path=/";
-
-    document.cookie = cookieString;
-};
-const readPathwayBook = (book) => {
-    let value = bookType(book.own_progress);
-    if (value == "lock") {
-        return;
-    }
-    setCookie(value);
-    router.get(route("storybooks.show", book.id));
-};
-const changePhoto = (book) => {
-    let type = bookType(book.own_progress);
-    if (type == "lock") {
-        return "/images/lock.png";
-    } else {
-        return "/images/Play Button.png";
-    }
-};
-
-const dynamicClass = (book_progress) => {
-    let value = bookType(book_progress);
-    if (value == "lock") {
-        return "storybook-story-lock";
-    } else {
-        return "storybook-story";
-    }
-};
 onMounted(() => {
     // Load initial data for page 1
     fetchData(currentPage.value);
@@ -180,13 +87,7 @@ onMounted(() => {
                             height="180"
                         ></v-img>
                         <div class="card1">
-                            <VCard
-                                :class="
-                                    dynamicClass(
-                                        currentPageData[0].own_progress
-                                    )
-                                "
-                            >
+                            <VCard class="storybook-story">
                                 <v-img
                                     :src="
                                         currentPageData[0].thumbnail_img == ''
@@ -199,9 +100,15 @@ onMounted(() => {
                                 <div class="d-flex justify-center">
                                     <img
                                         @click="
-                                            readPathwayBook(currentPageData[0])
+                                            () =>
+                                                router.get(
+                                                    route(
+                                                        'storybooks.show',
+                                                        currentPageData[0].id
+                                                    )
+                                                )
                                         "
-                                        :src="changePhoto(currentPageData[0])"
+                                        src="/images/Play Button.png"
                                         class="playButton"
                                         alt=""
                                     />
@@ -211,13 +118,7 @@ onMounted(() => {
                         <!-- <v-img :src="currentPageData[0].thumbnail_img == '' ? '/images/toycard.png' : currentPageData[0].thumbnail_img" class="card1" width="300" height="200"></v-img> -->
 
                         <div class="card2" v-if="currentPageData.length > 1">
-                            <VCard
-                                :class="
-                                    dynamicClass(
-                                        currentPageData[1].own_progress
-                                    )
-                                "
-                            >
+                            <VCard class="storybook-story">
                                 <v-img
                                     :src="
                                         currentPageData[1].thumbnail_img == ''
@@ -227,13 +128,18 @@ onMounted(() => {
                                     class="showimg-path"
                                     cover
                                 ></v-img>
-
                                 <div class="d-flex justify-center">
                                     <img
                                         @click="
-                                            readPathwayBook(currentPageData[1])
+                                            () =>
+                                                router.get(
+                                                    route(
+                                                        'storybooks.show',
+                                                        currentPageData[0].id
+                                                    )
+                                                )
                                         "
-                                        :src="changePhoto(currentPageData[1])"
+                                        src="/images/Play Button.png"
                                         class="playButton"
                                         alt=""
                                     />
@@ -271,23 +177,16 @@ onMounted(() => {
                     <span class="progress-text ruddy-bold ml-5 mt-2"
                         >Progress</span
                     >
-                    <div class="mt-5 progressimg">
-                        <!-- <img
+                    <div class="mt-5">
+                        <img
                             src="/images/Progress Bars.png"
                             class="progressimg ml-3"
                             alt=""
-                        /> -->
-                        <v-progress-linear
-                            class="mt-3 mx-2"
-                            v-model="progress"
-                            height="10"
-                            bg-color="#FF6262"
-                            color="#FF6262"
-                        ></v-progress-linear>
+                        />
                     </div>
                     <div>
                         <span class="progress-num-text ruddy-bold ml-2">
-                            {{ props.pathway.num_silver_coins }}</span
+                            21</span
                         >
                         <img
                             src="/images/chipcoin.png"
@@ -296,9 +195,7 @@ onMounted(() => {
                             height="25"
                             alt=""
                         />
-                        <span class="progress-num-text ruddy-bold ml-5">
-                            {{ props.pathway.num_gold_coins }}</span
-                        >
+                        <span class="progress-num-text ruddy-bold ml-5">1</span>
                         <img
                             src="/images/chipcoin2.png"
                             class="mr-5"
@@ -406,17 +303,6 @@ onMounted(() => {
     backdrop-filter: blur(2px);
 }
 
-.storybook-story-lock {
-    justify-content: center;
-    width: 300px;
-    align-items: center;
-    height: auto !important;
-    border-radius: 30px;
-    border: 5px solid var(--pathway, #ff6262);
-    backdrop-filter: blur(2px);
-    background: black;
-}
-
 .showimg-path {
     object-fit: cover;
     height: 230px;
@@ -426,8 +312,6 @@ onMounted(() => {
     position: absolute;
     top: 28%;
     z-index: 1;
-    width: 108px;
-    height: 109px;
 }
 
 // .pathway-section{

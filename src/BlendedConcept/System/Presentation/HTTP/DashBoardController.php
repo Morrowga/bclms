@@ -62,6 +62,11 @@ class DashBoardController extends Controller
         $org_teacher_classrooms = [];
         $org_teacher_students = [];
 
+        $homeNotifications = $user->unreadNotifications->filter(function ($notification) {
+            $data = $notification->data; // Decode the JSON data
+            return isset($data['type']) && $data['type'] === 'HomeAnnounce';
+        });
+
         if ($current_user_role == "BC Super Admin" || $current_user_role == "BC Staff") {
             $UserCount = (new GetSuperAdminListCount())->handle();
             $recent_books = (new GetRecentBooks())->handle();
@@ -80,7 +85,7 @@ class DashBoardController extends Controller
         $user_survey = (new GetUserSurveyByRole('LOG_IN'))->handle();
 
         //here I render it inside
-        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students', 'UserCount', 'classrooms', 'org_teacher_classrooms', 'org_teacher_students', 'user_survey', 'recent_books', 'recent_games'));
+        return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students', 'UserCount', 'classrooms', 'org_teacher_classrooms', 'org_teacher_students', 'user_survey', 'recent_books', 'recent_games', 'homeNotifications'));
     }
 
     /***

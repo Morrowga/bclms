@@ -1,31 +1,43 @@
 <script setup>
 import { defineProps } from "vue";
 
-let props = defineProps(["icon", "text"]);
+let props = defineProps(["icon", "text", 'id']);
+const emit = defineEmits(["submit"]);
+
+const onFormSubmit = () => {
+    emit("submit", props.id);
+};
 </script>
 <template>
-    <div class="message-list">
-        <div class="message-list-item">
-            <div class="d-flex align-center gap-10">
-                <v-icon
-                    :icon="props.icon"
-                    color="#fff"
-                    class="message-icon"
-                ></v-icon>
-                <span class="message-text pppangram-medium">{{
-                    props.text
-                }}</span>
-            </div>
-            <div class="close-btn">
-                <v-btn
-                    size="small"
-                    icon="mdi-close"
-                    variant="text"
-                    color="#fff"
-                ></v-btn>
+    <VForm
+        class="mt-6"
+        ref="refForm"
+        @submit.prevent="onFormSubmit"
+    >
+        <div class="message-list">
+            <div class="message-list-item">
+                <div class="d-flex align-center gap-10">
+                    <v-icon
+                        :icon="props.icon"
+                        color="#fff"
+                        class="message-icon"
+                    ></v-icon>
+                    <span class="message-text pppangram-medium">{{
+                        props.text
+                    }}</span>
+                </div>
+                <div class="close-btn">
+                    <v-btn
+                        type="submit"
+                        size="small"
+                        icon="mdi-close"
+                        variant="text"
+                        color="#fff"
+                    ></v-btn>
+                </div>
             </div>
         </div>
-    </div>
+    </VForm>
 </template>
 <style scoped>
 .message-list-item {

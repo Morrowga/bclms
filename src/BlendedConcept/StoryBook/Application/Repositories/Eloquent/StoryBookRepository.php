@@ -3,18 +3,21 @@
 namespace Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
-use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
-use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
-use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
-use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\ThemeEloquentModel;
-use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
-use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookData;
-use Src\BlendedConcept\StoryBook\Application\Mappers\StoryBookMapper;
 use Src\BlendedConcept\StoryBook\Domain\Model\StoryBook;
-use Src\BlendedConcept\StoryBook\Domain\Repositories\StoryBookRepositoryInterface;
+use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookData;
+use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
 use Src\BlendedConcept\StoryBook\Domain\Resources\StoryBookResource;
-use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
+use Src\BlendedConcept\StoryBook\Application\Mappers\StoryBookMapper;
+use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
+use Src\BlendedConcept\StoryBook\Domain\Repositories\StoryBookRepositoryInterface;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\ThemeEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\PlaylistEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 
 class StoryBookRepository implements StoryBookRepositoryInterface
 {
@@ -89,7 +92,18 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                     }
                 }
             }
+            $organisations = OrganisationEloquentModel::get();
 
+            foreach($organisations  as $org){
+                $user = $org->org_admin->user;
+                $user->notify(new BcNotification(['message' => 'New storybook “' . $storybookEloquent->name . '” has been added.', 'from' => 'System', 'to' => 'Organisation','icon' => 'fa:fa-solid fa-book', 'type' => 'HomeAnnounce']));
+
+                $teachers = TeacherEloquentModel::get();
+                foreach($teachers as $teacher){
+                    $toTeacher = $teacher->user;
+                    $toTeacher->notify(new BcNotification(['message' => 'New storybook “' . $storybookEloquent->name . '” has been added.', 'from' => 'System', 'to' => 'Teacher','icon' => 'fa:fa-solid fa-book', 'type' => 'HomeAnnounce']));
+                }
+            }
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();

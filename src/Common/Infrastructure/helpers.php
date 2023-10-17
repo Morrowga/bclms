@@ -8,8 +8,11 @@ if (! function_exists('getNotifications')) {
     {
         $notification = Cache::remember('unread_notifications_'.auth()->id(), 60, function () {
             return auth()->user()
-                ? auth()->user()->unreadNotifications()->with('notifiable')->paginate(7)
-                : null;
+            ? auth()->user()->unreadNotifications()
+                ->whereJsonDoesntContain('data->type', 'HomeAnnounce')
+                ->with('notifiable')
+                ->paginate(7)
+            : null;
         });
 
         $notification = $notification
