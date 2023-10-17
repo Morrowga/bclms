@@ -12,6 +12,9 @@ let props = defineProps({
     },
     current_user: {
         type: Object
+    },
+    check_type: {
+        type: Boolean
     }
 });
 
@@ -89,18 +92,6 @@ const deleteOnclick = () => {
     });
 }
 
-const checkIsOrg = () => {
-    if(props.current_user.data.organisation !== ''){
-        return true;
-    } else {
-        if(props.data.status === 'requested'){
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
-
 const publish = () => {
     const publishForm = useForm({});
     isConfirmedDialog({
@@ -108,7 +99,7 @@ const publish = () => {
         denyButtonText: "Yes,publish it!",
         icon: "success",
         onConfirm: () => {
-            publishForm.post('/resource/request-publish/' + props.data.id, {
+            publishForm.post('/resource/request-publish/' + props.data.id + '?size=' + props.data.size, {
                 onSuccess: () => {
                     SuccessDialog({
                         title: "You have successfully published resource to org!",
@@ -159,7 +150,7 @@ const openFileInput = () => {
                     <v-list-item @click="deleteOnclick">
                         <v-list-item-title>Delete</v-list-item-title>
                     </v-list-item>
-                    <v-list-item @click="publish()" v-if="!checkIsOrg()">
+                    <v-list-item @click="publish()" v-if="props.check_type">
                         <v-list-item-title
                             >Publish to Organization</v-list-item-title
                         >

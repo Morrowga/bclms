@@ -55,6 +55,27 @@ const checkMe = () =>{
     }
 }
 
+const checkBusinessType = () =>{
+    let current = props.currentUser.data
+
+    if(props.data.organisation_id === null) {
+        return false;
+    } else {
+        if(props.data.organisation_id !== null && props.data.teacher_id === null){
+            return false
+        }
+
+        if(props.data.organisation_id !== null && props.data.teacher_id !== null){
+            if(current.id === props.data.teacher_id){
+                return true
+            } else {
+                return false
+                // return props.data.teacher.full_name
+            }
+        }
+    }
+}
+
 const fileSizeInMB = computed(() => {
   return (props.data.size / (1024 * 1024)).toFixed(2); // Convert bytes to MB and round to 2 decimal places
 });
@@ -62,7 +83,7 @@ const fileSizeInMB = computed(() => {
 </script>
 <template>
     <VCard>
-        <CardAction v-if="props.type === 'orgData'" :current_user="currentUser" :data="props.data" :hidden="isEditMode" />
+        <CardAction v-if="props.type === 'orgData'" :check_type="checkBusinessType()" :current_user="currentUser" :data="props.data" :hidden="isEditMode" />
         <VCheckbox  v-model="isChecked" @change="updateSelectedData" class="checkboxcard" v-if="isEditMode"></VCheckbox>
         <v-img :src="props.data.thumb_url" height="350" cover></v-img>
         <div class="resource-label">

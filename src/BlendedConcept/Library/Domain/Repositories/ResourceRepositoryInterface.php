@@ -11,6 +11,9 @@ interface ResourceRepositoryInterface
     //get resources
     public function getResources(UserEloquentModel $userEloquentModel);
 
+    //get resource storage
+    public function getResourceStorage(UserEloquentModel $userEloquentModel);
+
     //create resource
     public function createResource(Request $request,UserEloquentModel $userEloquentModel);
 

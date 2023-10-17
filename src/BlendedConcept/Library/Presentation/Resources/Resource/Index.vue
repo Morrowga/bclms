@@ -17,8 +17,11 @@ let user_role = computed(() => page.props.user_info.user_role.name);
 let props = defineProps([
     "resources",
     "requestPublishData",
-    "auth"
+    "auth",
+    "resourceStorage"
 ]);
+
+const chosen = ref('all');
 
 const isRequestUploadData = ref(false);
 const checkedItems = ref([]);
@@ -152,6 +155,15 @@ const handleCheckboxChange = (data) => {
         }
     }
 }
+
+const chooseType = (type) => {
+    chosen.value = type;
+}
+
+const calculateProgress = (used, total) => {
+  // Calculate the percentage of used storage
+  return (used / total) * 100;
+};
 </script>
 
 <template>
@@ -162,9 +174,9 @@ const handleCheckboxChange = (data) => {
                     <div>
                         <span class="ruddy-bold resource">Resources</span>
                         <div class="mt-5">
-                            <v-chip class="menuchip">All</v-chip>
-                            <v-chip class="ml-2">Organisation</v-chip>
-                            <v-chip class="ml-2">Me</v-chip>
+                            <v-chip :class="chosen === 'all' ? 'menuchip' : ''" @click="chooseType('all')">All</v-chip>
+                            <v-chip class="ml-2" :class="chosen === 'org' ? 'menuchip' : ''" @click="chooseType('org')">Organisation</v-chip>
+                            <v-chip class="ml-2" :class="chosen === 'me' ? 'menuchip' : ''" @click="chooseType('me')">Me</v-chip>
                         </div>
                     </div>
                     <div>
@@ -271,10 +283,10 @@ const handleCheckboxChange = (data) => {
                                 <VCol cols="6"></VCol>
                                 <VCol cols="6">
                                     <div>
-                                        <span>55.4 MB of 80MB used </span>
+                                        <span>{{ props.resourceStorage['used'] }} MB of {{ props.resourceStorage['total'] }} MB used </span>
                                         <VProgressLinear
                                             color="yellow-darken-2"
-                                            model-value="80"
+                                            :model-value="calculateProgress(props.resourceStorage['used'], props.resourceStorage['total'])"
                                             :height="8"
                                         ></VProgressLinear>
                                     </div>
@@ -284,7 +296,7 @@ const handleCheckboxChange = (data) => {
                     </VRow>
                 </div>
                 <div class="mt-10" v-if="!isRequestUploadData">
-                    <VRow>
+                    <VRow v-if="chosen === 'all'">
                         <VCol
                             cols="12"
                             v-for="item in props.resources"
@@ -294,6 +306,46 @@ const handleCheckboxChange = (data) => {
                             :key="item"
                         >
                             <ResourceCard
+                                :data="item"
+                                @checkboxChange="handleCheckboxChange"
+                                :key="item"
+                                type="orgData"
+                                :currentUser="props.auth"
+                                :isEditMode="isEditMode"
+                            />
+                        </VCol>
+                    </VRow>
+                    <VRow v-if="chosen === 'org'">
+                        <VCol
+                            cols="12"
+                            v-for="item in props.resources"
+                            sm="6"
+                            md="4"
+                            lg="3"
+                            :key="item"
+                        >
+                            <ResourceCard
+                                v-if="item.teacher_id !== null"
+                                :data="item"
+                                @checkboxChange="handleCheckboxChange"
+                                :key="item"
+                                type="orgData"
+                                :currentUser="props.auth"
+                                :isEditMode="isEditMode"
+                            />
+                        </VCol>
+                    </VRow>
+                    <VRow v-if="chosen === 'me'">
+                        <VCol
+                            cols="12"
+                            v-for="item in props.resources"
+                            sm="6"
+                            md="4"
+                            lg="3"
+                            :key="item"
+                        >
+                            <ResourceCard
+                                v-if="item.teacher_id === null"
                                 :data="item"
                                 @checkboxChange="handleCheckboxChange"
                                 :key="item"
