@@ -146,7 +146,7 @@ class TeacherController extends Controller
             $used_storage_mb = $usedStorage == 0 ? $usedStorage : (int)($usedStorage / 1024 / 1024);
             $left_storage = $teacher->allocated_storage_limit - $used_storage_mb;
             return [
-                "id" => $teacher->teacher_id,
+                "teacher_id" => $teacher->teacher_id,
                 "used_storage" => $used_storage_mb,
                 "allocated_storage_limit" => $teacher->allocated_storage_limit,
                 "user" => $teacher->user,
