@@ -28,7 +28,7 @@ class StoreResourceRequest extends FormRequest
                 ],
             ];
         }
-
+        dd($this->checkOrgStorageLimit());
         return [
             'filename' => [
                 'required',
@@ -64,14 +64,13 @@ class StoreResourceRequest extends FormRequest
             // $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $org_admin->org_admin_id)->first();
             $usedStorage = MediaEloquentModel::where('collection_name', 'videos')
                 ->where('organisation_id', $organisation_id)
-                ->where('teacher_id', '!=',  null)
+                ->where('teacher_id', null)
                 ->where('status', 'active')
                 ->sum('size');
 
             $teacherStorageKiloBytes = $teacherStorages * 1024;
 
             $totalStorageLimit = $totalStorage - $teacherStorageKiloBytes;
-
             $usedKilobytes = $usedStorage / 1024;
 
             $leftStorageLimit = $totalStorageLimit - $usedKilobytes;
