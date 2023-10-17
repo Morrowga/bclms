@@ -92,8 +92,6 @@ class StoreResourceRequest extends FormRequest
             if($usedStorage > 0) {
                 $usedKilobytes = $usedStorage / 1024;
 
-                dd($usedKilobytes);
-
                 $leftStorageLimit = $allocatedStorage - $usedKilobytes;
 
                 return (int) $leftStorageLimit;

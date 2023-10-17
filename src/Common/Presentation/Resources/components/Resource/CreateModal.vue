@@ -14,6 +14,9 @@ const form = useForm({
     file: null
 })
 
+const errorModal = ref(false);
+const errorText = ref(null);
+
 const disabled = ref(false);
 
 const validateFile = (file) => {
@@ -59,6 +62,8 @@ const submitResource = () => {
       SuccessDialog({ title: "You've successfully saved a video." });
     },
     onError: (error) => {
+        errorText.value = error?.file
+        errorModal.value = true
     },
   });
 }
@@ -196,9 +201,22 @@ const openFileInput = () => {
                 </VCard>
             </VForm>
         </VDialog>
+
+        <VDialog v-model="errorModal" width="50%">
+            <VCard class="rolling-card">
+                <VCardText>
+                    <span class="error_text">Upload Failed ! Because {{ errorText }}</span>
+                </VCardText>
+            </VCard>
+        </VDialog>
     </div>
 </template>
 <style scoped>
+
+.error_text {
+    color: red !important;
+}
+
 .resource-create-title {
     color: #161616 !important;
     /* H3 Ruddy */
