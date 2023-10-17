@@ -14,9 +14,6 @@ const form = useForm({
     file: null
 })
 
-const errorModal = ref(false);
-const errorText = ref(null);
-
 const disabled = ref(false);
 
 const validateFile = (file) => {
@@ -53,7 +50,7 @@ const removeVideo = () => {
 }
 
 const submitResource = () => {
-    // disabled.value = true;
+    disabled.value = true;
     form.file = file.value
     form.post(route("resource.store"), {
     onSuccess: () => {
@@ -62,8 +59,7 @@ const submitResource = () => {
       SuccessDialog({ title: "You've successfully saved a video." });
     },
     onError: (error) => {
-        errorText.value = error?.file
-        errorModal.value = true
+        SuccessDialog({ title: error?.file, icon: 'warning',color: '#ff6262', mainTitle: 'Failed!' });
     },
   });
 }
@@ -200,14 +196,6 @@ const openFileInput = () => {
             </VCardActions> -->
                 </VCard>
             </VForm>
-        </VDialog>
-
-        <VDialog v-model="errorModal" width="50%">
-            <VCard class="rolling-card">
-                <VCardText>
-                    <span class="error_text">Upload Failed ! Because {{ errorText }}</span>
-                </VCardText>
-            </VCard>
         </VDialog>
     </div>
 </template>
