@@ -57,8 +57,9 @@ class StoreResourceRequest extends FormRequest
         if ($subscription->isEmpty()) {
             $storageLimit = 1; // Default value when the subscription is empty
         } else {
-            $totalStorageLimit = $subscription->first()->storage_limit * 1024;
+            $totalStorage = $subscription->first()->storage_limit * 1024;
             $organisation_id = auth()->user()->org_admin->organisation->id;
+            $teacherStorages = TeacherEloquentModel::where('organisation_id', $organisation_id)->sum('allocated_storage_limit');
             // $organisationEloquent = OrganisationEloquentModel::where('org_admin_id', $org_admin->org_admin_id)->first();
             $usedStorage = MediaEloquentModel::where('collection_name', 'videos')
                 ->where('organisation_id', $organisation_id)
@@ -66,6 +67,10 @@ class StoreResourceRequest extends FormRequest
                 ->where('status', 'active')
                 ->sum('size');
 
+            $teacherStorageKiloBytes = $teacherStorages * 1024;
+
+            $totalStorageLimit = $totalStorage - $teacherStorageKiloBytes;
+            
             $usedKilobytes = $usedStorage / 1024;
 
             $leftStorageLimit = $totalStorageLimit - $usedKilobytes;
