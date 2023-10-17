@@ -38,6 +38,7 @@ const createStudent = () => {
             if (flash.value.errorMessage) {
                 SuccessDialog({
                     title: flash.value.errorMessage,
+                    mainTitle: "Error!",
                     color: "#ff6262",
                     icon: "error",
                 });

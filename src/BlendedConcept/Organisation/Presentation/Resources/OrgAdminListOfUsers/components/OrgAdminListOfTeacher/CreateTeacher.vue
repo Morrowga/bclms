@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { Link } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import {
     emailValidator,
     requiredValidator,
@@ -18,12 +18,25 @@ const teacherForm = useForm({
     contact_number: "",
     image: "",
 });
+let flash = computed(() => usePage().props.flash);
 
 const createTeacher = () => {
     // teacherForm.image = profileFile.value;
     teacherForm.post(route("organisations-teacher.store"), {
         onSuccess: () => {
-            SuccessDialog({ title: "You've successfully created a teacher." });
+            if (flash.value.errorMessage) {
+                SuccessDialog({
+                    title: flash.value.errorMessage,
+                    mainTitle: "Error!",
+                    color: "#ff6262",
+                    icon: "error",
+                });
+            } else {
+                SuccessDialog({
+                    title: flash.value.successMessage,
+                    color: "#17CAB6",
+                });
+            }
         },
         onError: (error) => {
             form.setError("first_name", error?.first_name);

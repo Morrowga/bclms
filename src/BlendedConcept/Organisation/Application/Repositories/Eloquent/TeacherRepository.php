@@ -10,6 +10,7 @@ use Src\BlendedConcept\Organisation\Application\Mappers\TeacherMapper;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Src\BlendedConcept\Organisation\Domain\Repositories\TeacherRepositoryInterface;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 
 class TeacherRepository implements TeacherRepositoryInterface
 {
@@ -43,29 +44,39 @@ class TeacherRepository implements TeacherRepositoryInterface
         DB::beginTransaction();
 
         try {
-            $userEloquent = TeacherMapper::toEloquent($teacher);
-            //verify teacher just now
-            $userEloquent->email_verification_send_on = now();
-            $userEloquent->save();
+            $org_id = auth()->user()->organisation_id;
+            $organisation = OrganisationEloquentModel::find($org_id);
+            $organisation->load('subscription.b2b_subscription');
+            $total_teachers_licenses = $organisation->subscription->b2b_subscription->num_teacher_license;
+            $current_teacher_count = TeacherEloquentModel::where('organisation_id', $org_id)->count();
+            $coming_teacher_count = $current_teacher_count + 1;
+            if ($total_teachers_licenses >= $coming_teacher_count) {
+                $userEloquent = TeacherMapper::toEloquent($teacher);
+                //verify teacher just now
+                $userEloquent->email_verification_send_on = now();
+                $userEloquent->save();
 
-            if (request()->hasFile('image') && request()->file('image')->isValid()) {
-                $userEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_teachers');
+                if (request()->hasFile('image') && request()->file('image')->isValid()) {
+                    $userEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_teachers');
+                }
+
+                if ($userEloquent->getMedia('image')->isNotEmpty()) {
+                    $userEloquent->profile_pic = $userEloquent->getMedia('image')[0]->original_url;
+                    $userEloquent->update();
+                }
+
+                $teacher = new TeacherEloquentModel();
+                $teacher->user_id = $userEloquent->id;
+                $teacher->organisation_id = $org_id;
+                $teacher->save();
+
+                DB::commit();
+            } else {
+                return throw new \Exception("License not enough to create teacher");
             }
-
-            if ($userEloquent->getMedia('image')->isNotEmpty()) {
-                $userEloquent->profile_pic = $userEloquent->getMedia('image')[0]->original_url;
-                $userEloquent->update();
-            }
-
-            $teacher = new TeacherEloquentModel();
-            $teacher->user_id = $userEloquent->id;
-            $teacher->organisation_id = auth()->user()->organisation_id;
-            $teacher->save();
-
-            DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            return throw new \Exception($error->getMessage());
         }
     }
 

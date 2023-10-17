@@ -24,16 +24,16 @@ class OrganisationTeacherController
         // abort_if(authorize('view', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // try {
-            $filters = request(['search', 'first_name', 'last_name', 'email', 'filter']) ?? [];
+        $filters = request(['search', 'first_name', 'last_name', 'email', 'filter']) ?? [];
 
-            $teachers = (new GetTeacherList($filters))->handle();
+        $teachers = (new GetTeacherList($filters))->handle();
 
-            $studentListWithPagniation = (new GetStudentList($filters))->handle();
+        $studentListWithPagniation = (new GetStudentList($filters))->handle();
 
-            return Inertia::render(config('route.organisations-teacher.index'), [
-                'teachers' => $teachers,
-                'students' => $studentListWithPagniation,
-            ]);
+        return Inertia::render(config('route.organisations-teacher.index'), [
+            'teachers' => $teachers,
+            'students' => $studentListWithPagniation,
+        ]);
         // } catch (\Exception $e) {
         //     return $e;
         //     dd($e->getMessage());
@@ -68,11 +68,8 @@ class OrganisationTeacherController
             $storeTeacherCommand = new StoreTeacherCommand($newTeacher);
             $storeTeacherCommand->execute();
         } catch (\Exception $e) {
-
             // Handle the exception here
-            dd($e->getMessage());
-
-            return redirect()->route('organisations-teacher.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
 
         /**
