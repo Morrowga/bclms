@@ -6,7 +6,7 @@ use Inertia\Inertia;
 use Stancl\Tenancy\Database\Models\Domain;
 use Symfony\Component\HttpFoundation\Response;
 use Src\Common\Infrastructure\Laravel\Controller;
-use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
+use Src\BlendedConcept\Finance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Organisation\Application\DTO\OrganisationData;
 use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
 use Src\BlendedConcept\System\Application\Policies\OrganisationPolicy;

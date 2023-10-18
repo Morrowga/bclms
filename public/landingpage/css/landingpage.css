@@ -105,6 +105,21 @@ h6{
     padding: 0 0 0 150px;
 }
 
+.slide-item{
+    height: 550px !important;
+}
+.mobile-btn-group{
+    margin-top: 3rem;
+}
+
+.slide-left p {
+    margin-top: 3rem;
+}
+
+.slide-left-header{
+    font-size: 30px;
+}
+
 /* card-items */
 .card{
     border-radius: 12px;
@@ -136,7 +151,16 @@ h6{
     font-size: 16px;
 }
 
+/* offering  */
+.offering-img{
+    height: 574px;
+}
+
 /* .plan */
+
+.table-head{
+    width: 150px !important;
+}
 
 .gray{
     color: var(--Graphite, #282828);
@@ -342,7 +366,7 @@ body .bg-21{
     flex-shrink: 0;
     top: -222px;
     z-index: -1;
-    right: -222px;
+    right: 0;
 }
 
 body .bg-3{
@@ -363,7 +387,7 @@ body .bg-4{
     width: 986px;
     height: 500px;
     flex-shrink: 0;
-    right: -400px;
+    right: 0;
     top: 900px;
     fill: var(--Cream, #FFF2CE);
     z-index: -1;
@@ -379,7 +403,7 @@ body .bg-5{
     fill: var(--Seaform, #D7F2F0);
     filter: blur(117.5px);
     top: 1800px;
-    left: -450px;
+    left: 0;
     z-index: -1;
 }
 
@@ -389,7 +413,7 @@ body .bg-6{
     height: 700px;
     flex-shrink: 0;
     top: 2700px;
-    right: -500px;
+    right: 0;
     z-index: -1;
 
 }
@@ -401,7 +425,7 @@ body .bg-7{
     transform: rotate(-165.424deg);
     flex-shrink: 0;
     bottom: 0;
-    left: -500px;
+    left: 0;
     fill: var(--Pale-Blue, #D7DDF2);
     filter: blur(117.5px);
     z-index: -1;
@@ -446,4 +470,45 @@ body .bg-7{
 
 .footer .btn{
     border-radius: 0 50px 50px 0;
+}
+
+
+/* Mobile Size Responsive */
+@media only screen and (max-width: 600px) {
+
+    /* slide  */
+    .slide-item{
+        height: 320px !important;
+    }
+    .slide-left{
+        padding: 0;
+    }
+    .slide-left-header{
+        font-size: 16px !important;
+        margin-bottom: 10px;
+        margin-top: 0 !important;
+    }
+    .slide-left-para{
+        font-size: 12px !important;
+        margin: 0 !important;
+        line-height: 15px;
+        width: 100% !important;
+    }
+    .slide-left .mobile-btn-group{
+        margin-top: 10px !important;
+    }
+    .custom-btn{
+        padding: 0px 10px !important;
+        font-size: 16px !important;
+        margin-top: 10px;
+    }
+    .slide-left .mobile-btn-group .custom-bg-btn{
+        padding: 0px 20px !important;
+        margin-top: 5px !important;
+    }
+
+    /* offering  */
+    .offering-img{
+        height: 300px;
+    }
 }
