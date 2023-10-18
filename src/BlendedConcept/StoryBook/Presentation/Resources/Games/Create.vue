@@ -21,6 +21,7 @@ const props = defineProps({
 });
 console.log(props.devices);
 let dialog = ref(false);
+const isPersistant = ref(false);
 const gameTag = ref("");
 const gameFile = ref(null);
 const thumbnail = ref(null);
@@ -99,10 +100,13 @@ let onFormSubmit = () => {
   form.thumb = thumbnailFile.value;
   form.post(route("games.store"), {
     onSuccess: () => {
+      dialog.value = false;
+      isPersistant.value = false
       SuccessDialog({ title: "You've successfully updated a question." });
       form.reset();
     },
     onError: (error) => {
+      isPersistant.value = true
       form.setError("name", error?.name);
       form.setError("description", error?.description);
       form.setError("game", error?.game);
@@ -113,7 +117,6 @@ let onFormSubmit = () => {
     },
   });
   // SuccessDialog({ title: "Successfully Game added" });
-  dialog.value = false;
 };
 
 const addToSublearningArray = (e) => {
@@ -214,7 +217,7 @@ const removeFromArray = (index) => {
                     type="text"
                     item-value="id"
                     item-title="name"
-                    class="tiggie-resize-input-text"
+                    class="tiggie-resize-input-text disability-type-input"
                     placeholder="Select devices"
                     density="compact"
                     :rules="[requiredValidator]"

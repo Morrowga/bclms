@@ -11,6 +11,7 @@ const props = defineProps({
 });
 
 const HideOption = ref(false);
+const refForm = ref(null); // Define refForm
 
 const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
@@ -25,8 +26,14 @@ const removeOption = (index) => {
 };
 
 const onFormSubmit = () => {
-    emit("submit", props.form);
-    emit("update:isDialogVisible", false);
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            emit("submit", props.form);
+            emit("update:isDialogVisible", false);
+        } else {
+            emit("update:isDialogVisible", true);
+        }
+    })
 };
 
 const onFormReset = () => {
@@ -86,7 +93,9 @@ watch(
 
             <VCardText>
                 <!-- 👉 Form -->
-                <VForm class="mt-6" @submit.prevent="onFormSubmit">
+                <VForm
+                ref="refForm"
+                class="mt-6" @submit.prevent="onFormSubmit">
                     <VContainer>
                         <VRow justify="center">
                             <!-- 👉 Contact -->

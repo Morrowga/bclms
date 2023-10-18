@@ -54,11 +54,13 @@ const submitResource = () => {
     form.file = file.value
     form.post(route("resource.store"), {
     onSuccess: () => {
-        disabled.value = false;
+      disabled.value = false;
       isDialogVisible.value = false;
       SuccessDialog({ title: "You've successfully saved a video." });
     },
     onError: (error) => {
+        disabled.value = false;
+        isDialogVisible.value = false;
         SuccessDialog({ title: error?.file, icon: 'warning',color: '#ff6262', mainTitle: 'Failed!' });
     },
   });

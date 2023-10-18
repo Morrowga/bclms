@@ -49,7 +49,7 @@ class UpdateResourceRequest extends FormRequest
 
     public function checkOrgStorageLimit()
     {
-        $subscription = auth()->user()->org_admin->organisation->subscription->b2b_subscription;
+        $subscription = auth()->user()->org_admin->organisation->subscription != null ? auth()->user()->org_admin->organisation->subscription->b2b_subscription : null;
         if ($subscription === null) {
             $leftStorageLimit = 1; // Default value when the subscription is empty
         } else {

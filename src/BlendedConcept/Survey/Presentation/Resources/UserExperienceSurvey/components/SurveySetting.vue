@@ -35,6 +35,14 @@ const onFormSubmit = () => {
     emit('submit', form)
 }
 
+const customDateValidator = (value) => {
+    if(value === form.start_date){
+        return 'The end date must be different from the start date.';
+    } else {
+        return true;
+    }
+};
+
 const onFormReset = () => {
     emit('update:isDialogVisible', false)
 }
@@ -124,7 +132,7 @@ const appearOn = ref([
                             </VCol>
                             <VCol cols="6" md="6">
                                 <VLabel class="tiggie-label">Survey End Date</VLabel>
-                            <AppDateTimePicker placeholder="Select End Date" v-model="form.end_date" :rules="[requiredValidator]"  :error-messages="form?.errors?.end_date"  density="compact" />
+                            <AppDateTimePicker placeholder="Select End Date" v-model="form.end_date" :rules="[requiredValidator,customDateValidator]"  :error-messages="form?.errors?.end_date"  density="compact" />
                             </VCol>
                             <!-- 👉 Contact -->
                             <VCol cols="3" md="3">

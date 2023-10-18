@@ -47,6 +47,7 @@ class StoreGameRequest extends FormRequest
             'thumb' => 'Thumbnail image is required',
             'disability_type_id' => 'Disability Type is required',
             'tags' => 'Tag is required',
+            'devices' => 'Devices is required',
         ];
     }
 }

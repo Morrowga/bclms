@@ -21,6 +21,7 @@ let form = useForm({
     payment_date: "",
     payment_status: "UNPAID",
     stripe_price: "",
+    id: props.organisation?.id,
     image: "",
     b2b_subscription: {
         storage_limit: "",
@@ -47,7 +48,9 @@ let handleSubmit = () => {
                     onSuccess: () => {
                         SuccessDialog({ title: flash?.successMessage });
                     },
-                    onError: (error) => {},
+                    onError: (error) => {
+                        SuccessDialog({ title: error?.isExpire, icon: 'warning',color: '#ff6262', mainTitle: 'Failed!' });
+                    },
                 }
             );
         }
