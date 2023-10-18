@@ -55,6 +55,7 @@ const onFormSubmit = () => {
     form.options = options.value;
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
+
             emit("submit", form);
             generateRandomCombination();
             form.id = randomCombination.value; // Assuming id should be cleared
@@ -63,6 +64,8 @@ const onFormSubmit = () => {
             options.value = [""]; // Reset options as needed
             form.options = options.value;
             emit("update:isDialogVisible", false);
+        } else {
+            emit("update:isDialogVisible", true);
         }
     });
 };

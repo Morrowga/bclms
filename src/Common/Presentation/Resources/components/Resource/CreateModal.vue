@@ -59,6 +59,7 @@ const submitResource = () => {
       SuccessDialog({ title: "You've successfully saved a video." });
     },
     onError: (error) => {
+        disabled.value = false;
         isDialogVisible.value = false;
         SuccessDialog({ title: error?.file, icon: 'warning',color: '#ff6262', mainTitle: 'Failed!' });
     },

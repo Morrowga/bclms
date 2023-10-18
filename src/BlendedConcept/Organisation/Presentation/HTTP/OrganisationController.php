@@ -191,7 +191,7 @@ class OrganisationController extends Controller
 
     public function storeSubscription(StoreOrganisationSubscriptionRequest $request)
     {
-        // try {
+        try {
 
         // Abort if the user is not authorized to create organisations
         // abort_if(authorize('create', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -208,14 +208,14 @@ class OrganisationController extends Controller
             $saveOrganisation->execute();
         }
 
-
         return redirect()->route('organisations.index')->with('successMessage', 'Organisations Created Successfully!');
-        // } catch (\Exception $error) {
-        //     return redirect()
-        //         ->route('organisations.index')
-        //         ->with([
-        //             'systemErrorMessage' => $error->getCode(),
-        //         ]);
-        // }
+        
+        } catch (\Exception $error) {
+            return redirect()
+                ->route('organisations.index')
+                ->with([
+                    'systemErrorMessage' => $error->getCode(),
+                ]);
+        }
     }
 }
