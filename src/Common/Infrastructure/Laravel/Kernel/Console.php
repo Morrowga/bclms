@@ -39,7 +39,7 @@ class Console extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('expiration:org')
-        ->everyFourMinutes();
+        ->everyTwoHours();
     }
 
     /**

@@ -49,7 +49,7 @@ class ExpirationNoticeCommand extends Command
 
             $hoursUntilExpiration = Carbon::now()->diffInHours($end_date, false);
 
-            // if ($hoursUntilExpiration <= 2) {
+            if ($hoursUntilExpiration <= 2) {
                 $title = 'Your Subscription Expires Soon';
                 $message = 'Dear ' . $organisation->name . ', your subscription is expiring soon in ' . $hoursUntilExpiration . ' hours.';
 
@@ -57,9 +57,9 @@ class ExpirationNoticeCommand extends Command
                     ->send(new OrganisationExpirationNotice($organisation, $title, $message));
 
                 Log::info("Expiration notice sent to organization: {$organisation->name}");
-            // } else {
-            //     Log::info("Checking Expiration to : {$organisation->name}");
-            // }
+            } else {
+                Log::info("Checking Expiration to : {$organisation->name}");
+            }
         }
     }
 }
