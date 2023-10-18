@@ -1,83 +1,137 @@
 <script setup>
 const isDialogVisible = ref(false);
+import { router } from "@inertiajs/core";
 
 const filterItems = ref({
-  learningneed: [],
-  themes : [],
-  disability_types : [],
-  devices : []
+    learningneed: [],
+    themes: [],
+    disability_types: [],
+    devices: [],
 });
 
-
 defineProps(["learningneed", "themes", "disability_types", "devices"]);
+
+const applyFilter = () => {
+    let filterData = JSON.stringify(filterItems.value);
+    router.get(
+        route("books.index", {
+            filterItems: filterData,
+        })
+    );
+};
+
+onMounted(() => {
+    let currentParams = route().params;
+    if (currentParams.filterItems) {
+        let data = JSON.parse(currentParams.filterItems);
+        filterItems.value = {
+            learningneed: data.learningneed,
+            themes: data.themes,
+            disability_types: data.disability_types,
+            devices: data.devices,
+        };
+    }
+});
 </script>
 
 <template>
-  <VDialog v-model="isDialogVisible" width="500">
-    <!-- Activator -->
-    <template #activator="{ props }">
-      <v-btn color="gray" class="text-white" v-bind="props">
-        Filter
-        <v-icon icon="mdi-filter-variant"></v-icon>
-      </v-btn>
-    </template>
+    <VDialog v-model="isDialogVisible" width="500">
+        <!-- Activator -->
+        <template #activator="{ props }">
+            <v-btn color="gray" class="text-white" v-bind="props">
+                Filter
+                <v-icon icon="mdi-filter-variant"></v-icon>
+            </v-btn>
+        </template>
 
-    <!-- Dialog Content -->
-    <VCard title="Filter StoryBook Filter">
-      <DialogCloseBtn
-        variant="text"
-        size="small"
-        @click="isDialogVisible = false"
-      />
-      <v-card-text>
-        <h2 class="text-h6 mb-2">Learning Needs</h2>
+        <!-- Dialog Content -->
+        <VCard title="Filter StoryBook Filter">
+            <DialogCloseBtn
+                variant="text"
+                size="small"
+                @click="isDialogVisible = false"
+            />
+            <v-card-text>
+                <h2 class="text-h6 mb-2">Learning Needs</h2>
 
-        <v-chip-group v-model="filterItems.learningneed" column multiple>
-          <v-chip filter variant="outlined"
-          v-for="learningNeed in learningneed"
-          :key="learningNeed.id">
-            {{learningNeed.name}}
-          </v-chip>
-        </v-chip-group>
-      </v-card-text>
-       <v-card-text>
-        <h2 class="text-h6 mb-2">Themes</h2>
+                <v-chip-group
+                    v-model="filterItems.learningneed"
+                    column
+                    multiple
+                >
+                    <v-chip
+                        filter
+                        variant="outlined"
+                        :value="learningNeed.id"
+                        v-for="learningNeed in learningneed"
+                        :key="learningNeed.id"
+                    >
+                        {{ learningNeed.name }}
+                    </v-chip>
+                </v-chip-group>
+            </v-card-text>
+            <v-card-text>
+                <h2 class="text-h6 mb-2">Themes</h2>
 
-        <v-chip-group v-model="filterItems.themes" column multiple>
-          <v-chip filter variant="outlined"
-          v-for="theme in themes"
-          :key="theme.id">
-            {{theme.name}}
-          </v-chip>
-        </v-chip-group>
-      </v-card-text>
-       <v-card-text>
-        <h2 class="text-h6 mb-2">Disability Types</h2>
+                <v-chip-group v-model="filterItems.themes" column multiple>
+                    <v-chip
+                        filter
+                        variant="outlined"
+                        :value="theme.id"
+                        v-for="theme in themes"
+                        :key="theme.id"
+                    >
+                        {{ theme.name }}
+                    </v-chip>
+                </v-chip-group>
+            </v-card-text>
+            <v-card-text>
+                <h2 class="text-h6 mb-2">Disability Types</h2>
 
-        <v-chip-group v-model="filterItems.disability_types" column multiple>
-          <v-chip filter variant="outlined"
-          v-for="disability_type in disability_types"
-          :key="disability_type.id">
-            {{disability_type.name}}
-          </v-chip>
-        </v-chip-group>
-      </v-card-text>
-       <v-card-text>
-        <h2 class="text-h6 mb-2">Devices</h2>
+                <v-chip-group
+                    v-model="filterItems.disability_types"
+                    column
+                    multiple
+                >
+                    <v-chip
+                        filter
+                        variant="outlined"
+                        :value="disability_type.id"
+                        v-for="disability_type in disability_types"
+                        :key="disability_type.id"
+                    >
+                        {{ disability_type.name }}
+                    </v-chip>
+                </v-chip-group>
+            </v-card-text>
+            <v-card-text>
+                <h2 class="text-h6 mb-2">Devices</h2>
 
-        <v-chip-group v-model="filterItems.devices" column multiple>
-          <v-chip filter variant="outlined"
-          v-for="theme in devices"
-          :key="theme.id">
-            {{theme.name}}
-          </v-chip>
-        </v-chip-group>
-      </v-card-text>
+                <v-chip-group v-model="filterItems.devices" column multiple>
+                    <v-chip
+                        filter
+                        variant="outlined"
+                        :value="theme.id"
+                        v-for="theme in devices"
+                        :key="theme.id"
+                    >
+                        {{ theme.name }}
+                    </v-chip>
+                </v-chip-group>
+            </v-card-text>
 
-      <div class="d-flex justify-center gap-10 pa-3">
-        <VBtn @click="isDialogVisible = false" color="gray" class="text-white"> Cancel </VBtn>
-        <VBtn @click="isDialogVisible = false" color="primary"> Apply Filter </VBtn>
-      </div>
-    </VCard>
-  </VDialog>
+            <div class="d-flex justify-center gap-10 pa-3">
+                <VBtn
+                    @click="isDialogVisible = false"
+                    color="gray"
+                    class="text-white"
+                >
+                    Cancel
+                </VBtn>
+                <VBtn @click="applyFilter()" color="primary">
+                    Apply Filter
+                </VBtn>
+            </div>
+        </VCard>
+    </VDialog>
 </template>

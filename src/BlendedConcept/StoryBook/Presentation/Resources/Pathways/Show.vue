@@ -3,14 +3,31 @@ import { ref } from "vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import SampleStorybookSlider from "./components/SampleStoryBookSlider.vue";
 import AddBook from "./components/AddBook.vue";
+import { router } from "@inertiajs/core";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
-import { SuccessDialog } from "@actions/useSuccess";
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
 
 const props = defineProps(["data_type", "pathway"]);
 
 let flash = computed(() => usePage().props.flash);
 let search = ref("");
 const uploadedImages = ref([]);
+const deletePathway = (id) => {
+    isConfirmedDialog({
+        title: "You won't be able to revert it!",
+        denyButtonText: "Yes, delete it!",
+        onConfirm: () => {
+            router.delete(route("pathways.destroy", id), {
+                onSuccess: () => {
+                    SuccessDialog({
+                        title: "You have successfully deleted pathway!",
+                    });
+                },
+            });
+        },
+    });
+};
 onMounted(() => {
     uploadedImages.value = props.pathway.storybooks.map((storybook) => {
         return {
@@ -45,6 +62,12 @@ onMounted(() => {
                             >
                                 <VBtn color="success" width="150">Edit</VBtn>
                             </Link>
+                            <VBtn
+                                color="candy-red"
+                                width="150"
+                                @click="deletePathway(props.pathway.id)"
+                                >Delete</VBtn
+                            >
                         </div>
                     </div>
 

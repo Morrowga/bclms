@@ -47,12 +47,11 @@ class PathwayRepository implements PathwayRepositoryInterface
                 $pathwayEloquent->addMediaFromRequest('image')
                     ->toMediaCollection('pathway_img', 'media_storybook');
             }
+            DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error->getMessage());
         }
-
-        DB::commit();
     }
 
     //  update plan
@@ -80,16 +79,16 @@ class PathwayRepository implements PathwayRepositoryInterface
                 }
                 $pathwayEloquent->addMediaFromRequest('image')->toMediaCollection('pathway_img', 'media_game');
             }
+            DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
             dd($error);
         }
-
-        DB::commit();
     }
 
-    public function deletePathway(PathwayEloquentModel $Pathway)
+    public function deletePathway(PathwayEloquentModel $pathway)
     {
+        $pathway->delete();
     }
 
     public function getStudentPathway()
