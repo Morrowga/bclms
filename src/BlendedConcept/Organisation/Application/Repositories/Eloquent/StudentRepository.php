@@ -35,6 +35,9 @@ class StudentRepository implements StudentRepositoryInterface
             $org_id = auth()->user()->organisation_id;
             $organisation = OrganisationEloquentModel::find($org_id);
             $organisation->load('subscription.b2b_subscription');
+            if (!isset($organisation->subscription)) {
+                return throw new \Exception("Organisation doesn't have subscription");
+            }
             $total_students_licenses = $organisation->subscription->b2b_subscription->num_student_license;
             $current_student_count = StudentEloquentModel::where('organisation_id', $org_id)->count();
             $coming_student_count = $current_student_count + 1;

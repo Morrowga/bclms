@@ -47,6 +47,9 @@ class TeacherRepository implements TeacherRepositoryInterface
             $org_id = auth()->user()->organisation_id;
             $organisation = OrganisationEloquentModel::find($org_id);
             $organisation->load('subscription.b2b_subscription');
+            if (!isset($organisation->subscription)) {
+                return throw new \Exception("Organisation doesn't have subscription");
+            }
             $total_teachers_licenses = $organisation->subscription->b2b_subscription->num_teacher_license;
             $current_teacher_count = TeacherEloquentModel::where('organisation_id', $org_id)->count();
             $coming_teacher_count = $current_teacher_count + 1;
