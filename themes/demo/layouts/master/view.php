@@ -30,43 +30,68 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.12/dist/js/splide.min.js"></script>
     <script>
-        var splide = new Splide('.splide', {
-            type: 'loop',
-            perPage: 4,
-            rewind: true,
-            breakpoints: {
-                640: {
-                    perPage: 2,
-                    gap: '.7rem',
-                    height: '12rem',
-                },
-                480: {
-                    perPage: 1,
-                    gap: '.7rem',
-                    height: '12rem',
-                },
-            },
-        });
-        splide.mount();
+        var baseUrl = window.location.origin;
+        var story_card = document.getElementById('story_card');
+        var game_card = document.getElementById('game_card');
+        var no_data_text = document.getElementById('no_data_text');
+        var noData = document.getElementById('no_data');
 
-        var splide_game = new Splide('.splide-game', {
-            type: 'loop',
-            perPage: 4,
-            rewind: true,
-            breakpoints: {
-                640: {
-                    perPage: 2,
-                    gap: '.7rem',
-                    height: '12rem',
+        fetch(baseUrl +"/api/landingpage")
+            .then((response) => response.json())
+            .then((json) => {
+                addCardToHTML(json.data.books, story_card);
+                addCardToHTML(json.data.games, game_card);
+
+                splideCard('splide');
+                splideCard('splide-game');
+            });
+
+        function splideCard(className)
+        {
+            var splide = new Splide('.'+ className, {
+                type: 'loop',
+                perPage: 4,
+                rewind: true,
+                breakpoints: {
+                    640: {
+                        perPage: 2,
+                        gap: '.7rem',
+                        height: '12rem',
+                    },
+                    480: {
+                        perPage: 1,
+                        gap: '.7rem',
+                        height: '12rem',
+                    },
                 },
-                480: {
-                    perPage: 1,
-                    gap: '.7rem',
-                    height: '12rem',
-                },
-            },
-        });
-        splide_game.mount();
+            })
+            splide.mount();
+        }
+
+        function addCardToHTML(data, cardName)
+        {
+            if(data.length == 0)
+            {
+                no_data_text.style.display = 'none';
+                noData.innerHTML += '<h4 class="text-center muted mt-3">No Data</h4>';
+            }else{
+                data.forEach(d => {
+                    var thumbnail_img = d.thumbnail_img == '' ? '/images/image1.png' : d.thumbnail_img;
+                    var content = `<div class="col-sm-4 splide__slide m-2">
+                                        <div class="card-wrapper d-flex justify-content-around">
+                                            <div class="card p-3" style="width: 300px !important">
+                                                <img src="${thumbnail_img}" class="card-img-top" alt="...">
+                                                <div class="card-body p-0 mt-2">
+                                                    <h5 class="card-title mb-0 text-center theme-bold-font">${d.name}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                    cardName.innerHTML += content;
+                });
+            }
+        }
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
