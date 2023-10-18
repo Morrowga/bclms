@@ -18,6 +18,7 @@ use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationAdminMapper;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organisation\Domain\Repositories\OrganisationRepositoryInterface;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2bSubscriptionEloquentModel;
+use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
 
@@ -39,7 +40,27 @@ class OrganisationRepository implements OrganisationRepositoryInterface
 
     public function getOrganisations($filters = [])
     {
-        $paginate_organisations = OrganisationResource::collection(OrganisationEloquentModel::filter($filters)->with(['org_admin', 'subscription.b2b_subscription'])->withCount('teachers', 'students')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        // $paginate_organisations = OrganisationResource::collection(OrganisationEloquentModel::filter($filters)->with(['org_admin', 'subscription.b2b_subscription'])->withCount('teachers', 'all_students')->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $paginate_organisations = OrganisationEloquentModel::filter($filters)
+            ->with(['org_admin', 'subscription.b2b_subscription'])
+            ->withCount('teachers', 'all_students')
+            ->orderBy('id', 'desc')
+            ->paginate($filters['perPage'] ?? 10);
+
+        $paginate_organisations->getCollection()->transform(function ($item) {
+            $usedStorage = MediaEloquentModel::where('collection_name', 'videos')
+                ->where('organisation_id', $item->id) // Assuming 'id' is the organisation_id field
+                ->where('teacher_id', null)
+                ->where('status', 'active')
+                ->sum('size');
+
+            $convert_mb = $usedStorage == 0 ? $usedStorage : (int)($usedStorage / 1024 / 1024);
+            $item['used_storage'] = $convert_mb;
+
+            return $item;
+        });
+        // return $paginate_organisations;
+        // dd($paginate_organisations);
 
         $default_organisations = OrganisationEloquentModel::get();
 

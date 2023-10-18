@@ -76,7 +76,7 @@ class OrganisationEloquentModel extends Model implements HasMedia
 
     public function all_students()
     {
-        return $this->hasMany(StudentEloquentModel::class, 'student_id');
+        return $this->hasMany(StudentEloquentModel::class, 'organisation_id');
     }
 
     public function scopeFilter($query, $filters)

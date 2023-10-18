@@ -21,7 +21,7 @@ import {
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
 let flash = computed(() => usePage().props.flash);
-serverPage.value = ref(props.organisations.meta.current_page ?? 1);
+serverPage.value = ref(props.organisations.current_page ?? 1);
 serverPerPage.value = ref(10);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 let filters = ref(null);
@@ -70,8 +70,8 @@ let columns = [
 let options = ref({
     enabled: true,
     mode: "pages",
-    perPage: props.organisations?.meta?.per_page,
-    setCurrentPage: props?.organisations?.meta?.current_page,
+    perPage: props.organisations?.per_page,
+    setCurrentPage: props?.organisations?.current_page,
     perPageDropdown: [10, 20, 50, 100],
     dropdownAllowAll: false,
 });
@@ -185,7 +185,7 @@ const showInfo = (e) => {
                 <vue-good-table
                     class="user-data-table"
                     mode="remote"
-                    :totalRows="props.organisations.meta.total"
+                    :totalRows="props.organisations.total"
                     :pagination-options="options"
                     @column-filter="onColumnFilter"
                     :selected-rows-change="selectionChanged"
@@ -221,13 +221,13 @@ const showInfo = (e) => {
                         <div v-if="props.column.field == 'student_usage'">
                             <VProgressLinear
                                 color="yellow-darken-2"
-                                :model-value="props.row?.student_count"
+                                :model-value="props.row?.all_students_count"
                                 :max="maxStudent(props.row)"
                                 :height="8"
                             ></VProgressLinear>
                             <span
                                 ><span class="text-warning"
-                                    >{{ props.row?.students_count }} </span
+                                    >{{ props.row?.all_students_count }} </span
                                 >/{{ maxStudent(props.row) }}</span
                             >
                         </div>
@@ -239,10 +239,9 @@ const showInfo = (e) => {
                                 :height="8"
                             ></VProgressLinear>
                             <span
-                                ><span class="text-green">321 MB </span>/{{
-                                    maxStorage(props.row)
-                                }}
-                                GB</span
+                                ><span class="text-green"
+                                    >{{ props.row.used_storage }} MB </span
+                                >/{{ maxStorage(props.row) }} MB</span
                             >
                         </div>
                         <div v-if="props.column.field == 'status'">
@@ -311,9 +310,9 @@ const showInfo = (e) => {
                             >
                                 <span>
                                     Showing
-                                    {{ props.organisations.meta.from }} to
-                                    {{ props.organisations.meta.to }} of
-                                    {{ props.organisations.meta.total }}
+                                    {{ props.organisations.from }} to
+                                    {{ props.organisations.to }} of
+                                    {{ props.organisations.total }}
                                     entries
                                 </span>
                                 <div class="d-flex">
@@ -330,9 +329,7 @@ const showInfo = (e) => {
                                         v-model="serverPage"
                                         size="small"
                                         :total-visible="5"
-                                        :length="
-                                            props.organisations.meta.last_page
-                                        "
+                                        :length="props.organisations.last_page"
                                         @next="onPageChange"
                                         @prev="onPageChange"
                                         @click="onPageChange"
