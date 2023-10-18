@@ -39,11 +39,11 @@ let columns = [
         field: "storybooks",
         sortable: false,
     },
-    // {
-    //     label: "",
-    //     field: "action",
-    //     sortable: false,
-    // },
+    {
+        label: "",
+        field: "action",
+        sortable: false,
+    },
 ];
 serverPage.value = ref(props.pathways.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
@@ -66,19 +66,26 @@ let truncatedText = (text) => {
         }
     }
 };
-const deletePathway = () => {
+const deletePathway = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert it!",
         denyButtonText: "Yes, delete it!",
         onConfirm: () => {
-            SuccessDialog({
-                title: "You have successfully deleted pathway!",
+            router.delete(route("pathways.destroy", id), {
+                onSuccess: () => {
+                    SuccessDialog({
+                        title: "You have successfully deleted pathway!",
+                    });
+                },
             });
         },
     });
 };
 const selectionChanged = (data) => {
     console.log(data.selectedRows);
+};
+const goEdit = (id) => {
+    router.get(route("pathways.edit", id));
 };
 </script>
 <template>
@@ -213,7 +220,7 @@ const selectionChanged = (data) => {
                                             <VList>
                                                 <VListItem
                                                     @click="
-                                                        isEditDiability = true
+                                                        goEdit(dataProps.row.id)
                                                     "
                                                 >
                                                     <VListItemTitle
