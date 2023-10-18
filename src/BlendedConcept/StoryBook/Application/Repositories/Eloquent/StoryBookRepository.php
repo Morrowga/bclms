@@ -30,9 +30,37 @@ class StoryBookRepository implements StoryBookRepositoryInterface
      */
     public function getStoryBooks($filters)
     {
+        $filterItems = json_decode(request('filterItems'));
+        if ($filterItems) {
+        } else {
+            $filterItems = null;
+        }
         // Retrieve storybooks with relationships, order by id in descending order, and paginate the results
         $storyBooks = StoryBookResource::collection(
-            StoryBookEloquentModel::filter($filters)->with(['learningneeds', 'themes', 'disability_types', 'devices', 'tags', 'book_versions'])
+            StoryBookEloquentModel::filter($filters)
+                ->with(['learningneeds', 'themes', 'disability_types', 'devices', 'tags', 'book_versions'])
+                ->when($filterItems, function ($query, $filterItems) {
+                    $query->when($filterItems->learningneed, function ($query, $learningneed) {
+                        $query->whereHas('learningneeds', function ($query) use ($learningneed) {
+                            $query->whereIn('id', $learningneed);
+                        });
+                    });
+                    $query->when($filterItems->themes, function ($query, $themes) {
+                        $query->whereHas('themes', function ($query) use ($themes) {
+                            $query->whereIn('themes.id', $themes);
+                        });
+                    });
+                    $query->when($filterItems->disability_types, function ($query, $disability) {
+                        $query->whereHas('disability_types', function ($query) use ($disability) {
+                            $query->whereIn('disability_types.id', $disability);
+                        });
+                    });
+                    $query->when($filterItems->devices, function ($query, $devices) {
+                        $query->whereHas('devices', function ($query) use ($devices) {
+                            $query->whereIn('devices.id', $devices);
+                        });
+                    });
+                })
                 ->orderBy('id', 'desc')
                 ->paginate($filters['perPage'] ?? 10)
         );
@@ -94,17 +122,17 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             }
             $organisations = OrganisationEloquentModel::get();
 
-            foreach($organisations  as $org){
+            foreach ($organisations  as $org) {
                 $user = $org->org_admin->user;
-                $user->notify(new BcNotification(['message' => 'New storybook “' . $storybookEloquent->name . '” has been added.', 'from' => 'System', 'to' => 'Organisation','icon' => 'fa:fa-solid fa-book', 'type' => 'HomeAnnounce']));
+                $user->notify(new BcNotification(['message' => 'New storybook “' . $storybookEloquent->name . '” has been added.', 'from' => 'System', 'to' => 'Organisation', 'icon' => 'fa:fa-solid fa-book', 'type' => 'HomeAnnounce']));
             }
 
             $teachers = TeacherEloquentModel::get();
-            foreach($teachers as $teacher){
+            foreach ($teachers as $teacher) {
                 $toTeacher = $teacher->user;
-                $toTeacher->notify(new BcNotification(['message' => 'New storybook “' . $storybookEloquent->name . '” has been added.', 'from' => 'System', 'to' => 'Teacher','icon' => 'fa:fa-solid fa-book', 'type' => 'HomeAnnounce']));
+                $toTeacher->notify(new BcNotification(['message' => 'New storybook “' . $storybookEloquent->name . '” has been added.', 'from' => 'System', 'to' => 'Teacher', 'icon' => 'fa:fa-solid fa-book', 'type' => 'HomeAnnounce']));
             }
-            
+
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, defineProps, defineEmits } from "vue";
-import { Link, usePage } from "@inertiajs/inertia-vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 import NavBarNotifications from "@/layouts/components/NavBarNotifications.vue";
 // import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue";
 import UserProfile from "@mainRoot/components/UserProfile/UserProfile.vue";
@@ -41,6 +41,16 @@ let toggle = () => {
         <HorizontalNav :nav-items="navItems" />
 
         <VSpacer />
+        <Link
+            :href="route('techsupports')"
+            class="d-none d-md-flex align-center"
+        >
+            <VBtn icon color="secondary">
+                <v-icon style="font-size: 23px !important"
+                    >mdi-chat-question-outline</v-icon
+                >
+            </VBtn>
+        </Link>
         <NavBarNotifications class="me-3" />
 
         <UserProfile v-if="!is_drawer" class="d-none d-md-flex pe-3" />

@@ -17,8 +17,25 @@ class GameRepository implements GameRepositoryInterface
     //get all games
     public function getGameList($filters)
     {
+        $filterItems = json_decode(request('filterItems'));
+        if ($filterItems) {
+        } else {
+            $filterItems = null;
+        }
         $games = GameResource::collection(GameEloquentModel::filter($filters)
             ->with(['tags', 'disabilityTypes', 'devices'])
+            ->when($filterItems, function ($query, $filterItems) {
+                $query->when($filterItems->disability_types, function ($query, $disability) {
+                    $query->whereHas('disabilityTypes', function ($query) use ($disability) {
+                        $query->whereIn('disability_types.id', $disability);
+                    });
+                });
+                $query->when($filterItems->devices, function ($query, $devices) {
+                    $query->whereHas('devices', function ($query) use ($devices) {
+                        $query->whereIn('devices.id', $devices);
+                    });
+                });
+            })
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
 
@@ -106,14 +123,14 @@ class GameRepository implements GameRepositoryInterface
     }
 
     public function download(YourModel $yourModel)
-   {
+    {
         // Let's get some media.
         $downloads = $yourModel->getMedia('game_file');
 
         // Download the files associated with the media in a streamed way.
         // No prob if your files are very large.
         return MediaStream::create('my-files.zip')->addMedia($downloads);
-   }
+    }
 
 
     //update game
@@ -223,7 +240,8 @@ class GameRepository implements GameRepositoryInterface
         }
     }
 
-    public function deleteGame(GameEloquentModel $game){
+    public function deleteGame(GameEloquentModel $game)
+    {
         $gamePath = public_path('gamefiles/' . $game->game_file);
         if (file_exists($gamePath)) {
             \File::deleteDirectory($gamePath);
