@@ -17,6 +17,7 @@ use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationAdminMapper;
 use Src\BlendedConcept\Organisation\Application\Requests\StoreOrganisationRequest;
 use Src\BlendedConcept\Organisation\Application\Requests\UpdateOrganisationRequest;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
+use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\StoreOrganisationCommand;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\DeleteOrganisationCommand;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\UpdateOrganisationCommand;
@@ -146,10 +147,17 @@ class OrganisationController extends Controller
 
     public function show(OrganisationEloquentModel $organisation)
     {
+        $usedStorage = MediaEloquentModel::where('collection_name', 'videos')
+            ->where('organisation_id', $organisation->id)
+            ->where('teacher_id', null)
+            ->where('status', 'active')
+            ->sum('size');
+        $convert_mb = $usedStorage == 0 ? $usedStorage : (int)($usedStorage / 1024 / 1024);
         $organisation->load('org_admin', 'subscription.b2b_subscription')->loadCount('teachers', 'students');
 
         return Inertia::render(config('route.organisations.show'), [
             'organisation' => $organisation,
+            'used_storage' => $convert_mb
         ]);
     }
 
@@ -157,14 +165,14 @@ class OrganisationController extends Controller
     {
         // try {
 
-            // abort_if(authorize('destroy', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-            // $tenant = Tenant::get();
-            // Domain::where('tenant_id', $tenant->id)->delete();
-            // $tenant->delete();
-            $deleteOrganisation = (new DeleteOrganisationCommand($organisation));
-            $deleteOrganisation->execute();
+        // abort_if(authorize('destroy', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // $tenant = Tenant::get();
+        // Domain::where('tenant_id', $tenant->id)->delete();
+        // $tenant->delete();
+        $deleteOrganisation = (new DeleteOrganisationCommand($organisation));
+        $deleteOrganisation->execute();
 
-            return redirect()->route('organisations.index')->with('successMessage', 'Organisations Deleted Successfully!');
+        return redirect()->route('organisations.index')->with('successMessage', 'Organisations Deleted Successfully!');
         // } catch (\Exception $error) {
         //     return redirect()
         //         ->route('organisations.index')
@@ -185,23 +193,23 @@ class OrganisationController extends Controller
     {
         // try {
 
-            // Abort if the user is not authorized to create organisations
-            // abort_if(authorize('create', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // Abort if the user is not authorized to create organisations
+        // abort_if(authorize('create', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-            // Validate the request data
-            $subscription = SubscriptionEloquentModel::find($request->b2b_subscription['subscription_id']);
-            if($subscription){
-                $updateSubscription = SubscriptionData::fromRequest($request, $subscription);
-                $saveOrganisation = (new StoreOrganisationSubscriptionCommand($updateSubscription));
-                $saveOrganisation->execute();
-            } else {
-                $storeSubscription = SubscriptionMapper::fromRequest($request);
-                $saveOrganisation = (new NewOrganisationSubscriptionCommand($storeSubscription));
-                $saveOrganisation->execute();
-            }
+        // Validate the request data
+        $subscription = SubscriptionEloquentModel::find($request->b2b_subscription['subscription_id']);
+        if ($subscription) {
+            $updateSubscription = SubscriptionData::fromRequest($request, $subscription);
+            $saveOrganisation = (new StoreOrganisationSubscriptionCommand($updateSubscription));
+            $saveOrganisation->execute();
+        } else {
+            $storeSubscription = SubscriptionMapper::fromRequest($request);
+            $saveOrganisation = (new NewOrganisationSubscriptionCommand($storeSubscription));
+            $saveOrganisation->execute();
+        }
 
 
-            return redirect()->route('organisations.index')->with('successMessage', 'Organisations Created Successfully!');
+        return redirect()->route('organisations.index')->with('successMessage', 'Organisations Created Successfully!');
         // } catch (\Exception $error) {
         //     return redirect()
         //         ->route('organisations.index')

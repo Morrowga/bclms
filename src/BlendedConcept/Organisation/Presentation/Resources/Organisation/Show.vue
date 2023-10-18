@@ -13,6 +13,9 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    used_storage: {
+        default: 0,
+    },
 });
 const deleteOrganisation = () => {
     isConfirmedDialog({
@@ -55,12 +58,12 @@ const maxStudent = (organisation) => {
     );
 };
 const maxStorage = (organisation) => {
-    return (
-        organisation?.subscription?.b2b_subscription?.storage_limit * 1000 ?? 0
-    );
+    return organisation?.subscription?.b2b_subscription?.storage_limit ?? 0;
 };
 const getPrice = (organisation) => {
-    return organisation?.subscription?.stripe_price * 1000 ?? 0;
+    return organisation?.subscription
+        ? organisation?.subscription?.stripe_price * 1000 ?? 0
+        : 0;
 };
 
 onMounted(() => {
@@ -134,7 +137,7 @@ onMounted(() => {
                             </h4>
                             <p class="tiggie-p">
                                 {{
-                                    fullName(props.organisation.org_admin.user)
+                                    props.organisation.org_admin.user?.full_name
                                 }}
                             </p>
                         </VCol>
@@ -193,14 +196,14 @@ onMounted(() => {
                                     </h1>
                                     <p class="ml-2">
                                         <span class="text-success">
-                                            321 MB
+                                            {{ props.used_storage }} MB
                                         </span>
                                         <span
                                             >/
                                             {{
                                                 maxStorage($props.organisation)
                                             }}
-                                            GB</span
+                                            MB</span
                                         >
                                     </p>
                                 </VCol>
