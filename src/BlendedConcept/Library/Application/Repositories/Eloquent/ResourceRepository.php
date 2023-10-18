@@ -110,7 +110,7 @@ class ResourceRepository implements ResourceRepositoryInterface
                 $leftStorage = $totalStorageLimit - $usedStorage;
 
                 return [
-                    "total" => $totalStorage,
+                    "total" => (int) $totalStorage,
                     "used" => $totalStorage == 0 ? 0 : (int) $usedStorage + $teacherStorages,
                     "left" => $totalStorage == 0 ? 0 : $leftStorage
                 ];
@@ -134,7 +134,7 @@ class ResourceRepository implements ResourceRepositoryInterface
                 $leftStorage = $totalStorage - $usedStorage;
 
                 return [
-                    "total" => $totalStorage,
+                    "total" => (int) $totalStorage,
                     "used" => (int) $usedStorage,
                     "left" => $leftStorage
                 ];
@@ -143,8 +143,7 @@ class ResourceRepository implements ResourceRepositoryInterface
 
             case 'b2c':
                 $teacherEloquent = TeacherEloquentModel::where('user_id', $userEloquentModel->id)->first();
-
-                $totalStorage = $teacherEloquent->allocated_storage_limit;
+                $totalStorage = $teacherEloquent->subscription == null ? 0 : ($teacherEloquent->subscription->b2c_subscription == null ? 0 : ($teacherEloquent->subscription->b2c_subscription->plan == null ? 0 : $teacherEloquent->subscription->b2c_subscription->plan->storage_limit)); // Retrieve the allocated storage size for the user
 
                 $usedStorageBytes = MediaEloquentModel::where('collection_name', 'videos')
                     ->where('teacher_id', $userEloquentModel->id)
@@ -155,8 +154,8 @@ class ResourceRepository implements ResourceRepositoryInterface
                 $leftStorage = $totalStorage - $usedStorage;
 
                 return [
-                    "total" => $totalStorage,
-                    "used" => number_format($usedStorage, 2),
+                    "total" => (int) $totalStorage,
+                    "used" => (int) $usedStorage,
                     "left" => $leftStorage
                 ];
                 break;
