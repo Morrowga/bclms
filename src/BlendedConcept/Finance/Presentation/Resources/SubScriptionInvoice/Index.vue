@@ -3,7 +3,12 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import B2cUser from "./B2cUser.vue";
 import OrganisationUser from "./OrganisationUser.vue";
 let tabName = ref("users");
-const props = defineProps(["b2b_subscriptions", "flash", "b2c_subscriptions"]);
+const props = defineProps([
+    "b2b_subscriptions",
+    "flash",
+    "b2c_subscriptions",
+    "plans",
+]);
 const isActiveTab = (tabNameEnter) => {
     return tabName.value == tabNameEnter
         ? "primary"
@@ -42,6 +47,7 @@ const activeTab = (tabNameEnter) => {
                     <B2cUser
                         :subscriptions="props.b2c_subscriptions"
                         :flash="props.flash"
+                        :plans="props.plans"
                     />
                 </VCol>
                 <VCol

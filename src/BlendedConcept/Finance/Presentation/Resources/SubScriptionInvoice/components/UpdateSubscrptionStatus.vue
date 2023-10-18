@@ -6,7 +6,7 @@ const isDialogVisible = ref(false);
 const date = ref("");
 const isFormValid = ref(false);
 let refForm = ref();
-const props = defineProps(["subscription", "flash"]);
+const props = defineProps(["subscription", "flash", "plans"]);
 const form = useForm({
     end_date: "",
     start_date: "",
@@ -99,14 +99,19 @@ onUpdated(() => {
                             <VLabel class="tiggie-label">Plan</VLabel>
                             <div class="subplan">
                                 <v-radio-group inline v-model="form.plan_id">
-                                    <v-radio label="Free" :value="1">
+                                    <v-radio
+                                        :label="plan.name"
+                                        v-for="plan in props.plans"
+                                        :key="plan.id"
+                                        :value="plan.id"
+                                    >
                                         <template #label="{ label }">
                                             <VLabel class="tiggie-label">
                                                 {{ label }}</VLabel
                                             >
                                         </template>
                                     </v-radio>
-                                    <v-radio label="Base" :value="2">
+                                    <!-- <v-radio label="Base" :value="2">
                                         <template #label="{ label }">
                                             <VLabel class="tiggie-label">
                                                 {{ label }}</VLabel
@@ -126,7 +131,7 @@ onUpdated(() => {
                                                 {{ label }}</VLabel
                                             >
                                         </template>
-                                    </v-radio>
+                                    </v-radio> -->
                                 </v-radio-group>
                             </div>
                         </VCol>

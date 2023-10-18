@@ -15,7 +15,7 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
-const props = defineProps(["subscriptions", "flash"]);
+const props = defineProps(["subscriptions", "flash", "plans"]);
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
 let filters = ref(null);
@@ -214,6 +214,7 @@ watch(filters, (newValue) => {
                                     <UpdateSubscrptionStatus
                                         :subscription="dataProps.row"
                                         :key="dataProps.row.id"
+                                        :plans="props.plans"
                                     />
                                 </VListItem>
                                 <VListItem @click="getInvoice()">

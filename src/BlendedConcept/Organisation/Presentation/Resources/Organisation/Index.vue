@@ -245,8 +245,15 @@ const showInfo = (e) => {
                             >
                         </div>
                         <div v-if="props.column.field == 'status'">
-                            <VChip color="success" class="v-chip">
+                            <VChip
+                                v-if="props.row.status == 'ACTIVE'"
+                                color="success"
+                                class="v-chip"
+                            >
                                 Active
+                            </VChip>
+                            <VChip v-else color="error" class="v-chip">
+                                Inactive
                             </VChip>
                         </div>
                         <div v-if="props.column.field == 'action'">

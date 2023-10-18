@@ -133,10 +133,12 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
 
     public function getOrganisationIdAttribute()
     {
-        if ($this->organisation || ($this->b2bUser && $this->b2bUser->organisation)) {
-            return ($this->organisation->id ?? $this->b2bUser->organisation->id) ?? null;
+        if ($this->b2bUser && $this->b2bUser->organisation) {
+            return $this->b2bUser->organisation->id ?? null;
         } else if ($this->org_admin) {
             return $this->org_admin->organisation_id;
+        } else {
+            return null;
         }
     }
     public function role_user()
@@ -144,10 +146,10 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
         return $this->belongsTo(RoleEloquentModel::class, 'role_id');
     }
 
-    public function organisation()
-    {
-        return $this->belongsTo(OrganisationEloquentModel::class, 'id', 'org_admin_id');
-    }
+    // public function organisation()
+    // {
+    //     return $this->belongsTo(OrganisationEloquentModel::class, 'id', 'org_admin_id');
+    // }
 
     public function b2bUser()
     {
