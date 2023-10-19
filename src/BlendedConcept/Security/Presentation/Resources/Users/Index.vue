@@ -120,8 +120,8 @@ const viewInfoRow = (id) => {
 const setInactive = (status, id) => {
     if (status == "ACTIVE") {
         form.status = "INACTIVE";
-         isConfirmedDialog({
-            denyButtonText: "Set " + status == 'ACTIVE' ? 'Inactive' : 'Active',
+        isConfirmedDialog({
+            denyButtonText: form.status == "ACTIVE" ? "Active" : "Inactive",
             onConfirm: () => {
                 form.post(route("users.change_status", id), {
                     onSuccess: () => {
@@ -136,7 +136,7 @@ const setInactive = (status, id) => {
             icon: "success",
             color: "#48BC65",
             denyButtonColor: "#48BC65",
-            denyButtonText: "Set " + status == 'ACTIVE' ? 'Inactive' : 'Active',
+            denyButtonText: form.status == "ACTIVE" ? "Active" : "Inactive",
             onConfirm: () => {
                 form.post(route("users.change_status", id), {
                     onSuccess: () => {
