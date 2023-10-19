@@ -186,7 +186,11 @@ watch(filters, (newValue) => {
                         }}</span>
                     </div>
                     <div v-if="dataProps.column.field == 'stripe_status'">
-                        <div v-if="dataProps.row.stripe_status == 'ACTIVE'">
+                        <div
+                            v-if="
+                                dataProps.row.organisation?.status == 'ACTIVE'
+                            "
+                        >
                             <VChip color="success"> Active </VChip>
                         </div>
                         <div v-else>

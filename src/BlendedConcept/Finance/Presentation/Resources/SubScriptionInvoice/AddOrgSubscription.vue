@@ -92,6 +92,7 @@ watch(selectedOrg, (value) => {
                                         item-value="id"
                                         item-title="name"
                                         :items="props.organisations"
+                                        :rules="[requiredValidator]"
                                     ></v-select>
                                 </div>
                                 <VRow class="pt-5">
