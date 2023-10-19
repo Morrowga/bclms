@@ -141,6 +141,11 @@ watch(filters, (newValue) => {
                         item_value="value"
                     />
                 </div>
+                <div>
+                    <Link :href="route('subscriptions.add_subscription')">
+                        <VBtn>Add Subscription</VBtn>
+                    </Link>
+                </div>
             </VCardText>
 
             <VDivider />

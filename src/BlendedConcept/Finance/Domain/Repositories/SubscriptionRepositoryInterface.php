@@ -13,4 +13,6 @@ interface SubscriptionRepositoryInterface
     public function updateB2bSubscription(SubscriptionData $subscriptionData);
 
     public function updateB2cSubscription(SubscriptionData $subscriptionData);
+
+    public function getOrgForSubscription();
 }
