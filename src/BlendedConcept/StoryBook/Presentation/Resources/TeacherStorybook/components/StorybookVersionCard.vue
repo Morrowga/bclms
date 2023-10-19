@@ -1,13 +1,29 @@
 <script setup>
-import { isConfirmedDialog } from "@actions/useConfirm";
 import { router } from "@inertiajs/core";
+import { usePage } from "@inertiajs/vue3";
 
+import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
 let onFormSubmit = () => {
     isConfirmedDialog({ title: "Are you sure want to delete it." });
 };
 const props = defineProps(["storybook_versions", "story_img", "storybook_id"]);
+let flash = computed(() => usePage().props.flash);
 const getImage = (image) => {
     return image == "" || !image ? "/images/image8.png" : image;
+};
+const deleteItem = (id) => {
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,delete it!",
+        onConfirm: () => {
+            router.delete(route("storybooksversions.destroy", id), {
+                onSuccess: () => {
+                    SuccessDialog({ title: flash?.value.successMessage });
+                },
+            });
+        },
+    });
 };
 </script>
 <template>
@@ -31,7 +47,7 @@ const getImage = (image) => {
                                 >Edit</v-list-item-title
                             >
                         </v-list-item>
-                        <v-list-item @click="onFormSubmit">
+                        <v-list-item @click="deleteItem(storybook_versions.id)">
                             <v-list-item-title>Delete</v-list-item-title>
                         </v-list-item>
                     </v-list>

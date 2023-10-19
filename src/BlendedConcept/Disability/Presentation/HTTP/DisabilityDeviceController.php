@@ -39,7 +39,7 @@ class DisabilityDeviceController
             $saveDisabilityType = (new StoreDisabilityTypeCommand($disabilityTypeRequest));
             $saveDisabilityType->execute();
 
-            return redirect()->route('disability_type.index')->with('successMessage', 'Organisations Created Successfully!');
+            return redirect()->route('disability_type.index')->with('successMessage', 'Disability Type Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('disability_type.index')
@@ -72,7 +72,7 @@ class DisabilityDeviceController
             $updateDisabilityTypecommand = (new UpdateDisabilityTypeCommand($updateDisabilityType));
             $updateDisabilityTypecommand->execute();
 
-            return redirect()->route('disability_type.index')->with('successMessage', 'Organisations Created Successfully!');
+            return redirect()->route('disability_type.index')->with('successMessage', 'Disability Type Updated Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('disability_type.index')
@@ -89,7 +89,7 @@ class DisabilityDeviceController
             $updateDisabilityTypecommand = (new DeleteDisabilityTypeCommand($disabilityType));
             $updateDisabilityTypecommand->execute();
 
-            return redirect()->route('disability_type.index')->with('successMessage', 'Organisations Created Successfully!');
+            return redirect()->route('disability_type.index')->with('successMessage', 'Disability Type Deleted Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('disability_type.index')

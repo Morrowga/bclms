@@ -118,9 +118,9 @@ class OrganisationRepository implements OrganisationRepositoryInterface
                 'organisation_id' => $organisationEloquent->id,
             ]);
 
-            Artisan::call('run:subdomain', [
-                'subdomain' => $organisationEloquent->sub_domain, // Pass the subdomain as an argument
-            ]);
+            // Artisan::call('run:subdomain', [
+            //     'subdomain' => $organisationEloquent->sub_domain, // Pass the subdomain as an argument
+            // ]);
 
             $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
             DB::commit();

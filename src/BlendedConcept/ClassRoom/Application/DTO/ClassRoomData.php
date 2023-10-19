@@ -10,7 +10,7 @@ class ClassRoomData
         public readonly ?int $id,
         public readonly ?int $organisation_id,
         public readonly string $name,
-        public readonly string $description,
+        public readonly ?string $description,
         public readonly ?string $classroom_photo,
         public readonly ?array $teachers,
         public readonly ?array $students

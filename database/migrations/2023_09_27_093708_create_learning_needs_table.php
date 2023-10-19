@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('learning_needs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }

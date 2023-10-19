@@ -71,7 +71,7 @@ const deleteItem = (id) => {
         onConfirm: () => {
             router.delete(route("disability_themes.destroy", id), {
                 onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
+                    SuccessDialog({ title: props.flash?.successMessage });
                 },
             });
         },
