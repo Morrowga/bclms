@@ -83,7 +83,6 @@ class DashBoardController extends Controller
             $students = (new GetRecentStudents($filters = request(['search', 'perPage', 'page'])))->handle();
         }
         $user_survey = (new GetUserSurveyByRole('LOG_IN'))->handle();
-
         //here I render it inside
         return Inertia::render(config('route.dashboard'), compact('current_user_role', 'user', 'orgainzations_users', 'students', 'UserCount', 'classrooms', 'org_teacher_classrooms', 'org_teacher_students', 'user_survey', 'recent_books', 'recent_games', 'homeNotifications'));
     }

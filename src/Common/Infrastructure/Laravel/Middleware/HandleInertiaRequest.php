@@ -2,10 +2,11 @@
 
 namespace Src\Common\Infrastructure\Laravel\Middleware;
 
+use Inertia\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Middleware;
 use Src\BlendedConcept\Security\Domain\Resources\AuthResource;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetUserSurveyByRole;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\SiteSettingEloquentModel;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\SystemThemeEloquentModel;
 
@@ -37,7 +38,6 @@ class HandleInertiaRequest extends Middleware
      */
     public function share(Request $request): array
     {
-
         return array_merge(parent::share($request), [
             'flash' => [
                 'successMessage' => fn () => $request->session()->get('successMessage'),
@@ -48,6 +48,7 @@ class HandleInertiaRequest extends Middleware
                 'user_detail' => Auth::check() == true ? Auth::user() : ' ',
                 'user_role' => Auth::check() == true ? Auth::user()->role : ' ',
             ],
+            'user_survey_logout' => Auth::check() == true ? (new GetUserSurveyByRole('LOG_OUT'))->handle() : '',
             'notifications' => getNotifications() != null ? getNotifications()['notifications'] : null,
             'unreadNotificationsCount' => getNotifications() != null ? getNotifications()['unread'] : 0,
             'auth' => auth()->check() ? new AuthResource(auth()->user()) : '',

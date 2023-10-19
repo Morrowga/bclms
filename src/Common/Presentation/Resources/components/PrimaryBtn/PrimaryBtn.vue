@@ -30,6 +30,10 @@ let props = defineProps({
         type: Boolean,
         default: false,
     },
+    disabled:{
+        type: Boolean,
+        default: false,
+    },
     isLink: {
         type: Boolean,
         default: true,
@@ -51,6 +55,7 @@ let clicked = () => {
         <v-btn
             v-else
             :height="height"
+            :disabled="disabled"
             :type="props.type"
             variant="flat"
             rounded
