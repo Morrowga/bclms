@@ -123,14 +123,18 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             $organisations = OrganisationEloquentModel::get();
 
             foreach ($organisations  as $org) {
-                $user = $org->org_admin->user;
-                $user->notify(new BcNotification(['message' => 'New storybook “' . $storybookEloquent->name . '” has been added.', 'from' => 'System', 'to' => 'Organisation', 'icon' => 'fa:fa-solid fa-book', 'type' => 'HomeAnnounce']));
+                if ($org->org_admin) {
+                    $user = $org->org_admin->user;
+                    $user->notify(new BcNotification(['message' => 'New storybook “' . $storybookEloquent->name . '” has been added.', 'from' => 'System', 'to' => 'Organisation', 'icon' => 'fa:fa-solid fa-book', 'type' => 'HomeAnnounce']));
+                }
             }
 
             $teachers = TeacherEloquentModel::get();
             foreach ($teachers as $teacher) {
-                $toTeacher = $teacher->user;
-                $toTeacher->notify(new BcNotification(['message' => 'New storybook “' . $storybookEloquent->name . '” has been added.', 'from' => 'System', 'to' => 'Teacher', 'icon' => 'fa:fa-solid fa-book', 'type' => 'HomeAnnounce']));
+                if ($teacher->user) {
+                    $toTeacher = $teacher->user;
+                    $toTeacher->notify(new BcNotification(['message' => 'New storybook “' . $storybookEloquent->name . '” has been added.', 'from' => 'System', 'to' => 'Teacher', 'icon' => 'fa:fa-solid fa-book', 'type' => 'HomeAnnounce']));
+                }
             }
 
             DB::commit();
