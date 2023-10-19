@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\FInance\Application\DTO;
+namespace Src\BlendedConcept\Finance\Application\DTO;
 
 use Illuminate\Http\Request;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;

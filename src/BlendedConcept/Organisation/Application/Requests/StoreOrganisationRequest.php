@@ -52,6 +52,7 @@ class StoreOrganisationRequest extends FormRequest
             'name' => 'This organisation name already exist',
             'org_admin_contact_number.max' => 'This organisation contact number maximum 8.',
             'contact_number.max' => 'This organisation contact number maximum 8.',
+            'login_password.min' => 'Password length must be at least 8 characters'
         ];
     }
 }

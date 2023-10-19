@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Finance\Presentation\HTTP;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
+use Src\BlendedConcept\Finance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Finance\Application\Requests\UpdateB2bSubscriptionRequest;
 use Src\BlendedConcept\Finance\Application\Requests\UpdateB2cSubscriptionRequest;
 use Src\BlendedConcept\Finance\Application\UseCases\Commands\Subscriptions\UpdateB2bSubscriptionCommand;

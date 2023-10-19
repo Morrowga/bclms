@@ -2,7 +2,7 @@
 
 namespace Src\BlendedConcept\Finance\Application\UseCases\Commands\Plans;
 
-use Src\BlendedConcept\FInance\Application\DTO\PlanData;
+use Src\BlendedConcept\Finance\Application\DTO\PlanData;
 use Src\BlendedConcept\Finance\Domain\Repositories\PlanRepositoryInterface;
 use Src\Common\Domain\CommandInterface;
 

@@ -3,7 +3,7 @@
 namespace Src\BlendedConcept\Finance\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
-use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
+use Src\BlendedConcept\Finance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Finance\Domain\Repositories\SubscriptionRepositoryInterface;
 use Src\BlendedConcept\Finance\Domain\Resources\SubscriptionResource;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2bSubscriptionEloquentModel;

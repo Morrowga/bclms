@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('system_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('site_name');
-            $table->string('ssl');
-            $table->string('site_time_zone');
-            $table->string('site_locale');
-            $table->string('email');
-            $table->string('contact_number');
-            $table->string('url');
-            $table->string('website_logo');
-            $table->string('website_favicon');
+            $table->string('site_name')->nullable();
+            $table->string('ssl')->nullable()->default('Default SSL');
+            $table->string('site_time_zone')->nullable();
+            $table->string('site_locale')->nullable();
+            $table->string('email')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('url')->nullable();
+            $table->string('website_logo')->nullable();
+            $table->string('website_favicon')->nullable();
             $table->timestamps();
         });
     }

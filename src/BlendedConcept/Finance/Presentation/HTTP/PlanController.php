@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Finance\Presentation\HTTP;
 
 use Illuminate\Http\Response;
 use Inertia\Inertia;
-use Src\BlendedConcept\FInance\Application\DTO\PlanData;
+use Src\BlendedConcept\Finance\Application\DTO\PlanData;
 use Src\BlendedConcept\Finance\Application\Mappers\PlanMapper;
 use Src\BlendedConcept\Finance\Application\Policies\PlanPolicy;
 use Src\BlendedConcept\Finance\Application\Requests\ChangeStatusPlanRequest;
