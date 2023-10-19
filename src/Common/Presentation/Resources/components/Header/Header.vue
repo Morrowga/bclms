@@ -10,6 +10,9 @@ let props = defineProps({
         type: Object,
         default: null,
     },
+    user_survey_logout: {
+        type: Object,
+    },
     is_drawer: {
         type: Boolean,
         default: false,

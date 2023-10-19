@@ -286,7 +286,7 @@ class SurveyRepository implements SurveyRepositoryInterface
         $user_type = $this->checkRole($user->role->name);
         if ($user_type != 'BC') {
             $currentDateTime = now()->format('Y-m-d H:i:s'); // Format current datetime
-            
+
             $surveyEloquentModel = SurveyEloquentModel::where('appear_on', $appear_on)
                 ->where('type', 'USEREXP')
                 ->whereHas('survey_settings', function ($query) use ($user_type) {
@@ -301,8 +301,10 @@ class SurveyRepository implements SurveyRepositoryInterface
                     }
                 ])
                 ->latest()->first();
-
+            
             return ($surveyEloquentModel && $surveyEloquentModel->responses->count() == 0) ? $surveyEloquentModel : '';
+        } else {
+            return '';
         }
     }
 
