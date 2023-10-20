@@ -26,7 +26,7 @@ const form = useForm({
 })
 
 const checkSurvey = () => {
-    if(user_survey_logout){
+    if(user_survey_logout.value != ''){
         hasSurvey.value = true
     } else {
         isDialogVisible.value = true
