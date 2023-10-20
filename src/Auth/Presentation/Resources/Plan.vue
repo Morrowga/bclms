@@ -12,47 +12,29 @@ import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 import B2CRegister from "./B2CRegister.vue";
 import B2BRegister from "./B2BRegister.vue";
 
+const props = defineProps({
+    form: {
+        type: Object,
+    },
+});
+const emit = defineEmits(["update:hasSurvey", "update:isDialogVisible"]);
+
 const stripePromise = loadStripe(
     "pk_test_51O3CwpFAxSyBvPem5qU56paMzEVJzZ2dwLNZWCf8FB0PvQ4hZZwYRQ9THQl1AWDavJPE9YWoMwYT1qQXTJkGBPVd00U17bOF2t"
 );
 let elements;
 const isDonePayment = ref(false);
 
-let organisation = ref(false);
-
-let isAlertVisible = ref(true);
-
 const isDialogVisible = ref(false);
 
 const spinner = ref(false);
 const disable = ref(false);
 
-let agreed = ref("");
-let props = defineProps(["ErrorMessage", "sign_up_data"]);
-
-const items = [
-    "California",
-    "Colorado",
-    "Florida",
-    "Georgia",
-    "Texas",
-    "Wyoming",
-];
 const stripes = [{ id: "xl-tshirt" }];
 
 const isPasswordVisible = ref(false);
 
-console.log(props.sign_up_data);
-
-// if(props.sign_up_data.length == 0){
-//     router.get("/register");
-// }
-
-let emailAddress = props.sign_up_data.email;
-
-// document.addEventListener("DOMContentLoaded", function () {
-//   document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
-// });
+let emailAddress = props.form.email;
 
 // Fetches a payment intent and captures the client secret
 async function initialize() {
@@ -116,6 +98,7 @@ async function checkStatus() {
 async function handleSubmit(e) {
     //   e.preventDefault();
     isDonePayment.value = true;
+    emit("submit", props.form);
     //   setLoading(true);
 
     //   const stripe = await stripePromise; // Wait for Stripe to load
