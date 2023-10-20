@@ -10,7 +10,7 @@ import DisabilityType from "./components/DisabilityType.vue";
 import LearningType from "./components/LearningType.vue";
 import Themes from "./components/Themes.vue";
 
-let props = defineProps(["disabilityTypes"]);
+let props = defineProps(["disabilityTypes", "flash"]);
 let tabName = ref("disability");
 const isActiveTab = (tabNameEnter) => {
     return tabName.value == tabNameEnter
@@ -91,16 +91,29 @@ onMounted(() => {
                         >
                     </div>
                 </VCol>
+                <v-alert
+                    v-show="$page.props.flash.errorMessage != null"
+                    color="error"
+                    icon="$error"
+                    title="Error!"
+                    >{{ $page.props.flash.errorMessage }}
+                </v-alert>
             </VRow>
             <VRow>
                 <VCol cols="12" v-if="tabName == 'disability'">
-                    <DisabilityType :disabilityTypes="disabilityTypes" />
+                    <DisabilityType
+                        :disabilityTypes="disabilityTypes"
+                        :flash="flash"
+                    />
                 </VCol>
                 <VCol cols="12" v-if="tabName == 'learning'">
-                    <LearningType :disabilityTypes="disabilityTypes" />
+                    <LearningType
+                        :disabilityTypes="disabilityTypes"
+                        :flash="flash"
+                    />
                 </VCol>
                 <VCol cols="12" v-if="tabName == 'themes'">
-                    <Themes :disabilityTypes="disabilityTypes" />
+                    <Themes :disabilityTypes="disabilityTypes" :flash="flash" />
                 </VCol>
             </VRow>
         </VContainer>

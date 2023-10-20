@@ -5,6 +5,7 @@ namespace Src\BlendedConcept\Finance\Presentation\HTTP;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Src\BlendedConcept\Finance\Application\DTO\SubscriptionData;
+use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
 use Src\BlendedConcept\Finance\Application\Requests\UpdateB2bSubscriptionRequest;
 use Src\BlendedConcept\Finance\Application\Requests\UpdateB2cSubscriptionRequest;
 use Src\BlendedConcept\Finance\Application\UseCases\Commands\Subscriptions\UpdateB2bSubscriptionCommand;
@@ -12,7 +13,11 @@ use Src\BlendedConcept\Finance\Application\UseCases\Commands\Subscriptions\Updat
 use Src\BlendedConcept\Finance\Application\UseCases\Queries\Plans\GetPlanWithPagination;
 use Src\BlendedConcept\Finance\Application\UseCases\Queries\Subscriptions\GetB2bSubscriptions;
 use Src\BlendedConcept\Finance\Application\UseCases\Queries\Subscriptions\GetB2cSubscriptions;
+use Src\BlendedConcept\Finance\Application\UseCases\Queries\Subscriptions\GetOrgForSubscription;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
+use Src\BlendedConcept\Organisation\Application\Requests\StoreOrganisationSubscriptionRequest;
+use Src\BlendedConcept\Organisation\Application\UseCases\Commands\NewOrganisationSubscriptionCommand;
+use Src\BlendedConcept\Organisation\Application\UseCases\Commands\StoreOrganisationSubscriptionCommand;
 
 class SubscribtionInvoiceController
 {
@@ -88,6 +93,52 @@ class SubscribtionInvoiceController
                 ->route('subscription_invoice')
                 ->with([
                     'systemErrorMessage' => $e->getMessage(),
+                ]);
+        }
+    }
+
+    public function addOrgSubscription()
+    {
+        try {
+            $organisations = (new GetOrgForSubscription())->handle();
+            return Inertia::render(config('route.subscriptioninvoice.add_subscription'), [
+                'organisations' => $organisations
+            ]);
+        } catch (\Exception $e) {
+            dd($e);
+            return redirect()
+                ->route('subscription_invoice')
+                ->with([
+                    'systemErrorMessage' => $e->getMessage(),
+                ]);
+        }
+    }
+
+    public function storeOrgSubscription(StoreOrganisationSubscriptionRequest $request)
+    {
+        try {
+
+            // Abort if the user is not authorized to create organisations
+            // abort_if(authorize('create', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+            // Validate the request data
+            $subscription = SubscriptionEloquentModel::find($request->b2b_subscription['subscription_id']);
+            if ($subscription) {
+                $updateSubscription = SubscriptionData::fromRequest($request, $subscription);
+                $saveOrganisation = (new StoreOrganisationSubscriptionCommand($updateSubscription));
+                $saveOrganisation->execute();
+            } else {
+                $storeSubscription = SubscriptionMapper::fromRequest($request);
+                $saveOrganisation = (new NewOrganisationSubscriptionCommand($storeSubscription));
+                $saveOrganisation->execute();
+            }
+
+            return redirect()->route('subscription_invoice')->with('successMessage', 'Subscription Created Successfully!');
+        } catch (\Exception $error) {
+            return redirect()
+                ->route('organisations.index')
+                ->with([
+                    'systemErrorMessage' => $error->getCode(),
                 ]);
         }
     }

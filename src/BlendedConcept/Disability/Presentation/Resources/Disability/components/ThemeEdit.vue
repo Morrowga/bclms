@@ -20,8 +20,12 @@ let handleSubmit = () => {
                     disability_theme: props.disability_type.id,
                 }),
                 {
-                    onSuccess: () => {
-                        SuccessDialog({ title: props.flash?.successMessage });
+                    onSuccess: (res) => {
+                        let success = JSON.stringify(res.props.flash.successMessage);
+                        if(success !== 'null')
+                        {
+                            SuccessDialog({ title: success.replaceAll('"', '') });
+                        }
                         isDialogVisible.value = false;
                     },
                     onError: (error) => {},

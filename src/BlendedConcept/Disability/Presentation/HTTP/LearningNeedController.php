@@ -64,7 +64,7 @@ class LearningNeedController
             $updatelearningNeedcommand = (new UpdateLearningNeedCommand($updatelearningNeed));
             $updatelearningNeedcommand->execute();
 
-            return redirect()->route('learning_need.index')->with('successMessage', 'Learning Need Created Successfully!');
+            return redirect()->route('learning_need.index')->with('successMessage', 'Learning Need Updated Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('learning_need.index')
@@ -81,7 +81,7 @@ class LearningNeedController
             $deletelearningNeedCommand = (new DeleteLearningNeedCommand($learningNeed));
             $deletelearningNeedCommand->execute();
 
-            return redirect()->route('learning_need.index')->with('successMessage', 'Learning Need Created Successfully!');
+            return redirect()->route('learning_need.index')->with('successMessage', 'Learning Need Deleted Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('learning_need.index')

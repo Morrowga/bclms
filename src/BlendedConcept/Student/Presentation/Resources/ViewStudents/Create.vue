@@ -33,13 +33,19 @@ let refForm = ref();
 const gender = ref(["Male", "Female"]);
 let tab = ref(null);
 const createStudent = () => {
-    form.post(route("teacher_students.store"), {
-        onSuccess: () => {
-            SuccessDialog({ title: "You've successfully updated a student." });
-        },
-        onError: (error) => {
-            console.log(error);
-        },
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("teacher_students.store"), {
+                onSuccess: () => {
+                    SuccessDialog({
+                        title: "You've successfully updated a student.",
+                    });
+                },
+                onError: (error) => {
+                    console.log(error);
+                },
+            });
+        }
     });
     // SuccessDialog({
     //     title: "You have successfully create a playlist!",
@@ -129,7 +135,7 @@ const createStudent = () => {
                                 </p>
                                 <v-text-field
                                     v-model="form.parent_first_name"
-                                    placeholder="e.g. 9180003"
+                                    placeholder="e.g. Mary"
                                     variant="outlined"
                                     :rules="[]"
                                     :error-messages="
@@ -143,7 +149,7 @@ const createStudent = () => {
                                 </p>
                                 <v-text-field
                                     v-model="form.parent_last_name"
-                                    placeholder="e.g. 9180003"
+                                    placeholder="e.g. Smith"
                                     variant="outlined"
                                     :rules="[requiredValidator]"
                                     :error-messages="

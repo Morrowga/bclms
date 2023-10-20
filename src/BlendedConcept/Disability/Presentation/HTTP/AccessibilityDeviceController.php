@@ -65,12 +65,13 @@ class AccessibilityDeviceController
 
     public function edit($id)
     {
-        $device = DeviceEloquentModel::findOrFail($id);
+        $device = DeviceEloquentModel::with('books')->findOrFail($id);
         $disabilityTypes = (new GetDisabilityTypeForSelect())->handle();
-
+        $books = (new GetSimpleBooks())->handle();
         return Inertia::render(config('route.accessibility_device.edit'), [
             'disability_types' => $disabilityTypes,
             'device' => $device->load('disabilityTypes'),
+            'books' => $books
         ]);
     }
 
@@ -101,7 +102,7 @@ class AccessibilityDeviceController
             $deleteDeviceCommand = (new DeleteDeviceCommand($device));
             $deleteDeviceCommand->execute();
 
-            return redirect()->route('accessibility_device.index')->with('successMessage', 'Devices Created Successfully!');
+            return redirect()->route('accessibility_device.index')->with('successMessage', 'Devices Deleted Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('accessibility_device.index')

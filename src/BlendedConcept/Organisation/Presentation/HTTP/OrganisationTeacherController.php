@@ -13,6 +13,7 @@ use Src\BlendedConcept\Organisation\Application\UseCases\Commands\Teacher\Update
 use Src\BlendedConcept\Organisation\Application\UseCases\Queries\Student\GetStudentList;
 use Src\BlendedConcept\Organisation\Application\UseCases\Queries\Teacher\GetTeacherList;
 use Src\BlendedConcept\Organisation\Application\UseCases\Queries\Teacher\ShowTeacher;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Teacher\Domain\Policies\B2bTeacherPolicy;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,15 +25,22 @@ class OrganisationTeacherController
         // abort_if(authorize('view', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // try {
+        $organisation_id = auth()->user()->organisation_id;
         $filters = request(['search', 'first_name', 'last_name', 'email', 'filter']) ?? [];
-
+        $organisation = OrganisationEloquentModel::with('subscription.b2b_subscription')->find($organisation_id);
         $teachers = (new GetTeacherList($filters))->handle();
-
+        $total_teachers = 0;
+        $total_students = 0;
+        if (isset($organisation->subscription->b2b_subscription)) {
+            $total_students = $organisation->subscription->b2b_subscription->num_student_license;
+            $total_teachers = $organisation->subscription->b2b_subscription->num_teacher_license;
+        }
         $studentListWithPagniation = (new GetStudentList($filters))->handle();
-
         return Inertia::render(config('route.organisations-teacher.index'), [
             'teachers' => $teachers,
             'students' => $studentListWithPagniation,
+            'total_teachers' => $total_teachers,
+            'total_students' => $total_students
         ]);
         // } catch (\Exception $e) {
         //     return $e;

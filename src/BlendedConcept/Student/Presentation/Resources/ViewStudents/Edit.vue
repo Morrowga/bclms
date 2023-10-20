@@ -142,7 +142,7 @@ let form = useForm({
                                 </p>
                                 <v-text-field
                                     v-model="form.parent_first_name"
-                                    placeholder="e.g. 9180003"
+                                    placeholder="e.g. Mary"
                                     variant="outlined"
                                     :rules="[]"
                                     :error-messages="
@@ -156,7 +156,7 @@ let form = useForm({
                                 </p>
                                 <v-text-field
                                     v-model="form.parent_last_name"
-                                    placeholder="e.g. 9180003"
+                                    placeholder="e.g. Smith"
                                     variant="outlined"
                                     :rules="[requiredValidator]"
                                     :error-messages="

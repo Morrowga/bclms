@@ -175,7 +175,11 @@ const getAvaliableStorage = () => {
                     v-for="(teacher, index) in props.teachers"
                     :key="index"
                 >
-                    <TeacherStorageField :key="index" :data="teacher" />
+                    <TeacherStorageField
+                        :key="index"
+                        :data="teacher"
+                        :left_storage="getAvaliableStorage()"
+                    />
                 </VCol>
             </VRow>
         </VContainer>

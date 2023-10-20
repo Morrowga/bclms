@@ -60,8 +60,13 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
         }
     }
 
-    public function deleteStoryBookVersion()
+    public function deleteStoryBookVersion($storybook_version)
     {
+        try {
+            $storybook_version->delete();
+        } catch (\Exception $e) {
+            dd($e);
+        }
     }
 
     public function assigmentAssigment()

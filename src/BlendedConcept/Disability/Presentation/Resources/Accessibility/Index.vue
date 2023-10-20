@@ -107,6 +107,10 @@ let filterDatas = ref([
     { title: "Disability", value: "disability" },
     { title: "Status", value: "status" },
 ]);
+const form = useForm({
+    status: "",
+    _method: "DELETE",
+});
 watch(filters, (newValue) => {
     onColumnFilter({
         columnFilters: {
@@ -132,13 +136,43 @@ const selectionChanged = (data) => {
 const goRoute = (route) => {
     router.get(route);
 };
-const deleteItem = () => {
-    isConfirmedDialog({
-        denyButtonText: "Set Inactive",
-        onConfirm: () => {
-            // alert("good to go");
-        },
-    });
+// const deleteItem = () => {
+//     isConfirmedDialog({
+//         denyButtonText: "Set Inactive",
+//         onConfirm: () => {
+//             // alert("good to go");
+//         },
+//     });
+// };
+const deleteItem = (status, id) => {
+    if (status == "ACTIVE") {
+        form.status = "INACTIVE";
+        isConfirmedDialog({
+            denyButtonText: form.status == "ACTIVE" ? "Active" : "Inactive",
+            onConfirm: () => {
+                form.post(route("accessibility_device.destroy", id), {
+                    onSuccess: () => {
+                        SuccessDialog({ title: props.flash?.successMessage });
+                    },
+                });
+            },
+        });
+    } else {
+        form.status = "ACTIVE";
+        isConfirmedDialog({
+            icon: "success",
+            color: "#48BC65",
+            denyButtonColor: "#48BC65",
+            denyButtonText: form.status == "ACTIVE" ? "Active" : "Inactive",
+            onConfirm: () => {
+                form.post(route("accessibility_device.destroy", id), {
+                    onSuccess: () => {
+                        SuccessDialog({ title: props.flash?.successMessage });
+                    },
+                });
+            },
+        });
+    }
 };
 </script>
 <template>
@@ -230,13 +264,17 @@ const deleteItem = () => {
                                         "
                                         class="flex flex-wrap"
                                     >
-                                        <VChip color="success"> Active </VChip>
-
                                         <VChip
-                                            color="warning"
-                                            v-if="true == false"
+                                            v-if="
+                                                dataProps.row.status == 'ACTIVE'
+                                            "
+                                            color="success"
                                         >
                                             Active
+                                        </VChip>
+
+                                        <VChip color="warning" v-else>
+                                            Inactive
                                         </VChip>
                                     </div>
                                     <div
@@ -272,11 +310,20 @@ const deleteItem = () => {
                                                     >
                                                 </VListItem>
                                                 <VListItem
-                                                    @click="deleteItem()"
+                                                    @click="
+                                                        deleteItem(
+                                                            dataProps.row
+                                                                .status,
+                                                            dataProps.row.id
+                                                        )
+                                                    "
                                                 >
-                                                    <VListItemTitle
-                                                        >Delete</VListItemTitle
-                                                    >
+                                                    <VListItemTitle>{{
+                                                        dataProps.row.status ==
+                                                        "ACTIVE"
+                                                            ? "inactive"
+                                                            : "active"
+                                                    }}</VListItemTitle>
                                                 </VListItem>
                                             </VList>
                                         </VMenu>

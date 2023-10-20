@@ -39,6 +39,7 @@ const pages = {
 
 
     "BlendedConcept/Finance/Presentation/Resources/SubScriptionInvoice/Index": import('../../src/BlendedConcept/Finance/Presentation/Resources/SubScriptionInvoice/Index.vue'),
+    "BlendedConcept/Finance/Presentation/Resources/SubScriptionInvoice/AddOrgSubscription": import('../../src/BlendedConcept/Finance/Presentation/Resources/SubScriptionInvoice/AddOrgSubscription.vue'),
 
     /***
      * this below contains users  lists that will used for superadmin

@@ -16,4 +16,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('subscribptioninvoice', [SubscribtionInvoiceController::class, 'index'])->name('subscription_invoice');
     Route::put('subscribptioninvoice/{subscription}/update/b2b', [SubscribtionInvoiceController::class, 'updateB2b'])->name('subscription_invoice.updateb2b');
     Route::put('subscribptioninvoice/{subscription}/update/b2c', [SubscribtionInvoiceController::class, 'updateB2c'])->name('subscription_invoice.updateb2c');
+
+    Route::get('subscriptions/add_subscription', [SubscribtionInvoiceController::class, 'addOrgSubscription'])->name('subscriptions.add_subscription');
+
+    Route::put('subscriptions/store_subscription', [SubscribtionInvoiceController::class, 'storeOrgSubscription'])->name('subscriptions.store_subscription');
 });

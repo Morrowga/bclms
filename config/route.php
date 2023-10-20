@@ -60,6 +60,7 @@ return [
 
     'subscriptioninvoice' => [
         'index' => 'BlendedConcept/Finance/Presentation/Resources/SubScriptionInvoice/Index',
+        'add_subscription' => 'BlendedConcept/Finance/Presentation/Resources/SubScriptionInvoice/AddOrgSubscription',
     ],
 
     'disability_type' => [

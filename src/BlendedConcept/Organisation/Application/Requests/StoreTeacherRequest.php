@@ -26,9 +26,9 @@ class StoreTeacherRequest extends FormRequest
             'contact_number' => [
                 'required',
             ],
-            'image' => [
-                'required',
-            ],
+            // 'image' => [
+            //     'required',
+            // ],
         ];
     }
 

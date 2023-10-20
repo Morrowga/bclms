@@ -13,6 +13,9 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    total_teachers: {
+        default: 0,
+    },
 });
 
 let filters = ref(null);
@@ -21,6 +24,7 @@ let filterDatas = ref([
     { title: "Z-A", value: "desc" },
     { title: "Contact Number", value: "contact_number" },
 ]);
+console.log(props.data);
 watch(filters, (newValue) => {
     onColumnFilter({
         columnFilters: {
@@ -33,14 +37,23 @@ const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
 
 const formattedImageUrl = (imageUrl) => {
-  // Check if the input starts with http:// or https://
-  if (!/^https?:\/\//i.test(imageUrl)) {
-    // If not, add http:// as the default prefix
-    return app_url.value + '/' + imageUrl;
-  } else {
-    // If it already includes http:// or https://, use the input as is
-    return imageUrl;
-  }
+    // Check if the input starts with http:// or https://
+    if (!/^https?:\/\//i.test(imageUrl)) {
+        // If not, add http:// as the default prefix
+        return app_url.value + "/" + imageUrl;
+    } else {
+        // If it already includes http:// or https://, use the input as is
+        return imageUrl;
+    }
+};
+function calculatePercentageByCount(specificCount, totalCount) {
+    if (totalCount === 0) {
+        return 0; // To avoid division by zero error
+    }
+    return (specificCount / totalCount) * 100;
+}
+const showUsedStorage = (teacher) => {
+    return `${teacher.used_storage}/${teacher.allocated_storage_limit ?? 0}`;
 };
 </script>
 <template>
@@ -83,10 +96,20 @@ const formattedImageUrl = (imageUrl) => {
                     <VCol cols="12" class="pa-0">
                         <div class="d-flex justify-end">
                             <div class="w-25">
-                                <span>12/20 Used </span>
+                                <span
+                                    >{{ props.data.meta.total }}/{{
+                                        props.total_teachers
+                                    }}
+                                    Used
+                                </span>
                                 <VProgressLinear
                                     color="yellow-darken-2"
-                                    model-value="20"
+                                    :model-value="
+                                        calculatePercentageByCount(
+                                            props.data.meta.total,
+                                            props.total_teachers
+                                        )
+                                    "
                                     :height="15"
                                 ></VProgressLinear>
                             </div>
@@ -112,7 +135,7 @@ const formattedImageUrl = (imageUrl) => {
                     :route="route('organisations-teacher.show', item.user.id)"
                     :title="item.user.first_name + ' ' + item.user.last_name"
                     :phone_number="item.user.contact_number"
-                    storage="135 MB/ 200 MB"
+                    :storage="showUsedStorage(item)"
                 />
             </VCol>
         </VRow>

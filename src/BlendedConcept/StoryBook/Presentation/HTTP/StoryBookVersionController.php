@@ -13,6 +13,7 @@ use Src\BlendedConcept\StoryBook\Application\Requests\UpdateStoryBookRequest;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\BookReview\GiveBookReviewCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoryBookVersion\CreateStoryBookAssigmentCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoryBookVersion\CreateStoryBookVersionCommand;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoryBookVersion\DeleteStorybookVersionCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoryBookVersion\UpdateStorybookVersionCommand;
 use Src\BlendedConcept\StoryBook\Domain\Model\Entities\StoryBookVersion;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
@@ -91,6 +92,23 @@ class StoryBookVersionController
             return redirect()->back()->with('successMessage', 'StoryBook Version created successfully!');
         } catch (\Exception $th) {
             dd($th->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $storybook_version = StoryBookVersionEloquentModel::find($id);
+            $deleteBookCommand = (new DeleteStorybookVersionCommand($storybook_version));
+            $deleteBookCommand->execute();
+
+            return redirect()->back()->with('successMessage', 'Book Version Deleted Successfully!');
+        } catch (\Exception $error) {
+            return redirect()
+                ->route('teacher_storybook.index')
+                ->with([
+                    'systemErrorMessage' => $error->getCode(),
+                ]);
         }
     }
 }

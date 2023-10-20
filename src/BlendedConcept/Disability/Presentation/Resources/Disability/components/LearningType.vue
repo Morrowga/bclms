@@ -73,7 +73,14 @@ const selectionChanged = (data) => {
 const deleteItem = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",
-        denyButtonText: "Yes, delete it!",
+        denyButtonText: "Yes,delete it!",
+        onConfirm: () => {
+            router.delete(route("learning_need.destroy", id), {
+                onSuccess: () => {
+                    SuccessDialog({ title: props.flash?.successMessage });
+                },
+            });
+        },
     });
 };
 const handleSubmit = ({ title }) => {

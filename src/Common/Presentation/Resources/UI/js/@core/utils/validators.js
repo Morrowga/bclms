@@ -96,3 +96,9 @@ export const alphaDashValidator = value => {
 
   return /^[0-9A-Z_-]*$/i.test(valueAsString) || 'All Character are not valid'
 }
+
+export const contactNumberValidator = (value, length) => {
+  if (isEmpty(value))
+    return true
+  return String(value).length <= length || `Please enter a valid contact number with a maximium of ${length} digits.`
+}
