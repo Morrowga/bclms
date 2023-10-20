@@ -595,14 +595,14 @@ H5P.MultiChoice = function (options, contentId, contentData) {
         var device_id = studentData.device_id;
         console.log(device_id);
         //If two switch
-        if (device_id === 1) {
+        if (device_id === 2) {
           console.log("Two switch")
           handleSpacebarKeydown($answers);
           handleEnterKeyForChecking();
           handleTab();
         }
         //If single switch
-        else if (device_id === 2) {
+        else if (device_id === 3) {
           console.log("Single switch");
           handleDelayedSelection($answers);
           handleEnterKeyForCheckingSingle();
