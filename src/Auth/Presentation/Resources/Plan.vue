@@ -19,7 +19,8 @@ const items = [
 ];
 const isPasswordVisible = ref(false);
 let agreed = ref("");
-let props = defineProps(["ErrorMessage"]);
+let props = defineProps(["ErrorMessage", "sign_up_data"]);
+console.log(props.sign_up_data);
 </script>
 
 <template>

@@ -12,8 +12,8 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 
 const isFormValid = ref(false);
-const isDialogVisible = ref(false);
 let refForm = ref();
+const isDialogVisible = ref(false);
 
 let flash = computed(() => usePage().props.flash);
 let isPasswordVisible = ref(false);
