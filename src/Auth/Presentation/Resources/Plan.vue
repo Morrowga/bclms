@@ -4,11 +4,21 @@ import { onMounted, ref } from "vue";
 import { Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { toastAlert } from "@Composables/useToastAlert";
+import { loadStripe } from '@stripe/stripe-js';
+import axios from "axios";
 
 import B2CRegister from "./B2CRegister.vue";
 import B2BRegister from "./B2BRegister.vue";
+
+const stripePromise = loadStripe("pk_test_51O3CwpFAxSyBvPem5qU56paMzEVJzZ2dwLNZWCf8FB0PvQ4hZZwYRQ9THQl1AWDavJPE9YWoMwYT1qQXTJkGBPVd00U17bOF2t");
+let elements;
+
 let organisation = ref(false);
+
 let isAlertVisible = ref(true);
+
+const isDialogVisible = ref(false);
+
 const items = [
     "California",
     "Colorado",
@@ -17,10 +27,126 @@ const items = [
     "Texas",
     "Wyoming",
 ];
+const stripes = [{ id: "xl-tshirt" }];
+
 const isPasswordVisible = ref(false);
+
 let agreed = ref("");
 let props = defineProps(["ErrorMessage", "sign_up_data"]);
-console.log(props.sign_up_data);
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
+});
+
+let emailAddress = '';
+// Fetches a payment intent and captures the client secret
+async function initialize() {
+    try {
+    const response = await axios.post("/create-stripe", {
+        body: JSON.stringify({ stripes })
+    });
+
+    const { clientSecret } = response.data;
+
+    const stripe = await stripePromise; // Wait for Stripe to load
+
+    elements = stripe.elements({ clientSecret });
+
+    const linkAuthenticationElement = elements.create("linkAuthentication");
+    linkAuthenticationElement.mount("#link-authentication-element");
+
+    const paymentElementOptions = {
+        layout: "tabs",
+    };
+
+    const paymentElement = elements.create("payment", paymentElementOptions);
+    paymentElement.mount("#payment-element");
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// Fetches the payment intent status after payment submission
+async function checkStatus() {
+  const clientSecret = new URLSearchParams(window.location.search).get(
+    "payment_intent_client_secret"
+  );
+
+  if (!clientSecret) {
+    return;
+  }
+
+  const { paymentIntent } = await stripePromise.retrievePaymentIntent(clientSecret);
+
+  switch (paymentIntent.status) {
+    case "succeeded":
+      showMessage("Payment succeeded!");
+      break;
+    case "processing":
+      showMessage("Your payment is processing.");
+      break;
+    case "requires_payment_method":
+      showMessage("Your payment was not successful, please try again.");
+      break;
+    default:
+      showMessage("Something went wrong.");
+      break;
+  }
+}
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  setLoading(true);
+
+  const { error } = await stripePromise.confirmPayment({
+    elements,
+    confirmParams: {
+      // Make sure to change this to your payment completion page
+      return_url: "http://localhost:4242/checkout.html",
+      receipt_email: emailAddress,
+    },
+  });
+
+
+  function showMessage(messageText) {
+    const messageContainer = document.querySelector("#payment-message");
+
+    messageContainer.classList.remove("hidden");
+    messageContainer.textContent = messageText;
+
+    setTimeout(function () {
+        messageContainer.classList.add("hidden");
+        messageContainer.textContent = "";
+    }, 4000);
+}
+
+// Show a spinner on payment submission
+    function setLoading(isLoading) {
+    if (isLoading) {
+        // Disable the button and show a spinner
+        document.querySelector("#submit").disabled = true;
+        document.querySelector("#spinner").classList.remove("hidden");
+        document.querySelector("#button-text").classList.add("hidden");
+    } else {
+        document.querySelector("#submit").disabled = false;
+        document.querySelector("#spinner").classList.add("hidden");
+        document.querySelector("#button-text").classList.remove("hidden");
+    }
+    }
+    if (error.type === "card_error" || error.type === "validation_error") {
+        showMessage(error.message);
+    } else {
+        showMessage("An unexpected error occurred.");
+    }
+
+    setLoading(false);
+}
+
+const showPayment = () => {
+    isDialogVisible.value = true;
+    initialize();
+    checkStatus();
+}
 </script>
 
 <template>
@@ -92,6 +218,7 @@ console.log(props.sign_up_data);
                             color="#FC0"
                             variant="flat"
                             rounded
+                            @click="showPayment()"
                             >Sign Up</VBtn
                         >
                     </th>
@@ -284,6 +411,57 @@ console.log(props.sign_up_data);
             </tbody>
         </table>
     </div>
+
+    <VDialog v-model="isDialogVisible" width="50%">
+            <VCard class="pa-16">
+                <DialogCloseBtn
+                    variant="text"
+                    size="small"
+                    @click="isDialogVisible = false"
+                />
+
+                <VCardTitle class="">
+                    <span class="ppangram-bold color-black">Do you have a student code ?</span>
+                    <VTextField
+                        class="mt-3 custom-label-color"
+                        density="compact"
+                        placeholder="Student / Promotion Code ( optional )"
+                        variant="solo"
+                    />
+                    <div class="mt-10">
+                        <VRow>
+                            <VCol cols="8" offset-md="2">
+                                <VBtn color="#000" class="text-white" prepend-icon="mdi-apple" block>Pay</VBtn>
+                            </VCol>
+                        </VRow>
+                    </div>
+                    <div class="divider-container mt-10">
+                        <div class="divider"></div>
+                        <span class="pppangram-normal">Or pay with card</span>
+                        <div class="divider"></div>
+                    </div>
+                    <div class="mt-10">
+                        <VRow>
+                            <VCol cols="8" offset-md="2">
+                                <form id="payment-form">
+                                    <div id="link-authentication-element">
+                                        <!--Stripe.js injects the Link Authentication Element-->
+                                    </div>
+                                    <div id="payment-element">
+                                        <!--Stripe.js injects the Payment Element-->
+                                    </div>
+                                    <VBtn id="submit" class="mt-3" block>
+                                        <div class="spinner hidden" id="spinner"></div>
+                                        <span id="button-text">Pay now</span>
+                                    </VBtn>
+                                    <div id="payment-message" class="hidden"></div>
+                                </form>
+                            </VCol>
+                        </VRow>
+                    </div>
+                </VCardTitle>
+            </VCard>
+    </VDialog>
 </template>
 
 <style lang="scss" scoped>
@@ -296,6 +474,17 @@ console.log(props.sign_up_data);
 .th-btn {
     width: 90% !important;
     color: #fff;
+}
+
+.divider-container {
+  display: flex;
+  align-items: center; /* Center items vertically */
+}
+
+.divider {
+  flex: 1; /* Distribute remaining space equally on both sides */
+  border-top: 1px solid rgb(0, 0, 0, 0.2); /* Style the divider line */
+  margin: 0 10px; /* Add some spacing between the text and the dividers */
 }
 
 .textmargin {
@@ -347,6 +536,10 @@ tr:nth-child(even) {
 
 .heavyTable > tbody > tr > td:nth-child(1) {
     width: 35vh;
+}
+
+.color-black{
+    color: #000 !important;
 }
 
 .heavyTable > tbody > tr > td {

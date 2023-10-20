@@ -10,7 +10,6 @@ import TeacherOrParentDashboard from "./TeacherDashBoard/index.vue";
 import OrganizatinDashBoard from "./OrganisationDashboard/Index.vue";
 import B2BTeacherDashboard from "./B2BTeacher/Index.vue";
 import SystemAlert from "@mainRoot/components/SystemAlert/SystemAlert.vue";
-
 import { defineProps, onMounted, watch, computed } from "vue";
 import { usePage, useForm } from "@inertiajs/vue3";
 import axios from "axios";

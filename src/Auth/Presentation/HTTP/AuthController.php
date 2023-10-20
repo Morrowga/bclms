@@ -2,14 +2,15 @@
 
 namespace Src\Auth\Presentation\HTTP;
 
+use Stripe\Stripe;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
+use Src\Common\Infrastructure\Laravel\Controller;
 use Src\Auth\Application\Requests\StoreLoginRequest;
 use Src\Auth\Application\Requests\StoreRegisterRequest;
 use Src\Auth\Application\UseCases\Commands\AuthService;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
-use Src\Common\Infrastructure\Laravel\Controller;
 
 class AuthController extends Controller
 {
@@ -68,6 +69,33 @@ class AuthController extends Controller
                 'sytemErrorMessage' => $exception->getMessage(),
             ]);
         }
+    }
+
+    public function testingStripe(Request $request){
+        // try {
+            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
+            $jsonObj = json_decode($request->body, true);
+
+            // Create a PaymentIntent with amount and currency
+            $paymentIntent = $stripe->paymentIntents->create([
+                'amount' => 1400,
+                'currency' => 'sgd',
+                // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+                'automatic_payment_methods' => [
+                    'enabled' => true,
+                ],
+            ]);
+
+            $output = [
+                'clientSecret' => $paymentIntent->client_secret,
+            ];
+
+            echo json_encode($output);
+        // } catch (Error $e) {
+        //     http_response_code(500);
+        //     echo json_encode(['error' => $e->getMessage()]);
+        // }
     }
 
     /**
