@@ -33,13 +33,19 @@ let refForm = ref();
 const gender = ref(["Male", "Female"]);
 let tab = ref(null);
 const createStudent = () => {
-    form.post(route("teacher_students.store"), {
-        onSuccess: () => {
-            SuccessDialog({ title: "You've successfully updated a student." });
-        },
-        onError: (error) => {
-            console.log(error);
-        },
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("teacher_students.store"), {
+                onSuccess: () => {
+                    SuccessDialog({
+                        title: "You've successfully updated a student.",
+                    });
+                },
+                onError: (error) => {
+                    console.log(error);
+                },
+            });
+        }
     });
     // SuccessDialog({
     //     title: "You have successfully create a playlist!",
