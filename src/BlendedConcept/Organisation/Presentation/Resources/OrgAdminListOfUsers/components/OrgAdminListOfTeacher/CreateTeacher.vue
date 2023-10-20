@@ -38,12 +38,7 @@ const createTeacher = () => {
                 });
             }
         },
-        onError: (error) => {
-            form.setError("first_name", error?.first_name);
-            form.setError("last_name", error?.last_name);
-            form.setError("email", error?.email);
-            form.setError("contact_number", error?.contact_number);
-        },
+        onError: (error) => {},
     });
     // SuccessDialog({
     //     title: "You have successfully create a teacher!",
@@ -74,7 +69,9 @@ const createTeacher = () => {
                                     placeholder=""
                                     v-model="teacherForm.first_name"
                                     :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.first_name"
+                                    :error-messages="
+                                        teacherForm.errors?.first_name
+                                    "
                                 />
                             </VCol>
                             <VCol cols="6" class="py-2">
@@ -86,7 +83,9 @@ const createTeacher = () => {
                                     placeholder=""
                                     v-model="teacherForm.last_name"
                                     :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.last_name"
+                                    :error-messages="
+                                        teacherForm.errors?.last_name
+                                    "
                                 />
                             </VCol>
                             <VCol cols="12" class="py-2">
@@ -98,7 +97,7 @@ const createTeacher = () => {
                                     placeholder=""
                                     v-model="teacherForm.email"
                                     :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.email"
+                                    :error-messages="teacherForm.errors?.email"
                                 />
                             </VCol>
                             <VCol cols="12" class="py-2">
@@ -112,7 +111,7 @@ const createTeacher = () => {
                                     v-model="teacherForm.contact_number"
                                     :rules="[requiredValidator]"
                                     :error-messages="
-                                        form?.errors?.contact_number
+                                        teacherForm.errors?.contact_number
                                     "
                                 />
                             </VCol>

@@ -20,9 +20,7 @@ class StoreTeacherRequest extends FormRequest
             'last_name' => [
                 'required',
             ],
-            'email' => [
-                'required',
-            ],
+            'email' => ['required', 'email', 'unique:users,email'],
             'contact_number' => [
                 'required',
             ],
@@ -37,7 +35,9 @@ class StoreTeacherRequest extends FormRequest
         return [
             'first_name' => 'First Name is required',
             'last_name' => 'Last Name is required',
-            'email' => 'Email is required',
+            'email.required' => 'Enter your email address',
+            'email.email' => 'Enter a valid email address',
+            'email.unique' => 'This email is already in use',
             'contact_number' => 'Contact Number is required',
         ];
     }
