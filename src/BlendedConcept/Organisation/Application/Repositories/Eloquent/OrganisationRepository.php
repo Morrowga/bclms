@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 use Src\BlendedConcept\Finance\Domain\Model\Subscription;
 use Src\BlendedConcept\Organisation\Domain\Model\Organisation;
-use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
+use Src\BlendedConcept\Finance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Organisation\Application\DTO\OrganisationData;
 use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\Tenant;
@@ -118,9 +118,9 @@ class OrganisationRepository implements OrganisationRepositoryInterface
                 'organisation_id' => $organisationEloquent->id,
             ]);
 
-            Artisan::call('run:subdomain', [
-                'subdomain' => $organisationEloquent->sub_domain, // Pass the subdomain as an argument
-            ]);
+            // Artisan::call('run:subdomain', [
+            //     'subdomain' => $organisationEloquent->sub_domain, // Pass the subdomain as an argument
+            // ]);
 
             $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
             DB::commit();

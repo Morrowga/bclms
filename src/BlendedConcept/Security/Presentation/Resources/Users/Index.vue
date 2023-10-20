@@ -120,19 +120,32 @@ const viewInfoRow = (id) => {
 const setInactive = (status, id) => {
     if (status == "ACTIVE") {
         form.status = "INACTIVE";
+        isConfirmedDialog({
+            denyButtonText: form.status == "ACTIVE" ? "Active" : "Inactive",
+            onConfirm: () => {
+                form.post(route("users.change_status", id), {
+                    onSuccess: () => {
+                        SuccessDialog({ title: props.flash?.successMessage });
+                    },
+                });
+            },
+        });
     } else {
         form.status = "ACTIVE";
+        isConfirmedDialog({
+            icon: "success",
+            color: "#48BC65",
+            denyButtonColor: "#48BC65",
+            denyButtonText: form.status == "ACTIVE" ? "Active" : "Inactive",
+            onConfirm: () => {
+                form.post(route("users.change_status", id), {
+                    onSuccess: () => {
+                        SuccessDialog({ title: props.flash?.successMessage });
+                    },
+                });
+            },
+        });
     }
-    isConfirmedDialog({
-        denyButtonText: "Set Inactive",
-        onConfirm: () => {
-            form.post(route("users.change_status", id), {
-                onSuccess: () => {
-                    SuccessDialog({ title: props.flash?.successMessage });
-                },
-            });
-        },
-    });
 };
 const exportUser = () => {
     const array = props.users.data;

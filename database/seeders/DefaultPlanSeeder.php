@@ -18,7 +18,7 @@ class DefaultPlanSeeder extends Seeder
             [
                 'name' => 'Free',
                 'description' => '$$0/month',
-                'storage_limit' => null,
+                'storage_limit' => 0.00,
                 'num_student_profiles' => 1,
                 'allow_customisation' => false,
                 'allow_personalisation' => false,
@@ -33,7 +33,7 @@ class DefaultPlanSeeder extends Seeder
             [
                 'name' => 'Base',
                 'description' => 'Free for 1 month.Then start at $$10/month',
-                'storage_limit' => null,
+                'storage_limit' => 0.00,
                 'num_student_profiles' => 1,
                 'allow_customisation' => false,
                 'allow_personalisation' => false,

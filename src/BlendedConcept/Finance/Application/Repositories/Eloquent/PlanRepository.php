@@ -3,7 +3,7 @@
 namespace Src\BlendedConcept\Finance\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
-use Src\BlendedConcept\FInance\Application\DTO\PlanData;
+use Src\BlendedConcept\Finance\Application\DTO\PlanData;
 use Src\BlendedConcept\Finance\Application\Mappers\PlanMapper;
 use Src\BlendedConcept\Finance\Domain\Model\Entities\Plan;
 use Src\BlendedConcept\Finance\Domain\Repositories\PlanRepositoryInterface;

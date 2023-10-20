@@ -3,119 +3,144 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import StudentList from "./components/OrgAdminListOfStudent/StudentList.vue";
 import TeacherList from "./components/OrgAdminListOfTeacher/TeacherList.vue";
 import { ref } from "vue";
-let tab = ref("student");
-let props = defineProps(["teachers",'students']);
+let tab = ref("teacher");
+let props = defineProps([
+    "teachers",
+    "students",
+    "total_teachers",
+    "total_students",
+]);
 
 const changeTab = (tabName) => {
-  tab.value = tabName;
+    tab.value = tabName;
 };
 </script>
 <template>
-  <AdminLayout>
-    <VContainer class="width-80">
-      <div class="mb-10">
-        <v-row>
-          <VCol cols="12" md="6">
-            <div class="d-flex align-center">
-              <VBtn
-                variant="flat"
-                rounded
-                :color="tab == 'teacher' ? 'primary' : '#f6f6f6'"
-                :class="
-                  tab == 'teacher' ? 'text-white' : 'text-black border-black'
-                "
-                @click="changeTab('teacher')"
-              >
-                Teacher
-              </VBtn>
-              <VBtn
-                variant="flat"
-                rounded
-                :color="tab == 'student' ? 'primary' : '#f6f6f6'"
-                :class="
-                  tab == 'student' ? 'text-white' : 'text-black border-black'
-                "
-                @click="changeTab('student')"
-              >
-                Students
-              </VBtn>
-            </div>
-          </VCol>
-          <VCol cols="12" md="6" class="d-flex justify-end">
-            <div v-if="tab == 'student'" class="d-flex justify-end gap-10">
-              <Link :href="route('organisations-student.create')">
-                <VBtn
-                  variant="flat"
-                  rounded
-                  color="primary"
-                  class="text-white"
-                  prepend-icon="mdi-plus"
-                >
-                  Add
-                </VBtn>
-              </Link>
+    <AdminLayout>
+        <VContainer class="width-80">
+            <div class="mb-10">
+                <v-row>
+                    <VCol cols="12" md="6">
+                        <div class="d-flex align-center">
+                            <VBtn
+                                variant="flat"
+                                rounded
+                                :color="
+                                    tab == 'teacher' ? 'primary' : '#f6f6f6'
+                                "
+                                :class="
+                                    tab == 'teacher'
+                                        ? 'text-white'
+                                        : 'text-black border-black'
+                                "
+                                @click="changeTab('teacher')"
+                            >
+                                Teacher
+                            </VBtn>
+                            <VBtn
+                                variant="flat"
+                                rounded
+                                :color="
+                                    tab == 'student' ? 'primary' : '#f6f6f6'
+                                "
+                                :class="
+                                    tab == 'student'
+                                        ? 'text-white'
+                                        : 'text-black border-black'
+                                "
+                                @click="changeTab('student')"
+                            >
+                                Students
+                            </VBtn>
+                        </div>
+                    </VCol>
+                    <VCol cols="12" md="6" class="d-flex justify-end">
+                        <div
+                            v-if="tab == 'student'"
+                            class="d-flex justify-end gap-10"
+                        >
+                            <Link :href="route('organisations-student.create')">
+                                <VBtn
+                                    variant="flat"
+                                    rounded
+                                    color="primary"
+                                    class="text-white"
+                                    prepend-icon="mdi-plus"
+                                >
+                                    Add
+                                </VBtn>
+                            </Link>
 
-              <VBtn
-                variant="flat"
-                rounded
-                color="primary"
-                class="text-white"
-                prepend-icon="mdi-upload"
-              >
-                Upload
-              </VBtn>
-            </div>
-            <div v-if="tab == 'teacher'" class="d-flex justify-end gap-10">
-              <Link :href="route('listoforgteacher')">
-                <VBtn
-                  variant="flat"
-                  rounded
-                  color="#17CAB6"
-                  class="text-white"
-                  prepend-icon="mdi-plus"
-                >
-                  Allocate Storage
-                </VBtn>
-              </Link>
+                            <VBtn
+                                variant="flat"
+                                rounded
+                                color="primary"
+                                class="text-white"
+                                prepend-icon="mdi-upload"
+                            >
+                                Upload
+                            </VBtn>
+                        </div>
+                        <div
+                            v-if="tab == 'teacher'"
+                            class="d-flex justify-end gap-10"
+                        >
+                            <Link :href="route('listoforgteacher')">
+                                <VBtn
+                                    variant="flat"
+                                    rounded
+                                    color="#17CAB6"
+                                    class="text-white"
+                                    prepend-icon="mdi-plus"
+                                >
+                                    Allocate Storage
+                                </VBtn>
+                            </Link>
 
-              <Link :href="route('organisations-teacher.create')">
-                <VBtn
-                  variant="flat"
-                  rounded
-                  color="primary"
-                  class="text-white"
-                  prepend-icon="mdi-plus"
-                >
-                  Add
-                </VBtn>
-              </Link>
+                            <Link :href="route('organisations-teacher.create')">
+                                <VBtn
+                                    variant="flat"
+                                    rounded
+                                    color="primary"
+                                    class="text-white"
+                                    prepend-icon="mdi-plus"
+                                >
+                                    Add
+                                </VBtn>
+                            </Link>
 
-              <VBtn
-                variant="flat"
-                rounded
-                color="primary"
-                class="text-white"
-                prepend-icon="mdi-upload"
-              >
-                Upload
-              </VBtn>
+                            <VBtn
+                                variant="flat"
+                                rounded
+                                color="primary"
+                                class="text-white"
+                                prepend-icon="mdi-upload"
+                            >
+                                Upload
+                            </VBtn>
+                        </div>
+                    </VCol>
+                </v-row>
             </div>
-          </VCol>
-        </v-row>
-      </div>
-      <div class="tab-list">
-        <section v-if="tab == 'student'">
-          <StudentList :students="props.students"/>
-        </section>
-        <section v-if="tab == 'teacher'">
-          <TeacherList :data="props.teachers" />
-        </section>
-      </div>
-    </VContainer>
-  </AdminLayout>
+            <div class="tab-list">
+                <section v-if="tab == 'student'">
+                    <StudentList
+                        :students="props.students"
+                        :total_students="total_students"
+                    />
+                </section>
+                <section v-if="tab == 'teacher'">
+                    <TeacherList
+                        :data="props.teachers"
+                        :total_teachers="total_teachers"
+                    />
+                </section>
+            </div>
+        </VContainer>
+    </AdminLayout>
 </template>
 <style scoped>
 .border-black {
-  border: 1px solid #e5e5e5 !important;
+    border: 1px solid #e5e5e5 !important;
 }
 </style>

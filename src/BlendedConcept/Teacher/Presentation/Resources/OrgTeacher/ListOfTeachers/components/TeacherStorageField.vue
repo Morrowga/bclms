@@ -3,7 +3,7 @@ import { ref } from "vue";
 import EditTeacherStorage from "./EditTeacherStorage.vue";
 
 const storage = ref(200);
-const props = defineProps(["data"]);
+const props = defineProps(["data", "left_storage"]);
 
 const setImage = () => {
     return props.data?.user?.profile_pic == "" || !props.data?.user?.profile_pic
@@ -73,7 +73,10 @@ const calculatePercent = (specific, total) => {
                 </p>
             </VCol>
             <VCol cols="6" class="text-end pr-3">
-                <EditTeacherStorage :data="props.data" />
+                <EditTeacherStorage
+                    :data="props.data"
+                    :left_storage="props.left_storage"
+                />
             </VCol>
         </VRow>
     </VCard>

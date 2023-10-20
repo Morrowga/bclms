@@ -39,7 +39,7 @@ class ThemeController
             $saveTheme = (new StoreThemeCommand($themeRequest));
             $saveTheme->execute();
 
-            return redirect()->route('disability_themes.index')->with('successMessage', 'Organisations Created Successfully!');
+            return redirect()->route('disability_themes.index')->with('successMessage', 'Theme Created Successfully!');
         } catch (\Exception $error) {
             return redirect()->back()->with([
                 'errorMessage' => $error->getMessage(),
@@ -61,7 +61,7 @@ class ThemeController
             $updateThemecommand = (new UpdateThemeCommand($updateTheme));
             $updateThemecommand->execute();
 
-            return redirect()->route('disability_themes.index')->with('successMessage', 'Organisations Updated Successfully!');
+            return redirect()->route('disability_themes.index')->with('successMessage', 'Theme Updated Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->back()
@@ -78,7 +78,7 @@ class ThemeController
             $deleteThemeCommand = (new DeleteThemeCommand($theme));
             $deleteThemeCommand->execute();
 
-            return redirect()->route('disability_themes.index')->with('successMessage', 'Organisations Deleted Successfully!');
+            return redirect()->route('disability_themes.index')->with('successMessage', 'Theme Deleted Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->back()

@@ -128,6 +128,16 @@ const addToSublearningArray = (e) => {
 const removeFromArray = (index) => {
   form.tags = form.tags.filter((tag, i) => i != index);
 };
+
+const handleGameFileInputClick = () => {
+  const fileInput = document.getElementById('game-file-input');
+  fileInput.click();
+};
+
+const handleThumbFileInputClick = () => {
+  const fileInput = document.getElementById('thumb-file-input');
+  fileInput.click();
+};
 </script>
 <template>
   <div>
@@ -240,7 +250,7 @@ const removeFromArray = (index) => {
                         <p class="error-message">Game file must be type of .zip</p>
                     </div>
                     <div v-else>
-                        <p v-if="!gameFile">Drag & Drop game file</p>
+                        <p v-if="!gameFile">Drag & Drop game file or <span class="browse" @click="handleThumbFileInputClick">Browse File</span></p>
                         <div v-else>
                                     <p>File Name: {{ gameFile.name }}</p>
                                     <button @click="removeGameFile" class="remove-button">
@@ -249,6 +259,7 @@ const removeFromArray = (index) => {
                             </div>
                             <input
                             type="file"
+                            id="game-file-input"
                             style="display: none"
                             @change="handleGameFileChange"
                             :error-messages="form?.errors?.game"
@@ -269,10 +280,11 @@ const removeFromArray = (index) => {
                   >
                     <input
                       type="file"
+                      id="thumb-file-input"
                       style="display: none"
                       @change="handleThumbnailChange"
                     />
-                    <p v-if="!thumbnail">Drag & Drop thumbnail</p>
+                    <p v-if="!thumbnail">Drag & Drop thumbnail or <span class="browse" @click="handleThumbFileInputClick">Browse File</span></p>
                     <div v-else>
                       <v-img :src="thumbnail" alt="Thumbnail" cover />
                       <button @click="removeThumbnail" class="remove-button">
@@ -398,6 +410,11 @@ const removeFromArray = (index) => {
 }
 .coming-soon p {
   margin-bottom: 0;
+}
+
+.browse{
+    color: blue;
+    cursor: pointer !important;
 }
 
 :deep(.game-tag-add .v-field__append-inner svg) {

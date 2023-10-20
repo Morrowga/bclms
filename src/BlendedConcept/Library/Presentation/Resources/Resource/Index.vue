@@ -167,7 +167,6 @@ const chooseType = (type) => {
 }
 
 const calculateProgress = (used, total) => {
-  // Calculate the percentage of used storage
   return (used / total) * 100;
 };
 </script>

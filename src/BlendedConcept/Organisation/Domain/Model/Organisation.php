@@ -34,7 +34,6 @@ class Organisation extends AggregateRoot
             'sub_domain' => $this->sub_domain,
             'logo' => $this->logo,
             'status' => $this->status ?? null,
-
         ];
     }
 }

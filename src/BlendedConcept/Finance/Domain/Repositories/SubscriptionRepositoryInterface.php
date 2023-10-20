@@ -2,7 +2,7 @@
 
 namespace Src\BlendedConcept\Finance\Domain\Repositories;
 
-use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
+use Src\BlendedConcept\Finance\Application\DTO\SubscriptionData;
 
 interface SubscriptionRepositoryInterface
 {
@@ -13,4 +13,6 @@ interface SubscriptionRepositoryInterface
     public function updateB2bSubscription(SubscriptionData $subscriptionData);
 
     public function updateB2cSubscription(SubscriptionData $subscriptionData);
+
+    public function getOrgForSubscription();
 }

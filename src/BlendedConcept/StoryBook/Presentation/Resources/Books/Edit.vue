@@ -55,6 +55,7 @@ const form = useForm({
     disability_type: [],
     devices: [],
     thumbnail_img: "",
+    h5p_id: null,
     _method: "PUT",
 });
 
@@ -204,15 +205,17 @@ const isInBookLearningneed = (learningneedId) => {
 };
 
 onUpdated(() => {
-    (form.id = props.datas.id),
-        (form.name = props.datas.name),
-        (form.description = props.datas.description),
-        (form.thumbnail_img = props.datas.thumbnail_img),
-        (form.disability_type = props.datas.disability_type),
-        (form.sub_learning_needs = props.datas.learningneeds),
-        (form.themes = props.datas.themes),
-        (form.disability_type = props.datas.disability_types),
-        (form.devices = props.datas.devices);
+    form.id = props.datas.id;
+    form.name = props.datas.name;
+    form.description = props.datas.description;
+    form.thumbnail_img = props.datas.thumbnail_img;
+    form.disability_type = props.datas.disability_type;
+    form.sub_learning_needs = props.datas.learningneeds;
+    form.themes = props.datas.themes;
+    form.disability_type = props.datas.disability_types;
+    form.devices = props.datas.devices;
+    form.is_free = props.datas.is_free;
+    form.h5p_id = props.datas.h5p_id;
 });
 </script>
 <template>

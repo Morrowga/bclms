@@ -19,7 +19,6 @@ class StorePlanRequest extends FormRequest
             'num_student_profiles' => ['required'],
             'price' => ['required'],
             'storage_limit' => ['required'],
-
         ];
     }
 }

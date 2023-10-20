@@ -13,7 +13,7 @@ let form = useForm({
     name: "",
     disability_types: [],
     description: "",
-    status: "INACTIVE",
+    status: "ACTIVE",
     storybook_id: "",
 });
 

@@ -10,6 +10,7 @@ use Src\Common\Presentation\CLI\CreateCommandCmd;
 use Src\Common\Presentation\CLI\CreateControllerCmd;
 use Src\Common\Presentation\CLI\CreateLaravelSetupCmd;
 use Src\Common\Presentation\CLI\CreateSubDomainCommand;
+use Src\Common\Presentation\CLI\ExpirationNoticeCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Console extends ConsoleKernel
@@ -27,6 +28,7 @@ class Console extends ConsoleKernel
         CreateControllerCmd::class,
         CreateRoutesCmd::class,
         CreateLaravelSetupCmd::class,
+        ExpirationNoticeCommand::class,
     ];
 
     /**
@@ -36,7 +38,8 @@ class Console extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('expiration:org')
+        ->everyTwoHours();
     }
 
     /**

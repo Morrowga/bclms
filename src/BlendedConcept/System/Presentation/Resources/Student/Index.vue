@@ -55,7 +55,7 @@ onMounted(() => {
                         </div>
                         <div class="mt-2">
                             <p class="studentname pppangram-bold">
-                                {{ user.name }}
+                                {{ userData.full_name }}
                             </p>
                             <p class="semi-text pppangram-medium">{{ userData.student.gender}}</p>
                         </div>
@@ -134,7 +134,7 @@ onMounted(() => {
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <span class="value-student pppangram-medium"
-                                        >{{ userData.student.device.name ?? 'No Device' }}</span
+                                        >{{ userData.student.device === null || userData.student.device === '' ? 'No Device': userData.student.device.name }}</span
                                     >
                                 </div>
                             </VCol>

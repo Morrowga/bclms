@@ -25,6 +25,7 @@ class ResourceController extends Controller
         try {
             $resources = (new GetResources(auth()->user()))->handle();
             $resourceStorage = (new GetResourceStorage(auth()->user()))->handle();
+
             if (auth()->user()->organisation_id) {
 
                 $requestPublishData = (new GetRequestPublishData(auth()->user()))->handle();
@@ -37,6 +38,7 @@ class ResourceController extends Controller
 
             return Inertia::render(config('route.resource.index'), [
                 "resources" => $resources,
+                "resourceStorage" => $resourceStorage,
             ]);
         } catch (\Exception $e) {
             dd($e);

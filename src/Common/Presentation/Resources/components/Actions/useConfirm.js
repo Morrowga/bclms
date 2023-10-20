@@ -5,7 +5,8 @@ let isConfirmedDialog = ({
     color = '',
     icon = "warning",
     confirmButtonText ='Save',
-    denyButtonText="Don't save",
+    denyButtonColor='#FF6262',
+    denyButtonText="Save",
     onConfirm = null
 }) => {
 
@@ -14,6 +15,7 @@ let isConfirmedDialog = ({
         text: title,
         icon: icon,
         showConfirmButton:false,
+        denyButtonColor: denyButtonColor,
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: confirmButtonText,

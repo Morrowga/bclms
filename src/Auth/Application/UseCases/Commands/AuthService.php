@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use Src\Auth\Application\Requests\StoreLoginRequest;
 use Src\Auth\Domain\Mail\VerifyEmail;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
 
 class AuthService
@@ -29,8 +30,15 @@ class AuthService
          *  if incorrect email and password get invalid message
          */
         if ($user) {
+            if ($user->organisation_id) {
+                $organisation = OrganisationEloquentModel::find($user->organisation_id);
+                if ($organisation->status == 'INACTIVE') {
+                    $error = 'Organisation is inactive';
+                    return ['errorMessage' => $error, 'isCheck' => false];
+                }
+            }
             //this check verify email or not
-            if (! $user->email_verification_send_on) {
+            if (!$user->email_verification_send_on) {
                 $error = 'Please Verify your email';
 
                 return ['errorMessage' => $error, 'isCheck' => false];
@@ -40,7 +48,7 @@ class AuthService
                 'email' => request('email'),
                 'password' => request('password'),
             ])) {
-                $user->notify(new BcNotification(['message' => 'Welcome '.$user->name.' !', 'from' => '', 'to' => '', 'icon' =>  'mdi-human-greeting','type' => 'success']));
+                $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'from' => '', 'to' => '', 'icon' =>  'mdi-human-greeting', 'type' => 'success']));
 
                 return ['errorMessage' => 'Successfully', 'isCheck' => true];
             } else {

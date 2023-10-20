@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->longText('description')->nullable();
-            $table->decimal('storage_limit', 10, 2)->nullable();
+            $table->decimal('storage_limit', 10, 2)->default(0.00);
             $table->integer('num_student_profiles');
             $table->boolean('allow_customisation');
             $table->boolean('allow_personalisation');

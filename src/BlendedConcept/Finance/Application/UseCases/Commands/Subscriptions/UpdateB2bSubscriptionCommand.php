@@ -2,7 +2,7 @@
 
 namespace Src\BlendedConcept\Finance\Application\UseCases\Commands\Subscriptions;
 
-use Src\BlendedConcept\FInance\Application\DTO\SubscriptionData;
+use Src\BlendedConcept\Finance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Finance\Domain\Repositories\SubscriptionRepositoryInterface;
 use Src\Common\Domain\CommandInterface;
 

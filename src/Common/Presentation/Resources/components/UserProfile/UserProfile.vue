@@ -2,21 +2,27 @@
 import { initialAbility } from "@/plugins/casl/ability";
 import { useAppAbility } from "@/plugins/casl/useAppAbility";
 import { usePage, Link } from "@inertiajs/vue3";
-import { computed } from "vue";
 import { router } from "@inertiajs/core";
+import UserExperienceSurvey from "./components/UserExperienceSurvey.vue";
+import { defineProps, onMounted, watch, computed } from "vue";
+
 const ability = useAppAbility();
 let page = usePage();
 const userData = computed(() => page.props.auth);
 let user_role = computed(() => page.props.user_info.user_role.name);
 const profileRoute = ref(route("userprofile"));
+let user_survey_logout = computed(() => page?.props?.user_survey_logout);
 /***
  *  implementation logout for both multitant and b2c user
  *
  */
+
+const hasSurvey = ref(false);
+
 const logout = () => {
     const PREFIX =
         (localStorage.getItem("tenant") != "" || Object.is(localStorage.getItem('tenant',null)))
-            ? `/${localStorage.getItem("tenant")}`
+        ? `/${localStorage.getItem("tenant")}`
             : "";
     localStorage.removeItem("menu_title");
 
@@ -31,6 +37,16 @@ const logout = () => {
     }
 
 };
+
+const checkSurvey = () => {
+    if(user_survey_logout.value){
+        hasSurvey.value = true;
+        console.log(hasSurvey.value);
+    } else {
+        logout()
+    }
+}
+
 const dynamicProfileLink = () => {
     console.log(user_role.value);
     switch (user_role.value) {
@@ -120,7 +136,7 @@ const dynamicProfileLink = () => {
                     <!-- <VDivider class="my-2" /> -->
 
                     <!-- 👉 Logout -->
-                    <VListItem link @click="logout">
+                    <VListItem link @click="checkSurvey">
                         <template #prepend>
                             <VIcon class="me-2" icon="mdi-logout" size="22" />
                         </template>
@@ -129,7 +145,9 @@ const dynamicProfileLink = () => {
                     </VListItem>
                 </VList>
             </VMenu>
-
+            <UserExperienceSurvey
+            v-model:hasSurvey="hasSurvey"
+            :data="user_survey_logout" />
             <!-- !SECTION -->
         </VAvatar>
     </VBadge>

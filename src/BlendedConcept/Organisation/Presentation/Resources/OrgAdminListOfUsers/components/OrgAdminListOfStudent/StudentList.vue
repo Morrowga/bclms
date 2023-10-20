@@ -7,8 +7,8 @@ import {
     serverParams,
     searchItems,
 } from "@Composables/useServerSideDatable.js";
-let props = defineProps(["students"]);
-
+let props = defineProps(["students", "total_students"]);
+console.log(props.students);
 let filters = ref(null);
 let filterDatas = ref([
     { title: "A-Z", value: "asc" },
@@ -22,6 +22,12 @@ watch(filters, (newValue) => {
         },
     });
 });
+function calculatePercentageByCount(specificCount, totalCount) {
+    if (totalCount === 0) {
+        return 0; // To avoid division by zero error
+    }
+    return (specificCount / totalCount) * 100;
+}
 // console.log(props, "fuck");
 </script>
 <template>
@@ -64,10 +70,20 @@ watch(filters, (newValue) => {
                     <VCol cols="12" class="pa-0">
                         <div class="d-flex justify-end">
                             <div class="w-25">
-                                <span>50/100 Used </span>
+                                <span
+                                    >{{ props.students.meta.total }}/{{
+                                        props.total_students
+                                    }}
+                                    Used
+                                </span>
                                 <VProgressLinear
                                     color="yellow-darken-2"
-                                    model-value="50"
+                                    :model-value="
+                                        calculatePercentageByCount(
+                                            props.students.meta.total,
+                                            props.total_students
+                                        )
+                                    "
                                     :height="15"
                                 ></VProgressLinear>
                             </div>

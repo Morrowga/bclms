@@ -33,6 +33,14 @@ const selectBook = (id) => {
     isSelected.value = id;
     props.form.storybook_id = isSelected.value;
 };
+onMounted(() => {
+    if (props.form?.storybook_id == "") {
+        isSelected.value = 1;
+        props.form.storybook_id = 1;
+    } else {
+        isSelected.value = props.form?.storybook_id;
+    }
+});
 </script>
 <template>
     <div class="control-position">

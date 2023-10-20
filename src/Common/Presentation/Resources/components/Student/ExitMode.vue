@@ -1,14 +1,19 @@
 <script setup>
 import { router } from "@inertiajs/core";
-import { useForm } from "@inertiajs/vue3";
+import { usePage,useForm } from "@inertiajs/vue3";
 import {
   emailValidator,
   requiredValidator,
   integerValidator,
 } from "@validators";
+import LogoutUserExperienceSurvey from "../../../../../BlendedConcept/System/Presentation/Resources/Student/components/LogoutUserExperienceSurvey.vue";
 
 let props = defineProps(["route", "count", "teacher_id", "student_id"]);
+
+const page = usePage();
+let user_survey_logout = computed(() => page?.props?.user_survey_logout);
 const isDialogVisible = ref(false);
+const hasSurvey = ref(false);
 let passwordVisible = ref(false);
 
 const togglePasswordVisibility = () => {
@@ -19,6 +24,14 @@ const form = useForm({
     password: null,
     student_id: props.student_id
 })
+
+const checkSurvey = () => {
+    if(user_survey_logout){
+        hasSurvey.value = true
+    } else {
+        isDialogVisible.value = true
+    }
+}
 
 
 const logout = () => {
@@ -35,7 +48,7 @@ const logout = () => {
 <template #activator="{ props }">
     <div>
         <v-btn
-            @click="isDialogVisible = true"
+            @click="checkSurvey"
             varient="flat"
             color="#BFC0C1"
             class="textcolor w-100 pppangram-bold"
@@ -44,8 +57,6 @@ const logout = () => {
             Exit Kids Mode
         </v-btn>
         <VDialog v-model="isDialogVisible" width="500">
-            <!-- Activator -->
-            <!-- Dialog Content -->
             <VForm @submit.prevent="logout()">
                 <VCard class="rolling-card">
                     <VCardText>
@@ -106,8 +117,11 @@ const logout = () => {
             </VCardActions> -->
                 </VCard>
             </VForm>
-
         </VDialog>
+        <LogoutUserExperienceSurvey
+            v-model:hasSurvey="hasSurvey"
+            v-model:isDialogVisible="isDialogVisible"
+            :data="user_survey_logout" />
     </div>
 </template>
 <style scoped>

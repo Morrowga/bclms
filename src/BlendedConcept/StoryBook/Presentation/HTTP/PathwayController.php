@@ -103,7 +103,7 @@ class PathwayController
             $deletePathwayCommand = (new DeletePathwayCommand($pathway));
             $deletePathwayCommand->execute();
 
-            return redirect()->route('pathways.index')->with('successMessage', 'Pathway Created Successfully!');
+            return redirect()->route('pathways.index')->with('successMessage', 'Pathway Deleted Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('pathways.index')

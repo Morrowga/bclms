@@ -72,7 +72,10 @@ class DeviceRepository implements DeviceRepositoryInterface
     {
         DB::beginTransaction();
         try {
-            $device->delete();
+            // $device->delete();
+            $device->update([
+                'status' => request('status')
+            ]);
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();

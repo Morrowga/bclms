@@ -17,7 +17,7 @@ let props = defineProps({
     is_drawer: {
         type: Boolean,
         default: false,
-    },
+    }
 });
 let emit = defineEmits();
 
