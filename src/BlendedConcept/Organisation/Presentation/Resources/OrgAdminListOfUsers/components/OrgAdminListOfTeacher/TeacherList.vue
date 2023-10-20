@@ -24,6 +24,7 @@ let filterDatas = ref([
     { title: "Z-A", value: "desc" },
     { title: "Contact Number", value: "contact_number" },
 ]);
+console.log(props.data);
 watch(filters, (newValue) => {
     onColumnFilter({
         columnFilters: {
@@ -51,6 +52,9 @@ function calculatePercentageByCount(specificCount, totalCount) {
     }
     return (specificCount / totalCount) * 100;
 }
+const showUsedStorage = (teacher) => {
+    return `${teacher.used_storage}/${teacher.allocated_storage_limit ?? 0}`;
+};
 </script>
 <template>
     <VContainer>
@@ -131,7 +135,7 @@ function calculatePercentageByCount(specificCount, totalCount) {
                     :route="route('organisations-teacher.show', item.user.id)"
                     :title="item.user.first_name + ' ' + item.user.last_name"
                     :phone_number="item.user.contact_number"
-                    storage="135 MB/ 200 MB"
+                    :storage="showUsedStorage(item)"
                 />
             </VCol>
         </VRow>

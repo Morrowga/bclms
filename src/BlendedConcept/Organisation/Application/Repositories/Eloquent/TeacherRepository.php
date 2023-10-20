@@ -3,6 +3,7 @@
 namespace Src\BlendedConcept\Organisation\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
+use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\Organisation\Application\DTO\TeacherData;
 use Src\BlendedConcept\Organisation\Domain\Model\Entities\Teacher;
 use Src\BlendedConcept\Organisation\Domain\Resources\TeacherResource;
@@ -22,13 +23,40 @@ class TeacherRepository implements TeacherRepositoryInterface
     public function getTeachers($filters)
     {
         //set roles
-        $teachersCollection = TeacherResource::collection(TeacherEloquentModel::filter($filters)
+        // $teachersCollection = TeacherResource::collection(TeacherEloquentModel::filter($filters)
+        //     ->with(['user'])
+        //     ->where('organisation_id', auth()->user()->organisation_id)
+        //     ->orderBy('teacher_id', 'desc')
+        //     ->paginate($filters['perPage'] ?? 10))
+        $organisation_id = auth()->user()->organisation_id;
+        $teachers = TeacherResource::collection(TeacherEloquentModel::filter($filters)
             ->with(['user'])
             ->where('organisation_id', auth()->user()->organisation_id)
             ->orderBy('teacher_id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
+        $data = $teachers;
+        $array_data = $data->map(function ($teacher) use ($organisation_id) {
+            $usedStorage = MediaEloquentModel::where(function ($query) use ($organisation_id, $teacher) {
+                $query->where('collection_name', 'videos')
+                    ->where('organisation_id', $organisation_id)
+                    ->where('teacher_id', $teacher->user->id)
+                    ->whereIn('status', ['active', 'requested']);
+            })
+                ->sum('size');
+            $used_storage_mb = $usedStorage == 0 ? $usedStorage : (int)($usedStorage / 1024 / 1024);
+            $left_storage = $teacher->allocated_storage_limit - $used_storage_mb;
+            return [
+                "teacher_id" => $teacher->teacher_id,
+                "used_storage" => $used_storage_mb,
+                "allocated_storage_limit" => $teacher->allocated_storage_limit,
+                "user" => $teacher->user,
+                "organisation_id" => $teacher->organisation_id,
+                "left_storage" => $left_storage
+            ];
+        });
+        return ["data" => $array_data, "meta"  => $data->resource->toArray()];
 
-        return $teachersCollection;
+        // return $teachersCollection;
     }
 
     public function showTeacher($id)
