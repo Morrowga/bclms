@@ -318,9 +318,12 @@ const deleteItem = (status, id) => {
                                                         )
                                                     "
                                                 >
-                                                    <VListItemTitle
-                                                        >Delete</VListItemTitle
-                                                    >
+                                                    <VListItemTitle>{{
+                                                        dataProps.row.status ==
+                                                        "ACTIVE"
+                                                            ? "inactive"
+                                                            : "active"
+                                                    }}</VListItemTitle>
                                                 </VListItem>
                                             </VList>
                                         </VMenu>
