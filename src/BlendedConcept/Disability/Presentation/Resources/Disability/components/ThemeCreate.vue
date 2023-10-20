@@ -15,8 +15,12 @@ let handleSubmit = () => {
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
             form.post(route("disability_themes.store"), {
-                onSuccess: () => {
-                    SuccessDialog({ title: props.flash?.successMessage });
+                onSuccess: (res) => {
+                    let success = JSON.stringify(res.props.flash.successMessage);
+                    if(success !== 'null')
+                    {
+                        SuccessDialog({ title: success.replaceAll('"', '') });
+                    }
                     isDialogVisible.value = false;
                 },
                 onError: (error) => {},
