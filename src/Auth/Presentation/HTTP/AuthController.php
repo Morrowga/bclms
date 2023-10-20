@@ -91,7 +91,7 @@ class AuthController extends Controller
                 'clientSecret' => $paymentIntent->client_secret,
             ];
 
-            echo json_encode($output);
+            return json_encode($output);
         // } catch (Error $e) {
         //     http_response_code(500);
         //     echo json_encode(['error' => $e->getMessage()]);

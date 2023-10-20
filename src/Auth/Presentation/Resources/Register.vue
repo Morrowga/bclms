@@ -110,6 +110,7 @@ const goPlan = () => {
                                 class="my-3 custom-label-color"
                                 placeholder=""
                                 density="compact"
+                                type="number"
                                 variant="filled"
                                 v-model="form.contact_number"
                                 :rules="[requiredValidator]"

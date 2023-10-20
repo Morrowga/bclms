@@ -6,18 +6,27 @@ import { router } from "@inertiajs/core";
 import { toastAlert } from "@Composables/useToastAlert";
 import { loadStripe } from '@stripe/stripe-js';
 import axios from "axios";
+import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
+import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 
 import B2CRegister from "./B2CRegister.vue";
 import B2BRegister from "./B2BRegister.vue";
 
 const stripePromise = loadStripe("pk_test_51O3CwpFAxSyBvPem5qU56paMzEVJzZ2dwLNZWCf8FB0PvQ4hZZwYRQ9THQl1AWDavJPE9YWoMwYT1qQXTJkGBPVd00U17bOF2t");
 let elements;
+const isDonePayment = ref(false);
 
 let organisation = ref(false);
 
 let isAlertVisible = ref(true);
 
 const isDialogVisible = ref(false);
+
+const spinner = ref(false);
+const disable = ref(false);
+
+let agreed = ref("");
+let props = defineProps(["ErrorMessage", "sign_up_data"]);
 
 const items = [
     "California",
@@ -31,14 +40,18 @@ const stripes = [{ id: "xl-tshirt" }];
 
 const isPasswordVisible = ref(false);
 
-let agreed = ref("");
-let props = defineProps(["ErrorMessage", "sign_up_data"]);
+console.log(props.sign_up_data);
 
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
-});
+// if(props.sign_up_data.length == 0){
+//     router.get("/register");
+// }
 
-let emailAddress = '';
+let emailAddress = props.sign_up_data.email;
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   document.querySelector("#payment-form").addEventListener("submit", handleSubmit);
+// });
+
 // Fetches a payment intent and captures the client secret
 async function initialize() {
     try {
@@ -58,9 +71,9 @@ async function initialize() {
     const paymentElementOptions = {
         layout: "tabs",
     };
-
     const paymentElement = elements.create("payment", paymentElementOptions);
     paymentElement.mount("#payment-element");
+
     } catch (error) {
         console.log(error);
     }
@@ -95,51 +108,52 @@ async function checkStatus() {
 }
 
 async function handleSubmit(e) {
-  e.preventDefault();
-  setLoading(true);
+//   e.preventDefault();
+  isDonePayment.value = true;
+//   setLoading(true);
 
-  const { error } = await stripePromise.confirmPayment({
-    elements,
-    confirmParams: {
-      // Make sure to change this to your payment completion page
-      return_url: "http://localhost:4242/checkout.html",
-      receipt_email: emailAddress,
-    },
-  });
+//   const stripe = await stripePromise; // Wait for Stripe to load
+
+//   const { error } = stripe.confirmPayment({
+//     elements,
+//     confirmParams: {
+//       // Make sure to change this to your payment completion page
+//       return_url: "http://localhost:4242/checkout.html",
+//       receipt_email: emailAddress,
+//     },
+//   });
 
 
-  function showMessage(messageText) {
-    const messageContainer = document.querySelector("#payment-message");
+//   function showMessage(messageText) {
+//     const messageContainer = document.querySelector("#payment-message");
 
-    messageContainer.classList.remove("hidden");
-    messageContainer.textContent = messageText;
+//     messageContainer.classList.remove("hidden");
+//     messageContainer.textContent = messageText;
 
-    setTimeout(function () {
-        messageContainer.classList.add("hidden");
-        messageContainer.textContent = "";
-    }, 4000);
-}
+//     setTimeout(function () {
+//         messageContainer.classList.add("hidden");
+//         messageContainer.textContent = "";
+//     }, 4000);
+// }
 
-// Show a spinner on payment submission
-    function setLoading(isLoading) {
-    if (isLoading) {
-        // Disable the button and show a spinner
-        document.querySelector("#submit").disabled = true;
-        document.querySelector("#spinner").classList.remove("hidden");
-        document.querySelector("#button-text").classList.add("hidden");
-    } else {
-        document.querySelector("#submit").disabled = false;
-        document.querySelector("#spinner").classList.add("hidden");
-        document.querySelector("#button-text").classList.remove("hidden");
-    }
-    }
-    if (error.type === "card_error" || error.type === "validation_error") {
-        showMessage(error.message);
-    } else {
-        showMessage("An unexpected error occurred.");
-    }
+// // Show a spinner on payment submission
+//     function setLoading(isLoading) {
+//     if (isLoading) {
+//         // Disable the button and show a spinner
+//         disable.value = true;
+//         spinner.value = true;
+//     } else {
+//         disable.value = false;
+//         spinner.value = false;
+//     }
+//     }
+//     if (error.type === "card_error" || error.type === "validation_error") {
+//         showMessage(error.message);
+//     } else {
+//         showMessage("An unexpected error occurred.");
+//     }
 
-    setLoading(false);
+//     setLoading(false);
 }
 
 const showPayment = () => {
@@ -218,7 +232,6 @@ const showPayment = () => {
                             color="#FC0"
                             variant="flat"
                             rounded
-                            @click="showPayment()"
                             >Sign Up</VBtn
                         >
                     </th>
@@ -238,6 +251,7 @@ const showPayment = () => {
                             color="#FC0"
                             variant="flat"
                             rounded
+                            @click="showPayment()"
                             >Sign Up</VBtn
                         >
                     </th>
@@ -257,6 +271,7 @@ const showPayment = () => {
                             color="#FC0"
                             variant="flat"
                             rounded
+                            @click="showPayment()"
                             >Sign Up</VBtn
                         >
                     </th>
@@ -276,6 +291,7 @@ const showPayment = () => {
                             color="#FC0"
                             variant="flat"
                             rounded
+                            @click="showPayment()"
                             >Sign Up</VBtn
                         >
                     </th>
@@ -450,9 +466,8 @@ const showPayment = () => {
                                     <div id="payment-element">
                                         <!--Stripe.js injects the Payment Element-->
                                     </div>
-                                    <VBtn id="submit" class="mt-3" block>
-                                        <div class="spinner hidden" id="spinner"></div>
-                                        <span id="button-text">Pay now</span>
+                                    <VBtn id="submit" class="stripe-submit mt-3" :disabled="disable" :loading="spinner" block>
+                                        <span id="button-text" @click="handleSubmit" v-if="!spinner" >Pay now</span>
                                     </VBtn>
                                     <div id="payment-message" class="hidden"></div>
                                 </form>
@@ -460,6 +475,32 @@ const showPayment = () => {
                         </VRow>
                     </div>
                 </VCardTitle>
+            </VCard>
+    </VDialog>
+    <VDialog v-model="isDonePayment" width="50%">
+            <VCard class="pa-16">
+                <DialogCloseBtn
+                    variant="text"
+                    size="small"
+                    @click="isDonePayment = false"
+                />
+
+                <VCardTitle class="text-center">
+                    <span class="pppangram-bold head-signup">Thank You For Signing Up!</span>
+                    <p class="mt-4">We've sent a verification email to <Link href="">{{ emailAddress }}</Link> to verify your email address and <br> activate your account. The link is your email will expire in 24 hours. </p>
+                </VCardTitle>
+
+                <VCardActions class="mt-10">
+                    <VRow justify="center">
+                        <VCol cols="5">
+                            <SecondaryBtn type="button" @click="isDonePayment = false" title="Close"  />
+                        </VCol>
+                        <VCol cols="5">
+                            <PrimaryBtn :isLink="false"
+                            type="button" title="Resend Email" />
+                        </VCol>
+                    </VRow>
+                </VCardActions>
             </VCard>
     </VDialog>
 </template>
@@ -493,6 +534,11 @@ const showPayment = () => {
 
 .textmargin1 {
     margin-top: 10vh;
+}
+
+.head-signup{
+    font-size: 20px !important;
+    color: #000;
 }
 
 .plan-mini-text {
@@ -589,5 +635,44 @@ tr:nth-child(even) {
 .abs-top {
     position: absolute;
     right: 10px;
+}
+
+//stripe payment element
+#payment-message {
+  color: rgb(105, 115, 134);
+  font-size: 16px;
+  line-height: 20px;
+  padding-top: 12px;
+  text-align: center;
+}
+
+#payment-element {
+  margin-bottom: 24px;
+}
+
+/* Buttons and links */
+.stripe-submit {
+  border-radius: 4px;
+  border: 0;
+  font-size: 16px;
+  font-weight: 600;
+  display: block;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.stripe-submit:hover {
+  filter: contrast(115%);
+}
+.stripe-submit:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+@media only screen and (max-width: 600px) {
+  form {
+    width: 80vw;
+    min-width: initial;
+  }
 }
 </style>
