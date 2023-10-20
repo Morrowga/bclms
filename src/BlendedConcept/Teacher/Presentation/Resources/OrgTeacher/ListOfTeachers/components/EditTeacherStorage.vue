@@ -1,9 +1,10 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
+import { watch } from "vue";
 
 const isDialogVisible = ref(false);
-const props = defineProps(["data"]);
+const props = defineProps(["data", "left_storage"]);
 const isFormValid = ref(false);
 let flash = computed(() => usePage().props.flash);
 
@@ -42,6 +43,12 @@ const calculatePercent = (specific, total) => {
 
     return (specific / total) * 100;
 };
+
+watch(form, (value) => {
+    if (value.storage > props.left_storage) {
+        form.storage = props.left_storage;
+    }
+});
 </script>
 
 <template>
@@ -74,6 +81,9 @@ const calculatePercent = (specific, total) => {
                                 placeholder="200"
                                 height="38px"
                                 width="58px"
+                                type="number"
+                                :min="0"
+                                :max="left_storage"
                                 v-model="form.storage"
                             />
                             <VLabel class="tiggie-teacher-label">MB</VLabel>
