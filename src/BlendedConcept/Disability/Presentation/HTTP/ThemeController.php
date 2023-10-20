@@ -41,11 +41,9 @@ class ThemeController
 
             return redirect()->route('disability_themes.index')->with('successMessage', 'Organisations Created Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('disability_type.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with([
+                'errorMessage' => $error->getMessage(),
+            ]);
         }
     }
 
@@ -63,12 +61,12 @@ class ThemeController
             $updateThemecommand = (new UpdateThemeCommand($updateTheme));
             $updateThemecommand->execute();
 
-            return redirect()->route('disability_themes.index')->with('successMessage', 'Organisations Created Successfully!');
+            return redirect()->route('disability_themes.index')->with('successMessage', 'Organisations Updated Successfully!');
         } catch (\Exception $error) {
             return redirect()
-                ->route('disability_themes.index')
+                ->back()
                 ->with([
-                    'systemErrorMessage' => $error->getCode(),
+                    'errorMessage' => $error->getMessage(),
                 ]);
         }
     }
@@ -80,12 +78,12 @@ class ThemeController
             $deleteThemeCommand = (new DeleteThemeCommand($theme));
             $deleteThemeCommand->execute();
 
-            return redirect()->route('disability_themes.index')->with('successMessage', 'Organisations Created Successfully!');
+            return redirect()->route('disability_themes.index')->with('successMessage', 'Organisations Deleted Successfully!');
         } catch (\Exception $error) {
             return redirect()
-                ->route('disability_themes.index')
+                ->back()
                 ->with([
-                    'systemErrorMessage' => $error->getCode(),
+                    'errorMessage' => $error->getMessage(),
                 ]);
         }
     }

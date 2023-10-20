@@ -91,6 +91,13 @@ onMounted(() => {
                         >
                     </div>
                 </VCol>
+                <v-alert
+                    v-show="$page.props.flash.errorMessage != null"
+                    color="error"
+                    icon="$error"
+                    title="Error!"
+                    >{{ $page.props.flash.errorMessage }}
+                </v-alert>
             </VRow>
             <VRow>
                 <VCol cols="12" v-if="tabName == 'disability'">

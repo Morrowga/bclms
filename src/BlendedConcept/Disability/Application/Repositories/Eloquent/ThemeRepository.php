@@ -29,7 +29,7 @@ class ThemeRepository implements ThemeRepositoryInterface
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception);
+            throw new \Exception($exception->errorInfo[2]);
         }
     }
 
@@ -44,7 +44,8 @@ class ThemeRepository implements ThemeRepositoryInterface
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception);
+            throw new \Exception($exception->errorInfo[2]);
+            // dd($exception);
         }
     }
 
@@ -56,7 +57,8 @@ class ThemeRepository implements ThemeRepositoryInterface
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception);
+            // dd($exception);
+            throw new \Exception($exception->errorInfo[2]);
         }
     }
 }
