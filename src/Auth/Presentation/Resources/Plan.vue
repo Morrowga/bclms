@@ -4,7 +4,7 @@ import { onMounted, ref } from "vue";
 import { Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { toastAlert } from "@Composables/useToastAlert";
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
 import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
@@ -12,7 +12,9 @@ import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 import B2CRegister from "./B2CRegister.vue";
 import B2BRegister from "./B2BRegister.vue";
 
-const stripePromise = loadStripe("pk_test_51O3CwpFAxSyBvPem5qU56paMzEVJzZ2dwLNZWCf8FB0PvQ4hZZwYRQ9THQl1AWDavJPE9YWoMwYT1qQXTJkGBPVd00U17bOF2t");
+const stripePromise = loadStripe(
+    "pk_test_51O3CwpFAxSyBvPem5qU56paMzEVJzZ2dwLNZWCf8FB0PvQ4hZZwYRQ9THQl1AWDavJPE9YWoMwYT1qQXTJkGBPVd00U17bOF2t"
+);
 let elements;
 const isDonePayment = ref(false);
 
@@ -55,25 +57,27 @@ let emailAddress = props.sign_up_data.email;
 // Fetches a payment intent and captures the client secret
 async function initialize() {
     try {
-    const response = await axios.post("/create-stripe", {
-        body: JSON.stringify({ stripes })
-    });
+        const response = await axios.post("/create-stripe", {
+            body: JSON.stringify({ stripes }),
+        });
 
-    const { clientSecret } = response.data;
+        const { clientSecret } = response.data;
 
-    const stripe = await stripePromise; // Wait for Stripe to load
+        const stripe = await stripePromise; // Wait for Stripe to load
 
-    elements = stripe.elements({ clientSecret });
+        elements = stripe.elements({ clientSecret });
 
-    const linkAuthenticationElement = elements.create("linkAuthentication");
-    linkAuthenticationElement.mount("#link-authentication-element");
+        const linkAuthenticationElement = elements.create("linkAuthentication");
+        linkAuthenticationElement.mount("#link-authentication-element");
 
-    const paymentElementOptions = {
-        layout: "tabs",
-    };
-    const paymentElement = elements.create("payment", paymentElementOptions);
-    paymentElement.mount("#payment-element");
-
+        const paymentElementOptions = {
+            layout: "tabs",
+        };
+        const paymentElement = elements.create(
+            "payment",
+            paymentElementOptions
+        );
+        paymentElement.mount("#payment-element");
     } catch (error) {
         console.log(error);
     }
@@ -81,363 +85,385 @@ async function initialize() {
 
 // Fetches the payment intent status after payment submission
 async function checkStatus() {
-  const clientSecret = new URLSearchParams(window.location.search).get(
-    "payment_intent_client_secret"
-  );
+    const clientSecret = new URLSearchParams(window.location.search).get(
+        "payment_intent_client_secret"
+    );
 
-  if (!clientSecret) {
-    return;
-  }
+    if (!clientSecret) {
+        return;
+    }
 
-  const { paymentIntent } = await stripePromise.retrievePaymentIntent(clientSecret);
+    const { paymentIntent } = await stripePromise.retrievePaymentIntent(
+        clientSecret
+    );
 
-  switch (paymentIntent.status) {
-    case "succeeded":
-      showMessage("Payment succeeded!");
-      break;
-    case "processing":
-      showMessage("Your payment is processing.");
-      break;
-    case "requires_payment_method":
-      showMessage("Your payment was not successful, please try again.");
-      break;
-    default:
-      showMessage("Something went wrong.");
-      break;
-  }
+    switch (paymentIntent.status) {
+        case "succeeded":
+            showMessage("Payment succeeded!");
+            break;
+        case "processing":
+            showMessage("Your payment is processing.");
+            break;
+        case "requires_payment_method":
+            showMessage("Your payment was not successful, please try again.");
+            break;
+        default:
+            showMessage("Something went wrong.");
+            break;
+    }
 }
 
 async function handleSubmit(e) {
-//   e.preventDefault();
-  isDonePayment.value = true;
-//   setLoading(true);
+    //   e.preventDefault();
+    isDonePayment.value = true;
+    //   setLoading(true);
 
-//   const stripe = await stripePromise; // Wait for Stripe to load
+    //   const stripe = await stripePromise; // Wait for Stripe to load
 
-//   const { error } = stripe.confirmPayment({
-//     elements,
-//     confirmParams: {
-//       // Make sure to change this to your payment completion page
-//       return_url: "http://localhost:4242/checkout.html",
-//       receipt_email: emailAddress,
-//     },
-//   });
+    //   const { error } = stripe.confirmPayment({
+    //     elements,
+    //     confirmParams: {
+    //       // Make sure to change this to your payment completion page
+    //       return_url: "http://localhost:4242/checkout.html",
+    //       receipt_email: emailAddress,
+    //     },
+    //   });
 
+    //   function showMessage(messageText) {
+    //     const messageContainer = document.querySelector("#payment-message");
 
-//   function showMessage(messageText) {
-//     const messageContainer = document.querySelector("#payment-message");
+    //     messageContainer.classList.remove("hidden");
+    //     messageContainer.textContent = messageText;
 
-//     messageContainer.classList.remove("hidden");
-//     messageContainer.textContent = messageText;
+    //     setTimeout(function () {
+    //         messageContainer.classList.add("hidden");
+    //         messageContainer.textContent = "";
+    //     }, 4000);
+    // }
 
-//     setTimeout(function () {
-//         messageContainer.classList.add("hidden");
-//         messageContainer.textContent = "";
-//     }, 4000);
-// }
+    // // Show a spinner on payment submission
+    //     function setLoading(isLoading) {
+    //     if (isLoading) {
+    //         // Disable the button and show a spinner
+    //         disable.value = true;
+    //         spinner.value = true;
+    //     } else {
+    //         disable.value = false;
+    //         spinner.value = false;
+    //     }
+    //     }
+    //     if (error.type === "card_error" || error.type === "validation_error") {
+    //         showMessage(error.message);
+    //     } else {
+    //         showMessage("An unexpected error occurred.");
+    //     }
 
-// // Show a spinner on payment submission
-//     function setLoading(isLoading) {
-//     if (isLoading) {
-//         // Disable the button and show a spinner
-//         disable.value = true;
-//         spinner.value = true;
-//     } else {
-//         disable.value = false;
-//         spinner.value = false;
-//     }
-//     }
-//     if (error.type === "card_error" || error.type === "validation_error") {
-//         showMessage(error.message);
-//     } else {
-//         showMessage("An unexpected error occurred.");
-//     }
-
-//     setLoading(false);
+    //     setLoading(false);
 }
 
 const showPayment = () => {
     isDialogVisible.value = true;
     initialize();
     checkStatus();
-}
+};
 </script>
 
 <template>
-    <div class="layout-navbar">
-        <div
-            class="navbar-content-container d-flex justify-space-between px-10 py-5"
-        >
-            <h1 class="text-h5 font-weight-bold leading-normal text-capitalize">
-                {{ themeConfig.app.title }}
-            </h1>
-            <VBtn color="primary" class="b-0 text-white">
-                <Link :href="route('login')" class="text-white"> Login </Link>
-            </VBtn>
-        </div>
-    </div>
-    <SystemErrorAlert
-        :sytemErrorMessage="sytemErrorMessage"
-        v-if="sytemErrorMessage"
-    />
-
-    <VDivider></VDivider>
-
-    <div class="text-center mt-5">
-        <p class="pppangram-bold plan-title">Plans</p>
-        <VRow class="mt-10">
-            <VCol cols="3"> </VCol>
-            <VCol cols="6" class="text-left input-awine">
-                <p class="plan-text pppangram-bold">
-                    How many student accounts do you need ?
-                </p>
-                <VTextField
-                    placeholder="eg 5 "
-                    variant="plain"
-                    density="compact"
+    <div>
+        <div class="layout-navbar">
+            <div
+                class="navbar-content-container d-flex justify-space-between px-10 py-5"
+            >
+                <h1
+                    class="text-h5 font-weight-bold leading-normal text-capitalize"
                 >
-                    <template #append-inner>
-                        <VIcon
-                            icon="mdi-magnify"
-                            size="26px"
-                            height="26px"
-                            class="abs-top"
-                        >
-                        </VIcon>
-                    </template>
-                </VTextField>
-            </VCol>
-            <VCol cols="3"> </VCol>
-        </VRow>
-    </div>
+                    {{ themeConfig.app.title }}
+                </h1>
+                <VBtn color="primary" class="b-0 text-white">
+                    <Link :href="route('login')" class="text-white">
+                        Login
+                    </Link>
+                </VBtn>
+            </div>
+        </div>
+        <SystemErrorAlert
+            :sytemErrorMessage="sytemErrorMessage"
+            v-if="sytemErrorMessage"
+        />
 
-    <div class="mx-15">
-        <table class="heavyTable">
-            <thead>
-                <tr>
-                    <th>
-                        <div class="th-emtpy-width"></div>
-                    </th>
-                    <th>
-                        <div class="th-width">
-                            <p class="th-text pppangram-bold mt-5">Free</p>
+        <VDivider></VDivider>
 
-                            <p class="text-left ml-3 plan-mini-text textmargin">
-                                ss<strong>0</strong> <br />
-                                /month
-                            </p>
-                        </div>
-                        <VBtn
-                            class="th-btn mb-5"
-                            color="#FC0"
-                            variant="flat"
-                            rounded
-                            >Sign Up</VBtn
-                        >
-                    </th>
-                    <th>
-                        <div class="th-width">
-                            <p class="th-text pppangram-bold mt-5">Base</p>
+        <div class="text-center mt-5">
+            <p class="pppangram-bold plan-title">Plans</p>
+            <VRow class="mt-10">
+                <VCol cols="3"> </VCol>
+                <VCol cols="6" class="text-left input-awine">
+                    <p class="plan-text pppangram-bold">
+                        How many student accounts do you need ?
+                    </p>
+                    <VTextField
+                        placeholder="eg 5 "
+                        variant="plain"
+                        density="compact"
+                    >
+                        <template #append-inner>
+                            <VIcon
+                                icon="mdi-magnify"
+                                size="26px"
+                                height="26px"
+                                class="abs-top"
+                            >
+                            </VIcon>
+                        </template>
+                    </VTextField>
+                </VCol>
+                <VCol cols="3"> </VCol>
+            </VRow>
+        </div>
 
-                            <p class="text-left plan-mini-text ml-3 mt-15">
-                                Free <br />
-                                for 1 month <br />
-                                Then, starts of ss<strong>10</strong> <br />
-                                /month
-                            </p>
-                        </div>
-                        <VBtn
-                            class="th-btn mb-5"
-                            color="#FC0"
-                            variant="flat"
-                            rounded
-                            @click="showPayment()"
-                            >Sign Up</VBtn
-                        >
-                    </th>
-                    <th>
-                        <div class="th-width">
-                            <p class="th-text pppangram-bold mt-5">Pro</p>
+        <div class="mx-15">
+            <table class="heavyTable">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th-emtpy-width"></div>
+                        </th>
+                        <th>
+                            <div class="th-width">
+                                <p class="th-text pppangram-bold mt-5">Free</p>
 
-                            <p class="text-left plan-mini-text ml-3 mt-15">
-                                Free <br />
-                                for 1 month <br />
-                                Then, starts of ss<strong>50</strong> <br />
-                                /month
-                            </p>
-                        </div>
-                        <VBtn
-                            class="th-btn mb-5"
-                            color="#FC0"
-                            variant="flat"
-                            rounded
-                            @click="showPayment()"
-                            >Sign Up</VBtn
-                        >
-                    </th>
-                    <th>
-                        <div class="th-width">
-                            <p class="th-text pppangram-bold mt-5">Premium</p>
+                                <p
+                                    class="text-left ml-3 plan-mini-text textmargin"
+                                >
+                                    ss<strong>0</strong> <br />
+                                    /month
+                                </p>
+                            </div>
+                            <VBtn
+                                class="th-btn mb-5"
+                                color="#FC0"
+                                variant="flat"
+                                rounded
+                                >Sign Up</VBtn
+                            >
+                        </th>
+                        <th>
+                            <div class="th-width">
+                                <p class="th-text pppangram-bold mt-5">Base</p>
 
-                            <p class="text-left plan-mini-text ml-3 mt-15">
-                                Free <br />
-                                for 1 month <br />
-                                Then, starts of ss<strong>100</strong> <br />
-                                /month
-                            </p>
-                        </div>
-                        <VBtn
-                            class="th-btn mb-5"
-                            color="#FC0"
-                            variant="flat"
-                            rounded
-                            @click="showPayment()"
-                            >Sign Up</VBtn
-                        >
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="text-left">
-                    <td>Free Student Profile</td>
-                    <td>1 Student</td>
-                    <td>1 Student</td>
-                    <td>1 Student</td>
-                    <td>1 Student</td>
-                </tr>
-                <tr class="text-left">
-                    <td>Additional Student Profile</td>
-                    <td>
-                        <VIcon icon="mdi-close"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                </tr>
-                <tr class="text-left">
-                    <td>Storage Space</td>
-                    <td>NA</td>
-                    <td>NA</td>
-                    <td>1GB</td>
-                    <td>5GB</td>
-                </tr>
-                <tr class="text-left">
-                    <td>Free Library Access</td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                </tr>
-                <tr class="text-left">
-                    <td>Personalization</td>
-                    <td>
-                        <VIcon icon="mdi-close"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-close"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                </tr>
-                <tr class="text-left">
-                    <td>Customization</td>
-                    <td>
-                        <VIcon icon="mdi-close"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-close"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-close"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                </tr>
-                <tr class="text-left">
-                    <td>Full Library Access</td>
-                    <td>
-                        <VIcon icon="mdi-close"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                </tr>
-                <tr class="text-left">
-                    <td>Concument Access</td>
-                    <td>NA</td>
-                    <td>NA</td>
-                    <td>NA</td>
-                    <td>NA</td>
-                </tr>
-                <tr class="text-left">
-                    <td>Weekly Learning Progress Report</td>
-                    <td>
-                        <VIcon icon="mdi-close" size="lg"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                </tr>
-                <tr class="text-left">
-                    <td>Dedicated Student Report</td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                    <td>
-                        <VIcon icon="mdi-check"></VIcon>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                                <p class="text-left plan-mini-text ml-3 mt-15">
+                                    Free <br />
+                                    for 1 month <br />
+                                    Then, starts of ss<strong>10</strong> <br />
+                                    /month
+                                </p>
+                            </div>
+                            <VBtn
+                                class="th-btn mb-5"
+                                color="#FC0"
+                                variant="flat"
+                                rounded
+                                @click="showPayment()"
+                                >Sign Up</VBtn
+                            >
+                        </th>
+                        <th>
+                            <div class="th-width">
+                                <p class="th-text pppangram-bold mt-5">Pro</p>
 
-    <VDialog v-model="isDialogVisible" width="50%">
+                                <p class="text-left plan-mini-text ml-3 mt-15">
+                                    Free <br />
+                                    for 1 month <br />
+                                    Then, starts of ss<strong>50</strong> <br />
+                                    /month
+                                </p>
+                            </div>
+                            <VBtn
+                                class="th-btn mb-5"
+                                color="#FC0"
+                                variant="flat"
+                                rounded
+                                @click="showPayment()"
+                                >Sign Up</VBtn
+                            >
+                        </th>
+                        <th>
+                            <div class="th-width">
+                                <p class="th-text pppangram-bold mt-5">
+                                    Premium
+                                </p>
+
+                                <p class="text-left plan-mini-text ml-3 mt-15">
+                                    Free <br />
+                                    for 1 month <br />
+                                    Then, starts of ss<strong>100</strong>
+                                    <br />
+                                    /month
+                                </p>
+                            </div>
+                            <VBtn
+                                class="th-btn mb-5"
+                                color="#FC0"
+                                variant="flat"
+                                rounded
+                                @click="showPayment()"
+                                >Sign Up</VBtn
+                            >
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-left">
+                        <td>Free Student Profile</td>
+                        <td>1 Student</td>
+                        <td>1 Student</td>
+                        <td>1 Student</td>
+                        <td>1 Student</td>
+                    </tr>
+                    <tr class="text-left">
+                        <td>Additional Student Profile</td>
+                        <td>
+                            <VIcon icon="mdi-close"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <td>Storage Space</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                        <td>1GB</td>
+                        <td>5GB</td>
+                    </tr>
+                    <tr class="text-left">
+                        <td>Free Library Access</td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <td>Personalization</td>
+                        <td>
+                            <VIcon icon="mdi-close"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-close"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <td>Customization</td>
+                        <td>
+                            <VIcon icon="mdi-close"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-close"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-close"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <td>Full Library Access</td>
+                        <td>
+                            <VIcon icon="mdi-close"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <td>Concument Access</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr class="text-left">
+                        <td>Weekly Learning Progress Report</td>
+                        <td>
+                            <VIcon icon="mdi-close" size="lg"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <td>Dedicated Student Report</td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                        <td>
+                            <VIcon icon="mdi-check"></VIcon>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <VDialog v-model="isDialogVisible" width="50%">
             <VCard class="pa-16">
-                <DialogCloseBtn
+                <!-- <DialogCloseBtn
                     variant="text"
                     size="small"
                     @click="isDialogVisible = false"
-                />
-
-                <VCardTitle class="">
-                    <span class="ppangram-bold color-black">Do you have a student code ?</span>
+                /> -->
+                <div class="text-end">
+                    <VBtn
+                        color="secondary"
+                        variant="text"
+                        @click="isDialogVisible = false"
+                        icon
+                    >
+                        <VIcon>mdi-close</VIcon>
+                    </VBtn>
+                </div>
+                <VCardSutitle class="">
+                    <span class="ppangram-bold color-black"
+                        >Do you have a student code ?</span
+                    >
                     <VTextField
                         class="mt-3 custom-label-color"
                         density="compact"
@@ -447,7 +473,13 @@ const showPayment = () => {
                     <div class="mt-10">
                         <VRow>
                             <VCol cols="8" offset-md="2">
-                                <VBtn color="#000" class="text-white" prepend-icon="mdi-apple" block>Pay</VBtn>
+                                <VBtn
+                                    color="#000"
+                                    class="text-white"
+                                    prepend-icon="mdi-apple"
+                                    block
+                                    >Pay</VBtn
+                                >
                             </VCol>
                         </VRow>
                     </div>
@@ -466,43 +498,78 @@ const showPayment = () => {
                                     <div id="payment-element">
                                         <!--Stripe.js injects the Payment Element-->
                                     </div>
-                                    <VBtn id="submit" class="stripe-submit mt-3" :disabled="disable" :loading="spinner" block>
-                                        <span id="button-text" @click="handleSubmit" v-if="!spinner" >Pay now</span>
+                                    <VBtn
+                                        id="submit"
+                                        class="stripe-submit mt-3"
+                                        :disabled="disable"
+                                        :loading="spinner"
+                                        block
+                                    >
+                                        <span
+                                            id="button-text"
+                                            @click="handleSubmit"
+                                            v-if="!spinner"
+                                            >Pay now</span
+                                        >
                                     </VBtn>
-                                    <div id="payment-message" class="hidden"></div>
+                                    <div
+                                        id="payment-message"
+                                        class="hidden"
+                                    ></div>
                                 </form>
                             </VCol>
                         </VRow>
                     </div>
-                </VCardTitle>
+                </VCardSutitle>
             </VCard>
-    </VDialog>
-    <VDialog v-model="isDonePayment" width="50%">
+        </VDialog>
+        <VDialog v-model="isDonePayment" width="50%">
             <VCard class="pa-16">
-                <DialogCloseBtn
-                    variant="text"
-                    size="small"
-                    @click="isDonePayment = false"
-                />
+                <div class="text-end">
+                    <VBtn
+                        color="secondary"
+                        variant="text"
+                        @click="isDonePayment = false"
+                        icon
+                    >
+                        <VIcon>mdi-close</VIcon>
+                    </VBtn>
+                </div>
 
-                <VCardTitle class="text-center">
-                    <span class="pppangram-bold head-signup">Thank You For Signing Up!</span>
-                    <p class="mt-4">We've sent a verification email to <Link href="">{{ emailAddress }}</Link> to verify your email address and <br> activate your account. The link is your email will expire in 24 hours. </p>
-                </VCardTitle>
+                <VCardSubtitle class="text-center">
+                    <span class="pppangram-bold head-signup"
+                        >Thank You For Signing Up!</span
+                    >
+                    <p class="mt-4">
+                        We've sent a verification email to
+                        <Link href="">{{ emailAddress }}</Link> to verify your
+                        email address and <br />
+                        activate your account. The link is your email will
+                        expire in 24 hours.
+                    </p>
+                </VCardSubtitle>
 
                 <VCardActions class="mt-10">
                     <VRow justify="center">
                         <VCol cols="5">
-                            <SecondaryBtn type="button" @click="isDonePayment = false" title="Close"  />
+                            <SecondaryBtn
+                                type="button"
+                                @click="isDonePayment = false"
+                                title="Close"
+                            />
                         </VCol>
                         <VCol cols="5">
-                            <PrimaryBtn :isLink="false"
-                            type="button" title="Resend Email" />
+                            <PrimaryBtn
+                                :isLink="false"
+                                type="button"
+                                title="Resend Email"
+                            />
                         </VCol>
                     </VRow>
                 </VCardActions>
             </VCard>
-    </VDialog>
+        </VDialog>
+    </div>
 </template>
 
 <style lang="scss" scoped>
@@ -518,14 +585,14 @@ const showPayment = () => {
 }
 
 .divider-container {
-  display: flex;
-  align-items: center; /* Center items vertically */
+    display: flex;
+    align-items: center; /* Center items vertically */
 }
 
 .divider {
-  flex: 1; /* Distribute remaining space equally on both sides */
-  border-top: 1px solid rgb(0, 0, 0, 0.2); /* Style the divider line */
-  margin: 0 10px; /* Add some spacing between the text and the dividers */
+    flex: 1; /* Distribute remaining space equally on both sides */
+    border-top: 1px solid rgb(0, 0, 0, 0.2); /* Style the divider line */
+    margin: 0 10px; /* Add some spacing between the text and the dividers */
 }
 
 .textmargin {
@@ -536,7 +603,7 @@ const showPayment = () => {
     margin-top: 10vh;
 }
 
-.head-signup{
+.head-signup {
     font-size: 20px !important;
     color: #000;
 }
@@ -584,7 +651,7 @@ tr:nth-child(even) {
     width: 35vh;
 }
 
-.color-black{
+.color-black {
     color: #000 !important;
 }
 
@@ -639,40 +706,40 @@ tr:nth-child(even) {
 
 //stripe payment element
 #payment-message {
-  color: rgb(105, 115, 134);
-  font-size: 16px;
-  line-height: 20px;
-  padding-top: 12px;
-  text-align: center;
+    color: rgb(105, 115, 134);
+    font-size: 16px;
+    line-height: 20px;
+    padding-top: 12px;
+    text-align: center;
 }
 
 #payment-element {
-  margin-bottom: 24px;
+    margin-bottom: 24px;
 }
 
 /* Buttons and links */
 .stripe-submit {
-  border-radius: 4px;
-  border: 0;
-  font-size: 16px;
-  font-weight: 600;
-  display: block;
-  transition: all 0.2s ease;
-  width: 100%;
+    border-radius: 4px;
+    border: 0;
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    transition: all 0.2s ease;
+    width: 100%;
 }
 
 .stripe-submit:hover {
-  filter: contrast(115%);
+    filter: contrast(115%);
 }
 .stripe-submit:disabled {
-  opacity: 0.5;
-  cursor: default;
+    opacity: 0.5;
+    cursor: default;
 }
 
 @media only screen and (max-width: 600px) {
-  form {
-    width: 80vw;
-    min-width: initial;
-  }
+    form {
+        width: 80vw;
+        min-width: initial;
+    }
 }
 </style>
