@@ -1,7 +1,11 @@
 <script setup>
 import { useForm, Link } from "@inertiajs/vue3";
 import { ref, defineProps, computed } from "vue";
-import { emailValidator, requiredValidator } from "@validators";
+import {
+    emailValidator,
+    requiredValidator,
+    contactNumberValidator,
+} from "@validators";
 import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
@@ -46,6 +50,12 @@ let handleSubmit = () => {
         }
     });
 };
+
+watch(form, () => {
+    if (form.org_admin_contact_number.length > 8) {
+        return false;
+    }
+});
 </script>
 
 <template>
@@ -120,7 +130,13 @@ let handleSubmit = () => {
                                             type="number"
                                             v-model="form.contact_number"
                                             class="w-100"
-                                            :rules="[requiredValidator]"
+                                            :rules="[
+                                                requiredValidator,
+                                                contactNumberValidator(
+                                                    form.contact_number,
+                                                    8
+                                                ),
+                                            ]"
                                             :error-messages="
                                                 form?.errors?.contact_number
                                             "
@@ -164,7 +180,13 @@ let handleSubmit = () => {
                                             "
                                             class="w-100"
                                             type="number"
-                                            :rules="[requiredValidator]"
+                                            :rules="[
+                                                requiredValidator,
+                                                contactNumberValidator(
+                                                    form.org_admin_contact_number,
+                                                    8
+                                                ),
+                                            ]"
                                             :error-messages="
                                                 form?.errors
                                                     ?.org_admin_contact_number

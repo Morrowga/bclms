@@ -27,6 +27,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:hasSurvey", "update:isDialogVisible"]);
+const isError = ref(false);
 
 console.log(props.hasSurvey);
 
@@ -64,6 +65,16 @@ addSurveyForm.value.forEach((item) => {
     }
 });
 
+const checkValue = () => {
+    const allArraysHaveValues = selectedOptions.value.every((options) => options.length > 0);
+
+    if (allArraysHaveValues) {
+        return true
+    } else {
+        return false
+    }
+}
+
 const checkboxClick = (questionId, optionId) => {
   const questionOptions = selectedOptions.value[questionId];
 
@@ -87,20 +98,25 @@ const radioClick = (questionId, optionId) => {
 };
 
 const onFormSubmit = () => {
-    // Convert the filteredSelectedOptions to JSON
-    form.results = JSON.stringify(selectedOptions.value);
-    form.shortanswer = JSON.stringify(shortanswer.value);
+    if(checkValue()){
+        isError.value = false;
+        // Convert the filteredSelectedOptions to JSON
+        form.results = JSON.stringify(selectedOptions.value);
+        form.shortanswer = JSON.stringify(shortanswer.value);
 
-    form.post(route("surveyresponse.store"), {
-        onSuccess: () => {
-            emit("update:hasSurvey", false);
-            emit("update:isDialogVisible", true);
-        },
-        onError: (error) => {
-            form.results = selectedOptions.value;
-            form.shortanswer = shortanswer.value;
-        }
-    })
+        form.post(route("surveyresponse.store"), {
+            onSuccess: () => {
+                emit("update:hasSurvey", false);
+                emit("update:isDialogVisible", true);
+            },
+            onError: (error) => {
+                form.results = selectedOptions.value;
+                form.shortanswer = shortanswer.value;
+            }
+        })
+    } else {
+        isError.value = true;
+    }
 }
 
 const directLogout = () => {
@@ -230,7 +246,11 @@ const dialogVisibleUpdate = (val) => {
                         </VCardText>
                     </div>
                 </VCardText>
-
+                <VCardText>
+                    <div class="mt-5 text-center">
+                        <span v-if="isError" class="error-text pppangram-bold">You need to fill all surveys</span>
+                    </div>
+                </VCardText>
                 <VCardActions>
                     <VRow justify="center">
                         <VCol cols="3">
@@ -241,10 +261,9 @@ const dialogVisibleUpdate = (val) => {
                             @click="onFormSubmit" :isLink="false"
                             type="button" title="Submit" />
                         </VCol>
-                        <VCol :cols="'3'">
+                        <VCol :cols="'3'" v-if="!props.data.required">
                             <PrimaryBtn
                             @click="directLogout" :isLink="false"
-                            :disabled="props.data.required"
                             type="button" title="Logout" />
                         </VCol>
                     </VRow>
@@ -260,6 +279,10 @@ const dialogVisibleUpdate = (val) => {
     font-style: normal !important;
     font-weight: 500 !important;
     line-height: 20px !important;
+}
+
+.error-text{
+    color: red !important;
 }
 
 :deep(.v-radio) {
