@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             DefaultPlanSeeder::class,
             PermissionTableSeeder::class,
             PermissionRoleTableSeeder::class,
+            DeviceSeeder::class,
             SuperAdminSeeder::class,
             PageBuilderSeeder::class,
             SiteSettingSeeder::class,
