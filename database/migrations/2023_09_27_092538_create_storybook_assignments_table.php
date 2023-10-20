@@ -22,7 +22,7 @@ return new class extends Migration
                 ->references('student_id')
                 ->on('students')->onDelete('cascade');
             $table->bigInteger('curr_timestamp')->default(0);
-            $table->boolean('completed_once');
+            $table->boolean('completed_once')->default(0);
             $table->timestamps();
         });
     }
