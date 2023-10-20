@@ -27,6 +27,7 @@ const emit = defineEmits(["update:hasSurvey"]);
 console.log(props.hasSurvey);
 
 let user_id = computed(() => page.props.user_info.user_detail.id);
+const isError = ref(false);
 
 const form = useForm({
     results: null,
@@ -60,6 +61,16 @@ addSurveyForm.value.forEach((item) => {
         };
     }
 });
+
+const checkValue = () => {
+    const allArraysHaveValues = selectedOptions.value.every((options) => options.length > 0);
+
+    if (allArraysHaveValues) {
+        return true
+    } else {
+        return false
+    }
+}
 
 const checkboxClick = (questionId, optionId) => {
   const questionOptions = selectedOptions.value[questionId];
@@ -104,20 +115,24 @@ const logout = () => {
 };
 
 const onFormSubmit = () => {
-    // Convert the filteredSelectedOptions to JSON
-    form.results = JSON.stringify(selectedOptions.value);
-    form.shortanswer = JSON.stringify(shortanswer.value);
+    if(checkValue()){
+        isError.value = false;
+        form.results = JSON.stringify(selectedOptions.value);
+        form.shortanswer = JSON.stringify(shortanswer.value);
 
-    form.post(route("surveyresponse.store"), {
-        onSuccess: () => {
-            emit("update:hasSurvey", false);
-            logout();
-        },
-        onError: (error) => {
-            form.results = selectedOptions.value;
-            form.shortanswer = shortanswer.value;
-        }
-    })
+        form.post(route("surveyresponse.store"), {
+            onSuccess: () => {
+                emit("update:hasSurvey", false);
+                logout();
+            },
+            onError: (error) => {
+                form.results = selectedOptions.value;
+                form.shortanswer = shortanswer.value;
+            }
+        })
+    } else {
+        isError.value = true;
+    }
 }
 
 const dialogVisibleUpdate = (val) => {
@@ -161,7 +176,7 @@ const dialogVisibleUpdate = (val) => {
                                                 >{{  option.content  }}</VLabel
                                             >
                                             <VRadio
-                                            v-model="selectedOptions[question.id]"
+                                            v-model="selectdOptions[question.id]"
                                             :value="option.id"
                                             @click="radioClick(question.id, option.id)"
                                             />
@@ -218,7 +233,8 @@ const dialogVisibleUpdate = (val) => {
                                             <VLabel class="tiggie-label-custome fs-20"
                                                 >{{ option.content }}</VLabel
                                             >
-                                            <VCheckbox @click="checkboxClick(question.id, option.id)" :value="option.id" />
+                                            <VCheckbox
+                                            @click="checkboxClick(question.id, option.id)" :value="option.id" />
                                         </div>
                                     </VCol>
                                 </VRow>
@@ -234,15 +250,19 @@ const dialogVisibleUpdate = (val) => {
 
                             <VTextarea
                                 v-model="shortanswer[question.id].answer"
+                                :rules="[requiredValidator]" :error-messages="form?.errors?.answer"
                                 placeholder="Please Type here ...."
                                 auto-grow
                                 rows="5"
-                                :rules="[requiredValidator]" :error-messages="form?.errors?.answer"
                             />
                         </VCardText>
                     </div>
                 </VCardText>
-
+                <VCardText>
+                    <div class="mt-5 text-center">
+                        <span v-if="isError" class="error-text pppangram-bold">You need to fill all surveys</span>
+                    </div>
+                </VCardText>
                 <VCardActions>
                     <VRow justify="center">
                         <VCol cols="3">
@@ -253,10 +273,9 @@ const dialogVisibleUpdate = (val) => {
                             @click="onFormSubmit" :isLink="false"
                             type="button" title="Submit & Logout" />
                         </VCol>
-                        <VCol :cols="'3'">
+                        <VCol :cols="'3'" v-if="!props.data.required">
                             <PrimaryBtn
                             @click="logout" :isLink="false"
-                            :disabled="props.data.required"
                             type="button" title="Logout" />
                         </VCol>
                     </VRow>
@@ -272,6 +291,10 @@ const dialogVisibleUpdate = (val) => {
     font-style: normal !important;
     font-weight: 500 !important;
     line-height: 20px !important;
+}
+
+.error-text{
+    color: red !important;
 }
 
 :deep(.v-radio) {

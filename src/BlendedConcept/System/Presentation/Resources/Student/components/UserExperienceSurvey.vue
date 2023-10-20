@@ -30,10 +30,21 @@ const form = useForm({
 
 const selectedOptions = ref([]);
 const  shortanswer = ref([]);
+const isError = ref(false);
 
 const questionsExist = computed(() => {
   return props.data && props.data && props.data.questions;
 });
+
+const checkValue = () => {
+    const allArraysHaveValues = selectedOptions.value.every((options) => options.length > 0);
+
+    if (allArraysHaveValues) {
+        return true
+    } else {
+        return false
+    }
+}
 
 const addSurveyForm = ref(questionsExist.value ? props.data.questions : []);
 
@@ -71,20 +82,25 @@ const radioClick = (questionId, optionId) => {
 };
 
 const onFormSubmit = () => {
-    // Convert the filteredSelectedOptions to JSON
-    form.results = JSON.stringify(selectedOptions.value);
-    form.shortanswer = JSON.stringify(shortanswer.value);
+    if(checkValue()){
+        isError.value = false;
+        // Convert the filteredSelectedOptions to JSON
+        form.results = JSON.stringify(selectedOptions.value);
+        form.shortanswer = JSON.stringify(shortanswer.value);
 
-    form.post(route("surveyresponse.store"), {
-        onSuccess: () => {
-            isDialogVisible.value = false;
-            SuccessDialog({ title: "You've successfully submited user experience survey." });
-        },
-        onError: (error) => {
-            form.results = selectedOptions.value;
-            form.shortanswer = shortanswer.value;
-        }
-    })
+        form.post(route("surveyresponse.store"), {
+            onSuccess: () => {
+                isDialogVisible.value = false;
+                SuccessDialog({ title: "You've successfully submited user experience survey." });
+            },
+            onError: (error) => {
+                form.results = selectedOptions.value;
+                form.shortanswer = shortanswer.value;
+            }
+        })
+    } else {
+        isError.value = true;
+    }
 }
 
 
@@ -204,7 +220,11 @@ const onFormSubmit = () => {
                         </VCardText>
                     </div>
                 </VCardText>
-
+                <VCardText>
+                    <div class="mt-5 text-center">
+                        <span v-if="isError" class="error-text pppangram-bold">You need to fill all surveys</span>
+                    </div>
+                </VCardText>
                 <VCardActions>
                     <VRow justify="center">
                         <VCol cols="3" v-if="props.data.required == false">
@@ -228,6 +248,10 @@ const onFormSubmit = () => {
     font-style: normal !important;
     font-weight: 500 !important;
     line-height: 20px !important;
+}
+
+.error-text{
+    color: red !important;
 }
 
 :deep(.v-radio) {
