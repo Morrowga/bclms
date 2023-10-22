@@ -71,27 +71,28 @@ class AuthController extends Controller
         }
     }
 
-    public function testingStripe(Request $request){
+    public function testingStripe(Request $request)
+    {
         // try {
-            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
 
-            $jsonObj = json_decode($request->body, true);
+        $jsonObj = json_decode($request->body, true);
 
-            // Create a PaymentIntent with amount and currency
-            $paymentIntent = $stripe->paymentIntents->create([
-                'amount' => 1400,
-                'currency' => 'sgd',
-                // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-                'automatic_payment_methods' => [
-                    'enabled' => true,
-                ],
-            ]);
+        // Create a PaymentIntent with amount and currency
+        $paymentIntent = $stripe->paymentIntents->create([
+            'amount' => 1400,
+            'currency' => 'sgd',
+            // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+            'automatic_payment_methods' => [
+                'enabled' => true,
+            ],
+        ]);
 
-            $output = [
-                'clientSecret' => $paymentIntent->client_secret,
-            ];
+        $output = [
+            'clientSecret' => $paymentIntent->client_secret,
+        ];
 
-            return json_encode($output);
+        return json_encode($output);
         // } catch (Error $e) {
         //     http_response_code(500);
         //     echo json_encode(['error' => $e->getMessage()]);
@@ -289,6 +290,15 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             // Handle the exception gracefully, such as displaying a generic error page
             return Inertia::render(route('route.userprofile'))->with('sytemErrorMessage', $e->getMessage());
+        }
+    }
+
+    public function chooseFreePlan(StoreRegisterRequest $request)
+    {
+        try {
+            $this->authInterface->chooseFreePlan($request);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

@@ -149,6 +149,14 @@ const showPayment = () => {
     initialize();
     checkStatus();
 };
+
+const chooseFreePlan = () => {
+    props.form.post(route("choose-free-plan"), {
+        onSuccess: () => {
+            props.form.get(route("login"));
+        },
+    });
+};
 </script>
 
 <template>
@@ -223,6 +231,7 @@ const showPayment = () => {
                                 </p>
                             </div>
                             <VBtn
+                                @click="chooseFreePlan()"
                                 class="th-btn mb-5"
                                 color="#FC0"
                                 variant="flat"
