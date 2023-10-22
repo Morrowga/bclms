@@ -4,6 +4,7 @@ import { onMounted, ref } from "vue";
 import { Link, useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { toastAlert } from "@Composables/useToastAlert";
+import Plan from "./Plan.vue";
 import {
     emailValidator,
     requiredValidator,
@@ -13,8 +14,10 @@ import B2CRegister from "./B2CRegister.vue";
 import B2BRegister from "./B2BRegister.vue";
 let organisation = ref(false);
 let isAlertVisible = ref(true);
+const selectedUserType = ref('Teacher');
 
 const isFormValid = ref(false);
+const isRegisterFormFilled = ref(false);
 let refForm = ref();
 const isPasswordVisible = ref(false);
 let agreed = ref("");
@@ -31,14 +34,18 @@ let form = useForm({
 const goPlan = () => {
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
-            form.post(route("registerplan"));
+            isRegisterFormFilled.value = true
         }
     });
+};
+
+const radioClick = (type) => {
+  selectedUserType.value = type;
 };
 </script>
 
 <template>
-    <div>
+    <div v-if="!isRegisterFormFilled">
         <div class="layout-navbar">
             <div
                 class="navbar-content-container d-flex justify-space-between px-10 py-5"
@@ -68,31 +75,37 @@ const goPlan = () => {
                 <VRow class="mt-10">
                     <VCol cols="4"> </VCol>
                     <VCol cols="4" class="text-left">
-                        <div>
-                            <VLabel class="required">First Name</VLabel>
-                            <VTextField
-                                class="mt-3 custom-label-color"
-                                placeholder=""
-                                density="compact"
-                                variant="filled"
-                                v-model="form.first_name"
-                                :rules="[requiredValidator]"
-                                :error-messages="form?.errors?.first_name"
-                            />
-                        </div>
-                        <div>
-                            <VLabel class="required">Last Name</VLabel>
-                            <VTextField
-                                class="mt-3 custom-label-color"
-                                placeholder=""
-                                density="compact"
-                                variant="filled"
-                                v-model="form.last_name"
-                                :rules="[requiredValidator]"
-                                :error-messages="form?.errors?.last_name"
-                            />
-                        </div>
-                        <div>
+                        <VRow>
+                            <VCol cols="6">
+                                <div>
+                                    <VLabel class="required">First Name</VLabel>
+                                    <VTextField
+                                        class="mt-3 custom-label-color"
+                                        placeholder=""
+                                        density="compact"
+                                        variant="filled"
+                                        v-model="form.first_name"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="form?.errors?.first_name"
+                                    />
+                                </div>
+                            </VCol>
+                            <VCol size="6">
+                                <div>
+                                    <VLabel class="required">Last Name</VLabel>
+                                    <VTextField
+                                        class="mt-3 custom-label-color"
+                                        placeholder=""
+                                        density="compact"
+                                        variant="filled"
+                                        v-model="form.last_name"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="form?.errors?.last_name"
+                                    />
+                                </div>
+                            </VCol>
+                        </VRow>
+                        <div class="mt-4">
                             <VLabel class="required">Email</VLabel>
                             <VTextField
                                 class="my-3 custom-label-color"
@@ -161,10 +174,29 @@ const goPlan = () => {
                                 "
                             />
                         </div>
-                        <div class="my-3">
+                        <div class="d-flex justify-start">
+                            <div class="sign-up-as">
+                                <span>Sign up as </span>
+                            </div>
+                            <VRadio
+                            label="Teacher"
+                            :value="'Teacher'"
+                            v-model="selectedUserType"
+                            @click="radioClick('Teacher')"
+                            ></VRadio>
+                            <VRadio
+                            v-model="selectedUserType"
+                            @click="radioClick('Parent')"
+                            :value="'Parent'"
+                            label="Parent"
+                            ></VRadio>
+                        </div>
+                        <div class="my-3 d-flex align-center">
                             <v-checkbox
-                                label="I agree to the terms and services"
                             ></v-checkbox>
+                            <VLabel class="required">
+                                I agree to the terms and services
+                            </VLabel>
                         </div>
                         <VBtn
                             block
@@ -181,6 +213,9 @@ const goPlan = () => {
             </VForm>
         </div>
     </div>
+    <Plan
+    v-model:form="form"
+    v-else></Plan>
 </template>
 
 <style lang="scss">
@@ -199,6 +234,10 @@ const goPlan = () => {
     font-weight: 700;
     line-height: 52px; /* 130% */
     text-transform: capitalize;
+}
+
+.sign-up-as{
+    padding: 10px;
 }
 
 .custom-label-color .v-label {
