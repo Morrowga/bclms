@@ -103,4 +103,51 @@ class AuthRepository implements AuthRepositoryInterface
             dd($ex);
         }
     }
+
+    public function choosePaidPlan($request)
+    {
+        DB::beginTransaction();
+        try {
+            $user_type = $request->user_type;
+            $userEloquent = (new UserEloquentModel());
+            $userEloquent->first_name = $request->first_name;
+            $userEloquent->last_name = $request->last_name;
+            $userEloquent->contact_number = $request->contact_number;
+            $userEloquent->email = $request->email;
+            $userEloquent->password = $request->password;
+            $userEloquent->email_verification_send_on = now();
+            $userEloquent->status = "PENDING";
+            $userEloquent->role_id = $user_type == 'Teacher' ? 2 : 7;
+            $userEloquent->save();
+
+            if ($user_type == 'Teacher') {
+                $teacherEloquent = (new TeacherEloquentModel());
+                $teacherEloquent->user_id = $userEloquent->id;
+                $teacherEloquent->curr_subscription_id = null;
+                $teacherEloquent->save();
+
+                // $b2cSubEloquent = (new B2cSubscriptionEloquentModel());
+                // $b2cSubEloquent->subscription_id = $subscriptionEloquent->id;
+                // $b2cSubEloquent->teacher_id = $teacherEloquent->teacher_id;
+            // $b2cSubEloquent->plan_id = 1;
+                // $b2cSubEloquent->save();
+            } else {
+                $parentEloquent = (new ParentEloquentModel());
+                $parentEloquent->user_id = $userEloquent->id;
+                $parentEloquent->type = "B2C";
+                $parentEloquent->curr_subscription_id = null;
+                $parentEloquent->save();
+
+                // $b2cSubEloquent = (new B2cSubscriptionEloquentModel());
+                // $b2cSubEloquent->subscription_id = $subscriptionEloquent->id;
+                // $b2cSubEloquent->parent_id = $parentEloquent->parent_id;
+                // $b2cSubEloquent->plan_id = 1;
+                // $b2cSubEloquent->save();
+            }
+            DB::commit();
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            dd($ex);
+        }
+    }
 }

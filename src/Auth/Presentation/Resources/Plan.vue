@@ -98,7 +98,8 @@ async function checkStatus() {
 async function handleSubmit(e) {
     //   e.preventDefault();
     isDonePayment.value = true;
-    emit("submit", props.form);
+    choosePaidPlan()
+    // emit("submit", props.form);
     //   setLoading(true);
 
     //   const stripe = await stripePromise; // Wait for Stripe to load
@@ -153,7 +154,15 @@ const showPayment = () => {
 const chooseFreePlan = () => {
     props.form.post(route("choose-free-plan"), {
         onSuccess: () => {
-            props.form.get(route("login"));
+            router.get(route("login"));
+        },
+    });
+};
+
+const choosePaidPlan = () => {
+    props.form.post(route("choose-paid-plan"), {
+        onSuccess: () => {
+            router.get(route("login"));
         },
     });
 };

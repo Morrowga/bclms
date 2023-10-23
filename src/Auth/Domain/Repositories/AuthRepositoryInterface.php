@@ -14,4 +14,6 @@ interface AuthRepositoryInterface
     public function verification($id);
 
     public function chooseFreePlan($request);
+
+    public function choosePaidPlan($request);
 }
