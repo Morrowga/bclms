@@ -63,7 +63,7 @@ class AuthRepository implements AuthRepositoryInterface
             $userEloquent->contact_number = $request->contact_number;
             $userEloquent->email = $request->email;
             $userEloquent->password = $request->password;
-            $userEloquent->email_verification_send_on = now();
+            $userEloquent->email_verification_send_on = null;
             $userEloquent->status = "PENDING";
             $userEloquent->role_id = $user_type == 'Teacher' ? 2 : 7;
             $userEloquent->save();
