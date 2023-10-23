@@ -198,7 +198,7 @@ class AuthController extends Controller
         try {
             $email = $request->query('auth');
 
-            $this->authservices->verificationEmail($email);
+            $this->authInterface->verificationEmail($email);
 
             return Inertia::render(config('route.verify'));
         } catch (\Exception $e) {
