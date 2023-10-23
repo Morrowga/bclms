@@ -16,4 +16,6 @@ interface AuthRepositoryInterface
     public function chooseFreePlan($request);
 
     public function choosePaidPlan($request);
+
+    public function verificationEmail($email);
 }

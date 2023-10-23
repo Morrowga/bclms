@@ -22,12 +22,14 @@ const isRegisterFormFilled = ref(false);
 let refForm = ref();
 const isPasswordVisible = ref(false);
 let agreed = ref("");
-let props = defineProps(["ErrorMessage"]);
+let props = defineProps(["ErrorMessage", "plans"]);
 let form = useForm({
     first_name: "",
     last_name: "",
     email: "",
     contact_number: "",
+    plan: 1,
+    plan_price: '0.00',
     password: "",
     password_confirmation: "",
     user_type: "Teacher",
@@ -40,6 +42,8 @@ const goPlan = () => {
         }
     });
 };
+
+console.log(props.plans)
 
 const radioClick = (type) => {
     selectedUserType.value = type;
@@ -227,7 +231,7 @@ const radioClick = (type) => {
             </VForm>
         </div>
     </div>
-    <Plan v-model:form="form" v-else></Plan>
+    <Plan v-model:form="form" :plans="props.plans" v-else></Plan>
 </template>
 
 <style lang="scss">

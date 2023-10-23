@@ -3,14 +3,17 @@
 namespace Src\Auth\Application\Repositories\Eloquent;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
+use Src\Auth\Application\Mails\EmailVerify;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloquentModel;
-use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloquentModel;
 
 class AuthRepository implements AuthRepositoryInterface
 {
@@ -97,6 +100,11 @@ class AuthRepository implements AuthRepositoryInterface
                 $b2cSubEloquent->plan_id = 1;
                 $b2cSubEloquent->save();
             }
+
+            $bcstaff = UserEloquentModel::where('role_id', 3)->first();
+
+            \Mail::to($userEloquent->email)->send(new EmailVerify($userEloquent->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userEloquent->email), $bcstaff->email, $bcstaff->contact_number));
+
             DB::commit();
         } catch (\Exception $ex) {
             DB::rollBack();
@@ -120,17 +128,31 @@ class AuthRepository implements AuthRepositoryInterface
             $userEloquent->role_id = $user_type == 'Teacher' ? 2 : 7;
             $userEloquent->save();
 
+            $plan = PlanEloquentModel::find($request->plan);
+            $start_date = Carbon::now();
+            $end_date_start = Carbon::now();
+            $end_date = $plan->payment_period == 'MONTHLY' ? $end_date_start->addMonth(1) : $end_date_start->addYear(1);
+
+            $subscriptionEloquent = (new SubscriptionEloquentModel());
+            $subscriptionEloquent->start_date = $start_date;
+            $subscriptionEloquent->end_date = $end_date;
+            $subscriptionEloquent->payment_date = now();
+            $subscriptionEloquent->stripe_status = 'ACTIVE';
+            $subscriptionEloquent->stripe_price = $request->plan_price;
+            $subscriptionEloquent->payment_status = "PAID";
+            $subscriptionEloquent->save();
+
             if ($user_type == 'Teacher') {
                 $teacherEloquent = (new TeacherEloquentModel());
                 $teacherEloquent->user_id = $userEloquent->id;
                 $teacherEloquent->curr_subscription_id = null;
                 $teacherEloquent->save();
 
-                // $b2cSubEloquent = (new B2cSubscriptionEloquentModel());
-                // $b2cSubEloquent->subscription_id = $subscriptionEloquent->id;
-                // $b2cSubEloquent->teacher_id = $teacherEloquent->teacher_id;
-            // $b2cSubEloquent->plan_id = 1;
-                // $b2cSubEloquent->save();
+                $b2cSubEloquent = (new B2cSubscriptionEloquentModel());
+                $b2cSubEloquent->subscription_id = $subscriptionEloquent->id;
+                $b2cSubEloquent->teacher_id = $teacherEloquent->teacher_id;
+                $b2cSubEloquent->plan_id = $request->plan;
+                $b2cSubEloquent->save();
             } else {
                 $parentEloquent = (new ParentEloquentModel());
                 $parentEloquent->user_id = $userEloquent->id;
@@ -138,16 +160,26 @@ class AuthRepository implements AuthRepositoryInterface
                 $parentEloquent->curr_subscription_id = null;
                 $parentEloquent->save();
 
-                // $b2cSubEloquent = (new B2cSubscriptionEloquentModel());
-                // $b2cSubEloquent->subscription_id = $subscriptionEloquent->id;
-                // $b2cSubEloquent->parent_id = $parentEloquent->parent_id;
-                // $b2cSubEloquent->plan_id = 1;
-                // $b2cSubEloquent->save();
+                $b2cSubEloquent = (new B2cSubscriptionEloquentModel());
+                $b2cSubEloquent->subscription_id = $subscriptionEloquent->id;
+                $b2cSubEloquent->parent_id = $parentEloquent->parent_id;
+                $b2cSubEloquent->plan_id = $request->plan;
+                $b2cSubEloquent->save();
             }
+
+            $bcstaff = UserEloquentModel::where('role_id', 3)->first();
+
+            \Mail::to($userEloquent->email)->send(new EmailVerify($userEloquent->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userEloquent->email), $bcstaff->email, $bcstaff->contact_number));
+
             DB::commit();
         } catch (\Exception $ex) {
             DB::rollBack();
             dd($ex);
         }
+    }
+
+    public function verificationEmail($email){
+        $decryptedEmail = Crypt::decrypt($email);
+        $userEloquent = UserEloquentModel::where('email', $decryptedEmail)->update(['email_verification_send_on', Carbon::now()]);
     }
 }

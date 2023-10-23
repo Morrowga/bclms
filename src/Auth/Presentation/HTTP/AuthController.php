@@ -6,11 +6,15 @@ use Stripe\Stripe;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Src\Auth\Application\Mails\EmailVerify;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Src\Auth\Application\Requests\StoreLoginRequest;
 use Src\Auth\Application\Requests\StoreRegisterRequest;
 use Src\Auth\Application\UseCases\Commands\AuthService;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class AuthController extends Controller
 {
@@ -71,7 +75,7 @@ class AuthController extends Controller
         }
     }
 
-    public function testingStripe(Request $request)
+    public function stripePaymentInialize(Request $request)
     {
         // try {
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
@@ -111,6 +115,7 @@ class AuthController extends Controller
      */
     public function login(StoreLoginRequest $request)
     {
+
         try {
             /***
              *  Call the login method on the auth service to authenticate the user
@@ -188,9 +193,13 @@ class AuthController extends Controller
      *
      * @return \Inertia\Response  An Inertia.js response containing the verification page.
      */
-    public function verify()
+    public function verify(Request $request)
     {
         try {
+            $email = $request->query('auth');
+
+            $this->authservices->verificationEmail($email);
+
             return Inertia::render(config('route.verify'));
         } catch (\Exception $e) {
 
@@ -217,8 +226,9 @@ class AuthController extends Controller
                 return redirect()->route('dashboard');
             }
 
+            $plans = PlanEloquentModel::limit(4)->get();
             // Render the registration page using the Inertia.js framework
-            return Inertia::render(config('route.register'));
+            return Inertia::render(config('route.register'), compact('plans'));
         } catch (\Exception $e) {
             // Handle the exception gracefully, such as displaying a generic error page
             return Inertia::render(config('route.register'))->with('sytemErrorMessage', $e->getMessage());
@@ -275,6 +285,16 @@ class AuthController extends Controller
         }
     }
 
+    public function resend(Request $request){
+
+        $userEloquentModel = UserEloquentModel::where('email', $request->email)->first();
+
+        $bcstaff = UserEloquentModel::where('role_id', 3)->first();
+
+        \Mail::to($userEloquentModel->email)->send(new EmailVerify($userEloquentModel->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userEloquentModel->email), $bcstaff->email, $bcstaff->contact_number));
+
+        return redirect()->route('login');
+    }
     /**
      * Render the user profile page.
      *
@@ -305,7 +325,7 @@ class AuthController extends Controller
     public function choosePaidPlan(StoreRegisterRequest $request)
     {
         try {
-            $this->authInterface->chooseFreePlan($request);
+            $this->authInterface->choosePaidPlan($request);
         } catch (\Exception $e) {
             return redirect()->back()->with('errorMessage', $e->getMessage());
         }
