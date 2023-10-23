@@ -66,7 +66,6 @@ class AuthRepository implements AuthRepositoryInterface
             $userEloquent->contact_number = $request->contact_number;
             $userEloquent->email = $request->email;
             $userEloquent->password = $request->password;
-            $userEloquent->email_verification_send_on = null;
             $userEloquent->status = "PENDING";
             $userEloquent->role_id = $user_type == 'Teacher' ? 2 : 7;
             $userEloquent->save();
@@ -123,7 +122,6 @@ class AuthRepository implements AuthRepositoryInterface
             $userEloquent->contact_number = $request->contact_number;
             $userEloquent->email = $request->email;
             $userEloquent->password = $request->password;
-            $userEloquent->email_verification_send_on = now();
             $userEloquent->status = "PENDING";
             $userEloquent->role_id = $user_type == 'Teacher' ? 2 : 7;
             $userEloquent->save();
@@ -178,9 +176,12 @@ class AuthRepository implements AuthRepositoryInterface
         }
     }
 
-    public function verificationEmail($email){
+    public function verificationEmail($email)
+    {
         $decryptedEmail = Crypt::decrypt($email);
-        $userEloquent = UserEloquentModel::where('email', $decryptedEmail)->update(['email_verification_send_on', Carbon::now()]);
+
+        $userEloquent = UserEloquentModel::where('email', $decryptedEmail)->first();
+        $userEloquent->update(['email_verification_send_on' => Carbon::now()]);
         $userEloquent->status = 'ACTIVE';
         $userEloquent->save();
     }
