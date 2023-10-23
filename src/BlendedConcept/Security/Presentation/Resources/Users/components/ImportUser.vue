@@ -3,6 +3,7 @@ import { ref, defineProps } from "vue";
 import ImportUserTypeData from "./ImportUserTypeData.vue";
 
 const isDialogVisible = ref(false);
+const isImportDialogVisible = ref(false);
 
 const props = defineProps(["organisations"]);
 
@@ -20,21 +21,22 @@ const selectedValueForSecondSelect = ref(null);
 const selectedType = ref(null);
 const organisation_name = ref("");
 
-const downloadAll = () => {
-    const files = ["bc_student_import.csv", "bc_teacher_import.csv"]; // List of files to download
-    files.forEach((file) => {
-        downloadFile(file);
-    });
+const openImports = () => {
+    isImportDialogVisible.value = true;
+    // const files = ["bc_student_import.csv", "bc_teacher_import.csv"]; // List of files to download
+    // files.forEach((file) => {
+    //     downloadFile(file);
+    // });
 };
 const downloadFile = (file) => {
-    const downloadUrl = `/public/imports/${file}`;
-    const link = document.createElement("a");
-    link.href = downloadUrl;
-    link.download = file;
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // const downloadUrl = `/public/imports/${file}`;
+    // const link = document.createElement("a");
+    // link.href = downloadUrl;
+    // link.download = file;
+    // link.style.display = "none";
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
 };
 watch(selectedOrganisation, (newValue) => {
     if (newValue) {
@@ -94,8 +96,30 @@ const clearForm = () => {
                     icon="mdi-file-download"
                     color="tiggie-blue"
                     size="30px"
-                    @click="downloadAll()"
+                    @click="openImports()"
                 />
+                <VDialog v-model="isImportDialogVisible" max-width="400">
+                    <VCard>
+                        <VCardText>
+                            <div
+                                class="d-flex justify-center align-center gap-3"
+                            >
+                                <a
+                                    href="/imports/bc_student_import.csv"
+                                    download
+                                >
+                                    <VBtn>Students</VBtn>
+                                </a>
+                                <a
+                                    href="/imports/bc_teacher_import.csv"
+                                    download
+                                >
+                                    <VBtn>Teachers</VBtn>
+                                </a>
+                            </div>
+                        </VCardText>
+                    </VCard>
+                </VDialog>
             </VCardTitle>
             <VCardText>
                 <VLabel class="tiggie-label required" v-if="!showSecondSelect"
