@@ -110,11 +110,12 @@ const createStudent = () => {
                                     Date of birth
                                 </p>
                                 <AppDateTimePicker
-                                    placeholder="Select End Date"
+                                    placeholder="Select Date of birth"
                                     v-model="form.dob"
                                     :rules="[requiredValidator]"
                                     :error-messages="form?.errors?.dob"
                                     density="compact"
+                                    :config="{ minDate: null, maxDate: 'today' }"
                                 />
                             </v-col>
                             <!-- <v-col cols="12">
@@ -149,7 +150,7 @@ const createStudent = () => {
                                 <v-text-field
                                     type="number"
                                     v-model="form.contact_number"
-                                    placeholder="e.g. 9180003"
+                                    placeholder="e.g. 91810003"
                                     variant="outlined"
                                     :rules="[
                                         requiredValidator,
