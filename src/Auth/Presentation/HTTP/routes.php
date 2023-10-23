@@ -65,6 +65,8 @@ Route::group([
      * GET /verification
      */
     Route::get('verification', [AuthController::class, 'verification'])->name('verification');
+
+    Route::post('free-plan', [AuthController::class, 'chooseFreePlan'])->name('choose-free-plan');
 });
 
 /****

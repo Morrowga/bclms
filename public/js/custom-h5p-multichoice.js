@@ -417,6 +417,16 @@ H5P.MultiChoice = function (options, contentId, contentData) {
       if (parts.length == 2) return parts.pop().split(";").shift();
     }
 
+    //-------------------Default left click-------------------//
+    $(document).ready(function() {
+      // Handle left mouse click on any answer
+      $answers.on('click', function() {
+          // Toggle the check for the clicked answer
+          toggleCheck($(this));
+      });
+  });
+  
+
         //-------------------Dual switch functions-------------------//
     function handleSpacebarKeydown($element) {
       $element.keydown(function (e) {

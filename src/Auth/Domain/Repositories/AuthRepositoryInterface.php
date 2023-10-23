@@ -12,4 +12,6 @@ interface AuthRepositoryInterface
 
     //verification email
     public function verification($id);
+
+    public function chooseFreePlan($request);
 }

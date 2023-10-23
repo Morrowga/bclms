@@ -9,12 +9,13 @@ import {
     emailValidator,
     requiredValidator,
     contactNumberValidator,
+    confirmedValidator,
 } from "@validators";
 import B2CRegister from "./B2CRegister.vue";
 import B2BRegister from "./B2BRegister.vue";
 let organisation = ref(false);
 let isAlertVisible = ref(true);
-const selectedUserType = ref('Teacher');
+const selectedUserType = ref("Teacher");
 
 const isFormValid = ref(false);
 const isRegisterFormFilled = ref(false);
@@ -29,18 +30,20 @@ let form = useForm({
     contact_number: "",
     password: "",
     password_confirmation: "",
+    user_type: "Teacher",
 });
 
 const goPlan = () => {
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
-            isRegisterFormFilled.value = true
+            isRegisterFormFilled.value = true;
         }
     });
 };
 
 const radioClick = (type) => {
-  selectedUserType.value = type;
+    selectedUserType.value = type;
+    form.user_type = type;
 };
 </script>
 
@@ -86,7 +89,9 @@ const radioClick = (type) => {
                                         variant="filled"
                                         v-model="form.first_name"
                                         :rules="[requiredValidator]"
-                                        :error-messages="form?.errors?.first_name"
+                                        :error-messages="
+                                            form?.errors?.first_name
+                                        "
                                     />
                                 </div>
                             </VCol>
@@ -100,7 +105,9 @@ const radioClick = (type) => {
                                         variant="filled"
                                         v-model="form.last_name"
                                         :rules="[requiredValidator]"
-                                        :error-messages="form?.errors?.last_name"
+                                        :error-messages="
+                                            form?.errors?.last_name
+                                        "
                                     />
                                 </div>
                             </VCol>
@@ -168,7 +175,13 @@ const radioClick = (type) => {
                                 density="compact"
                                 variant="filled"
                                 v-model="form.password_confirmation"
-                                :rules="[requiredValidator]"
+                                :rules="[
+                                    requiredValidator,
+                                    confirmedValidator(
+                                        form.password_confirmation,
+                                        form.password
+                                    ),
+                                ]"
                                 :error-messages="
                                     form?.errors?.password_confirmation
                                 "
@@ -179,21 +192,22 @@ const radioClick = (type) => {
                                 <span>Sign up as </span>
                             </div>
                             <VRadio
-                            label="Teacher"
-                            :value="'Teacher'"
-                            v-model="selectedUserType"
-                            @click="radioClick('Teacher')"
+                                v-model="selectedUserType"
+                                name="type"
+                                label="Teacher"
+                                :value="'Teacher'"
+                                @click="radioClick('Teacher')"
                             ></VRadio>
                             <VRadio
-                            v-model="selectedUserType"
-                            @click="radioClick('Parent')"
-                            :value="'Parent'"
-                            label="Parent"
+                                v-model="selectedUserType"
+                                name="type"
+                                @click="radioClick('Parent')"
+                                :value="'Parent'"
+                                label="Parent"
                             ></VRadio>
                         </div>
                         <div class="my-3 d-flex align-center">
-                            <v-checkbox
-                            ></v-checkbox>
+                            <v-checkbox></v-checkbox>
                             <VLabel class="required">
                                 I agree to the terms and services
                             </VLabel>
@@ -213,9 +227,7 @@ const radioClick = (type) => {
             </VForm>
         </div>
     </div>
-    <Plan
-    v-model:form="form"
-    v-else></Plan>
+    <Plan v-model:form="form" v-else></Plan>
 </template>
 
 <style lang="scss">
@@ -236,7 +248,7 @@ const radioClick = (type) => {
     text-transform: capitalize;
 }
 
-.sign-up-as{
+.sign-up-as {
     padding: 10px;
 }
 
