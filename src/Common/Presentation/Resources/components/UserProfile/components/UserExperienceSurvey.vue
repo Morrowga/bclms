@@ -176,7 +176,7 @@ const dialogVisibleUpdate = (val) => {
                                                 >{{  option.content  }}</VLabel
                                             >
                                             <VRadio
-                                            v-model="selectdOptions[question.id]"
+                                            v-model="selectedOptions[question.id]"
                                             :value="option.id"
                                             @click="radioClick(question.id, option.id)"
                                             />
