@@ -2,6 +2,7 @@
 
 namespace Src\Auth\Application\UseCases\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Src\Auth\Application\Requests\StoreLoginRequest;
@@ -44,6 +45,30 @@ class AuthService
                 return ['errorMessage' => $error, 'isCheck' => false];
             }
 
+            if ($user->parent) {
+                $login_user = $user->parent;
+            } elseif ($user->b2bUser) {
+                $login_user = $user->b2bUser;
+            } else {
+                $login_user = null;
+            }
+            if ($login_user) {
+                if ($login_user->subscription) {
+                    if ($login_user->subscription->b2c_subscription) {
+                        $plan = $login_user->subscription->b2c_subscription;
+                        if ($plan->plan_id != 1) {
+                            $start_date = Carbon::parse($login_user->subscription->start_date);
+                            $end_date = Carbon::parse($login_user->subscription->end_date);
+                            $current_date = Carbon::now();
+
+                            if ($current_date->gt($end_date)) {
+                                $error = 'Subscription is expired';
+                                return ['errorMessage' => $error, 'isCheck' => false];
+                            }
+                        }
+                    }
+                }
+            }
             if (auth()->attempt([
                 'email' => request('email'),
                 'password' => request('password'),

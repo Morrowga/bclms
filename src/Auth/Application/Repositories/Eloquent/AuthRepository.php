@@ -64,7 +64,7 @@ class AuthRepository implements AuthRepositoryInterface
             $userEloquent->email = $request->email;
             $userEloquent->password = $request->password;
             $userEloquent->email_verification_send_on = now();
-            $userEloquent->status = "ACTIVE";
+            $userEloquent->status = "PENDING";
             $userEloquent->role_id = $user_type == 'Teacher' ? 2 : 7;
             $userEloquent->save();
 
@@ -129,7 +129,7 @@ class AuthRepository implements AuthRepositoryInterface
                 // $b2cSubEloquent = (new B2cSubscriptionEloquentModel());
                 // $b2cSubEloquent->subscription_id = $subscriptionEloquent->id;
                 // $b2cSubEloquent->teacher_id = $teacherEloquent->teacher_id;
-            // $b2cSubEloquent->plan_id = 1;
+                // $b2cSubEloquent->plan_id = 1;
                 // $b2cSubEloquent->save();
             } else {
                 $parentEloquent = (new ParentEloquentModel());
