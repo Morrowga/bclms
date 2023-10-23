@@ -181,5 +181,7 @@ class AuthRepository implements AuthRepositoryInterface
     public function verificationEmail($email){
         $decryptedEmail = Crypt::decrypt($email);
         $userEloquent = UserEloquentModel::where('email', $decryptedEmail)->update(['email_verification_send_on', Carbon::now()]);
+        $userEloquent->status = 'ACTIVE';
+        $userEloquent->save();
     }
 }
