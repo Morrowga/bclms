@@ -301,4 +301,13 @@ class AuthController extends Controller
             return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
+
+    public function choosePaidPlan(StoreRegisterRequest $request)
+    {
+        try {
+            $this->authInterface->chooseFreePlan($request);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('errorMessage', $e->getMessage());
+        }
+    }
 }
