@@ -21,6 +21,17 @@ const props = defineProps({
   }),
 })
 
+import { computed } from 'vue';
+
+const externalConfig = toRefs(props).config || {};
+
+const mergedConfig = computed(() => {
+  return {
+    ...datePickerConfig.value,
+    ...externalConfig
+  };
+});
+
 const datePickerConfig = ref({
   enableTime: true, // Enable time input
   dateFormat: 'Y-m-d H:i', // Specify the date and time format
@@ -112,7 +123,7 @@ const emitModelValue = val => {
             <!-- flat-picker  -->
             <FlatPickr
               :enableTime="datePickerConfig.enableTime"
-              :config="datePickerConfig"
+              :config="mergedConfig"
               v-if="!isInlinePicker"
               v-bind="compAttrs"
               ref="refFlatPicker"

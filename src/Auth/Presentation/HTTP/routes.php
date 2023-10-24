@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Src\Auth\Presentation\HTTP\AuthController;
+use Src\Auth\Presentation\HTTP\VerificationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
@@ -33,7 +34,9 @@ Route::group([
      */
     Route::get('login', [AuthController::class, 'loginPage'])->name('login');
 
+    Route::post('register-plan', [AuthController::class, 'planPage'])->name('registerplan');
     Route::get('register-plan', [AuthController::class, 'planPage'])->name('registerplan');
+    Route::post('create-stripe', [AuthController::class, 'stripePaymentInialize'])->name('stripePaymentInialize');
     /**
      * Handle the login request.
      * POST /login
@@ -62,7 +65,11 @@ Route::group([
      * Display the verification page.
      * GET /verification
      */
-    Route::get('verification', [AuthController::class, 'verification'])->name('verification');
+    Route::get('verification', [AuthController::class, 'verify'])->name('verification');
+
+    Route::post('free-plan', [AuthController::class, 'chooseFreePlan'])->name('choose-free-plan');
+    Route::post('paid-plan', [AuthController::class, 'choosePaidPlan'])->name('choose-paid-plan');
+    Route::post('/resend-email',[AuthController::class, 'resend'])->name('resend');
 });
 
 /****

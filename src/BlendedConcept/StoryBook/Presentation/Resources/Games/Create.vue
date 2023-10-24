@@ -250,7 +250,7 @@ const handleThumbFileInputClick = () => {
                         <p class="error-message">Game file must be type of .zip</p>
                     </div>
                     <div v-else>
-                        <p v-if="!gameFile">Drag & Drop game file or <span class="browse" @click="handleThumbFileInputClick">Browse File</span></p>
+                        <p v-if="!gameFile">Drag & Drop game file or <span class="browse" @click="handleGameFileInputClick">Browse File</span></p>
                         <div v-else>
                                     <p>File Name: {{ gameFile.name }}</p>
                                     <button @click="removeGameFile" class="remove-button">

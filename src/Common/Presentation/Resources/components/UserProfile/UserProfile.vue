@@ -136,7 +136,7 @@ const dynamicProfileLink = () => {
                     <!-- <VDivider class="my-2" /> -->
 
                     <!-- 👉 Logout -->
-                    <VListItem link @click="checkSurvey">
+                    <VListItem @click="checkSurvey">
                         <template #prepend>
                             <VIcon class="me-2" icon="mdi-logout" size="22" />
                         </template>

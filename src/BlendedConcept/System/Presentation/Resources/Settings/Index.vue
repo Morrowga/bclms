@@ -12,7 +12,6 @@ import {
     integerValidator,
 } from "@validators";
 
-
 let props = defineProps(["setting"]);
 let flash = computed(() => usePage().props.flash)
 let page = usePage();
@@ -29,14 +28,18 @@ let form = useForm({
     url: props?.setting?.url,
     sub_domain: "",
 });
-console.log(form)
-
+console.log(form);
+let refForm = ref();
 function handleUpdateSite() {
-    form.post(route("updateSetting"), {
-        onSuccess: () => {
-            FlashMessage({ flash })
-        },
-        onError: (error) => {},
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("updateSetting"), {
+                onSuccess: () => {
+                    FlashMessage({ flash })
+                },
+                onError: (error) => {},
+            });
+        }
     });
 }
 </script>
@@ -44,7 +47,7 @@ function handleUpdateSite() {
 <template>
     <AdminLayout>
         <VContainer>
-            <VForm @submit.prevent="handleUpdateSite">
+            <VForm ref="refForm" @submit.prevent="handleUpdateSite">
                 <VRow>
                     <VCol cols="6">
                         <h4 class="tiggie-show-title pr-10 margin-buttom-18">
@@ -57,12 +60,14 @@ function handleUpdateSite() {
                                     v-model="form.site_name"
                                     :rules="[requiredValidator]"
                                     :error-messages="form?.errors?.site_name"
-
                                 />
                             </VCol>
                             <VCol cols="8">
                                 <VLabel class="tiggie-label">SSL</VLabel>
-                                <VTextField v-model="form.ssl"  />
+                                <VTextField
+                                    v-model="form.ssl"
+                                    :rules="[requiredValidator]"
+                                />
                             </VCol>
                             <VCol cols="8">
                                 <VLabel class="tiggie-label"
@@ -70,8 +75,10 @@ function handleUpdateSite() {
                                 >
                                 <VTextField
                                     v-model="form.site_time_zone"
-                                    :error-messages="form?.errors?.site_time_zone"
-
+                                    :rules="[requiredValidator]"
+                                    :error-messages="
+                                        form?.errors?.site_time_zone
+                                    "
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -80,8 +87,8 @@ function handleUpdateSite() {
                                 >
                                 <VTextField
                                     v-model="form.site_locale"
+                                    :rules="[requiredValidator]"
                                     :error-messages="form?.errors?.site_locale"
-
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -89,9 +96,8 @@ function handleUpdateSite() {
                                 <VTextField
                                     type="email"
                                     v-model="form.email"
-                                    :rules="[emailValidator]"
+                                    :rules="[emailValidator, requiredValidator]"
                                     :error-messages="form?.errors?.email"
-
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -109,7 +115,6 @@ function handleUpdateSite() {
                                 <VTextField
                                     v-model="form.url"
                                     :rules="[requiredValidator]"
-
                                 />
                             </VCol>
                             <VCol cols="8">
@@ -117,7 +122,6 @@ function handleUpdateSite() {
                                 <VTextField
                                     v-model="form.sub_domain"
                                     :rules="[requiredValidator]"
-
                                 />
                             </VCol>
                         </VRow>

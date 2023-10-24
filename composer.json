@@ -26,6 +26,9 @@
         "spatie/ignition": "^1.4",
         "spatie/laravel-medialibrary": "^10.7",
         "stancl/tenancy": "^3.7",
+        "stripe/stripe-php": "^13.0",
+        "symfony/http-client": "^6.3",
+        "symfony/mailgun-mailer": "^6.3",
         "tightenco/ziggy": "^1.5"
     },
     "require-dev": {

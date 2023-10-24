@@ -1,29 +1,58 @@
 <script setup>
 import { themeConfig } from "@themeConfig";
 import { onMounted, ref } from "vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { toastAlert } from "@Composables/useToastAlert";
-
+import Plan from "./Plan.vue";
+import {
+    emailValidator,
+    requiredValidator,
+    contactNumberValidator,
+    confirmedValidator,
+} from "@validators";
 import B2CRegister from "./B2CRegister.vue";
 import B2BRegister from "./B2BRegister.vue";
 let organisation = ref(false);
 let isAlertVisible = ref(true);
-const items = [
-    "California",
-    "Colorado",
-    "Florida",
-    "Georgia",
-    "Texas",
-    "Wyoming",
-];
+const selectedUserType = ref("Teacher");
+
+const isFormValid = ref(false);
+const isRegisterFormFilled = ref(false);
+let refForm = ref();
 const isPasswordVisible = ref(false);
 let agreed = ref("");
-let props = defineProps(["ErrorMessage"]);
+let props = defineProps(["ErrorMessage", "plans"]);
+let form = useForm({
+    first_name: "",
+    last_name: "",
+    email: "",
+    contact_number: "",
+    plan: 1,
+    plan_price: '0.00',
+    password: "",
+    password_confirmation: "",
+    user_type: "Teacher",
+});
+
+const goPlan = () => {
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            isRegisterFormFilled.value = true;
+        }
+    });
+};
+
+console.log(props.plans)
+
+const radioClick = (type) => {
+    selectedUserType.value = type;
+    form.user_type = type;
+};
 </script>
 
 <template>
-    <div>
+    <div v-if="!isRegisterFormFilled">
         <div class="layout-navbar">
             <div
                 class="navbar-content-container d-flex justify-space-between px-10 py-5"
@@ -49,81 +78,160 @@ let props = defineProps(["ErrorMessage"]);
 
         <div class="text-center mt-10">
             <p class="ruddy-bold signup-title">Sign Up For B2C Account</p>
-            <VRow class="mt-10">
-                <VCol cols="4"> </VCol>
-                <VCol cols="4" class="text-left">
-                    <VTextField
-                        class="mt-3 custom-label-color"
-                        label="Name *"
-                        placeholder=""
-                        density="compact"
-                        variant="solo"
-                    />
-                    <VTextField
-                        class="mt-5 custom-label-color"
-                        label="Email *"
-                        placeholder=""
-                        density="compact"
-                        variant="solo"
-                    />
-                    <VTextField
-                        class="mt-5 custom-label-color"
-                        label="Contact Number *"
-                        placeholder=""
-                        density="compact"
-                        variant="solo"
-                    />
-                    <VTextField
-                        class="mt-5 custom-label-color"
-                        label="Password *"
-                        placeholder=""
-                        density="compact"
-                        variant="solo"
-                        :type="isPasswordVisible ? 'text' : 'password'"
-                        :append-inner-icon="
-                            isPasswordVisible
-                                ? 'mdi-eye-off-outline'
-                                : 'mdi-eye-outline'
-                        "
-                        @click:append-inner="
-                            isPasswordVisible = !isPasswordVisible
-                        "
-                    />
-                    <VTextField
-                        class="mt-5 custom-label-color"
-                        label="Confirm Password *"
-                        placeholder=""
-                        :type="isPasswordVisible ? 'text' : 'password'"
-                        :append-inner-icon="
-                            isPasswordVisible
-                                ? 'mdi-eye-off-outline'
-                                : 'mdi-eye-outline'
-                        "
-                        @click:append-inner="
-                            isPasswordVisible = !isPasswordVisible
-                        "
-                        density="compact"
-                        variant="solo"
-                    />
-                    <div class="mt-5">
-                        <v-checkbox
-                            label="I agree to the terms and services"
-                        ></v-checkbox>
-                    </div>
-                    <VBtn
-                        block
-                        @click="router.get(route('registerplan'))"
-                        variant="flat"
-                        class="primary mt-5"
-                        rounded
-                    >
-                        Sign up
-                    </VBtn>
-                </VCol>
-                <VCol cols="4"> </VCol>
-            </VRow>
+            <VForm ref="refForm" v-model="isFormValid" @submit.prevent="goPlan">
+                <VRow class="mt-10">
+                    <VCol cols="4"> </VCol>
+                    <VCol cols="4" class="text-left">
+                        <VRow>
+                            <VCol cols="6">
+                                <div>
+                                    <VLabel class="required">First Name</VLabel>
+                                    <VTextField
+                                        class="mt-3 custom-label-color"
+                                        placeholder=""
+                                        density="compact"
+                                        variant="filled"
+                                        v-model="form.first_name"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="
+                                            form?.errors?.first_name
+                                        "
+                                    />
+                                </div>
+                            </VCol>
+                            <VCol size="6">
+                                <div>
+                                    <VLabel class="required">Last Name</VLabel>
+                                    <VTextField
+                                        class="mt-3 custom-label-color"
+                                        placeholder=""
+                                        density="compact"
+                                        variant="filled"
+                                        v-model="form.last_name"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="
+                                            form?.errors?.last_name
+                                        "
+                                    />
+                                </div>
+                            </VCol>
+                        </VRow>
+                        <div class="mt-4">
+                            <VLabel class="required">Email</VLabel>
+                            <VTextField
+                                class="my-3 custom-label-color"
+                                placeholder=""
+                                density="compact"
+                                variant="filled"
+                                v-model="form.email"
+                                :rules="[requiredValidator]"
+                                :error-messages="form?.errors?.email"
+                            />
+                        </div>
+                        <div>
+                            <VLabel class="required">Contact Number</VLabel>
+                            <VTextField
+                                class="my-3 custom-label-color"
+                                placeholder=""
+                                density="compact"
+                                type="number"
+                                variant="filled"
+                                v-model="form.contact_number"
+                                :rules="[requiredValidator]"
+                                :error-messages="form?.errors?.contact_number"
+                            />
+                        </div>
+                        <div>
+                            <VLabel class="required">Password</VLabel>
+                            <VTextField
+                                class="my-3 custom-label-color"
+                                placeholder=""
+                                density="compact"
+                                variant="filled"
+                                :type="isPasswordVisible ? 'text' : 'password'"
+                                :append-inner-icon="
+                                    isPasswordVisible
+                                        ? 'mdi-eye-off-outline'
+                                        : 'mdi-eye-outline'
+                                "
+                                @click:append-inner="
+                                    isPasswordVisible = !isPasswordVisible
+                                "
+                                v-model="form.password"
+                                :rules="[requiredValidator]"
+                                :error-messages="form?.errors?.password"
+                            />
+                        </div>
+                        <div>
+                            <VLabel class="required">Confirm Password</VLabel>
+                            <VTextField
+                                class="my-3 custom-label-color"
+                                placeholder=""
+                                :type="isPasswordVisible ? 'text' : 'password'"
+                                :append-inner-icon="
+                                    isPasswordVisible
+                                        ? 'mdi-eye-off-outline'
+                                        : 'mdi-eye-outline'
+                                "
+                                @click:append-inner="
+                                    isPasswordVisible = !isPasswordVisible
+                                "
+                                density="compact"
+                                variant="filled"
+                                v-model="form.password_confirmation"
+                                :rules="[
+                                    requiredValidator,
+                                    confirmedValidator(
+                                        form.password_confirmation,
+                                        form.password
+                                    ),
+                                ]"
+                                :error-messages="
+                                    form?.errors?.password_confirmation
+                                "
+                            />
+                        </div>
+                        <div class="d-flex justify-start">
+                            <div class="sign-up-as">
+                                <span>Sign up as </span>
+                            </div>
+                            <VRadio
+                                v-model="selectedUserType"
+                                name="type"
+                                label="Teacher"
+                                :value="'Teacher'"
+                                @click="radioClick('Teacher')"
+                            ></VRadio>
+                            <VRadio
+                                v-model="selectedUserType"
+                                name="type"
+                                @click="radioClick('Parent')"
+                                :value="'Parent'"
+                                label="Parent"
+                            ></VRadio>
+                        </div>
+                        <div class="my-3 d-flex align-center">
+                            <v-checkbox></v-checkbox>
+                            <VLabel class="required">
+                                I agree to the terms and services
+                            </VLabel>
+                        </div>
+                        <VBtn
+                            block
+                            type="submit"
+                            variant="flat"
+                            class="primary my-3"
+                            rounded
+                        >
+                            Sign up
+                        </VBtn>
+                    </VCol>
+                    <VCol cols="4"> </VCol>
+                </VRow>
+            </VForm>
         </div>
     </div>
+    <Plan v-model:form="form" :plans="props.plans" v-else></Plan>
 </template>
 
 <style lang="scss">
@@ -142,6 +250,10 @@ let props = defineProps(["ErrorMessage"]);
     font-weight: 700;
     line-height: 52px; /* 130% */
     text-transform: capitalize;
+}
+
+.sign-up-as {
+    padding: 10px;
 }
 
 .custom-label-color .v-label {

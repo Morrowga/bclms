@@ -61,6 +61,14 @@ class RouteServiceProvider extends ServiceProvider
         }
     }
 
+    protected function mapEmailVerificationRoutes()
+    {
+        Route::middleware('web', 'auth')
+            ->namespace($this->namespace)
+            ->prefix('email')
+            ->group(base_path('routes/email-verification.php'));
+    }
+
     /**
      * Maps all API routes to the specified domains.
      *
