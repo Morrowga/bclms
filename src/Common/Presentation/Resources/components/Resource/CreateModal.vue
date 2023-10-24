@@ -17,24 +17,39 @@ const form = useForm({
 const disabled = ref(false);
 
 const validateFile = (file) => {
-  const fileInput = file;
-  // Check file format (mime type)
-  if (!fileInput.type.startsWith('video/')) {
-    validationError.value = 'Please select a valid video file.';
-    return false;
-  }
+    const fileInput = file;
 
-  // Check file size (10MB limit)
-  const maxSizeInBytes = 100 * 1024 * 1024; // 10MB
-  if (fileInput.size > maxSizeInBytes) {
-    validationError.value = 'File size exceeds the 100 MB limit.';
-    return false;
-  }
+    const allowedFormats = [
+        "video/mp4", "video/webm", "video/ogg",
+        "image/jpeg", "image/jpg", "image/png", "image/gif", "image/bmp", "image/tiff", "image/tif", "image/svg+xml",
+        "audio/mp3", "audio/mpeg", "audio/wav", "audio/ogg", "audio/m4a",
+        "application/pdf", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "text/css", "text/csv", "text/plain", "text/rtf", "text/xml", "text/markdown", "text/vtt", "text/x-diff",
+        "font/ttf", "font/otf", "font/woff", "font/woff2", "application/x-font-ttf", "application/font-woff", "application/font-woff2", "application/vnd.ms-fontobject", "font/opentype", "application/x-font-opentype", "application/x-font-truetype",
+        "application/json", "application/javascript",
+        "application/x-shockwave-flash",
+        "application/vnd.oasis.opendocument.presentation", "application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text"
+    ];
 
-  // Reset error message if the file is valid
-  validationError.value = null;
-  return true;
+    if (!allowedFormats.includes(fileInput.type)) {
+        validationError.value = 'Please select a valid file format.';
+        return false;
+    }
+
+    // Check file size (100MB limit)
+    const maxSizeInBytes = 100 * 1024 * 1024; // 100MB
+    if (fileInput.size > maxSizeInBytes) {
+        validationError.value = 'File size exceeds the 100 MB limit.';
+        return false;
+    }
+
+    // Reset error message if the file is valid
+    validationError.value = null;
+    return true;
 };
+
 
 const handleFileUpload = (event) => {
     const selectedFile = event.target.files[0];
@@ -109,16 +124,29 @@ const openFileInput = () => {
                                 <VTextField v-model="form.filename" class="textfield-round" />
                             </div>
                             <div class="mt-3">
-                                <div v-if="selectedImage" class="video-resource">
-                                    <video controls autoplay class="videoDiv">
-                                        <!-- Set the video source to the selected video file -->
-                                        <source :src="selectedImage" type="video/mp4">
+                                <div v-if="selectedImage" class="resource-content">
+                                    <!-- Render video if the uploaded file is a video type -->
+                                    <video v-if="file?.type && file.type.startsWith('video/')" controls autoplay class="videoDiv">
+                                        <source :src="selectedImage" :type="file.type">
                                         Your browser does not support the video tag.
                                     </video>
+                                    
+                                    <!-- Render audio if the uploaded file is an audio type -->
+                                    <audio v-else-if="file?.type && file.type.startsWith('audio/')" controls class="audioPlayer">
+                                        <source :src="selectedImage" :type="file.type">
+                                        Your browser does not support the audio tag.
+                                    </audio>
+                                    
+                                    <!-- Render image if the uploaded file is an image type -->
+                                    <img v-else-if="file?.type && (file.type.startsWith('image/'))" :src="selectedImage" class="image-resource" alt="Uploaded Image" />
+
+                                    <!-- TODO: Add other preview elements for different file types like PDF, DOCX, etc. if required -->
+
                                     <div class="d-flex justify-center">
                                         <VBtn @click="removeVideo">Remove</VBtn>
                                     </div>
                                 </div>
+
                                 <VCard v-else
                                     class="upload-card-resource"
                                     @click="openFileInput"
@@ -149,8 +177,7 @@ const openFileInput = () => {
                                             </div>
                                             <div class="mt-2">
                                                 <span class="fade-text">
-                                                    PNG, GIF, WebP, MP4 or MP3.
-                                                    Maximum file size 100 Mb.
+    Allowed formats: Images (PNG, JPG, JPEG, GIF, BMP, TIFF, SVG, WebP), Videos (MP4, WebM, OGG), Audios (MP3, M4A, WAV, OGG), Documents (PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, ODT, ODS, ODP), Text (TXT, RTF, MD, CSV, XML, VTT, CSS, JS, JSON, DIFF), Fonts (TTF, OTF, WOFF, WOFF2), SWF. Maximum file size: 100MB.
                                                 </span>
                                             </div>
                                         </div>
