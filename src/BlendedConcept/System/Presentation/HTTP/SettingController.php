@@ -36,7 +36,7 @@ class SettingController extends Controller
             return Inertia::render(config('route.settings'), compact('setting'));
         } catch (\Exception $e) {
             // Handle any exceptions that occur during the execution of the code
-            return Inertia::render(config('route.settings'))->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -45,7 +45,6 @@ class SettingController extends Controller
      */
     public function UpdateSetting(UpdateSettingRequest $request)
     {
-
         try {
             // Create a SiteSettingData instance from the request
             $site_setting = SiteSettingData::fromRequest($request);
@@ -55,9 +54,10 @@ class SettingController extends Controller
 
             // Execute the update setting command
             $update_setting->execute();
+            return redirect()->back()->with('successMessage', 'Site Setting Updated Successfully!');
         } catch (\Exception $e) {
             // Return a response indicating the error to the user
-            dd($e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -75,8 +75,9 @@ class SettingController extends Controller
             $system_theme = SiteThemData::fromRequest($request);
             $update_system_theme = new UpdateSiteThemeCommand($system_theme);
             $update_system_theme->execute();
+            return redirect()->back()->with('successMessage', 'Site Theme Updated Successfully!');
         } catch (\Exception $error) {
-            dd($error->getMessage());
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 }

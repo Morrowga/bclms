@@ -117,11 +117,7 @@ class OrganisationController extends Controller
 
             return redirect()->route('organisations.index')->with('successMessage', 'Organisations Created Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('organisations.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -135,11 +131,7 @@ class OrganisationController extends Controller
             $updateOrganisationcommand = (new updateOrganisationCommand($updateOrganisation));
             $updateOrganisationcommand->execute();
         } catch (\Exception $error) {
-            return redirect()
-                ->route('organisations.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
 
         return redirect()->route('organisations.index')->with('successMessage', 'Organisation Updated Successfully!');
@@ -209,13 +201,9 @@ class OrganisationController extends Controller
         }
 
         return redirect()->route('organisations.index')->with('successMessage', 'Organisations Created Successfully!');
-        
+
         } catch (\Exception $error) {
-            return redirect()
-                ->route('organisations.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 }

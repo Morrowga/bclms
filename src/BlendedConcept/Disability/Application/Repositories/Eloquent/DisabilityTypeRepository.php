@@ -36,9 +36,13 @@ class DisabilityTypeRepository implements DisabilityTypeRepositoryInterface
             $disabilityType = DisabilityTypeMapper::toEloquent($disabilityType);
             $disabilityType->save();
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (\Exception $error) {
             DB::rollBack();
-            dd($exception);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 
@@ -51,9 +55,13 @@ class DisabilityTypeRepository implements DisabilityTypeRepositoryInterface
             $disabilityTypeEloquent->fill($disabilityTypeArray);
             $disabilityTypeEloquent->update();
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (\Exception $error) {
             DB::rollBack();
-            dd($exception);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 
@@ -63,9 +71,13 @@ class DisabilityTypeRepository implements DisabilityTypeRepositoryInterface
         try {
             $disabilityType->delete();
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (\Exception $error) {
             DB::rollBack();
-            dd($exception);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 

@@ -33,11 +33,7 @@ class PlanController
                 'plans' => $plans['paginate_plans'],
             ]);
         } catch (\Exception $e) {
-            return redirect()
-                ->route('plans.index')
-                ->with([
-                    'systemErrorMessage' => $e->getMessage(),
-                ]);
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -61,11 +57,7 @@ class PlanController
 
             return redirect()->route('plans.index')->with('successMessage', 'plans Created Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('plans.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -80,11 +72,7 @@ class PlanController
 
             return redirect()->route('plans.index')->with('successMessage', 'Plan Updated Successfully!');
         } catch (\Exception $e) {
-            return redirect()
-                ->route('plans.index')
-                ->with([
-                    'systemErrorMessage' => $e->getMessage(),
-                ]);
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -115,11 +103,7 @@ class PlanController
             $deletePlan = (new DeletePlanCommand($plan));
             $deletePlan->execute();
         } catch (\Exception $e) {
-            return redirect()
-                ->route('plans.index')
-                ->with([
-                    'systemErrorMessage' => $e->getMessage(),
-                ]);
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -134,11 +118,7 @@ class PlanController
 
             return redirect()->route('plans.index')->with('successMessage', "Subscription plan has been set $message");
         } catch (\Exception $e) {
-            return redirect()
-                ->route('plans.index')
-                ->with([
-                    'systemErrorMessage' => $e->getMessage(),
-                ]);
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

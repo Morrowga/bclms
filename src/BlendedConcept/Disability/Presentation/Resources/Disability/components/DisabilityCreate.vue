@@ -15,10 +15,20 @@ let handleSubmit = () => {
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
             form.post(route("disability_type.store"), {
-                onSuccess: () => {
-                    SuccessDialog({ title: props.flash?.successMessage });
+                onSuccess: ({props}) => {
+                    let success = props.flash?.successMessage;
+                    if(success !== null)
+                    {
+                        SuccessDialog({ title: success });
+                    }else{
+                        SuccessDialog({
+                            title: props.flash?.errorMessage,
+                            mainTitle: "Error!",
+                            color: "#ff6262",
+                            icon: "error",
+                        });
+                    }
                     isDialogVisible.value = false;
-                    form.reset();
                 },
                 onError: (error) => {},
             });

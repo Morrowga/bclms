@@ -4,6 +4,7 @@ import { router } from "@inertiajs/core";
 import { ref, defineProps } from "vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import {
   serverParams,
   onColumnFilter,
@@ -16,7 +17,7 @@ import {
 // import avatar4 from "@images/avatars/avatar-4.png";
 
 let props = defineProps(["active_plans", "flash"]);
-
+let flash = computed(() => usePage().props.flash)
 let columns = [
   {
     label: "",
@@ -80,13 +81,13 @@ const selectionChanged = (data) => {
 };
 
 const deletePlan = () => {
-  SuccessDialog({ title: "Subscription plan deleted" });
+  FlashMessage({ flash });
 };
 
 const setInactive = (id) => {
   form.post(route("plans.change_status", id), {
     onSuccess: () => {
-      SuccessDialog({ title: props.flash?.successMessage });
+      FlashMessage({ flash });
       onColumnFilter({
         columnFilters: {
           status: "active",

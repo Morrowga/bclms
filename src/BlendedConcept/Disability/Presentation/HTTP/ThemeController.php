@@ -41,9 +41,7 @@ class ThemeController
 
             return redirect()->route('disability_themes.index')->with('successMessage', 'Theme Created Successfully!');
         } catch (\Exception $error) {
-            return redirect()->back()->with([
-                'errorMessage' => $error->getMessage(),
-            ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 

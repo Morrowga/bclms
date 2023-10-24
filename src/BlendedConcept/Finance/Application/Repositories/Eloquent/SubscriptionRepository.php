@@ -48,7 +48,11 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
             $b2bSubscriptionEloquent->save();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
 
         DB::commit();
@@ -72,7 +76,11 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
             $b2bSubscriptionEloquent->save();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
 
         DB::commit();
@@ -80,7 +88,15 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
 
     public function getOrgForSubscription()
     {
-        $organisations = OrganisationEloquentModel::with('subscription')->get();
-        return $organisations;
+        try {
+            $organisations = OrganisationEloquentModel::with('subscription')->get();
+            return $organisations;
+        } catch (\Exception $error) {
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
+        }
     }
 }

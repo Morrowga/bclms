@@ -32,21 +32,30 @@ class UserProfileController extends Controller
 
     public function updateProfile(UpdateUserProfileRequest $request)
     {
-        $user = UserEloquentModel::query()->findOrFail(auth()->user()->id);
-        $updateUser = UserProfileData::fromRequest($request, $user->id);
-        $updatedUserCommand = (new UpdateUserProfileCommand($updateUser));
-        $updatedUserCommand->execute();
+        try {
+            $user = UserEloquentModel::query()->findOrFail(auth()->user()->id);
+            $updateUser = UserProfileData::fromRequest($request, $user->id);
+            $updatedUserCommand = (new UpdateUserProfileCommand($updateUser));
+            $updatedUserCommand->execute();
 
-        return redirect()->route('userprofile')->with('successMessage', 'Your Profile Was Updated Successfully!');
+            return redirect()->route('userprofile')->with('successMessage', 'Your Profile Was Updated Successfully!');
+        } catch (\Exception $error) {
+            return redirect()->back()->with('errorMessage', $error->getMessage());
+
+        }
     }
 
     public function changePassword(UpdateUserProfilePasswordRequest $request)
     {
-        $isPasswordMatch = $this->userService->changePassword($request);
-        if ($isPasswordMatch) {
-            return redirect()->route('userprofile')->with('successMessage', 'Password Updated Successfully!');
-        }
+        try {
+            $isPasswordMatch = $this->userService->changePassword($request);
+            if ($isPasswordMatch) {
+                return redirect()->route('userprofile')->with('successMessage', 'Password Updated Successfully!');
+            }
 
-        return redirect()->route('userprofile')->with('errorMessage', 'Password does not match!');
+            return redirect()->route('userprofile')->with('errorMessage', 'Password does not match!');
+        } catch (\Throwable $th) {
+            return redirect()->route('userprofile')->with('errorMessage', 'Password does not match!');
+        }
     }
 }

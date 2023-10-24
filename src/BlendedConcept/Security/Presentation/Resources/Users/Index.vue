@@ -12,6 +12,7 @@ import { router } from "@inertiajs/core";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import exportFromJSON from "export-from-json";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import userRole from "@configRole";
 
 import {
@@ -125,7 +126,7 @@ const setInactive = (status, id) => {
             onConfirm: () => {
                 form.post(route("users.change_status", id), {
                     onSuccess: () => {
-                        SuccessDialog({ title: props.flash?.successMessage });
+                        FlashMessage({ flash });
                     },
                 });
             },
@@ -140,7 +141,7 @@ const setInactive = (status, id) => {
             onConfirm: () => {
                 form.post(route("users.change_status", id), {
                     onSuccess: () => {
-                        SuccessDialog({ title: props.flash?.successMessage });
+                        FlashMessage({ flash });
                     },
                 });
             },

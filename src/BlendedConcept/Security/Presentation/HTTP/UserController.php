@@ -65,9 +65,7 @@ class UserController extends Controller
                 'organisations' => $oragnizations,
             ]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
-
-            return redirect()->route('users.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -97,7 +95,7 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('successMessage', 'User created successfully!');
         } catch (\Exception $e) {
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route('users.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route('users.index')->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -106,22 +104,31 @@ class UserController extends Controller
     {
         // abort_if(authorize('edit', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $updateUser = UserData::fromRequest($request, $user->id);
-        $updatedUserCommand = (new UpdateUserCommand($updateUser));
+        try {
+            $updateUser = UserData::fromRequest($request, $user->id);
+            $updatedUserCommand = (new UpdateUserCommand($updateUser));
 
-        $updatedUserCommand->execute();
+            $updatedUserCommand->execute();
 
-        return redirect()->route('users.index')->with('successMessage', 'User Updated Successfully!');
+            return redirect()->route('users.index')->with('successMessage', 'User Updated Successfully!');
+        } catch (\Exception $error) {
+            return redirect()->back()->with('errorMessage', $error->getMessage());
+        }
     }
 
     public function destroy(UserEloquentModel $user)
     {
         // abort_if(authorize('destroy', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user = new DelectUserCommand($user->id);
-        $user->execute();
+        try {
+            $user = new DelectUserCommand($user->id);
+            $user->execute();
 
-        return redirect()->route('users.index')->with('successMessage', 'User Deleted Successfully!');
+            return redirect()->route('users.index')->with('successMessage', 'User Deleted Successfully!');
+        } catch (\Exception $error) {
+            return redirect()->back()->with('errorMessage', $error->getMessage());
+
+        }
     }
 
     public function show(UserEloquentModel $user)
@@ -143,8 +150,7 @@ class UserController extends Controller
 
             return redirect()->route('userprofile')->with('errorMessage', 'Password does not match!');
         } catch (\Exception $error) {
-
-            dd('something was wrong', $error->getMessage());
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -159,11 +165,7 @@ class UserController extends Controller
 
             return redirect()->route('users.index')->with('successMessage', "User has been set $message");
         } catch (\Exception $e) {
-            return redirect()
-                ->route('plans.index')
-                ->with([
-                    'systemErrorMessage' => $e->getMessage(),
-                ]);
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

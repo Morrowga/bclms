@@ -17,9 +17,20 @@ let handleSubmit = () => {
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
       form.post(route("learning_need.store"), {
-        onSuccess: () => {
-          SuccessDialog({ title: props.flash?.successMessage });
-          isDialogVisible.value = false;
+        onSuccess: ({props}) => {
+            let success = props.flash?.successMessage;
+            if(success !== null)
+            {
+                SuccessDialog({ title: success });
+            }else{
+                SuccessDialog({
+                    title: props.flash?.errorMessage,
+                    mainTitle: "Error!",
+                    color: "#ff6262",
+                    icon: "error",
+                });
+            }
+            isDialogVisible.value = false;
         },
         onError: (error) => {},
       });
@@ -112,6 +123,7 @@ const removeFromArray = (index) => {
                   v-model="form.description"
                   auto-grow
                   rows="5"
+                  :rules="[requiredValidator]"
                 />
               </VCol>
 

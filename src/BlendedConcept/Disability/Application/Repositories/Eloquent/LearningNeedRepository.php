@@ -33,9 +33,13 @@ class LearningNeedRepository implements LearningNeedRepositoryInterface
                 ]);
             }
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (\Exception $error) {
             DB::rollBack();
-            dd($exception);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 
@@ -59,9 +63,13 @@ class LearningNeedRepository implements LearningNeedRepositoryInterface
                 $subLearningEloquent->delete();
             }
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (\Exception $error) {
             DB::rollBack();
-            dd($exception);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 
@@ -71,9 +79,13 @@ class LearningNeedRepository implements LearningNeedRepositoryInterface
         try {
             $LearningNeed->delete();
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (\Exception $error) {
             DB::rollBack();
-            dd($exception);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 }

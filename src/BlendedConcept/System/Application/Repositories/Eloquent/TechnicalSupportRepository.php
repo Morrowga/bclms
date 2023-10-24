@@ -2,11 +2,12 @@
 
 namespace Src\BlendedConcept\System\Application\Repositories\Eloquent;
 
+use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\System\Application\DTO\TechnicalSupportData;
-use Src\BlendedConcept\System\Application\Mappers\TechnicalSupportMapper;
 use Src\BlendedConcept\System\Domain\Model\Entities\TechnicalSupport;
-use Src\BlendedConcept\System\Domain\Repositories\TechnicalSupportRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Resources\TechnicalSupportResource;
+use Src\BlendedConcept\System\Application\Mappers\TechnicalSupportMapper;
+use Src\BlendedConcept\System\Domain\Repositories\TechnicalSupportRepositoryInterface;
 use Src\BlendedConcept\System\Infrastructure\EloquentModels\TechnicalSupportEloquentModel;
 
 class TechnicalSupportRepository implements TechnicalSupportRepositoryInterface
@@ -60,6 +61,15 @@ class TechnicalSupportRepository implements TechnicalSupportRepositoryInterface
 
     public function deleteSupportQuestion($support)
     {
-        $support->delete();
+        try {
+            $support->delete();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
+        }
     }
 }

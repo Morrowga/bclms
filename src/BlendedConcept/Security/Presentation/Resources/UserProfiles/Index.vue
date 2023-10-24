@@ -4,6 +4,7 @@ import { computed } from "vue";
 import { usePage, useForm, Link } from "@inertiajs/vue3";
 import { toastAlert } from "@Composables/useToastAlert";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import ChangePasswordDialog from "./components/ChangePasswordDialog.vue";
 import ProfileEditDialog from "./components/ProfileEditDialog.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
@@ -12,9 +13,8 @@ import { router } from "@inertiajs/core";
 //## start variable section
 let props = defineProps(["auth", "flash", 'user_info']);
 const page = usePage();
-
-const flash = "Password Updated Successfully";
-console.log(props.auth.data);
+let flash = computed(() => page.props.flash);
+// const flash = "Password Updated Successfully";
 const profileImage = ref(props.auth.data.image ?? null);
 
 const isUserPasswordChange = ref(false);
@@ -37,9 +37,7 @@ const handleChangePassword = (data) => {
     passwordForm.post(route("userprofile.changepassword"), {
         onSuccess: (data) => {
             isUserPasswordChange.value = false;
-            SuccessDialog({
-                title: props.flash?.successMessage,
-            });
+            FlashMessage({ flash });
             passwordForm.reset();
         },
         onError: (error) => {
@@ -51,10 +49,9 @@ const handleChangePassword = (data) => {
 const handleUpdateProfile = (data) => {
     profileForm.post(route("userprofile.update"), {
         onSuccess: (data) => {
+            console.log(flash.value.errorMessage+ 'test error')
+            FlashMessage({ flash })
             isUserProfileEdit.value = false;
-            SuccessDialog({
-                title: props.flash?.successMessage,
-            });
         },
         onError: (error) => {
             isUserProfileEdit.value = true;

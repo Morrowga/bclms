@@ -68,8 +68,13 @@ class TechnicalSupportController extends Controller
 
     public function deleteSupportQuestion(TechnicalSupportEloquentModel $support_ticket)
     {
-        (new DeleteTicketCommand($support_ticket))->execute();
+        try {
+            (new DeleteTicketCommand($support_ticket))->execute();
 
-        return redirect()->back();
+            return redirect()->back()->with('successMessage', 'You have successfully deleted!');
+        } catch (\Exception $error) {
+            return redirect()->back()->with('errorMessage', $error->getMessage());
+
+        }
     }
 }

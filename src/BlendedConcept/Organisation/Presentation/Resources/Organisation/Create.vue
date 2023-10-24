@@ -1,11 +1,11 @@
 <script setup>
-import { useForm, Link } from "@inertiajs/vue3";
+import { useForm, Link, usePage } from "@inertiajs/vue3";
 import { ref, defineProps, computed } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
 import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 const isFormValid = ref(false);
 const isDialogVisible = ref(false);
@@ -33,13 +33,12 @@ let form = useForm({
 
 // submit create form
 let handleSubmit = () => {
-    // SuccessDialog({ title: "You've successfully created organisation" });
 
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
             form.post(route("organisations.store"), {
                 onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
+                    FlashMessage({flash: flash});
                 },
                 onError: (error) => {},
             });

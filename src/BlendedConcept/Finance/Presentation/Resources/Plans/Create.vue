@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import { requiredValidator } from "@validators";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
@@ -31,7 +32,7 @@ let handleSubmit = () => {
         if (valid) {
             form.post(route("plans.store"), {
                 onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
+                    FlashMessage({ flash });
                 },
                 onError: (error) => {},
             });

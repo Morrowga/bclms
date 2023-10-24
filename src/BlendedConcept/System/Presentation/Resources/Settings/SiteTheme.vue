@@ -6,7 +6,8 @@ import { staticPrimaryColor } from "@/plugins/vuetify/theme";
 import { useThemeConfig } from "@core/composable/useThemeConfig";
 import { RouteTransitions, Skins } from "@core/enums";
 import { SuccessDialog } from "@actions/useSuccess";
-import { Link, useForm } from "@inertiajs/vue3";
+import { FlashMessage } from "@actions/useFlashMessage";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { watch } from "vue";
 import {
     AppContentLayoutNav,
@@ -33,6 +34,7 @@ const {
 } = useThemeConfig();
 
 const props = defineProps(["site_theme"]);
+let flash = computed(() => usePage().props.flash)
 
 const form = useForm({
     skins: props.site_theme.skins,
@@ -85,9 +87,7 @@ const { width: windowWidth } = useWindowSize();
 const updateTheme = () => {
     form.post(route("updatetheme", 1), {
         onSuccess: (response) => {
-            SuccessDialog({
-                title: "You have successfully updated site theme",
-            });
+            FlashMessage({ flash })
         },
         onError: (error) => {
             console.log(error);

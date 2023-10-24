@@ -3,6 +3,7 @@ import { ref, watch } from "vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import axios from "axios";
 import {
     emailValidator,
@@ -167,6 +168,8 @@ const b2bteacherbyorg = ref([]);
 const toSelect = ref(null);
 
 // let author_id = computed(() => usePage().props.auth.data.roles.name);
+let flash = computed(() => usePage().props.flash)
+
 const showDialog = ref(false);
 const icon = ref("");
 const searchIcon = ref("");
@@ -1448,7 +1451,7 @@ let onFormSubmit = () => {
     form.post(route("announcements.store"), {
         onSuccess: () => {
             form.users = originalUserArray;
-            SuccessDialog({ title: "You've successfully posted announcement" });
+            FlashMessage({ flash })
         },
         onError: (error) => {
             console.log(originalUserArray);

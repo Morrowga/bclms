@@ -5,6 +5,7 @@ import { emailValidator, requiredValidator } from "@validators";
 import { toastAlert } from "@Composables/useToastAlert";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
 import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
 
@@ -46,7 +47,7 @@ let handleSubmit = () => {
                 ),
                 {
                     onSuccess: () => {
-                        SuccessDialog({ title: flash?.successMessage });
+                        FlashMessage({ flash });
                     },
                     onError: (error) => {
                         SuccessDialog({ title: error?.isExpire, icon: 'warning',color: '#ff6262', mainTitle: 'Failed!' });
