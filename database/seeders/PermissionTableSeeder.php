@@ -671,6 +671,11 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Users can create playlists and their configurations within the application.',
             ],
             [
+                'name' => 'show_playlist',
+                'guard_name' => 'web',
+                'description' => 'Users can create playlists and their configurations within the application.',
+            ],
+            [
                 'name' => 'create_playlist',
                 'guard_name' => 'web',
                 'description' => 'Users can create playlists and their configurations within the application.',
@@ -833,6 +838,59 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'delete_organisationUser',
                 'guard_name' => 'web',
                 'description' => 'Users can delete organisation user.',
+            ],
+
+
+            [
+                'name' => 'access_teacherBook',
+                'guard_name' => 'web',
+                'description' => 'Users can access teacherBooks and their configurations within the application.',
+            ],
+            [
+                'name' => 'show_teacherBook',
+                'guard_name' => 'web',
+                'description' => 'Users can view teacherBooks and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_teacherBook',
+                'guard_name' => 'web',
+                'description' => 'Users can create teacherBooks and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_teacherBook',
+                'guard_name' => 'web',
+                'description' => 'Users can edit teacherBooks and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_teacherBook',
+                'guard_name' => 'web',
+                'description' => 'Users can delete teacherBooks and their configurations within the application.',
+            ],
+
+            [
+                'name' => 'access_teacherStudent',
+                'guard_name' => 'web',
+                'description' => 'Users can access teacherStudents and their configurations within the application.',
+            ],
+            [
+                'name' => 'show_teacherStudent',
+                'guard_name' => 'web',
+                'description' => 'Users can view teacherStudents and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_teacherStudent',
+                'guard_name' => 'web',
+                'description' => 'Users can create teacherStudents and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_teacherStudent',
+                'guard_name' => 'web',
+                'description' => 'Users can edit teacherStudents and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_teacherStudent',
+                'guard_name' => 'web',
+                'description' => 'Users can delete teacherStudents and their configurations within the application.',
             ],
 
         ];

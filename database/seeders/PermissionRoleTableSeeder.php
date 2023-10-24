@@ -104,27 +104,46 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_viewStudents',
                         'access_reports',
                         'access_exportData',
-                        'access_playlists',
+                        'access_playlist',
+                        'show_playlist',
+                        'create_playlist',
+                        'edit_playlist',
+                        'delete_playlist',
+                        'access_teacherBook',
+                        'create_teacherBook',
+                        'edit_teacherBook',
+                        'show_teacherBook',
+                        'delete_teacherBook',
+                        'access_assignStudent',
+                        'access_teacherStudent',
+                        'show_teacherStudent',
+                        'edit_teacherStudent',
+                        'create_teacherStudent',
+                        'update_teacherStudent',
+                        'delete_teacherStudent',
+                        'access_techSupport',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
-            } elseif ($data['name'] == 'Parent') {
-                $role = RoleEloquentModel::create($data);
-                $permission = PermissionEloquentModel::whereIn(
-                    'name',
-                    [
-                        'access_plan',
-                        'access_teacherStorybook',
-                        'access_resources',
-                        'access_viewStudents',
-                        'access_reports',
-                        'access_exportData',
-
-                        'access_playlists',
-                    ]
-                )->pluck('id');
-                $role->permissions()->sync($permission);
-            } elseif ($data['name'] == 'BC Staff') {
+            }
+            // elseif ($data['name'] == 'Parent') {
+            //     $role = RoleEloquentModel::create($data);
+            //     $permission = PermissionEloquentModel::whereIn(
+            //         'name',
+            //         [
+            //             'access_plan',
+            //             'access_teacherStorybook',
+            //             'access_resources',
+            //             'access_viewStudents',
+            //             'access_reports',
+            //             'access_exportData',
+            //             'access_techSupport',
+            //             'access_playlists',
+            //         ]
+            //     )->pluck('id');
+            //     $role->permissions()->sync($permission);
+            // } 
+            elseif ($data['name'] == 'BC Staff') {
                 $role = RoleEloquentModel::create($data);
                 $permission = PermissionEloquentModel::whereIn(
                     'name',
@@ -232,15 +251,31 @@ class PermissionRoleTableSeeder extends Seeder
                         'delete_resources',
                         'access_reports',
                         'access_exportData',
-
+                        'access_techSupport',
                         'access_viewStudents',
                         'access_teacherStorybook',
-                        'access_playlists',
+                        'access_playlist',
+                        'show_playlist',
+                        'create_playlist',
+                        'edit_playlist',
+                        'delete_playlist',
                         'access_orgClassroom',
                         'access_playlist',
                         'delete_playlist',
                         'edit_playlist',
                         'create_playlist',
+                        'access_teacherBook',
+                        'create_teacherBook',
+                        'edit_teacherBook',
+                        'show_teacherBook',
+                        'delete_teacherBook',
+                        'access_assignStudent',
+                        'access_teacherStudent',
+                        'show_teacherStudent',
+                        'create_teacherStudent',
+                        'edit_teacherStudent',
+                        'update_teacherStudent',
+                        'delete_teacherStudent',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
@@ -272,10 +307,12 @@ class PermissionRoleTableSeeder extends Seeder
                         'create_b2bteacher',
                         'access_b2bteacher',
                         'access_organisationUser',
+                        'show_organisationUser',
                         'create_organisationUser',
                         'edit_organisationUser',
                         'update_organisationUser',
                         'delete_organisationUser',
+                        'access_techSupport',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
@@ -302,15 +339,25 @@ class PermissionRoleTableSeeder extends Seeder
                         'delete_resources',
                         'access_reports',
                         'access_exportData',
-
+                        'access_techSupport',
                         'access_viewStudents',
                         'access_teacherStorybook',
-                        'access_playlists',
+                        'access_playlist',
+                        'show_playlist',
+                        'create_playlist',
+                        'edit_playlist',
+                        'delete_playlist',
                         'access_orgClassroom',
                         'access_playlist',
                         'delete_playlist',
                         'edit_playlist',
                         'create_playlist',
+                        'access_teacherStudent',
+                        'show_teacherStudent',
+                        'create_teacherStudent',
+                        'edit_teacherStudent',
+                        'update_teacherStudent',
+                        'delete_teacherStudent',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);

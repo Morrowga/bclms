@@ -3,6 +3,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import StudentList from "./components/OrgAdminListOfStudent/StudentList.vue";
 import TeacherList from "./components/OrgAdminListOfTeacher/TeacherList.vue";
 import { ref } from "vue";
+import { checkPermission } from "@actions/useCheckPermission";
 let tab = ref("teacher");
 let props = defineProps([
     "teachers",
@@ -59,7 +60,12 @@ const changeTab = (tabName) => {
                             v-if="tab == 'student'"
                             class="d-flex justify-end gap-10"
                         >
-                            <Link :href="route('organisations-student.create')">
+                            <Link
+                                v-if="
+                                    checkPermission('create_organisationUser')
+                                "
+                                :href="route('organisations-student.create')"
+                            >
                                 <VBtn
                                     variant="flat"
                                     rounded
@@ -97,7 +103,12 @@ const changeTab = (tabName) => {
                                 </VBtn>
                             </Link>
 
-                            <Link :href="route('organisations-teacher.create')">
+                            <Link
+                                v-if="
+                                    checkPermission('create_organisationUser')
+                                "
+                                :href="route('organisations-teacher.create')"
+                            >
                                 <VBtn
                                     variant="flat"
                                     rounded

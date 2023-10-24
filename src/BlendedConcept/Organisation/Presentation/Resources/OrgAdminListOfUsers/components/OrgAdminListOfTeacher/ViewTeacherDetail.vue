@@ -4,7 +4,8 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
 import { router } from "@inertiajs/core";
-let props = defineProps(['teacher']);
+import { checkPermission } from "@actions/useCheckPermission";
+let props = defineProps(["teacher"]);
 const deleteTeacher = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",
@@ -16,13 +17,18 @@ const deleteTeacher = (id) => {
         },
     });
 };
+const setImage = (teacher) => {
+    return teacher.profile_pic == "" || !teacher.profile_pic
+        ? "/images/defaults/upload_image.png"
+        : teacher.profile_pic;
+};
 </script>
 <template>
     <AdminLayout>
         <v-container>
             <v-row justify="center">
                 <v-col cols="6">
-                    <VImg :src="props.teacher.data.profile_pic" />
+                    <VImg :src="setImage(props.teacher.data)" />
                 </v-col>
                 <v-col cols="6">
                     <v-text class="teacherprofile-title">Profile</v-text>
@@ -31,9 +37,13 @@ const deleteTeacher = (id) => {
                         <div class="d-flex align-center gap-10">
                             <v-btn variant="flat" rounded color="teal">
                                 <Link
+                                    v-if="
+                                        checkPermission('edit_organisationUser')
+                                    "
                                     :href="
                                         route(
-                                            'organisations-teacher.edit', props.teacher.data.id
+                                            'organisations-teacher.edit',
+                                            props.teacher.data.id
                                         )
                                     "
                                 >
@@ -45,6 +55,9 @@ const deleteTeacher = (id) => {
                                 </Link>
                             </v-btn>
                             <v-btn
+                                v-if="
+                                    checkPermission('delete_organisationUser')
+                                "
                                 variant="flat"
                                 rounded
                                 color="error"
@@ -61,15 +74,25 @@ const deleteTeacher = (id) => {
                     <v-row>
                         <v-col cols="12" class="py-2">
                             <h6 class="tiggie-small-label">FullName</h6>
-                            <p class="tiggie-p">{{  props.teacher.data.first_name + ' ' + props.teacher.data.last_name  }}</p>
+                            <p class="tiggie-p">
+                                {{
+                                    props.teacher.data.first_name +
+                                    " " +
+                                    props.teacher.data.last_name
+                                }}
+                            </p>
                         </v-col>
                         <v-col cols="12" class="py-2">
                             <h6 class="tiggie-small-label">Work Email</h6>
-                            <p class="tiggie-p">{{  props.teacher.data.email }}</p>
+                            <p class="tiggie-p">
+                                {{ props.teacher.data.email }}
+                            </p>
                         </v-col>
                         <v-col cols="12" class="py-2">
                             <h6 class="tiggie-small-label">Contact Number</h6>
-                            <p class="tiggie-p">{{ props.teacher.data.contact_number }}</p>
+                            <p class="tiggie-p">
+                                {{ props.teacher.data.contact_number }}
+                            </p>
                         </v-col>
                     </v-row>
                     <!-- contact user plan -->

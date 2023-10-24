@@ -51,14 +51,14 @@ export default [
         title: 'Students',
         url: "/teacher_students",
         icon: { icon: 'mdi-account-multiple-outline' },
-        access_module: "access_viewStudents",
+        access_module: "access_teacherStudent",
         route_name: "teacher_students",
     },
     {
         title: 'Playlists',
         url: "/playlists",
         icon: { icon: 'mdi-play-circle-outline' },
-        access_module: "access_playlists",
+        access_module: "access_playlist",
         route_name: "playlists",
     },
     {
@@ -80,13 +80,13 @@ export default [
         route_name: 'organisations',
         access_module: "access_organisation",
     },
-    {
-        title: 'Teachers',
-        url: `${PREFIX}/teachers`,
-        icon: { icon: 'mdi-account-group-outline' },
-        route_name: 'teachers',
-        access_module: "access_teacher",
-    },
+    // {
+    //     title: 'Teachers',
+    //     url: `${PREFIX}/teachers`,
+    //     icon: { icon: 'mdi-account-group-outline' },
+    //     route_name: 'teachers',
+    //     access_module: "access_teacher",
+    // },
     {
         title: 'ClassRoom',
         url: `${PREFIX}/classrooms`,
@@ -106,7 +106,7 @@ export default [
         url: `/organisations-teacher`,
         icon: { icon: ' mdi-google-classroom' },
         route_name: 'organisations-teacher',
-        access_module: "access_orgusers",
+        access_module: "access_organisationUser",
     },
 
     {

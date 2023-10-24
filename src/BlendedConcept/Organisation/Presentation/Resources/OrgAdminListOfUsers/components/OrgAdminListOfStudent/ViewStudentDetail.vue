@@ -4,7 +4,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
-
+import { checkPermission } from "@actions/useCheckPermission";
 import { ref } from "vue";
 let tab = ref(null);
 const form = useForm({});
@@ -34,13 +34,19 @@ const deleteStudent = () => {
         },
     });
 };
+const setImage = (organisations_student) => {
+    return organisations_student.user.profile_pic == "" ||
+        !organisations_student.user.profile_pic
+        ? "/images/defaults/upload_image.png"
+        : organisations_student.user.profile_pic;
+};
 </script>
 <template>
     <AdminLayout>
         <v-container class="width-80">
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-img :src="organisations_student.user.profile_pic" />
+                    <v-img :src="setImage(organisations_student)" />
                 </v-col>
                 <v-col cols="12" md="6" class="pa-5">
                     <div class="d-flex justify-space-between align-center">
@@ -55,6 +61,9 @@ const deleteStudent = () => {
                                 "
                             >
                                 <v-btn
+                                    v-if="
+                                        checkPermission('edit_organisationUser')
+                                    "
                                     variant="flat"
                                     rounded
                                     color="#17CAB6"
@@ -64,6 +73,9 @@ const deleteStudent = () => {
                                 >
                             </Link>
                             <v-btn
+                                v-if="
+                                    checkPermission('delete_organisationUser')
+                                "
                                 variant="flat"
                                 rounded
                                 color="error"
@@ -178,7 +190,7 @@ const deleteStudent = () => {
             </v-row>
             <v-row justify="center">
                 <v-col cols="2">
-                    <Link :href="route('organisations-student.index')">
+                    <Link :href="route('organisations-teacher.index')">
                         <v-btn
                             color="#e9eff0"
                             variant="flat"

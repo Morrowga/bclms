@@ -120,7 +120,10 @@ let form = useForm({
                                     :rules="[requiredValidator]"
                                     :error-messages="form?.errors?.dob"
                                     density="compact"
-                                    :config="{ minDate: null, maxDate: 'today' }"
+                                    :config="{
+                                        minDate: null,
+                                        maxDate: 'today',
+                                    }"
                                 />
                             </v-col>
                             <v-col cols="12">
@@ -251,7 +254,7 @@ let form = useForm({
                     </v-col>
                     <v-col cols="12">
                         <div class="d-flex justify-center">
-                            <Link :href="route('organisations-teacher.index')">
+                            <Link :href="route('teacher_students.index')">
                                 <v-btn
                                     variant="flat"
                                     rounded

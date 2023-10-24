@@ -20,7 +20,7 @@ class PlayListController
 {
     public function index()
     {
-        // abort_if(authorize('view', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('view', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $filters = request(['search', 'name']) ?? [];
 
@@ -39,7 +39,7 @@ class PlayListController
 
     public function create()
     {
-        // abort_if(authorize('create', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('create', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return Inertia::render(config('route.playlist.create'));
     }
@@ -52,7 +52,7 @@ class PlayListController
      */
     public function store(StorePlaylistRequest $request)
     {
-        // abort_if(authorize('create', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('store', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $request->validated();
             //Creates a new playlist object from the request data.
@@ -77,7 +77,7 @@ class PlayListController
 
     public function edit($id)
     {
-        // abort_if(authorize('edit', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('edit', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $playlist = (new ShowPlaylist($id))->handle();
 
@@ -94,7 +94,7 @@ class PlayListController
      */
     public function update(UpdatePlaylistRequest $request, PlaylistEloquentModel $playlist)
     {
-        // abort_if(authorize('edit', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('update', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Validate the request.
@@ -119,6 +119,7 @@ class PlayListController
 
     public function show($id)
     {
+        abort_if(authorize('show', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $playlist = (new ShowPlaylist($id))->handle();
 
         return Inertia::render(config('route.playlist.show'), [
@@ -134,7 +135,7 @@ class PlayListController
      */
     public function destroy(PlaylistEloquentModel $playlist)
     {
-        // abort_if(authorize('destroy', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('destroy', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Try to delete the playlist.

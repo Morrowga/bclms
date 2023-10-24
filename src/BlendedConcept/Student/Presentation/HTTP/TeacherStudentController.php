@@ -10,7 +10,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Src\BlendedConcept\Student\Application\DTO\StudentData;
-use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
 use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
 use Src\BlendedConcept\Student\Application\Requests\PasswordRequest;
 use Src\BlendedConcept\Student\Application\Requests\storeStudentRequest;
@@ -26,13 +25,14 @@ use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreTeacherStudent
 use Src\BlendedConcept\Student\Application\UseCases\Commands\UpdateTeacherStudentCommand;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetDisabilityTypesForStudent;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\Student\UpdateStudentCommand;
+use Src\BlendedConcept\Student\Application\Policies\TeacherStudentPolicy;
 
 class TeacherStudentController
 {
     public function index()
     {
+        abort_if(authorize('view', TeacherStudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
-
             // Get the filters from the request, or initialize an empty array if they are not present
             $filters = request()->only(['name', 'search', 'perPage', 'filter']) ?? [];
 
@@ -47,13 +47,14 @@ class TeacherStudentController
 
     public function show($id)
     {
+        abort_if(authorize('show', TeacherStudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $student = (new ShowStudent($id))->handle();
         return Inertia::render(config('route.teacher_students.show'), compact('student'));
     }
     public function store(storeStudentRequest $request)
     {
 
-        // abort_if(authorize('create', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('store', TeacherStudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // dd($request->all());
         try {
 
@@ -72,6 +73,7 @@ class TeacherStudentController
 
     public function create()
     {
+        abort_if(authorize('create', TeacherStudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $disabilityTypes = (new GetDisabilityTypesForStudent())->handle();
             $learningNeeds = (new GetLearningNeedsForStudent())->handle();
@@ -86,7 +88,7 @@ class TeacherStudentController
 
     public function update(UpdateStudentRequest $request, StudentEloquentModel $teacher_student)
     {
-        // abort_if(authorize('edit', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('update', TeacherStudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $updateStudent = StudentData::fromRequest($request, $teacher_student->student_id);
@@ -102,6 +104,7 @@ class TeacherStudentController
 
     public function edit($id)
     {
+        abort_if(authorize('edit', TeacherStudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $student = (new ShowStudent($id))->handle();
 
         $disabilityTypes = (new GetDisabilityTypesForStudent())->handle();
