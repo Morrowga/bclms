@@ -360,7 +360,7 @@ const choosePaidPlan = () => {
                     </tr>
                     <tr class="text-left">
                         <td>Storage Space</td>
-                        <td v-for="plan in props.plans" :key="plan.id">{{ plan.storage_limit == '0.00' ? 'NA' : plan.storage_limit + ' MB'}}</td>
+                        <td v-for="plan in props.plans" :key="plan.id">{{ plan.storage_limit == '0.00' ? 'NA' : plan.storage_limit + ' GB'}}</td>
                     </tr>
                     <tr class="text-left">
                         <td>Free Library Access</td>
