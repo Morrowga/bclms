@@ -7,6 +7,8 @@ import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
 import { router } from "@inertiajs/core";
 import ImportUser from "./components/ImportUser.vue";
+import { checkPermission } from "@actions/useCheckPermission";
+
 let flash = computed(() => usePage().props.flash);
 const props = defineProps({
     organisation: {
@@ -260,6 +262,7 @@ onMounted(() => {
                 </VCol>
                 <VCol cols="4">
                     <VBtn
+                        v-if="checkPermission('edit_organisation')"
                         @click="deleteOrganisation"
                         class="text-white pl-16 pr-16"
                         color="candy-red"
@@ -269,6 +272,7 @@ onMounted(() => {
                 </VCol>
                 <VCol cols="4">
                     <Link
+                        v-if="checkPermission('edit_organisation')"
                         :href="route('organisations.edit', 1)"
                         class="text-white"
                     >

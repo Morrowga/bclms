@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Organisation\Application\Policies;
+namespace Src\BlendedConcept\Organisation\Domain\Policies;
 
 class OrganisationPolicy
 {
@@ -9,6 +9,14 @@ class OrganisationPolicy
         return auth()->user()->hasPermission('access_organisation');
     }
 
+    public static function viewBc()
+    {
+        return auth()->user()->hasPermission('access_bcstaffOrganisation');
+    }
+    public static function show()
+    {
+        return auth()->user()->hasPermission('show_organisation');
+    }
     public static function create()
     {
         return auth()->user()->hasPermission('create_organisation');

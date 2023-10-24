@@ -7,10 +7,6 @@ import { router } from "@inertiajs/core";
 import { SuccessDialog } from "@actions/useSuccess";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
-
-let props = defineProps(["organisations", "flash", "auth"]);
-let page = usePage();
-let user_role = computed(() => page.props.user_info.user_role.name);
 import {
     serverParams,
     onColumnFilter,
@@ -20,6 +16,11 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
+import { checkPermission } from "@actions/useCheckPermission";
+
+let props = defineProps(["organisations", "flash", "auth"]);
+let page = usePage();
+let user_role = computed(() => page.props.user_info.user_role.name);
 let flash = computed(() => usePage().props.flash);
 serverPage.value = ref(props.organisations.current_page ?? 1);
 serverPerPage.value = ref(10);
@@ -127,7 +128,9 @@ watch(filters, (newValue) => {
 });
 const showInfo = (e) => {
     // console.log(e);
-    router.get(route("organisations.show", e.row.id));
+    if (checkPermission("show_organisation")) {
+        router.get(route("organisations.show", e.row.id));
+    }
 };
 </script>
 
@@ -171,7 +174,11 @@ const showInfo = (e) => {
                             item_value="value"
                         />
                         <!-- 👉 Add user button -->
-                        <Link :href="route('organisations.create')">
+                        <Link
+                            :href="route('organisations.create')"
+                            v-if="checkPermission('create_organisation')"
+                        >
+                            <!-- {{ checkPermission("create_organisation") }} -->
                             <VBtn height="40" density="compact">
                                 <span class="text-capatlize text-white">
                                     Add New
@@ -257,7 +264,13 @@ const showInfo = (e) => {
                             </VChip>
                         </div>
                         <div v-if="props.column.field == 'action'">
-                            <VMenu location="end">
+                            <VMenu
+                                location="end"
+                                v-if="
+                                    checkPermission('edit_organisation') ||
+                                    checkPermission('delete_organisation')
+                                "
+                            >
                                 <template #activator="{ props }">
                                     <VIcon
                                         v-bind="props"
@@ -269,6 +282,9 @@ const showInfo = (e) => {
                                 </template>
                                 <VList v-if="user_role == 'BC Staff'">
                                     <VListItem
+                                        v-if="
+                                            checkPermission('edit_organisation')
+                                        "
                                         @click="
                                             () =>
                                                 router.get(
@@ -286,6 +302,9 @@ const showInfo = (e) => {
                                 </VList>
                                 <VList v-else>
                                     <VListItem
+                                        v-if="
+                                            checkPermission('edit_organisation')
+                                        "
                                         @click="
                                             () =>
                                                 router.get(
@@ -299,6 +318,11 @@ const showInfo = (e) => {
                                         <VListItemTitle>Edit</VListItemTitle>
                                     </VListItem>
                                     <VListItem
+                                        v-if="
+                                            checkPermission(
+                                                'delete_organisation'
+                                            )
+                                        "
                                         @click="
                                             deleteOrganisation(props.row.id)
                                         "

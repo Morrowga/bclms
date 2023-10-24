@@ -13,7 +13,10 @@ class OrganisationPolicy
     {
         return auth()->user()->hasPermission('access_bcstaffOrganisation');
     }
-
+    public static function show()
+    {
+        return auth()->user()->hasPermission('show_organisation');
+    }
     public static function create()
     {
         return auth()->user()->hasPermission('create_organisation');

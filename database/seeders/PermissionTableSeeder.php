@@ -141,11 +141,44 @@ class PermissionTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'description' => 'Users can access library-related functionalities and resources.',
             ],
+
             [
                 'name' => 'access_subscriber',
                 'guard_name' => 'web',
                 'description' => 'Users can access subscriber-related features and settings.',
             ],
+            [
+                'name' => 'access_subscription',
+                'guard_name' => 'web',
+                'description' => 'Users can access subscriber-related features and settings.',
+            ],
+            [
+                'name' => 'show_subscription',
+                'guard_name' => 'web',
+                'description' => 'Users can view subscriber-related features and settings.',
+            ],
+            [
+                'name' => 'create_subscription',
+                'guard_name' => 'web',
+                'description' => 'Users can create subscriber-related features and settings.',
+            ],
+            [
+                'name' => 'edit_subscription',
+                'guard_name' => 'web',
+                'description' => 'Users can edit subscriber-related features and settings.',
+            ],
+            [
+                'name' => 'update_subscription',
+                'guard_name' => 'web',
+                'description' => 'Users can update subscriber-related features and settings.',
+            ],
+            [
+                'name' => 'delete_subscription',
+                'guard_name' => 'web',
+                'description' => 'Users can delete subscriber-related features and settings.',
+            ],
+
+
             [
                 'name' => 'access_system',
                 'guard_name' => 'web',
@@ -459,7 +492,7 @@ class PermissionTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'description' => 'Users can delete b2b teacher.',
             ],
-             [
+            [
                 'name' => 'access_surveyresponses',
                 'guard_name' => 'web',
                 'description' => 'Users can access SurveyResponses and their configurations within the application.',

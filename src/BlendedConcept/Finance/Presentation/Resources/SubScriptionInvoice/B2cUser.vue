@@ -89,7 +89,7 @@ const selectionChanged = (data) => {
 };
 
 const fullName = (user) => {
-    if (user.parent) {
+    if (user?.parent) {
         return (
             (user?.parent?.user?.first_name ?? "") +
             " " +

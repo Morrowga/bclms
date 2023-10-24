@@ -9,7 +9,7 @@ use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\Finance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Organisation\Application\DTO\OrganisationData;
 use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
-use Src\BlendedConcept\System\Application\Policies\OrganisationPolicy;
+
 use Src\BlendedConcept\Organisation\Domain\Services\OrganisationService;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\Tenant;
 use Src\BlendedConcept\Organisation\Application\Mappers\OrganisationMapper;
@@ -18,6 +18,7 @@ use Src\BlendedConcept\Organisation\Application\Requests\StoreOrganisationReques
 use Src\BlendedConcept\Organisation\Application\Requests\UpdateOrganisationRequest;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
+
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\StoreOrganisationCommand;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\DeleteOrganisationCommand;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\UpdateOrganisationCommand;
@@ -26,6 +27,7 @@ use Src\BlendedConcept\Organisation\Application\Requests\StoreOrganisationSubscr
 use Src\BlendedConcept\Organisation\Application\UseCases\Queries\GetOrganisationWithPagination;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\NewOrganisationSubscriptionCommand;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\StoreOrganisationSubscriptionCommand;
+use Src\BlendedConcept\Organisation\Domain\Policies\OrganisationPolicy;
 
 class OrganisationController extends Controller
 {
@@ -45,6 +47,7 @@ class OrganisationController extends Controller
         //     Response::HTTP_FORBIDDEN,
         //     '403 Forbidden'
         // );
+        abort_if(authorize('view', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -73,12 +76,14 @@ class OrganisationController extends Controller
 
     public function create()
     {
-
+        abort_if(authorize('create', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return Inertia::render(config('route.organisations.create'));
     }
 
     public function edit(OrganisationEloquentModel $organisation)
     {
+        abort_if(authorize('edit', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $organisation->load('org_admin', 'subscription.b2b_subscription')->loadCount('teachers', 'students');
         // return "hello";
         // return $organisation;
@@ -102,6 +107,8 @@ class OrganisationController extends Controller
      */
     public function store(StoreOrganisationRequest $request)
     {
+        abort_if(authorize('create', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             // Abort if the user is not authorized to create organisations
             // abort_if(authorize('create', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -127,6 +134,8 @@ class OrganisationController extends Controller
 
     public function update(UpdateOrganisationRequest $request, OrganisationEloquentModel $organisation)
     {
+        abort_if(authorize('update', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
 
             // abort_if(authorize('edit', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -147,6 +156,8 @@ class OrganisationController extends Controller
 
     public function show(OrganisationEloquentModel $organisation)
     {
+        abort_if(authorize('show', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $usedStorage = MediaEloquentModel::where('collection_name', 'videos')
             ->where('organisation_id', $organisation->id)
             ->where('teacher_id', null)
@@ -163,6 +174,8 @@ class OrganisationController extends Controller
 
     public function destroy(OrganisationEloquentModel $organisation)
     {
+        abort_if(authorize('destroy', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // try {
 
         // abort_if(authorize('destroy', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -193,23 +206,22 @@ class OrganisationController extends Controller
     {
         try {
 
-        // Abort if the user is not authorized to create organisations
-        // abort_if(authorize('create', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            // Abort if the user is not authorized to create organisations
+            // abort_if(authorize('create', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // Validate the request data
-        $subscription = SubscriptionEloquentModel::find($request->b2b_subscription['subscription_id']);
-        if ($subscription) {
-            $updateSubscription = SubscriptionData::fromRequest($request, $subscription);
-            $saveOrganisation = (new StoreOrganisationSubscriptionCommand($updateSubscription));
-            $saveOrganisation->execute();
-        } else {
-            $storeSubscription = SubscriptionMapper::fromRequest($request);
-            $saveOrganisation = (new NewOrganisationSubscriptionCommand($storeSubscription));
-            $saveOrganisation->execute();
-        }
+            // Validate the request data
+            $subscription = SubscriptionEloquentModel::find($request->b2b_subscription['subscription_id']);
+            if ($subscription) {
+                $updateSubscription = SubscriptionData::fromRequest($request, $subscription);
+                $saveOrganisation = (new StoreOrganisationSubscriptionCommand($updateSubscription));
+                $saveOrganisation->execute();
+            } else {
+                $storeSubscription = SubscriptionMapper::fromRequest($request);
+                $saveOrganisation = (new NewOrganisationSubscriptionCommand($storeSubscription));
+                $saveOrganisation->execute();
+            }
 
-        return redirect()->route('organisations.index')->with('successMessage', 'Organisations Created Successfully!');
-        
+            return redirect()->route('organisations.index')->with('successMessage', 'Organisations Created Successfully!');
         } catch (\Exception $error) {
             return redirect()
                 ->route('organisations.index')
