@@ -53,7 +53,11 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
 
     }
@@ -129,7 +133,16 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
 
     public function delete(int $annountment_id): void
     {
-        $annount = AnnouncementEloquentModel::query()->findOrFail($annountment_id);
-        $annount->delete();
+        try {
+            $annount = AnnouncementEloquentModel::query()->findOrFail($annountment_id);
+            $annount->delete();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
+        }
     }
 }

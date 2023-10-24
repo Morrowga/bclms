@@ -56,7 +56,11 @@ class PlanRepository implements PlanRepositoryInterface
             $planEloquent->save();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error->getMessage());
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
 
         DB::commit();
@@ -75,7 +79,11 @@ class PlanRepository implements PlanRepositoryInterface
             $planEloquent->update();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
 
         DB::commit();
@@ -91,7 +99,11 @@ class PlanRepository implements PlanRepositoryInterface
             $planEloquent->update();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
 
         DB::commit();

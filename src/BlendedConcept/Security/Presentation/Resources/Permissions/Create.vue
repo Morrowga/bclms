@@ -5,6 +5,7 @@ import { toastAlert } from "@Composables/useToastAlert";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { ref, defineProps } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 const isFormValid = ref(false);
 const refForm = ref();
@@ -15,6 +16,7 @@ let form = useForm({
     description: "",
 });
 let props = defineProps(["flash"]);
+let flash = computedd(() => usePage().props.flash)
 
 // submit create form
 let handleSubmit = () => {
@@ -22,9 +24,7 @@ let handleSubmit = () => {
         if (valid) {
             form.post(route("permissions.store"), {
                 onSuccess: () => {
-                    toastAlert({
-                        title: props.flash?.successMessage,
-                    });
+                    FlashMessage({ flash })
                     form.reset();
                     refForm.value?.reset();
                     refForm.value?.resetValidation();

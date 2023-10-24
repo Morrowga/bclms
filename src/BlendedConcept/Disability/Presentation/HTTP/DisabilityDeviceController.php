@@ -41,11 +41,7 @@ class DisabilityDeviceController
 
             return redirect()->route('disability_type.index')->with('successMessage', 'Disability Type Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('disability_type.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -74,11 +70,7 @@ class DisabilityDeviceController
 
             return redirect()->route('disability_type.index')->with('successMessage', 'Disability Type Updated Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('disability_type.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -91,11 +83,7 @@ class DisabilityDeviceController
 
             return redirect()->route('disability_type.index')->with('successMessage', 'Disability Type Deleted Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('disability_type.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 }

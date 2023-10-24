@@ -108,48 +108,78 @@ class SecurityRepository implements SecurityRepositoryInterface
     public function createUser(User $user)
     {
 
-        $userEloquent = UserMapper::toEloquent($user);
-        //verify email now()
-        $userEloquent->email_verified_at = now();
-        $userEloquent->save();
+        DB::beginTransaction();
+        try {
+            $userEloquent = UserMapper::toEloquent($user);
+            //verify email now()
+            $userEloquent->email_verified_at = now();
+            $userEloquent->save();
 
-        if (request()->hasFile('image') && request()->file('image')->isValid()) {
-            $userEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+                $userEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');
+            }
+
+            $userEloquent->roles()->sync(request('role'));
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
-
-        $userEloquent->roles()->sync(request('role'));
     }
 
     //  update user
     public function updateUser(UserData $user)
     {
 
-        $userArray = $user->toArray();
-        $updateUserEloquent = UserEloquentModel::query()->findOrFail($user->id);
-        $updateUserEloquent->fill($userArray);
-        $updateUserEloquent->save();
+        DB::beginTransaction();
+        try {
+            $userArray = $user->toArray();
+            $updateUserEloquent = UserEloquentModel::query()->findOrFail($user->id);
+            $updateUserEloquent->fill($userArray);
+            $updateUserEloquent->save();
 
-        //  delete image if reupload or insert if does not exit
-        if (request()->hasFile('image') && request()->file('image')->isValid()) {
+            //  delete image if reupload or insert if does not exit
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
 
-            $old_image = $updateUserEloquent->getFirstMedia('image');
-            if ($old_image != null) {
-                $old_image->delete();
+                $old_image = $updateUserEloquent->getFirstMedia('image');
+                if ($old_image != null) {
+                    $old_image->delete();
 
-                $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');
-            } else {
+                    $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');
+                } else {
 
-                $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');
+                    $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_user');
+                }
             }
-        }
 
-        $updateUserEloquent->roles()->sync(request('role'));
+            $updateUserEloquent->roles()->sync(request('role'));
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
+        }
     }
 
     public function deleteUser(int $user_id)
     {
-        $user = UserEloquentModel::query()->findOrFail($user_id);
-        $user->delete();
+        try {
+            $user = UserEloquentModel::query()->findOrFail($user_id);
+            $user->delete();
+        } catch (\Exception $error) {
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
+        }
     }
 
     //user filter
@@ -177,23 +207,34 @@ class SecurityRepository implements SecurityRepositoryInterface
     // update User Profile
     public function updateUserProfile(UserProfileData $user)
     {
-        $userArray = $user->toArray();
-        $updateUserEloquent = UserEloquentModel::query()->findOrFail($user->id);
-        $updateUserEloquent->fill($userArray);
-        $updateUserEloquent->save();
+        DB::beginTransaction();
+        try {
+            $userArray = $user->toArray();
+            $updateUserEloquent = UserEloquentModel::query()->findOrFail($user->id);
+            $updateUserEloquent->fill($userArray);
+            $updateUserEloquent->save();
 
-        if (request()->hasFile('image') && request()->file('image')->isValid()) {
-            $old_image = $updateUserEloquent->getFirstMedia('image');
-            if ($old_image != null) {
-                $old_image->forceDelete();
+            if (request()->hasFile('image') && request()->file('image')->isValid()) {
+                $old_image = $updateUserEloquent->getFirstMedia('image');
+                if ($old_image != null) {
+                    $old_image->forceDelete();
+                }
+
+                $newProfileMedia = $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_profile');
+
+                if ($newProfileMedia->getUrl()) {
+                    $updateUserEloquent->profile_pic = $newProfileMedia->getUrl();
+                    $updateUserEloquent->update();
+                }
             }
-
-            $newProfileMedia = $updateUserEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_profile');
-
-            if ($newProfileMedia->getUrl()) {
-                $updateUserEloquent->profile_pic = $newProfileMedia->getUrl();
-                $updateUserEloquent->update();
-            }
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 
@@ -214,18 +255,40 @@ class SecurityRepository implements SecurityRepositoryInterface
     // store permission
     public function createPermission(Permission $permission)
     {
-        $newPermissionEloquent = PermissionMapper::toEloquent($permission);
-        $newPermissionEloquent->save();
+        DB::beginTransaction();
+        try {
+            $newPermissionEloquent = PermissionMapper::toEloquent($permission);
+            $newPermissionEloquent->save();
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
+        }
     }
 
     // update permission
 
     public function updatePermission(PermissionData $permission)
     {
-        $permissionArray = $permission->toArray();
-        $permissionEloquent = PermissionEloquentModel::query()->findOrFail($permission->id);
-        $permissionEloquent->fill($permissionArray);
-        $permissionEloquent->save();
+        DB::beginTransaction();
+        try {
+            $permissionArray = $permission->toArray();
+            $permissionEloquent = PermissionEloquentModel::query()->findOrFail($permission->id);
+            $permissionEloquent->fill($permissionArray);
+            $permissionEloquent->save();
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
+        }
     }
 
     // get roles
@@ -252,20 +315,42 @@ class SecurityRepository implements SecurityRepositoryInterface
     public function createRole(Role $role)
     {
 
-        $RoleEloquent = RoleMapper::toEloquent($role);
-        $RoleEloquent->save();
-        $RoleEloquent->permissions()->sync(request('selectedIds'));
+        DB::beginTransaction();
+        try {
+            $RoleEloquent = RoleMapper::toEloquent($role);
+            $RoleEloquent->save();
+            $RoleEloquent->permissions()->sync(request('selectedIds'));
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
+        }
     }
 
     //  update role
     public function updateRole(RoleData $role)
     {
 
-        $roleArray = $role->toArray();
-        $roleEloquent = RoleEloquentModel::query()->findOrFail($role->id);
-        $roleEloquent->fill($roleArray);
-        $roleEloquent->save();
-        $roleEloquent->permissions()->sync(request('selectedIds'));
+        DB::beginTransaction();
+        try {
+            $roleArray = $role->toArray();
+            $roleEloquent = RoleEloquentModel::query()->findOrFail($role->id);
+            $roleEloquent->fill($roleArray);
+            $roleEloquent->save();
+            $roleEloquent->permissions()->sync(request('selectedIds'));
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
+        }
     }
 
     public function getUserForDashBoard()
@@ -296,14 +381,17 @@ class SecurityRepository implements SecurityRepositoryInterface
     {
 
         DB::beginTransaction();
-
         try {
             $userEloquent->status = $request->status;
             $userEloquent->update();
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 

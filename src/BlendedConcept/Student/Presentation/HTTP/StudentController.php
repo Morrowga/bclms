@@ -57,8 +57,7 @@ class StudentController extends Controller
 
             return Inertia::render(config('route.students'), compact('students'));
         } catch (\Exception $e) {
-            dd($e);
-            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url . 'students.index')->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -84,7 +83,7 @@ class StudentController extends Controller
             return redirect()->route($this->route_url . 'students.index')->with('successMessage', 'Student created successfully!');
         } catch (\Exception $e) {
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url . 'students.index')->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -101,7 +100,7 @@ class StudentController extends Controller
             return redirect()->route($this->route_url . 'students.index')->with('successMessage', 'Student Updated Successfully!');
         } catch (\Exception $e) {
 
-            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url . 'students.index')->with('errorMessage', $e->getMessage());
         }
     }
 

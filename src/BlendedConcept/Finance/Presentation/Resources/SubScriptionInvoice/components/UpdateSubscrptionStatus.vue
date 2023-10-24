@@ -1,12 +1,14 @@
 <script setup>
 import { SuccessDialog } from "@actions/useSuccess";
-import { useForm } from "@inertiajs/vue3";
-import { defineProps } from "vue";
+import { FlashMessage } from "@actions/useFlashMessage";
+import { useForm, usePage } from "@inertiajs/vue3";
+import { computed, defineProps } from "vue";
 const isDialogVisible = ref(false);
 const date = ref("");
 const isFormValid = ref(false);
 let refForm = ref();
 const props = defineProps(["subscription", "flash", "plans"]);
+let flash = computed(() => usePage().props.flash)
 const form = useForm({
     end_date: "",
     start_date: "",
@@ -30,7 +32,7 @@ let handleSubmit = () => {
                 route("subscription_invoice.updateb2c", props.subscription.id),
                 {
                     onSuccess: () => {
-                        SuccessDialog({ title: props.flash?.successMessage });
+                        FlashMessage({ flash });
                         isDialogVisible.value = false;
                     },
                     onError: (error) => {},

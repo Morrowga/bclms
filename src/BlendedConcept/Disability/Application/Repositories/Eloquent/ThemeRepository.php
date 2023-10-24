@@ -27,9 +27,13 @@ class ThemeRepository implements ThemeRepositoryInterface
             $themeEloquent = ThemeMapper::toEloquent($theme);
             $themeEloquent->save();
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (\Exception $error) {
             DB::rollBack();
-            throw new \Exception($exception->errorInfo[2]);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 
@@ -42,10 +46,13 @@ class ThemeRepository implements ThemeRepositoryInterface
             $themeEloquent->fill($themeArray);
             $themeEloquent->update();
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (\Exception $error) {
             DB::rollBack();
-            throw new \Exception($exception->errorInfo[2]);
-            // dd($exception);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 
@@ -55,10 +62,13 @@ class ThemeRepository implements ThemeRepositoryInterface
         try {
             $theme->delete();
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (\Exception $error) {
             DB::rollBack();
-            // dd($exception);
-            throw new \Exception($exception->errorInfo[2]);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 }

@@ -21,8 +21,19 @@ let handleSubmit = () => {
             form.post(
                 route("learning_need.update", props.disability_type?.id),
                 {
-                    onSuccess: () => {
-                        SuccessDialog({ title: props.flash?.successMessage });
+                    onSuccess: ({props}) => {
+                        let success = props.flash?.successMessage;
+                        if(success !== null)
+                        {
+                            SuccessDialog({ title: success });
+                        }else{
+                            SuccessDialog({
+                                title: props.flash?.errorMessage,
+                                mainTitle: "Error!",
+                                color: "#ff6262",
+                                icon: "error",
+                            });
+                        }
                         isDialogVisible.value = false;
                     },
                     onError: (error) => {},

@@ -1,10 +1,11 @@
 <script setup>
-import { useForm, Link } from "@inertiajs/vue3";
+import { useForm, Link, usePage } from "@inertiajs/vue3";
 import { ref, defineProps, computed, watch } from "vue";
 import { emailValidator, requiredValidator } from "@validators";
 import { toastAlert } from "@Composables/useToastAlert";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
 import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
 
@@ -36,13 +37,12 @@ let form = useForm({
 
 // submit create form
 let handleSubmit = () => {
-    // SuccessDialog({ title: "You've successfully created organisation" });
 
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
             form.post(route("subscriptions.store_subscription", form.id), {
                 onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
+                    FlashMessage({ flash });
                 },
                 onError: (error) => {
                     SuccessDialog({

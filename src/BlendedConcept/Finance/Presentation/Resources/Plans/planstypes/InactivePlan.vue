@@ -6,6 +6,8 @@ import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
+
 import {
   serverParams,
   onColumnFilter,
@@ -20,6 +22,7 @@ import {
 // let permissions = computed(() => usePage().props.auth.data.permissions);
 
 let props = defineProps(["inactive_plans", "flash"]);
+let flash = computed(() => usePage().props.flash)
 
 const actions = ref([
   {
@@ -92,12 +95,12 @@ const selectionChanged = (data) => {
 };
 
 const deletePlan = () => {
-  SuccessDialog({ title: "Subscription plan deleted" });
+    FlashMessage({ flash });
 };
 const setActive = (id) => {
   form.post(route("plans.change_status", id), {
     onSuccess: () => {
-      SuccessDialog({ title: props.flash?.successMessage });
+        FlashMessage({ flash });
       onColumnFilter({
         columnFilters: {
           status: "inactive",
@@ -160,7 +163,7 @@ const setActive = (id) => {
                 />
               </template>
               <VList>
-                <VListItem @click="() => router.get(route('plans.edit'))">
+                <VListItem @click="() => router.get(route('plans.edit', dataProps.row.id))">
                   <VListItemTitle>Edit</VListItemTitle>
                 </VListItem>
                 <VListItem @click="setActive(dataProps.row.id)">

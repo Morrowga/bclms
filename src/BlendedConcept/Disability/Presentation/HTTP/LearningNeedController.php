@@ -41,11 +41,7 @@ class LearningNeedController
 
             return redirect()->route('learning_need.index')->with('successMessage', 'Learning Need Created Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('learning_need.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -66,11 +62,7 @@ class LearningNeedController
 
             return redirect()->route('learning_need.index')->with('successMessage', 'Learning Need Updated Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('learning_need.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -83,11 +75,7 @@ class LearningNeedController
 
             return redirect()->route('learning_need.index')->with('successMessage', 'Learning Need Deleted Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('learning_need.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 }

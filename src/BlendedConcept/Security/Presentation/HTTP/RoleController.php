@@ -47,7 +47,7 @@ class RoleController extends Controller
                 'permissions' => $permissions['default_permissions'],
             ]);
         } catch (\Exception $e) {
-            return redirect()->route('roles.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route('roles.index')->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ class RoleController extends Controller
                 'permissions' => $permissions['default_permissions'],
             ]);
         } catch (\Exception $e) {
-            return redirect()->route('roles.create')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -79,7 +79,7 @@ class RoleController extends Controller
                 'exists_permissions' => $role->permissions()->pluck('id'),
             ]);
         } catch (\Exception $e) {
-            return redirect()->route('roles.create')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -101,7 +101,7 @@ class RoleController extends Controller
             // Redirect the user to the index page for roles with a success message
             return redirect()->route('roles.index')->with('successMessage', 'Roles created Successfully!');
         } catch (\Exception $e) {
-            return redirect()->route('roles.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -131,7 +131,7 @@ class RoleController extends Controller
             return redirect()->route('roles.index')->with('successMessage', 'Role updated Successfully!');
         } catch (\Exception $e) {
 
-            return redirect()->route('roles.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 

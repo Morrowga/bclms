@@ -8,6 +8,8 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { router } from "@inertiajs/core";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
+
 import {
     serverParams,
     onColumnFilter,
@@ -52,6 +54,7 @@ let columns = [
 ];
 
 const props = defineProps(["technicalSupportList"]);
+let flash = computed(() => usePage().props.flash)
 
 const form = useForm({
     id: "",
@@ -99,10 +102,7 @@ const deleteSupport = () => {
         onConfirm: () => {
             router.delete(route("deleteSupportQuestion", form.id), {
                 onSuccess: () => {
-                    SuccessDialog({
-                        title: "You have successfully deleted!",
-                        color: "#17CAB6",
-                    });
+                    FlashMessage({ flash })
                 },
                 onError: () => {
                     console.log("something was wrong");

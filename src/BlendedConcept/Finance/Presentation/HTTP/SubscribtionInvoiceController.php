@@ -48,13 +48,7 @@ class SubscribtionInvoiceController
                 'plans' => $plans
             ]);
         } catch (\Exception $e) {
-            dd($e);
-
-            return redirect()
-                ->route('subscription_invoice')
-                ->with([
-                    'systemErrorMessage' => $e->getMessage(),
-                ]);
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -67,13 +61,7 @@ class SubscribtionInvoiceController
 
             return redirect()->route('subscription_invoice')->with('successMessage', 'Subscription Updated Successfully!');
         } catch (\Exception $e) {
-            dd($e);
-
-            return redirect()
-                ->route('subscription_invoice')
-                ->with([
-                    'systemErrorMessage' => $e->getMessage(),
-                ]);
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -87,13 +75,7 @@ class SubscribtionInvoiceController
 
             return redirect()->route('subscription_invoice')->with('successMessage', 'Subscription Updated Successfully!');
         } catch (\Exception $e) {
-            dd($e);
-
-            return redirect()
-                ->route('subscription_invoice')
-                ->with([
-                    'systemErrorMessage' => $e->getMessage(),
-                ]);
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -105,12 +87,7 @@ class SubscribtionInvoiceController
                 'organisations' => $organisations
             ]);
         } catch (\Exception $e) {
-            dd($e);
-            return redirect()
-                ->route('subscription_invoice')
-                ->with([
-                    'systemErrorMessage' => $e->getMessage(),
-                ]);
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -135,11 +112,7 @@ class SubscribtionInvoiceController
 
             return redirect()->route('subscription_invoice')->with('successMessage', 'Subscription Created Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('organisations.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 }

@@ -1,9 +1,10 @@
 <script setup>
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { requiredValidator } from "@validators";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 let flash = computed(() => usePage().props.flash);
 let props = defineProps(["plan"]);
@@ -28,13 +29,12 @@ let form = useForm({
 
 // submit create form
 let handleSubmit = () => {
-  // SuccessDialog({ title: "You've successfully created organisation" });
-
   refForm.value?.validate().then(({ valid }) => {
     if (valid) {
       form.post(route("plans.update", props.plan.id), {
         onSuccess: () => {
-          SuccessDialog({ title: flash?.successMessage });
+            console.log(flash?.value?.errorMessage + ' test error')
+          FlashMessage({ flash });
         },
         onError: (error) => {},
       });

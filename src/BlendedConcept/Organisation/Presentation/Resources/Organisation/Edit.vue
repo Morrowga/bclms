@@ -1,5 +1,5 @@
 <script setup>
-import { useForm, Link } from "@inertiajs/vue3";
+import { useForm, Link, usePage } from "@inertiajs/vue3";
 import { ref, defineProps, computed } from "vue";
 import {
     emailValidator,
@@ -10,6 +10,7 @@ import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 const isFormValid = ref(false);
 const isDialogVisible = ref(false);
@@ -42,7 +43,7 @@ let handleSubmit = () => {
         if (valid) {
             form.post(route("organisations.update", props.organisation.id), {
                 onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
+                    FlashMessage({ flash })
                 },
                 onError: (error) => {},
             });

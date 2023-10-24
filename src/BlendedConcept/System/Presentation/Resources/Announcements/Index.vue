@@ -7,6 +7,7 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import deleteItem from "@Composables/useDeleteItem.js";
+import { FlashMessage } from "@actions/useFlashMessage";
 import {
   serverParams,
   onColumnFilter,
@@ -36,6 +37,7 @@ serverPerPage.value = ref(10);
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
 
+let flash = computed(() => usePage().props.flash)
 //## end delete announcement and delete in database
 
 //start datatable section
@@ -92,7 +94,9 @@ const deleteAnnouncement = (id) => {
     denyButtonText: "Yes,delete it!",
     onConfirm: () => {
       router.delete("announcements/" + id, {
-        onSuccess: () => {},
+        onSuccess: () => {
+            FlashMessage({ flash })
+        },
       });
     },
   });

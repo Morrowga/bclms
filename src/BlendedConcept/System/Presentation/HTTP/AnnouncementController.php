@@ -55,7 +55,7 @@ class AnnouncementController extends Controller
                 'organisations' => $organisations,
             ]);
         } catch (\Exception $e) {
-            return Inertia::render(config('route.announment.index'))->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -95,11 +95,7 @@ class AnnouncementController extends Controller
             $storeAnnounmentCommand = new StoreAnnounmentCommand($newAnnoument);
             $storeAnnounmentCommand->execute();
         } catch (\Exception $e) {
-
-            // Handle the exception here
-            dd($e->getMessage());
-
-            return redirect()->route('announcements.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
 
         /**
@@ -190,7 +186,7 @@ class AnnouncementController extends Controller
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('announcements.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

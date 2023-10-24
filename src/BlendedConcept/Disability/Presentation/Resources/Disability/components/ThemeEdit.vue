@@ -20,11 +20,18 @@ let handleSubmit = () => {
                     disability_theme: props.disability_type.id,
                 }),
                 {
-                    onSuccess: (res) => {
-                        let success = JSON.stringify(res.props.flash.successMessage);
+                    onSuccess: ({props}) => {
+                        let success = JSON.stringify(props.flash?.successMessage);
                         if(success !== 'null')
                         {
                             SuccessDialog({ title: success.replaceAll('"', '') });
+                        }else{
+                            SuccessDialog({
+                                title: JSON.stringify(props.flash?.errorMessage).replaceAll('"', ''),
+                                mainTitle: "Error!",
+                                color: "#ff6262",
+                                icon: "error",
+                            });
                         }
                         isDialogVisible.value = false;
                     },

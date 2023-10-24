@@ -5,6 +5,7 @@ import { computed, defineProps, watch } from "vue";
 import deleteItem from "@Composables/useDeleteItem.js";
 import { router } from "@inertiajs/core";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import {
@@ -89,7 +90,7 @@ const deleteOrganisation = (id) => {
         onConfirm: () => {
             router.delete(route("organisations.destroy", id), {
                 onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
+                    FlashMessage({ flash });
                 },
             });
         },

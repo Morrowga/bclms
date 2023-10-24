@@ -1,9 +1,10 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { watch, defineProps, computed, ref } from "vue";
 import { requiredValidator } from "@validators";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import { router } from "@inertiajs/core";
 
 //## start for form submit
@@ -37,6 +38,7 @@ let headers = [
     },
 ];
 let props = defineProps(["permissions", "flash", "role", "exists_permissions"]);
+let flash = computed(() => usePage().props.flash)
 let permissionsFilter = computed(() =>
     props.permissions.filter((item) => item.name?.includes(searchName.value))
 );
@@ -53,12 +55,7 @@ let updateRole = (id) => {
         if (valid) {
             form.put(route("roles.update", { id: id }), {
                 onSuccess: () => {
-                    SuccessDialog({
-                        title:
-                            props.flash?.successMessage ??
-                            "You have successfully updated role",
-                    });
-                    router.get(route("roles.index"));
+                    FlashMessage({ flash })
                 },
                 onError: (error) => {
                     form.setError("name", error?.name);

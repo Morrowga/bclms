@@ -4,6 +4,7 @@ import { defineProps } from "vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ImageUpload from "@Composables/ImageUpload.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 import {
     emailValidator,
@@ -12,6 +13,7 @@ import {
 } from "@validators";
 
 let props = defineProps(["setting"]);
+let flash = computed(() => usePage().props.flash)
 let page = usePage();
 
 let form = useForm({
@@ -33,9 +35,7 @@ function handleUpdateSite() {
         if (valid) {
             form.post(route("updateSetting"), {
                 onSuccess: () => {
-                    SuccessDialog({
-                        title: "You have successfully updated site setting",
-                    });
+                    FlashMessage({ flash })
                 },
                 onError: (error) => {},
             });

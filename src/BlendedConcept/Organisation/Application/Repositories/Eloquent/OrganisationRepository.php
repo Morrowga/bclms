@@ -125,9 +125,12 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             $subdomain->domains()->create(['domain' => $subdomain->id . '.' . env('CENTERAL_DOMAIN')]);
             DB::commit();
         } catch (\Exception $error) {
-            dd($error);
             DB::rollBack();
-            dd($error->getMessage());
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 
@@ -163,7 +166,11 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 
@@ -208,7 +215,11 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 
@@ -245,12 +256,24 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
         }
     }
 
     public function delete(OrganisationEloquentModel $organisation)
     {
-        $organisation->delete();
+        try {
+            $organisation->delete();
+        } catch (\Exception $error) {
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
+            // throw new \Exception($error->getMessage());
+            // throw new \Exception('Something Wrong! Please try again.'); // for production
+        }
     }
 }
