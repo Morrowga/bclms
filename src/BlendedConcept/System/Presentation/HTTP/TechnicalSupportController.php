@@ -2,8 +2,10 @@
 
 namespace Src\BlendedConcept\System\Presentation\HTTP;
 
+use Illuminate\Http\Response;
 use Inertia\Inertia;
 use Src\BlendedConcept\System\Application\Mappers\TechnicalSupportMapper;
+use Src\BlendedConcept\System\Application\Policies\TechSupportPolicy;
 use Src\BlendedConcept\System\Application\Requests\AnswerTechnicalSupportRequest;
 use Src\BlendedConcept\System\Application\Requests\QuestionTechnicalSupportRequest;
 use Src\BlendedConcept\System\Application\UseCases\Commands\CreateTicketDetailCommand;
@@ -17,6 +19,7 @@ class TechnicalSupportController extends Controller
     public function index()
     {
 
+        abort_if(authorize('view', TechSupportPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $filters = request(['search', 'page', 'perPage', 'filter']);
 
         $technicalSupportList = (new getTechnicalSupportQueries($filters))->handle();
@@ -28,6 +31,7 @@ class TechnicalSupportController extends Controller
 
     public function techsupports()
     {
+        abort_if(authorize('view', TechSupportPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $filters = request(['search', 'page', 'perPage']);
 
@@ -41,6 +45,8 @@ class TechnicalSupportController extends Controller
 
     public function askSupportQuestion(QuestionTechnicalSupportRequest $request)
     {
+        abort_if(authorize('create', TechSupportPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             $technicalSupport = TechnicalSupportMapper::fromRequest($request);
             $technicalSupportCommand = new CreateTicketDetailCommand($technicalSupport);
@@ -57,6 +63,7 @@ class TechnicalSupportController extends Controller
 
     public function answerSupportQuestion(AnswerTechnicalSupportRequest $request, TechnicalSupportEloquentModel $support_ticket)
     {
+        abort_if(authorize('edit', TechSupportPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validated();
 
@@ -68,13 +75,14 @@ class TechnicalSupportController extends Controller
 
     public function deleteSupportQuestion(TechnicalSupportEloquentModel $support_ticket)
     {
+        abort_if(authorize('delete', TechSupportPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             (new DeleteTicketCommand($support_ticket))->execute();
 
             return redirect()->back()->with('successMessage', 'You have successfully deleted!');
         } catch (\Exception $error) {
             return redirect()->back()->with('errorMessage', $error->getMessage());
-
         }
     }
 }

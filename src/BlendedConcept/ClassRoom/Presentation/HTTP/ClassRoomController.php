@@ -37,7 +37,7 @@ class ClassRoomController extends Controller
 
         // Check if the user is authorized to view classrooms
 
-        // abort_if(authorize('view', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('view', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -58,6 +58,8 @@ class ClassRoomController extends Controller
 
     public function showCopy(ClassRoomEloquentModel $classroom)
     {
+        abort_if(authorize('show', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             // dd($classroom->load('students', 'teachers')->loadCount('students', 'teachers'));
             return Inertia::render(config('route.showCopy'), [
@@ -74,6 +76,8 @@ class ClassRoomController extends Controller
 
     public function editCopy(ClassRoomEloquentModel $classroom)
     {
+        abort_if(authorize('edit', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // dd($classroom->load('students', 'teachers')->loadCount('students', 'teachers'));
         try {
             return Inertia::render(config('route.editCopy'), [
@@ -88,6 +92,7 @@ class ClassRoomController extends Controller
 
     public function create()
     {
+        abort_if(authorize('create', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -108,7 +113,7 @@ class ClassRoomController extends Controller
     public function store(storeClassRoomRequest $request)
     {
 
-        // abort_if(authorize('create', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('store', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
             $request->validated();
@@ -129,7 +134,7 @@ class ClassRoomController extends Controller
     //update Classroom
     public function update(updateClassRoomRequest $request, ClassRoomEloquentModel $classroom)
     {
-        // abort_if(authorize('edit', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('edit', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $updateClassRoom = ClassRoomData::fromRequest($request, $classroom->id);
             $updateClassRoom = (new UpdateClassRoomCommand($updateClassRoom));
@@ -143,7 +148,7 @@ class ClassRoomController extends Controller
 
     public function destroy(ClassRoomEloquentModel $classroom)
     {
-        // abort_if(authorize('destroy', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('destroy', ClassRoomPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $classroom->delete();
 

@@ -14,6 +14,7 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
+import { checkPermission } from "@actions/useCheckPermission";
 let props = defineProps(["pathways", "flash"]);
 
 //## start datatable section
@@ -117,6 +118,11 @@ const goEdit = (id) => {
                                         <!-- 👉 Add User button -->
                                         <VBtn class="tiggie-btn">
                                             <Link
+                                                v-if="
+                                                    checkPermission(
+                                                        'create_pathway'
+                                                    )
+                                                "
                                                 :href="route('pathways.create')"
                                                 class="text-white"
                                             >
@@ -219,6 +225,11 @@ const goEdit = (id) => {
                                             </template>
                                             <VList>
                                                 <VListItem
+                                                    v-if="
+                                                        checkPermission(
+                                                            'edit_pathway'
+                                                        )
+                                                    "
                                                     @click="
                                                         goEdit(dataProps.row.id)
                                                     "
@@ -228,6 +239,11 @@ const goEdit = (id) => {
                                                     >
                                                 </VListItem>
                                                 <VListItem
+                                                    v-if="
+                                                        checkPermission(
+                                                            'delete_pathway'
+                                                        )
+                                                    "
                                                     @click="
                                                         deletePathway(
                                                             dataProps.row.id

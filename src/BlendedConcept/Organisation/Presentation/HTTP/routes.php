@@ -8,10 +8,10 @@ use Src\BlendedConcept\Organisation\Presentation\HTTP\OrganisationTeacherControl
 Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('organisations', OrganisationController::class);
+    Route::get('/staff_organisations', [OrganisationController::class, 'staff_index'])->name('staff_organisations');
     Route::get('organisations/{organisation}/addsubscription', [OrganisationController::class, 'addSubscription'])->name('organisations.addSubscription');
     Route::put('organisations/{organisation}/storesubscription', [OrganisationController::class, 'storeSubscription'])->name('organisations.storeSubscription');
 
     Route::resource('/organisations-teacher', OrganisationTeacherController::class);
     Route::resource('organisations-student', OrganisationStudentController::class);
-
 });

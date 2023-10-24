@@ -5,7 +5,7 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import Edit from "./Edit.vue";
 import { router } from "@inertiajs/core";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
-
+import { checkPermission } from "@actions/useCheckPermission";
 const props = defineProps({
     data: {
         type: Object,
@@ -157,6 +157,7 @@ onUpdated(() => {
                                 color="secondary"
                             ></v-btn> -->
                             <Edit
+                                v-if="checkPermission('edit_book')"
                                 :datas="data"
                                 :disability_types="props.disability_types"
                                 :devices="props.devices"
@@ -164,7 +165,10 @@ onUpdated(() => {
                                 :learningneeds="props.learningneeds"
                             />
                             <!-- <v-btn icon="mdi-edit" size="x-small" color="secondary" @click="isEdit = true"/> -->
-                            <Link :href="route('books.edit', data.id)">
+                            <Link
+                                :href="route('books.edit', data.id)"
+                                v-if="checkPermission('edit_book')"
+                            >
                                 <v-btn
                                     icon="mdi-upload"
                                     size="x-small"
@@ -173,6 +177,7 @@ onUpdated(() => {
                             </Link>
 
                             <v-btn
+                                v-if="checkPermission('delete_book')"
                                 icon="mdi-bin"
                                 size="x-small"
                                 color="secondary"

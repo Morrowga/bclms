@@ -19,6 +19,7 @@ class DisabilityDeviceController
 {
     public function index()
     {
+        abort_if(authorize('view', DisabilityTypePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $filters = request(['search', 'page', 'perPage']);
         $disabilityTypes = (new GetDisabilityTypes($filters))->handle();
 
@@ -31,7 +32,7 @@ class DisabilityDeviceController
     {
         try {
             // Abort if the user is not authorized to create organisations
-            // abort_if(authorize('create', DisabilityTypePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            abort_if(authorize('create', DisabilityTypePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             // Validate the request data
             $request->validated();
@@ -47,11 +48,13 @@ class DisabilityDeviceController
 
     public function create()
     {
+        abort_if(authorize('create', DisabilityTypePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return Inertia::render(config('route.plans.create'));
     }
 
     public function show()
     {
+        abort_if(authorize('show', DisabilityTypePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return Inertia::render(config('route.plans.show'));
     }
 
@@ -62,7 +65,7 @@ class DisabilityDeviceController
 
     public function update(UpdateDisabilityTypeRequest $request, DisabilityTypeEloquentModel $disabilityType)
     {
-
+        abort_if(authorize('update', DisabilityTypePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $updateDisabilityType = DisabilityTypeData::fromRequest($request, $disabilityType);
             $updateDisabilityTypecommand = (new UpdateDisabilityTypeCommand($updateDisabilityType));
@@ -76,6 +79,7 @@ class DisabilityDeviceController
 
     public function destroy(DisabilityTypeEloquentModel $disabilityType)
     {
+        abort_if(authorize('destroy', DisabilityTypePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
             $updateDisabilityTypecommand = (new DeleteDisabilityTypeCommand($disabilityType));

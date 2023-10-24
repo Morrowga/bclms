@@ -12,7 +12,7 @@ use Src\BlendedConcept\Student\Application\UseCases\Commands\Playlist\StorePlayl
 use Src\BlendedConcept\Student\Application\UseCases\Commands\Playlist\UpdatePlaylistCommand;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\Playlist\GetPlaylist;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\Playlist\ShowPlaylist;
-use Src\BlendedConcept\Student\Domain\Policies\PlaylistPolicy;
+use Src\BlendedConcept\Student\Application\Policies\PlaylistPolicy;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\PlaylistEloquentModel;
 use Symfony\Component\HttpFoundation\Response;
 

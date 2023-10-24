@@ -2,6 +2,7 @@
 
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
+use Illuminate\Http\Response;
 use Inertia\Inertia;
 use Src\BlendedConcept\StoryBook\Application\DTO\RewardData;
 use Src\BlendedConcept\StoryBook\Application\Mappers\RewardMapper;
@@ -13,6 +14,7 @@ use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoreRewardComman
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\UpdateRewardCommand;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\RewardEloquentModel;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\ChangeRewardStatusCommand;
+use Src\BlendedConcept\StoryBook\Domain\Policies\RewardPolicy;
 
 class RewardController
 {
@@ -23,6 +25,8 @@ class RewardController
      */
     public function index()
     {
+        abort_if(authorize('view', RewardPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // Get filters from the request
         $filters = request()->only(['search', 'name', 'status', 'perPage', 'filter']) ?? [];
 
@@ -40,6 +44,8 @@ class RewardController
      */
     public function create()
     {
+        abort_if(authorize('create', RewardPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // Render the create reward page using Inertia
         return Inertia::render(config('route.reward.create'));
     }
@@ -51,6 +57,8 @@ class RewardController
      */
     public function store(StoreRewardRequest $request)
     {
+        abort_if(authorize('store', RewardPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
 
         try {
             // Map the reward data from the request
@@ -75,6 +83,8 @@ class RewardController
      */
     public function show(RewardEloquentModel $reward)
     {
+        abort_if(authorize('show', RewardPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // Render the reward details using Inertia
         return Inertia::render(config('route.reward.show'), compact('reward'));
     }
@@ -86,6 +96,8 @@ class RewardController
      */
     public function edit(RewardEloquentModel $reward)
     {
+        abort_if(authorize('edit', RewardPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         // Render the reward edit form using Inertia
         return Inertia::render(config('route.reward.edit'), compact('reward'));
     }
@@ -97,6 +109,8 @@ class RewardController
      */
     public function update(UpdateRewardRequest $request, RewardEloquentModel $reward)
     {
+        abort_if(authorize('update', RewardPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             // Map the reward data from the request
             $rewardData = RewardData::fromRequest($request, $reward->id);

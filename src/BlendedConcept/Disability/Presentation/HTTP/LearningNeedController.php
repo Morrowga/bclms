@@ -6,6 +6,7 @@ use Illuminate\Http\Response;
 use Inertia\Inertia;
 use Src\BlendedConcept\Disability\Application\DTO\LearningNeedData;
 use Src\BlendedConcept\Disability\Application\Mappers\LearningNeedMapper;
+use Src\BlendedConcept\Disability\Application\Policies\LearningNeedPolicy;
 use Src\BlendedConcept\Disability\Application\Requests\StoreLearningNeedRequest;
 use Src\BlendedConcept\Disability\Application\Requests\UpdateLearningNeedRequest;
 use Src\BlendedConcept\Disability\Application\UseCases\Commands\LearningNeeds\DeleteLearningNeedCommand;
@@ -18,6 +19,7 @@ class LearningNeedController
 {
     public function index()
     {
+        abort_if(authorize('view', LearningNeedPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $filters = request(['search', 'page', 'perPage']);
         $learningNeeds = (new GetLearningNeeds($filters))->handle();
 
@@ -30,7 +32,7 @@ class LearningNeedController
     {
         try {
             // Abort if the user is not authorized to create Learning Need
-            // abort_if(authorize('create', LearningNeedPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            abort_if(authorize('create', LearningNeedPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             // Validate the request data
 
@@ -52,6 +54,7 @@ class LearningNeedController
 
     public function update(UpdateLearningNeedRequest $request, $id)
     {
+        abort_if(authorize('update', LearningNeedPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -68,6 +71,8 @@ class LearningNeedController
 
     public function destroy($id)
     {
+        abort_if(authorize('destroy', LearningNeedPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             $learningNeed = learningNeedEloquentModel::findOrFail($id);
             $deletelearningNeedCommand = (new DeleteLearningNeedCommand($learningNeed));

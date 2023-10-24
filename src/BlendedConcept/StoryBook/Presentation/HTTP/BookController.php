@@ -3,6 +3,7 @@
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
 use Inertia\Inertia;
 use Src\BlendedConcept\Library\Application\UseCases\Commands\UpdateResourceCommand;
@@ -20,6 +21,7 @@ use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetLearningNeed;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStoryBook;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStudentStorybooks;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetTheme;
+use Src\BlendedConcept\StoryBook\Domain\Policies\BookPolicy;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
 
 class BookController
@@ -32,6 +34,7 @@ class BookController
      */
     public function index()
     {
+        abort_if(authorize('view', BookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // Retrieve learning needs, themes, disability types, and devices
         $learningneeds = (new GetLearningNeed())->handle();
         $themes = (new GetTheme())->handle();
@@ -56,6 +59,8 @@ class BookController
     {
         // $val = Cookie::get('h5p_id');
         // dd($val);
+        abort_if(authorize('store', BookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             // Map the request data to create a new storybook
             $newStoryBook = StoryBookMapper::fromRequest($request);
@@ -81,6 +86,8 @@ class BookController
      */
     public function update(UpdateStoryBookRequest $request, StoryBookEloquentModel $book)
     {
+        abort_if(authorize('update', BookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             // Map the request data to update the storybook
             $updateStoryBook = StoryBookData::fromRequest($request, $book->id);
@@ -99,6 +106,8 @@ class BookController
 
     public function create()
     {
+        abort_if(authorize('create', BookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $learningneeds = (new GetLearningNeed())->handle();
         $themes = (new GetTheme())->handle();
         $disability_types = (new GetDisabilityType())->handle();
@@ -110,6 +119,8 @@ class BookController
     public function edit(StoryBookEloquentModel $book)
     {
         // dd($book);
+        abort_if(authorize('edit', BookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return Inertia::render(config('route.books.edit'), compact('book'));
     }
 
@@ -125,6 +136,8 @@ class BookController
     }
     public function destroy(StoryBookEloquentModel $book)
     {
+        abort_if(authorize('destroy', BookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             $deleteBookCommand = (new DeleteBookCommand($book));
             $deleteBookCommand->execute();

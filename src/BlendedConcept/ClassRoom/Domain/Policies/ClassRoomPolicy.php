@@ -14,6 +14,11 @@ class ClassRoomPolicy
         return auth()->user()->hasPermission('create_classroom');
     }
 
+    public static function show()
+    {
+        return auth()->user()->hasPermission('show_classroom');
+    }
+
     public static function store()
     {
         return auth()->user()->hasPermission('create_classroom');

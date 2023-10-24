@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Student\Domain\Policies;
+namespace Src\BlendedConcept\Student\Application\Policies;
 
 class StudentPolicy
 {
@@ -12,6 +12,10 @@ class StudentPolicy
     public static function create()
     {
         return auth()->user()->hasPermission('create_student');
+    }
+    public static function show()
+    {
+        return auth()->user()->hasPermission('show_student');
     }
 
     public static function store()

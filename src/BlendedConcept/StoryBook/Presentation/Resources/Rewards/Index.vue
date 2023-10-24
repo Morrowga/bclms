@@ -19,6 +19,7 @@ import {
     serverPerPage,
     truncatedText,
 } from "@Composables/useServerSideDatable.js";
+import { checkPermission } from "@actions/useCheckPermission";
 
 let props = defineProps(["rewards"]);
 
@@ -182,6 +183,9 @@ const showName = (status) => {
                                     <!-- 👉 Add Announcement button -->
                                     <VBtn class="tiggie-btn">
                                         <Link
+                                            v-if="
+                                                checkPermission('create_reward')
+                                            "
                                             :href="route('rewards.create')"
                                             class="text-white"
                                         >
@@ -260,6 +264,11 @@ const showName = (status) => {
                                             </template>
                                             <VList>
                                                 <VListItem
+                                                    v-if="
+                                                        checkPermission(
+                                                            'edit_reward'
+                                                        )
+                                                    "
                                                     @click="
                                                         editRewards(
                                                             dataProps.row.id
@@ -271,6 +280,11 @@ const showName = (status) => {
                                                     >
                                                 </VListItem>
                                                 <VListItem
+                                                    v-if="
+                                                        checkPermission(
+                                                            'delete_reward'
+                                                        )
+                                                    "
                                                     @click="
                                                         setInactive(
                                                             dataProps.row.id

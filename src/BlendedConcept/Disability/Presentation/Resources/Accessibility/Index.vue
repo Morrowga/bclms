@@ -18,6 +18,7 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
+import { checkPermission } from "@actions/useCheckPermission";
 let props = defineProps(["devices", "flash"]);
 
 //## start datatable section
@@ -212,6 +213,11 @@ const deleteItem = (status, id) => {
                                         />
                                         <!-- 👉 Add button -->
                                         <DefaultBtn
+                                            v-if="
+                                                checkPermission(
+                                                    'create_accessibility'
+                                                )
+                                            "
                                             title="Add Device"
                                             @click="
                                                 goRoute(
@@ -294,6 +300,11 @@ const deleteItem = (status, id) => {
                                             </template>
                                             <VList>
                                                 <VListItem
+                                                    v-if="
+                                                        checkPermission(
+                                                            'edit_accessibility'
+                                                        )
+                                                    "
                                                     @click="
                                                         () =>
                                                             router.get(
@@ -310,6 +321,11 @@ const deleteItem = (status, id) => {
                                                     >
                                                 </VListItem>
                                                 <VListItem
+                                                    v-if="
+                                                        checkPermission(
+                                                            'delete_accessibility'
+                                                        )
+                                                    "
                                                     @click="
                                                         deleteItem(
                                                             dataProps.row

@@ -13,12 +13,15 @@ use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\Pathways\StorePat
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\Pathways\UpdatePathwayCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStorybookForSelect;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\Pathways\GetPathwaysQuery;
+use Src\BlendedConcept\StoryBook\Domain\Policies\PathwayPolicy;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\PathwayEloquentModel;
 
 class PathwayController
 {
     public function index()
     {
+        abort_if(authorize('view', PathwayPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $filters = request(['search', 'page', 'perPage']);
         $pathways = (new GetPathwaysQuery($filters))->handle();
 
@@ -31,7 +34,7 @@ class PathwayController
     {
         try {
             // Abort if the user is not authorized to create Pathway
-            // abort_if(authorize('create', PathwayPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            abort_if(authorize('store', PathwayPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             // Validate the request data
 
@@ -52,6 +55,8 @@ class PathwayController
 
     public function show(PathwayEloquentModel $pathway)
     {
+        abort_if(authorize('show', PathwayPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return Inertia::render(config('route.pathways.show'), [
             'pathway' => $pathway->load('storybooks'),
         ]);
@@ -59,6 +64,7 @@ class PathwayController
 
     public function edit(PathwayEloquentModel $pathway)
     {
+        abort_if(authorize('edit', PathwayPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $storybooks = (new GetStorybookForSelect())->handle();
 
@@ -70,6 +76,8 @@ class PathwayController
 
     public function create()
     {
+        abort_if(authorize('create', PathwayPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $storybooks = (new GetStorybookForSelect())->handle();
 
         return Inertia::render(config('route.pathways.create'), [
@@ -79,6 +87,8 @@ class PathwayController
 
     public function update(UpdatePathwayRequest $request, $id)
     {
+        abort_if(authorize('update', PathwayPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
 
             $pathway = PathwayEloquentModel::findOrFail($id);
@@ -98,6 +108,8 @@ class PathwayController
 
     public function destroy($id)
     {
+        abort_if(authorize('destroy', PathwayPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             $pathway = PathwayEloquentModel::findOrFail($id);
             $deletePathwayCommand = (new DeletePathwayCommand($pathway));

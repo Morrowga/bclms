@@ -10,7 +10,7 @@ use Src\BlendedConcept\Student\Application\Requests\updateStudentRequest;
 use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreStudentCommand;
 use Src\BlendedConcept\Student\Application\UseCases\Commands\UpdateStudentCommand;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetStudentWithPagination;
-use Src\BlendedConcept\Student\Domain\Policies\StudentPolicy;
+use Src\BlendedConcept\Student\Application\Policies\StudentPolicy;
 use Src\BlendedConcept\Student\Domain\Services\StudentService;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\Common\Infrastructure\Laravel\Controller;
@@ -45,7 +45,7 @@ class StudentController extends Controller
 
         // Check if the user is authorized to view users
 
-        // abort_if(authorize('view', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('view', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -54,7 +54,6 @@ class StudentController extends Controller
 
             // Retrieve users with pagination using the provided filters
             $students = (new GetStudentWithPagination($filters))->handle()['paginate_students'];
-
             return Inertia::render(config('route.students'), compact('students'));
         } catch (\Exception $e) {
             return redirect()->route($this->route_url . 'students.index')->with('errorMessage', $e->getMessage());
@@ -70,7 +69,7 @@ class StudentController extends Controller
     public function store(storeStudentRequest $request)
     {
 
-        // abort_if(authorize('create', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('create', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -90,7 +89,7 @@ class StudentController extends Controller
     //update user
     public function update(updateStudentRequest $request, StudentEloquentModel $student)
     {
-        // abort_if(authorize('edit', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('edit', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
             $updateStudent = StudentData::fromRequest($request, $student->id);
@@ -106,7 +105,7 @@ class StudentController extends Controller
 
     public function destroy(StudentEloquentModel $student)
     {
-        // abort_if(authorize('destroy', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('destroy', StudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $student->delete();
 

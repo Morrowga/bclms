@@ -30,10 +30,16 @@ class StudentRepository implements StudentRepositoryInterface
      */
     public function getStudent($filters)
     {
+        $auth = auth()->user()->role->name;
         $paginate_students = StudentResources::collection(
             StudentEloquentModel::with('user', 'organisation', 'disability_types', 'parent')
                 ->filter($filters)
-                ->where('organisation_id', auth()->user()->organisation_id)
+                ->when($auth, function ($query, $auth) {
+
+                    if ($auth != 'BC Super Admin') {
+                        $query->where('organisation_id', auth()->user()->organisation_id);
+                    }
+                })
                 ->orderBy('student_id', 'desc')
                 // ->where('organisation_id', auth()->user()->organisation_id)
                 ->paginate($filters['perPage'] ?? 10)

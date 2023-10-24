@@ -14,7 +14,7 @@ import avatar4 from "@images/avatars/avatar-4.png";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
-
+import { checkPermission } from "@actions/useCheckPermission";
 // import Create from "./Create.vue";
 // import Edit from "./Edit.vue";
 let props = defineProps(["surveys"]);
@@ -134,6 +134,9 @@ const deleteSurvey = (id) => {
                                     >
                                         <!-- 👉 Add User button -->
                                         <Create
+                                            v-if="
+                                                checkPermission('create_survey')
+                                            "
                                             :organisations="organisations"
                                             :roles="roles_name"
                                             :flash="flash"
@@ -147,6 +150,9 @@ const deleteSurvey = (id) => {
                                             item_value="value"
                                         />
                                         <Link
+                                            v-if="
+                                                checkPermission('create_survey')
+                                            "
                                             :href="
                                                 route(
                                                     'userexperiencesurvey.create'
@@ -269,6 +275,11 @@ const deleteSurvey = (id) => {
                                             </template>
                                             <VList>
                                                 <VListItem
+                                                    v-if="
+                                                        checkPermission(
+                                                            'delete_survey'
+                                                        )
+                                                    "
                                                     @click="
                                                         deleteSurvey(
                                                             dataProps.row.id
@@ -280,6 +291,11 @@ const deleteSurvey = (id) => {
                                                     >
                                                 </VListItem>
                                                 <VListItem
+                                                    v-if="
+                                                        checkPermission(
+                                                            'show_survey'
+                                                        )
+                                                    "
                                                     @click="
                                                         router.get(
                                                             route(

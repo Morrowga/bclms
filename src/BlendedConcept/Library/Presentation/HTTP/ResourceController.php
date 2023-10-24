@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\Library\Presentation\HTTP;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\Library\Application\Requests\CheckStorageRequest;
 use Src\BlendedConcept\Library\Application\Requests\StoreResourceRequest;
@@ -17,11 +18,14 @@ use Src\BlendedConcept\Library\Application\UseCases\Commands\DeleteResourceComma
 use Src\BlendedConcept\Library\Application\UseCases\Commands\ResourceActionCommand;
 use Src\BlendedConcept\Library\Application\UseCases\Commands\UpdateResourceCommand;
 use Src\BlendedConcept\Library\Application\UseCases\Commands\RequestPublishResourceCommand;
+use Src\BlendedConcept\Library\Application\Policies\ResourcePolicy;
 
 class ResourceController extends Controller
 {
     public function index()
     {
+        abort_if(authorize('view', ResourcePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             $resources = (new GetResources(auth()->user()))->handle();
             $resourceStorage = (new GetResourceStorage(auth()->user()))->handle();
@@ -56,7 +60,7 @@ class ResourceController extends Controller
      */
     public function store(StoreResourceRequest $request)
     {
-        // abort_if(authorize('create', ResourcePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('store', ResourcePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             // Validate the request data
@@ -83,7 +87,7 @@ class ResourceController extends Controller
      */
     public function update(UpdateResourceRequest $request, MediaEloquentModel $resource)
     {
-        // abort_if(authorize('create', ResourcePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('update', ResourcePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             // Validate the request data
@@ -110,7 +114,7 @@ class ResourceController extends Controller
      */
     public function destroy(MediaEloquentModel $resource)
     {
-        // abort_if(authorize('destroy', PlaylistPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('destroy', ResourcePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Try to delete the playlist.

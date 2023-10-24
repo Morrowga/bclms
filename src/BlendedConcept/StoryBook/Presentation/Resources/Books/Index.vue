@@ -13,7 +13,7 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
-
+import { checkPermission } from "@actions/useCheckPermission";
 let props = defineProps([
     "storybooks",
     "learningneeds",
@@ -52,7 +52,10 @@ const searchItem = ref({
                             :disability_types="props.disability_types"
                             :devices="props.devices"
                         />
-                        <Link :href="route('books.create')">
+                        <Link
+                            :href="route('books.create')"
+                            v-if="checkPermission('create_book')"
+                        >
                             <VBtn>Add New Book</VBtn>
                         </Link>
                     </div>

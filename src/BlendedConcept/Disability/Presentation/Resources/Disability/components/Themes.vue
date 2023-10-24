@@ -18,6 +18,8 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
+import { checkPermission } from "@actions/useCheckPermission";
+
 let props = defineProps(["disabilityTypes", "flash"]);
 
 //## start datatable section
@@ -109,7 +111,11 @@ const handleSubmit = ({ title }) => {
                                 <VRow align="center">
                                     <VCol cols="6"></VCol>
                                     <VCol cols="6" class="text-end">
-                                        <Create />
+                                        <Create
+                                            v-if="
+                                                checkPermission('create_theme')
+                                            "
+                                        />
                                     </VCol>
                                 </VRow>
                             </div>
@@ -145,9 +151,19 @@ const handleSubmit = ({ title }) => {
                                         </template>
                                         <VList>
                                             <Edit
+                                                v-if="
+                                                    checkPermission(
+                                                        'edit_theme'
+                                                    )
+                                                "
                                                 :disability_type="dataProps.row"
                                             />
                                             <VListItem
+                                                v-if="
+                                                    checkPermission(
+                                                        'delete_theme'
+                                                    )
+                                                "
                                                 @click="
                                                     deleteItem(dataProps.row.id)
                                                 "

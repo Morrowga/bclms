@@ -13,7 +13,10 @@ class GamePolicy
     {
         return auth()->user()->hasPermission('create_game');
     }
-
+    public static function show()
+    {
+        return auth()->user()->hasPermission('show_game');
+    }
     public static function store()
     {
         return auth()->user()->hasPermission('create_game');

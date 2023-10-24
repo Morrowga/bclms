@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Src\BlendedConcept\System\Application\DTO\SiteSettingData;
 use Src\BlendedConcept\System\Application\DTO\SiteThemData;
 use Src\BlendedConcept\System\Application\Policies\SettingPolicy;
+use Src\BlendedConcept\System\Application\Policies\SiteThemePolicy;
 use Src\BlendedConcept\System\Application\Requests\UpdateSettingRequest;
 use Src\BlendedConcept\System\Application\Requests\updateSiteThemeRequest;
 use Src\BlendedConcept\System\Application\UseCases\Commands\UpdateSiteSettingCommand;
@@ -25,7 +26,7 @@ class SettingController extends Controller
     public function index()
     {
         // Authorize the user to view the site settings
-        // abort_if(authorize('view', SettingPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('view', SettingPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -45,6 +46,8 @@ class SettingController extends Controller
      */
     public function UpdateSetting(UpdateSettingRequest $request)
     {
+        abort_if(authorize('update', SettingPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             // Create a SiteSettingData instance from the request
             $site_setting = SiteSettingData::fromRequest($request);
@@ -63,6 +66,7 @@ class SettingController extends Controller
 
     public function updateSiteTheme()
     {
+        abort_if(authorize('view', SiteThemePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $site_theme = (new GetSiteThemeQuery)->handle();
 
@@ -71,6 +75,8 @@ class SettingController extends Controller
 
     public function updatetheme(updateSiteThemeRequest $request)
     {
+        abort_if(authorize('update', SiteThemePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             $system_theme = SiteThemData::fromRequest($request);
             $update_system_theme = new UpdateSiteThemeCommand($system_theme);

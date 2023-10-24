@@ -19,6 +19,8 @@ class ThemeController
 {
     public function index()
     {
+        abort_if(authorize('view', ThemePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $filters = request(['search', 'page', 'perPage']);
         $themes = (new GetThemes($filters))->handle();
 
@@ -31,7 +33,7 @@ class ThemeController
     {
         try {
             // Abort if the user is not authorized to create organisations
-            // abort_if(authorize('create', ThemePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            abort_if(authorize('create', ThemePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             // Validate the request data
             $request->validated();
@@ -53,6 +55,8 @@ class ThemeController
     public function update(UpdateThemeRequest $request, $id)
     {
 
+        abort_if(authorize('update', ThemePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             $theme = ThemeEloquentModel::findOrFail($id);
             $updateTheme = ThemeData::fromRequest($request, $theme);
@@ -71,6 +75,8 @@ class ThemeController
 
     public function destroy($id)
     {
+        abort_if(authorize('destroy', ThemePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             $theme = ThemeEloquentModel::findOrFail($id);
             $deleteThemeCommand = (new DeleteThemeCommand($theme));

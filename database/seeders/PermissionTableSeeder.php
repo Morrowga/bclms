@@ -87,6 +87,11 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Users can delete organisations when they are no longer needed.',
             ],
             [
+                'name' => 'access_userMenu',
+                'guard_name' => 'web',
+                'description' => 'Users can access user-menu functionalities and profiles.',
+            ],
+            [
                 'name' => 'access_user',
                 'guard_name' => 'web',
                 'description' => 'Users can access user-related functionalities and profiles.',
@@ -168,11 +173,6 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Users can edit subscriber-related features and settings.',
             ],
             [
-                'name' => 'update_subscription',
-                'guard_name' => 'web',
-                'description' => 'Users can update subscriber-related features and settings.',
-            ],
-            [
                 'name' => 'delete_subscription',
                 'guard_name' => 'web',
                 'description' => 'Users can delete subscriber-related features and settings.',
@@ -195,6 +195,11 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Users can access plans and subscription-related functionalities.',
             ],
             [
+                'name' => 'show_plan',
+                'guard_name' => 'web',
+                'description' => 'Users can view plans and subscription-related functionalities.',
+            ],
+            [
                 'name' => 'create_plan',
                 'guard_name' => 'web',
                 'description' => 'Users can create new subscription plans.',
@@ -210,14 +215,39 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Users can delete subscription plans when necessary.',
             ],
             [
-                'name' => 'access_settings',
+                'name' => 'access_setting',
                 'guard_name' => 'web',
                 'description' => 'Users can access various application settings and configurations.',
+            ],
+            [
+                'name' => 'create_setting',
+                'guard_name' => 'web',
+                'description' => 'Users can create various application settings and configurations.',
+            ],
+            [
+                'name' => 'show_setting',
+                'guard_name' => 'web',
+                'description' => 'Users can view various application settings and configurations.',
+            ],
+            [
+                'name' => 'edit_setting',
+                'guard_name' => 'web',
+                'description' => 'Users can edit various application settings and configurations.',
+            ],
+            [
+                'name' => 'delete_setting',
+                'guard_name' => 'web',
+                'description' => 'Users can delete various application settings and configurations.',
             ],
             [
                 'name' => 'access_student',
                 'guard_name' => 'web',
                 'description' => 'Users can access student-related functionalities and profiles.',
+            ],
+            [
+                'name' => 'show_student',
+                'guard_name' => 'web',
+                'description' => 'Users can view student-related functionalities and profiles.',
             ],
             [
                 'name' => 'create_student',
@@ -260,6 +290,11 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Users can access classroom-related functionalities and settings.',
             ],
             [
+                'name' => 'show_classroom',
+                'guard_name' => 'web',
+                'description' => 'Users can show classroom-related functionalities and settings.',
+            ],
+            [
                 'name' => 'create_classroom',
                 'guard_name' => 'web',
                 'description' => 'Users can create new classroom environments.',
@@ -282,10 +317,96 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Users can access accessibility-related features and settings within the application.',
             ],
             [
+                'name' => 'show_accessibility',
+                'guard_name' => 'web',
+                'description' => 'Users can access accessibility-related features and settings within the application.',
+            ],
+            [
+                'name' => 'edit_accessibility',
+                'guard_name' => 'web',
+                'description' => 'Users can access accessibility-related features and settings within the application.',
+            ],
+            [
+                'name' => 'delete_accessibility',
+                'guard_name' => 'web',
+                'description' => 'Users can access accessibility-related features and settings within the application.',
+            ],
+            [
+                'name' => 'create_accessibility',
+                'guard_name' => 'web',
+                'description' => 'Users can access accessibility-related features and settings within the application.',
+            ],
+
+
+            [
                 'name' => 'access_disabilityDevice',
                 'guard_name' => 'web',
                 'description' => 'Users can access and manage disability devices and related functionalities.',
             ],
+
+            [
+                'name' => 'access_disability',
+                'guard_name' => 'web',
+                'description' => 'Users can access and manage disability type and related functionalities.'
+            ],
+            [
+                'name' => 'create_disability',
+                'guard_name' => 'web',
+                'description' => 'Users can access and manage disability type and related functionalities.'
+            ],
+            [
+                'name' => 'edit_disability',
+                'guard_name' => 'web',
+                'description' => 'Users can access and manage disability type and related functionalities.'
+            ],
+            [
+                'name' => 'delete_disability',
+                'guard_name' => 'web',
+                'description' => 'Users can access and manage disability type and related functionalities.'
+            ],
+
+            [
+                'name' => 'access_learning',
+                'guard_name' => 'web',
+                'description' => 'Users can access and manage learning type and related functionalities.'
+            ],
+            [
+                'name' => 'create_learning',
+                'guard_name' => 'web',
+                'description' => 'Users can access and manage learning type and related functionalities.'
+            ],
+            [
+                'name' => 'edit_learning',
+                'guard_name' => 'web',
+                'description' => 'Users can access and manage learning type and related functionalities.'
+            ],
+            [
+                'name' => 'delete_learning',
+                'guard_name' => 'web',
+                'description' => 'Users can access and manage learning type and related functionalities.'
+            ],
+
+            [
+                'name' => 'access_theme',
+                'guard_name' => 'web',
+                'description' => 'Users can access and manage theme and related functionalities.'
+            ],
+            [
+                'name' => 'create_theme',
+                'guard_name' => 'web',
+                'description' => 'Users can access and manage theme and related functionalities.'
+            ],
+            [
+                'name' => 'edit_theme',
+                'guard_name' => 'web',
+                'description' => 'Users can access and manage theme and related functionalities.'
+            ],
+            [
+                'name' => 'delete_theme',
+                'guard_name' => 'web',
+                'description' => 'Users can access and manage theme and related functionalities.'
+            ],
+
             [
                 'name' => 'access_accessibilityDevice',
                 'guard_name' => 'web',
@@ -297,35 +418,95 @@ class PermissionTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'description' => 'Users can access storybook and their configurations within the application.',
             ],
+
+
             [
-                'name' => 'access_games',
-                'guard_name' => 'web',
-                'description' => 'Users can access games and their configurations within the application.',
-            ],
-            [
-                'name' => 'access_books',
+                'name' => 'access_book',
                 'guard_name' => 'web',
                 'description' => 'Users can access books and their configurations within the application.',
             ],
             [
-                'name' => 'access_pathways',
+                'name' => 'show_book',
+                'guard_name' => 'web',
+                'description' => 'Users can view books and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_book',
+                'guard_name' => 'web',
+                'description' => 'Users can create books and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_book',
+                'guard_name' => 'web',
+                'description' => 'Users can edit books and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_book',
+                'guard_name' => 'web',
+                'description' => 'Users can delete books and their configurations within the application.',
+            ],
+
+            [
+                'name' => 'access_pathway',
                 'guard_name' => 'web',
                 'description' => 'Users can access pathways and their configurations within the application.',
             ],
             [
-                'name' => 'access_rewards',
+                'name' => 'create_pathway',
+                'guard_name' => 'web',
+                'description' => 'Users can create pathways and their configurations within the application.',
+            ],
+            [
+                'name' => 'show_pathway',
+                'guard_name' => 'web',
+                'description' => 'Users can view pathways and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_pathway',
+                'guard_name' => 'web',
+                'description' => 'Users can edit pathways and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_pathway',
+                'guard_name' => 'web',
+                'description' => 'Users can delete pathways and their configurations within the application.',
+            ],
+
+            [
+                'name' => 'access_reward',
                 'guard_name' => 'web',
                 'description' => 'Users can access rewards and their configurations within the application.',
             ],
             [
+                'name' => 'create_reward',
+                'guard_name' => 'web',
+                'description' => 'Users can create rewards and their configurations within the application.',
+            ],
+            [
+                'name' => 'show_reward',
+                'guard_name' => 'web',
+                'description' => 'Users can view rewards and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_reward',
+                'guard_name' => 'web',
+                'description' => 'Users can edit rewards and their configurations within the application.',
+            ],
+            [
+                'name' => 'update_reward',
+                'guard_name' => 'web',
+                'description' => 'Users can update rewards and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_reward',
+                'guard_name' => 'web',
+                'description' => 'Users can delete rewards and their configurations within the application.',
+            ],
+
+            [
                 'name' => 'access_mainSubscription',
                 'guard_name' => 'web',
                 'description' => 'Users can access mainSubscription and their configurations within the application.',
-            ],
-            [
-                'name' => 'access_subscription',
-                'guard_name' => 'web',
-                'description' => 'Users can access subscription and their configurations within the application.',
             ],
             [
                 'name' => 'access_surveys',
@@ -377,11 +558,33 @@ class PermissionTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'description' => 'Users can access studentRewards and their configurations within the application.',
             ],
+
             [
                 'name' => 'access_resources',
                 'guard_name' => 'web',
                 'description' => 'Users can access resources and their configurations within the application.',
             ],
+            [
+                'name' => 'create_resources',
+                'guard_name' => 'web',
+                'description' => 'Users can access resources and their configurations within the application.',
+            ],
+            [
+                'name' => 'show_resources',
+                'guard_name' => 'web',
+                'description' => 'Users can view resources and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_resources',
+                'guard_name' => 'web',
+                'description' => 'Users can edit resources and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_resources',
+                'guard_name' => 'web',
+                'description' => 'Users can delete resources and their configurations within the application.',
+            ],
+
             [
                 'name' => 'access_orgClassroom',
                 'guard_name' => 'web',
@@ -418,6 +621,11 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Users can create surveys and their configurations within the application.',
             ],
             [
+                'name' => 'show_survey',
+                'guard_name' => 'web',
+                'description' => 'Users can view surveys and their configurations within the application.',
+            ],
+            [
                 'name' => 'create_survey',
                 'guard_name' => 'web',
                 'description' => 'Users can create surveys and their configurations within the application.',
@@ -441,6 +649,11 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'create_game',
                 'guard_name' => 'web',
                 'description' => 'Users can create games and their configurations within the application.',
+            ],
+            [
+                'name' => 'show_game',
+                'guard_name' => 'web',
+                'description' => 'Users can view games and their configurations within the application.',
             ],
             [
                 'name' => 'edit_game',
@@ -512,6 +725,116 @@ class PermissionTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'description' => 'Users can delete survey responses.',
             ],
+
+            [
+                'name' => 'access_siteTheme',
+                'guard_name' => 'web',
+                'description' => 'Users can access site theme and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_siteTheme',
+                'guard_name' => 'web',
+                'description' => 'Users can create site theme and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_siteTheme',
+                'guard_name' => 'web',
+                'description' => 'Users can update site theme and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_siteTheme',
+                'guard_name' => 'web',
+                'description' => 'Users can delete site theme.',
+            ],
+            [
+                'name' => 'access_exportData',
+                'guard_name' => 'web',
+                'description' => 'Users can access exportData',
+            ],
+
+            [
+                'name' => 'access_techSupport',
+                'guard_name' => 'web',
+                'description' => 'Users can access technical support and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_techSupport',
+                'guard_name' => 'web',
+                'description' => 'Users can create technical support and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_techSupport',
+                'guard_name' => 'web',
+                'description' => 'Users can update technical support and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_techSupport',
+                'guard_name' => 'web',
+                'description' => 'Users can delete technical support.',
+            ],
+
+            [
+                'name' => 'access_bookReview',
+                'guard_name' => 'web',
+                'description' => 'Users can access book review and their configurations within the application.',
+            ],
+            [
+                'name' => 'show_bookReview',
+                'guard_name' => 'web',
+                'description' => 'Users can access book review and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_bookReview',
+                'guard_name' => 'web',
+                'description' => 'Users can create book review and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_bookReview',
+                'guard_name' => 'web',
+                'description' => 'Users can update book review and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_bookReview',
+                'guard_name' => 'web',
+                'description' => 'Users can delete book review.',
+            ],
+            [
+                'name' => 'access_profilling',
+                'guard_name' => 'web',
+                'description' => 'Users can create surveys and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_profilling',
+                'guard_name' => 'web',
+                'description' => 'Users can view surveys and their configurations within the application.',
+            ],
+
+            [
+                'name' => 'access_organisationUser',
+                'guard_name' => 'web',
+                'description' => 'Users can access organisation user and their configurations within the application.',
+            ],
+            [
+                'name' => 'show_organisationUser',
+                'guard_name' => 'web',
+                'description' => 'Users can access organisation user and their configurations within the application.',
+            ],
+            [
+                'name' => 'create_organisationUser',
+                'guard_name' => 'web',
+                'description' => 'Users can create organisation user and their configurations within the application.',
+            ],
+            [
+                'name' => 'edit_organisationUser',
+                'guard_name' => 'web',
+                'description' => 'Users can update organisation user and their configurations within the application.',
+            ],
+            [
+                'name' => 'delete_organisationUser',
+                'guard_name' => 'web',
+                'description' => 'Users can delete organisation user.',
+            ],
+
         ];
         foreach ($permissions as $permission) {
             PermissionEloquentModel::create($permission);

@@ -4,7 +4,7 @@ import Edit from "./Edit.vue";
 import { format } from "date-fns";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import { router } from "@inertiajs/core";
-
+import { checkPermission } from "@actions/useCheckPermission";
 const props = defineProps({
     data: {
         type: Object,
@@ -40,16 +40,16 @@ const setImage = () => {
 };
 
 const deleteGame = () => {
-  dialog.value = false
-  isConfirmedDialog({
-    title: "You won't be able to revert this!",
-    denyButtonText: "Yes,delete it!",
-    onConfirm: () => {
-      router.delete("games/" + props.data.id, {
-        onSuccess: () => {},
-      });
-    },
-  });
+    dialog.value = false;
+    isConfirmedDialog({
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,delete it!",
+        onConfirm: () => {
+            router.delete("games/" + props.data.id, {
+                onSuccess: () => {},
+            });
+        },
+    });
 };
 </script>
 <template>
@@ -86,11 +86,13 @@ const deleteGame = () => {
                         </div>
                         <div class="edit-icon">
                             <Edit
+                                v-if="checkPermission('edit_game')"
                                 :datas="props.data"
                                 :disabilitytypes="props.disabilitytypes"
                                 :devices="props.devices"
                             />
                             <v-btn
+                                v-if="checkPermission('delete_game')"
                                 @click="deleteGame"
                                 class="mt-1"
                                 icon="mdi-trash"

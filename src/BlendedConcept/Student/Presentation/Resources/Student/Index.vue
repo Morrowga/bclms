@@ -21,6 +21,7 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
+import { checkPermission } from "@actions/useCheckPermission";
 let flash = computed(() => usePage().props.flash);
 serverPage.value = ref(props.students.meta.current_page ?? 1);
 serverPerPage.value = ref(10);

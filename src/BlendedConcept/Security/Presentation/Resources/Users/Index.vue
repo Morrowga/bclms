@@ -24,6 +24,8 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
+import { checkPermission } from "@actions/useCheckPermission";
+
 let props = defineProps([
     "users",
     "roles_name",
@@ -176,6 +178,7 @@ const showOrg = (user) => {
                     <!-- 👉 Export button -->
                     <!-- <IconOutlineBtn icon="mdi-export-variant" title="Export" /> -->
                     <VBtn
+                        v-if="checkPermission('create_user')"
                         variant="tonal"
                         color="primary"
                         prepend-icon="mdi-tray-arrow-up"

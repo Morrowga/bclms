@@ -27,7 +27,7 @@ use Src\BlendedConcept\Organisation\Application\Requests\StoreOrganisationSubscr
 use Src\BlendedConcept\Organisation\Application\UseCases\Queries\GetOrganisationWithPagination;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\NewOrganisationSubscriptionCommand;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\StoreOrganisationSubscriptionCommand;
-use Src\BlendedConcept\Organisation\Domain\Policies\OrganisationPolicy;
+use Src\BlendedConcept\Organisation\Application\Policies\OrganisationPolicy;
 
 class OrganisationController extends Controller
 {
@@ -48,6 +48,35 @@ class OrganisationController extends Controller
         //     '403 Forbidden'
         // );
         abort_if(authorize('view', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        try {
+
+            // Get filters from the request
+            $filters = request()->only(['page', 'search', 'perPage', 'filter']);
+
+            //quick create org admin
+
+            // Get organisations with pagination using the provided filters
+            $organisations = (new GetOrganisationWithPagination($filters))->handle();
+
+            // Render the organisation index page with the retrieved organisations
+
+            return Inertia::render(config('route.organisations.index'), [
+                'organisations' => $organisations['paginate_organisations'],
+            ]);
+        } catch (\Exception $e) {
+
+            return redirect()
+                ->route('organisations.index')
+                ->with([
+                    'systemErrorMessage' => $e->getMessage(),
+                ]);
+        }
+    }
+    public function staff_index()
+    {
+        // Authorize user to view organisation
+        abort_if(authorize('viewBc', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -189,6 +218,7 @@ class OrganisationController extends Controller
 
     public function addSubscription(OrganisationEloquentModel $organisation)
     {
+
         return Inertia::render(config('route.organisations.addSubscription'), [
             'organisation' => $organisation->load('subscription'),
         ]);
@@ -196,10 +226,9 @@ class OrganisationController extends Controller
 
     public function storeSubscription(StoreOrganisationSubscriptionRequest $request)
     {
-        try {
 
+        try {
             // Abort if the user is not authorized to create organisations
-            // abort_if(authorize('create', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
             // Validate the request data
             $subscription = SubscriptionEloquentModel::find($request->b2b_subscription['subscription_id']);
@@ -213,7 +242,7 @@ class OrganisationController extends Controller
                 $saveOrganisation->execute();
             }
 
-            return redirect()->route('organisations.index')->with('successMessage', 'Organisations Created Successfully!');
+            return redirect()->route('staff_organisations')->with('successMessage', 'Organisations Created Successfully!');
         } catch (\Exception $error) {
             return redirect()->back()->with('errorMessage', $error->getMessage());
         }

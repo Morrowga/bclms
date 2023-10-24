@@ -61,6 +61,7 @@ class AnnouncementController extends Controller
 
     public function create()
     {
+        abort_if(authorize('create', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $teachers = (new GetB2BTeachers())->handle();
         $b2cUsers = (new GetB2CUsers())->handle();
@@ -176,6 +177,8 @@ class AnnouncementController extends Controller
         /**
          * Try to delete the announcement.
          */
+        abort_if(authorize('destroy', AnnouncementPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
 
             $announment = new DeleteAnnounmentCommand($announcement->id);

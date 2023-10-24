@@ -13,6 +13,10 @@ class SurveyPolicy
     {
         return auth()->user()->hasPermission('create_survey');
     }
+    public static function show()
+    {
+        return auth()->user()->hasPermission('show_survey');
+    }
 
     public static function store()
     {

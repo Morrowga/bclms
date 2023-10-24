@@ -1,6 +1,7 @@
 <?php
 
-namespace Src\BlendedConcept\Organisation\Domain\Policies;
+namespace Src\BlendedConcept\Finance\Application\Policies;
+
 
 class SubscriptionPolicy
 {

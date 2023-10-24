@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Organisation\Domain\Policies;
+namespace Src\BlendedConcept\Organisation\Application\Policies;
 
 class OrganisationPolicy
 {

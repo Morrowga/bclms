@@ -9,6 +9,10 @@ class PlanPolicy
         return auth()->user()->hasPermission('access_plan');
     }
 
+    public static function show()
+    {
+        return auth()->user()->hasPermission('show_plan');
+    }
     public static function create()
     {
         return auth()->user()->hasPermission('create_plan');

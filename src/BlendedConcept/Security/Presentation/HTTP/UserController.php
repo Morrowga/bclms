@@ -41,7 +41,7 @@ class UserController extends Controller
     public function index()
     {
 
-        // abort_if(authorize('view', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('view', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -82,7 +82,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        // abort_if(authorize('create', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('create', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 
@@ -102,7 +102,7 @@ class UserController extends Controller
     //update user
     public function update(UpdateUserRequest $request, UserEloquentModel $user)
     {
-        // abort_if(authorize('edit', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('edit', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $updateUser = UserData::fromRequest($request, $user->id);
@@ -118,7 +118,7 @@ class UserController extends Controller
 
     public function destroy(UserEloquentModel $user)
     {
-        // abort_if(authorize('destroy', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('destroy', UserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $user = new DelectUserCommand($user->id);
@@ -127,7 +127,6 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('successMessage', 'User Deleted Successfully!');
         } catch (\Exception $error) {
             return redirect()->back()->with('errorMessage', $error->getMessage());
-
         }
     }
 
@@ -156,7 +155,7 @@ class UserController extends Controller
 
     public function changeStatus(Request $request, UserEloquentModel $user)
     {
-        // abort_if(authorize('edit', PlanPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('edit', PlanPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $updateUserCommand = (new ChangeStatusCommand($request, $user));

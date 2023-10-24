@@ -26,11 +26,11 @@ export default [
         route_name: 'accessibility',
         access_module: "access_storybook",
         children: [
-            { title: 'Books', url: '/books', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'books', access_module: "access_user", },
-            { title: 'Games', url: '/games', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'games', access_module: "access_user", },
-            { title: 'Pathways', url: '/pathways', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'pathways', access_module: "access_user", },
-            { title: 'Rewards', url: '/rewards', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'rewards', access_module: "access_user", },
-            { title: 'Reviews', url: '/bookreviews', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'bookreviews', access_module: "access_user", },
+            { title: 'Books', url: '/books', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'books', access_module: "access_book", },
+            { title: 'Games', url: '/games', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'games', access_module: "access_game", },
+            { title: 'Pathways', url: '/pathways', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'pathways', access_module: "access_pathway", },
+            { title: 'Rewards', url: '/rewards', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'rewards', access_module: "access_reward", },
+            { title: 'Reviews', url: '/bookreviews', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'bookreviews', access_module: "access_bookReview", },
         ]
     },
     {
@@ -124,14 +124,14 @@ export default [
         title: 'Manage Users',
         url: "#",
         icon: { icon: 'mdi-account' },
-        access_module: "access_user",
+        access_module: "access_userMenu",
         children: [
             { title: 'Users', url: '/users', icon: { icon: 'mdi-account-group' }, route_name: 'users', access_module: "access_user" },
             { title: 'Student', url: `${PREFIX}/students`, icon: { icon: 'mdi-account-group-outline' }, route_name: 'students', access_module: "access_student" },
             { title: 'Roles', url: '/roles', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'roles', access_module: "access_role" },
             { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
-            { title: 'Organisations', url: '/organisations', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'access_organisations', access_module: "access_bcstaffOrganisation", },
-            { title: 'Subscriptions', url: '/subscribptioninvoice', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'access_subscription_invoice', access_module: "access_bcstaffSubscription", },
+            { title: 'Organisations', url: '/staff_organisations', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'staff_organisations', access_module: "access_bcstaffOrganisation", },
+            { title: 'Subscriptions', url: '/subscribptioninvoice', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'subscribptioninvoice', access_module: "access_bcstaffSubscription", },
         ],
     },
 
@@ -175,10 +175,10 @@ export default [
         route_name: 'system',
         access_module: "access_system",
         children: [
-            { title: 'System', url: '/settings', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'settings', access_module: "access_pagebuilder" },
-            { title: 'Site Theme', url: '/updateSiteTheme', icon: { icon: 'mdi-cog' }, route_name: 'updateSiteTheme', access_module: "access_pagebuilder" },
-            { title: 'Export Data', url: '/reports', icon: { icon: 'mdi-cog' }, route_name: 'reports', access_module: "access_pagebuilder" },
-            { title: 'Tech Support', url: '/supports', icon: { icon: 'mdi-cog' }, route_name: 'supports', access_module: "access_pagebuilder" },
+            { title: 'System', url: '/settings', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'settings', access_module: "access_setting" },
+            { title: 'Site Theme', url: '/updateSiteTheme', icon: { icon: 'mdi-cog' }, route_name: 'updateSiteTheme', access_module: "access_siteTheme" },
+            { title: 'Export Data', url: '/reports', icon: { icon: 'mdi-cog' }, route_name: 'reports', access_module: "access_exportData" },
+            { title: 'Tech Support', url: '/supports', icon: { icon: 'mdi-cog' }, route_name: 'supports', access_module: "access_techSupport" },
         ]
     },
 

@@ -14,6 +14,7 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
+import { checkPermission } from "@actions/useCheckPermission";
 let flash = computed(() => usePage().props.flash);
 serverPage.value = ref(props.classrooms.meta.current_page ?? 1);
 serverPerPage.value = ref(10);
@@ -45,6 +46,7 @@ const showCount = (classroom) => {
                     </VCol>
                     <VCol size="6" class="text-right">
                         <v-btn
+                            v-if="checkPermission('create_classroom')"
                             varient="flat"
                             class="ruddy-bold"
                             @click="

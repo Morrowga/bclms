@@ -5,6 +5,8 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
+import { checkPermission } from "@actions/useCheckPermission";
+
 let props = defineProps(["flash", "auth", "classroom"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
@@ -73,6 +75,7 @@ const stdImage = (user) =>
                         <br />
                         <div>
                             <v-btn
+                                v-if="checkPermission('edit_classroom')"
                                 prepend-icon="mdi-pencil"
                                 varient="flat"
                                 @click="
@@ -91,6 +94,7 @@ const stdImage = (user) =>
                                 Edit
                             </v-btn>
                             <v-btn
+                                v-if="checkPermission('delete_classroom')"
                                 @click="deleteClassroom(props.classroom.id)"
                                 prepend-icon="mdi-trash-can-outline"
                                 color="#ff6262"

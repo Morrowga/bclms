@@ -50,7 +50,12 @@ let handleSubmit = () => {
                         FlashMessage({ flash });
                     },
                     onError: (error) => {
-                        SuccessDialog({ title: error?.isExpire, icon: 'warning',color: '#ff6262', mainTitle: 'Failed!' });
+                        SuccessDialog({
+                            title: error?.isExpire,
+                            icon: "warning",
+                            color: "#ff6262",
+                            mainTitle: "Failed!",
+                        });
                     },
                 }
             );
@@ -227,7 +232,7 @@ let handleSubmit = () => {
                                 class="d-flex flex-wrap justify-center gap-10"
                             >
                                 <Link
-                                    :href="route('organisations.index')"
+                                    :href="route('staff_organisations')"
                                     class="text-black"
                                 >
                                     <VBtn

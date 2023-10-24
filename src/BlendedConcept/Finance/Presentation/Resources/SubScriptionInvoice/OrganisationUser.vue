@@ -14,6 +14,8 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
+import { checkPermission } from "@actions/useCheckPermission";
+
 const props = defineProps(["subscriptions", "flash"]);
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
@@ -142,7 +144,10 @@ watch(filters, (newValue) => {
                     />
                 </div>
                 <div>
-                    <Link :href="route('subscriptions.add_subscription')">
+                    <Link
+                        v-if="checkPermission('create_subscription')"
+                        :href="route('subscriptions.add_subscription')"
+                    >
                         <VBtn>Add Subscription</VBtn>
                     </Link>
                 </div>
@@ -211,7 +216,7 @@ watch(filters, (newValue) => {
                             <VList>
                                 <VListItem
                                     @click="() => {}"
-                                    v-if="user_role == 'BC Super Admin'"
+                                    v-if="checkPermission('edit_subscription')"
                                 >
                                     <UpdateB2bSubscription
                                         :key="dataProps.row.id"

@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\BlendedConcept\Student\Domain\Policies;
+namespace Src\BlendedConcept\Student\Application\Policies;
 
 class PlaylistPolicy
 {
@@ -13,7 +13,10 @@ class PlaylistPolicy
     {
         return auth()->user()->hasPermission('create_playlist');
     }
-
+    public static function show()
+    {
+        return auth()->user()->hasPermission('show_playlist');
+    }
     public static function store()
     {
         return auth()->user()->hasPermission('create_playlist');

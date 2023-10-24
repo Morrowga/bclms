@@ -41,13 +41,15 @@ class UserExperienceSurveyController
 
     public function create()
     {
+        abort_if(authorize('create', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return Inertia::render(config('route.userexperiencesurvey.create'));
     }
 
     public function store(StoreSurveyRequest $request)
     {
-        // abort_if(authorize('create', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        abort_if(authorize('store', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             $request->validated();
@@ -71,12 +73,15 @@ class UserExperienceSurveyController
 
     public function show()
     {
+        abort_if(authorize('show', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return Inertia::render(config('route.userexperiencesurvey.show'));
     }
 
     public function edit($id)
     {
         // abort_if(authorize('edit', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('edit', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $survey = (new ShowSurvey($id))->handle();
         // dd('hello');
@@ -93,7 +98,7 @@ class UserExperienceSurveyController
      */
     public function update(UpdateSurveyRequest $request, SurveyEloquentModel $userexperiencesurvey)
     {
-        // abort_if(authorize('edit', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('update', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
          * Validate the request.
@@ -107,7 +112,6 @@ class UserExperienceSurveyController
             $surveyData = SurveyData::fromRequest($request, $userexperiencesurvey);
             $updateSurveyCommand = (new UpdateSurveyCommand($surveyData));
             $updateSurveyCommand->execute();
-
         } catch (\Exception $e) {
             /**
              * Catch any exceptions and display an error message.
@@ -126,7 +130,7 @@ class UserExperienceSurveyController
      */
     public function destroy(SurveyEloquentModel $userexperiencesurvey)
     {
-        // abort_if(authorize('destroy', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('destroy', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         /**
          * Try to delete the announcement.
          */

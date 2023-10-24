@@ -15,6 +15,8 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
+import { checkPermission } from "@actions/useCheckPermission";
+
 const props = defineProps(["subscriptions", "flash", "plans"]);
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
@@ -209,7 +211,7 @@ watch(filters, (newValue) => {
                             <VList>
                                 <VListItem
                                     @click="() => {}"
-                                    v-if="user_role == 'BC Super Admin'"
+                                    v-if="checkPermission('edit_subscription')"
                                 >
                                     <UpdateSubscrptionStatus
                                         :subscription="dataProps.row"

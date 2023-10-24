@@ -15,7 +15,7 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
-
+import { checkPermission } from "@actions/useCheckPermission";
 //## start variable section
 let props = defineProps(["roles", "permissions", "auth", "flash"]);
 let permissions = computed(() => usePage().props.auth.data.permissions);
@@ -83,7 +83,10 @@ watch(serverPerPage, function (value) {
                         class="app-user-search-filter d-flex align-center justify-end"
                     >
                         <!-- 👉 Add permission button -->
-                        <Link :href="route('roles.create')">
+                        <Link
+                            :href="route('roles.create')"
+                            v-if="checkPermission('create_role')"
+                        >
                             <VBtn>Add Role</VBtn>
                         </Link>
                     </div>
@@ -155,6 +158,7 @@ watch(serverPerPage, function (value) {
                         >
                             <div class="d-flex">
                                 <Link
+                                    v-if="checkPermission('edit_role')"
                                     :href="
                                         route('roles.edit', {
                                             id: dataProps.row.id,

@@ -23,7 +23,7 @@ class RoleController extends Controller
     {
         // $this->authorize('view', RoleEloquentModel::class);
 
-        // abort_if(authorize('view', RolePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('view', RolePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             // Check if the user is authorized to view roles
@@ -56,6 +56,8 @@ class RoleController extends Controller
      */
     public function create()
     {
+        abort_if(authorize('create', RolePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
 
             $permissions = (new GetPermissionwithPagination([]))->handle();
@@ -70,6 +72,8 @@ class RoleController extends Controller
 
     public function edit(RoleEloquentModel $role)
     {
+        abort_if(authorize('edit', RolePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             $permissions = (new GetPermissionwithPagination([]))->handle();
 

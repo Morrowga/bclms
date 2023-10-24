@@ -3,9 +3,11 @@
 namespace Src\BlendedConcept\Finance\Presentation\HTTP;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Inertia\Inertia;
 use Src\BlendedConcept\Finance\Application\DTO\SubscriptionData;
 use Src\BlendedConcept\Finance\Application\Mappers\SubscriptionMapper;
+use Src\BlendedConcept\Finance\Application\Policies\SubscriptionPolicy;
 use Src\BlendedConcept\Finance\Application\Requests\UpdateB2bSubscriptionRequest;
 use Src\BlendedConcept\Finance\Application\Requests\UpdateB2cSubscriptionRequest;
 use Src\BlendedConcept\Finance\Application\UseCases\Commands\Subscriptions\UpdateB2bSubscriptionCommand;
@@ -19,6 +21,7 @@ use Src\BlendedConcept\Organisation\Application\Requests\StoreOrganisationSubscr
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\NewOrganisationSubscriptionCommand;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\StoreOrganisationSubscriptionCommand;
 
+
 class SubscribtionInvoiceController
 {
     public function index()
@@ -27,6 +30,7 @@ class SubscribtionInvoiceController
         //     $query->orderBy('num_teacher_license', 'asc');
         // })->get();
         // dd('hello');
+        abort_if(authorize('view', SubscriptionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
             // Get filters from the request
@@ -54,6 +58,7 @@ class SubscribtionInvoiceController
 
     public function updateB2b(UpdateB2bSubscriptionRequest $request, SubscriptionEloquentModel $subscription)
     {
+        abort_if(authorize('update', SubscriptionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $updateSubscription = SubscriptionData::fromRequest($request, $subscription);
             $updateSubscriptionCommand = (new UpdateB2bSubscriptionCommand($updateSubscription));
@@ -68,6 +73,7 @@ class SubscribtionInvoiceController
     public function updateB2c(Request $request, SubscriptionEloquentModel $subscription)
     {
 
+        abort_if(authorize('update', SubscriptionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $updateSubscription = SubscriptionData::fromRequest($request, $subscription);
             $updateSubscriptionCommand = (new UpdateB2cSubscriptionCommand($updateSubscription));
@@ -81,6 +87,8 @@ class SubscribtionInvoiceController
 
     public function addOrgSubscription()
     {
+        abort_if(authorize('store', SubscriptionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             $organisations = (new GetOrgForSubscription())->handle();
             return Inertia::render(config('route.subscriptioninvoice.add_subscription'), [
@@ -93,6 +101,7 @@ class SubscribtionInvoiceController
 
     public function storeOrgSubscription(StoreOrganisationSubscriptionRequest $request)
     {
+        abort_if(authorize('store', SubscriptionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
 
             // Abort if the user is not authorized to create organisations

@@ -6,31 +6,31 @@ class SettingPolicy
 {
     public static function view()
     {
-        return auth()->user()->hasPermission('access_settings');
+        return auth()->user()->hasPermission('access_setting');
     }
 
     public static function create()
     {
-        return auth()->user()->hasPermission('create_user');
+        return auth()->user()->hasPermission('create_setting');
     }
 
     public static function store()
     {
-        return auth()->user()->hasPermission('create_user');
+        return auth()->user()->hasPermission('create_setting');
     }
 
     public static function edit()
     {
-        return auth()->user()->hasPermission('edit_user');
+        return auth()->user()->hasPermission('edit_setting');
     }
 
     public static function update()
     {
-        return auth()->user()->hasPermission('edit_user');
+        return auth()->user()->hasPermission('edit_setting');
     }
 
     public static function destroy()
     {
-        return auth()->user()->hasPermission('delete_user');
+        return auth()->user()->hasPermission('delete_setting');
     }
 }

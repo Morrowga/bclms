@@ -26,7 +26,7 @@ class PermissionController extends Controller
     {
 
         //check permission user's has permission
-        // abort_if(authorize('view', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('view', PermissionPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
 

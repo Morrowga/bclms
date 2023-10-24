@@ -11,17 +11,17 @@ import { isConfirmedDialog } from "@actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { useForm } from "@inertiajs/vue3";
-
+import { checkPermission } from "@actions/useCheckPermission";
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
 let props = defineProps([
     "resources",
     "requestPublishData",
     "auth",
-    "resourceStorage"
+    "resourceStorage",
 ]);
 
-const chosen = ref('all');
+const chosen = ref("all");
 
 const isRequestUploadData = ref(false);
 const checkedItems = ref([]);
@@ -40,9 +40,9 @@ const activeEditMode = () => {
 };
 const approve = () => {
     const actionForm = useForm({
-        type: 'approve',
+        type: "approve",
         size: parseInt(totalSize.value / 1024),
-        ids: JSON.stringify(checkedItems.value)
+        ids: JSON.stringify(checkedItems.value),
     });
 
     isConfirmedDialog({
@@ -60,7 +60,12 @@ const approve = () => {
                     isEditMode.value = false;
                 },
                 onError: (error) => {
-                    SuccessDialog({ title: error?.size, icon: 'warning',color: '#ff6262', mainTitle: 'Failed!' });
+                    SuccessDialog({
+                        title: error?.size,
+                        icon: "warning",
+                        color: "#ff6262",
+                        mainTitle: "Failed!",
+                    });
                 },
             });
         },
@@ -69,8 +74,8 @@ const approve = () => {
 
 const reject = () => {
     const actionForm = useForm({
-        type: 'decline',
-        ids: JSON.stringify(checkedItems.value)
+        type: "decline",
+        ids: JSON.stringify(checkedItems.value),
     });
     isConfirmedDialog({
         title: "You won't be able to revert this!",
@@ -94,8 +99,8 @@ const reject = () => {
 
 const multiDelete = () => {
     const actionForm = useForm({
-        type: 'delete',
-        ids: JSON.stringify(checkedItems.value)
+        type: "delete",
+        ids: JSON.stringify(checkedItems.value),
     });
     isConfirmedDialog({
         title: "You won't be able to revert this!",
@@ -141,7 +146,7 @@ const backToPage = () => {
     isEditMode.value = false;
     isDeleteMode.value = false;
     isRequestUploadData.value = false;
-}
+};
 
 const checkIsOrg = () => {
     return user_role.value == "Organisation Admin" ? true : false;
@@ -150,7 +155,7 @@ const checkIsOrg = () => {
 const handleCheckboxChange = (data) => {
     if (data.checked) {
         totalSize.value += data.size;
-    // Checkbox is checked, add data to the array
+        // Checkbox is checked, add data to the array
         checkedItems.value.push(data.id);
     } else {
         totalSize.value -= data.size;
@@ -160,14 +165,14 @@ const handleCheckboxChange = (data) => {
             checkedItems.value.splice(index, 1);
         }
     }
-}
+};
 
 const chooseType = (type) => {
     chosen.value = type;
-}
+};
 
 const calculateProgress = (used, total) => {
-  return (used / total) * 100;
+    return (used / total) * 100;
 };
 </script>
 
@@ -179,9 +184,23 @@ const calculateProgress = (used, total) => {
                     <div>
                         <span class="ruddy-bold resource">Resources</span>
                         <div class="mt-5">
-                            <v-chip :class="chosen === 'all' ? 'menuchip' : ''" @click="chooseType('all')">All</v-chip>
-                            <v-chip class="ml-2" :class="chosen === 'org' ? 'menuchip' : ''" @click="chooseType('org')">Organisation</v-chip>
-                            <v-chip class="ml-2" :class="chosen === 'me' ? 'menuchip' : ''" @click="chooseType('me')">Me</v-chip>
+                            <v-chip
+                                :class="chosen === 'all' ? 'menuchip' : ''"
+                                @click="chooseType('all')"
+                                >All</v-chip
+                            >
+                            <v-chip
+                                class="ml-2"
+                                :class="chosen === 'org' ? 'menuchip' : ''"
+                                @click="chooseType('org')"
+                                >Organisation</v-chip
+                            >
+                            <v-chip
+                                class="ml-2"
+                                :class="chosen === 'me' ? 'menuchip' : ''"
+                                @click="chooseType('me')"
+                                >Me</v-chip
+                            >
                         </div>
                     </div>
                     <div>
@@ -189,6 +208,9 @@ const calculateProgress = (used, total) => {
                             <div v-if="isEditMode">
                                 <div v-if="isDeleteMode">
                                     <v-btn
+                                        v-if="
+                                            checkPermission('delete_resources')
+                                        "
                                         prepend-icon="mdi-trash-can-outline"
                                         @click="multiDelete()"
                                         color="#ff6262"
@@ -244,8 +266,11 @@ const calculateProgress = (used, total) => {
                                     @click="activeEditMode()"
                                     >Requested Upload</v-btn
                                 >
-                                <CreateModal />
+                                <CreateModal
+                                    v-if="checkPermission('create_resources')"
+                                />
                                 <v-btn
+                                    v-if="checkPermission('delete_resources')"
                                     prepend-icon="mdi-trash-can-outline"
                                     @click="deleteMode()"
                                     color="#ff6262"
@@ -288,10 +313,24 @@ const calculateProgress = (used, total) => {
                                 <VCol cols="6"></VCol>
                                 <VCol cols="6">
                                     <div>
-                                        <span>{{ props.resourceStorage['used'] }} MB of {{ props.resourceStorage['total'] }} MB used </span>
+                                        <span
+                                            >{{ props.resourceStorage["used"] }}
+                                            MB of
+                                            {{ props.resourceStorage["total"] }}
+                                            MB used
+                                        </span>
                                         <VProgressLinear
                                             color="yellow-darken-2"
-                                            :model-value="calculateProgress(props.resourceStorage['used'], props.resourceStorage['total'])"
+                                            :model-value="
+                                                calculateProgress(
+                                                    props.resourceStorage[
+                                                        'used'
+                                                    ],
+                                                    props.resourceStorage[
+                                                        'total'
+                                                    ]
+                                                )
+                                            "
                                             :height="8"
                                         ></VProgressLinear>
                                     </div>
