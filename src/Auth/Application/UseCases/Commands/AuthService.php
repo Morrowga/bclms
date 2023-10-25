@@ -34,6 +34,7 @@ class AuthService
 
 
         if ($user) {
+            setcookie("h5p_id", "", time() - 3600, "/");
             if ($user->organisation_id) {
                 $organisation = OrganisationEloquentModel::find($user->organisation_id);
                 if (!$organisation) {
