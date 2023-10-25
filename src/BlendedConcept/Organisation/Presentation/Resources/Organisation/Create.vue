@@ -37,12 +37,11 @@ let form = useForm({
 
 // submit create form
 let handleSubmit = () => {
-
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
             form.post(route("organisations.store"), {
                 onSuccess: () => {
-                    FlashMessage({flash: flash});
+                    FlashMessage({ flash: flash });
                 },
                 onError: (error) => {},
             });
@@ -203,7 +202,10 @@ watch(form, () => {
                                             placeholder="Type here ..."
                                             v-model="form.login_email"
                                             class="w-100"
-                                            :rules="[requiredValidator]"
+                                            :rules="[
+                                                requiredValidator,
+                                                emailValidator,
+                                            ]"
                                             :error-messages="
                                                 form?.errors?.login_email
                                             "

@@ -210,7 +210,43 @@
                     H5P.jQuery(this).prop('disabled', 'disabled');
                     H5P.jQuery('.h5p-delete').prop('disabled', 'disabled');
                 }, 50);
-            })
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            let iframe = document.querySelector('.h5p-editor-iframe');
+            iframe.onload = function() {
+                const observer = new MutationObserver((mutationsList, observer) => {
+                    for (let mutation of mutationsList) {
+                        if (mutation.type === 'childList') {
+                            var select = iframe.contentDocument.querySelector(
+                                'select[name="h5peditor-library"]');
+                            if (select !== null) {
+                                // Element found, do something with it
+                                var valuesToHide = ["H5P.Audio 1.5", "H5P.Blanks 1.14",
+                                    "H5P.DragQuestion 1.14", "H5P.DragText 1.10",
+                                    "H5P.MarkTheWords 1.11", "H5P.MultiChoice 1.16",
+                                    "H5P.MultiMediaChoice 0.3", "H5P.SingleChoiceSet 1.11",
+                                    "H5P.Summary 1.10", "H5P.TrueFalse 1.8"
+                                ];
+
+                                select.querySelectorAll('option').forEach(option => {
+                                    if (valuesToHide.includes(option.value)) {
+                                        option.style.display = 'none';
+                                    }
+                                });
+                                observer.disconnect(); // Stop observing once the element is found
+                            }
+                        }
+                    }
+                });
+
+                observer.observe(iframe.contentDocument, {
+                    childList: true,
+                    subtree: true
+                });
+            };
         });
     </script>
 @endpush

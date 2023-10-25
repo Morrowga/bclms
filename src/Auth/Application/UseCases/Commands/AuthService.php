@@ -33,6 +33,10 @@ class AuthService
         if ($user) {
             if ($user->organisation_id) {
                 $organisation = OrganisationEloquentModel::find($user->organisation_id);
+                if (!$organisation) {
+                    $error = 'Organisation is deleted';
+                    return ['errorMessage' => $error, 'isCheck' => false];
+                }
                 if ($organisation->status == 'INACTIVE') {
                     $error = 'Organisation is inactive';
                     return ['errorMessage' => $error, 'isCheck' => false];

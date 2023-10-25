@@ -11,6 +11,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
@@ -21,7 +22,7 @@ use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAd
 
 class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyEmail
 {
-    use HasFactory, InteractsWithMedia, Notifiable;
+    use HasFactory, InteractsWithMedia, Notifiable, SoftDeletes;
 
     protected $table = 'users';
 

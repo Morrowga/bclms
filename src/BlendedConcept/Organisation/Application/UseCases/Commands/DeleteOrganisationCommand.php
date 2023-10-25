@@ -18,6 +18,6 @@ class DeleteOrganisationCommand implements CommandInterface
 
     public function execute()
     {
-        $this->organisation->delete();
+        $this->repository->delete($this->organisation);
     }
 }

@@ -195,25 +195,27 @@ class OrganisationController extends Controller
 
     public function destroy(OrganisationEloquentModel $organisation)
     {
+
         abort_if(authorize('destroy', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // try {
+        try {
 
-        // abort_if(authorize('destroy', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $tenant = Tenant::get();
-        // Domain::where('tenant_id', $tenant->id)->delete();
-        // $tenant->delete();
-        $deleteOrganisation = (new DeleteOrganisationCommand($organisation));
-        $deleteOrganisation->execute();
+            // abort_if(authorize('destroy', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+            // $tenant = Tenant::get();
+            // Domain::where('tenant_id', $tenant->id)->delete();
+            // $tenant->delete();
+            $deleteOrganisation = (new DeleteOrganisationCommand($organisation));
+            $deleteOrganisation->execute();
 
-        return redirect()->route('organisations.index')->with('successMessage', 'Organisations Deleted Successfully!');
-        // } catch (\Exception $error) {
-        //     return redirect()
-        //         ->route('organisations.index')
-        //         ->with([
-        //             'systemErrorMessage' => $error->getCode(),
-        //         ]);
-        // }
+            return redirect()->back()->with('successMessage', 'Organisations Deleted Successfully!');
+        } catch (\Exception $error) {
+            dd($error);
+            return redirect()
+                ->route('organisations.index')
+                ->with([
+                    'systemErrorMessage' => $error->getCode(),
+                ]);
+        }
     }
 
     public function addSubscription(OrganisationEloquentModel $organisation)

@@ -53,6 +53,7 @@ class UserExperienceSurveyController
 
         try {
             $request->validated();
+
             //Creates a new survey object from the request data.
             $newSurvey = SurveyMapper::fromRequest($request);
             // Creates a new StoreSurveyCommand object and executes it.

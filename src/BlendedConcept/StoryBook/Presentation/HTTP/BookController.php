@@ -113,7 +113,7 @@ class BookController
         $disability_types = (new GetDisabilityType())->handle();
         $devices = (new GetDevice())->handle();
 
-        return Inertia::render(config('route.books.create'), compact('learningneeds', 'themes', 'disability_types', 'devices',));
+        return Inertia::render(config('route.books.create'), compact('learningneeds', 'themes', 'disability_types', 'devices', 'tags'));
     }
 
     public function edit(StoryBookEloquentModel $book)

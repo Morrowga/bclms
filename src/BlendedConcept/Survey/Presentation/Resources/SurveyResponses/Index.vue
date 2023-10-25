@@ -42,7 +42,7 @@ let columns = [
     },
     {
         label: "Name of Survey",
-        field: "user_type",
+        field: "name_survey",
         sortable: false,
     },
     {
@@ -169,13 +169,21 @@ const deleteItem = (id) => {
                                     </div>
                                     <div
                                         v-if="
-                                            dataProps.column.field == 'user_type'
+                                            dataProps.column.field ==
+                                            'name_survey'
                                         "
                                     >
-                                        {{
-
-                                            dataProps.row.user.role.name
-                                        }}
+                                        <span>{{
+                                            dataProps.row.survey.title
+                                        }}</span>
+                                    </div>
+                                    <div
+                                        v-if="
+                                            dataProps.column.field ==
+                                            'user_type'
+                                        "
+                                    >
+                                        {{ dataProps.row.user.role.name }}
                                     </div>
                                     <div
                                         v-if="
@@ -200,7 +208,9 @@ const deleteItem = (id) => {
                                             icon="mdi-trash"
                                             class="ml-2"
                                             color="secondary"
-                                            @click="deleteItem(dataProps.row.id)"
+                                            @click="
+                                                deleteItem(dataProps.row.id)
+                                            "
                                         >
                                         </VBtn>
                                     </div>

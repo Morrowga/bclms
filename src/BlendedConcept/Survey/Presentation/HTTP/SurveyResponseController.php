@@ -22,7 +22,7 @@ class SurveyResponseController
             $filters = request()->only(['question', 'search', 'perPage', 'filter']);
 
             $surveyResponses = (new GetSurveyResponses($filters))->handle();
-
+            // dd($surveyResponses);
             return Inertia::render(config('route.surveyresponse.index'), [
                 'surveyResponses' => $surveyResponses,
             ]);

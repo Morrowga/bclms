@@ -25,7 +25,7 @@ class StoreSurveyRequest extends FormRequest
             'user_type' => ['required', 'string'],
             'appear_on' => ['required', 'string'],
             'start_date' => ['required', new StartEndDateValidationRule],
-            'end_date' => ['required','different:start_date', new StartEndDateValidationRule],
+            'end_date' => ['required', 'different:start_date', new StartEndDateValidationRule],
             'required' => ['required', 'boolean'],
             'repeat' => ['required', 'boolean'],
             'questions' => ['required'],
@@ -42,6 +42,7 @@ class StoreSurveyRequest extends FormRequest
             'start_date' => 'Start Date on is required',
             'end_date.different' => 'The end date must be different from the start date.',
             'end_date' => 'End Date on is required',
+            'questions.required' => 'At least one survey question is required'
         ];
     }
 }

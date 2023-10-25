@@ -242,7 +242,7 @@ const showInfo = (e) => {
                         <div v-if="props.column.field == 'storage_usage'">
                             <VProgressLinear
                                 color="green"
-                                :model-value="321"
+                                :model-value="props.row.used_storage"
                                 :max="maxStorage(props.row)"
                                 :height="8"
                             ></VProgressLinear>

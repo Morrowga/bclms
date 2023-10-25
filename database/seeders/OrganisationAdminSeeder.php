@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2bSubscriptionEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\Tenant;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
@@ -60,7 +61,7 @@ class OrganisationAdminSeeder extends Seeder
             'payment_date' => now(),
             'payment_status' => 'PAID',
             'stripe_status' => null,
-            'stripe_price' => null,
+            'stripe_price' => 1200.51,
         ];
 
         $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
@@ -78,7 +79,13 @@ class OrganisationAdminSeeder extends Seeder
         ];
 
         $organisationModel = OrganisationEloquentModel::create($organisationData);
-
+        $b2bSubscriptionEloquent = new B2bSubscriptionEloquentModel();
+        $b2bSubscriptionEloquent->subscription_id = $subscriptionOne->id;
+        $b2bSubscriptionEloquent->organisation_id = $organisationModel->id;
+        $b2bSubscriptionEloquent->storage_limit = 500;
+        $b2bSubscriptionEloquent->num_student_license = 10;
+        $b2bSubscriptionEloquent->num_teacher_license = 10;
+        $b2bSubscriptionEloquent->save();
         $subdomain = Tenant::create([
             'id' => $organisationModel->sub_domain,
             'organisation_id' => $organisationModel->id,
