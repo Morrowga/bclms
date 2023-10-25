@@ -163,8 +163,10 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             $updateStoryBookEloquent->fill($storyBookArray);
             $updateStoryBookEloquent->update();
 
-            $tags = TagEloquentModel::whereIn('id', $storyBookArray['delete_tags'])->delete();
-            $updateStoryBookEloquent->associateTags(request()->tags);
+            if ($storyBookArray['delete_tags']) {
+                $tags = TagEloquentModel::whereIn('id', $storyBookArray['delete_tags'])->delete();
+                $updateStoryBookEloquent->associateTags(request()->tags);
+            }
             if (request()->hasFile('thumbnail_img') && request()->file('thumbnail_img')->isValid()) {
 
                 $old_thumbnail = $updateStoryBookEloquent->getFirstMedia('thumbnail_img');
