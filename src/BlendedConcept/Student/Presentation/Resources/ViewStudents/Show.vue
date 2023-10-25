@@ -48,15 +48,15 @@ const formatDate = (dateString) => {
     return format(date, "MMMM d, yyyy"); // "MMMM" for full month name, "d" for day, "yyyy" for year
 };
 
-function checkURL(input) {
-    if (input.includes("https://") && input.includes("http://")) {
-        return input;
-    } else if (input.includes("https://") || input.includes("http://")) {
-        return input;
-    } else {
-        return "/" + input;
-    }
-}
+// function checkURL(input) {
+//     if (input.includes("https://") && input.includes("http://")) {
+//         return input;
+//     } else if (input.includes("https://") || input.includes("http://")) {
+//         return input;
+//     } else {
+//         return "/" + input;
+//     }
+// }
 </script>
 <template>
     <AdminLayout>
@@ -67,7 +67,7 @@ function checkURL(input) {
                         :src="
                             props.student.data.user.profile_pic == ''
                                 ? '/images/teacherimg.png'
-                                : checkURL(props.student.data.user.profile_pic)
+                                : props.student.data.user.profile_pic
                         "
                     />
 
@@ -259,7 +259,8 @@ function checkURL(input) {
                                 <Link
                                     :href="
                                         route(
-                                            'teacher_students.profiling_surveys', props.student.data.user.id
+                                            'teacher_students.profiling_surveys',
+                                            props.student.data.user.id
                                         )
                                     "
                                 >
