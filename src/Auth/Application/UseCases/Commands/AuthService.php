@@ -30,6 +30,9 @@ class AuthService
          *  auth attempt if email verified then sent notification inside dashboard
          *  if incorrect email and password get invalid message
          */
+        // setcookie('h5p_id', 111, time() + (86400 * 30), "/");
+
+
         if ($user) {
             if ($user->organisation_id) {
                 $organisation = OrganisationEloquentModel::find($user->organisation_id);

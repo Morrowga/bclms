@@ -88,6 +88,13 @@ const selectionChanged = (data) => {
 const goEdit = (id) => {
     router.get(route("pathways.edit", id));
 };
+const showInfo = (e) => {
+    router.get(
+        route("pathways.show", {
+            id: e.row.id,
+        })
+    );
+};
 </script>
 <template>
     <AdminLayout>
@@ -147,21 +154,13 @@ const goEdit = (id) => {
                                     enabled: true,
                                     selectOnCheckboxOnly: true,
                                 }"
+                                @row-click="showInfo"
                             >
                                 <template #table-row="dataProps">
                                     <div
                                         v-if="dataProps.column.field == 'name'"
                                     >
-                                        <Link
-                                            class="t-black"
-                                            :href="
-                                                route('pathways.show', {
-                                                    id: dataProps.row.id,
-                                                })
-                                            "
-                                        >
-                                            {{ dataProps.row.name }}
-                                        </Link>
+                                        {{ dataProps.row.name }}
                                     </div>
                                     <div
                                         v-if="

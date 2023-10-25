@@ -97,7 +97,7 @@ onMounted(() => {
                                 </VBtn>
                             </p>
                             <v-card
-                                class="ma-4 ps-index"
+                                class="ma-0 pa-0 mb-2 ps-index"
                                 height="200"
                                 :color="'primary'"
                             >

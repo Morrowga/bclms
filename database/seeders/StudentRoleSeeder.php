@@ -47,7 +47,7 @@ class StudentRoleSeeder extends Seeder
 
         $parentData = [
             "user_id" => $parentUserCreate->id,
-            "organisation_id" => 1,
+            "organisation_id" => null,
             "curr_subscription_id" => $subscription->id,
             "type" => 'B2B'
         ];
@@ -56,7 +56,7 @@ class StudentRoleSeeder extends Seeder
 
         $studentData = [
             'user_id' => $userCreate->id,
-            'organisation_id' => 1,
+            'organisation_id' => null,
             'parent_id' => $parentCreate->parent_id,
             'dob' => now(),
             'gender' => 'Male',
@@ -64,5 +64,6 @@ class StudentRoleSeeder extends Seeder
         ];
 
         $studentCreate = StudentEloquentModel::create($studentData);
+        $studentCreate->teachers()->sync([1]);
     }
 }

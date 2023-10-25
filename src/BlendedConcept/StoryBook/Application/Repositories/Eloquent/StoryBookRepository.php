@@ -100,7 +100,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
 
             // Associate tags
             $storybookEloquent->associateTags(request()->tags);
-            setcookie("h5p_id", time() - 3600);
+            setcookie("h5p_id", "", time() - 3600, "/");
             // Add media to media library
             if (request()->hasFile('thumbnail_img') && request()->file('thumbnail_img')->isValid()) {
                 $storybookEloquent->addMediaFromRequest('thumbnail_img')

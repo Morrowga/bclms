@@ -224,7 +224,9 @@
                                 'select[name="h5peditor-library"]');
                             if (select !== null) {
                                 // Element found, do something with it
-                                var valuesToHide = ["H5P.Audio 1.5", "H5P.Blanks 1.14",
+                                var valuesToHide = [
+                                    "H5P.Audio 1.5",
+                                    "H5P.Blanks 1.14",
                                     "H5P.DragQuestion 1.14", "H5P.DragText 1.10",
                                     "H5P.MarkTheWords 1.11", "H5P.MultiChoice 1.16",
                                     "H5P.MultiMediaChoice 0.3", "H5P.SingleChoiceSet 1.11",

@@ -42,6 +42,16 @@ let toggle = () => {
         <HorizontalNav :nav-items="navItems" />
 
         <VSpacer />
+        <Link
+            :href="route('techsupports')"
+            class="d-none d-md-flex align-center"
+        >
+            <VBtn icon color="secondary">
+                <v-icon style="font-size: 23px !important"
+                    >mdi-chat-question-outline</v-icon
+                >
+            </VBtn>
+        </Link>
         <NavBarNotifications class="me-3" />
 
         <UserProfile v-if="!is_drawer" class="d-none d-md-flex pe-3" />

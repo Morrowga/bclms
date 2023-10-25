@@ -30,13 +30,23 @@ class StudentRepository implements StudentRepositoryInterface
      */
     public function getStudent($filters)
     {
+        // dd('hello');
         $auth = auth()->user()->role->name;
         $paginate_students = StudentResources::collection(
-            StudentEloquentModel::with('user', 'organisation', 'disability_types', 'parent')
+            StudentEloquentModel::with('user', 'organisation', 'disability_types', 'parent', 'teachers')
                 ->filter($filters)
                 ->when($auth, function ($query, $auth) {
 
-                    if ($auth != 'BC Super Admin') {
+                    if ($auth == 'BC Super Admin') {
+                    } elseif ($auth == 'BC Subscriber') {
+                        $query->whereHas('teachers', function ($query) {
+                            $query->where('user_id', auth()->user()->id);
+                        });
+                    } elseif ($auth == 'Parent') {
+                        $query->whereHas('parent', function ($query) {
+                            $query->where('user_id', auth()->user()->id);
+                        });
+                    } else {
                         $query->where('organisation_id', auth()->user()->organisation_id);
                     }
                 })

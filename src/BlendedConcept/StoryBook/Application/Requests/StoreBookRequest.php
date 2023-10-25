@@ -41,6 +41,7 @@ class StoreBookRequest extends FormRequest
             'devices' => [
                 'required', 'array',
             ],
+            'h5p_id' => ['required']
         ];
     }
 
@@ -56,6 +57,7 @@ class StoreBookRequest extends FormRequest
             'disability_type' => 'Disability Type is required',
             'disability_type' => 'Disability Type is required',
             'devices' => 'Supported Accessibility Devices  is required',
+            'h5p_id.required' => 'h5p video is required'
         ];
     }
 }
