@@ -46,6 +46,14 @@ class StudentRepository implements StudentRepositoryInterface
                         $query->whereHas('parent', function ($query) {
                             $query->where('user_id', auth()->user()->id);
                         });
+                    } elseif ($auth == 'Teacher') {
+                        $teachers = TeacherEloquentModel::with('classrooms')->where('user_id', auth()->user()->id)->first();
+                        foreach ($teachers->classrooms as $classroom) {
+                            array_push($classroom_ids, $classroom->id);
+                        }
+                        $query->whereHas('classrooms', function ($query) use ($classroom_ids) {
+                            $query->whereIn('id', $classroom_ids);
+                        });
                     } else {
                         $query->where('organisation_id', auth()->user()->organisation_id);
                     }
