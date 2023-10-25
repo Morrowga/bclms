@@ -315,9 +315,8 @@ onUpdated(() => {
                                         v-model="form.name"
                                     ></v-text-field>
                                 </VCol>
-                                <VCol cols="4">
+                                <VCol cols="4" class="f-title">
                                     <VTextField
-                                        class="f-title"
                                         v-model="gameTag"
                                         :error-messages="form?.errors?.tags"
                                         append-inner-icon="mdi-add-circle"
@@ -686,7 +685,7 @@ onUpdated(() => {
     padding-top: 0;
     padding-bottom: 0;
 }
-:deep(#input-82) {
+:deep(.f-title .v-text-field input) {
     color: var(--graphite, #282828) !important;
     font-size: 15px !important;
     font-style: normal !important;
