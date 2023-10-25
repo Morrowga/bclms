@@ -15,7 +15,7 @@ use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentMode
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomGroupEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 
-class ClassroomEloquentModel extends Model implements HasMedia
+class ClassRoomEloquentModel extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, Notifiable;
 

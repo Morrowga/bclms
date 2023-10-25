@@ -7,7 +7,7 @@ namespace Src\BlendedConcept\Student\Infrastructure\EloquentModels;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassroomEloquentModel;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomGroupEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
@@ -99,7 +99,7 @@ class StudentEloquentModel extends Model implements HasMedia
 
     public function classrooms()
     {
-        return $this->belongsToMany(ClassroomEloquentModel::class, 'classroom_students', 'student_id', 'classroom_id');
+        return $this->belongsToMany(ClassRoomEloquentModel::class, 'classroom_students', 'student_id', 'classroom_id');
     }
 
     public function playlists()
