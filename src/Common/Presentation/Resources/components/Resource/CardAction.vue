@@ -146,6 +146,20 @@ const copyLink = () => {
     // props.data.video_url
 };
 
+const downloadImage = () => {
+    const linkToDownload = props.data.video_url;
+
+    const anchorElement = document.createElement("a");
+    anchorElement.href = linkToDownload;
+    anchorElement.download = props.data.file_name; // You can change the default downloaded file name here
+
+    document.body.appendChild(anchorElement);
+
+    anchorElement.click();
+
+    document.body.removeChild(anchorElement);
+};
+
 const fileInput = ref(null);
 
 const openFileInput = () => {
@@ -171,6 +185,12 @@ onMounted(() => {
 
             <v-menu activator="parent">
                 <v-list>
+                    <v-list-item
+                        @click="downloadImage"
+                        v-if="mimeType.startsWith('image/')"
+                    >
+                        <v-list-item-title>Download Image</v-list-item-title>
+                    </v-list-item>
                     <v-list-item @click="copyLink">
                         <v-list-item-title>Copy Link</v-list-item-title>
                     </v-list-item>
