@@ -5,6 +5,8 @@ import { computed, defineProps } from "vue";
 import avatar4 from "@images/avatars/avatar-4.png";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { isConfirmedDialog } from "@actions/useConfirm";
+import { FlashMessage } from "@actions/useFlashMessage";
+
 import {
     serverParams,
     onColumnFilter,
@@ -15,8 +17,9 @@ import {
     serverPerPage,
     datas,
     routeName,
+    loadItems,
 } from "./useOrganisationsDatatable.js";
-
+let flash = "successfully deleted";
 //## start datatable section
 let columns = [
     {
@@ -55,12 +58,18 @@ const selectionChanged = (data) => {
     console.log(data.selectedRows);
 };
 
-const deleteOrganisation = () => {
+const deleteOrganisation = (id) => {
     isConfirmedDialog({
-        title: "",
-        icon: "warning",
-        confirmButtonText: "Save",
-        denyButtonText: "Yes,delete it",
+        title: "You won't be able to revert this!",
+        denyButtonText: "Yes,delete it!",
+        onConfirm: () => {
+            router.delete(route("organisations.destroy", id), {
+                onSuccess: () => {
+                    FlashMessage({ flash });
+                    loadItems();
+                },
+            });
+        },
     });
 };
 
@@ -200,11 +209,17 @@ const organisations = computed(() => datas.value);
                         {{ dataProps.row.name }}
                         <!-- <VChip size="small" color="primary">organisation</VChip> -->
                     </Link>
-                    <div
-                        v-if="dataProps.column.field == 'status'"
-                        class="flex flex-nowrap"
-                    >
-                        <VChip size="small" color="danger"> pending </VChip>
+                    <div v-if="dataProps.column.field == 'status'">
+                        <VChip
+                            v-if="dataProps.row.status == 'ACTIVE'"
+                            color="success"
+                            class="v-chip"
+                        >
+                            Active
+                        </VChip>
+                        <VChip v-else color="error" class="v-chip">
+                            Inactive
+                        </VChip>
                     </div>
                     <div
                         v-if="dataProps.column.field == 'action'"
@@ -234,7 +249,11 @@ const organisations = computed(() => datas.value);
                                 >
                                     <VListItemTitle>Edit</VListItemTitle>
                                 </VListItem>
-                                <VListItem @click="deleteOrganisation()">
+                                <VListItem
+                                    @click="
+                                        deleteOrganisation(dataProps.row.id)
+                                    "
+                                >
                                     <VListItemTitle>Delete</VListItemTitle>
                                 </VListItem>
                             </VList>

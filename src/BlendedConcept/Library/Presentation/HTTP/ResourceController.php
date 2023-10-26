@@ -53,7 +53,7 @@ class ResourceController extends Controller
     /**
      * This function stores a new resource.
      *
-     * @param  StoreGameRequest  $request The request object
+     * @param  StoreResourceRequest  $request The request object
      * @return \Illuminate\Http\RedirectResponse The redirect response
      */
     public function store(StoreResourceRequest $request)

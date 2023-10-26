@@ -128,13 +128,13 @@ const deleteAnnouncement = (id) => {
                             class="app-user-search-filter d-flex justify-end align-center"
                         >
                             <!-- 👉 Add Announcement button -->
-                            <VBtn class="tiggie-btn">
+                            <VBtn
+                                class="tiggie-btn"
+                                v-if="checkPermission('create_announcement')"
+                            >
                                 <Link
                                     :href="route('announcements.create')"
                                     class="text-white"
-                                    v-if="
-                                        checkPermission('create_announcement')
-                                    "
                                 >
                                     Add Announcement
                                 </Link>

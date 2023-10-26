@@ -18,6 +18,7 @@ use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquent
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\TagEloquentModel;
 
 class StoryBookRepository implements StoryBookRepositoryInterface
 {
@@ -99,7 +100,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
 
             // Associate tags
             $storybookEloquent->associateTags(request()->tags);
-            setcookie("h5p_id", time() - 3600);
+            setcookie("h5p_id", "", time() - 3600, "/");
             // Add media to media library
             if (request()->hasFile('thumbnail_img') && request()->file('thumbnail_img')->isValid()) {
                 $storybookEloquent->addMediaFromRequest('thumbnail_img')
@@ -159,11 +160,15 @@ class StoryBookRepository implements StoryBookRepositoryInterface
         try {
             // Convert StoryBookData to an array
             $storyBookArray = $storyBookData->toArray();
-
             // Find the storybook by ID and fill with the updated data
             $updateStoryBookEloquent = StoryBookEloquentModel::query()->findOrFail($storyBookData->id);
             $updateStoryBookEloquent->fill($storyBookArray);
             $updateStoryBookEloquent->update();
+
+            if ($storyBookArray['delete_tags']) {
+                $tags = TagEloquentModel::whereIn('id', $storyBookArray['delete_tags'])->delete();
+                $updateStoryBookEloquent->associateTags(request()->tags);
+            }
             if (request()->hasFile('thumbnail_img') && request()->file('thumbnail_img')->isValid()) {
 
                 $old_thumbnail = $updateStoryBookEloquent->getFirstMedia('thumbnail_img');

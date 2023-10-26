@@ -12,7 +12,6 @@ import { requiredValidator } from "@validators";
 const props = defineProps(["data_type", "storybooks", "pathway"]);
 const isFormValid = ref(false);
 let refForm = ref();
-const isShowBook = ref(false);
 const selectedImage = ref(null);
 let draggedImageIndex = null;
 const uploadedImages = ref([]);
@@ -41,21 +40,27 @@ function startDrag(index, id) {
     // Store the index of the dragged image
     if (!form.storybooks.includes(id)) {
         form.storybooks.push(id);
+        draggedImageIndex = index;
     }
-    draggedImageIndex = index;
 }
 
 function handleDropp(event) {
     event.preventDefault();
     const files = event.dataTransfer.files;
+    let book = props.storybooks[draggedImageIndex];
     if (files.length > 0) {
         for (const file of files) {
             uploadedImages.value.push({
+                id: book.id,
                 file: file,
                 src: URL.createObjectURL(file),
-                name: file.name,
+                name: book.name,
             });
         }
+        uploadedImages.value = uploadedImages.value.filter(
+            (image, index, self) =>
+                index === self.findIndex((t) => t.id === image.id)
+        );
     } else {
         const droppedImage = datas[draggedImageIndex];
 
@@ -78,9 +83,7 @@ const removeUploadedItem = (index) => {
     uploadedImages.value.splice(index, 1);
     form.storybooks.splice(index, 1);
 };
-function showBook() {
-    isShowBook.value = !isShowBook.value;
-}
+
 const scrollToTarget = () => {
     const container = containerRef.value;
     const target = targetRef.value;
@@ -150,17 +153,13 @@ const storybooks = (datas) => {
                             <VBtn
                                 color="secondary"
                                 text-color="white"
-                                density="compact"
                                 variant="tonal"
                                 class="pl-16 pr-16"
-                                height="30"
                             >
                                 <span class="text-dark">Back</span>
                             </VBtn>
                         </Link>
-                        <VBtn height="30" class="ml-4 w-25" type="submit">
-                            Save
-                        </VBtn>
+                        <VBtn class="ml-4 w-25" type="submit"> Save </VBtn>
                     </VCol>
                 </VRow>
                 <VRow>
@@ -205,7 +204,7 @@ const storybooks = (datas) => {
 
                             <VCol cols="12" sm="6" md="4">
                                 <VLabel class="tiggie-label required"
-                                    >Number Of Gold Coins for Completion</VLabel
+                                    >Number Of Gold Coins</VLabel
                                 >
                                 <VTextField
                                     placeholder="Type here ..."
@@ -221,7 +220,7 @@ const storybooks = (datas) => {
 
                             <VCol cols="12" sm="6" md="4">
                                 <VLabel class="tiggie-label required"
-                                    >Number Of Silver Coins for Replay</VLabel
+                                    >Number Of Silver Coins</VLabel
                                 >
                                 <VTextField
                                     placeholder="Type here ..."
@@ -246,13 +245,12 @@ const storybooks = (datas) => {
                 </VRow>
                 <VRow>
                     <VCol cols="12" class="pt-0">
+                        <h1 class="tiggie-title required">Current Flow</h1>
                         <div class="scroll-container" ref="containerRef">
                             <div
                                 class="ps-relative card-container"
                                 v-for="(image, index) in uploadedImages"
                                 :key="index"
-                                :draggable="true"
-                                @dragend="startDrag(index)"
                             >
                                 <p
                                     class="font-weight-bold text-right storybook-ps"
@@ -281,7 +279,7 @@ const storybooks = (datas) => {
                                     </VBtn>
                                 </p>
                                 <v-card
-                                    class="ma-4 ps-index"
+                                    class="ma-0 pa-0 mb-2 ps-index"
                                     height="200"
                                     :color="'primary'"
                                 >
@@ -299,7 +297,7 @@ const storybooks = (datas) => {
                                 </p>
                             </div>
                             <div
-                                class="imprt-path-text mt-4 mx-5"
+                                class="imprt-path-text mx-5"
                                 @dragover.prevent
                                 @drop="handleDropp"
                             >
@@ -321,9 +319,7 @@ const storybooks = (datas) => {
                     </VCol>
                     <VCol>
                         <div class="d-flex justify-space-between align-center">
-                            <VBtn color="primary" @click="showBook"
-                                >Add Books</VBtn
-                            >
+                            <h1 class="tiggie-title required">Book Library</h1>
                             <div class="search-field">
                                 <v-text-field
                                     density="compact"
@@ -342,11 +338,11 @@ const storybooks = (datas) => {
                                 )"
                                 :key="index"
                                 :draggable="true"
-                                @dragend="startDrag(index, data.id)"
+                                @dragstart="startDrag(index, data.id)"
                                 class="card-container"
                             >
                                 <v-card
-                                    class="ma-4 container-style pa-0"
+                                    class="ma-0 pa-0 mb-2 container-style"
                                     height="200"
                                     :color="'primary'"
                                 >
@@ -358,12 +354,6 @@ const storybooks = (datas) => {
                                             :src="data.thumbnail_img"
                                         />
                                     </div>
-                                    <v-scale-transition class="full-icon">
-                                        <!-- <v-icon
-                                                size="48"
-                                                icon="mdi-check-circle-outline"
-                                            ></v-icon> -->
-                                    </v-scale-transition>
                                 </v-card>
                                 <p class="font-weight-bold text-center">
                                     {{ data.name }}

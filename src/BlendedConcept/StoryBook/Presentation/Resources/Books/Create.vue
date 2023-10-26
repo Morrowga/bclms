@@ -70,10 +70,16 @@ let onFormSubmit = () => {
                         isLoading.value = false;
                     },
                     onError: (error) => {
-                        console.log(error);
+                        SuccessDialog({
+                            title: error.h5p_id,
+                            mainTitle: "Error!",
+                            color: "#ff6262",
+                            icon: "error",
+                        });
+                        isLoading.value = false;
                     },
                 });
-            }, 10000);
+            }, 5000);
         }
     });
 };

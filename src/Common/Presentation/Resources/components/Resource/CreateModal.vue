@@ -4,17 +4,20 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
 
+import { requiredValidator } from "@validators";
 let props = defineProps(["route", "title", "type"]);
 const isDialogVisible = ref(false);
 const selectedImage = ref(null);
 const file = ref(null);
 const validationError = ref(null);
 let flash = computed(() => usePage().props.flash);
+const isFormValid = ref(false);
+let refForm = ref();
 
 const form = useForm({
     filename: null,
-    file: null
-})
+    file: null,
+});
 
 const disabled = ref(false);
 
@@ -22,28 +25,65 @@ const validateFile = (file) => {
     const fileInput = file;
 
     const allowedFormats = [
-        "video/mp4", "video/webm", "video/ogg",
-        "image/jpeg", "image/jpg", "image/png", "image/gif", "image/bmp", "image/tiff", "image/tif", "image/svg+xml",
-        "audio/mp3", "audio/mpeg", "audio/wav", "audio/ogg", "audio/m4a",
-        "application/pdf", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "text/css", "text/csv", "text/plain", "text/rtf", "text/xml", "text/markdown", "text/vtt", "text/x-diff",
-        "font/ttf", "font/otf", "font/woff", "font/woff2", "application/x-font-ttf", "application/font-woff", "application/font-woff2", "application/vnd.ms-fontobject", "font/opentype", "application/x-font-opentype", "application/x-font-truetype",
-        "application/json", "application/javascript",
+        "video/mp4",
+        "video/webm",
+        "video/ogg",
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/gif",
+        "image/bmp",
+        "image/tiff",
+        "image/tif",
+        "image/svg+xml",
+        "audio/mp3",
+        "audio/mpeg",
+        "audio/wav",
+        "audio/ogg",
+        "audio/m4a",
+        "application/pdf",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/vnd.ms-powerpoint",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "text/css",
+        "text/csv",
+        "text/plain",
+        "text/rtf",
+        "text/xml",
+        "text/markdown",
+        "text/vtt",
+        "text/x-diff",
+        "font/ttf",
+        "font/otf",
+        "font/woff",
+        "font/woff2",
+        "application/x-font-ttf",
+        "application/font-woff",
+        "application/font-woff2",
+        "application/vnd.ms-fontobject",
+        "font/opentype",
+        "application/x-font-opentype",
+        "application/x-font-truetype",
+        "application/json",
+        "application/javascript",
         "application/x-shockwave-flash",
-        "application/vnd.oasis.opendocument.presentation", "application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text"
+        "application/vnd.oasis.opendocument.presentation",
+        "application/vnd.oasis.opendocument.spreadsheet",
+        "application/vnd.oasis.opendocument.text",
     ];
 
     if (!allowedFormats.includes(fileInput.type)) {
-        validationError.value = 'Please select a valid file format.';
+        validationError.value = "Please select a valid file format.";
         return false;
     }
 
     // Check file size (100MB limit)
     const maxSizeInBytes = 100 * 1024 * 1024; // 100MB
     if (fileInput.size > maxSizeInBytes) {
-        validationError.value = 'File size exceeds the 100 MB limit.';
+        validationError.value = "File size exceeds the 100 MB limit.";
         return false;
     }
 
@@ -52,19 +92,18 @@ const validateFile = (file) => {
     return true;
 };
 
-
 const handleFileUpload = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile && validateFile(selectedFile)) {
-        file.value = selectedFile
+        file.value = selectedFile;
         selectedImage.value = URL.createObjectURL(selectedFile);
     }
 };
 
 const removeVideo = () => {
     selectedImage.value = null;
-    file.value = null
-}
+    file.value = null;
+};
 
 const submitResource = () => {
     disabled.value = true;
@@ -100,10 +139,10 @@ const openFileInput = () => {
             >Add</v-btn
         >
 
-        <VDialog v-model="isDialogVisible" width="1000">
+        <VDialog v-model="isDialogVisible" width="1000" scrollable>
             <!-- Activator -->
             <!-- Dialog Content -->
-            <VForm @submit.prevent="submitResource">
+            <VForm @submit.prevent="submitResource" ref="refForm">
                 <VCard class="rolling-card">
                     <VCardText>
                         <div class="d-flex justify-space-between">
@@ -123,24 +162,63 @@ const openFileInput = () => {
                                 <span class="input-label-resource"
                                     >Filename <span class="star">*</span></span
                                 >
-                                <VTextField v-model="form.filename" class="textfield-round" />
+                                <VTextField
+                                    v-model="form.filename"
+                                    class="textfield-round"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="form?.errors?.filename"
+                                />
                             </div>
                             <div class="mt-3">
-                                <div v-if="selectedImage" class="resource-content">
+                                <div
+                                    v-if="selectedImage"
+                                    class="resource-content"
+                                >
                                     <!-- Render video if the uploaded file is a video type -->
-                                    <video v-if="file?.type && file.type.startsWith('video/')" controls autoplay class="videoDiv">
-                                        <source :src="selectedImage" :type="file.type">
-                                        Your browser does not support the video tag.
+                                    <video
+                                        v-if="
+                                            file?.type &&
+                                            file.type.startsWith('video/')
+                                        "
+                                        controls
+                                        autoplay
+                                        class="videoDiv"
+                                    >
+                                        <source
+                                            :src="selectedImage"
+                                            :type="file.type"
+                                        />
+                                        Your browser does not support the video
+                                        tag.
                                     </video>
 
                                     <!-- Render audio if the uploaded file is an audio type -->
-                                    <audio v-else-if="file?.type && file.type.startsWith('audio/')" controls class="audioPlayer">
-                                        <source :src="selectedImage" :type="file.type">
-                                        Your browser does not support the audio tag.
+                                    <audio
+                                        v-else-if="
+                                            file?.type &&
+                                            file.type.startsWith('audio/')
+                                        "
+                                        controls
+                                        class="audioPlayer"
+                                    >
+                                        <source
+                                            :src="selectedImage"
+                                            :type="file.type"
+                                        />
+                                        Your browser does not support the audio
+                                        tag.
                                     </audio>
 
                                     <!-- Render image if the uploaded file is an image type -->
-                                    <img v-else-if="file?.type && (file.type.startsWith('image/'))" :src="selectedImage" class="image-resource" alt="Uploaded Image" />
+                                    <img
+                                        v-else-if="
+                                            file?.type &&
+                                            file.type.startsWith('image/')
+                                        "
+                                        :src="selectedImage"
+                                        class="image-resource"
+                                        alt="Uploaded Image"
+                                    />
 
                                     <!-- TODO: Add other preview elements for different file types like PDF, DOCX, etc. if required -->
 
@@ -149,7 +227,8 @@ const openFileInput = () => {
                                     </div>
                                 </div>
 
-                                <VCard v-else
+                                <VCard
+                                    v-else
                                     class="upload-card-resource"
                                     @click="openFileInput"
                                 >
@@ -160,8 +239,13 @@ const openFileInput = () => {
                                         cover
                                     ></v-img> -->
                                     <div class="card-text">
-                                        <div  v-if="validationError" class="text-center">
-                                            <span class="error-message pppangram-bold">
+                                        <div
+                                            v-if="validationError"
+                                            class="text-center"
+                                        >
+                                            <span
+                                                class="error-message pppangram-bold"
+                                            >
                                                 {{ validationError }}
                                             </span>
                                         </div>
@@ -179,7 +263,18 @@ const openFileInput = () => {
                                             </div>
                                             <div class="mt-2">
                                                 <span class="fade-text">
-    Allowed formats: Images (PNG, JPG, JPEG, GIF, BMP, TIFF, SVG, WebP), Videos (MP4, WebM, OGG), Audios (MP3, M4A, WAV, OGG), Documents (PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, ODT, ODS, ODP), Text (TXT, RTF, MD, CSV, XML, VTT, CSS, JS, JSON, DIFF), Fonts (TTF, OTF, WOFF, WOFF2), SWF. Maximum file size: 100MB.
+                                                    Allowed formats: Images
+                                                    (PNG, JPG, JPEG, GIF, BMP,
+                                                    TIFF, SVG, WebP), Videos
+                                                    (MP4, WebM, OGG), Audios
+                                                    (MP3, M4A, WAV, OGG),
+                                                    Documents (PDF, DOC, DOCX,
+                                                    XLS, XLSX, PPT, PPTX, ODT,
+                                                    ODS, ODP), Text (TXT, RTF,
+                                                    MD, CSV, XML, VTT, CSS, JS,
+                                                    JSON, DIFF), Fonts (TTF,
+                                                    OTF, WOFF, WOFF2), SWF.
+                                                    Maximum file size: 100MB.
                                                 </span>
                                             </div>
                                         </div>
@@ -231,7 +326,6 @@ const openFileInput = () => {
     </div>
 </template>
 <style scoped>
-
 .error_text {
     color: red !important;
 }
@@ -267,11 +361,11 @@ const openFileInput = () => {
     border-radius: 100px !important;
 }
 
-.error-message{
+.error-message {
     color: red !important;
 }
 
-.videoDiv{
+.videoDiv {
     width: 100%;
     height: 200px;
     object-fit: cover;

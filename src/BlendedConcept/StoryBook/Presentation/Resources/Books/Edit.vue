@@ -6,6 +6,7 @@ import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
 import UploadThumbnail from "./components/UploadThumbnail.vue";
 import UploadPhysicalResources from "./components/UploadPhysicalResources.vue";
+import { integerValidator } from "@validators";
 const props = defineProps({
     datas: {
         type: Object,
@@ -36,12 +37,16 @@ let physicalDialog = ref(false);
 let types = ref([]);
 let devices = ref([]);
 let themes = ref([]);
+let tags = ref([]);
 let learningneeds = ref([]);
 let systemDisabilityTypes = ref([]);
 let systemDevices = ref([]);
 let systemThemes = ref([]);
 let systemLearningneeds = ref([]);
+let deleteTags = ref([]);
 const getThumbFile = ref(null);
+const gameTag = ref("");
+
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
@@ -58,6 +63,9 @@ const form = useForm({
     devices: [],
     thumbnail_img: "",
     h5p_id: null,
+    num_gold_coins: "",
+    num_silver_coins: "",
+    delete_tags: [],
     _method: "PUT",
 });
 
@@ -206,6 +214,24 @@ const isInBookLearningneed = (learningneedId) => {
     );
 };
 
+const addToSublearningArray = (tag) => {
+    if (gameTag.value) {
+        form.tags.push(gameTag.value);
+        gameTag.value = "";
+    }
+};
+
+const removeFromTagArray = (index) => {
+    form.tags = form.tags.filter((tag, i) => i != index);
+};
+const removeFromTagIdArray = (tag_id) => {
+    tags.value = tags.value.filter((tag, i) => tag.id != tag_id);
+    if (tag_id) {
+        deleteTags.value.push(tag_id);
+        form.delete_tags = deleteTags.value;
+    }
+};
+
 onUpdated(() => {
     form.id = props.datas.id;
     form.name = props.datas.name;
@@ -213,11 +239,14 @@ onUpdated(() => {
     form.thumbnail_img = props.datas.thumbnail_img;
     form.disability_type = props.datas.disability_type;
     form.sub_learning_needs = props.datas.learningneeds;
+    tags.value = props.datas.tags;
     form.themes = props.datas.themes;
     form.disability_type = props.datas.disability_types;
     form.devices = props.datas.devices;
-    form.is_free = props.datas.is_free;
+    form.is_free = props.datas.is_free ? true : false;
     form.h5p_id = props.datas.h5p_id;
+    form.num_gold_coins = props.datas.num_gold_coins;
+    form.num_silver_coins = props.datas.num_silver_coins;
 });
 </script>
 <template>
@@ -237,10 +266,69 @@ onUpdated(() => {
                             :aspect-ratio="16 / 9"
                             cover
                             alt="Faded Image"
-                        />
+                        >
+                            <div class="pa-2 ml-10 mt-4 coins-bg">
+                                <div class="d-flex space-between align-center">
+                                    <img
+                                        src="/images/icons/goldcoins.png"
+                                        class="coin-image"
+                                    />
+                                    <!-- <span class="coin-text pl-1">{{
+                                        form.num_gold_coins
+                                    }}</span> -->
+                                    <v-text-field
+                                        variant="solo"
+                                        type="number"
+                                        class="coin-text text-white pl-1"
+                                        v-model="form.num_gold_coins"
+                                    />
+                                </div>
+                                <div class="d-flex space-between align-center">
+                                    <img
+                                        src="/images/icons/silvercoins.png"
+                                        class="coin-image"
+                                    />
+                                    <!-- <span class="coin-text pl-2">
+                                        {{ form.num_silver_coins }}
+                                    </span> -->
+                                    <v-text-field
+                                        dark
+                                        variant="solo"
+                                        type="number"
+                                        class="coin-text text-white pl-1"
+                                        v-model="form.num_silver_coins"
+                                    />
+                                </div>
+                            </div>
+                        </v-img>
                         <div class="faded-overlay"></div>
                         <div class="book-title">
-                            <v-text-field v-model="form.name"></v-text-field>
+                            <div class="d-flex justify-end">
+                                <VLabel class="tiggie-label pr-5"
+                                    >Available for Free Users</VLabel
+                                >
+                                <VCheckbox v-model="form.is_free" />
+                            </div>
+
+                            <VRow>
+                                <VCol cols="8">
+                                    <v-text-field
+                                        class="r-title"
+                                        v-model="form.name"
+                                    ></v-text-field>
+                                </VCol>
+                                <VCol cols="4" class="f-title">
+                                    <VTextField
+                                        v-model="gameTag"
+                                        :error-messages="form?.errors?.tags"
+                                        append-inner-icon="mdi-add-circle"
+                                        @click:append-inner="
+                                            addToSublearningArray
+                                        "
+                                    >
+                                    </VTextField>
+                                </VCol>
+                            </VRow>
                         </div>
                         <div class="edit-icon">
                             <v-btn
@@ -278,6 +366,49 @@ onUpdated(() => {
                         </div>
                     </div>
                 </v-card-title>
+                <v-card-subtitle class="text-end d-flex justify-end">
+                    <div
+                        class="d-flex my-4 justify-end"
+                        v-if="form.tags.length > 0"
+                        :class="tags.length == 0 ? 'pr-16 mr-6' : ''"
+                    >
+                        <div
+                            class="ps-relative"
+                            v-for="(tag, index) in form.tags"
+                            :key="index"
+                        >
+                            <v-chip size="small" color="primary">{{
+                                tag
+                            }}</v-chip>
+                            <div
+                                class="delete-chip"
+                                @click="removeFromTagArray(index)"
+                            >
+                                <span>-</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="d-flex my-4 justify-end pr-16 mr-6"
+                        v-if="tags.length > 0"
+                    >
+                        <div
+                            class="ps-relative"
+                            v-for="(tag, index) in tags"
+                            :key="index"
+                        >
+                            <v-chip size="small" color="primary">{{
+                                tag.name
+                            }}</v-chip>
+                            <div
+                                class="delete-chip"
+                                @click="removeFromTagIdArray(tag.id)"
+                            >
+                                <span>-</span>
+                            </div>
+                        </div>
+                    </div>
+                </v-card-subtitle>
                 <v-card-text class="px-10 py-0 pb-5">
                     <div class="paragraph">
                         <v-textarea
@@ -430,6 +561,7 @@ onUpdated(() => {
                                         v-if="isInGameDevices(device.id)"
                                     >
                                         <span
+                                            style="font-size: 10px !important"
                                             @click="
                                                 removeDeviceFromArray(device.id)
                                             "
@@ -437,7 +569,9 @@ onUpdated(() => {
                                         >
                                     </div>
                                     <div class="add-chip" v-else>
-                                        <span @click="addDeviceToArray(device)"
+                                        <span
+                                            style="font-size: 10px !important"
+                                            @click="addDeviceToArray(device)"
                                             >+</span
                                         >
                                     </div>
@@ -553,6 +687,16 @@ onUpdated(() => {
     padding-top: 0;
     padding-bottom: 0;
 }
+:deep(.f-title .v-text-field input) {
+    color: var(--graphite, #282828) !important;
+    font-size: 15px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 52px !important; /* 108.333% */
+    text-transform: capitalize !important;
+    padding-top: 0;
+    padding-bottom: 0;
+}
 
 .delete-chip {
     background: rgb(109, 120, 141);
@@ -597,5 +741,32 @@ onUpdated(() => {
 }
 .max-w-edit-book {
     max-width: 650px !important;
+}
+
+/* coin images class */
+
+.coins-bg {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 360px !important;
+    height: 80px;
+    border-radius: 30px !important;
+    background: rgba(0, 0, 0, 0.75) !important;
+    background-color: transparent;
+}
+.coin-image {
+    width: 50px !important;
+    height: 50px !important;
+}
+.coin-text {
+    color: #fff !important;
+    text-align: center !important;
+    font-family: "ruddy-bold";
+    font-size: 45px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 74px !important; /* 123.333% */
+    text-transform: capitalize !important;
 }
 </style>

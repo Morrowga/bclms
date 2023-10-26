@@ -21,6 +21,7 @@ use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2bSubscriptionEloq
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class OrganisationRepository implements OrganisationRepositoryInterface
 {
@@ -266,9 +267,22 @@ class OrganisationRepository implements OrganisationRepositoryInterface
 
     public function delete(OrganisationEloquentModel $organisation)
     {
+        DB::beginTransaction();
         try {
+            $organisation->load('org_admin', 'teachers', 'students', 'parents');
+            $org_admin = $organisation->org_admin->user_id;
+            $teachers = $organisation->teachers()->pluck('user_id');
+            $students = $organisation->students()->pluck('user_id');
+            $parents = $organisation->parents()->pluck('user_id');
+            $result = collect([$org_admin])->merge($teachers)->merge($students)->merge($parents);
+            $uniqueUserIds = $result->unique();
+            $mergedArray = $uniqueUserIds->toArray();
+            $userEloquent = UserEloquentModel::whereIn('id', $mergedArray);
+            $userEloquent->delete();
             $organisation->delete();
+            DB::commit();
         } catch (\Exception $error) {
+            DB::rollBack();
             config('app.env') == 'production'
                 ? throw new \Exception('Something Wrong! Please try again.')
                 : throw new \Exception($error->getMessage());

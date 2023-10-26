@@ -46,14 +46,15 @@ class DashboardRepository implements DashboardRepositoryInterface
     public function getRecentStudents($filters)
     {
         $curr_role_name = auth()->user()->role->name;
-        $query =  StudentEloquentModel::with('user', 'organisation', 'disability_types', 'parent')
+        $query =  StudentEloquentModel::with('user', 'teachers', 'organisation', 'disability_types', 'parent')
             ->filter($filters)
             ->orderBy('student_id', 'desc');
+        // dd($query->get());
         $students = [];
         if ($curr_role_name == "BC Subscriber" || $curr_role_name == "Teacher") {
-            $user_id = auth()->user()->b2bUser->teacher_id;
+            $user_id = auth()->user()->id;
             $students = $query->whereHas('teachers', function ($query) use ($user_id) {
-                $query->where('teachers.teacher_id', $user_id);
+                return $query->where('user_id', $user_id);
             })->paginate($filters['perPage'] ?? 10);
         } else if ($curr_role_name == "Parent") {
             $user_id = auth()->user()->parents->parent_id;

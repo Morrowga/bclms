@@ -30,13 +30,32 @@ class StudentRepository implements StudentRepositoryInterface
      */
     public function getStudent($filters)
     {
+        // dd('hello');
         $auth = auth()->user()->role->name;
         $paginate_students = StudentResources::collection(
-            StudentEloquentModel::with('user', 'organisation', 'disability_types', 'parent')
+            StudentEloquentModel::with('user', 'organisation', 'disability_types', 'parent', 'teachers')
                 ->filter($filters)
                 ->when($auth, function ($query, $auth) {
 
-                    if ($auth != 'BC Super Admin') {
+                    if ($auth == 'BC Super Admin') {
+                    } elseif ($auth == 'BC Subscriber') {
+                        $query->whereHas('teachers', function ($query) {
+                            $query->where('user_id', auth()->user()->id);
+                        });
+                    } elseif ($auth == 'Parent') {
+                        $query->whereHas('parent', function ($query) {
+                            $query->where('user_id', auth()->user()->id);
+                        });
+                    } elseif ($auth == 'Teacher') {
+                        $classroom_ids = [];
+                        $teachers = TeacherEloquentModel::with('classrooms')->where('user_id', auth()->user()->id)->first();
+                        foreach ($teachers->classrooms as $classroom) {
+                            array_push($classroom_ids, $classroom->id);
+                        }
+                        $query->whereHas('classrooms', function ($query) use ($classroom_ids) {
+                            $query->whereIn('id', $classroom_ids);
+                        });
+                    } else {
                         $query->where('organisation_id', auth()->user()->organisation_id);
                     }
                 })

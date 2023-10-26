@@ -148,8 +148,24 @@ onUpdated(() => {
                             </div>
                         </v-img>
                         <div class="faded-overlay"></div>
-                        <div class="book-title">
-                            <span>{{ data.name }}</span>
+                        <div class="book-title d-flex align-center">
+                            <p>{{ data.name }}</p>
+                            <div class="px-4 d-flex">
+                                <v-chip
+                                    size="small"
+                                    color="success"
+                                    v-if="data.is_free"
+                                >
+                                    free access
+                                </v-chip>
+                                <v-chip
+                                    size="small"
+                                    v-for="(tag, index) in data.tags"
+                                    :key="index"
+                                >
+                                    {{ tag.name }}
+                                </v-chip>
+                            </div>
                         </div>
                         <div class="edit-icon">
                             <!-- <v-btn
@@ -311,13 +327,15 @@ onUpdated(() => {
     width: 100%;
     left: 40px;
 }
-.book-title span {
+.book-title p {
     color: var(--graphite, #282828) !important;
     font-size: 35px !important;
     font-style: normal !important;
     font-weight: 700 !important;
     line-height: 52px !important; /* 108.333% */
     text-transform: capitalize !important;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 .close-btn {

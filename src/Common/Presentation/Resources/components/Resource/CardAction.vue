@@ -12,11 +12,11 @@ let props = defineProps({
         type: Object,
     },
     current_user: {
-        type: Object
+        type: Object,
     },
     check_type: {
-        type: Boolean
-    }
+        type: Boolean,
+    },
 });
 
 const isEditDialogVisible = ref(false);
@@ -24,73 +24,84 @@ const selectedImage = ref(props.data.video_url);
 const file = ref(null);
 const validationError = ref(null);
 let flash = computed(() => usePage().props.flash);
+const mimeType = ref(props.data.mime_type);
 
 const form = useForm({
     filename: props.data.name,
     file: null,
     user_id: props.data.model_id,
-    _method: 'PUT'
-})
+    _method: "PUT",
+});
 
 const validateFile = (file) => {
-  const fileInput = file;
-  // Check file format (mime type)
-  if (!fileInput.type.startsWith('video/')) {
-    validationError.value = 'Please select a valid video file.';
-    return false;
-  }
+    const fileInput = file;
+    // Check file format (mime type)
+    if (
+        !fileInput.type.startsWith("video/") &&
+        !fileInput.type.startsWith("image/")
+    ) {
+        validationError.value = "Please select a valid video or image file.";
+        return false;
+    }
 
-  // Check file size (10MB limit)
-  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB
-  if (fileInput.size > maxSizeInBytes) {
-    validationError.value = 'File size exceeds the 100MB limit.';
-    return false;
-  }
+    // Check file size (10MB limit)
+    const maxSizeInBytes = 100 * 1024 * 1024; // 100MB
+    if (fileInput.size > maxSizeInBytes) {
+        validationError.value = "File size exceeds the 100MB limit.";
+        return false;
+    }
 
-  // Reset error message if the file is valid
-  validationError.value = null;
-  return true;
+    // Reset error message if the file is valid
+    validationError.value = null;
+    return true;
 };
 
 const handleFileUpload = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile && validateFile(selectedFile)) {
-        file.value = selectedFile
+        mimeType.value = selectedFile.type;
+        file.value = selectedFile;
         selectedImage.value = URL.createObjectURL(selectedFile);
     }
 };
 
 const removeVideo = () => {
     selectedImage.value = null;
-    file.value = null
-}
+    file.value = null;
+    mimeType.value = null;
+};
 
 const updateResource = () => {
-    form.file = file.value
+    form.file = file.value;
     form.post(route("resource.update", props.data.id), {
         onSuccess: () => {
             isEditDialogVisible.value = false;
             FlashMessage({ flash });
         },
         onError: (error) => {
-            SuccessDialog({ title: error?.file, icon: 'warning',color: '#ff6262', mainTitle: 'Failed!' });
+            SuccessDialog({
+                title: error?.file,
+                icon: "warning",
+                color: "#ff6262",
+                mainTitle: "Failed!",
+            });
         },
     });
-}
+};
 
 const deleteOnclick = () => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",
         denyButtonText: "Yes,delete it!",
         onConfirm: () => {
-            router.delete('/resource/' + props.data.id, {
+            router.delete("/resource/" + props.data.id, {
                 onSuccess: () => {
                     FlashMessage({ flash })
                 },
             });
         },
     });
-}
+};
 
 const publish = () => {
     const publishForm = useForm({});
@@ -106,12 +117,12 @@ const publish = () => {
             });
         },
     });
-}
+};
 
 const copyLink = () => {
     const linkToCopy = props.data.video_url;
 
-    const inputElement = document.createElement('input');
+    const inputElement = document.createElement("input");
     inputElement.value = linkToCopy;
 
     document.body.appendChild(inputElement);
@@ -119,25 +130,57 @@ const copyLink = () => {
     inputElement.select();
     inputElement.setSelectionRange(0, 99999);
 
-    document.execCommand('copy');
+    document.execCommand("copy");
 
     document.body.removeChild(inputElement);
     // props.data.video_url
-}
+};
+
+const downloadImage = () => {
+    const linkToDownload = props.data.video_url;
+
+    const anchorElement = document.createElement("a");
+    anchorElement.href = linkToDownload;
+    anchorElement.download = props.data.file_name; // You can change the default downloaded file name here
+
+    document.body.appendChild(anchorElement);
+
+    anchorElement.click();
+
+    document.body.removeChild(anchorElement);
+};
 
 const fileInput = ref(null);
 
 const openFileInput = () => {
     fileInput.value.click();
 };
+
+onMounted(() => {
+    console.log(props.data);
+});
 </script>
 <template #activator="{ props }">
     <div>
         <span class="resourcemenu mt-2 ml-10">
-            <span style="color: #000; background: #ffcc01; border-radius: 50%; padding: 5px 10px 13px 10px;">...</span>
+            <span
+                style="
+                    color: #000;
+                    background: #ffcc01;
+                    border-radius: 50%;
+                    padding: 5px 10px 13px 10px;
+                "
+                >...</span
+            >
 
             <v-menu activator="parent">
                 <v-list>
+                    <v-list-item
+                        @click="downloadImage"
+                        v-if="mimeType.startsWith('image/')"
+                    >
+                        <v-list-item-title>Download Image</v-list-item-title>
+                    </v-list-item>
                     <v-list-item @click="copyLink">
                         <v-list-item-title>Copy Link</v-list-item-title>
                     </v-list-item>
@@ -176,20 +219,48 @@ const openFileInput = () => {
                                 <span class="input-label-resource"
                                     >Filename <span class="star">*</span></span
                                 >
-                                <VTextField v-model="form.filename" class="textfield-round" />
+                                <VTextField
+                                    v-model="form.filename"
+                                    class="textfield-round"
+                                />
                             </div>
                             <div class="mt-3">
-                                <div v-if="selectedImage" class="video-resource">
-                                    <video controls autoplay class="videoDiv">
+                                <div
+                                    v-if="selectedImage"
+                                    class="video-resource"
+                                >
+                                    <video
+                                        v-if="
+                                            selectedImage &&
+                                            mimeType.startsWith('video/')
+                                        "
+                                        controls
+                                        autoplay
+                                        class="videoDiv"
+                                    >
                                         <!-- Set the video source to the selected video file -->
-                                        <source :src="selectedImage" type="video/mp4">
-                                        Your browser does not support the video tag.
+                                        <source
+                                            :src="selectedImage"
+                                            type="video/mp4"
+                                        />
+                                        Your browser does not support the video
+                                        tag.
                                     </video>
+                                    <img
+                                        v-else-if="
+                                            selectedImage &&
+                                            mimeType.startsWith('image/')
+                                        "
+                                        :src="selectedImage"
+                                        class="image-resource"
+                                        alt="Uploaded Image"
+                                    />
                                     <div class="d-flex justify-center">
                                         <VBtn @click="removeVideo">Remove</VBtn>
                                     </div>
                                 </div>
-                                <VCard v-else
+                                <VCard
+                                    v-else
                                     class="upload-card-resource"
                                     @click="openFileInput"
                                 >
@@ -200,8 +271,13 @@ const openFileInput = () => {
                                         cover
                                     ></v-img> -->
                                     <div class="card-text">
-                                        <div  v-if="validationError" class="text-center">
-                                            <span class="error-message pppangram-bold">
+                                        <div
+                                            v-if="validationError"
+                                            class="text-center"
+                                        >
+                                            <span
+                                                class="error-message pppangram-bold"
+                                            >
                                                 {{ validationError }}
                                             </span>
                                         </div>
@@ -321,7 +397,7 @@ const openFileInput = () => {
     border-radius: 100px !important;
 }
 
-.videoDiv{
+.videoDiv {
     width: 100%;
     height: 200px;
     object-fit: cover;

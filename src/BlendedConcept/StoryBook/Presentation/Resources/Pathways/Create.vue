@@ -61,25 +61,31 @@ const addPathway = () => {
     FlashMessage({ flash })
 };
 
-function startDrag(index, id) {
+async function startDrag(index, id) {
     // Store the index of the dragged image
     if (!form.storybooks.includes(id)) {
         form.storybooks.push(id);
+        draggedImageIndex = index;
     }
-    draggedImageIndex = index;
 }
 
-function handleDropp(event) {
+async function handleDropp(event) {
     event.preventDefault();
     const files = event.dataTransfer.files;
+    let book = props.storybooks[draggedImageIndex];
     if (files.length > 0) {
         for (const file of files) {
             uploadedImages.value.push({
+                id: book.id,
                 file: file,
                 src: URL.createObjectURL(file),
-                name: file.name,
+                name: book.name,
             });
         }
+        uploadedImages.value = uploadedImages.value.filter(
+            (image, index, self) =>
+                index === self.findIndex((t) => t.id === image.id)
+        );
     } else {
         const droppedImage = datas[draggedImageIndex];
 
@@ -163,17 +169,13 @@ const storybooks = (datas) => {
                             <VBtn
                                 color="secondary"
                                 text-color="white"
-                                density="compact"
                                 variant="tonal"
                                 class="pl-16 pr-16"
-                                height="30"
                             >
-                                <span class="text-dark">Back</span>
+                                Back
                             </VBtn>
                         </Link>
-                        <VBtn height="30" class="ml-4" type="submit">
-                            Add Pathway
-                        </VBtn>
+                        <VBtn class="ml-4" type="submit"> Add Pathway </VBtn>
                     </VCol>
                 </VRow>
 
@@ -218,7 +220,7 @@ const storybooks = (datas) => {
 
                             <VCol cols="12" sm="6" md="4">
                                 <VLabel class="tiggie-label required"
-                                    >Number Of Gold Coins for Completion</VLabel
+                                    >Number Of Gold Coins</VLabel
                                 >
                                 <VTextField
                                     placeholder="Type here ..."
@@ -234,7 +236,7 @@ const storybooks = (datas) => {
 
                             <VCol cols="12" sm="6" md="4">
                                 <VLabel class="tiggie-label required"
-                                    >Number Of Silver Coins for Replay</VLabel
+                                    >Number Of Silver Coins</VLabel
                                 >
                                 <VTextField
                                     placeholder="Type here ..."
@@ -259,14 +261,6 @@ const storybooks = (datas) => {
                                     Current Flow
                                 </h1>
                                 <VCardText class="pa-0">
-                                    <p
-                                        class="pppangram-bold ml-5 fs-20 t-black"
-                                    >
-                                        <strong class="fs-20 l-blue">{{
-                                            uploadedImages.length
-                                        }}</strong>
-                                        Book Remaining
-                                    </p>
                                     <div class="mt-3">
                                         <div
                                             class="scroll-container"
@@ -278,8 +272,6 @@ const storybooks = (datas) => {
                                                     image, index
                                                 ) in uploadedImages"
                                                 :key="index"
-                                                :draggable="true"
-                                                @dragend="startDrag(index)"
                                             >
                                                 <p
                                                     class="font-weight-bold text-right storybook-ps"
@@ -315,7 +307,7 @@ const storybooks = (datas) => {
                                                     </VBtn>
                                                 </p>
                                                 <v-card
-                                                    class="ma-4 ps-index"
+                                                    class="ma-0 pa-0 mb-2 ps-index"
                                                     height="200"
                                                     :color="'primary'"
                                                 >
@@ -335,7 +327,7 @@ const storybooks = (datas) => {
                                                 </p>
                                             </div>
                                             <div
-                                                class="imprt-path-text mt-4 mx-5"
+                                                class="imprt-path-text mr-5"
                                                 @dragover.prevent
                                                 @drop="handleDropp"
                                             >
@@ -392,11 +384,11 @@ const storybooks = (datas) => {
                                     )"
                                     :key="index"
                                     :draggable="true"
-                                    @dragend="startDrag(index, data.id)"
+                                    @dragstart="startDrag(index, data.id)"
                                     class="card-container"
                                 >
                                     <v-card
-                                        class="ma-4 container-style pa-0"
+                                        class="container-style pa-0 ma-0 mb-2"
                                         height="200"
                                         :color="'primary'"
                                     >

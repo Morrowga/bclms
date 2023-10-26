@@ -10,6 +10,8 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
+import { FlashMessage } from "@actions/useFlashMessage";
+
 import {
     serverParams,
     onColumnFilter,
@@ -22,7 +24,7 @@ import {
 } from "@Composables/useServerSideDatable.js";
 import { checkPermission } from "@actions/useCheckPermission";
 
-let props = defineProps(["rewards"]);
+let props = defineProps(["rewards", "flash"]);
 
 // for database script need
 
@@ -124,7 +126,7 @@ const form = useForm({
     id: "",
 });
 
-const setInactive = (id) => {
+const setInactive = (id, status) => {
     form.id = id;
     isConfirmedDialog({
         denyButtonText: "Set Inactive",
@@ -288,7 +290,8 @@ const showName = (status) => {
                                                     "
                                                     @click="
                                                         setInactive(
-                                                            dataProps.row.id
+                                                            dataProps.row.id,
+                                                            dataProps.row.status
                                                         )
                                                     "
                                                 >

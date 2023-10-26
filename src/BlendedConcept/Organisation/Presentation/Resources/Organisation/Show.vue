@@ -64,7 +64,7 @@ const maxStorage = (organisation) => {
 };
 const getPrice = (organisation) => {
     return organisation?.subscription
-        ? organisation?.subscription?.stripe_price * 1000 ?? 0
+        ? organisation?.subscription?.stripe_price
         : 0;
 };
 
