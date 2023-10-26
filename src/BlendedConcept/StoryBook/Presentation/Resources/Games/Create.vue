@@ -1,7 +1,8 @@
 <script setup>
 import { defineProps, ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import {
   emailValidator,
   requiredValidator,
@@ -19,6 +20,7 @@ const props = defineProps({
     type: Object,
   },
 });
+let flash = computed(() => usePage().props.flash);
 console.log(props.devices);
 let dialog = ref(false);
 const isPersistant = ref(false);
@@ -102,7 +104,8 @@ let onFormSubmit = () => {
     onSuccess: () => {
       dialog.value = false;
       isPersistant.value = false
-      SuccessDialog({ title: "You've successfully updated a question." });
+      console.log(flash.value.errorMessage+ ' test');
+      FlashMessage({ flash });
       form.reset();
     },
     onError: (error) => {

@@ -85,6 +85,9 @@ class StudentRepository implements StudentRepositoryInterface
             }
         } catch (\Exception $error) {
             DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
 
         DB::commit();
@@ -117,7 +120,9 @@ class StudentRepository implements StudentRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error->getMessage());
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -238,6 +243,9 @@ class StudentRepository implements StudentRepositoryInterface
             }
         } catch (\Exception $error) {
             DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -292,7 +300,9 @@ class StudentRepository implements StudentRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error->getMessage());
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 }

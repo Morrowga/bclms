@@ -36,8 +36,14 @@ class TeacherService
     public function updateTeacherStorage($teacher, $request)
     {
 
-        $teacher->update([
-            "allocated_storage_limit" => $request->storage
-        ]);
+        try {
+            $teacher->update([
+                "allocated_storage_limit" => $request->storage
+            ]);
+        } catch (\Exception $e) {
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($e->getMessage());
+        }
     }
 }

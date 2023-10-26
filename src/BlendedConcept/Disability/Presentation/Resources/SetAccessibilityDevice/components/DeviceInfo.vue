@@ -1,9 +1,10 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import GreenChip from "@mainRoot/components/GreenChip/GreenChip.vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 const props = defineProps({
   devices: {
@@ -19,6 +20,7 @@ const props = defineProps({
     required: true,
   }
 });
+let flash = computed(() => usePage().props.flash)
 let tab = ref(null);
 const selectedDevice = computed(() => {
   // Find the selected device object based on selectedValue
@@ -30,7 +32,7 @@ const form = useForm({
 let onFormSubmit = () => {
   form.post(route("set_accessibility_device.store", props.student_id), {
     onSuccess: () => {
-      SuccessDialog({ title: "You've successfully set a device." });
+      FlashMessage({ flash });
     },
     onError: (error) => {
     },

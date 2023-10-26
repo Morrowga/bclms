@@ -61,9 +61,8 @@ class UserExperienceSurveyController
             $storeSurveyCommand->execute();
         } catch (\Exception $e) {
             // Handle the exception here
-            dd($e->getMessage());
 
-            return redirect()->route('userexperiencesurvey.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
 
         /**
@@ -117,7 +116,7 @@ class UserExperienceSurveyController
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('userexperiencesurvey.index')->with('SystemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
 
         return redirect()->route('userexperiencesurvey.index')->with('successMessage', 'Survey updated Successfully!');
@@ -144,7 +143,7 @@ class UserExperienceSurveyController
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('userexperiencesurvey.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

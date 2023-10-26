@@ -8,6 +8,7 @@ import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { FlashMessage } from "@actions/useFlashMessage";
 
@@ -31,7 +32,7 @@ serverPage.value = ref(props.rewards.meta.current_page ?? 1);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 serverPerPage.value = ref(10);
 let page = usePage();
-
+let flash = page?.props?.flash;
 let options = ref({
     enabled: true,
     mode: "pages",

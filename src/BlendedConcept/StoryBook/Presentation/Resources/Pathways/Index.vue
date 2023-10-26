@@ -5,6 +5,7 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import {
     serverParams,
     onColumnFilter,
@@ -16,7 +17,7 @@ import {
 } from "@Composables/useServerSideDatable.js";
 import { checkPermission } from "@actions/useCheckPermission";
 let props = defineProps(["pathways", "flash"]);
-
+let flash = computed(() => usePage().props?.flash)
 //## start datatable section
 let columns = [
     {
@@ -74,9 +75,7 @@ const deletePathway = (id) => {
         onConfirm: () => {
             router.delete(route("pathways.destroy", id), {
                 onSuccess: () => {
-                    SuccessDialog({
-                        title: "You have successfully deleted pathway!",
-                    });
+                    FlashMessage({ flash })
                 },
             });
         },

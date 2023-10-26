@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps, ref } from "vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
@@ -30,6 +31,7 @@ let refForm = ref();
 const isFormValid = ref(false);
 const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
+let flash = computed(() => page?.props?.flash)
 //this arrary describe as multiple select for each roles
 const gameTag = ref("");
 const form = useForm({
@@ -64,7 +66,7 @@ let onFormSubmit = () => {
                 form.h5p_id = curr_h5p_id;
                 form.post(route("books.store"), {
                     onSuccess: () => {
-                        SuccessDialog({ title: props.flash?.successMessage });
+                        FlashMessage({ flash })
                         isLoading.value = false;
                     },
                     onError: (error) => {

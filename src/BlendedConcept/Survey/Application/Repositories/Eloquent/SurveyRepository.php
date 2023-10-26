@@ -117,7 +117,9 @@ class SurveyRepository implements SurveyRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -158,7 +160,9 @@ class SurveyRepository implements SurveyRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -211,7 +215,9 @@ class SurveyRepository implements SurveyRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -256,7 +262,9 @@ class SurveyRepository implements SurveyRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -301,7 +309,7 @@ class SurveyRepository implements SurveyRepositoryInterface
                     }
                 ])
                 ->latest()->first();
-            
+
             return ($surveyEloquentModel && $surveyEloquentModel->responses->count() == 0) ? $surveyEloquentModel : '';
         } else {
             return '';

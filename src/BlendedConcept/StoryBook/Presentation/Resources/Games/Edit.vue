@@ -1,9 +1,10 @@
 <script setup>
 import { defineProps, ref, defineEmits } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import UploadGameFile from "./components/UploadGameFile.vue";
 import UploadThumbnail from "./components/UploadThumbnail.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import { format } from "date-fns";
 
 const props = defineProps({
@@ -20,6 +21,7 @@ const props = defineProps({
         requird: true,
     },
 });
+let flash = computed(() => usePage().props?.flash);
 let emit = defineEmits();
 let dialog = ref(false);
 let gameFileDialog = ref(false);
@@ -107,6 +109,7 @@ let updateformSubmit = () => {
 
     formSubmit.post(route("games.update", props.datas.id), {
         onSuccess: () => {
+            FlashMessage({ flash });
             dialog.value = false;
         },
         onError: (error) => {},

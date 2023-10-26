@@ -9,11 +9,13 @@ import CreateModal from "@mainRoot/components/Resource/CreateModal.vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { useForm } from "@inertiajs/vue3";
 import { checkPermission } from "@actions/useCheckPermission";
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
+let flash = computed(() => page.props?.flash);
 let props = defineProps([
     "resources",
     "requestPublishData",
@@ -52,10 +54,7 @@ const approve = () => {
         onConfirm: () => {
             actionForm.post(route("resource.approve"), {
                 onSuccess: () => {
-                    SuccessDialog({
-                        title: "You have successfully approved resource to org!",
-                        color: "#17CAB6",
-                    });
+                    FlashMessage({ flash })
                     reload("resource.index");
                     isEditMode.value = false;
                 },
@@ -84,10 +83,7 @@ const reject = () => {
         onConfirm: () => {
             actionForm.post(route("resource.decline"), {
                 onSuccess: () => {
-                    SuccessDialog({
-                        title: "You have successfully declined resource to org!",
-                        color: "#17CAB6",
-                    });
+                    FlashMessage({ flash })
                     reload("resource.index");
 
                     isEditMode.value = false;
@@ -109,10 +105,7 @@ const multiDelete = () => {
         onConfirm: () => {
             actionForm.post(route("resource.multipledelete"), {
                 onSuccess: () => {
-                    SuccessDialog({
-                        title: "You have successfully deleted resource!",
-                        color: "#17CAB6",
-                    });
+                    FlashMessage({ flash })
                     reload("resource.index");
 
                     isEditMode.value = false;

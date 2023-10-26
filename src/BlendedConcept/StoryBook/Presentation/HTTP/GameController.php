@@ -36,10 +36,7 @@ class GameController
                 'games' => $games,
             ]);
         } catch (\Exception $e) {
-
-            dd($e->getMessage());
-
-            return redirect()->route('games.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route('games.index')->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -63,11 +60,7 @@ class GameController
 
             return redirect()->route('games.index')->with('successMessage', 'Game Created Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('games.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -101,7 +94,7 @@ class GameController
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('games.index')->with('SystemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -116,11 +109,7 @@ class GameController
 
             return redirect()->route('games.index')->with('successMessage', 'Game Deleted Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('games.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 }

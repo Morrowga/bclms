@@ -5,6 +5,7 @@ import { isConfirmedDialog } from "@actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
 import { usePage } from "@inertiajs/vue3";
 import { useForm } from "@inertiajs/vue3";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 let props = defineProps({
     data: {
@@ -22,6 +23,7 @@ const isEditDialogVisible = ref(false);
 const selectedImage = ref(props.data.video_url);
 const file = ref(null);
 const validationError = ref(null);
+let flash = computed(() => usePage().props.flash);
 const mimeType = ref(props.data.mime_type);
 
 const form = useForm({
@@ -74,7 +76,7 @@ const updateResource = () => {
     form.post(route("resource.update", props.data.id), {
         onSuccess: () => {
             isEditDialogVisible.value = false;
-            SuccessDialog({ title: "You've successfully updated a video." });
+            FlashMessage({ flash });
         },
         onError: (error) => {
             SuccessDialog({
@@ -94,10 +96,7 @@ const deleteOnclick = () => {
         onConfirm: () => {
             router.delete("/resource/" + props.data.id, {
                 onSuccess: () => {
-                    SuccessDialog({
-                        title: "You have successfully deleted resource!",
-                        color: "#17CAB6",
-                    });
+                    FlashMessage({ flash })
                 },
             });
         },
@@ -111,20 +110,11 @@ const publish = () => {
         denyButtonText: "Yes,publish it!",
         icon: "success",
         onConfirm: () => {
-            publishForm.post(
-                "/resource/request-publish/" +
-                    props.data.id +
-                    "?size=" +
-                    props.data.size,
-                {
-                    onSuccess: () => {
-                        SuccessDialog({
-                            title: "You have successfully published resource to org!",
-                            color: "#17CAB6",
-                        });
-                    },
-                }
-            );
+            publishForm.post('/resource/request-publish/' + props.data.id + '?size=' + props.data.size, {
+                onSuccess: () => {
+                    FlashMessage({ flash })
+                },
+            });
         },
     });
 };

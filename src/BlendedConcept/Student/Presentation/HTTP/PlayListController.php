@@ -31,9 +31,7 @@ class PlayListController
             ]);
         } catch (\Exception $e) {
 
-            dd($e->getMessage());
-
-            return redirect()->route('playlist.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route('playlist.index')->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -64,15 +62,13 @@ class PlayListController
         } catch (\Exception $e) {
 
             // Handle the exception here
-            dd($e->getMessage());
-
-            return redirect()->route('playlists.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
 
         /**
          * Returns a redirect response to the playlist index page.
          */
-        return redirect()->route('playlists.index')->with('successMessage', 'Teacher created Successfully!');
+        return redirect()->route('playlists.index')->with('successMessage', 'Playlist created Successfully!');
     }
 
     public function edit($id)
@@ -113,7 +109,7 @@ class PlayListController
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('playlists.index')->with('SystemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -149,7 +145,7 @@ class PlayListController
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('playlists.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

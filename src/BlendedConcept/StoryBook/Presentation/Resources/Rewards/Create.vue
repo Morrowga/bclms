@@ -6,6 +6,7 @@ import ImageUpload from "@Composables/ImageUpload.vue";
 import { toastAlert } from "@Composables/useToastAlert";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 const isFormValid = ref(false);
 const isDialogVisible = ref(false);
@@ -37,9 +38,7 @@ let handleSubmit = () => {
     form.post(route("rewards.store"), {
         onSuccess: (response) => {
             console.log(response);
-            SuccessDialog({
-                title: "You've successfully created organisation",
-            });
+            FlashMessage({ flash })
         },
         onError: (error) => {
             console.log(error);

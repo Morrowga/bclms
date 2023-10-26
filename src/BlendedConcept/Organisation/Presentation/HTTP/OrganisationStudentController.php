@@ -77,7 +77,7 @@ class OrganisationStudentController
             return to_route('organisations-teacher.index')
                 ->with('successMessage', 'Student Updated Successfully!');
         } catch (\Exception $error) {
-            //throw $th;
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -93,8 +93,12 @@ class OrganisationStudentController
     public function destroy(StudentEloquentModel $organisations_student)
     {
         abort_if(authorize('destroy', OrganisationUserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        (new DeleteStudentCommand($organisations_student))->execute();
+        try {
+            (new DeleteStudentCommand($organisations_student))->execute();
 
-        return to_route('organisations-teacher.index')->with('successMessage', 'Student Deleted Successfully!');
+            return to_route('organisations-teacher.index')->with('successMessage', 'Student Deleted Successfully!');
+        } catch (\Exception $error) {
+            return redirect()->back()->with('errorMessage', $error->getMessage());
+        }
     }
 }

@@ -67,7 +67,7 @@ class TeacherStudentController
             return redirect()->route('teacher_students.index')->with('successMessage', 'Student created successfully!');
         } catch (\Exception $e) {
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route('teacher_students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -98,7 +98,7 @@ class TeacherStudentController
             return redirect()->route('teacher_students.show', $teacher_student->student_id)->with('successMessage', 'Student Updated Successfully!');
         } catch (\Exception $e) {
 
-            return redirect()->route('teacher_students.show', $teacher_student->student_id)->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -129,11 +129,7 @@ class TeacherStudentController
 
             return redirect()->route('dashboard'); // Redirect to the kid's home page.
         } catch (\Exception $error) {
-            return redirect()
-                ->route('teacher_students.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -147,11 +143,7 @@ class TeacherStudentController
 
             return redirect()->route('teacher_students.show', $request->student_id); // Redirect to the kid's home page.
         } catch (\Exception $error) {
-            return redirect()
-                ->route('dashboard')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 }

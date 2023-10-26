@@ -72,7 +72,7 @@ class RewardController
             return redirect()->route('rewards.index')->with('successMessage', 'Reward created successfully!');
         } catch (\Exception $exception) {
             // Handle any exceptions and display the error message
-            dd($exception->getMessage());
+            return redirect()->back()->with('errorMessage', $exception->getMessage());
         }
     }
 
@@ -122,7 +122,7 @@ class RewardController
             return redirect()->route('rewards.index')->with('successMessage', 'Reward updated successfully!');
         } catch (\Exception $error) {
             // Handle any exceptions and display the error
-            dd($error);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 

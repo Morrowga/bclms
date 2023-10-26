@@ -15,10 +15,11 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { checkPermission } from "@actions/useCheckPermission";
+import { FlashMessage } from "@actions/useFlashMessage";
 // import Create from "./Create.vue";
 // import Edit from "./Edit.vue";
 let props = defineProps(["surveys"]);
-
+let flash = computed(() => usePage().props.flash);
 const formatDate = (dateString) => {
     // Parse the date string into a Date object
     const date = new Date(dateString);
@@ -100,7 +101,9 @@ const deleteSurvey = (id) => {
         denyButtonText: "Yes,delete it!",
         onConfirm: () => {
             router.delete(route("userexperiencesurvey.destroy", id), {
-                onSuccess: () => {},
+                onSuccess: () => {
+                    FlashMessage({ flash })
+                },
             });
         },
     });

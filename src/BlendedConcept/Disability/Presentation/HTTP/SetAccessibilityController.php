@@ -29,11 +29,7 @@ class SetAccessibilityController
 
             return redirect()->route('teacher_students.show', $student_id->student_id)->with('successMessage', 'Set Device Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('teacher_students.show', $student_id->id)
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 }

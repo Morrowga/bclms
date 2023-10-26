@@ -5,6 +5,9 @@ import { format } from "date-fns";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import { router } from "@inertiajs/core";
 import { checkPermission } from "@actions/useCheckPermission";
+import { FlashMessage } from "@actions/useFlashMessage";
+import { usePage } from "@inertiajs/vue3";
+
 const props = defineProps({
     data: {
         type: Object,
@@ -19,7 +22,7 @@ const props = defineProps({
         required: true,
     },
 });
-
+let flash = computed(() => usePage().props.flash);
 let dialog = ref(false);
 
 const toggleDialog = () => {
@@ -46,7 +49,9 @@ const deleteGame = () => {
         denyButtonText: "Yes,delete it!",
         onConfirm: () => {
             router.delete("games/" + props.data.id, {
-                onSuccess: () => {},
+                onSuccess: () => {
+                    FlashMessage({ flash });
+                },
             });
         },
     });

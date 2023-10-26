@@ -1,6 +1,7 @@
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import { watch } from "vue";
 
 const isDialogVisible = ref(false);
@@ -21,7 +22,7 @@ const handleSubmit = () => {
                 route("listoforgteacher.update_storage", form.teacher_id),
                 {
                     onSuccess: () => {
-                        SuccessDialog({ title: flash?.successMessage });
+                        FlashMessage({ flash });
                         isDialogVisible.value = false;
                     },
                     onError: (error) => {},

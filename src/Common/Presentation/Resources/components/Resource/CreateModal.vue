@@ -1,13 +1,16 @@
 <script setup>
 import { router } from "@inertiajs/core";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
+
 import { requiredValidator } from "@validators";
 let props = defineProps(["route", "title", "type"]);
 const isDialogVisible = ref(false);
 const selectedImage = ref(null);
 const file = ref(null);
 const validationError = ref(null);
+let flash = computed(() => usePage().props.flash);
 const isFormValid = ref(false);
 let refForm = ref();
 
@@ -103,32 +106,21 @@ const removeVideo = () => {
 };
 
 const submitResource = () => {
-    refForm.value?.validate().then(({ valid }) => {
-        if (valid) {
-            disabled.value = true;
-            form.file = file.value;
-            form.post(route("resource.store"), {
-                onSuccess: () => {
-                    disabled.value = false;
-                    isDialogVisible.value = false;
-                    SuccessDialog({
-                        title: "You've successfully saved a video.",
-                    });
-                },
-                onError: (error) => {
-                    disabled.value = false;
-                    isDialogVisible.value = false;
-                    SuccessDialog({
-                        title: error?.file,
-                        icon: "warning",
-                        color: "#ff6262",
-                        mainTitle: "Failed!",
-                    });
-                },
-            });
-        }
-    });
-};
+    disabled.value = true;
+    form.file = file.value
+    form.post(route("resource.store"), {
+    onSuccess: () => {
+      disabled.value = false;
+      isDialogVisible.value = false;
+      FlashMessage({ flash });
+    },
+    onError: (error) => {
+        disabled.value = false;
+        isDialogVisible.value = false;
+        SuccessDialog({ title: error?.file, icon: 'warning',color: '#ff6262', mainTitle: 'Failed!' });
+    },
+  });
+}
 
 const fileInput = ref(null);
 

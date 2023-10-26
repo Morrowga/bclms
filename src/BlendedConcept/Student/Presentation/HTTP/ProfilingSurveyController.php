@@ -16,7 +16,7 @@ class ProfilingSurveyController
 
             return Inertia::render(config('route.teacher_students.profiling_surveys'), compact('profilingSurvey', 'user'));
         } catch (\Exception $e) {
-            return redirect()->route('teacher_students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

@@ -8,6 +8,7 @@ import SelectTeacher from "./components/SelectTeacher.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { requiredValidator } from "@validators";
 import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
+import { FlashMessage } from "@actions/useFlashMessage";
 let props = defineProps(["flash", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
@@ -27,7 +28,7 @@ const handleSubmit = () => {
         if (valid) {
             form.post(route("classrooms.store"), {
                 onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
+                    FlashMessage({ flash });
                 },
                 onError: (error) => {},
             });

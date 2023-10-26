@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { SuccessDialog } from "@actions/useSuccess";
 import SurveyAdd from "../components/SurveyAdd.vue";
@@ -16,8 +16,10 @@ import {
     requiredValidator,
     integerValidator,
 } from "@validators";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 let props = defineProps(['survey']);
+let flash = computed(() => usePage().props.flash);
 
 const drag = ref(false);
 
@@ -59,7 +61,7 @@ function deleteSurveyForm(id) {
             router.delete(route("questions.destroy", id, queryParams), {
                 onSuccess: () => {
                     reload('userexperiencesurvey.edit', props.survey.data.id);
-                    SuccessDialog({ title: "You've successfully deleted a question." });
+                    FlashMessage({ flash });
                 },
             });
         },
@@ -93,7 +95,7 @@ const handleEditSurveyFormSubmit = (data) => {
     updateData.put(route("questions.update", data.id), {
         onSuccess: () => {
             reload('userexperiencesurvey.edit', props.survey.data.id);
-            SuccessDialog({ title: "You've successfully updated a question." });
+            FlashMessage({ flash });
         },
         onError: (error) => {
             form.setError("question_type", error?.question_type);
@@ -135,7 +137,7 @@ const handleModalSubmit = (data) => {
         onSuccess: () => {
             reload('userexperiencesurvey.edit', props.survey.data.id);
 
-            SuccessDialog({ title: "You've successfully created a new question." });
+            FlashMessage({ flash });
         },
         onError: (error) => {
             form.setError("question_type", error?.question_type);
@@ -157,7 +159,7 @@ const handleSettingModalSubmit = (data) => {
     form.post(route("userexperiencesurvey.update", props.survey.data.id), {
         onSuccess: () => {
             reload('userexperiencesurvey.index');
-            SuccessDialog({ title: "You've successfully updated user experience survey." });
+            FlashMessage({ flash });
         },
         onError: (error) => {
             form.setError("title", error?.title);

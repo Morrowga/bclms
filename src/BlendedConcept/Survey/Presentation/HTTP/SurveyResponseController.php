@@ -57,7 +57,7 @@ class SurveyResponseController
             $storeSurveyResponseCommand->execute();
         } catch (\Exception $e) {
             // Handle the exception here
-            dd($e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
         /**
          * Returns a redirect response to the surveys index page.
@@ -88,7 +88,7 @@ class SurveyResponseController
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('surveyresponse.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

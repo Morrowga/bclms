@@ -110,7 +110,9 @@ class TeacherRepository implements TeacherRepositoryInterface
             }
         } catch (\Exception $error) {
             DB::rollBack();
-            return throw new \Exception($error->getMessage());
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -143,7 +145,9 @@ class TeacherRepository implements TeacherRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 

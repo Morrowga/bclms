@@ -26,7 +26,6 @@ class StudentRewardsController extends Controller
                 "placed_stickers" => $stickers['placed_stickers']
             ]);
         } catch (Exception $e) {
-            dd($e);
             return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
@@ -36,8 +35,7 @@ class StudentRewardsController extends Controller
         try {
             return Inertia::render(config('route.reward-store'));
         } catch (Exception $e) {
-            dd($e);
-            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -46,8 +44,7 @@ class StudentRewardsController extends Controller
         try {
             return Inertia::render(config('route.be-lucky'));
         } catch (Exception $e) {
-            dd($e);
-            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -59,8 +56,7 @@ class StudentRewardsController extends Controller
                 "stickers" => $stickers
             ]);
         } catch (Exception $e) {
-            dd($e);
-            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 

@@ -33,13 +33,11 @@ class QuestionController
 
         } catch (\Exception $e) {
             // Handle the exception here
-            dd($e->getMessage());
-
             if ($request->type == 'profiling') {
-                return redirect()->route('profilling_survey.index')->with('systemErrorMessage', $e->getMessage());
+                return redirect()->route('profilling_survey.index')->with('errorMessage', $e->getMessage());
             }
 
-            return redirect()->route('userexperiencesurvey.edit', $request->survey_id)->with('systemErrorMessage', $e->getMessage());
+            return redirect()->route('userexperiencesurvey.edit', $request->survey_id)->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -51,6 +49,7 @@ class QuestionController
      */
     public function update(UpdateQuestionRequest $request, QuestionEloquentModel $question)
     {
+        dd('hakhak');
         // abort_if(authorize('edit', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**
@@ -67,19 +66,20 @@ class QuestionController
             $updateQuestionCommand->execute();
 
             if ($request->type == 'profiling') {
+                dd('hoho');
                 return redirect()->route('profilling_survey.index')->with('successMessage', 'Question updated Successfully!');
             }
-
+            dd('haha');
             return redirect()->route('userexperiencesurvey.edit', $question->survey_id)->with('successMessage', 'Question updated Successfully!');
         } catch (\Exception $e) {
             /**
              * Catch any exceptions and display an error message.
              */
             if ($request->type == 'profiling') {
-                return redirect()->route('profilling_survey.index')->with('SystemErrorMessage', $e->getMessage());
+                return redirect()->route('profilling_survey.index')->with('errorMessage', $e->getMessage());
             }
 
-            return redirect()->route('userexperiencesurvey.edit', $question->survey_id)->with('SystemErrorMessage', $e->getMessage());
+            return redirect()->route('userexperiencesurvey.edit', $question->survey_id)->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -109,10 +109,10 @@ class QuestionController
              * Catch any exceptions and display an error message.
              */
             if ($request->type == 'profiling') {
-                return redirect()->route('profilling_survey.index')->with('systemErrorMessage', $e->getMessage());
+                return redirect()->route('profilling_survey.index')->with('errorMessage', $e->getMessage());
             }
 
-            return redirect()->route('userexperiencesurvey.edit', $question->survey_id)->with('systemErrorMessage', $e->getMessage());
+            return redirect()->route('userexperiencesurvey.edit', $question->survey_id)->with('errorMessage', $e->getMessage());
         }
     }
 }

@@ -45,10 +45,8 @@ class ResourceController extends Controller
                 "resourceStorage" => $resourceStorage,
             ]);
         } catch (\Exception $e) {
-            dd($e);
-            dd($e->getMessage());
 
-            return redirect()->route('resource.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route('resource.index')->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -71,11 +69,7 @@ class ResourceController extends Controller
 
             return redirect()->route('resource.index')->with('successMessage', 'Resource Created Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('resource.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -98,11 +92,7 @@ class ResourceController extends Controller
 
             return redirect()->route('resource.index')->with('successMessage', 'Resource Updated Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('resource.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -128,7 +118,7 @@ class ResourceController extends Controller
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('resource.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -143,7 +133,7 @@ class ResourceController extends Controller
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('resource.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -159,7 +149,7 @@ class ResourceController extends Controller
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('resource.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -175,7 +165,7 @@ class ResourceController extends Controller
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('resource.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -191,7 +181,7 @@ class ResourceController extends Controller
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('resource.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

@@ -50,9 +50,7 @@ class ClassRoomController extends Controller
             return Inertia::render(config('route.classrooms'), compact('classrooms'));
         } catch (\Exception $e) {
 
-            dd($e->getMessage());
-
-            return redirect()->route('classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route('classrooms.index')->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -68,9 +66,8 @@ class ClassRoomController extends Controller
                 }, 'teachers', 'groups'])->loadCount('students', 'teachers'),
             ]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
 
-            return redirect()->route('classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -84,9 +81,8 @@ class ClassRoomController extends Controller
                 'classroom' => $classroom->load('students', 'teachers')->loadCount('students', 'teachers'),
             ]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
 
-            return redirect()->route('classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -98,9 +94,8 @@ class ClassRoomController extends Controller
 
             return Inertia::render(config('route.createCopy'));
         } catch (\Exception $e) {
-            dd($e->getMessage());
 
-            return redirect()->route('classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -124,10 +119,9 @@ class ClassRoomController extends Controller
 
             return redirect()->route('classrooms.index')->with('successMessage', 'ClassRoom created successfully!');
         } catch (\Exception $e) {
-            dd($e->getMessage());
 
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route('classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -142,7 +136,7 @@ class ClassRoomController extends Controller
 
             return redirect()->route('classrooms.index')->with('successMessage', 'ClassRoom Updated Successfully!');
         } catch (\Exception $e) {
-            return redirect()->route('classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -167,9 +161,7 @@ class ClassRoomController extends Controller
             return Inertia::render(config('route.org-teacher-classroom.index'), compact('classrooms'));
         } catch (\Exception $e) {
 
-            dd($e->getMessage());
-
-            return redirect()->route('classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -182,9 +174,8 @@ class ClassRoomController extends Controller
                 }, 'teachers', 'groups'])->loadCount('students', 'teachers'),
             ]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
 
-            return redirect()->route('classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -210,9 +201,8 @@ class ClassRoomController extends Controller
                 'students' => $students,
             ]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
 
-            return redirect()->route('classrooms.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -229,10 +219,9 @@ class ClassRoomController extends Controller
 
             return redirect()->route('org-teacher-classroom.show', $request->classroom_id)->with('successMessage', 'Classroom Group created successfully!');
         } catch (\Exception $e) {
-            dd($e->getMessage());
 
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route('org-teacher-classroom.show', $request->classroom_id)->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -245,7 +234,7 @@ class ClassRoomController extends Controller
 
             return redirect()->route('org-teacher-classroom.show', $classroomGroup->classroom_id)->with('successMessage', 'Classroom Group Updated Successfully!');
         } catch (\Exception $e) {
-            return redirect()->route('org-teacher-classroom.show', $classroomGroup->classroom_id)->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -269,7 +258,7 @@ class ClassRoomController extends Controller
 
             return redirect()->route('org-teacher-classroom.show', $classroomGroup->classroom_id)->with('successMessage', 'Classroom Group Deleted Successfully!');
         } catch (\Exception $e) {
-            return redirect()->route('org-teacher-classroom.show', $classroomGroup->classroom_id)->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

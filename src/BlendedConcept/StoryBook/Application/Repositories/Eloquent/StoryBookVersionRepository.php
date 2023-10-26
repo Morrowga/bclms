@@ -37,7 +37,9 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
         } catch (\Exception $error) {
 
             DB::rollBack();
-            dd($error->getMessage());
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -56,7 +58,9 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
         } catch (\Exception $error) {
             DB::rollBack();
             // Handle any exceptions and display the error message
-            dd($error->getMessage());
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -65,7 +69,9 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
         try {
             $storybook_version->delete();
         } catch (\Exception $e) {
-            dd($e);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($e->getMessage());
         }
     }
 
@@ -79,7 +85,9 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error->getMessage());
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -94,8 +102,10 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
             $createEloquent->save();
             DB::commit();
         } catch (\Exception $error) {
-            dd($error->getMessage());
             DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 }
