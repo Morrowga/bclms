@@ -156,6 +156,7 @@ const pages = {
 
 
     "BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Edit": import('../../src/BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Edit.vue'),
+    "BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/View": import('../../src/BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/View.vue'),
 
 
 

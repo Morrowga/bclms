@@ -11,6 +11,7 @@ use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\ResponseEloquentMode
 use Src\BlendedConcept\Survey\Application\UseCases\Commands\Response\DeleteResponseCommand;
 use Src\BlendedConcept\Survey\Application\UseCases\Commands\Survey\StoreSurveyResponseCommand;
 use Src\BlendedConcept\Survey\Application\UseCases\Queries\SurveyResponses\GetSurveyResponses;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 
 class SurveyResponseController
 {
@@ -32,18 +33,23 @@ class SurveyResponseController
         }
     }
 
-    public function show()
+    public function show(ResponseEloquentModel $surveyresponse)
     {
-        abort_if(authorize('view', SurveyResponsePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return Inertia::render(config('route.surveyresponse.show'));
+        abort_if(authorize('view', SurveyResponsePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // dd($surveyresponse->load('user', 'survey', 'question.options', 'options'));
+        // dd($surveyresponse->load('survey_settings', 'questions.options', 'responses.user', 'responses.options', 'responses.question'));
+        return Inertia::render(config('route.surveyresponse.show'), [
+            'surveyresponse' => $surveyresponse->load('user', 'survey', 'options', 'question.options',)
+        ]);
     }
 
-    public function view()
+    public function view(SurveyEloquentModel $survey)
     {
         abort_if(authorize('view', SurveyResponsePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return Inertia::render(config('route.surveyresponse.view'));
+        return Inertia::render(config('route.surveyresponse.view'), [
+            'survey' => $survey->load('survey_settings', 'questions', 'responses')
+        ]);
     }
 
     public function store(StoreSurveyResponseRequest $request)

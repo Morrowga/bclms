@@ -38,7 +38,13 @@ class UserExperienceSurveyController
             return redirect()->route('userexperiencesurvey.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
-
+    public function view(SurveyEloquentModel $survey)
+    {
+        abort_if(authorize('view', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return Inertia::render(config('route.userexperiencesurvey.view'), [
+            'survey' => $survey->load('survey_settings', 'questions', 'responses')
+        ]);
+    }
     public function create()
     {
         abort_if(authorize('create', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');

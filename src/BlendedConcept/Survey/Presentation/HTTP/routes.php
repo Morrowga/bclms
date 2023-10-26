@@ -12,5 +12,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/profilling_survey', [ProfillingSurveyController::class, 'index'])->name('profilling_survey.index');
     Route::post('/profilling_survey/{profilingSurvey}', [ProfillingSurveyController::class, 'saveOrder'])->name('profilling_survey.order-saving');
     Route::resource('/surveyresponse', SurveyResponseController::class);
-    Route::get('/surveyresponse/view', [SurveyResponseController::class, 'view'])->name('surveyresponse.view');
+    Route::get('/userexperiencesurvey/view/{survey}', [UserExperienceSurveyController::class, 'view'])->name('userexperiencesurvey.view');
 });

@@ -16,6 +16,7 @@ return [
         'create' => 'BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Create',
         'edit' => 'BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Edit',
         'show' => 'BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/Show',
+        'view' => 'BlendedConcept/Survey/Presentation/Resources/UserExperienceSurvey/Survey/View'
     ],
 
     'reward' => [

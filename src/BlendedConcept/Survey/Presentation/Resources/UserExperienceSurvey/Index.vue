@@ -102,11 +102,15 @@ const deleteSurvey = (id) => {
         onConfirm: () => {
             router.delete(route("userexperiencesurvey.destroy", id), {
                 onSuccess: () => {
-                    FlashMessage({ flash })
+                    FlashMessage({ flash });
                 },
             });
         },
     });
+};
+
+const editSurvey = (e) => {
+    router.get(route("userexperiencesurvey.edit", e.row.id));
 };
 </script>
 <template>
@@ -185,24 +189,13 @@ const deleteSurvey = (id) => {
                                     enabled: false,
                                 }"
                                 :pagination-options="{ enabled: true }"
+                                @row-click="editSurvey"
                             >
                                 <template #table-row="dataProps">
                                     <div
                                         v-if="dataProps.column.field == 'title'"
                                     >
-                                        <Link
-                                            :href="
-                                                route(
-                                                    'userexperiencesurvey.edit',
-                                                    dataProps.row.id
-                                                )
-                                            "
-                                            class="text-secondary"
-                                        >
-                                            <span>{{
-                                                dataProps.row.title
-                                            }}</span>
-                                        </Link>
+                                        <span>{{ dataProps.row.title }}</span>
                                     </div>
                                     <div
                                         v-if="
@@ -302,7 +295,8 @@ const deleteSurvey = (id) => {
                                                     @click="
                                                         router.get(
                                                             route(
-                                                                'surveyresponse.view'
+                                                                'userexperiencesurvey.view',
+                                                                dataProps.row.id
                                                             )
                                                         )
                                                     "

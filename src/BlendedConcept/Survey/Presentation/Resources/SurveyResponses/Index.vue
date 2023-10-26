@@ -111,11 +111,16 @@ const deleteItem = (id) => {
         onConfirm: () => {
             router.delete(route("surveyresponse.destroy", id), {
                 onSuccess: () => {
-                    FlashMessage({ flash })
+                    FlashMessage({ flash });
                 },
             });
         },
     });
+};
+
+const showInfo = (e) => {
+    // console.log(e.row);
+    router.get(route("surveyresponse.show", e.row.id));
 };
 </script>
 <template>
@@ -162,6 +167,7 @@ const deleteItem = (id) => {
                                     enabled: false,
                                 }"
                                 :pagination-options="{ enabled: true }"
+                                @row-click="showInfo"
                             >
                                 <template #table-row="dataProps">
                                     <div
