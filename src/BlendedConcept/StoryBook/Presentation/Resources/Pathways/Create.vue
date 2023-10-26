@@ -22,33 +22,33 @@ let draggedImageIndex = null;
 const uploadedImages = ref([]);
 const targetRef = ref(null);
 const containerRef = ref(null);
-let datas = [
-    {
-        id: 1,
-        image: "/images/image1.png",
-        title: "Book 1",
-    },
-    {
-        id: 2,
-        image: "/images/image2.png",
-        title: "Book 2",
-    },
-    {
-        id: 3,
-        image: "/images/image3.png",
-        title: "Book 3",
-    },
-    {
-        id: 4,
-        image: "/images/image4.png",
-        title: "Book 4",
-    },
-    {
-        id: 5,
-        image: "/images/image5.png",
-        title: "Book 5",
-    },
-];
+// let datas = [
+//     {
+//         id: 1,
+//         image: "/images/image1.png",
+//         title: "Book 1",
+//     },
+//     {
+//         id: 2,
+//         image: "/images/image2.png",
+//         title: "Book 2",
+//     },
+//     {
+//         id: 3,
+//         image: "/images/image3.png",
+//         title: "Book 3",
+//     },
+//     {
+//         id: 4,
+//         image: "/images/image4.png",
+//         title: "Book 4",
+//     },
+//     {
+//         id: 5,
+//         image: "/images/image5.png",
+//         title: "Book 5",
+//     },
+// ];
 
 const handleDrop = (event) => {
     event.preventDefault();
@@ -58,7 +58,7 @@ const handleDrop = (event) => {
     }
 };
 const addPathway = () => {
-    FlashMessage({ flash })
+    FlashMessage({ flash });
 };
 
 async function startDrag(index, id) {
@@ -87,15 +87,16 @@ async function handleDropp(event) {
                 index === self.findIndex((t) => t.id === image.id)
         );
     } else {
-        const droppedImage = datas[draggedImageIndex];
+        const droppedImage = props.storybooks[draggedImageIndex];
 
         // Check if the dropped item is an image card
         if (droppedImage) {
             // Add the dropped image to the uploadedImages array
             uploadedImages.value.push({
+                id: droppedImage.id,
                 file: "",
-                src: "http://bc-lms.test" + droppedImage.image,
-                name: droppedImage.title,
+                src: "",
+                name: droppedImage.name,
             });
 
             draggedImageIndex = null;
@@ -136,7 +137,7 @@ let handleSubmit = () => {
         if (valid) {
             form.post(route("pathways.store"), {
                 onSuccess: () => {
-                    FlashMessage({ flash })
+                    FlashMessage({ flash });
                 },
                 onError: (error) => {},
             });

@@ -62,15 +62,16 @@ function handleDropp(event) {
                 index === self.findIndex((t) => t.id === image.id)
         );
     } else {
-        const droppedImage = datas[draggedImageIndex];
+        const droppedImage = props.storybooks[draggedImageIndex];
 
         // Check if the dropped item is an image card
         if (droppedImage) {
             // Add the dropped image to the uploadedImages array
             uploadedImages.value.push({
+                id: droppedImage.id,
                 file: "",
-                src: "http://bc-lms.test" + droppedImage.image,
-                name: droppedImage.title,
+                src: "",
+                name: droppedImage.name,
             });
 
             draggedImageIndex = null;
@@ -104,7 +105,7 @@ let handleSubmit = () => {
         if (valid) {
             form.post(route("pathways.update", { id: props.pathway.id }), {
                 onSuccess: () => {
-                    FlashMessage({ flash })
+                    FlashMessage({ flash });
                 },
                 onError: (error) => {},
             });
