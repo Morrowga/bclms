@@ -1,5 +1,5 @@
 <script setup>
-import { Link, useForm } from "@inertiajs/vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { SuccessDialog } from "@actions/useSuccess";
@@ -10,11 +10,14 @@ import {
     requiredValidator,
     integerValidator,
 } from "@validators";
+import { FlashMessage } from "@actions/useFlashMessage";
+
 const props = defineProps([
     "learningNeeds",
     "disability_types",
     "organisations_student",
 ]);
+let flash = computed(() => usePage().props.flash);
 
 const form = useForm({
     student_id: props.organisations_student.student_id,
@@ -50,10 +53,7 @@ const createStudent = () => {
         ),
         {
             onSuccess: () => {
-                SuccessDialog({
-                    title: "You have successfully create a student!",
-                    color: "#17CAB6",
-                });
+                FlashMessage({ flash })
             },
             onError: (error) => {
                 console.log(error);

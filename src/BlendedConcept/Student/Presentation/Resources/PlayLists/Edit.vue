@@ -2,9 +2,10 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import PlayListSelectBox from "./components/PlayListSelectBox.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import SelectStudent from "./components/SelectStudent.vue";
 import SelectStorybook from "./components/SelectStorybook.vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
 
 let props = defineProps(["playlist"]);
@@ -23,14 +24,11 @@ const form = useForm({
     storybooks: storybookids.value.length > 0 ? storybookids.value : [],
     _method: "PUT",
 });
-
+let flash = computed(() => usePage().props.flash)
 const updatePlaylist = () => {
     form.post(route("playlists.update", props.playlist.data.id), {
         onSuccess: () => {
-            SuccessDialog({
-                title: "You have successfully updated playlist!",
-                color: "#17CAB6",
-            });
+            FlashMessage({ flash })
         },
         onError: (error) => {
             form.setError("name", error?.name);

@@ -1,8 +1,10 @@
 <script setup>
-import { Link, useForm } from "@inertiajs/vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
+
 import { ref } from "vue";
 // import ImageUpload from "@Composables/ImageUpload.vue";
 import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
@@ -13,15 +15,14 @@ import {
 } from "@validators";
 const props = defineProps(["learningNeeds", "disabilityTypes", "student"]);
 let refForm = ref();
+let flash = computed(() => usePage().props.flash)
 
 const gender = ref(["Male", "Female"]);
 let tab = ref(null);
 const updateStudent = () => {
     form.post(route("teacher_students.update", props.student.data.student_id), {
         onSuccess: () => {
-            SuccessDialog({
-                title: "You've successfully updated a student.",
-            });
+            FlashMessage({ flash })
         },
         onError: (error) => {
             console.log(error);

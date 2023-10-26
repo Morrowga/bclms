@@ -7,6 +7,7 @@ import { router } from "@inertiajs/core";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 const props = defineProps(["data_type", "pathway"]);
 
@@ -20,9 +21,7 @@ const deletePathway = (id) => {
         onConfirm: () => {
             router.delete(route("pathways.destroy", id), {
                 onSuccess: () => {
-                    SuccessDialog({
-                        title: "You have successfully deleted pathway!",
-                    });
+                    FlashMessage({ flash })
                 },
             });
         },

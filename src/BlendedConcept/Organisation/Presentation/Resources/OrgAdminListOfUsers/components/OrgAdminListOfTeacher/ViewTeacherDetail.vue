@@ -1,18 +1,22 @@
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
 import { router } from "@inertiajs/core";
 import { checkPermission } from "@actions/useCheckPermission";
+import { FlashMessage } from "@actions/useFlashMessage";
 let props = defineProps(["teacher"]);
+let flash = computed(() => usePage().props.flash);
 const deleteTeacher = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",
         denyButtonText: "Yes,delete it!",
         onConfirm: () => {
             router.delete(id, {
-                onSuccess: () => {},
+                onSuccess: () => {
+                    FlashMessage({ flash })
+                },
             });
         },
     });

@@ -3,6 +3,7 @@ import { ref } from "vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { requiredValidator } from "@validators";
 import AddBook from "./components/AddBook.vue";
@@ -57,7 +58,7 @@ const handleDrop = (event) => {
     }
 };
 const addPathway = () => {
-    SuccessDialog({ title: "You have successfully created Pathway" });
+    FlashMessage({ flash })
 };
 
 function startDrag(index, id) {
@@ -129,7 +130,7 @@ let handleSubmit = () => {
         if (valid) {
             form.post(route("pathways.store"), {
                 onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
+                    FlashMessage({ flash })
                 },
                 onError: (error) => {},
             });

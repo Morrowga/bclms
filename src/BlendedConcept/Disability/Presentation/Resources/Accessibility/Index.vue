@@ -19,8 +19,9 @@ import {
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
 import { checkPermission } from "@actions/useCheckPermission";
+import { FlashMessage } from "@actions/useFlashMessage";
 let props = defineProps(["devices", "flash"]);
-
+let flash = computed(() => usePage().props.flash);
 //## start datatable section
 let columns = [
     {
@@ -153,7 +154,7 @@ const deleteItem = (status, id) => {
             onConfirm: () => {
                 form.post(route("accessibility_device.destroy", id), {
                     onSuccess: () => {
-                        SuccessDialog({ title: props.flash?.successMessage });
+                        FlashMessage({ flash });
                     },
                 });
             },
@@ -168,7 +169,7 @@ const deleteItem = (status, id) => {
             onConfirm: () => {
                 form.post(route("accessibility_device.destroy", id), {
                     onSuccess: () => {
-                        SuccessDialog({ title: props.flash?.successMessage });
+                        FlashMessage({ flash });
                     },
                 });
             },

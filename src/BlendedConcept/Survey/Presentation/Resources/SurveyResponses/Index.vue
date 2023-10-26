@@ -19,9 +19,11 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
+import { FlashMessage } from "@actions/useFlashMessage";
+
 // import Edit from "./Edit.vue";
 let props = defineProps(["surveyResponses"]);
-
+let flash = computed(() => usePage().props.flash);
 const formatDate = (dateString) => {
     // Parse the date string into a Date object
     const date = new Date(dateString);
@@ -108,7 +110,9 @@ const deleteItem = (id) => {
         denyButtonText: "Yes,delete it!",
         onConfirm: () => {
             router.delete(route("surveyresponse.destroy", id), {
-                onSuccess: () => {},
+                onSuccess: () => {
+                    FlashMessage({ flash })
+                },
             });
         },
     });

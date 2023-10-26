@@ -1,12 +1,14 @@
 <script setup>
 import { ref, defineProps } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
 import { requiredValidator } from "@validators";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import SampleStorybookSlider from "./components/SampleStorybookSlider.vue";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 const props = defineProps(["device", "disability_types", "books"]);
+let flash = computed(() => usePage().props.flash);
 const isFormValid = ref(false);
 let refForm = ref();
 let form = useForm({
@@ -23,7 +25,7 @@ let handleSubmit = () => {
         if (valid) {
             form.post(route("accessibility_device.update", props.device.id), {
                 onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
+                    FlashMessage({ flash });
                 },
                 onError: (error) => {},
             });

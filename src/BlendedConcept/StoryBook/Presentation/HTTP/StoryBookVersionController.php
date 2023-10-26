@@ -39,7 +39,7 @@ class StoryBookVersionController
             return redirect()->back()->with('successMessage', 'StoryBook Version created successfully!');
         } catch (\Exception $exception) {
             // Handle any exceptions and display the error message
-            dd($exception->getMessage());
+            return redirect()->back()->with('errorMessage', $exception->getMessage());
         }
     }
 
@@ -57,8 +57,8 @@ class StoryBookVersionController
             $createNewStoryBook = (new CreateStoryBookAssigmentCommand())->execute();
 
             return redirect()->back()->with('successMessage', 'StoryBook Version created successfully!');
-        } catch (\Exception $error) {
-            dd($error->getCode());
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('errorMessage', $exception->getMessage());
         }
     }
 
@@ -78,7 +78,7 @@ class StoryBookVersionController
             return redirect()->back()->with('successMessage', 'StoryBook Version updated successfully!');
         } catch (\Exception $exception) {
             // Handle any exceptions and display the error message
-            dd($exception->getMessage());
+            return redirect()->back()->with('errorMessage', $exception->getMessage());
         }
     }
 
@@ -90,8 +90,8 @@ class StoryBookVersionController
             $createReview = (new GiveBookReviewCommand($newReview))->execute();
 
             return redirect()->back()->with('successMessage', 'StoryBook Version created successfully!');
-        } catch (\Exception $th) {
-            dd($th->getMessage());
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('errorMessage', $exception->getMessage());
         }
     }
 
@@ -103,12 +103,8 @@ class StoryBookVersionController
             $deleteBookCommand->execute();
 
             return redirect()->back()->with('successMessage', 'Book Version Deleted Successfully!');
-        } catch (\Exception $error) {
-            return redirect()
-                ->route('teacher_storybook.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('errorMessage', $exception->getMessage());
         }
     }
 }

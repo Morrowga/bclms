@@ -25,7 +25,7 @@ class OrganisationTeacherController
     {
         abort_if(authorize('view', OrganisationUserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // try {
+        try {
         $organisation_id = auth()->user()->organisation_id;
         $filters = request(['search', 'first_name', 'last_name', 'email', 'filter']) ?? [];
         $organisation = OrganisationEloquentModel::with('subscription.b2b_subscription')->find($organisation_id);
@@ -43,12 +43,10 @@ class OrganisationTeacherController
             'total_teachers' => $total_teachers,
             'total_students' => $total_students
         ]);
-        // } catch (\Exception $e) {
-        //     return $e;
-        //     dd($e->getMessage());
+        } catch (\Exception $e) {
 
-        //     return redirect()->route('organisations-teacher.index')->with('sytemErrorMessage', $e->getMessage());
-        // }
+            return redirect()->back()->with('errorMessage', $e->getMessage());
+        }
     }
 
     public function create()
@@ -137,7 +135,7 @@ class OrganisationTeacherController
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('organisations-teacher.show', $organisations_teacher->id)->with('SystemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -164,7 +162,7 @@ class OrganisationTeacherController
             /**
              * Catch any exceptions and display an error message.
              */
-            return redirect()->route('organisations-teacher.index')->with('systemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

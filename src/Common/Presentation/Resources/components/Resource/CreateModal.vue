@@ -1,13 +1,15 @@
 <script setup>
 import { router } from "@inertiajs/core";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 let props = defineProps(["route", "title", "type"]);
 const isDialogVisible = ref(false);
 const selectedImage = ref(null);
 const file = ref(null);
 const validationError = ref(null);
+let flash = computed(() => usePage().props.flash);
 
 const form = useForm({
     filename: null,
@@ -71,7 +73,7 @@ const submitResource = () => {
     onSuccess: () => {
       disabled.value = false;
       isDialogVisible.value = false;
-      SuccessDialog({ title: "You've successfully saved a video." });
+      FlashMessage({ flash });
     },
     onError: (error) => {
         disabled.value = false;
@@ -130,13 +132,13 @@ const openFileInput = () => {
                                         <source :src="selectedImage" :type="file.type">
                                         Your browser does not support the video tag.
                                     </video>
-                                    
+
                                     <!-- Render audio if the uploaded file is an audio type -->
                                     <audio v-else-if="file?.type && file.type.startsWith('audio/')" controls class="audioPlayer">
                                         <source :src="selectedImage" :type="file.type">
                                         Your browser does not support the audio tag.
                                     </audio>
-                                    
+
                                     <!-- Render image if the uploaded file is an image type -->
                                     <img v-else-if="file?.type && (file.type.startsWith('image/'))" :src="selectedImage" class="image-resource" alt="Uploaded Image" />
 

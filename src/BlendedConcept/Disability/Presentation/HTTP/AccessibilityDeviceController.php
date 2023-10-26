@@ -48,11 +48,7 @@ class AccessibilityDeviceController
 
             return redirect()->route('accessibility_device.index')->with('successMessage', 'Devices Created Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('accessibility_device.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -96,11 +92,7 @@ class AccessibilityDeviceController
 
             return redirect()->route('accessibility_device.index')->with('successMessage', 'Devices Created Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('accessibility_device.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -113,13 +105,9 @@ class AccessibilityDeviceController
             $deleteDeviceCommand = (new DeleteDeviceCommand($device));
             $deleteDeviceCommand->execute();
 
-            return redirect()->route('accessibility_device.index')->with('successMessage', 'Devices Deleted Successfully!');
+            return redirect()->route('accessibility_device.index')->with('successMessage', 'Devices '. strtolower($device->status) .' Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('accessibility_device.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 }

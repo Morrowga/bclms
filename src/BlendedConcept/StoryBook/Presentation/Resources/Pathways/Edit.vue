@@ -5,6 +5,7 @@ import SampleStorybookSlider from "./components/SampleStoryBookSlider.vue";
 import AddBook from "./components/AddBook.vue";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
 import { requiredValidator } from "@validators";
 
@@ -100,7 +101,7 @@ let handleSubmit = () => {
         if (valid) {
             form.post(route("pathways.update", { id: props.pathway.id }), {
                 onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
+                    FlashMessage({ flash })
                 },
                 onError: (error) => {},
             });

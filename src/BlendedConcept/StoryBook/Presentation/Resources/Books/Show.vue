@@ -6,6 +6,7 @@ import Edit from "./Edit.vue";
 import { router } from "@inertiajs/core";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { checkPermission } from "@actions/useCheckPermission";
+import { FlashMessage } from "@actions/useFlashMessage";
 const props = defineProps({
     data: {
         type: Object,
@@ -52,7 +53,7 @@ const form = useForm({
 const handleUpdate = () => {
     form.post(route("books.update", form.id), {
         onSuccess: () => {
-            SuccessDialog({ title: props.flash?.successMessage });
+            FlashMessage({ flash })
             dialog.value = false;
         },
         onError: (error) => {
@@ -73,7 +74,7 @@ const deleteBook = (id) => {
         onConfirm: () => {
             router.delete(route("books.destroy", id), {
                 onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
+                    FlashMessage({ flash });
                 },
             });
         },

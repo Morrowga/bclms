@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { SuccessDialog } from '@actions/useSuccess';
 import SurveyAdd from "../components/SurveyAdd.vue"
@@ -14,8 +14,10 @@ import {
     requiredValidator,
     integerValidator,
 } from "@validators";
-const drag = ref(false);
+import { FlashMessage } from "@actions/useFlashMessage";
 
+const drag = ref(false);
+let flash = computed(() => usePage().props.flash);
 let form = useForm({
     title: 'Untitled Survey',
     description: null,
@@ -85,7 +87,7 @@ const handleSettingModalSubmit = (data) => {
     console.log(form);
     form.post(route("userexperiencesurvey.store"), {
         onSuccess: () => {
-            SuccessDialog({ title: "You've successfully created user experience survey." });
+            FlashMessage({ flash });
         },
         onError: (error) => {
             form.setError("title", error?.title);

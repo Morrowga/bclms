@@ -4,14 +4,13 @@ import { useForm } from "@inertiajs/vue3";
 import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
 import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import { usePage } from "@inertiajs/vue3";
 let dialog = ref(false);
+let flash = computed(() => usePage().props.flash)
 const submitReview = () => {
     dialog.value = false;
-    SuccessDialog({
-        title: "You have successfully created a version",
-        color: "#17CAB6",
-    });
+    FlashMessage({ flash });
 };
 
 const props = defineProps(["dataStoryBook"]);
@@ -44,9 +43,8 @@ const CreateStoryBookVersion = () => {
         form.h5p_id = curr_h5p_id;
         form.post(route("storybooksversions.store"), {
             onSuccess: () => {
-                SuccessDialog({
-                    title: "You've successfully created organisation",
-                });
+                console.log(' test')
+                FlashMessage({ flash });
                 dialog.value = false;
                 isLoading.value = false;
             },

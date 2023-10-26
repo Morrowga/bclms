@@ -118,7 +118,9 @@ class GameRepository implements GameRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error->getMessage());
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -236,7 +238,9 @@ class GameRepository implements GameRepositoryInterface
         } catch (\Exception $error) {
             DB::rollBack();
 
-            return $error->getMessage();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 

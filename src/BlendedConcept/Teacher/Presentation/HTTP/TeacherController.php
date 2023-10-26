@@ -61,7 +61,7 @@ class TeacherController extends Controller
                 'users_name' => $users_name,
             ]);
         } catch (\Exception $e) {
-            return redirect()->route('c.teachers.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -81,10 +81,9 @@ class TeacherController extends Controller
 
             return redirect()->route('c.teachers.index')->with('successMessage', 'User created successfully!');
         } catch (\Exception $e) {
-            dd($e->getMessage());
 
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route('c.teachers.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -92,17 +91,25 @@ class TeacherController extends Controller
     public function update(UpdateTeacherRequest $request, UserEloquentModel $teacher)
     {
         // abort_if(authorize('edit', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->teacherService->updateTeacher($request, $teacher->id);
+        try {
+            $this->teacherService->updateTeacher($request, $teacher->id);
 
-        return redirect()->route('c.teachers.index')->with('successMessage', 'User Updated Successfully!');
+            return redirect()->route('c.teachers.index')->with('successMessage', 'User Updated Successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('errorMessage', $e->getMessage());
+        }
     }
 
     public function destroy(UserEloquentModel $user)
     {
         // abort_if(authorize('destroy', TeacherPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $this->teacherService->deleteTeacher($user);
+        try {
+            $this->teacherService->deleteTeacher($user);
 
-        return redirect()->route('c.teachers.index')->with('successMessage', 'User Deleted Successfully!');
+            return redirect()->route('c.teachers.index')->with('successMessage', 'User Deleted Successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('errorMessage', $e->getMessage());
+        }
     }
 
     public function viewteacher()
@@ -170,10 +177,9 @@ class TeacherController extends Controller
 
             return redirect()->route('listoforgteacher')->with('successMessage', 'Teacher storage updated successfully!');
         } catch (\Exception $e) {
-            dd($e->getMessage());
 
             // Handle the exception, log the error, or display a user-friendly error message.
-            return redirect()->route('listoforgteacher')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 

@@ -39,7 +39,9 @@ class DeviceRepository implements DeviceRepositoryInterface
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($exception->getMessage());
         }
     }
 
@@ -64,7 +66,9 @@ class DeviceRepository implements DeviceRepositoryInterface
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($exception->getMessage());
         }
     }
 
@@ -79,7 +83,9 @@ class DeviceRepository implements DeviceRepositoryInterface
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($exception->getMessage());
         }
     }
 
@@ -100,7 +106,9 @@ class DeviceRepository implements DeviceRepositoryInterface
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($exception->getMessage());
         }
     }
     public function getSimpleBooks()

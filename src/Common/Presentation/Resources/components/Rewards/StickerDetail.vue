@@ -1,6 +1,7 @@
 <script setup>
 import { usePage, useForm } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 let props = defineProps(["route", "data"]);
 let flash = computed(() => usePage().props.flash);
 const form = useForm({});
@@ -10,11 +11,7 @@ const ownSticker = (id) => {
     form.post(route("own-sticker", { reward: id }), {
         onSuccess: () => {
             isDialogVisible.value = false;
-            if (flash.value.errorMessage) {
-                alert(flash.value.errorMessage);
-            } else {
-                SuccessDialog({ title: flash?.successMessage });
-            }
+            FlashMessage({ flash })
         },
     });
 };

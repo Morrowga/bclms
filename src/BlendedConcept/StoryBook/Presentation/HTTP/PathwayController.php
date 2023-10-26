@@ -45,11 +45,7 @@ class PathwayController
 
             return redirect()->route('pathways.index')->with('successMessage', 'Pathway Created Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('pathways.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -96,13 +92,9 @@ class PathwayController
             $updatePathwaycommand = (new UpdatePathwayCommand($updatePathway));
             $updatePathwaycommand->execute();
 
-            return redirect()->route('pathways.index')->with('successMessage', 'Pathway Created Successfully!');
+            return redirect()->route('pathways.index')->with('successMessage', 'Pathway Updated Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('pathways.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 
@@ -117,11 +109,7 @@ class PathwayController
 
             return redirect()->route('pathways.index')->with('successMessage', 'Pathway Deleted Successfully!');
         } catch (\Exception $error) {
-            return redirect()
-                ->route('pathways.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+            return redirect()->back()->with('errorMessage', $error->getMessage());
         }
     }
 }

@@ -10,6 +10,7 @@ import {
     integerValidator,
 } from "@validators";
 import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 const teacherForm = useForm({
     first_name: "",
@@ -24,19 +25,7 @@ const createTeacher = () => {
     // teacherForm.image = profileFile.value;
     teacherForm.post(route("organisations-teacher.store"), {
         onSuccess: () => {
-            if (flash.value.errorMessage) {
-                SuccessDialog({
-                    title: flash.value.errorMessage,
-                    mainTitle: "Error!",
-                    color: "#ff6262",
-                    icon: "error",
-                });
-            } else {
-                SuccessDialog({
-                    title: flash.value.successMessage,
-                    color: "#17CAB6",
-                });
-            }
+            FlashMessage({ flash })
         },
         onError: (error) => {},
     });

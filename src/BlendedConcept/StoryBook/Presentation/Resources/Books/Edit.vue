@@ -1,8 +1,9 @@
 <script setup>
 import { defineProps, ref, defineEmits, onUpdated } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import Upload from "./components/Upload.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import UploadThumbnail from "./components/UploadThumbnail.vue";
 import UploadPhysicalResources from "./components/UploadPhysicalResources.vue";
 const props = defineProps({
@@ -27,6 +28,7 @@ const props = defineProps({
         required: true,
     },
 });
+let flash = computed(() => usePage().props?.flash)
 let emit = defineEmits();
 let dialog = ref(false);
 let thumbnailDialog = ref(false);
@@ -141,7 +143,7 @@ const handleUpdate = () => {
     form.thumbnail_img = getThumbFile.value;
     form.post(route("books.update", form.id), {
         onSuccess: () => {
-            SuccessDialog({ title: props.flash?.successMessage });
+            FlashMessage({ flash });
             dialog.value = false;
         },
         onError: (error) => {

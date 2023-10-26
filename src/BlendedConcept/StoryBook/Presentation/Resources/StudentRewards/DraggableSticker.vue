@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted, defineEmits, defineProps } from "vue";
 import { usePage, useForm } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 let flash = computed(() => usePage().props.flash);
 
 const isDragging = ref(false);
@@ -64,10 +65,7 @@ const stopDragging = (event) => {
         form.post(route("drop-sticker", { reward: props.data.id }), {
             preserveScroll: true,
             onSuccess: (e) => {
-                if (flash.value.errorMessage) {
-                    alert(flash.value.errorMessage);
-                } else {
-                }
+                FlashMessage({ flash })
             },
         });
         // Remove event listeners from the document

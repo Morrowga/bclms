@@ -3,9 +3,11 @@ import { ref } from "vue";
 import { Link } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { SuccessDialog } from "@actions/useSuccess";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
+import { FlashMessage } from "@actions/useFlashMessage";
 let props = defineProps(["teacher"]);
+let flash = computed(() => usePage().props.flash);
 
 const teacherEditForm = useForm({
     first_name: props.teacher.data.first_name,
@@ -23,9 +25,7 @@ const updateTeacher = () => {
         route("organisations-teacher.update", props.teacher.data.id),
         {
             onSuccess: () => {
-                SuccessDialog({
-                    title: "You've successfully updated a teacher.",
-                });
+                FlashMessage({ flash })
             },
             onError: (error) => {
                 teacherEditForm.setError("name", error?.name);

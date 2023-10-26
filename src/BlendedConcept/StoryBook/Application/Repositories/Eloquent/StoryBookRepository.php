@@ -140,7 +140,9 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error->getMessage(), $error->getLine());
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -220,7 +222,9 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
-            dd($error);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -336,7 +340,9 @@ class StoryBookRepository implements StoryBookRepositoryInterface
         try {
             $storyBook->delete();
         } catch (\Exception $e) {
-            dd($e);
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($e->getMessage());
         }
     }
 }

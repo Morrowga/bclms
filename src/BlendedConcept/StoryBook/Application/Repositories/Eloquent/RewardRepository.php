@@ -61,8 +61,10 @@ class RewardRepository implements RewaredRepositoryInterface
             DB::commit();
         } catch (\Exception $error) {
             // Handle any exceptions and display the error message
-            dd($error->getMessage());
             DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -103,7 +105,9 @@ class RewardRepository implements RewaredRepositoryInterface
         } catch (\Exception $error) {
             DB::rollBack();
             // Handle any exceptions and display the error message
-            dd($error->getMessage());
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($error->getMessage());
         }
     }
 
@@ -156,8 +160,10 @@ class RewardRepository implements RewaredRepositoryInterface
             DB::commit();
             return $data;
         } catch (\Exception $e) {
-            return throw new \Exception($e->getMessage());
             DB::rollBack();
+            config('app.env') == 'production'
+            ? throw new \Exception('Something Wrong! Please try again.')
+            : throw new \Exception($e->getMessage());
         }
     }
 
@@ -176,9 +182,10 @@ class RewardRepository implements RewaredRepositoryInterface
             ]);
             DB::commit();
         } catch (\Exception $e) {
-            dd($e);
-            return throw new \Exception($e->getMessage());
             DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($e->getMessage());
         }
     }
 
@@ -192,8 +199,10 @@ class RewardRepository implements RewaredRepositoryInterface
             return $stickers;
         } catch (\Exception $e) {
 
-            return throw new \Exception($e);
             DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($e->getMessage());
         }
     }
 

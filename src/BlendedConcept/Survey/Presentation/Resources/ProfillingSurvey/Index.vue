@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { SuccessDialog } from "@actions/useSuccess";
 import SurveyAdd from "./components/SurveyAdd.vue";
@@ -14,9 +14,10 @@ import {
     requiredValidator,
     integerValidator,
 } from "@validators";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 let props = defineProps(["survey"]);
-
+let flash = computed(() => usePage().props.flash);
 let addNewQuestionForm = useForm({
     survey_id: props.survey.data.id,
     question_type: null,
@@ -44,9 +45,7 @@ function deleteSurveyForm(id) {
             router.delete("questions/" + id + "?type=profiling", {
                 onSuccess: () => {
                     reload("profilling_survey.index");
-                    SuccessDialog({
-                        title: "You've successfully deleted a question.",
-                    });
+                    FlashMessage({ flash })
                 },
             });
         },
@@ -73,7 +72,8 @@ const handleEditSurveyFormSubmit = (data) => {
     updateData.put(route("questions.update", data.id), {
         onSuccess: () => {
             reload("profilling_survey.index");
-            SuccessDialog({ title: "You've successfully updated a question." });
+            console.log(flash.value.successMessage + ' test')
+            FlashMessage({ flash });
         },
         onError: (error) => {},
     });
@@ -111,9 +111,7 @@ const handleModalSubmit = (data) => {
         onSuccess: () => {
             reload("profilling_survey.index");
 
-            SuccessDialog({
-                title: "You've successfully created a new question.",
-            });
+            FlashMessage({ flash })
         },
         onError: (error) => {
             addNewQuestionForm.setError("question_type", error?.question_type);

@@ -1,8 +1,9 @@
 <script setup>
-import { Link, useForm } from "@inertiajs/vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import { ref } from "vue";
 // import ImageUpload from "@Composables/ImageUpload.vue";
 import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
@@ -12,6 +13,7 @@ import {
     integerValidator,
 } from "@validators";
 const props = defineProps(["learningNeeds", "disabilityTypes"]);
+let flash = computed(() => usePage().props.flash)
 console.log(props.disabilityTypes);
 const form = useForm({
     first_name: "",
@@ -37,9 +39,8 @@ const createStudent = () => {
         if (valid) {
             form.post(route("teacher_students.store"), {
                 onSuccess: () => {
-                    SuccessDialog({
-                        title: "You've successfully updated a student.",
-                    });
+                    console.log(flash.errorMessage + ' test')
+                    FlashMessage({ flash })
                 },
                 onError: (error) => {
                     console.log(error);

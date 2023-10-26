@@ -71,9 +71,9 @@ class BookController
 
             // Redirect to the index page with a success message
             return redirect()->route('books.index')->with('successMessage', 'StoryBook Created Successfully!');
-        } catch (\Exception $th) {
+        } catch (\Exception $e) {
             // Redirect to the index page with a system error message
-            return redirect()->route('books.index')->with('systemErrorMessage', 'StoryBook is not created!');
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -98,9 +98,9 @@ class BookController
 
             // Redirect to the index page with a success message
             return redirect()->route('books.index')->with('successMessage', 'StoryBook updated Successfully!');
-        } catch (\Exception $th) {
+        } catch (\Exception $e) {
             // Redirect to the index page with a system error message
-            return redirect()->route('books.index')->with('systemErrorMessage', 'Something unexpected happened');
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 
@@ -130,8 +130,8 @@ class BookController
             $updateResources = new UpdatePhysicalResourcesCommand($request, $book);
             $updateResources->execute();
             return redirect()->back()->with('successMessage', 'StoryBook updated Successfully!');
-        } catch (\Exception $ex) {
-            return redirect()->back()->with('systemErrorMessage', 'Something unexpected happened');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
     public function destroy(StoryBookEloquentModel $book)
@@ -143,12 +143,8 @@ class BookController
             $deleteBookCommand->execute();
 
             return redirect()->route('books.index')->with('successMessage', 'Book Deleted Successfully!');
-        } catch (\Exception $error) {
-            return redirect()
-                ->route('books.index')
-                ->with([
-                    'systemErrorMessage' => $error->getCode(),
-                ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

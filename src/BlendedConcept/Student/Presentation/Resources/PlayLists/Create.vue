@@ -2,8 +2,9 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import PlayListSelectBox from "./components/PlayListSelectBox.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { FlashMessage } from "@actions/useFlashMessage";
 import SelectStudent from "./components/SelectStudent.vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import SelectStorybook from "./components/SelectStorybook.vue";
 import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
 const form = useForm({
@@ -12,13 +13,14 @@ const form = useForm({
     student_id: "",
     storybooks: [],
 });
-
+let flash = computed(() => usePage().props.flash)
 const playlist = ref(null);
 
 const createPlaylist = () => {
     form.post(route("playlists.store"), {
         onSuccess: () => {
-            SuccessDialog({ title: "You've successfully created a playlist." });
+            console.log(flash.errorMessage+ ' test error')
+            FlashMessage({ flash })
         },
         onError: (error) => {
             form.setError("name", error?.name);

@@ -6,6 +6,7 @@ import { computed, defineProps } from "vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
 import { checkPermission } from "@actions/useCheckPermission";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 let props = defineProps(["flash", "auth", "classroom"]);
 let flash = computed(() => usePage().props.flash);
@@ -17,7 +18,7 @@ const deleteClassroom = (id) => {
         onConfirm: () => {
             router.delete(route("classrooms.destroy", id), {
                 onSuccess: () => {
-                    SuccessDialog({ title: flash?.successMessage });
+                    FlashMessage({ flash });
                 },
             });
         },
