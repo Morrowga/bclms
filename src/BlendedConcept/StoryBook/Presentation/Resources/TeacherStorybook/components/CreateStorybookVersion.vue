@@ -7,7 +7,7 @@ import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
 import { usePage } from "@inertiajs/vue3";
 let dialog = ref(false);
-let flash = computed(() => usePage().props.flash)
+let flash = computed(() => usePage().props.flash);
 const submitReview = () => {
     dialog.value = false;
     FlashMessage({ flash });
@@ -43,7 +43,7 @@ const CreateStoryBookVersion = () => {
         form.h5p_id = curr_h5p_id;
         form.post(route("storybooksversions.store"), {
             onSuccess: () => {
-                console.log(' test')
+                console.log(" test");
                 FlashMessage({ flash });
                 dialog.value = false;
                 isLoading.value = false;
@@ -130,6 +130,7 @@ onMounted(() => {
                                         @click="dialog = false"
                                         :disabled="isLoading"
                                         :loading="isLoading"
+                                        type="button"
                                     />
 
                                     <v-btn

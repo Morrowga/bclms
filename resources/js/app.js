@@ -29,6 +29,7 @@ import '@styles/styles.scss'
 import "vue-good-table-next/dist/vue-good-table-next.css";
 
 
+
 //animation css
 import 'animate.css';
 

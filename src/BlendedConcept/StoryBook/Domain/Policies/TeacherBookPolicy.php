@@ -12,6 +12,10 @@ class TeacherBookPolicy
     {
         return auth()->user()->hasPermission('access_assignStudent');
     }
+    public static function create_version()
+    {
+        return auth()->user()->hasPermission('access_createVersion');
+    }
     public static function show()
     {
         return auth()->user()->hasPermission('show_teacherBook');

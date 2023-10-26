@@ -10,6 +10,7 @@ use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetStoryBook;
 use Src\BlendedConcept\StoryBook\Domain\Policies\TeacherBookPolicy;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquentModel;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
 class TeacherStorybookController
 {
@@ -31,10 +32,17 @@ class TeacherStorybookController
     public function show(StoryBookEloquentModel $teacher_storybook)
     {
         abort_if(authorize('show', TeacherBookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $teacher_id = auth()->user()->b2bUser->teacher_id;
+        $auth = auth()->user()->role->name;
+        if ($auth == 'Parent') {
+            $parent = auth()->user()->parents;
+            $student = StudentEloquentModel::where('parent_id', $parent->parent_id)->first();
+            $user_id = $student->teachers()->pluck('teachers.teacher_id');
+        } else {
+            $user_id = [auth()->user()->b2bUser->teacher_id];
+        }
         $filters = request(['search', 'filter', 'perPage', 'page']);
-        $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($teacher_id) {
-            $query->where('teacher_id', $teacher_id);
+        $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
+            $query->where('teacher_id', $user_id);
         }]);
         $games = (new GetGameList($filters))->handle();
 

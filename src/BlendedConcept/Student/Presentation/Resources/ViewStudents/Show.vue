@@ -10,6 +10,8 @@ import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { ref } from "vue";
 import { format } from "date-fns";
+import { checkPermission } from "@actions/useCheckPermission";
+
 let tab = ref(null);
 let props = defineProps(["student"]);
 const form = useForm({});
@@ -103,6 +105,9 @@ const formatDate = (dateString) => {
                                 "
                             >
                                 <v-btn
+                                    v-if="
+                                        checkPermission('edit_teacherStudent')
+                                    "
                                     variant="flat"
                                     rounded
                                     color="#17CAB6"
@@ -112,6 +117,7 @@ const formatDate = (dateString) => {
                                 >
                             </Link>
                             <v-btn
+                                v-if="checkPermission('delete_teacherStudent')"
                                 variant="flat"
                                 rounded
                                 color="error"
@@ -296,7 +302,7 @@ const formatDate = (dateString) => {
         </VContainer>
         <div class="storybooks-assign mb-4">
             <VContainer class="header width-80">
-                <div class="d-flex justify-space-between align-center">
+                <div class="d-flex justify-space-between align-center mb-4">
                     <h1 class="text-h4 font-weight-bold">
                         Storybooks Assigned to Student
                     </h1>
@@ -312,15 +318,14 @@ const formatDate = (dateString) => {
                         class="mr-4"
                     ></v-text-field>
                 </div>
-            </VContainer>
-            <div>
                 <StoryBookSlider :datas="props.student.data.book_versions" />
-            </div>
+            </VContainer>
+            <div></div>
         </div>
 
         <div class="playlist">
             <VContainer class="header width-80">
-                <div class="d-flex justify-space-between align-center">
+                <div class="d-flex justify-space-between align-center mb-4">
                     <h1 class="text-h4 font-weight-bold">Playlists</h1>
                     <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
@@ -335,10 +340,9 @@ const formatDate = (dateString) => {
                         class="mr-4"
                     ></v-text-field>
                 </div>
-            </VContainer>
-            <div>
                 <PlaylistSlider :datas="props.student.data.playlists" />
-            </div>
+            </VContainer>
+            <div></div>
         </div>
     </AdminLayout>
 </template>

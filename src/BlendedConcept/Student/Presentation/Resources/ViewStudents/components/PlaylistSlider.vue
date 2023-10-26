@@ -1,22 +1,22 @@
 <script setup>
 import { ref, defineProps } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+
 let model = ref(false);
 import PlaylistCard from "./PlaylistCard.vue";
 const props = defineProps({
-  datas: {
-    type: Object,
-    required: true,
-  },
+    datas: {
+        type: Object,
+        required: true,
+    },
 });
 </script>
 <template>
-    <v-slide-group v-model="model" center-active show-arrows mandatory>
-        <v-slide-group-item v-for="data in props.datas" :key="data">
-            <div class="mx-4 card-container">
-                <PlaylistCard :data="data"/>
-            </div>
-        </v-slide-group-item>
-    </v-slide-group>
+    <swiper :slides-per-view="4" :space-between="20">
+        <swiper-slide v-for="data in props.datas" :key="data">
+            <PlaylistCard :data="data" />
+        </swiper-slide>
+    </swiper>
 </template>
 
 <style>

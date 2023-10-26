@@ -4,6 +4,7 @@ import { usePage } from "@inertiajs/vue3";
 
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
+import { checkPermission } from "@actions/useCheckPermission";
 let onFormSubmit = () => {
     isConfirmedDialog({ title: "Are you sure want to delete it." });
 };
@@ -27,11 +28,14 @@ const deleteItem = (id) => {
 };
 </script>
 <template>
-    <v-card>
+    <v-card class="grab-pointer">
         <v-card-title>
             <v-btn class="dotbtn" icon="true" color="rgba(255, 255, 255, 0.70)">
                 <img src="/images/dot.png" width="10" height="18" alt="" />
-                <v-menu activator="parent">
+                <v-menu
+                    activator="parent"
+                    v-if="checkPermission('access_createVersion')"
+                >
                     <v-list>
                         <v-list-item
                             @click="
@@ -77,6 +81,7 @@ const deleteItem = (id) => {
                     variant="flat"
                     color="#FF8015"
                     rounded
+                    v-if="checkPermission('access_assignStudent')"
                 >
                     Manage Assignment to Students
                 </v-btn>

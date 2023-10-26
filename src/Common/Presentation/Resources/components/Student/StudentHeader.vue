@@ -72,7 +72,6 @@ const openStdMenu = () => {
         <Link
             href="/home"
             v-if="!is_drawer"
-            to="/"
             class="d-none d-md-flex align-center"
         >
             <img src="/images/logowhite.png" width="200" height="55" />

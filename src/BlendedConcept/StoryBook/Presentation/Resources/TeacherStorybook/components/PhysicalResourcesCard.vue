@@ -2,10 +2,10 @@
 const dataProps = defineProps(["data"]);
 let truncatedText = (text) => {
     if (text) {
-        if (text?.length <= 30) {
+        if (text?.length <= 20) {
             return text;
         } else {
-            return text?.substring(0, 30) + "...";
+            return text?.substring(0, 20) + "...";
         }
     }
 };
@@ -23,7 +23,7 @@ const imageType = (type) => {
 </script>
 <template>
     <v-hover v-slot="{ isHovering, props }">
-        <v-card width="300" class="mr-5" v-bind="props">
+        <v-card class="mr-5 grab-pointer" v-bind="props">
             <div class="resource-main">
                 <img src="/images/pdf.png" alt="" />
                 <div

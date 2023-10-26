@@ -115,6 +115,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'show_teacherBook',
                         'delete_teacherBook',
                         'access_assignStudent',
+                        'access_createVersion',
                         'access_teacherStudent',
                         'show_teacherStudent',
                         'edit_teacherStudent',
@@ -276,6 +277,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'show_teacherBook',
                         'delete_teacherBook',
                         'access_assignStudent',
+                        'access_createVersion',
                         'access_teacherStudent',
                         'show_teacherStudent',
                         'create_teacherStudent',
@@ -350,7 +352,12 @@ class PermissionRoleTableSeeder extends Seeder
                         'edit_teacherStudent',
                         'update_teacherStudent',
                         'delete_teacherStudent',
-                        'create_techSupport'
+                        'create_techSupport',
+                        'access_playlist',
+                        'show_playlist',
+                        'access_teacherStorybook',
+                        'access_teacherBook',
+                        'show_teacherBook',
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);

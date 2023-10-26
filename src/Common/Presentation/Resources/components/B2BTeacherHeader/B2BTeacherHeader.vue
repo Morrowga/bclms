@@ -17,7 +17,7 @@ let props = defineProps({
     is_drawer: {
         type: Boolean,
         default: false,
-    }
+    },
 });
 let emit = defineEmits();
 
@@ -34,7 +34,11 @@ let toggle = () => {
             class="d-flex d-md-none"
         ></v-app-bar-nav-icon>
 
-        <Link v-if="!is_drawer" to="/" class="d-none d-md-flex align-center">
+        <Link
+            v-if="!is_drawer"
+            href="/home"
+            class="d-none d-md-flex align-center"
+        >
             <img src="/images/sitelogotext.svg" width="200" height="200" />
         </Link>
         <VSpacer />

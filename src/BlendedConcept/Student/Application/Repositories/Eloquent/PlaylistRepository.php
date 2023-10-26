@@ -9,16 +9,24 @@ use Src\BlendedConcept\Student\Domain\Model\Entities\Playlist;
 use Src\BlendedConcept\Student\Domain\Repositories\PlaylistRepositoryInterface;
 use Src\BlendedConcept\Student\Domain\Resources\PlaylistResource;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\PlaylistEloquentModel;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
 class PlaylistRepository implements PlaylistRepositoryInterface
 {
     public function getPlaylist($filters = [])
     {
-        $teacher_id = auth()->user()->b2bUser->teacher_id;
+        $auth = auth()->user()->role->name;
+        if ($auth == 'Parent') {
+            $parent = auth()->user()->parents;
+            $student = StudentEloquentModel::where('parent_id', $parent->parent_id)->first();
+            $user_id = $student->teachers()->pluck('teachers.teacher_id');
+        } else {
+            $user_id = [auth()->user()->b2bUser->teacher_id];
+        }
 
         $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
             ->with(['storybooks', 'student.user'])
-            ->where('teacher_id', $teacher_id)
+            ->whereIn('teacher_id', $user_id)
             ->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
 

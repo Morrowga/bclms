@@ -13,9 +13,10 @@ class ProfilingSurveyController
     {
         try {
             $profilingSurvey = (new GetProfilingSurvey())->handle();
-
+            $user->load('student');
             return Inertia::render(config('route.teacher_students.profiling_surveys'), compact('profilingSurvey', 'user'));
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }

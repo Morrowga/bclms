@@ -13,7 +13,7 @@ const props = defineProps(["physical_resources"]);
             <span> Physical Resources </span>
         </div>
         <div class="body-sec">
-            <swiper :slides-per-view="3" :space-between="0">
+            <swiper :slides-per-view="3" :space-between="20">
                 <swiper-slide
                     v-for="(data, key) in props.physical_resources"
                     :key="key"

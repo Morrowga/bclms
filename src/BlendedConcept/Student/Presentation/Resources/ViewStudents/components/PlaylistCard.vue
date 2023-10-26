@@ -1,21 +1,23 @@
 <script setup>
 import { ref } from "vue";
 const props = defineProps({
-  data: {
-    type: Object,
-    required: true,
-  },
+    data: {
+        type: Object,
+        required: true,
+    },
 });
 
 let is_description = ref(false);
 let is_chip = ref(true);
 </script>
 <template>
-    <v-card min-width="275">
+    <v-card min-width="275" class="grab-pointer">
         <v-card-title class="ps-relative">
             <v-img src="/images/image4.png" />
             <div class="chip-page" v-if="is_chip">
-                <div class="chip-content">{{ props.data.storybooks.length}} storybooks</div>
+                <div class="chip-content">
+                    {{ props.data.storybooks.length }} storybooks
+                </div>
             </div>
         </v-card-title>
         <v-card-text>

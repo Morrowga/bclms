@@ -2,6 +2,7 @@
 import TeacherStorybookCard from "./TeacherStorybookCard.vue";
 import CreateStorybookVersion from "./CreateStorybookVersion.vue";
 import { ref } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
 let model = ref(false);
 const props = defineProps(["storybooks"]);
 </script>
@@ -14,23 +15,15 @@ const props = defineProps(["storybooks"]);
             <div
                 class="d-flex justify-start justify-md-center align-center gap-10 f-wrap"
             >
-                <v-slide-group
-                    v-model="model"
-                    center-active
-                    show-arrows
-                    mandatory
-                >
-                    <v-slide-group-item
-                        v-for="item in storybooks.data"
-                        :key="item"
-                    >
+                <swiper :slides-per-view="4" :space-between="20">
+                    <swiper-slide v-for="item in storybooks.data" :key="item">
                         <TeacherStorybookCard
                             :item="item"
                             :isDisabled="true"
-                            class="margin-card"
+                            class="margin-card grab-pointer"
                         />
-                    </v-slide-group-item>
-                </v-slide-group>
+                    </swiper-slide>
+                </swiper>
             </div>
         </div>
     </div>

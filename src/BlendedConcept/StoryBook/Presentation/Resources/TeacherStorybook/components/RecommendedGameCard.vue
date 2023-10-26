@@ -1,6 +1,6 @@
 <script setup></script>
 <template>
-    <v-card>
+    <v-card class="grab-pointer">
         <v-card-title>
             <v-img src="/images/regame.png" />
         </v-card-title>

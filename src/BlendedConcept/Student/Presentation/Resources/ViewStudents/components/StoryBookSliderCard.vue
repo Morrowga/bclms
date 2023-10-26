@@ -13,6 +13,7 @@ const setImage = () => {
 <template>
     <v-card
         min-width="275"
+        class="grab-pointer"
         @click="
             router.get(
                 route('learning_activities.index', { storybook: data.id })

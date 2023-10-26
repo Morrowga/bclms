@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
@@ -19,7 +20,7 @@ use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentMode
 
 class OrganisationEloquentModel extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, Notifiable;
+    use HasFactory, InteractsWithMedia, Notifiable, SoftDeletes;
 
     protected $table = 'organisations';
 

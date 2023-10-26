@@ -1,7 +1,7 @@
 <script setup>
 import { ref, defineProps } from "vue";
 import HoverCard from "./HoverCard.vue";
-let is_chip = ref(true);
+let is_chip = ref(false);
 import GreenChip from "@mainRoot/components/GreenChip/GreenChip.vue";
 import { router } from "@inertiajs/core";
 const props = defineProps({

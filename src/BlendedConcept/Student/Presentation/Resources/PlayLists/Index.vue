@@ -3,14 +3,14 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { router } from "@inertiajs/core";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@actions/useSuccess";
+import { checkPermission } from "@actions/useCheckPermission";
+
 import {
     serverParams,
     searchItems,
 } from "@Composables/useServerSideDatable.js";
 const items = ["Name", "Age", "Name", "Name"];
-let props = defineProps([
-    'playlists'
-]);
+let props = defineProps(["playlists"]);
 const currentPage = ref(1);
 
 const deletePlaylist = (id) => {
@@ -18,7 +18,7 @@ const deletePlaylist = (id) => {
         title: "You won't be able to revert this!",
         denyButtonText: "Yes,delete it!",
         onConfirm: () => {
-            router.delete('/playlists/' + id, {
+            router.delete("/playlists/" + id, {
                 onSuccess: () => {
                     SuccessDialog({
                         title: "You have successfully deleted playlist!",
@@ -29,7 +29,11 @@ const deletePlaylist = (id) => {
         },
     });
 };
-console.log(props.playlists);
+const goView = (item) => {
+    if (checkPermission("show_playlist")) {
+        router.get(route("playlists.show", item.id));
+    }
+};
 </script>
 
 <template>
@@ -40,7 +44,12 @@ console.log(props.playlists);
                     <h1 class="tiggie-teacher-title">Playlists</h1>
                 </VCol>
                 <VCol cols="6" class="text-end">
-                    <VBtn color="primary" variant="flat" rounded>
+                    <VBtn
+                        color="primary"
+                        variant="flat"
+                        rounded
+                        v-if="checkPermission('create_playlist')"
+                    >
                         <Link :href="route('playlists.create')">
                             <VIcon icon="mdi-plus" class="text-white"></VIcon>
                             <span class="text-white">Add</span>
@@ -85,11 +94,7 @@ console.log(props.playlists);
                         v-for="item in props.playlists.data"
                         :key="item"
                     >
-                        <VCol
-                            cols="3"
-                            class="ml-4"
-                            @click="router.get(route('playlists.show', item.id))"
-                        >
+                        <VCol cols="3" class="ml-4" @click="goView(item)">
                             <div
                                 class="d-flex flex-row align-center justify-center gap-3"
                             >
@@ -105,30 +110,40 @@ console.log(props.playlists);
                                         <VIcon
                                             icon="mdi-playlist-music-outline"
                                         />
-                                        <span>{{ item.storybooks.length }}</span>
+                                        <span>{{
+                                            item.storybooks.length
+                                        }}</span>
                                     </div>
                                 </div>
-                                <span class="tiggie-p">{{ item.name  }}</span>
+                                <span class="tiggie-p">{{ item.name }}</span>
                             </div>
                         </VCol>
                         <VCol cols="3">
-                            <p class="tiggie-p">{{ item.student.user.full_name  }}</p>
+                            <p class="tiggie-p">
+                                {{ item.student.user.full_name }}
+                            </p>
                         </VCol>
 
                         <VCol cols="3">
                             <div class="d-flex flex-row">
                                 <VBtn
+                                    v-if="checkPermission('edit_playlist')"
                                     color="teal"
                                     class="text-white"
                                     variant="flat"
                                     rounded
-                                    @click="router.get(route('playlists.edit', item.id))"
+                                    @click="
+                                        router.get(
+                                            route('playlists.edit', item.id)
+                                        )
+                                    "
                                 >
                                     <VIcon icon="mdi-pencil" class="mr-2" />
                                     <span>Edit</span>
                                 </VBtn>
 
                                 <VBtn
+                                    v-if="checkPermission('delete_playlist')"
                                     color="error"
                                     class="text-white ml-2"
                                     variant="flat"
@@ -162,7 +177,7 @@ console.log(props.playlists);
     width: 73px;
     height: 18px;
 }
-.music-component{
+.music-component {
     cursor: pointer !important;
 }
 </style>

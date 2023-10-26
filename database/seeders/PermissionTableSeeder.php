@@ -873,6 +873,16 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Users can access teacherStudents and their configurations within the application.',
             ],
             [
+                'name' => 'access_assignStudent',
+                'guard_name' => 'web',
+                'description' => 'Users can access assign student and their configurations within the application.',
+            ],
+            [
+                'name' => 'access_createVersion',
+                'guard_name' => 'web',
+                'description' => 'Users can create book version and their configurations within the application.',
+            ],
+            [
                 'name' => 'show_teacherStudent',
                 'guard_name' => 'web',
                 'description' => 'Users can view teacherStudents and their configurations within the application.',

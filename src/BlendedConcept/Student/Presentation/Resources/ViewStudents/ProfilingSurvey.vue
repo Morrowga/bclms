@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from "vue";
-import { useForm,usePage } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { SuccessDialog } from "@actions/useSuccess";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
-import debounce from 'lodash/debounce';
+import debounce from "lodash/debounce";
 
 import {
     emailValidator,
@@ -15,12 +15,16 @@ import {
 
 let page = usePage();
 
-let props = defineProps(['profilingSurvey', 'user']);
+let props = defineProps(["profilingSurvey", "user"]);
 const selectedOptions = ref([]);
-const  shortanswer = ref([]);
+const shortanswer = ref([]);
 
 const questionsExist = computed(() => {
-  return props.profilingSurvey && props.profilingSurvey.data && props.profilingSurvey.data.questions;
+    return (
+        props.profilingSurvey &&
+        props.profilingSurvey.data &&
+        props.profilingSurvey.data.questions
+    );
 });
 
 const user_id = ref(props.user.id);
@@ -28,40 +32,42 @@ const user_id = ref(props.user.id);
 const form = useForm({
     results: null,
     shortanswer: null,
-    type: 'PROFILING',
+    type: "PROFILING",
     survey_id: props.profilingSurvey.data.id,
-    user_id: user_id.value
-})
+    user_id: user_id.value,
+});
 
-const addSurveyForm = ref(questionsExist.value ? props.profilingSurvey.data.questions : []);
-
+const addSurveyForm = ref(
+    questionsExist.value ? props.profilingSurvey.data.questions : []
+);
 
 addSurveyForm.value.forEach((item) => {
-    if(item.question_type != 'SHORT_ANSWER'){
+    if (item.question_type != "SHORT_ANSWER") {
         selectedOptions.value[item.id] = [];
     } else {
         shortanswer.value[item.id] = {
-            "id": item.id,
-            "answer" : ''
+            id: item.id,
+            answer: "",
         };
     }
 });
 
 const onFormSubmit = () => {
-
     // Convert the filteredSelectedOptions to JSON
     form.results = JSON.stringify(selectedOptions.value);
     form.shortanswer = JSON.stringify(shortanswer.value);
     form.post(route("surveyresponse.store"), {
         onSuccess: () => {
-            SuccessDialog({ title: "You've successfully submited profiling survey." });
+            SuccessDialog({
+                title: "You've successfully submited profiling survey.",
+            });
         },
         onError: (error) => {
             form.results = selectedOptions.value;
             form.shortanswer = shortanswer.value;
-        }
-    })
-}
+        },
+    });
+};
 // let addNewQuestionForm = useForm({
 //     "survey_id" : props.profilingSurvey.data.id,
 //     "question_type" : null,
@@ -71,37 +77,34 @@ const onFormSubmit = () => {
 // })
 
 const radioClick = (questionId, optionId) => {
-  selectedOptions.value[questionId].push(optionId);
+    selectedOptions.value[questionId].push(optionId);
 };
 
 const checkboxClick = (questionId, optionId) => {
-  const questionOptions = selectedOptions.value[questionId];
+    const questionOptions = selectedOptions.value[questionId];
 
-  const optionIndex = questionOptions.indexOf(optionId);
+    const optionIndex = questionOptions.indexOf(optionId);
 
-  if (optionIndex !== -1) {
-    questionOptions.splice(optionIndex, 1);
-  } else {
-    questionOptions.push(optionId);
-  }
+    if (optionIndex !== -1) {
+        questionOptions.splice(optionIndex, 1);
+    } else {
+        questionOptions.push(optionId);
+    }
 
-  console.log(selectedOptions.value);
+    console.log(selectedOptions.value);
 };
-
-
 
 const submitProfiling = () => {
     console.log(selectedOptions.value);
-}
+};
 
 const questionType = (questionType) => {
-    if(questionType === 'SINGLE_CHOICE' || questionType === 'Rating'){
-        return "[Choose one option]"
-    } else if(questionType === 'MULTIPLE_RESPONSE'){
-        return "[Please select all that apply]"
+    if (questionType === "SINGLE_CHOICE" || questionType === "Rating") {
+        return "[Choose one option]";
+    } else if (questionType === "MULTIPLE_RESPONSE") {
+        return "[Please select all that apply]";
     }
-}
-
+};
 </script>
 <template>
     <AdminLayout>
@@ -114,46 +117,96 @@ const questionType = (questionType) => {
                         class="d-flex justify-space-between align-center"
                     >
                         <div>
-                            <h1 class="tiggie-title mb-4">{{props.profilingSurvey.data.title}}</h1>
-                            <span class="text-subtitle-1"
-                                >{{props.profilingSurvey.data.description}}</span
-                            >
+                            <h1 class="tiggie-title mb-4">
+                                {{ props.profilingSurvey.data.title }}
+                            </h1>
+                            <span class="text-subtitle-1">{{
+                                props.profilingSurvey.data.description
+                            }}</span>
                         </div>
                     </v-col>
                     <VCol cols="12" v-for="(item, i) in addSurveyForm" :key="i">
-                        <VCard style="width:81vw" class="mt-4 question-card">
+                        <VCard style="width: 81vw" class="mt-4 question-card">
                             <VCardTitle class="tiggie-subtitle">
-                            <div class="d-flex justify-space-between">
-                                <span class="question-text">
-                                <strong class="pppangram-bold question-label">Question {{ i + 1 }} : </strong> {{ item.question }} {{ questionType(item.question_type) }}
-                                </span>
-                            </div>
+                                <div class="d-flex justify-space-between">
+                                    <span class="question-text">
+                                        <strong
+                                            class="pppangram-bold question-label"
+                                            >Question {{ i + 1 }} :
+                                        </strong>
+                                        {{ item.question }}
+                                        {{ questionType(item.question_type) }}
+                                    </span>
+                                </div>
                             </VCardTitle>
-                            <VRow no-gutters justify="start" v-if="item.question_type === 'MULTIPLE_RESPONSE'">
-                                <VCol cols="12" v-for="(option, i) in item.options" :key="i" style="text-align: left;">
+                            <VRow
+                                no-gutters
+                                justify="start"
+                                v-if="
+                                    item.question_type === 'MULTIPLE_RESPONSE'
+                                "
+                            >
+                                <VCol
+                                    cols="12"
+                                    v-for="(option, i) in item.options"
+                                    :key="i"
+                                    style="text-align: left"
+                                >
                                     <VList class="question-option">
-                                    <VListItem>
-                                        <template #prepend>
-                                        <VCheckbox @click="checkboxClick(item.id, option.id)" :value="option.id" />
-                                        </template>
-                                        <VListItemTitle class="tiggie-p">
-                                        <span>{{ option.content }}</span>
-                                        </VListItemTitle>
-                                    </VListItem>
+                                        <VListItem>
+                                            <template #prepend>
+                                                <VCheckbox
+                                                    @click="
+                                                        checkboxClick(
+                                                            item.id,
+                                                            option.id
+                                                        )
+                                                    "
+                                                    :value="option.id"
+                                                />
+                                            </template>
+                                            <VListItemTitle class="tiggie-p">
+                                                <span>{{
+                                                    option.content
+                                                }}</span>
+                                            </VListItemTitle>
+                                        </VListItem>
                                     </VList>
                                 </VCol>
                             </VRow>
-                            <VRow no-gutters justify="start" v-else-if="item.question_type === 'SINGLE_CHOICE' || item.question_type === 'RATING'">
-                                <VCol cols="12" v-for="(option, i) in item.options" :key="i" style="text-align: left;">
+                            <VRow
+                                no-gutters
+                                justify="start"
+                                v-else-if="
+                                    item.question_type === 'SINGLE_CHOICE' ||
+                                    item.question_type === 'RATING'
+                                "
+                            >
+                                <VCol
+                                    cols="12"
+                                    v-for="(option, i) in item.options"
+                                    :key="i"
+                                    style="text-align: left"
+                                >
                                     <VList class="question-option">
-                                    <VListItem>
-                                        <template #prepend>
-                                        <VRadio :value="option.id" @click="radioClick(item.id, option.id)" />
-                                        </template>
-                                        <VListItemTitle class="tiggie-p">
-                                        <span>{{ option.content }}</span>
-                                        </VListItemTitle>
-                                    </VListItem>
+                                        <VListItem>
+                                            <template #prepend>
+                                                <VRadio
+                                                    :value="option.id"
+                                                    @click="
+                                                        radioClick(
+                                                            item.id,
+                                                            option.id
+                                                        )
+                                                    "
+                                                />
+                                            </template>
+                                            <VListItemTitle class="tiggie-p">
+                                                <span>{{
+                                                    option.content
+                                                }}</span>
+                                            </VListItemTitle>
+                                        </VListItem>
                                     </VList>
                                 </VCol>
                             </VRow>
@@ -164,7 +217,8 @@ const questionType = (questionType) => {
                                         placeholder="Please Type here ...."
                                         auto-grow
                                         rows="5"
-                                        :rules="[requiredValidator]" :error-messages="form?.errors?.answer"
+                                        :rules="[requiredValidator]"
+                                        :error-messages="form?.errors?.answer"
                                     />
                                 </VCol>
                             </VRow>
@@ -172,7 +226,14 @@ const questionType = (questionType) => {
                     </VCol>
                     <v-col cols="12">
                         <div class="d-flex justify-center">
-                            <Link>
+                            <Link
+                                :href="
+                                    route(
+                                        'teacher_students.show',
+                                        props.user.student.student_id
+                                    )
+                                "
+                            >
                                 <v-btn
                                     variant="flat"
                                     rounded
@@ -199,26 +260,25 @@ const questionType = (questionType) => {
     </AdminLayout>
 </template>
 <style scoped>
-.question-label{
+.question-label {
     font-size: 25px !important;
 }
 
-.question-text{
+.question-text {
     font-size: 25px !important;
 }
 
-.question-card{
-    border:none;
+.question-card {
+    border: none;
     box-shadow: none;
     background: #f7f7f9 !important;
 }
 
-.question-option{
+.question-option {
     background: #f7f7f9 !important;
 }
 
 .question-option > VListItem {
     background: #f7f7f9 !important;
 }
-
 </style>
