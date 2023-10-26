@@ -127,47 +127,20 @@ const form = useForm({
 
 const setInactive = (id, status) => {
     form.id = id;
-    // isConfirmedDialog({
-    //     denyButtonText: "Set Inactive",
-    //     onConfirm: () => {
-    //         // Assuming form.post is a valid function for making a POST request
-    //         form.post(`changerewardStatus/${id}`, {
-    //             onSuccess: () => {
-    //                 SuccessDialog({ title: flash?.successMessage });
-    //                 isDialogVisible.value = false;
-    //             },
-    //             onError: (error) => {
-    //                 console.log(error);
-    //             },
-    //         });
-    //     },
-    // });
-    if (status == "ACTIVE") {
-        isConfirmedDialog({
-            denyButtonText: status == "ACTIVE" ? "Inactive" : "Active",
-            onConfirm: () => {
-                form.post(`changerewardStatus/${id}`, {
-                    onSuccess: () => {
-                        FlashMessage({ flash: props.flash?.successMessage });
-                    },
-                });
-            },
-        });
-    } else {
-        isConfirmedDialog({
-            icon: "success",
-            color: "#48BC65",
-            denyButtonColor: "#48BC65",
-            denyButtonText: status == "ACTIVE" ? "Inactive" : "Active",
-            onConfirm: () => {
-                form.post(`changerewardStatus/${id}`, {
-                    onSuccess: () => {
-                        FlashMessage({ flash: props.flash?.successMessage });
-                    },
-                });
-            },
-        });
-    }
+
+    isConfirmedDialog({
+        icon: status == "ACTIVE" ? "warning" : "success",
+        color: status == "ACTIVE" ? "#FF6262" : "#48BC65",
+        denyButtonColor: status == "ACTIVE" ? "#FF6262" : "#48BC65",
+        denyButtonText: status == "ACTIVE" ? "Inactive" : "Active",
+        onConfirm: () => {
+            form.post(`changerewardStatus/${id}`, {
+                onSuccess: () => {
+                    FlashMessage({ flash: props.flash?.successMessage });
+                },
+            });
+        },
+    });
 };
 
 const showName = (status) => {
