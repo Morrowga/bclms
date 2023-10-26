@@ -127,6 +127,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'create_resources',
                         'edit_resources',
                         'delete_resources',
+                        'create_techSupport'
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
@@ -281,6 +282,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'edit_teacherStudent',
                         'update_teacherStudent',
                         'delete_teacherStudent',
+                        'create_techSupport'
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
@@ -318,6 +320,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'update_organisationUser',
                         'delete_organisationUser',
                         'access_techSupport',
+                        'create_techSupport'
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
@@ -347,7 +350,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'edit_teacherStudent',
                         'update_teacherStudent',
                         'delete_teacherStudent',
-
+                        'create_techSupport'
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);

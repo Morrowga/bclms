@@ -99,7 +99,16 @@ const props = defineProps(["technicalSupportList"]);
                         </VCol>
 
                         <VCol cols="3">
-                            <VChip color="success">Active</VChip>
+                            <VChip
+                                color="success"
+                                v-if="!technicalSupportIndex.has_responded"
+                                >Active</VChip
+                            >
+                            <VChip
+                                color="gray"
+                                v-if="technicalSupportIndex.has_responded"
+                                >Closed</VChip
+                            >
                         </VCol>
                     </VRow>
                     <VRow justify="center" align="center">

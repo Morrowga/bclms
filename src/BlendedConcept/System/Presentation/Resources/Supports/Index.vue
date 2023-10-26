@@ -54,7 +54,7 @@ let columns = [
 ];
 
 const props = defineProps(["technicalSupportList"]);
-let flash = computed(() => usePage().props.flash)
+let flash = computed(() => usePage().props.flash);
 
 const form = useForm({
     id: "",
@@ -102,7 +102,7 @@ const deleteSupport = () => {
         onConfirm: () => {
             router.delete(route("deleteSupportQuestion", form.id), {
                 onSuccess: () => {
-                    FlashMessage({ flash })
+                    FlashMessage({ flash });
                 },
                 onError: () => {
                     console.log("something was wrong");
@@ -113,14 +113,15 @@ const deleteSupport = () => {
 };
 
 const onRowClick = (params) => {
-    console.log(params);
-    form.id = params.row.id;
-    form.question = params.row.question;
-    //disable event for deletePopUP
-    if (params?.event?.target?.className?.includes("disablePopUp")) {
-        return;
+    if (!params.row.has_responded) {
+        form.id = params.row.id;
+        form.question = params.row.question;
+        //disable event for deletePopUP
+        if (params?.event?.target?.className?.includes("disablePopUp")) {
+            return;
+        }
+        document.getElementsByClassName("clickLayNaw")[0].click();
     }
-    document.getElementsByClassName("clickLayNaw")[0].click();
 };
 </script>
 <template>
@@ -244,7 +245,10 @@ const onRowClick = (params) => {
                                             />
                                         </VBtn>
                                     </div>
-                                    <AnswerSupport :dataPropsRow="form" />
+                                    <AnswerSupport
+                                        :dataPropsRow="form"
+                                        :data="dataProps.row"
+                                    />
                                 </template>
                                 <template #pagination-bottom>
                                     <VRow class="pa-4">
