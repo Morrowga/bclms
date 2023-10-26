@@ -10,7 +10,6 @@ import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
-import { FlashMessage } from "@actions/useFlashMessage";
 
 import {
     serverParams,
