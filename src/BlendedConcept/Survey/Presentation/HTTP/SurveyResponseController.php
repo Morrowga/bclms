@@ -61,6 +61,7 @@ class SurveyResponseController
             // Creates a new StoreSurveyResponseCommand object and executes it.
             $storeSurveyResponseCommand = new StoreSurveyResponseCommand($request);
             $storeSurveyResponseCommand->execute();
+            return redirect()->back();
         } catch (\Exception $e) {
             // Handle the exception here
             return redirect()->back()->with('errorMessage', $e->getMessage());
