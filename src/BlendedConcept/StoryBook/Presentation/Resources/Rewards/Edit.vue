@@ -99,6 +99,7 @@ let handleSubmit = () => {
                                     >
                                     <VTextField
                                         density="compact"
+                                        type="number"
                                         placeholder="Type here ..."
                                         v-model="form.gold_coins_needed"
                                         class="w-100"
@@ -114,6 +115,7 @@ let handleSubmit = () => {
                                     >
                                     <VTextField
                                         density="compact"
+                                        type="number"
                                         placeholder="Type here ..."
                                         v-model="form.silver_coins_needed"
                                         class="w-100"

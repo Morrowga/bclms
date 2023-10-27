@@ -4,9 +4,11 @@ import { SuccessDialog } from "@actions/useSuccess";
 import { router } from "@inertiajs/core";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
+import { FlashMessage } from "@actions/useFlashMessage";
 
 const props = defineProps(["book"]);
 let iframeRef = ref("");
+
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
@@ -36,8 +38,9 @@ let onFormSubmit = () => {
     saveToH5p();
     isLoading.value = true;
     setTimeout(() => {
+        FlashMessage({ flash: "Storybook Update Successfully" });
         isLoading.value = false;
-    }, 10000);
+    }, 13000);
 };
 onMounted(() => {
     iframeRef.value.style.display = "none";
@@ -102,7 +105,7 @@ onMounted(() => {
                                 :disabled="isLoading"
                                 :loading="isLoading"
                             >
-                                Add
+                                Save
                             </VBtn>
                         </div>
                     </div>

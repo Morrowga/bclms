@@ -29,6 +29,10 @@ class StoreRewardRequest extends FormRequest
             'rarity' => [
                 'required', 'not_in:SELECT',
             ],
+            'image' => [
+                'required',
+                'file'
+            ],
         ];
     }
 
@@ -40,6 +44,7 @@ class StoreRewardRequest extends FormRequest
             'gold_coins_needed' => 'Gold Coins Need is required',
             'silver_coins_needed' => 'Silver Coins Need is required',
             'rarity.not_in' => 'Please select rarity',
+            'image.required' => 'Image is required'
         ];
     }
 }

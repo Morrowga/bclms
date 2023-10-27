@@ -43,7 +43,7 @@ class RewardRepository implements RewaredRepositoryInterface
         try {
             // Map the request data to the Eloquent model
             $rewardEloquent = RewardMapper::toEloquent($request);
-            $rewardEloquent->status = 'INACTIVE';
+            $rewardEloquent->status = 'ACTIVE';
             $rewardEloquent->save();
 
             // Check if an image file was uploaded and is valid
@@ -162,8 +162,8 @@ class RewardRepository implements RewaredRepositoryInterface
         } catch (\Exception $e) {
             DB::rollBack();
             config('app.env') == 'production'
-            ? throw new \Exception('Something Wrong! Please try again.')
-            : throw new \Exception($e->getMessage());
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($e->getMessage());
         }
     }
 

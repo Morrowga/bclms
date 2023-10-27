@@ -38,10 +38,15 @@ let handleSubmit = () => {
     form.post(route("rewards.store"), {
         onSuccess: (response) => {
             console.log(response);
-            FlashMessage({ flash })
+            FlashMessage({ flash });
         },
         onError: (error) => {
-            console.log(error);
+            SuccessDialog({
+                title: error.image,
+                mainTitle: "Error!",
+                color: "#ff6262",
+                icon: "error",
+            });
         },
     });
 };
@@ -94,6 +99,7 @@ let handleSubmit = () => {
                                     >
                                     <VTextField
                                         density="compact"
+                                        type="number"
                                         placeholder="Type here ..."
                                         v-model="form.gold_coins_needed"
                                         class="w-100"
@@ -109,6 +115,7 @@ let handleSubmit = () => {
                                     >
                                     <VTextField
                                         density="compact"
+                                        type="number"
                                         placeholder="Type here ..."
                                         v-model="form.silver_coins_needed"
                                         class="w-100"
@@ -134,6 +141,9 @@ let handleSubmit = () => {
                             <span class="tiggie-title">Sticker</span>
                             <br />
                             <ImageUpload v-model="form.image" />
+                            <!-- <span class="text-red" v-if="form.errors.image">{{
+                                form.errors.image
+                            }}</span> -->
                         </VCol>
                         <VCol
                             cols="12"
