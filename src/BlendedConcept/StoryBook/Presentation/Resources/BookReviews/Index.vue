@@ -201,6 +201,7 @@ const deleteReview = () => {
                                         v-if="dataProps.column.field == 'stars'"
                                     >
                                         <VRating
+                                            readonly
                                             :model-value="dataProps.row.stars"
                                             active-color="#4C4E64"
                                         />
@@ -238,9 +239,7 @@ const deleteReview = () => {
                                                     props.bookreviews.meta.from
                                                 }}
                                                 to
-                                                {{
-                                                    props.bookreviews.meta.to
-                                                }}
+                                                {{ props.bookreviews.meta.to }}
                                                 of
                                                 {{
                                                     props.bookreviews.meta.total

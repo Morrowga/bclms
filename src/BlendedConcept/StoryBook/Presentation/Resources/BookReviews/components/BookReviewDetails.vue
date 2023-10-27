@@ -7,12 +7,12 @@ import { defineProps, onUpdated } from "vue";
 //     }
 // });
 
-const props = defineProps(['isDialogVisible','bookreviews'])
-const BookReviewDetails = ref({});
+const props = defineProps(["isDialogVisible", "bookreviews"]);
+const bookReviewDetails = ref({});
 
-onUpdated(()=> {
-    BookReviewDetails.value = props.bookreviews
-})
+onUpdated(() => {
+    bookReviewDetails.value = props.bookreviews;
+});
 </script>
 
 <template>
@@ -25,18 +25,20 @@ onUpdated(()=> {
                     </VCol>
                     <VCol cols="3">
                         <h1 class="tiggie-label">
-                        {{BookReviewDetails?.storybooks?.name}}
+                            {{ bookReviewDetails?.storybooks?.name }}
                         </h1>
-                        <VRating :model-value="BookReviewDetails.stars" active-color="#4C4E64" />
+                        <VRating
+                            readonly
+                            :model-value="bookReviewDetails.stars"
+                            active-color="#4C4E64"
+                        />
                     </VCol>
                 </VRow>
             </VCardTitle>
             <VCardText>
-                <h1 class="tiggie-label">
-                 Feedbacks
-                </h1>
+                <h1 class="tiggie-label">Feedbacks</h1>
                 <p class="tiggie-p">
-                    {{BookReviewDetails.feedback}}
+                    {{ bookReviewDetails.feedback }}
                 </p>
             </VCardText>
 
@@ -46,10 +48,10 @@ onUpdated(()=> {
                         src="/images/profile/profiletwo.png"
                         class="width-high-50"
                     />
-                    <div class="">
+                    <div class="ml-10">
                         <h5>Customer</h5>
                         <div class="tiggie-p">
-                        {{BookReviewDetails.users[0].full_name}}
+                            {{ bookReviewDetails.users[0]?.full_name }}
                         </div>
                     </div>
                 </div>
