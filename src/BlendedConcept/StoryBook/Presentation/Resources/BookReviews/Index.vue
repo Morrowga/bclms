@@ -136,7 +136,7 @@ const deleteReview = () => {
                                         item_value="value"
                                     />
                                     <!-- 👉 Add Announcement button -->
-                                    <VBtn class="tiggie-btn"> Delete </VBtn>
+                                    <!-- <VBtn class="tiggie-btn"> Delete </VBtn> -->
 
                                     <BookReviewDetails
                                         :bookreviews="storybooksDetails"
@@ -214,10 +214,13 @@ const deleteReview = () => {
                                     >
                                         <VBtn
                                             v-if="
-                                                checkPermission('delete_review')
+                                                checkPermission(
+                                                    'delete_bookReview'
+                                                )
                                             "
                                             variant="text"
                                             class="text-secondary"
+                                            style="z-index: 2"
                                             @click="deleteReview"
                                         >
                                             <VIcon
