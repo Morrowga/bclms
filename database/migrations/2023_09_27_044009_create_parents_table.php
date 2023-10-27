@@ -24,6 +24,7 @@ return new class extends Migration
                 ->on('subscriptions')->onDelete('cascade');
             $table->enum("type", ["B2C", "B2B", "BOTH"]);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -24,6 +24,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('subscriptions')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

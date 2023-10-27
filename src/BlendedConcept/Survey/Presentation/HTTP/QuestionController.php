@@ -30,7 +30,6 @@ class QuestionController
             }
 
             return redirect()->route('userexperiencesurvey.edit', $request->survey_id)->with('successMessage', 'Question created Successfully!');
-
         } catch (\Exception $e) {
             // Handle the exception here
             if ($request->type == 'profiling') {
@@ -49,7 +48,7 @@ class QuestionController
      */
     public function update(UpdateQuestionRequest $request, QuestionEloquentModel $question)
     {
-        dd('hakhak');
+        // dd('hakhak');
         // abort_if(authorize('edit', SurveyPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         /**

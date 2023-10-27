@@ -35,6 +35,7 @@ return new class extends Migration
             $table->integer('student_code')->nullable();
             $table->float('total_time_spent')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
