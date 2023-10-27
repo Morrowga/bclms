@@ -168,4 +168,7 @@ let open = ref(false);
         @include mixins.boxed-content(true);
     }
 }
+.layout-page-content {
+    min-height: 100vh !important;
+}
 </style>
