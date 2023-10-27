@@ -74,6 +74,9 @@ class AuthService
                                 return ['errorMessage' => $error, 'isCheck' => false];
                             }
                         }
+                    } elseif (!$login_user->subscription->stripe_status || $login_user->subscription->stripe_status == "INACTIVE") {
+                        $error = 'Subscription is inactive';
+                        return ['errorMessage' => $error, 'isCheck' => false];
                     }
                 }
             }

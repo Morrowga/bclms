@@ -193,7 +193,8 @@ watch(filters, (newValue) => {
                     <div v-if="dataProps.column.field == 'stripe_status'">
                         <div
                             v-if="
-                                dataProps.row.organisation?.status == 'ACTIVE'
+                                dataProps.row.b2b_subscription?.stripe_status ==
+                                'ACTIVE'
                             "
                         >
                             <VChip color="success"> Active </VChip>

@@ -31,9 +31,10 @@ let refForm = ref();
 const isFormValid = ref(false);
 const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
-let flash = computed(() => page?.props?.flash)
+let flash = computed(() => page?.props?.flash);
 //this arrary describe as multiple select for each roles
 const gameTag = ref("");
+const tagError = ref("");
 const form = useForm({
     name: "",
     tag_name: "",
@@ -57,6 +58,9 @@ const saveToH5p = () => {
     saveButton.click();
 };
 let onFormSubmit = () => {
+    if (form.tags.length == 0) {
+        tagError.value = "At least one tag is required";
+    }
     refForm.value?.validate().then(({ valid }) => {
         if (valid && form.tags.length > 0) {
             saveToH5p();
@@ -66,7 +70,7 @@ let onFormSubmit = () => {
                 form.h5p_id = curr_h5p_id;
                 form.post(route("books.store"), {
                     onSuccess: () => {
-                        FlashMessage({ flash })
+                        FlashMessage({ flash });
                         isLoading.value = false;
                     },
                     onError: (error) => {
@@ -85,6 +89,7 @@ let onFormSubmit = () => {
 };
 
 const addToSublearningArray = (e) => {
+    tagError.value = "";
     if (gameTag.value) {
         form.tags.push(gameTag.value);
         gameTag.value = "";
@@ -152,13 +157,12 @@ onMounted(() => {
                 @submit.prevent="onFormSubmit"
             >
                 <VRow>
-                    <VCol cols="12" md="6" class="pb-0">
+                    <VCol cols="12" md="6">
                         <VLabel class="tiggie-label required"
                             >Storybook Name</VLabel
                         >
                         <VTextField
                             type="text"
-                            class="tiggie-resize-input-text"
                             v-model="form.name"
                             placeholder="Text here"
                             :error-messages="form?.errors?.name"
@@ -188,7 +192,7 @@ onMounted(() => {
                         </div>
                         <VTextField
                             v-model="gameTag"
-                            :error-messages="form?.errors?.tags"
+                            :error-messages="tagError"
                             append-inner-icon="mdi-add-circle"
                             @click:append-inner="addToSublearningArray"
                         >
@@ -215,13 +219,12 @@ onMounted(() => {
                             :error-messages="form?.errors?.description"
                         />
                     </VCol>
-                    <VCol cols="12" md="6" class="pb-0">
+                    <VCol cols="12" md="6">
                         <VLabel class="tiggie-label required"
                             >Learning Needs</VLabel
                         >
                         <VSelect
                             type="text"
-                            class="tiggie-resize-input-text"
                             placeholder="Select devices"
                             density="compact"
                             v-model="form.sub_learning_needs"
@@ -234,11 +237,10 @@ onMounted(() => {
                             chips
                         />
                     </VCol>
-                    <VCol cols="12" md="6" class="pb-0">
+                    <VCol cols="12" md="6">
                         <VLabel class="tiggie-label required">Themes</VLabel>
                         <VSelect
                             type="text"
-                            class="tiggie-resize-input-text"
                             placeholder="Select devices"
                             density="compact"
                             v-model="form.themes"
