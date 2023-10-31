@@ -209,7 +209,7 @@ class AuthRepository implements AuthRepositoryInterface
         DB::beginTransaction();
 
         try {
-            $student = StudentEloquentModel::find(2);
+            $student = StudentEloquentModel::where('student_code', $request->student_code)->first();
 
             if ($student) {
                 $parent = $student->parent;
@@ -222,13 +222,9 @@ class AuthRepository implements AuthRepositoryInterface
                 $b2cSubEloquent->parent_id = $parent->parent_id;
                 $b2cSubEloquent->plan_id = $request->plan;
                 $b2cSubEloquent->save();
-
                 $parent->update([
                     'type' => "BOTH"
                 ]);
-                $bcstaff = UserEloquentModel::where('role_id', 3)->first();
-
-                \Mail::to($user->email)->send(new EmailVerify($user->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($user->email), $bcstaff->email, $bcstaff->contact_number));
             }
             DB::commit();
         } catch (\Exception $ex) {

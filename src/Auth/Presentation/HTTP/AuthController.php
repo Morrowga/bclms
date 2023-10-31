@@ -346,6 +346,7 @@ class AuthController extends Controller
     {
         try {
             $this->authInterface->chooseBothPlan($request);
+            return redirect()->route('login')->with('successMessage', 'Subscription Updated Successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('errorMessage', $e->getMessage());
         }
