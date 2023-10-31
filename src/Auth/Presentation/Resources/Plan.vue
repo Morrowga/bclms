@@ -28,10 +28,6 @@ const stripePromise = loadStripe(
 let elements;
 const isDonePayment = ref(false);
 
-const checkExist = ref(null);
-
-const studentCode = ref(null);
-
 const isDialogVisible = ref(false);
 
 const spinner = ref(false);
@@ -133,7 +129,11 @@ async function handleSubmit(e) {
         if(result.paymentIntent.status == 'succeeded'){
             emit("update:isDialogVisible", false);
             isDialogVisible.value = false;
-            choosePaidPlan()
+            if(props.form.student_code != null || props.form.student_code != ''){
+                choosePaidPlan()
+            } else {
+                chooseBothPlan()
+            }
             isDonePayment.value = true;
         }
         // Payment was successful, you can handle success here
@@ -176,11 +176,15 @@ const showPayment = (data) => {
 };
 
 const chooseFreePlan = () => {
-    props.form.post(route("choose-free-plan"), {
-        onSuccess: () => {
-            isDonePayment.value = true
-        },
-    });
+    if(props.form.student_code != null || props.form.student_code != ''){
+        props.form.post(route("choose-free-plan"), {
+            onSuccess: () => {
+                isDonePayment.value = true
+            },
+        });
+    } else {
+        chooseBothPlan()
+    }
 };
 
 const resend = () => {
@@ -204,23 +208,13 @@ const choosePaidPlan = () => {
     });
 };
 
-watch(studentCode, (newVal) => {
-  if (newVal.length === 6) {
-    fetchDataFromServer(newVal);
-  }
-});
-
-async function fetchDataFromServer(value) {
-    try {
-        const response = await axios.get(
-            `/search-student-code?student_code=${value}`
-        );
-
-        checkExist.value = response.data
-    } catch (error) {
-        console.error("Error fetching data:", error);
-    }
-}
+const chooseBothPlan = () => {
+    props.form.post(route("choose-both-plan"), {
+        onSuccess: () => {
+            // router.get(route("login"));
+        },
+    });
+};
 </script>
 
 <template>
@@ -448,21 +442,6 @@ async function fetchDataFromServer(value) {
                     </VBtn>
                 </div>
                 <VCardSutitle class="">
-                    <span class="ppangram-bold color-black"
-                        >Do you have a student code ?</span
-                    >
-                    <VTextField
-                        class="mt-3 custom-label-color"
-                        density="compact"
-                        placeholder="Student / Promotion Code ( optional )"
-                        variant="solo"
-                        v-model="studentCode"
-                    >
-                        <template v-if="studentCode != ''" #append-inner>
-                            <VIcon icon="mdi-check-circle" v-if="checkExist" class="check-circle"></VIcon>
-                            <VIcon icon="mdi-close-circle" v-else class="check-false"></VIcon>
-                        </template>
-                    </VTextField>
                     <div class="mt-10">
                         <VRow>
                             <VCol cols="8" offset-md="2">

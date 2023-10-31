@@ -340,4 +340,13 @@ class AuthController extends Controller
             return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
+
+public function chooseBothPlan(Request $request)
+    {
+        try {
+            $this->authInterface->chooseBothPlan($request->student_code);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('errorMessage', $e->getMessage());
+        }
+    }
 }
