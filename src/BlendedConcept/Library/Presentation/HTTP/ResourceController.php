@@ -46,7 +46,7 @@ class ResourceController extends Controller
             ]);
         } catch (\Exception $e) {
 
-            return redirect()->route('resource.index')->with('errorMessage', $e->getMessage());
+            return redirect()->route('dashboard')->with('errorMessage', $e->getMessage());
         }
     }
 

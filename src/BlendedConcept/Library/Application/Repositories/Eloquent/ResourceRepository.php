@@ -76,6 +76,19 @@ class ResourceRepository implements ResourceRepositoryInterface
 
                 break;
 
+            case 'b2c_parent':
+                $userEloquentModel->getMedia('videos', ['teacher_id' => $userEloquentModel->id]);
+                $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
+                    ->where('teacher_id', $userEloquentModel->id)
+                    ->with(['teacher'])
+                    ->get();
+
+                $mediaItems->each->append('video_url', 'thumb_url');
+
+                return $mediaItems;
+
+                break;
+
             default:
                 break;
         }
@@ -159,7 +172,24 @@ class ResourceRepository implements ResourceRepositoryInterface
                     "left" => $leftStorage
                 ];
                 break;
+            case 'b2c_parent':
+                $parentEloquent = ParentUserEloquentModel::where('user_id', $userEloquentModel->id)->first();
+                $totalStorage = $parentEloquent->subscription == null ? 0 : ($parentEloquent->subscription->b2c_subscription == null ? 0 : ($parentEloquent->subscription->b2c_subscription->plan == null ? 0 : $parentEloquent->subscription->b2c_subscription->plan->storage_limit)); // Retrieve the allocated storage size for the user
 
+                $usedStorageBytes = MediaEloquentModel::where('collection_name', 'videos')
+                    ->where('teacher_id', $userEloquentModel->id)
+                    ->sum('size');
+
+                $usedStorage = $usedStorageBytes / 1024 / 1024;
+
+                $leftStorage = $totalStorage - $usedStorage;
+
+                return [
+                    "total" => (int) $totalStorage,
+                    "used" => (int) $usedStorage,
+                    "left" => $leftStorage
+                ];
+                break;
             default:
                 break;
         }
@@ -217,6 +247,16 @@ class ResourceRepository implements ResourceRepositoryInterface
 
                 case 'b2c':
                     $teacherEloquent = TeacherEloquentModel::where('user_id', $userEloquentModel->id)->first();
+
+                    $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
+                    $media->name = $request->filename;
+                    $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
+                    $media->teacher_id = $userEloquentModel->id;
+                    $media->save();
+
+                    break;
+                case 'b2c_parent':
+                    $parentEloquent = ParentUserEloquentModel::where('user_id', $userEloquentModel->id)->first();
 
                     $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
                     $media->name = $request->filename;
@@ -294,6 +334,21 @@ class ResourceRepository implements ResourceRepositoryInterface
                         $media->save();
                     }
                     break;
+                case 'b2c_parent':
+                    $parentEloquent = ParentUserEloquentModel::where('user_id', $userEloquentModel->id)->first();
+                    if (request()->hasFile('file') && request()->file('file')->isValid()) {
+                        if ($resource) {
+                            $resource->delete();
+                        }
+
+                        $media = $userEloquentModel->addMedia($request->file)->toMediaCollection('videos', 'media_resource');
+                        $media->name = $request->filename;
+                        $media->file_name = $request->filename . '.' . $request->file->getClientOriginalExtension();
+                        $media->organisation_id = $parentEloquent->organisation_id;
+                        $media->teacher_id = $userEloquentModel->id;
+                        $media->save();
+                    }
+                    break;
                 default:
                     break;
             }
@@ -335,6 +390,11 @@ class ResourceRepository implements ResourceRepositoryInterface
         $check_b2c = TeacherEloquentModel::where('user_id', $user->id)->first();
         if ($check_b2c && $check_b2c->organisation_id == null) {
             return "b2c";
+        }
+
+        $check_b2c_parent = ParentUserEloquentModel::where('user_id', $user->id)->first();
+        if ($check_b2c_parent && $check_b2c_parent->organisation_id == null) {
+            return "b2c_parent";
         }
     }
 

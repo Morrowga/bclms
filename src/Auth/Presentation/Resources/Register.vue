@@ -77,8 +77,10 @@ async function fetchDataFromServer(value) {
 
 const goToRegisterForm = (type) => {
     if(type == 'teacher'){
+        form.user_type = 'Teacher'
         didChoose.value = true;
     } else {
+        form.user_type = 'Parent'
         if(checkExist.value == true){
             didChoose.value = true;
             isRegisterFormFilled.value = true;
@@ -321,7 +323,7 @@ const goToRegisterForm = (type) => {
                                     "
                                 />
                             </div>
-                            <div class="d-flex justify-start">
+                            <!-- <div class="d-flex justify-start">
                                 <div class="sign-up-as">
                                     <span>Sign up as </span>
                                 </div>
@@ -339,7 +341,7 @@ const goToRegisterForm = (type) => {
                                     :value="'Parent'"
                                     label="Parent"
                                 ></VRadio>
-                            </div>
+                            </div> -->
                             <div class="my-3 d-flex align-center">
                                 <v-checkbox></v-checkbox>
                                 <VLabel class="required">
