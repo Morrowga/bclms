@@ -22,7 +22,9 @@ class PermissionRoleTableSeeder extends Seeder
             ['name' => 'Teacher', 'guard_name' => 'web'],
             ['name' => 'Organisation Admin', 'guard_name' => 'web'],
             ['name' => 'Student', 'guard_name' => 'web'],
-            ['name' => 'Parent', 'guard_name' => 'web'],
+            ['name' => 'B2B Parent', 'guard_name' => 'web'],
+            ['name' => 'B2C Parent', 'guard_name' => 'web'],
+            ['name' => 'Both Parent', 'guard_name' => 'web'],
         ];
         foreach ($datas as $data) {
             // $role = RoleEloquentModel::create($data);
@@ -132,25 +134,7 @@ class PermissionRoleTableSeeder extends Seeder
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
-            }
-            // elseif ($data['name'] == 'Parent') {
-            //     $role = RoleEloquentModel::create($data);
-            //     $permission = PermissionEloquentModel::whereIn(
-            //         'name',
-            //         [
-            //             'access_plan',
-            //             'access_teacherStorybook',
-            //             'access_resources',
-            //             'access_viewStudents',
-            //             'access_reports',
-            //             'access_exportData',
-            //             'access_techSupport',
-            //             'access_playlists',
-            //         ]
-            //     )->pluck('id');
-            //     $role->permissions()->sync($permission);
-            // } 
-            elseif ($data['name'] == 'BC Staff') {
+            } elseif ($data['name'] == 'BC Staff') {
                 $role = RoleEloquentModel::create($data);
                 $permission = PermissionEloquentModel::whereIn(
                     'name',
@@ -337,7 +321,7 @@ class PermissionRoleTableSeeder extends Seeder
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);
-            } elseif ($data['name'] == 'Parent') {
+            } elseif ($data['name'] == 'B2B Parent') {
                 $role = RoleEloquentModel::create($data);
                 $permission = PermissionEloquentModel::whereIn(
                     'name',
@@ -358,6 +342,84 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_teacherStorybook',
                         'access_teacherBook',
                         'show_teacherBook',
+                    ]
+                )->pluck('id');
+                $role->permissions()->sync($permission);
+            } elseif ($data['name'] == 'B2C Parent') {
+                $role = RoleEloquentModel::create($data);
+                $permission = PermissionEloquentModel::whereIn(
+                    'name',
+                    [
+                        'access_plan',
+                        'access_teacherStorybook',
+                        'access_resources',
+                        'access_viewStudents',
+                        'access_reports',
+                        'access_exportData',
+                        'access_playlist',
+                        'show_playlist',
+                        'create_playlist',
+                        'edit_playlist',
+                        'delete_playlist',
+                        'access_teacherBook',
+                        'create_teacherBook',
+                        'edit_teacherBook',
+                        'show_teacherBook',
+                        'delete_teacherBook',
+                        'access_assignStudent',
+                        'access_createVersion',
+                        'access_teacherStudent',
+                        'show_teacherStudent',
+                        'edit_teacherStudent',
+                        'create_teacherStudent',
+                        'update_teacherStudent',
+                        'delete_teacherStudent',
+                        'access_techSupport',
+                        'access_resources',
+                        'show_resources',
+                        'create_resources',
+                        'edit_resources',
+                        'delete_resources',
+                        'create_techSupport'
+                    ]
+                )->pluck('id');
+                $role->permissions()->sync($permission);
+            } elseif ($data['name'] == 'Both Parent') {
+                $role = RoleEloquentModel::create($data);
+                $permission = PermissionEloquentModel::whereIn(
+                    'name',
+                    [
+                        'access_plan',
+                        'access_teacherStorybook',
+                        'access_resources',
+                        'access_viewStudents',
+                        'access_reports',
+                        'access_exportData',
+                        'access_playlist',
+                        'show_playlist',
+                        'create_playlist',
+                        'edit_playlist',
+                        'delete_playlist',
+                        'access_teacherBook',
+                        'create_teacherBook',
+                        'edit_teacherBook',
+                        'show_teacherBook',
+                        'delete_teacherBook',
+                        'access_assignStudent',
+                        'access_createVersion',
+                        'access_teacherStudent',
+                        'show_teacherStudent',
+                        'edit_teacherStudent',
+                        'create_teacherStudent',
+                        'update_teacherStudent',
+                        'delete_teacherStudent',
+                        'access_techSupport',
+                        'access_resources',
+                        'show_resources',
+                        'create_resources',
+                        'edit_resources',
+                        'delete_resources',
+                        'create_techSupport'
                     ]
                 )->pluck('id');
                 $role->permissions()->sync($permission);

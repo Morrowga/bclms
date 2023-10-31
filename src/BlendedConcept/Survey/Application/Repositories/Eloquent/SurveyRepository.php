@@ -169,8 +169,8 @@ class SurveyRepository implements SurveyRepositoryInterface
     public function delete(int $survey_id): void
     {
         $survey = SurveyEloquentModel::query()->findOrFail($survey_id);
-        if($survey->responses->count() > 0){
-            foreach($survey->responses as $response){
+        if ($survey->responses->count() > 0) {
+            foreach ($survey->responses as $response) {
                 $response->delete();
             }
         }
@@ -331,7 +331,7 @@ class SurveyRepository implements SurveyRepositoryInterface
             case 'Student':
                 return 'STUDENT';
                 break;
-            case 'Parent':
+            case 'B2B Parent':
                 return 'PARENT';
                 break;
             case 'BC Staff' || 'BC Super Admin':

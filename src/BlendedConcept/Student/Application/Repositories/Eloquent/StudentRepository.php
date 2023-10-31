@@ -42,7 +42,7 @@ class StudentRepository implements StudentRepositoryInterface
                         $query->whereHas('teachers', function ($query) {
                             $query->where('user_id', auth()->user()->id);
                         });
-                    } elseif ($auth == 'Parent') {
+                    } elseif ($auth == 'B2B Parent' || $auth == 'B2C Parent' || $auth == 'Both Parent') {
                         $query->whereHas('parent', function ($query) {
                             $query->where('user_id', auth()->user()->id);
                         });
@@ -128,9 +128,22 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function getStudentsByPagination($filters)
     {
-        $organisation_id = auth()->user()->organisation_id;
+        $auth = auth()->user()->role;
+        if ($auth->name == 'B2C Parent' || $auth->name == 'Both Parent') {
+            $user_id = auth()->user()->parents->parent_id;
+            return StudentEloquentModel::filter($filters)->whereHas('parent', function ($query) use ($user_id) {
+                $query->where('parent_id', $user_id);
+            })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+        } elseif ($auth->name == "BC Subscriber") {
+            $user_id = auth()->user()->b2bUser->teacher_id;
+            return StudentEloquentModel::filter($filters)->whereHas('teachers', function ($query) use ($user_id) {
+                $query->where('teacher_id', $user_id);
+            })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+        } else {
+            $organisation_id = auth()->user()->organisation_id;
 
-        return StudentEloquentModel::filter($filters)->where('organisation_id', $organisation_id)->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+            return StudentEloquentModel::filter($filters)->where('organisation_id', $organisation_id)->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+        }
     }
 
     public function showStudent($id)
@@ -175,57 +188,65 @@ class StudentRepository implements StudentRepositoryInterface
     public function storeTeacherStudent(Student $student)
     {
         DB::beginTransaction();
-
+        $auth = auth()->user()->role;
         try {
-            $teacher_id = auth()->user()->b2bUser->teacher_id;
             $create_user_data = [
                 'first_name' => $student->first_name,
                 'last_name' => $student->last_name,
                 'role_id' => 6,
                 'password' => 'password'
             ];
-            $create_parent_data = [
-                'first_name' => $student->parent_first_name,
-                'last_name' => $student->parent_last_name,
-                'contact_number' => $student->contact_number,
-                'email' => $student->email,
-                'role_id' => 7,
-                'password' => 'password'
-            ];
-            $planEloquent = PlanEloquentModel::find(1);
-
-            $subscriptionEloquent = [
-                'start_date' => now(),
-                'end_date' => now(),
-                'payment_date' => now(),
-                'payment_status' => 'PAID',
-                'stripe_status' => 'ACTIVE',
-                'stripe_price' => 0,
-            ];
-            $subscriptionEloquent = SubscriptionEloquentModel::create($subscriptionEloquent);
-
-            $userParentEloquent = UserEloquentModel::create($create_parent_data);
-
-            $parentEloquent = ParentUserEloqeuntModel::create([
-                "user_id" => $userParentEloquent->id,
-                "curr_subscription_id" => $subscriptionEloquent->id,
-                "organisation_id" => null,
-                "type" => "B2C"
-            ]);
-            $b2cSubscriptionEloquent = B2cSubscriptionEloquentModel::create([
-                "parent_id" => $parentEloquent->parent_id,
-                "subscription_id" => $subscriptionEloquent->id,
-                "plan_id" => 1
-            ]);
             $userEloquent = UserEloquentModel::create($create_user_data);
 
+            if ($auth->name != 'B2C Parent') {
+                $teacher_id = auth()->user()->b2bUser->teacher_id;
+                $create_parent_data = [
+                    'first_name' => $student->parent_first_name,
+                    'last_name' => $student->parent_last_name,
+                    'contact_number' => $student->contact_number,
+                    'email' => $student->email,
+                    'role_id' => 7,
+                    'password' => 'password'
+                ];
+                $planEloquent = PlanEloquentModel::find(1);
+
+                $subscriptionEloquent = [
+                    'start_date' => now(),
+                    'end_date' => now(),
+                    'payment_date' => now(),
+                    'payment_status' => 'PAID',
+                    'stripe_status' => 'ACTIVE',
+                    'stripe_price' => 0,
+                ];
+                $subscriptionEloquent = SubscriptionEloquentModel::create($subscriptionEloquent);
+
+                $userParentEloquent = UserEloquentModel::create($create_parent_data);
+
+                $parentEloquent = ParentUserEloqeuntModel::create([
+                    "user_id" => $userParentEloquent->id,
+                    "curr_subscription_id" => $subscriptionEloquent->id,
+                    "organisation_id" => null,
+                    "type" => "B2B"
+                ]);
+                $b2cSubscriptionEloquent = B2cSubscriptionEloquentModel::create([
+                    "parent_id" => $parentEloquent->parent_id,
+                    "subscription_id" => $subscriptionEloquent->id,
+                    "plan_id" => 1
+                ]);
+                $parent_id = $parentEloquent->parent_id;
+            } else {
+                $parent_id = auth()->user()->parents->parent_id;
+            }
             $createStudentEloqoent = StudentMapper::toEloquent($student);
             $createStudentEloqoent->user_id = $userEloquent->id;
-            $createStudentEloqoent->parent_id = $parentEloquent->parent_id;
+            $createStudentEloqoent->parent_id = $parent_id;
             $createStudentEloqoent->num_gold_coins = 0;
             $createStudentEloqoent->num_silver_coins = 0;
             $createStudentEloqoent->save();
-            $createStudentEloqoent->teachers()->sync([$teacher_id]);
+
+            if ($auth->name != 'B2C Parent') {
+                $createStudentEloqoent->teachers()->sync([$teacher_id]);
+            }
 
             $createStudentEloqoent->disability_types()->sync($student->disability_types);
             $createStudentEloqoent->learningneeds()->sync($student->learning_needs);

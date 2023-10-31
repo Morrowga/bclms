@@ -25,6 +25,7 @@ class PlaylistEloquentModel extends Model implements HasMedia
         'user_id',
         'student_id',
         'teacher_id',
+        'parent_id',
         'playlist_photo',
     ];
 
@@ -36,7 +37,7 @@ class PlaylistEloquentModel extends Model implements HasMedia
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('name', 'like', '%'.$search.'%');
+            $query->where('name', 'like', '%' . $search . '%');
         });
     }
 

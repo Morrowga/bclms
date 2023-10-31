@@ -10,6 +10,7 @@ class PlaylistData
         public readonly ?int $id,
         public readonly ?int $student_id,
         public readonly ?int $teacher_id,
+        public readonly ?int $parent_id,
         public readonly ?string $name,
     ) {
     }
@@ -21,7 +22,9 @@ class PlaylistData
             id: $playlist_id,
             student_id: $request->student_id,
             teacher_id: $request->teacher_id,
+            parent_id: $request->parent_id,
             name: $request->name,
+
         );
     }
 
@@ -31,6 +34,7 @@ class PlaylistData
             'id' => $this->id,
             'student_id' => $this->student_id,
             'teacher_id' => $this->teacher_id,
+            'teacher_id' => $this->parent_id,
             'name' => $this->name,
         ];
     }

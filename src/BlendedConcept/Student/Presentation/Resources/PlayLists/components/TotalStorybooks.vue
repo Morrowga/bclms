@@ -53,38 +53,52 @@ const selectionChanged = (data) => {
             <VDivider />
             <VCol cols="12">
                 <VRow>
-                    <VCol cols="3" v-for="item in datas" :key="item" class="pa-1">
-                            <VCard>
-                                <VImg
-                                    :src="item.thumbnail_img == '' || item.thumbnail_img == null  ? '/images/2.jpg' : item.thumbnail_img"
-                                    height="282px"
-                                    cover
+                    <VCol
+                        cols="3"
+                        v-for="item in datas"
+                        :key="item"
+                        class="pa-1"
+                    >
+                        <VCard>
+                            <VImg
+                                :src="
+                                    item.thumbnail_img == '' ||
+                                    item.thumbnail_img == null
+                                        ? '/images/2.jpg'
+                                        : item.thumbnail_img
+                                "
+                                height="282px"
+                                cover
+                            />
+                            <div class="select-box">
+                                <VCheckbox
+                                    color="secondary"
+                                    class="checkbox-position"
+                                    v-model="props.form.storybooks"
+                                    :value="item.id"
                                 />
-                                <div class="select-box">
-                                    <VCheckbox
-                                        color="secondary"
-                                        class="checkbox-position"
-                                        v-model="props.form.storybooks"
-                                        :value="item.id"
-                                    />
+                            </div>
+                            <VCardItem>
+                                <VCardTitle
+                                    class="text-center tiggie-teacher-p tiggie-black-color fw-700"
+                                >
+                                    {{ item.name }}
+                                </VCardTitle>
+                                <ChipWithBlueDot
+                                    v-for="item in item.disability_types"
+                                    :key="item.id"
+                                    :title="item.name"
+                                />
+                            </VCardItem>
+                            <VCardActions>
+                                <div class="d-flex gap-1">
+                                    <GreenChip title="Switch" />
+                                    <GreenChip title="Eye-Gaze" />
+                                    <GreenChip title="Touch" />
                                 </div>
-                                <VCardItem>
-                                    <VCardTitle
-                                        class="text-center tiggie-teacher-p tiggie-black-color fw-700"
-                                        >
-                                        {{ item.name }}
-                                    </VCardTitle>
-                                    <ChipWithBlueDot v-for="item in item.disability_types" :key="item.id" :title="item.name" />
-                                </VCardItem>
-                                <VCardActions>
-                                    <div class="d-flex gap-1">
-                                        <GreenChip title="Switch" />
-                                        <GreenChip title="Eye-Gaze" />
-                                        <GreenChip title="Touch" />
-                                    </div>
-                                </VCardActions>
-                            </VCard>
-                        </VCol>
+                            </VCardActions>
+                        </VCard>
+                    </VCol>
                 </VRow>
                 <VRow justify="center" align="center">
                     <VPagination

@@ -10,6 +10,8 @@ use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2bSubscriptionEloq
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class SubscriptionRepository implements SubscriptionRepositoryInterface
 {
@@ -72,6 +74,21 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
             $b2bSubscriptionEloquent->subscription_id = $subscriptionEloquent->id;
             $b2bSubscriptionEloquent->plan_id = $subscriptionData->plan_id;
             $b2bSubscriptionEloquent->teacher_id = $subscriptionData->teacher_id;
+            // if ($subscriptionData->parent_id) {
+            //     $parent = ParentUserEloqeuntModel::where('parent_id', $subscriptionData->parent_id)->first();
+            //     if ($parent && $parent->type == 'B2B' && $subscriptionData->plan_id > 1) {
+            //         $parent->update(['type' => 'BOTH']);
+            //         $user = UserEloquentModel::whereHas('parents', function ($query) use ($subscriptionData) {
+            //             $query->where('parent_id', $subscriptionData->parent_id);
+            //         })->first();
+            //         $user->update([
+            //             'role_id' => 9
+            //         ]);
+            //         $b2bSubscriptionEloquent->parent_id = $subscriptionData->parent_id;
+            //     } elseif ($parent && $parent->type == 'B2C') {
+
+            //     }
+            // }
             $b2bSubscriptionEloquent->parent_id = $subscriptionData->parent_id;
             $b2bSubscriptionEloquent->save();
         } catch (\Exception $error) {

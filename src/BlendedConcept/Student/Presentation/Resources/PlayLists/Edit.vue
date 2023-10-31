@@ -7,9 +7,11 @@ import SelectStudent from "./components/SelectStudent.vue";
 import SelectStorybook from "./components/SelectStorybook.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
+import { requiredValidator } from "@validators";
 
 let props = defineProps(["playlist"]);
-
+const isFormValid = ref(false);
+let refForm = ref();
 const playlist = ref(props.playlist.data.playlist_photo);
 const storybookids = ref([]);
 
@@ -21,18 +23,23 @@ const form = useForm({
     image: null,
     student_id: props.playlist.data.student.student_id,
     teacher_id: props.playlist.data.teacher_id,
+    parent_id: props.playlist.data.parent_id,
     storybooks: storybookids.value.length > 0 ? storybookids.value : [],
     _method: "PUT",
 });
-let flash = computed(() => usePage().props.flash)
+let flash = computed(() => usePage().props.flash);
 const updatePlaylist = () => {
-    form.post(route("playlists.update", props.playlist.data.id), {
-        onSuccess: () => {
-            FlashMessage({ flash })
-        },
-        onError: (error) => {
-            form.setError("name", error?.name);
-        },
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("playlists.update", props.playlist.data.id), {
+                onSuccess: () => {
+                    FlashMessage({ flash });
+                },
+                onError: (error) => {
+                    form.setError("name", error?.name);
+                },
+            });
+        }
     });
 };
 // onMounted(() => {});
@@ -42,6 +49,8 @@ const updatePlaylist = () => {
     <AdminLayout>
         <VContainer>
             <VForm
+                ref="refForm"
+                v-model="isFormValid"
                 @submit.prevent="updatePlaylist"
                 @keydown.enter="$event.preventDefault()"
             >

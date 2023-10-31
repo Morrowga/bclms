@@ -16,19 +16,43 @@ class PlaylistRepository implements PlaylistRepositoryInterface
     public function getPlaylist($filters = [])
     {
         $auth = auth()->user()->role->name;
-        if ($auth == 'Parent') {
+        if ($auth == 'B2B Parent') {
             $parent = auth()->user()->parents;
             $student = StudentEloquentModel::where('parent_id', $parent->parent_id)->first();
             $user_id = $student->teachers()->pluck('teachers.teacher_id');
+            $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
+                ->with(['storybooks', 'student.user'])
+                ->whereIn('teacher_id', $user_id)
+                ->orderBy('id', 'desc')
+                ->paginate($filters['perPage'] ?? 10));
+        } elseif ($auth == 'B2C Parent') {
+            $parent = auth()->user()->parents;
+            $user_id = $parent->parent_id;
+            $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
+                ->with(['storybooks', 'student.user'])
+                ->where('parent_id', $user_id)
+                ->orderBy('id', 'desc')
+                ->paginate($filters['perPage'] ?? 10));
+        } elseif ($auth == 'Both Parent') {
+            $parent = auth()->user()->parents;
+            $user_id = $parent->parent_id;
+            $student = StudentEloquentModel::with('teachers')->where('parent_id', $parent->parent_id)->first();
+            $teacher_id = $student->teachers[0]->teacher_id;
+            $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
+                ->with(['storybooks', 'student.user'])
+                ->where('parent_id', $user_id)
+                ->orWhere('teacher_id', $teacher_id)
+                ->orderBy('id', 'desc')
+                ->paginate($filters['perPage'] ?? 10));
         } else {
             $user_id = [auth()->user()->b2bUser->teacher_id];
+            $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
+                ->with(['storybooks', 'student.user'])
+                ->whereIn('teacher_id', $user_id)
+                ->orderBy('id', 'desc')
+                ->paginate($filters['perPage'] ?? 10));
         }
 
-        $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
-            ->with(['storybooks', 'student.user'])
-            ->whereIn('teacher_id', $user_id)
-            ->orderBy('id', 'desc')
-            ->paginate($filters['perPage'] ?? 10));
 
         return $playlists;
     }

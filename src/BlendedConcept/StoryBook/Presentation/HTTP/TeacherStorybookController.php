@@ -33,17 +33,36 @@ class TeacherStorybookController
     {
         abort_if(authorize('show', TeacherBookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $auth = auth()->user()->role->name;
-        if ($auth == 'Parent') {
+        if ($auth == 'B2B Parent') {
             $parent = auth()->user()->parents;
             $student = StudentEloquentModel::where('parent_id', $parent->parent_id)->first();
             $user_id = $student->teachers()->pluck('teachers.teacher_id');
+            $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
+                $query->where('teacher_id', $user_id);
+            }]);
+        } elseif ($auth == 'B2C Parent') {
+            $parent = auth()->user()->parents;
+
+            $user_id = $parent->parent_id;
+            $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
+                $query->where('parent_id', $user_id);
+            }]);
+        } elseif ($auth == 'Both Parent') {
+            $parent = auth()->user()->parents;
+            $user_id = $parent->parent_id;
+            $student = StudentEloquentModel::with('teachers')->where('parent_id', $parent->parent_id)->first();
+            $teacher_id = $student->teachers[0]->teacher_id;
+            $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id, $teacher_id) {
+                $query->where('parent_id', $user_id)->orWhere('teacher_id', $teacher_id);
+            }]);
         } else {
             $user_id = [auth()->user()->b2bUser->teacher_id];
+            $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
+                $query->where('teacher_id', $user_id);
+            }]);
         }
         $filters = request(['search', 'filter', 'perPage', 'page']);
-        $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
-            $query->where('teacher_id', $user_id);
-        }]);
+
         $games = (new GetGameList($filters))->handle();
 
         $storybooks = (new GetStoryBook($filters = []))->handle();

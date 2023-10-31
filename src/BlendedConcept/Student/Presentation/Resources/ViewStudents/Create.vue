@@ -13,7 +13,9 @@ import {
     integerValidator,
 } from "@validators";
 const props = defineProps(["learningNeeds", "disabilityTypes"]);
-let flash = computed(() => usePage().props.flash)
+let flash = computed(() => usePage().props.flash);
+let user_role = computed(() => usePage().props.user_info.user_role.name);
+
 console.log(props.disabilityTypes);
 const form = useForm({
     first_name: "",
@@ -39,8 +41,8 @@ const createStudent = () => {
         if (valid) {
             form.post(route("teacher_students.store"), {
                 onSuccess: () => {
-                    console.log(flash.errorMessage + ' test')
-                    FlashMessage({ flash })
+                    console.log(flash.errorMessage + " test");
+                    FlashMessage({ flash });
                 },
                 onError: (error) => {
                     console.log(error);
@@ -134,7 +136,13 @@ const createStudent = () => {
                                     "
                                 />
                             </v-col>
-                            <v-col cols="12">
+                            <v-col
+                                cols="12"
+                                v-if="
+                                    user_role == 'BC Subscriber' ||
+                                    user_role == 'Teacher'
+                                "
+                            >
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's First Name
                                 </p>
@@ -148,7 +156,13 @@ const createStudent = () => {
                                     "
                                 />
                             </v-col>
-                            <v-col cols="12">
+                            <v-col
+                                cols="12"
+                                v-if="
+                                    user_role == 'BC Subscriber' ||
+                                    user_role == 'Teacher'
+                                "
+                            >
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's Last Name
                                 </p>
@@ -162,7 +176,13 @@ const createStudent = () => {
                                     "
                                 />
                             </v-col>
-                            <v-col cols="12">
+                            <v-col
+                                cols="12"
+                                v-if="
+                                    user_role == 'BC Subscriber' ||
+                                    user_role == 'Teacher'
+                                "
+                            >
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's Contact Number
                                 </p>
@@ -180,7 +200,13 @@ const createStudent = () => {
                                     "
                                 />
                             </v-col>
-                            <v-col cols="12">
+                            <v-col
+                                cols="12"
+                                v-if="
+                                    user_role == 'BC Subscriber' ||
+                                    user_role == 'Teacher'
+                                "
+                            >
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's Email Address
                                 </p>
