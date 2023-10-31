@@ -130,7 +130,7 @@ class StoryBookEloquentModel extends Model implements HasMedia
 
     public function book_versions()
     {
-        return $this->hasMany(StoryBookVersionEloquentModel::class, 'storybook_id')->with('teacher', 'result');
+        return $this->hasMany(StoryBookVersionEloquentModel::class, 'storybook_id')->with('teacher', 'result', 'parent');
     }
 
     public function playlists()

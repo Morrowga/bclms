@@ -10,13 +10,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Devleaptech\LaravelH5p\Eloquents\H5pResult;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
 
 class StoryBookVersionEloquentModel extends Model
 {
     use HasFactory;
 
     protected $table = 'storybook_versions';
-
+    protected $appends = [
+        'owner'
+    ];
     protected $fillable = [
         'id',
         'storybook_id',
@@ -26,7 +29,10 @@ class StoryBookVersionEloquentModel extends Model
         'description',
         'h5p_id'
     ];
-
+    public function getOwnerAttribute()
+    {
+        return ($this->teacher ?? $this->parent) ?? null;
+    }
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['name'] ?? false, function ($query, $name) {
@@ -53,5 +59,9 @@ class StoryBookVersionEloquentModel extends Model
     public function result()
     {
         return $this->hasOne(H5pResult::class, 'content_id', 'h5p_id');
+    }
+    public function parent()
+    {
+        return $this->belongsTo(ParentUserEloqeuntModel::class, 'parent_id')->with('user');
     }
 }

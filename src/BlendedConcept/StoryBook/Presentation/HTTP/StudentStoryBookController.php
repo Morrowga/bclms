@@ -22,7 +22,7 @@ class StudentStoryBookController extends Controller
             $books = (new GetStudentStorybooks($filters))->handle();
             $playlists = (new GetStudentPlaylists($filters))->handle();
             $pathways = (new GetPathwaysQuery($filters))->handle();
-
+            // dd($books);
             // Get the filters from the request, or initialize an empty array if they are not present
             return Inertia::render(config('route.storybooks'), [
                 'books' => $books,

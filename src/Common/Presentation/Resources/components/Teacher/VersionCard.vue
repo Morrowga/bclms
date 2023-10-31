@@ -151,14 +151,14 @@ onMounted(() => {
                                         <v-img
                                             :src="
                                                 userImage(
-                                                    book_version.teacher.user
+                                                    book_version.owner.user
                                                 )
                                             "
                                             alt=""
                                         />
                                     </v-avatar>
                                     <span class="version-profile-text ml-2">{{
-                                        book_version.teacher.user.full_name
+                                        book_version.owner.user.full_name
                                     }}</span>
                                 </div>
                             </VCard>
