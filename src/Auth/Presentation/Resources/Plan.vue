@@ -130,9 +130,9 @@ async function handleSubmit(e) {
             emit("update:isDialogVisible", false);
             isDialogVisible.value = false;
             if(props.form.student_code != null || props.form.student_code != ''){
-                choosePaidPlan()
-            } else {
                 chooseBothPlan()
+            } else {
+                choosePaidPlan()
             }
             isDonePayment.value = true;
         }
@@ -177,13 +177,13 @@ const showPayment = (data) => {
 
 const chooseFreePlan = () => {
     if(props.form.student_code != null || props.form.student_code != ''){
+        chooseBothPlan()
+    } else {
         props.form.post(route("choose-free-plan"), {
             onSuccess: () => {
                 isDonePayment.value = true
             },
         });
-    } else {
-        chooseBothPlan()
     }
 };
 
