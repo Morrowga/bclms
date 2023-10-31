@@ -20,4 +20,6 @@ interface AuthRepositoryInterface
     public function verificationEmail($email);
 
     public function searchStudentCode($studentCode);
+
+    public function chooseBothPlan($studentCode);
 }

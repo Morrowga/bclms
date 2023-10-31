@@ -191,9 +191,20 @@ class AuthRepository implements AuthRepositoryInterface
         $student = StudentEloquentModel::where('student_code', $studentCode)->first();
 
         if(!empty($student)){
-            return true;
+            return [
+                "parent" => $student->parent,
+                "exist" => true
+            ];
         } else {
-            return false;
+            return [
+                "parent" => null,
+                "exist" => false
+            ];
         }
     }
+
+    public function chooseBothPlan($studentCode){
+        //write both plan
+    }
+
 }
