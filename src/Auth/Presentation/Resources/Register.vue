@@ -18,7 +18,7 @@ let isAlertVisible = ref(true);
 const selectedUserType = ref("Teacher");
 
 const isFormValid = ref(false);
-const isRegisterFormFilled = ref(false);
+const isRegisterFormFilled = ref(true);
 let refForm = ref();
 const isPasswordVisible = ref(false);
 let agreed = ref("");

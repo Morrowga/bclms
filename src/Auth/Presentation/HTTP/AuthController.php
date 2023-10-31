@@ -75,32 +75,42 @@ class AuthController extends Controller
         }
     }
 
+    public function searchStudentCode(Request $request)
+    {
+        try {
+           $exist = $this->authInterface->searchStudentCode($request->query('student_code'));
+            return response()->json($exist);
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
+
     public function stripePaymentInialize(Request $request)
     {
-        // try {
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        try {
+            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
 
-        $jsonObj = json_decode($request->body, true);
+            $jsonObj = json_decode($request->body, true);
 
-        // Create a PaymentIntent with amount and currency
-        $paymentIntent = $stripe->paymentIntents->create([
-            'amount' => 1400,
-            'currency' => 'sgd',
-            // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-            'automatic_payment_methods' => [
-                'enabled' => true,
-            ],
-        ]);
+            // Create a PaymentIntent with amount and currency
+            $paymentIntent = $stripe->paymentIntents->create([
+                'amount' => 1400,
+                'currency' => 'sgd',
+                // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+                'automatic_payment_methods' => [
+                    'enabled' => true,
+                ],
+            ]);
 
-        $output = [
-            'clientSecret' => $paymentIntent->client_secret,
-        ];
+            $output = [
+                'clientSecret' => $paymentIntent->client_secret,
+            ];
 
-        return json_encode($output);
-        // } catch (Error $e) {
-        //     http_response_code(500);
-        //     echo json_encode(['error' => $e->getMessage()]);
-        // }
+            return json_encode($output);
+        } catch (Error $e) {
+            http_response_code(500);
+            echo json_encode(['error' => $e->getMessage()]);
+        }
     }
 
     /**

@@ -28,6 +28,10 @@ const stripePromise = loadStripe(
 let elements;
 const isDonePayment = ref(false);
 
+const checkExist = ref(null);
+
+const studentCode = ref(null);
+
 const isDialogVisible = ref(false);
 
 const spinner = ref(false);
@@ -199,6 +203,24 @@ const choosePaidPlan = () => {
         },
     });
 };
+
+watch(studentCode, (newVal) => {
+  if (newVal.length === 6) {
+    fetchDataFromServer(newVal);
+  }
+});
+
+async function fetchDataFromServer(value) {
+    try {
+        const response = await axios.get(
+            `/search-student-code?student_code=${value}`
+        );
+
+        checkExist.value = response.data
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
 </script>
 
 <template>
@@ -434,7 +456,13 @@ const choosePaidPlan = () => {
                         density="compact"
                         placeholder="Student / Promotion Code ( optional )"
                         variant="solo"
-                    />
+                        v-model="studentCode"
+                    >
+                        <template v-if="studentCode != ''" #append-inner>
+                            <VIcon icon="mdi-check-circle" v-if="checkExist" class="check-circle"></VIcon>
+                            <VIcon icon="mdi-close-circle" v-else class="check-false"></VIcon>
+                        </template>
+                    </VTextField>
                     <div class="mt-10">
                         <VRow>
                             <VCol cols="8" offset-md="2">
@@ -665,6 +693,18 @@ tr:nth-child(even) {
     padding: 8px 16px 8px 20px !important;
     background: #fff !important;
 }
+:deep(.custom-label-color .v-field__append-inner) {
+    margin-top: 5px !important;
+}
+
+.check-circle{
+    color: green;
+}
+
+.check-false{
+    color: red;
+}
+
 .abs-top {
     position: absolute;
     right: 10px;

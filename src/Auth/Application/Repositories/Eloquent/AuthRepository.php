@@ -11,6 +11,7 @@ use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentEloquentModel;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloquentModel;
@@ -184,5 +185,15 @@ class AuthRepository implements AuthRepositoryInterface
         $userEloquent->update(['email_verification_send_on' => Carbon::now()]);
         $userEloquent->status = 'ACTIVE';
         $userEloquent->save();
+    }
+
+    public function searchStudentCode($studentCode){
+        $student = StudentEloquentModel::where('student_code', $studentCode)->first();
+
+        if(!empty($student)){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
