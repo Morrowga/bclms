@@ -29,9 +29,15 @@ class StoryBookVersionRepository implements StoryBookVersionRepositoryInterface
 
         DB::beginTransaction();
         try {
-            $teacher_id = auth()->user()->b2bUser->teacher_id;
+            $auth = auth()->user()->role;
             $storyBookVersionEloquent = StoryBookVersionMapper::toEloquent($storyBookVersion);
-            $storyBookVersionEloquent->teacher_id = $teacher_id;
+            if ($auth->name == 'B2C Parent' || $auth->name == 'Both Parent') {
+                $user_id = auth()->user()->parents->parent_id;
+                $storyBookVersionEloquent->parent_id = $user_id;
+            } else {
+                $user_id = auth()->user()->b2bUser->teacher_id;
+                $storyBookVersionEloquent->teacher_id = $user_id;
+            }
             $storyBookVersionEloquent->save();
             DB::commit();
         } catch (\Exception $error) {

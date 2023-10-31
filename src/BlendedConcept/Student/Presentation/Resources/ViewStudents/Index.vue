@@ -2,6 +2,8 @@
 import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+import { checkPermission } from "@actions/useCheckPermission";
+
 import { usePage } from "@inertiajs/vue3";
 let props = defineProps(["students"]);
 let page = usePage();
@@ -38,7 +40,7 @@ watch(filters, (newValue) => {
 
                 <Link
                     :href="route('teacher_students.create')"
-                    v-if="user_role == 'BC Subscriber'"
+                    v-if="checkPermission('create_teacherStudent')"
                 >
                     <v-btn
                         variant="flat"

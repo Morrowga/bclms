@@ -67,7 +67,7 @@ class AuthRepository implements AuthRepositoryInterface
             $userEloquent->email = $request->email;
             $userEloquent->password = $request->password;
             $userEloquent->status = "PENDING";
-            $userEloquent->role_id = $user_type == 'Teacher' ? 2 : 7;
+            $userEloquent->role_id = $user_type == 'Teacher' ? 2 : 8;
             $userEloquent->save();
 
             $subscriptionEloquent = (new SubscriptionEloquentModel());
@@ -123,7 +123,7 @@ class AuthRepository implements AuthRepositoryInterface
             $userEloquent->email = $request->email;
             $userEloquent->password = $request->password;
             $userEloquent->status = "PENDING";
-            $userEloquent->role_id = $user_type == 'Teacher' ? 2 : 7;
+            $userEloquent->role_id = $user_type == 'Teacher' ? 2 : 8;
             $userEloquent->save();
 
             $plan = PlanEloquentModel::find($request->plan);

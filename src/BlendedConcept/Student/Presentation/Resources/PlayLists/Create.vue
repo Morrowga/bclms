@@ -7,24 +7,32 @@ import SelectStudent from "./components/SelectStudent.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import SelectStorybook from "./components/SelectStorybook.vue";
 import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
+import { requiredValidator } from "@validators";
+
 const form = useForm({
     name: "",
     image: null,
     student_id: "",
     storybooks: [],
 });
-let flash = computed(() => usePage().props.flash)
+let flash = computed(() => usePage().props.flash);
 const playlist = ref(null);
+const isFormValid = ref(false);
+let refForm = ref();
 
 const createPlaylist = () => {
-    form.post(route("playlists.store"), {
-        onSuccess: () => {
-            console.log(flash.errorMessage+ ' test error')
-            FlashMessage({ flash })
-        },
-        onError: (error) => {
-            form.setError("name", error?.name);
-        },
+    refForm.value?.validate().then(({ valid }) => {
+        if (valid) {
+            form.post(route("playlists.store"), {
+                onSuccess: () => {
+                    console.log(flash.errorMessage + " test error");
+                    FlashMessage({ flash });
+                },
+                onError: (error) => {
+                    form.setError("name", error?.name);
+                },
+            });
+        }
     });
     // SuccessDialog({
     //     title: "You have successfully create a playlist!",
@@ -37,6 +45,8 @@ const createPlaylist = () => {
     <AdminLayout>
         <VContainer>
             <VForm
+                ref="refForm"
+                v-model="isFormValid"
                 @submit.prevent="createPlaylist"
                 @keydown.enter="$event.preventDefault()"
             >

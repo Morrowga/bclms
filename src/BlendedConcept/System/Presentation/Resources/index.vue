@@ -26,7 +26,7 @@ let props = defineProps([
     "org_teacher_classrooms",
     "recent_games",
     "recent_books",
-    "homeNotifications"
+    "homeNotifications",
 ]);
 
 const isAlertVisible = ref(true);
@@ -55,7 +55,7 @@ const getNotifications = () => {
 };
 
 const removeNotification = (notificationId) => {
-    console.log('asda');
+    console.log("asda");
     form.post(route("markAsRead", { id: notificationId }), {
         onSuccess: () => {
             notifications.value = notifications.value.filter(
@@ -96,7 +96,9 @@ onMounted(() => {
                 >Welcome, {{ user_detail }}</span
             >
             <br /><br />
-            <SystemAlert v-for="homeNotification in homeNotifications" :key="homeNotification.id"
+            <SystemAlert
+                v-for="homeNotification in homeNotifications"
+                :key="homeNotification.id"
                 class="pb-4"
                 @submit="removeNotification"
                 :id="homeNotification.id"
@@ -122,12 +124,15 @@ onMounted(() => {
         <div
             v-else-if="
                 current_user_role == 'BC Subscriber' ||
-                current_user_role == 'Parent'
+                current_user_role == 'B2B Parent' ||
+                current_user_role == 'B2C Parent' ||
+                current_user_role == 'Both Parent'
             "
         >
             <TeacherOrParentDashboard
-            :user_survey="props.user_survey"
-            :students="students">
+                :user_survey="props.user_survey"
+                :students="students"
+            >
             </TeacherOrParentDashboard>
         </div>
         <div v-else-if="current_user_role == 'Organisation Admin'">

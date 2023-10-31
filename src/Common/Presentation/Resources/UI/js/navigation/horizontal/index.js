@@ -116,7 +116,7 @@ export default [
         route_name: 'subscribers',
         access_module: "access_subscriber",
         children: [
-            { title: 'Subscriptions', url: '/subscribptioninvoice', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'subscription_invoice', access_module: "access_subscription", },
+            { title: 'Subscriptions', url: '/subscribptioninvoice', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'subscription_invoice', access_module: "access_subscription", forStaff:false},
             { title: 'Plans', url: '/plans', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'plans', access_module: "access_plan", },
         ]
     },
@@ -131,7 +131,7 @@ export default [
             { title: 'Roles', url: '/roles', icon: { icon: 'mdi-alpha-r-circle' }, route_name: 'roles', access_module: "access_role" },
             { title: 'Permissions', url: '/permissions', icon: { icon: 'mdi-shield' }, route_name: 'permissions', access_module: "access_permission", },
             { title: 'Organisations', url: '/staff_organisations', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'staff_organisations', access_module: "access_bcstaffOrganisation", },
-            { title: 'Subscriptions', url: '/subscribptioninvoice', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'subscribptioninvoice', access_module: "access_bcstaffSubscription", },
+            { title: 'Subscriptions', url: '/subscribptioninvoice', icon: { icon: 'mdi-account-group-outline ' }, route_name: 'subscription_invoice', access_module: "access_bcstaffSubscription", forStaff:true},
         ],
     },
 

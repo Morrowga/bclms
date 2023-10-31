@@ -50,7 +50,13 @@ const resolveHeaderComponent = () => {
         case "BC Subscriber":
             showMenubar.value = false;
             return BCTeacherHeader;
-        case "Parent":
+        case "B2B Parent":
+            showMenubar.value = false;
+            return ParentHeader;
+        case "B2C Parent":
+            showMenubar.value = false;
+            return ParentHeader;
+        case "Both Parent":
             showMenubar.value = false;
             return ParentHeader;
         case "Teacher":

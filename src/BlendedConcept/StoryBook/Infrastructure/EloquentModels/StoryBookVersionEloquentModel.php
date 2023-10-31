@@ -21,6 +21,7 @@ class StoryBookVersionEloquentModel extends Model
         'id',
         'storybook_id',
         'teacher_id',
+        'parent_id',
         'name',
         'description',
         'h5p_id'
