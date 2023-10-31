@@ -21,5 +21,5 @@ interface AuthRepositoryInterface
 
     public function searchStudentCode($studentCode);
 
-    public function chooseBothPlan($studentCode);
+    public function chooseBothPlan($request);
 }
