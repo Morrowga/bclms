@@ -187,10 +187,11 @@ class AuthRepository implements AuthRepositoryInterface
         $userEloquent->save();
     }
 
-    public function searchStudentCode($studentCode){
+    public function searchStudentCode($studentCode)
+    {
         $student = StudentEloquentModel::where('student_code', $studentCode)->first();
 
-        if(!empty($student)){
+        if (!empty($student)) {
             return [
                 "parent" => $student->parent,
                 "exist" => true
@@ -203,8 +204,11 @@ class AuthRepository implements AuthRepositoryInterface
         }
     }
 
-    public function chooseBothPlan($studentCode){
-        //write both plan
+    public function chooseBothPlan($studentCode)
+    {
+        $student = StudentEloquentModel::where('student_code', $studentCode)->first();
+        if ($student) {
+            $parent = $student->parent;
+        }
     }
-
 }

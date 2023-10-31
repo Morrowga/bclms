@@ -78,10 +78,10 @@ class StudentRepository implements StudentRepositoryInterface
 
         try {
 
-            $createStudentEloqoent = StudentMapper::toEloquent($student);
-            $createStudentEloqoent->save();
+            $createStudentEloquent = StudentMapper::toEloquent($student);
+            $createStudentEloquent->save();
             if (request()->hasFile('image') && request()->file('image')->isValid()) {
-                $createStudentEloqoent->addMediaFromRequest('image')->toMediaCollection('image', 'media_students');
+                $createStudentEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_students');
             }
         } catch (\Exception $error) {
             DB::rollBack();
@@ -237,30 +237,31 @@ class StudentRepository implements StudentRepositoryInterface
             } else {
                 $parent_id = auth()->user()->parents->parent_id;
             }
-            $createStudentEloqoent = StudentMapper::toEloquent($student);
-            $createStudentEloqoent->user_id = $userEloquent->id;
-            $createStudentEloqoent->parent_id = $parent_id;
-            $createStudentEloqoent->num_gold_coins = 0;
-            $createStudentEloqoent->num_silver_coins = 0;
-            $createStudentEloqoent->save();
+            $createStudentEloquent = StudentMapper::toEloquent($student);
+            $createStudentEloquent->user_id = $userEloquent->id;
+            $createStudentEloquent->student_code = generateUniqueCode();
+            $createStudentEloquent->parent_id = $parent_id;
+            $createStudentEloquent->num_gold_coins = 0;
+            $createStudentEloquent->num_silver_coins = 0;
+            $createStudentEloquent->save();
 
             if ($auth->name != 'B2C Parent') {
-                $createStudentEloqoent->teachers()->sync([$teacher_id]);
+                $createStudentEloquent->teachers()->sync([$teacher_id]);
             }
 
-            $createStudentEloqoent->disability_types()->sync($student->disability_types);
-            $createStudentEloqoent->learningneeds()->sync($student->learning_needs);
+            $createStudentEloquent->disability_types()->sync($student->disability_types);
+            $createStudentEloquent->learningneeds()->sync($student->learning_needs);
 
             // media library save images
             if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {
-                $createStudentEloqoent->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organisation');
-                $userEloquent->profile_pic = $createStudentEloqoent->getFirstMediaUrl('profile_pics');
+                $createStudentEloquent->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organisation');
+                $userEloquent->profile_pic = $createStudentEloquent->getFirstMediaUrl('profile_pics');
                 $userEloquent->update();
             }
             DB::commit();
 
             if (request()->hasFile('image') && request()->file('image')->isValid()) {
-                $createStudentEloqoent->addMediaFromRequest('image')->toMediaCollection('image', 'media_students');
+                $createStudentEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_students');
             }
         } catch (\Exception $error) {
             DB::rollBack();

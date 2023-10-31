@@ -58,6 +58,7 @@ class StudentRoleSeeder extends Seeder
             'user_id' => $userCreate->id,
             'organisation_id' => null,
             'parent_id' => $parentCreate->parent_id,
+            'student_code' => generateUniqueCode(),
             'dob' => now(),
             'gender' => 'Male',
             'education_level' => 'G1',

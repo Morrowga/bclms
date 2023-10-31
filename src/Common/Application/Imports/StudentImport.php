@@ -68,6 +68,7 @@ class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithH
                     'gender' => $row['gender'],
                     'dob' => $dob,
                     'education_level' => $row['education_level'],
+                    'student_code' => generateUniqueCode(),
                     'organisation_id' => $this->request->organisation_id
                 ];
                 $studentEloquent = StudentEloquentModel::create($create_student);

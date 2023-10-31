@@ -84,3 +84,16 @@ if (!function_exists('isEvenOdd')) {
         }
     }
 }
+
+if (!function_exists('generateUniqueCode')) {
+    function generateUniqueCode()
+    {
+        $code = '';
+        $characters = '0123456789';
+        $max = strlen($characters) - 1;
+        for ($i = 0; $i < 6; $i++) {
+            $code .= $characters[mt_rand(0, $max)];
+        }
+        return $code;
+    }
+}

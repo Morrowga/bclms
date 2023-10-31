@@ -76,18 +76,19 @@ class StudentRepository implements StudentRepositoryInterface
                     "type" => "B2B"
                 ]);
                 $userEloquent = UserEloquentModel::create($create_user_data);
-                $StudentEloquentModel = StudentMapper::toEloquent($student);
-                $StudentEloquentModel->user_id = $userEloquent->id;
-                $StudentEloquentModel->parent_id = $parentEloquent->parent_id;
-                $StudentEloquentModel->organisation_id = $org_id;
-                $StudentEloquentModel->save();
-                $StudentEloquentModel->disability_types()->sync($student->disability_types);
-                $StudentEloquentModel->learningneeds()->sync($student->learning_needs);
+                $studentEloquentModel = StudentMapper::toEloquent($student);
+                $studentEloquentModel->user_id = $userEloquent->id;
+                $studentEloquentModel->student_code = generateUniqueCode();
+                $studentEloquentModel->parent_id = $parentEloquent->parent_id;
+                $studentEloquentModel->organisation_id = $org_id;
+                $studentEloquentModel->save();
+                $studentEloquentModel->disability_types()->sync($student->disability_types);
+                $studentEloquentModel->learningneeds()->sync($student->learning_needs);
 
                 // media library save images
                 if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {
-                    $StudentEloquentModel->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organisation');
-                    $userEloquent->profile_pic = $StudentEloquentModel->getFirstMediaUrl('profile_pics');
+                    $studentEloquentModel->addMediaFromRequest('profile_pics')->toMediaCollection('profile_pics', 'media_organisation');
+                    $userEloquent->profile_pic = $studentEloquentModel->getFirstMediaUrl('profile_pics');
                     $userEloquent->update();
                 }
                 DB::commit();

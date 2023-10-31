@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('education_level');
             $table->integer('num_gold_coins')->default(0);
             $table->integer('num_silver_coins')->default(0);
-            $table->integer('student_code')->nullable();
+            $table->integer('student_code')->unique()->nullable();
             $table->float('total_time_spent')->nullable();
             $table->timestamps();
             $table->softDeletes();
