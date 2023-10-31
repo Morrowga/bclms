@@ -13,9 +13,10 @@ use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\ResourceEloquentModel;
-use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2bUserEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
 
 class ResourceRepository implements ResourceRepositoryInterface
 {

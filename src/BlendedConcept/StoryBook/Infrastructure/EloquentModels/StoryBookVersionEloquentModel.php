@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Devleaptech\LaravelH5p\Eloquents\H5pResult;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
 
 class StoryBookVersionEloquentModel extends Model
 {
@@ -62,6 +62,6 @@ class StoryBookVersionEloquentModel extends Model
     }
     public function parent()
     {
-        return $this->belongsTo(ParentUserEloqeuntModel::class, 'parent_id')->with('user');
+        return $this->belongsTo(ParentUserEloquentModel::class, 'parent_id')->with('user');
     }
 }

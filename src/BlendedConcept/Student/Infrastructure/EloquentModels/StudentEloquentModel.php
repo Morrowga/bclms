@@ -15,7 +15,7 @@ use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEl
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\RewardEloquentModel;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
@@ -124,7 +124,7 @@ class StudentEloquentModel extends Model implements HasMedia
     }
     public function parent()
     {
-        return $this->belongsTo(ParentUserEloqeuntModel::class, 'parent_id')->with('user');
+        return $this->belongsTo(ParentUserEloquentModel::class, 'parent_id')->with('user');
     }
     public function groups()
     {

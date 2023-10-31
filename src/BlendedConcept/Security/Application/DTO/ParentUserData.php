@@ -3,7 +3,7 @@
 namespace Src\BlendedConcept\Security\Application\DTO;
 
 use Illuminate\Http\Request;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
 
 class ParentUserData
 {
@@ -28,7 +28,7 @@ class ParentUserData
         );
     }
 
-    public static function fromEloquent(ParentUserEloqeuntModel $parent): self
+    public static function fromEloquent(ParentUserEloquentModel $parent): self
     {
         return new self(
             parent_id: $parent->parent_id,

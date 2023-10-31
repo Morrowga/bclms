@@ -9,7 +9,7 @@ use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloq
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Application\DTO\StudentData;
 use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
@@ -222,7 +222,7 @@ class StudentRepository implements StudentRepositoryInterface
 
                 $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
-                $parentEloquent = ParentUserEloqeuntModel::create([
+                $parentEloquent = ParentUserEloquentModel::create([
                     "user_id" => $userParentEloquent->id,
                     "curr_subscription_id" => $subscriptionEloquent->id,
                     "organisation_id" => null,

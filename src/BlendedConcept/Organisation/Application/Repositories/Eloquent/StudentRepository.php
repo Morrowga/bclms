@@ -13,7 +13,7 @@ use Src\BlendedConcept\Organisation\Domain\Resources\StudentResource;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 class StudentRepository implements StudentRepositoryInterface
@@ -70,7 +70,7 @@ class StudentRepository implements StudentRepositoryInterface
                 ];
                 $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
-                $parentEloquent = ParentUserEloqeuntModel::create([
+                $parentEloquent = ParentUserEloquentModel::create([
                     "user_id" => $userParentEloquent->id,
                     "organisation_id" => $org_id,
                     "type" => "B2B"

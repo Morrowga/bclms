@@ -15,7 +15,7 @@ use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentMode
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationAdminEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class OrganisationEloquentModel extends Model implements HasMedia
@@ -72,7 +72,7 @@ class OrganisationEloquentModel extends Model implements HasMedia
 
     public function parents()
     {
-        return $this->hasMany(ParentUserEloqeuntModel::class, 'organisation_id', 'id');
+        return $this->hasMany(ParentUserEloquentModel::class, 'organisation_id', 'id');
     }
 
 

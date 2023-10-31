@@ -4,7 +4,7 @@ namespace Src\BlendedConcept\Security\Application\Mappers;
 
 use Illuminate\Http\Request;
 use Src\BlendedConcept\Security\Domain\Model\Entities\ParentUser;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
 
 class ParentUserMapper
 {
@@ -19,12 +19,12 @@ class ParentUserMapper
         );
     }
 
-    public static function toEloquent(ParentUser $parent): ParentUserEloqeuntModel
+    public static function toEloquent(ParentUser $parent): ParentUserEloquentModel
     {
-        $ParentEloquent = new ParentUserEloqeuntModel();
+        $ParentEloquent = new ParentUserEloquentModel();
 
         if ($parent->parent_id) {
-            $ParentEloquent = ParentUserEloqeuntModel::query()->findOrFail($parent->parent_id);
+            $ParentEloquent = ParentUserEloquentModel::query()->findOrFail($parent->parent_id);
         }
         $ParentEloquent->user_id = $parent->user_id;
         $ParentEloquent->organisation_id = $parent->organisation_id;

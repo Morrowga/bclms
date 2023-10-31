@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloqeuntModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
@@ -53,7 +53,7 @@ class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithH
                 ];
                 $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
-                $parentEloquent = ParentUserEloqeuntModel::create([
+                $parentEloquent = ParentUserEloquentModel::create([
                     "user_id" => $userParentEloquent->id,
                     "organisation_id" => $this->request->organisation_id,
                     "type" => "B2B"

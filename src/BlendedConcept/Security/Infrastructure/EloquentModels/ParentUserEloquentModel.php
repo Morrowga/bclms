@@ -9,7 +9,7 @@ use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEl
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 
-class ParentUserEloqeuntModel extends Model
+class ParentUserEloquentModel extends Model
 {
     use HasFactory;
     protected $table = "parents";

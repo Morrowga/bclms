@@ -160,7 +160,7 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
 
     public function parents()
     {
-        return $this->hasOne(ParentUserEloqeuntModel::class, 'user_id', 'id')->with('organisation');
+        return $this->hasOne(ParentUserEloquentModel::class, 'user_id', 'id')->with('organisation');
     }
 
     public function org_admin()
