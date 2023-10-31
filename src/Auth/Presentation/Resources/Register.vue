@@ -76,6 +76,7 @@ async function fetchDataFromServer(value) {
 }
 
 const goToRegisterForm = (type) => {
+    form.student_code = studentCode.value
     if(type == 'teacher'){
         form.user_type = 'Teacher'
         didChoose.value = true;
