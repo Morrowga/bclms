@@ -18,4 +18,6 @@ interface AuthRepositoryInterface
     public function choosePaidPlan($request);
 
     public function verificationEmail($email);
+
+    public function searchStudentCode($studentCode);
 }

@@ -24,7 +24,6 @@ async function fetchData() {
         // Assuming the API response contains an array of data similar to props.pathways.data
         datas.value = response.data.data;
         totalPage.value = response.data.data.length;
-        console.log(response.data);
         let results = datas.value[0].map((book, index) => {
             return {
                 id: book.id,
@@ -37,10 +36,6 @@ async function fetchData() {
         });
         currentPageData.value = results;
         totalBook.value = response.data.total;
-        // currentPageData.value = results;
-        // if (totalPage.value == "") {
-        //     totalPage.value = response.data.last_page + 1;
-        // }
     } catch (error) {
         console.error("Error fetching data:", error);
     }
