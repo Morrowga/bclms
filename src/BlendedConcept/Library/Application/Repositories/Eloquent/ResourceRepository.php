@@ -24,7 +24,7 @@ class ResourceRepository implements ResourceRepositoryInterface
     public function getResources(UserEloquentModel $userEloquentModel)
     {
         $userType = $this->checkUserType($userEloquentModel->id);
-        dd($userType);
+        // dd($userType);
         switch ($userType) {
             case 'Organisation Admin':
                 $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
