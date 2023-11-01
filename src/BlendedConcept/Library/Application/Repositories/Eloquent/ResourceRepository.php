@@ -24,7 +24,7 @@ class ResourceRepository implements ResourceRepositoryInterface
     public function getResources(UserEloquentModel $userEloquentModel)
     {
         $userType = $this->checkUserType($userEloquentModel->id);
-
+        dd($userType);
         switch ($userType) {
             case 'Organisation Admin':
                 $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
@@ -102,7 +102,7 @@ class ResourceRepository implements ResourceRepositoryInterface
         switch ($userType) {
             case 'Organisation Admin':
                 $org_admin = OrganisationAdminEloquentModel::where('user_id', $userEloquentModel->id)->first();
-                if($org_admin->organisation->subscription !== null){
+                if ($org_admin->organisation->subscription !== null) {
                     $totalStorage = $org_admin->organisation->subscription->b2b_subscription === null ? 0  : $org_admin->organisation->subscription->b2b_subscription->storage_limit;
                 } else {
                     $totalStorage = 0;
@@ -141,7 +141,7 @@ class ResourceRepository implements ResourceRepositoryInterface
                         ->where('teacher_id', $userEloquentModel->id)
                         ->whereIn('status', ['active', 'requested']);
                 })
-                ->sum('size');
+                    ->sum('size');
 
                 $usedStorage = $usedStorageBytes / 1024 / 1024;
 
@@ -396,6 +396,8 @@ class ResourceRepository implements ResourceRepositoryInterface
         $check_b2c_parent = ParentUserEloquentModel::where('user_id', $user->id)->first();
         if ($check_b2c_parent && $check_b2c_parent->organisation_id == null) {
             return "b2c_parent";
+        } else {
+            return "b2c_both_parent";
         }
     }
 

@@ -37,11 +37,18 @@ class PlaylistRepository implements PlaylistRepositoryInterface
             $parent = auth()->user()->parents;
             $user_id = $parent->parent_id;
             $student = StudentEloquentModel::with('teachers')->where('parent_id', $parent->parent_id)->first();
-            $teacher_id = $student->teachers[0]->teacher_id;
+            if ($parent->organisation_id) {
+                $teacher = $student->classrooms()->with('teachers')->get()->pluck('teachers')->flatten();
+                $teacher_id = $teacher->map(function ($teacher) {
+                    return $teacher->teacher_id;
+                });
+            } else {
+                $teacher_id = $student->teachers()->pluck('teachers.teacher_id');
+            }
             $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
                 ->with(['storybooks', 'student.user'])
                 ->where('parent_id', $user_id)
-                ->orWhere('teacher_id', $teacher_id)
+                ->orWhereIn('teacher_id', $teacher_id)
                 ->orderBy('id', 'desc')
                 ->paginate($filters['perPage'] ?? 10));
         } else {

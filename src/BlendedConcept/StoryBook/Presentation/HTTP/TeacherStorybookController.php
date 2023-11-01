@@ -36,9 +36,16 @@ class TeacherStorybookController
         if ($auth == 'B2B Parent') {
             $parent = auth()->user()->parents;
             $student = StudentEloquentModel::where('parent_id', $parent->parent_id)->first();
-            $user_id = $student->teachers()->pluck('teachers.teacher_id');
+            if ($parent->organisation_id) {
+                $user = $student->classrooms()->with('teachers')->get()->pluck('teachers')->flatten();
+                $user_id = $user->map(function ($user) {
+                    return $user->teacher_id;
+                });
+            } else {
+                $user_id = $student->teachers()->pluck('teachers.teacher_id');
+            }
             $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
-                $query->where('teacher_id', $user_id);
+                $query->whereIn('teacher_id', $user_id);
             }]);
         } elseif ($auth == 'B2C Parent') {
             $parent = auth()->user()->parents;
@@ -49,11 +56,19 @@ class TeacherStorybookController
             }]);
         } elseif ($auth == 'Both Parent') {
             $parent = auth()->user()->parents;
-            $user_id = $parent->parent_id;
             $student = StudentEloquentModel::with('teachers')->where('parent_id', $parent->parent_id)->first();
-            $teacher_id = $student->teachers[0]->teacher_id;
+
+            if ($parent->organisation_id) {
+                $teacher = $student->classrooms()->with('teachers')->get()->pluck('teachers')->flatten();
+                $teacher_id = $teacher->map(function ($teacher) {
+                    return $teacher->teacher_id;
+                });
+            } else {
+                $teacher_id = $student->teachers()->pluck('teachers.teacher_id');
+            }
+            $user_id = $parent->parent_id;
             $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id, $teacher_id) {
-                $query->where('parent_id', $user_id)->orWhere('teacher_id', $teacher_id);
+                $query->where('parent_id', $user_id)->orWhereIn('teacher_id', $teacher_id);
             }]);
         } else {
             $user_id = [auth()->user()->b2bUser->teacher_id];

@@ -198,7 +198,7 @@ class StudentRepository implements StudentRepositoryInterface
             ];
             $userEloquent = UserEloquentModel::create($create_user_data);
 
-            if ($auth->name != 'B2C Parent') {
+            if ($auth->name != 'B2C Parent' && $auth->name != 'Both Parent') {
                 $teacher_id = auth()->user()->b2bUser->teacher_id;
                 $create_parent_data = [
                     'first_name' => $student->parent_first_name,
@@ -208,31 +208,31 @@ class StudentRepository implements StudentRepositoryInterface
                     'role_id' => 7,
                     'password' => 'password'
                 ];
-                $planEloquent = PlanEloquentModel::find(1);
+                // $planEloquent = PlanEloquentModel::find(1);
 
-                $subscriptionEloquent = [
-                    'start_date' => now(),
-                    'end_date' => now(),
-                    'payment_date' => now(),
-                    'payment_status' => 'PAID',
-                    'stripe_status' => 'ACTIVE',
-                    'stripe_price' => 0,
-                ];
-                $subscriptionEloquent = SubscriptionEloquentModel::create($subscriptionEloquent);
+                // $subscriptionEloquent = [
+                //     'start_date' => now(),
+                //     'end_date' => now(),
+                //     'payment_date' => now(),
+                //     'payment_status' => 'PAID',
+                //     'stripe_status' => 'ACTIVE',
+                //     'stripe_price' => 0,
+                // ];
+                // $subscriptionEloquent = SubscriptionEloquentModel::create($subscriptionEloquent);
 
                 $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
                 $parentEloquent = ParentUserEloquentModel::create([
                     "user_id" => $userParentEloquent->id,
-                    "curr_subscription_id" => $subscriptionEloquent->id,
+                    "curr_subscription_id" => null,
                     "organisation_id" => null,
                     "type" => "B2B"
                 ]);
-                $b2cSubscriptionEloquent = B2cSubscriptionEloquentModel::create([
-                    "parent_id" => $parentEloquent->parent_id,
-                    "subscription_id" => $subscriptionEloquent->id,
-                    "plan_id" => 1
-                ]);
+                // $b2cSubscriptionEloquent = B2cSubscriptionEloquentModel::create([
+                //     "parent_id" => $parentEloquent->parent_id,
+                //     "subscription_id" => $subscriptionEloquent->id,
+                //     "plan_id" => 1
+                // ]);
                 $parent_id = $parentEloquent->parent_id;
             } else {
                 $parent_id = auth()->user()->parents->parent_id;
@@ -245,7 +245,7 @@ class StudentRepository implements StudentRepositoryInterface
             $createStudentEloquent->num_silver_coins = 0;
             $createStudentEloquent->save();
 
-            if ($auth->name != 'B2C Parent') {
+            if ($auth->name != 'B2C Parent' && $auth->name != 'Both Parent') {
                 $createStudentEloquent->teachers()->sync([$teacher_id]);
             }
 
@@ -258,11 +258,11 @@ class StudentRepository implements StudentRepositoryInterface
                 $userEloquent->profile_pic = $createStudentEloquent->getFirstMediaUrl('profile_pics');
                 $userEloquent->update();
             }
-            DB::commit();
 
             if (request()->hasFile('image') && request()->file('image')->isValid()) {
                 $createStudentEloquent->addMediaFromRequest('image')->toMediaCollection('image', 'media_students');
             }
+            DB::commit();
         } catch (\Exception $error) {
             DB::rollBack();
             config('app.env') == 'production'
