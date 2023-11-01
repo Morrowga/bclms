@@ -2,8 +2,12 @@
 
 namespace Src\BlendedConcept\StoryBook\Presentation\HTTP;
 
+use ZipArchive;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\Response;
 use Src\BlendedConcept\StoryBook\Application\DTO\GameData;
 use Src\BlendedConcept\StoryBook\Domain\Policies\GamePolicy;
@@ -15,6 +19,7 @@ use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\StoreGameCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\DeleteGameCommand;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\UpdateGameCommand;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameFileDownload;
 use Src\BlendedConcept\Disability\Application\UseCases\Queries\Devices\GetDevicesWithoutPagination;
 use Src\BlendedConcept\Disability\Application\UseCases\Queries\DisabilityTypes\ShowDisabilityTypes;
 
@@ -111,5 +116,12 @@ class GameController
         } catch (\Exception $error) {
             return redirect()->back()->with('errorMessage', $error->getMessage());
         }
+    }
+
+    public function gameDownload(GameEloquentModel $game)
+    {
+        $download =  (new GetGameFileDownload($game))->handle();
+
+        return \Response::download($download->getPath(), $download->file_name);
     }
 }

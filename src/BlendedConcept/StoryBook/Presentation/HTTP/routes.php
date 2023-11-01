@@ -19,6 +19,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('changerewardStatus/{reward}', [RewardController::class, 'changerewardStatus'])->name('changerewardStatus');
     Route::resource('games', GameController::class);
+    Route::post('games/gamedownload/{game}', [GameController::class, 'gameDownload'])->name('games.game-download');
     // storybook resources
     Route::resource('books', BookController::class);
     Route::put('/update/physical_resources/{book}', [BookController::class, 'updatePhysicalResources'])->name('books.update_physical_resources');

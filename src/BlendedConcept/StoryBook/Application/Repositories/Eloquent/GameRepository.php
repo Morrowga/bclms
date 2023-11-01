@@ -3,8 +3,13 @@
 namespace Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent;
 
 use ZipArchive;
+use Illuminate\Http\Response;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Spatie\MediaLibrary\Support\MediaStream;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Src\BlendedConcept\StoryBook\Application\DTO\GameData;
 use Src\BlendedConcept\StoryBook\Domain\Model\Entities\Game;
 use Src\BlendedConcept\StoryBook\Domain\Resources\GameResource;
@@ -63,6 +68,8 @@ class GameRepository implements GameRepositoryInterface
 
             if (request()->hasFile('game') && request()->file('game')->isValid()) {
                 $zipFile = request()->file('game');
+
+                $gameEloquent->addMediaFromRequest('game')->toMediaCollection('gamezip', 'media_game');
 
                 // Get the original file name
                 $originalFileName = pathinfo($zipFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -124,17 +131,6 @@ class GameRepository implements GameRepositoryInterface
         }
     }
 
-    public function download(YourModel $yourModel)
-    {
-        // Let's get some media.
-        $downloads = $yourModel->getMedia('game_file');
-
-        // Download the files associated with the media in a streamed way.
-        // No prob if your files are very large.
-        return MediaStream::create('my-files.zip')->addMedia($downloads);
-    }
-
-
     //update game
     public function updateGame(GameData $game)
     {
@@ -159,26 +155,22 @@ class GameRepository implements GameRepositoryInterface
                 }
             }
 
-            // if (request()->hasFile('game') && request()->file('game')->isValid()) {
-
-            //     $old_game = $gameEloquent->getFirstMedia('game_file');
-            //     if ($old_game != null) {
-            //         $old_game->forceDelete();
-            //     }
-
-            //     $newGameMedia = $gameEloquent->addMediaFromRequest('game')->toMediaCollection('game_file', 'media_game');
-
-            //     if ($newGameMedia->getUrl()) {
-            //         $gameEloquent->game_file = $newGameMedia->getUrl();
-            //         $gameEloquent->update();
-            //     }
-            // }
-
             if (request()->hasFile('game') && request()->file('game')->isValid()) {
-                $oldFolderPath = public_path('gamefiles/' . $gameEloquent->game_file);
+                $oldgame_zip = $gameEloquent->getFirstMedia('gamezip');
+
+                if ($oldgame_zip != null) {
+                    $oldgame_zip->forceDelete();
+                }
+
+                $newGameZip = $gameEloquent->addMediaFromRequest('game')->toMediaCollection('gamezip', 'media_game');
+
+                $gameOldFile = str_replace('/index.html', '', $gameEloquent->game_file);
+                $oldFolderPath = public_path('gamefiles/' . $gameOldFile);
+
                 if (file_exists($oldFolderPath)) {
                     \File::deleteDirectory($oldFolderPath);
                 }
+
                 $zipFile = request()->file('game');
 
                 // Get the original file name
@@ -251,5 +243,12 @@ class GameRepository implements GameRepositoryInterface
             \File::deleteDirectory($gamePath);
         }
         $game->delete();
+    }
+
+    public function gameDownload(GameEloquentModel $game)
+    {
+        $download = $game->getMedia('gamezip')->first();
+
+        return $download;
     }
 }

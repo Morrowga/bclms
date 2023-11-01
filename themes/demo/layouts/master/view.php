@@ -82,7 +82,7 @@
                     var content = `<div class="col-sm-4 splide__slide m-2">
                                         <div class="card-wrapper d-flex justify-content-around">
                                             <div class="card p-3" style="width: 300px !important">
-                                                <img src="${thumbnail_img}" class="card-img-top" alt="...">
+                                                <img src="${thumbnail_img}" height="135" class="card-img-top" alt="...">
                                                 <div class="card-body p-0 mt-2">
                                                     <h5 class="card-title mb-0 text-center theme-bold-font">${d.name}</h5>
                                                 </div>
