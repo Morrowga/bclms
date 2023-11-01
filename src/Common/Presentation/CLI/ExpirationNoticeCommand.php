@@ -46,9 +46,13 @@ class ExpirationNoticeCommand extends Command
     {
         $organisations = OrganisationEloquentModel::where('curr_subscription_id', '!=', null)->get();
 
+        $now = Carbon::now()->format('Y-m-d');
+
         foreach ($organisations as $organisation) {
             $subscription = $organisation->subscription;
             $end_date = $subscription->end_date;
+
+            $end_date = Carbon::parse($end_date)->format('Y-m-d');
 
             if ($now >= $end_date) {
 
@@ -80,7 +84,10 @@ class ExpirationNoticeCommand extends Command
             $subscription = $parent->subscription;
             $end_date = $subscription->end_date;
 
+            $end_date = Carbon::parse($end_date)->format('Y-m-d');
+
             if ($now >= $end_date) {
+
 
                 $subscription->status = 'INACTIVE';
                 $subscription->save();
@@ -109,6 +116,8 @@ class ExpirationNoticeCommand extends Command
         foreach ($teachers as $teacher) {
             $subscription = $teacher->subscription;
             $end_date = $subscription->end_date;
+
+            $end_date = Carbon::parse($end_date)->format('Y-m-d');
 
             if ($now >= $end_date) {
 
