@@ -396,6 +396,8 @@ class ResourceRepository implements ResourceRepositoryInterface
         $check_b2c_parent = ParentUserEloquentModel::where('user_id', $user->id)->first();
         if ($check_b2c_parent && $check_b2c_parent->organisation_id == null) {
             return "b2c_parent";
+        } else {
+            return "b2c_both_parent";
         }
     }
 
