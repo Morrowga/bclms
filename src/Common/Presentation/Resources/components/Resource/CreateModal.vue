@@ -106,21 +106,30 @@ const removeVideo = () => {
 };
 
 const submitResource = () => {
-    disabled.value = true;
-    form.file = file.value
-    form.post(route("resource.store"), {
-    onSuccess: () => {
-      disabled.value = false;
-      isDialogVisible.value = false;
-      FlashMessage({ flash });
-    },
-    onError: (error) => {
-        disabled.value = false;
-        isDialogVisible.value = false;
-        SuccessDialog({ title: error?.file, icon: 'warning',color: '#ff6262', mainTitle: 'Failed!' });
-    },
-  });
-}
+    refForm.value.validate().then(({ valid }) => {
+        if (valid) {
+            disabled.value = true;
+            form.file = file.value;
+            form.post(route("resource.store"), {
+                onSuccess: () => {
+                    disabled.value = false;
+                    isDialogVisible.value = false;
+                    FlashMessage({ flash });
+                },
+                onError: (error) => {
+                    disabled.value = false;
+                    isDialogVisible.value = false;
+                    SuccessDialog({
+                        title: error?.file,
+                        icon: "warning",
+                        color: "#ff6262",
+                        mainTitle: "Failed!",
+                    });
+                },
+            });
+        }
+    });
+};
 
 const fileInput = ref(null);
 
