@@ -34,13 +34,15 @@
         var story_card = document.getElementById('story_card');
         var game_card = document.getElementById('game_card');
         var no_data_text = document.getElementById('no_data_text');
-        var noData = document.getElementById('no_data');
+        var no_data_text_toy = document.getElementById('no_data_text_toy');
+        var noDataToy = document.getElementById('no_data_toy');
+        var noDataGame = document.getElementById('no_data_game');
 
         fetch(baseUrl +"/api/landingpage")
             .then((response) => response.json())
             .then((json) => {
-                addCardToHTML(json.data.books, story_card);
-                addCardToHTML(json.data.games, game_card);
+                addCardToHTML(json.data.books, story_card, 'toy', noDataToy, no_data_text_toy);
+                addCardToHTML(json.data.games, game_card, 'game', noDataGame, no_data_text);
 
                 splideCard('splide');
                 splideCard('splide-game');
@@ -68,11 +70,11 @@
             splide.mount();
         }
 
-        function addCardToHTML(data, cardName)
+        function addCardToHTML(data, cardName, card, noData, noDataText)
         {
             if(data.length == 0)
             {
-                no_data_text.style.display = 'none';
+                noDataText.style.display = 'none';
                 noData.innerHTML += '<h4 class="text-center muted mt-3">No Data</h4>';
             }else{
                 data.forEach(d => {
