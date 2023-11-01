@@ -264,10 +264,10 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_createVersion',
                         'access_teacherStudent',
                         'show_teacherStudent',
-                        'create_teacherStudent',
-                        'edit_teacherStudent',
-                        'update_teacherStudent',
-                        'delete_teacherStudent',
+                        // 'create_teacherStudent',
+                        // 'edit_teacherStudent',
+                        // 'update_teacherStudent',
+                        // 'delete_teacherStudent',
                         'create_techSupport'
                     ]
                 )->pluck('id');

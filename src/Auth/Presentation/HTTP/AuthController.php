@@ -78,7 +78,7 @@ class AuthController extends Controller
     public function searchStudentCode(Request $request)
     {
         try {
-           $exist = $this->authInterface->searchStudentCode($request->query('student_code'));
+            $exist = $this->authInterface->searchStudentCode($request->query('student_code'));
             return response()->json($exist);
         } catch (\Exception $exception) {
             return $exception->getMessage();
@@ -295,7 +295,8 @@ class AuthController extends Controller
         }
     }
 
-    public function resend(Request $request){
+    public function resend(Request $request)
+    {
 
         $userEloquentModel = UserEloquentModel::where('email', $request->email)->first();
 
@@ -341,10 +342,11 @@ class AuthController extends Controller
         }
     }
 
-public function chooseBothPlan(Request $request)
+    public function chooseBothPlan(Request $request)
     {
         try {
-            $this->authInterface->chooseBothPlan($request->student_code);
+            $this->authInterface->chooseBothPlan($request);
+            return redirect()->route('login')->with('successMessage', 'Subscription Updated Successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('errorMessage', $e->getMessage());
         }

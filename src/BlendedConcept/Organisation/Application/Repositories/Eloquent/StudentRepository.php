@@ -42,6 +42,7 @@ class StudentRepository implements StudentRepositoryInterface
         DB::beginTransaction();
         try {
             $org_id = auth()->user()->organisation_id;
+            // dd($org_id);
             $organisation = OrganisationEloquentModel::find($org_id);
             $organisation->load('subscription.b2b_subscription');
             if (!isset($organisation->subscription)) {

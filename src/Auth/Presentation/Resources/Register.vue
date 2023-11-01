@@ -17,7 +17,7 @@ import B2BRegister from "./B2BRegister.vue";
 let organisation = ref(false);
 let isAlertVisible = ref(true);
 const selectedUserType = ref("Teacher");
-const checkExist = ref('none');
+const checkExist = ref("none");
 
 const studentCode = ref(null);
 const isFormValid = ref(false);
@@ -33,11 +33,11 @@ let form = useForm({
     email: "",
     contact_number: "",
     plan: 1,
-    plan_price: '0.00',
+    plan_price: "0.00",
     password: "",
     password_confirmation: "",
     user_type: "Teacher",
-    student_code: studentCode.value
+    student_code: studentCode.value,
 });
 
 const goPlan = () => {
@@ -53,13 +53,12 @@ const radioClick = (type) => {
     form.user_type = type;
 };
 
-
 watch(studentCode, (newVal) => {
-  if (newVal.length === 6) {
-    fetchDataFromServer(newVal);
-  } else {
-    checkExist.value = 'none';
-  }
+    if (newVal.length === 6) {
+        fetchDataFromServer(newVal);
+    } else {
+        checkExist.value = "none";
+    }
 });
 
 async function fetchDataFromServer(value) {
@@ -68,7 +67,10 @@ async function fetchDataFromServer(value) {
             `/search-student-code?student_code=${value}`
         );
 
-        checkExist.value = response.data.exist
+        checkExist.value = response.data.exist;
+        if (!checkExist.value) {
+            studentCode.value = null;
+        }
         form.email = response.data.parent.user.email;
     } catch (error) {
         console.error("Error fetching data:", error);
@@ -76,20 +78,20 @@ async function fetchDataFromServer(value) {
 }
 
 const goToRegisterForm = (type) => {
-    form.student_code = studentCode.value
-    if(type == 'teacher'){
-        form.user_type = 'Teacher'
+    form.student_code = studentCode.value;
+    if (type == "teacher") {
+        form.user_type = "Teacher";
         didChoose.value = true;
     } else {
-        form.user_type = 'Parent'
-        if(checkExist.value == true){
+        form.user_type = "Parent";
+        if (checkExist.value == true) {
             didChoose.value = true;
             isRegisterFormFilled.value = true;
         } else {
             didChoose.value = true;
         }
     }
-}
+};
 </script>
 
 <template>
@@ -127,20 +129,30 @@ const goToRegisterForm = (type) => {
                                 <h1 class="pppangram-bold">Teacher</h1>
 
                                 <div class="mt-5">
-                                    <span class="signuptext">Sign up to access a world of educational resources and <br>
-                                        enhance your teaching experience for your students with <br>
+                                    <span class="signuptext"
+                                        >Sign up to access a world of
+                                        educational resources and <br />
+                                        enhance your teaching experience for
+                                        your students with <br />
                                         our many exciting features.
-                                        <br>
-                                        <br>
-                                        Join us to make a difference in the classroom!
-                                        <br>
-                                        <br>
-                                        <br>
-                                        <br>
+                                        <br />
+                                        <br />
+                                        Join us to make a difference in the
+                                        classroom!
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
                                     </span>
                                 </div>
 
-                                <VBtn variant="flat" @click="goToRegisterForm('teacher')" class="mt-13" rounded>Sign Up</VBtn>
+                                <VBtn
+                                    variant="flat"
+                                    @click="goToRegisterForm('teacher')"
+                                    class="mt-13"
+                                    rounded
+                                    >Sign Up</VBtn
+                                >
                             </VCardText>
                         </VCard>
                     </VCol>
@@ -150,16 +162,22 @@ const goToRegisterForm = (type) => {
                                 <h1 class="pppangram-bold">Parent</h1>
 
                                 <div class="mt-5">
-                                    <span class="signuptext">Sign up to access a world of educational resources and <br>
-                                        support for your child.Plus,if you have your <br>
-                                        organisation's student code,you can enjoy exclusive <br>
-                                        discounts on our services and monitor your child's <br>
+                                    <span class="signuptext"
+                                        >Sign up to access a world of
+                                        educational resources and <br />
+                                        support for your child.Plus,if you have
+                                        your <br />
+                                        organisation's student code,you can
+                                        enjoy exclusive <br />
+                                        discounts on our services and monitor
+                                        your child's <br />
                                         progress within the organization.
-                                        <br>
-                                        <br>
+                                        <br />
+                                        <br />
                                     </span>
                                     <span class="ppangram-bold color-black"
-                                        >Do you have a student code ?</span>
+                                        >Do you have a student code ?</span
+                                    >
                                     <VTextField
                                         class="mt-3 custom-label-student-code"
                                         density="compact"
@@ -167,22 +185,37 @@ const goToRegisterForm = (type) => {
                                         variant="solo"
                                         v-model="studentCode"
                                     >
-                                        <template v-if="studentCode != ''" #append-inner>
-                                            <VIcon icon="mdi-check-circle" v-if="checkExist == true" class="check-circle mt-1"></VIcon>
-                                            <VIcon icon="mdi-close-circle" v-if="checkExist == false" class="check-false mt-1"></VIcon>
+                                        <template
+                                            v-if="studentCode != ''"
+                                            #append-inner
+                                        >
+                                            <VIcon
+                                                icon="mdi-check-circle"
+                                                v-if="checkExist == true"
+                                                class="check-circle mt-1"
+                                            ></VIcon>
+                                            <VIcon
+                                                icon="mdi-close-circle"
+                                                v-if="checkExist == false"
+                                                class="check-false mt-1"
+                                            ></VIcon>
                                         </template>
                                     </VTextField>
                                 </div>
 
-                                <VBtn variant="flat" @click="goToRegisterForm('parent')" class="mt-6" rounded>Sign Up</VBtn>
+                                <VBtn
+                                    variant="flat"
+                                    @click="goToRegisterForm('parent')"
+                                    class="mt-6"
+                                    rounded
+                                    >Sign Up</VBtn
+                                >
                             </VCardText>
                         </VCard>
                     </VCol>
                 </VRow>
             </VContainer>
         </div>
-
-
     </div>
     <div v-else>
         <div v-if="!isRegisterFormFilled">
@@ -211,14 +244,20 @@ const goToRegisterForm = (type) => {
 
             <div class="text-center mt-10">
                 <p class="ruddy-bold signup-title">Sign Up For B2C Account</p>
-                <VForm ref="refForm" v-model="isFormValid" @submit.prevent="goPlan">
+                <VForm
+                    ref="refForm"
+                    v-model="isFormValid"
+                    @submit.prevent="goPlan"
+                >
                     <VRow class="mt-10">
                         <VCol cols="4"> </VCol>
                         <VCol cols="4" class="text-left">
                             <VRow>
                                 <VCol cols="6">
                                     <div>
-                                        <VLabel class="required">First Name</VLabel>
+                                        <VLabel class="required"
+                                            >First Name</VLabel
+                                        >
                                         <VTextField
                                             class="mt-3 custom-label-color"
                                             placeholder=""
@@ -234,7 +273,9 @@ const goToRegisterForm = (type) => {
                                 </VCol>
                                 <VCol size="6">
                                     <div>
-                                        <VLabel class="required">Last Name</VLabel>
+                                        <VLabel class="required"
+                                            >Last Name</VLabel
+                                        >
                                         <VTextField
                                             class="mt-3 custom-label-color"
                                             placeholder=""
@@ -271,7 +312,9 @@ const goToRegisterForm = (type) => {
                                     variant="filled"
                                     v-model="form.contact_number"
                                     :rules="[requiredValidator]"
-                                    :error-messages="form?.errors?.contact_number"
+                                    :error-messages="
+                                        form?.errors?.contact_number
+                                    "
                                 />
                             </div>
                             <div>
@@ -281,7 +324,9 @@ const goToRegisterForm = (type) => {
                                     placeholder=""
                                     density="compact"
                                     variant="filled"
-                                    :type="isPasswordVisible ? 'text' : 'password'"
+                                    :type="
+                                        isPasswordVisible ? 'text' : 'password'
+                                    "
                                     :append-inner-icon="
                                         isPasswordVisible
                                             ? 'mdi-eye-off-outline'
@@ -296,11 +341,15 @@ const goToRegisterForm = (type) => {
                                 />
                             </div>
                             <div>
-                                <VLabel class="required">Confirm Password</VLabel>
+                                <VLabel class="required"
+                                    >Confirm Password</VLabel
+                                >
                                 <VTextField
                                     class="my-3 custom-label-color"
                                     placeholder=""
-                                    :type="isPasswordVisible ? 'text' : 'password'"
+                                    :type="
+                                        isPasswordVisible ? 'text' : 'password'
+                                    "
                                     :append-inner-icon="
                                         isPasswordVisible
                                             ? 'mdi-eye-off-outline'
@@ -390,8 +439,8 @@ const goToRegisterForm = (type) => {
     padding: 10px;
 }
 
-.signuptext{
-    color: rgb(0,0,0,0.6) !important;
+.signuptext {
+    color: rgb(0, 0, 0, 0.6) !important;
 }
 
 .custom-label-color .v-label {
@@ -403,15 +452,15 @@ const goToRegisterForm = (type) => {
     color: #000; /* Change the label color to red */
     font-size: 15px !important;
 }
-.check-circle{
+.check-circle {
     color: green;
 }
 
-.check-false{
+.check-false {
     color: red;
 }
 
-.color-black{
+.color-black {
     color: #000 !important;
 }
 </style>

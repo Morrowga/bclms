@@ -204,11 +204,32 @@ class AuthRepository implements AuthRepositoryInterface
         }
     }
 
-    public function chooseBothPlan($studentCode)
+    public function chooseBothPlan($request)
     {
-        $student = StudentEloquentModel::where('student_code', $studentCode)->first();
-        if ($student) {
-            $parent = $student->parent;
+        DB::beginTransaction();
+
+        try {
+            $student = StudentEloquentModel::where('student_code', $request->student_code)->first();
+
+            if ($student) {
+                $parent = $student->parent;
+                $user = $parent->user;
+                $user->update([
+                    "role_id" => 9
+                ]);
+                $b2cSubEloquent = (new B2cSubscriptionEloquentModel());
+                $b2cSubEloquent->subscription_id = $parent->subscription->id;
+                $b2cSubEloquent->parent_id = $parent->parent_id;
+                $b2cSubEloquent->plan_id = $request->plan;
+                $b2cSubEloquent->save();
+                $parent->update([
+                    'type' => "BOTH"
+                ]);
+            }
+            DB::commit();
+        } catch (\Exception $ex) {
+            dd($ex);
+            DB::rollBack();
         }
     }
 }
