@@ -21,7 +21,7 @@ class StudentRepository implements StudentRepositoryInterface
     public function getStudents($filters)
     {
         $auth = auth()->user()->role;
-        if ($auth->name == 'B2C Parent' || $auth->name == "Both Subscription") {
+        if ($auth->name == 'B2C Parent' || $auth->name == "Both Parent") {
             $parent = auth()->user()->parents;
             $users = StudentResource::collection(StudentEloquentModel::filter($filters)
                 ->where('parent_id', $parent->parent_id)

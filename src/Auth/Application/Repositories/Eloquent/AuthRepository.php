@@ -218,7 +218,23 @@ class AuthRepository implements AuthRepositoryInterface
                     "role_id" => 9
                 ]);
                 $b2cSubEloquent = (new B2cSubscriptionEloquentModel());
-                $b2cSubEloquent->subscription_id = $parent->subscription->id;
+                if ($parent->subscription) {
+                    $b2cSubEloquent->subscription_id = $parent->subscription->id;
+                } else {
+                    $plan = PlanEloquentModel::find($request->plan);
+                    $start_date = Carbon::now();
+                    $end_date_start = Carbon::now();
+                    $end_date = $plan->payment_period == 'MONTHLY' ? $end_date_start->addMonth(1) : $end_date_start->addYear(1);
+                    $subscriptionEloquent = (new SubscriptionEloquentModel());
+                    $subscriptionEloquent->start_date = $start_date;
+                    $subscriptionEloquent->end_date = $end_date;
+                    $subscriptionEloquent->payment_date = now();
+                    $subscriptionEloquent->stripe_status = 'ACTIVE';
+                    $subscriptionEloquent->stripe_price = 0;
+                    $subscriptionEloquent->payment_status = "PAID";
+                    $subscriptionEloquent->save();
+                    $b2cSubEloquent->subscription_id = $subscriptionEloquent->id;
+                }
                 $b2cSubEloquent->parent_id = $parent->parent_id;
                 $b2cSubEloquent->plan_id = $request->plan;
                 $b2cSubEloquent->save();
