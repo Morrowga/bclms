@@ -129,11 +129,13 @@ async function handleSubmit(e) {
         if(result.paymentIntent.status == 'succeeded'){
             emit("update:isDialogVisible", false);
             isDialogVisible.value = false;
-            if(props.form.student_code != null || props.form.student_code != ''){
-                chooseBothPlan()
-            } else {
-                choosePaidPlan()
-            }
+            console.log(props.form.student_code)
+            props.form.student_code != null ? chooseBothPlan() : choosePaidPlan()
+            // if(props.form.student_code != null || props.form.student_code != ''){
+            //     chooseBothPlan()
+            // } else {
+            //     choosePaidPlan()
+            // }
             isDonePayment.value = true;
         }
         // Payment was successful, you can handle success here
@@ -176,7 +178,7 @@ const showPayment = (data) => {
 };
 
 const chooseFreePlan = () => {
-    if(props.form.student_code != null || props.form.student_code != ''){
+    if(props.form.student_code != null){
         chooseBothPlan()
     } else {
         props.form.post(route("choose-free-plan"), {
