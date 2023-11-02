@@ -57,7 +57,11 @@ watch(studentCode, (newVal) => {
     if (newVal.length === 6) {
         fetchDataFromServer(newVal);
     } else {
-        checkExist.value = "none";
+        if(newVal.length > 6){
+            checkExist.value = false;
+        } else {
+            checkExist.value = 'none';
+        }
     }
 });
 
@@ -68,20 +72,23 @@ async function fetchDataFromServer(value) {
         );
 
         checkExist.value = response.data.exist;
+
         if (!checkExist.value) {
             studentCode.value = null;
+        } else {
+            form.email = response.data.parent.user.email;
         }
-        form.email = response.data.parent.user.email;
     } catch (error) {
         console.error("Error fetching data:", error);
     }
 }
 
 const goToRegisterForm = (type) => {
-    form.student_code = studentCode.value;
+    form.student_code = studentCode.value == '' ? null : studentCode.value;
     if (type == "teacher") {
         form.user_type = "Teacher";
         didChoose.value = true;
+        console.log(form.student_code);
     } else {
         form.user_type = "Parent";
         if (checkExist.value == true) {

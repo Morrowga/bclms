@@ -15,6 +15,7 @@ use Src\BlendedConcept\Student\Application\Requests\PasswordRequest;
 use Src\BlendedConcept\Student\Application\Requests\storeStudentRequest;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\ShowStudent;
 use Src\BlendedConcept\Organisation\Application\Requests\UpdateStudentRequest;
+use Src\BlendedConcept\Organisation\Application\UseCases\Commands\Student\DeleteStudentCommand;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetUserSurveyByRole;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreStudentCommand;
@@ -142,6 +143,18 @@ class TeacherStudentController
             Auth::login($user);
 
             return redirect()->route('teacher_students.show', $request->student_id); // Redirect to the kid's home page.
+        } catch (\Exception $error) {
+            return redirect()->back()->with('errorMessage', $error->getMessage());
+        }
+    }
+
+    public function destroy(StudentEloquentModel $teacher_student)
+    {
+        abort_if(authorize('destroy', TeacherStudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        try {
+            (new DeleteStudentCommand($teacher_student))->execute();
+
+            return redirect()->route('teacher_students.index')->with('successMessage', 'Student Deleted Successfully!');
         } catch (\Exception $error) {
             return redirect()->back()->with('errorMessage', $error->getMessage());
         }

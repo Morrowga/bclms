@@ -19,4 +19,6 @@ interface GameRepositoryInterface
 
     //delete game
     public function deleteGame(GameEloquentModel $game);
+
+    public function gameDownload(GameEloquentModel $game);
 }

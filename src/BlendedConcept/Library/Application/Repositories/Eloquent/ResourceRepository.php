@@ -68,6 +68,7 @@ class ResourceRepository implements ResourceRepositoryInterface
                 $userEloquentModel->getMedia('videos', ['teacher_id' => $userEloquentModel->id]);
                 $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
                     ->where('teacher_id', $userEloquentModel->id)
+                    ->where('status', 'active')
                     ->with(['teacher'])
                     ->get();
 
@@ -81,6 +82,7 @@ class ResourceRepository implements ResourceRepositoryInterface
                 $userEloquentModel->getMedia('videos', ['teacher_id' => $userEloquentModel->id]);
                 $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
                     ->where('teacher_id', $userEloquentModel->id)
+                    ->where('status', 'active')
                     ->with(['teacher'])
                     ->get();
 
@@ -161,6 +163,7 @@ class ResourceRepository implements ResourceRepositoryInterface
 
                 $usedStorageBytes = MediaEloquentModel::where('collection_name', 'videos')
                     ->where('teacher_id', $userEloquentModel->id)
+                    ->where('status', 'active')
                     ->sum('size');
 
                 $usedStorage = $usedStorageBytes / 1024 / 1024;
@@ -179,6 +182,7 @@ class ResourceRepository implements ResourceRepositoryInterface
 
                 $usedStorageBytes = MediaEloquentModel::where('collection_name', 'videos')
                     ->where('teacher_id', $userEloquentModel->id)
+                    ->where('status', 'active')
                     ->sum('size');
 
                 $usedStorage = $usedStorageBytes / 1024 / 1024;
@@ -397,7 +401,7 @@ class ResourceRepository implements ResourceRepositoryInterface
         if ($check_b2c_parent && $check_b2c_parent->organisation_id == null) {
             return "b2c_parent";
         } else {
-            return "b2c_both_parent";
+            return "b2c_parent";
         }
     }
 
@@ -424,7 +428,6 @@ class ResourceRepository implements ResourceRepositoryInterface
             case 'decline':
                 MediaEloquentModel::whereIn('id', $ids)->update(['status' => 'active']);
                 break;
-
             case 'delete':
                 MediaEloquentModel::whereIn('id', $ids)->update(['status' => 'inactive']);
                 break;

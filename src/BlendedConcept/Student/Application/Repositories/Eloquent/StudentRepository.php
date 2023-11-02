@@ -2,7 +2,9 @@
 
 namespace Src\BlendedConcept\Student\Application\Repositories\Eloquent;
 
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Src\Auth\Application\Mails\EmailVerify;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloquentModel;
@@ -190,6 +192,28 @@ class StudentRepository implements StudentRepositoryInterface
         DB::beginTransaction();
         $auth = auth()->user()->role;
         try {
+            if ($auth->name == 'Both Parent' || $auth->name == 'B2C Parent') {
+                $subscription = auth()->user()->parents->subscription;
+                $num_student_profiles = $subscription->b2c_subscription->plan->num_student_profiles;
+                $current_student_count = StudentEloquentModel::where('parent_id', auth()->user()->parents->parent_id)->count();
+
+                $coming_student_count = $current_student_count + 1;
+                if ($coming_student_count > $num_student_profiles) {
+                    return throw new \Exception("License not enough to create student");
+                }
+            } elseif ($auth->name == 'BC Subscriber') {
+                $teacher_id = auth()->user()->b2bUser->teacher_id;
+                $subscription = auth()->user()->b2bUser->subscription;
+                $num_student_profiles = $subscription->b2c_subscription->plan->num_student_profiles;
+                $current_student_count = StudentEloquentModel::whereHas('teachers', function ($query) use ($teacher_id) {
+                    $query->where('teachers.teacher_id', $teacher_id);
+                })->count();
+
+                $coming_student_count = $current_student_count + 1;
+                if ($coming_student_count > $num_student_profiles) {
+                    return throw new \Exception("License not enough to create student");
+                }
+            }
             $create_user_data = [
                 'first_name' => $student->first_name,
                 'last_name' => $student->last_name,
@@ -208,17 +232,6 @@ class StudentRepository implements StudentRepositoryInterface
                     'role_id' => 7,
                     'password' => 'password'
                 ];
-                // $planEloquent = PlanEloquentModel::find(1);
-
-                // $subscriptionEloquent = [
-                //     'start_date' => now(),
-                //     'end_date' => now(),
-                //     'payment_date' => now(),
-                //     'payment_status' => 'PAID',
-                //     'stripe_status' => 'ACTIVE',
-                //     'stripe_price' => 0,
-                // ];
-                // $subscriptionEloquent = SubscriptionEloquentModel::create($subscriptionEloquent);
 
                 $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
@@ -228,11 +241,10 @@ class StudentRepository implements StudentRepositoryInterface
                     "organisation_id" => null,
                     "type" => "B2B"
                 ]);
-                // $b2cSubscriptionEloquent = B2cSubscriptionEloquentModel::create([
-                //     "parent_id" => $parentEloquent->parent_id,
-                //     "subscription_id" => $subscriptionEloquent->id,
-                //     "plan_id" => 1
-                // ]);
+                $bcstaff = UserEloquentModel::where('role_id', 3)->first();
+
+                \Mail::to($userParentEloquent->email)->send(new EmailVerify($userParentEloquent->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userParentEloquent->email), $bcstaff->email, $bcstaff->contact_number));
+
                 $parent_id = $parentEloquent->parent_id;
             } else {
                 $parent_id = auth()->user()->parents->parent_id;
