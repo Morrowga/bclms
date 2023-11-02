@@ -219,7 +219,7 @@ class AuthRepository implements AuthRepositoryInterface
                 ]);
                 $b2cSubEloquent = (new B2cSubscriptionEloquentModel());
                 if ($parent->subscription) {
-                    $b2cSubEloquent->subscription_id = $parent->subscription->id;
+                    $b2cSubEloquent->subscription_id = $parent->curr_subscription_id;
                 } else {
                     $plan = PlanEloquentModel::find($request->plan);
                     $start_date = Carbon::now();
@@ -233,6 +233,7 @@ class AuthRepository implements AuthRepositoryInterface
                     $subscriptionEloquent->stripe_price = 0;
                     $subscriptionEloquent->payment_status = "PAID";
                     $subscriptionEloquent->save();
+                    $parent->update(['curr_subscription_id' => $subscriptionEloquent->id]);
                     $b2cSubEloquent->subscription_id = $subscriptionEloquent->id;
                 }
                 $b2cSubEloquent->parent_id = $parent->parent_id;
