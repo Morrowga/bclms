@@ -29,7 +29,7 @@ class ResourceController extends Controller
         try {
             $resources = (new GetResources(auth()->user()))->handle();
             $resourceStorage = (new GetResourceStorage(auth()->user()))->handle();
-
+            // dd($resourceStorage);
             if (auth()->user()->organisation_id) {
 
                 $requestPublishData = (new GetRequestPublishData(auth()->user()))->handle();

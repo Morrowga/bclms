@@ -2,7 +2,9 @@
 
 namespace Src\BlendedConcept\Student\Application\Repositories\Eloquent;
 
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Src\Auth\Application\Mails\EmailVerify;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\B2cSubscriptionEloquentModel;
@@ -228,6 +230,9 @@ class StudentRepository implements StudentRepositoryInterface
                     "organisation_id" => null,
                     "type" => "B2B"
                 ]);
+                $bcstaff = UserEloquentModel::where('role_id', 3)->first();
+
+                \Mail::to($userEloquent->email)->send(new EmailVerify($userEloquent->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userEloquent->email), $bcstaff->email, $bcstaff->contact_number));
                 // $b2cSubscriptionEloquent = B2cSubscriptionEloquentModel::create([
                 //     "parent_id" => $parentEloquent->parent_id,
                 //     "subscription_id" => $subscriptionEloquent->id,
