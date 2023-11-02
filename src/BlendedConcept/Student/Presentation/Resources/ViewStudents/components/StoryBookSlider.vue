@@ -3,7 +3,7 @@ import { ref, defineProps } from "vue";
 import StoryBookSliderCard from "./StoryBookSliderCard.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 let model = ref(false);
-const props = defineProps(["datas"]);
+const props = defineProps(["datas", "student_id"]);
 </script>
 <template>
     <!-- <v-slide-group v-model="model" center-active show-arrows mandatory>
@@ -15,7 +15,10 @@ const props = defineProps(["datas"]);
     </v-slide-group> -->
     <swiper :slides-per-view="5" :space-between="10">
         <swiper-slide v-for="data in props.datas" :key="data.id">
-            <StoryBookSliderCard :data="data.storybook" />
+            <StoryBookSliderCard
+                :data="data.storybook"
+                :student_id="student_id"
+            />
         </swiper-slide>
     </swiper>
 </template>

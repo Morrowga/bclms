@@ -318,7 +318,10 @@ const formatDate = (dateString) => {
                         class="mr-4"
                     ></v-text-field>
                 </div>
-                <StoryBookSlider :datas="props.student.data.book_versions" />
+                <StoryBookSlider
+                    :datas="props.student.data.book_versions"
+                    :student_id="props.student.data.student_id"
+                />
             </VContainer>
             <div></div>
         </div>
