@@ -68,6 +68,7 @@ class ResourceRepository implements ResourceRepositoryInterface
                 $userEloquentModel->getMedia('videos', ['teacher_id' => $userEloquentModel->id]);
                 $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
                     ->where('teacher_id', $userEloquentModel->id)
+                    ->where('status', 'active')
                     ->with(['teacher'])
                     ->get();
 
@@ -81,6 +82,7 @@ class ResourceRepository implements ResourceRepositoryInterface
                 $userEloquentModel->getMedia('videos', ['teacher_id' => $userEloquentModel->id]);
                 $mediaItems = MediaEloquentModel::where('collection_name', 'videos')
                     ->where('teacher_id', $userEloquentModel->id)
+                    ->where('status', 'active')
                     ->with(['teacher'])
                     ->get();
 
