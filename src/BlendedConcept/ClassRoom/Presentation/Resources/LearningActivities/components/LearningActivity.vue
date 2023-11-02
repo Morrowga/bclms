@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 
-let props = defineProps(["users"]);
+let props = defineProps(["users", "h5p_contents"]);
 //## start datatable section
 let columns = [
     {
@@ -42,45 +42,63 @@ let columns = [
     },
 ];
 
-let rows = [
-    {
-        image: "/images/art.png",
-        type: {
-            title: "Flashcards",
-            subtitle: "Questions about The Airport Scene",
-        },
-        description:
-            "Understand the theme of friendship and sacrifice depicted in the movie",
-        timestamp: "2.30",
-        completed: "Yes",
-        correct: "-",
-        created_by: "Bc Staff",
-    },
-    {
-        image: "/images/art2.png",
-        type: {
-            title: "Guess the Answer",
-            subtitle: "Guess the Scene",
-        },
-        description: "To remember and recognize key moments from the movie",
-        timestamp: "1.42",
-        completed: "Yes",
-        correct: "100%",
-        created_by: "Me",
-    },
-    {
-        image: "/images/art3.png",
-        type: {
-            title: "Guess the Answer",
-            subtitle: "Guess the Scene",
-        },
-        description: "To remember and recognize key moments from the movie",
-        timestamp: "1.42",
-        completed: "Yes",
-        correct: "100%",
-        created_by: "Me",
-    },
-];
+// let rows = [
+//     {
+//         image: "/images/art.png",
+//         type: {
+//             title: "Flashcards",
+//             subtitle: "Questions about The Airport Scene",
+//         },
+//         description:
+//             "Understand the theme of friendship and sacrifice depicted in the movie",
+//         timestamp: "2.30",
+//         completed: "Yes",
+//         correct: "-",
+//         created_by: "Bc Staff",
+//     },
+//     {
+//         image: "/images/art2.png",
+//         type: {
+//             title: "Guess the Answer",
+//             subtitle: "Guess the Scene",
+//         },
+//         description: "To remember and recognize key moments from the movie",
+//         timestamp: "1.42",
+//         completed: "Yes",
+//         correct: "100%",
+//         created_by: "Me",
+//     },
+//     {
+//         image: "/images/art3.png",
+//         type: {
+//             title: "Guess the Answer",
+//             subtitle: "Guess the Scene",
+//         },
+//         description: "To remember and recognize key moments from the movie",
+//         timestamp: "1.42",
+//         completed: "Yes",
+//         correct: "100%",
+//         created_by: "Me",
+//     },
+// ];
+
+//make as previous
+const rows = computed(() => {
+  if (props.h5p_contents) {
+    return props.h5p_contents.map(content => ({
+      image: content.image ?? '-',
+      type: {
+        title: JSON.parse(content.parameters)?.interactiveVideo?.assets?.interactions[0]?.libraryTitle ?? '-',
+        subtitle: '',
+      },
+      description: JSON.parse(content.parameters)?.interactiveVideo?.assets?.interactions[0]?.libraryTitle ?? '-',
+      timestamp: JSON.parse(content.parameters).interactiveVideo?.assets?.endscreens[0]?.time ?? '-',
+      completed: content.completed ? "Yes" : "No",
+      correct: content.correct ? `${content.correct}%` : "-",
+      created_by: content.eloquent_user?.full_name ?? '-',
+    }));
+  }
+});
 
 //## truncatedText
 let truncatedText = (text) => {
