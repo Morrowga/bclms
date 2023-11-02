@@ -397,7 +397,7 @@ class ResourceRepository implements ResourceRepositoryInterface
         if ($check_b2c_parent && $check_b2c_parent->organisation_id == null) {
             return "b2c_parent";
         } else {
-            return "b2c_both_parent";
+            return "b2c_parent";
         }
     }
 
@@ -424,7 +424,6 @@ class ResourceRepository implements ResourceRepositoryInterface
             case 'decline':
                 MediaEloquentModel::whereIn('id', $ids)->update(['status' => 'active']);
                 break;
-
             case 'delete':
                 MediaEloquentModel::whereIn('id', $ids)->update(['status' => 'inactive']);
                 break;
