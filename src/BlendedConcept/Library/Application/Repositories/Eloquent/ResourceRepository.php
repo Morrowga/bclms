@@ -161,7 +161,7 @@ class ResourceRepository implements ResourceRepositoryInterface
 
                 $usedStorageBytes = MediaEloquentModel::where('collection_name', 'videos')
                     ->where('teacher_id', $userEloquentModel->id)
-                    ->whereIn('status', 'active')
+                    ->where('status', 'active')
                     ->sum('size');
 
                 $usedStorage = $usedStorageBytes / 1024 / 1024;
@@ -180,7 +180,7 @@ class ResourceRepository implements ResourceRepositoryInterface
 
                 $usedStorageBytes = MediaEloquentModel::where('collection_name', 'videos')
                     ->where('teacher_id', $userEloquentModel->id)
-                    ->whereIn('status', 'active')
+                    ->where('status', 'active')
                     ->sum('size');
 
                 $usedStorage = $usedStorageBytes / 1024 / 1024;
