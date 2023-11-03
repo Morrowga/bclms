@@ -10,20 +10,18 @@ beforeEach(function () {
     Artisan::call('migrate:fresh');
     // Seed the database with test data
     Artisan::call('db:seed');
-
-    //login as superadmin
-    $this->post('/login', [
-        'email' => 'superadmin@mail.com',
-        'password' => 'password',
-    ]);
 });
 
 test('superadmin create announcement', function () {
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
 
-    $this->assertTrue(Auth::check());
+    // Log in as the existing user
+    $this->actingAs($user);
 
-    $reponse = $this->get('/announcements');
-    $reponse->assertStatus(200);
+    $this->assertAuthenticated(); // Check if the user is authenticated
+
+    $response = $this->get('/announcements');
+    $response->assertStatus(200);
 });
 
 test('without login not access announcement', function () {
@@ -57,7 +55,12 @@ test('without other role not access announcement  ', function () {
 
 test('form submit as announcement with superadmin role', function () {
 
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    // Log in as the existing user
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $response = $this->get('/announcements');
     $response->assertStatus(200);

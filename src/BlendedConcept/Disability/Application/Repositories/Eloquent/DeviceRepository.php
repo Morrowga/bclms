@@ -24,18 +24,23 @@ class DeviceRepository implements DeviceRepositoryInterface
 
     public function createDevice(Device $device)
     {
-
         DB::beginTransaction();
+
         try {
             $deviceEloquent = DeviceMapper::toEloquent($device);
             $deviceEloquent->save();
+
             $disabilityCollection = collect($device->disability_types);
+
             $disabilityLength = $disabilityCollection->count();
             if ($disabilityLength > 0) {
-                // Attach disability types with the game
                 $deviceEloquent->disabilityTypes()->attach($device->disability_types);
             }
-            $deviceEloquent->books()->sync([$device->storybook_id]);
+
+            if($device->storybook_id != null){
+                $deviceEloquent->books()->sync([$device->storybook_id]);
+            }
+
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();

@@ -12,12 +12,6 @@ beforeEach(function () {
     Artisan::call('migrate:fresh');
     // Seed the database with test data
     Artisan::call('db:seed');
-
-    //login as superadmin
-    $this->post('/login', [
-        'email' => 'bcstaff@mail.com',
-        'password' => 'password',
-    ]);
 });
 
 test('without login not access game', function () {
@@ -51,11 +45,16 @@ test('without other role not access games', function () {
 });
 
 test('create game with bcstaff roles', function () {
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
+
+    // Log in as the existing user
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $thumbFile = UploadedFile::fake()->image('thumb.jpg'); // Change 'test.jpg' to the desired file name and extension
 
-    $gameFile = UploadedFile::fake()->image('game.jpg'); // Change 'test.jpg' to the desired file name and extension
+    $gameFile = UploadedFile::fake()->create('game.zip', 1024); // Change 'test.zip' to the desired filename
 
     $disability_type = $this->post('/disability_type', [
         'name' => 'Example',
@@ -92,17 +91,19 @@ test('create game with bcstaff roles', function () {
     $storeData->assertSessionHasErrors(['name', 'description', 'thumb', 'game', 'disability_type_id', 'devices', 'tags']);
 
     $response->assertRedirect('/games');
-
-    // Roll back the transaction to undo any database changes made during the test
 });
 
 test('update game with bcstaff roles', function () {
-    // Start a database transaction for the test
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
+
+    // Log in as the existing user
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $thumbFile = UploadedFile::fake()->image('thumb.jpg'); // Change 'test.jpg' to the desired file name and extension
 
-    $gameFile = UploadedFile::fake()->image('game.jpg'); // Change 'test.jpg' to the desired file name and extension
+    $gameFile = UploadedFile::fake()->create('game.zip', 1024); // Change 'test.zip' to the desired filename
 
     $disability_type = $this->post('/disability_type', [
         'name' => 'Example',
@@ -138,7 +139,7 @@ test('update game with bcstaff roles', function () {
     $gameId = 1; // Retrieve the teacher ID as needed
     $thumbUpdateFile = UploadedFile::fake()->image('thumbUpdate.jpg'); // Change 'test.jpg' to the desired file name and extension
 
-    $gameUpdateFile = UploadedFile::fake()->image('gameUpdate.jpg'); // Change 'test.jpg' to the desired file name and extension
+    $gameUpdateFile = UploadedFile::fake()->create('gameUpdate.zip', 1024); // Change 'test.zip' to the desired filename
 
     $update_disability_type = $this->post('/disability_type', [
         'name' => 'Example Update',
@@ -180,49 +181,52 @@ test('update game with bcstaff roles', function () {
     $response->assertRedirect('/games');
 });
 
-// test('delete game with bcstaff roles', function () {
-//     // Start a database transaction for the test
-//     $this->assertTrue(Auth::check());
+test('delete game with bcstaff roles', function () {
+    $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
 
-//     $thumbFile = UploadedFile::fake()->image('thumb.jpg'); // Change 'test.jpg' to the desired file name and extension
+    $this->actingAs($user);
 
-//     $gameFile = UploadedFile::fake()->image('game.jpg'); // Change 'test.jpg' to the desired file name and extension
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
-//     $disability_type = $this->post('/disability_type', [
-//         'name' => 'Example',
-//         'description' => 'Disability Type Description',
-//     ]);
+    $thumbFile = UploadedFile::fake()->image('thumb.jpg'); // Change 'test.jpg' to the desired file name and extension
 
-//     $disability_type->assertStatus(302);
+    $gameFile = UploadedFile::fake()->create('gameUpdate.zip', 1024); // Change 'test.zip' to the desired filename
 
-//     $device = $this->post('/accessibility_device', [
-//         'name' => 'Example Device',
-//         'description' => 'Device Description',
-//         'disability_types' => [1],
-//         'status' => "INACTIVE",
-//     ]);
+    $disability_type = $this->post('/disability_type', [
+        'name' => 'Example',
+        'description' => 'Disability Type Description',
+    ]);
 
-//     $device->assertStatus(302);
+    $disability_type->assertStatus(302);
 
-//     $response = $this->post('/games', [
-//         'name' => 'Example Game',
-//         'description' => 'Game Description',
-//         'thumb' => $thumbFile, // Use the created file instance
-//         'game' => $gameFile, // Use the created file instance
-//         'disability_type_id' => [1],
-//         'devices' => [1],
-//         'num_gold_coins' => 0,
-//         'num_silver_coins' => 0,
-//         'tags' => ['example', 'example2'],
-//     ]);
+    $device = $this->post('/accessibility_device', [
+        'name' => 'Example Device',
+        'description' => 'Device Description',
+        'disability_types' => [1],
+        'status' => "INACTIVE",
+    ]);
 
-//     $response->assertStatus(302);
+    $device->assertStatus(302);
 
-//     // Extract the survey ID from the response or retrieve it from the database
-//     $gameId = 1; // Retrieve the survey ID as needed
+    $response = $this->post('/games', [
+        'name' => 'Example Game',
+        'description' => 'Game Description',
+        'thumb' => $thumbFile, // Use the created file instance
+        'game' => $gameFile, // Use the created file instance
+        'disability_type_id' => [1],
+        'devices' => [1],
+        'num_gold_coins' => 0,
+        'num_silver_coins' => 0,
+        'tags' => ['example', 'example2'],
+    ]);
 
-//     // Attempt to delete the survey
-//     $deleteResponse = $this->delete("/games/{$gameId}");
+    $response->assertStatus(302);
 
-//     $deleteResponse->assertStatus(302);
-// });
+    $gameId = 1; // Retrieve the survey ID as needed
+
+    $deleteResponse = $this->delete("/games/{$gameId}");
+
+    $deleteResponse->assertStatus(302);
+
+    $response->assertRedirect('/games');
+});

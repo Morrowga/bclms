@@ -29,31 +29,10 @@ class OrganisationAdminSeeder extends Seeder
             'status' => 'ACTIVE',
             'email_verification_send_on' => now(),
             'profile_pic' => 'images/profile/profilefive.png',
-            // [
-            //     'role_id' => 5,
-            //     'first_name' => 'Org',
-            //     'last_name' => 'Two',
-            //     'email' => 'orgtwo@mail.com',
-            //     'password' => bcrypt('password'),
-            //     'contact_number' => '1234567890',
-            //     'status' => 'ACTIVE',
-            //     'email_verification_send_on' => now(),
-            //     'profile_pic' => 'images/profile/profilefive.png',
-            // ],
         ];
 
         $userCreate = UserEloquentModel::create($user);
-        // [
-        //     'curr_subscription_id' => $subscriptionTwo->id,
-        //     'org_admin_id' => 10,
-        //     'name' => 'organisation two',
-        //     'contact_name' => 'org two',
-        //     'contact_email' => 'orgtwo@mail.com',
-        //     'contact_number' => '973434533',
-        //     'sub_domain' => 'orgtwo',
-        //     'logo' => null,
-        //     'status' => 'INACTIVE',
-        // ]
+
 
         $subscriptionData = [
             'start_date' => now(),
@@ -86,6 +65,7 @@ class OrganisationAdminSeeder extends Seeder
         $b2bSubscriptionEloquent->num_student_license = 10;
         $b2bSubscriptionEloquent->num_teacher_license = 10;
         $b2bSubscriptionEloquent->save();
+
         $subdomain = Tenant::create([
             'id' => $organisationModel->sub_domain,
             'organisation_id' => $organisationModel->id,
