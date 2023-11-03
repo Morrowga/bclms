@@ -29,31 +29,9 @@ class OrganisationAdminSeeder extends Seeder
             'status' => 'ACTIVE',
             'email_verification_send_on' => now(),
             'profile_pic' => 'images/profile/profilefive.png',
-            // [
-            //     'role_id' => 5,
-            //     'first_name' => 'Org',
-            //     'last_name' => 'Two',
-            //     'email' => 'orgtwo@mail.com',
-            //     'password' => bcrypt('password'),
-            //     'contact_number' => '1234567890',
-            //     'status' => 'ACTIVE',
-            //     'email_verification_send_on' => now(),
-            //     'profile_pic' => 'images/profile/profilefive.png',
-            // ],
         ];
 
         $userCreate = UserEloquentModel::create($user);
-        // [
-        //     'curr_subscription_id' => $subscriptionTwo->id,
-        //     'org_admin_id' => 10,
-        //     'name' => 'organisation two',
-        //     'contact_name' => 'org two',
-        //     'contact_email' => 'orgtwo@mail.com',
-        //     'contact_number' => '973434533',
-        //     'sub_domain' => 'orgtwo',
-        //     'logo' => null,
-        //     'status' => 'INACTIVE',
-        // ]
 
         $subscriptionData = [
             'start_date' => now(),
@@ -73,7 +51,7 @@ class OrganisationAdminSeeder extends Seeder
             'contact_name' => 'org one',
             'contact_email' => 'orgone@mail.com',
             'contact_number' => '973434533',
-            'sub_domain' => 'orgone',
+            'sub_domain' => 'orgtwo',
             'logo' => null,
             'status' => 'ACTIVE',
         ];
