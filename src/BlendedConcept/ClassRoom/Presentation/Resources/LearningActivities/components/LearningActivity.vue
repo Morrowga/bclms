@@ -1,6 +1,10 @@
 <script setup>
 import { computed } from "vue";
 import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
+import {
+    serverParams,
+    searchItems,
+} from "@Composables/useServerSideDatable.js";
 
 let props = defineProps(["users", "h5p_contents"]);
 //## start datatable section
@@ -84,9 +88,9 @@ let columns = [
 
 //make as previous
 const rows = computed(() => {
-  if (props.h5p_contents) {
-    return props.h5p_contents.map(content => ({
-      image: content.image ?? '-',
+  if (props.h5p_contents.data) {
+    return props.h5p_contents.data.map(content => ({
+      image: content.image ?? '/images/art3.png',
       type: {
         title: JSON.parse(content.parameters)?.interactiveVideo?.assets?.interactions[0]?.libraryTitle ?? '-',
         subtitle: '',
@@ -116,63 +120,116 @@ const selectionChanged = (data) => {
 };
 </script>
 <template>
-    <section>
-        <VCard>
-            <VCardText class="d-flex flex-wrap gap-4">
-                <v-text-field
-                    density="compact"
-                    variant="solo"
-                    label="Search templates"
-                    append-inner-icon="mdi-magnify"
-                    single-line
-                    hide-details
-                ></v-text-field>
-            </VCardText>
-
-            <VDivider />
-
-            <vue-good-table
-                class="role-data-table"
-                styleClass="vgt-table"
-                v-on:selected-rows-change="selectionChanged"
-                :columns="columns"
-                :rows="rows"
-                :select-options="{
-                    enabled: true,
-                }"
-                :pagination-options="{
-                    enabled: true,
-                }"
-            >
-                <template #table-row="dataProps">
-                    <div
-                        v-if="dataProps.column.field == 'image'"
-                        class="flex flex-nowrap"
+    <AdminLayout>
+        <VContainer>
+            <VRow justify="space-start">
+                <VCol cols="6">
+                    <h1 class="tiggie-teacher-title">Learning Activities</h1>
+                </VCol>
+                <VCol cols="12">
+                    <VTextField
+                        placeholder="Search ..."
+                        append-inner-icon=""
+                        density="compact"
+                        @keyup.enter="searchItems"
+                        v-model="serverParams.search"
+                        rounded
                     >
-                        <v-img
-                            :src="dataProps.row.image"
-                            width="70"
-                            height="70"
+                        <template #append-inner>
+                            <VIcon icon="mdi-magnify" size="30" />
+                        </template>
+                    </VTextField>
+                </VCol>
+                <VCol cols="12">
+                    <VRow class="bg-line mx-1 rounded pa-1 mb-5" align="center">
+                        <VCol cols="1" class="">
+                            <VLabel class="tiggie-label pr-3"></VLabel>
+                        </VCol>
+                        <VCol cols="1" class="">
+                            <VLabel class="tiggie-label pr-3">Type</VLabel>
+                            <VIcon icon="mdi-menu-down"></VIcon>
+                        </VCol>
+                        <VCol cols="2">
+                            <VLabel class="tiggie-label pr-3"
+                                >Description</VLabel
+                            >
+                        </VCol>
+                        <VCol cols="2">
+                            <VLabel class="tiggie-label pr-3">Timestamp</VLabel>
+                            <VIcon icon="mdi-menu-down"></VIcon>
+                        </VCol>
+                        <VCol cols="2">
+                            <VLabel class="tiggie-label pr-3">Completed</VLabel>
+                            <VIcon icon="mdi-menu-down"></VIcon>
+                        </VCol>
+                        <VCol cols="2">
+                            <VLabel class="tiggie-label pr-3">% Correct</VLabel>
+                            <VIcon icon="mdi-menu-down"></VIcon>
+                        </VCol>
+                        <VCol cols="2">
+                            <VLabel class="tiggie-label pr-3">Created By</VLabel>
+                            <VIcon icon="mdi-menu-down"></VIcon>
+                        </VCol>
+                    </VRow>
+                    <VRow
+                        class="bg-line mx-1 rounded pa-1 my-2"
+                        align="center"
+                        v-for="h5p_contents in rows"
+                        :key="h5p_contents.id"
+                    >
+                        <VCol cols="1">
+                            <VImg
+                                :src="h5p_contents.image"
+                                width="73px"
+                                height="56px"
+                            />
+                        </VCol>
+                        <VCol cols="1">
+                            <p class="tiggie-p">
+                                {{ h5p_contents.type.title }}
+                            </p>
+                        </VCol>
+                        <VCol cols="2">
+                            <p class="tiggie-p">
+                                {{ h5p_contents.description }}
+                            </p>
+                        </VCol>
+
+                        <VCol cols="2">
+                            <p class="tiggie-p">
+                                {{ h5p_contents.timestamp }}
+                            </p>
+                        </VCol>
+
+                        <VCol cols="2">
+                            <p class="tiggie-p">
+                                {{ h5p_contents.completed }}
+                            </p>
+                        </VCol>
+
+                        <VCol cols="2">
+                            <p class="tiggie-p">
+                                {{ h5p_contents.correct }}
+                            </p>
+                        </VCol>
+
+                        <VCol cols="2">
+                            <p class="tiggie-p">
+                                {{ h5p_contents.created_by }}
+                            </p>
+                        </VCol>
+                    </VRow>
+                    <VRow justify="center" align="center">
+                        <VPagination
+                            v-model="props.h5p_contents.current_page"
+                            variant="outlined"
+                            :length="props.h5p_contents.last_page"
                         />
-                    </div>
-                    <div v-if="dataProps.column.field == 'type'">
-                        <p class="font-weight-black mb-0">
-                            {{ dataProps.row.type.title }}
-                        </p>
-                        <p>
-                            {{ dataProps.row.type.subtitle }}
-                        </p>
-                    </div>
-                </template>
-            </vue-good-table>
-
-            <VDivider />
-
-            <v-card-actions class="d-flex justify-center">
-                <Pagination />
-            </v-card-actions>
-        </VCard>
-    </section>
+                    </VRow>
+                </VCol>
+            </VRow>
+        </VContainer>
+    </AdminLayout>
 </template>
 
 <style lang="scss">

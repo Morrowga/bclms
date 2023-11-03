@@ -33,7 +33,6 @@ class OrganisationAdminSeeder extends Seeder
 
         $userCreate = UserEloquentModel::create($user);
 
-
         $subscriptionData = [
             'start_date' => now(),
             'end_date' => now(),
@@ -52,7 +51,7 @@ class OrganisationAdminSeeder extends Seeder
             'contact_name' => 'org one',
             'contact_email' => 'orgone@mail.com',
             'contact_number' => '973434533',
-            'sub_domain' => 'orgone',
+            'sub_domain' => 'orgtwo',
             'logo' => null,
             'status' => 'ACTIVE',
         ];
