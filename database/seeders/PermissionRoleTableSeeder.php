@@ -51,8 +51,6 @@ class PermissionRoleTableSeeder extends Seeder
                         'delete_user',
                         'show_role',
                         'show_organisation',
-                        'show_announcement',
-                        'show_announcement',
                         'edit_role',
                         'edit_permission',
                         'edit_organisation',
