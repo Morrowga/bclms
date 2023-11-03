@@ -16,34 +16,61 @@ beforeEach(function () {
 
     //login as superadmin
 });
-test('blank_teacher_register_email', function () {
+test('invalid_teacher_register_email', function () {
     $data = [
+        'email' => 'test.com',
         'password' => 'password',
         'first_name' => 'tester',
         'last_name' => 'one',
         'contact_number' => '87333233',
         'password_confirmation' => 'password',
         'plan' => 1,
-        'user_type' => 'teacher',
-        'role_id' => 2
+        'user_type' => 'teacher'
     ];
     $response = $this->post('/free-plan', $data);
     $response->assertSessionHasErrors('email');
 });
 
-test('blank_parent_register_email', function () {
+test('invalid_parent_register_email', function () {
     $data = [
+        'email' => 'test.com',
         'password' => 'password',
         'first_name' => 'tester',
         'last_name' => 'one',
         'contact_number' => '87333233',
         'password_confirmation' => 'password',
         'plan' => 1,
-        'user_type' => 'parent',
-        'role_id' => 8
+        'user_type' => 'parent'
     ];
     $response = $this->post('/free-plan', $data);
     $response->assertSessionHasErrors('email');
+});
+
+
+test('blank_teacher_register', function () {
+    $data = [
+        'plan' => 1,
+        'user_type' => 'teacher'
+    ];
+    $response = $this->post('/free-plan', $data);
+    $response->assertSessionHasErrors('email');
+    $response->assertSessionHasErrors('first_name');
+    $response->assertSessionHasErrors('last_name');
+    $response->assertSessionHasErrors('password');
+    $response->assertSessionHasErrors('contact_number');
+});
+
+test('blank_parent_register', function () {
+    $data = [
+        'plan' => 1,
+        'user_type' => 'parent'
+    ];
+    $response = $this->post('/free-plan', $data);
+    $response->assertSessionHasErrors('email');
+    $response->assertSessionHasErrors('first_name');
+    $response->assertSessionHasErrors('last_name');
+    $response->assertSessionHasErrors('password');
+    $response->assertSessionHasErrors('contact_number');
 });
 
 // /**
@@ -61,21 +88,18 @@ test('unique_teacher_register_email', function () {
         'password' => 'password',
         'password_confirmation' => 'password',
         'contact_number' => '0923434',
-        'plan' => 1,
-        'user_type' => 'teacher',
-        'role_id' => 2
     ];
     $existingUser = UserEloquentModel::create($data);
+    $testUser = UserEloquentModel::where('email', 'testuser@mail.com')->first();
     $response = $this->post('/free-plan', [
         'first_name' => $existingUser->first_name,
         'last_name' => $existingUser->last_name,
-        'email' => $existingUser->email,
+        'email' => $testUser->email,
         'password' => 'password',
         'password_confirmation' => 'password',
         'contact_number' => $existingUser->contact_number,
         'plan' => 1,
-        'user_type' => 'teacher',
-        'role_id' => 2
+        'user_type' => 'teacher'
     ]);
 
     // dd($response);
@@ -87,69 +111,98 @@ test('unique_teacher_register_email', function () {
 //  *
 //  *  @return  bool True
 //  */
-// test('blank login email or password', function () {
-//     $data = [
-//         'email' => '',
-//         'password' => 'password',
-//     ];
-//     $response = $this->post('login', $data);
-//     $response->assertSessionHasErrors('email');
+test('blank login email or password', function () {
+    $data = [
+        'email' => '',
+        'password' => 'password',
+    ];
+    $response = $this->post('login', $data);
+    $response->assertSessionHasErrors('email');
 
-//     $data = [
-//         'email' => 'testing@testing.com',
-//         'password' => '',
-//     ];
-//     $response = $this->post('login', $data);
-//     $response->assertSessionHasErrors('password');
-// });
+    $data = [
+        'email' => 'testing@testing.com',
+        'password' => '',
+    ];
+    $response = $this->post('login', $data);
+    $response->assertSessionHasErrors('password');
+});
 
 // /**
 //  *  check invalid email address
 //  *
 //  *  @return bool True
 //  */
-// test('invalid_login_email', function () {
-//     $data = [
-//         'email' => 'testing.com',
-//         'password' => Hash::make('password'),
-//     ];
-//     $response = $this->post('login', $data);
-//     $response->assertSessionHasErrors('email');
-// });
+test('invalid_login_email', function () {
+    $data = [
+        'email' => 'testing.com',
+        'password' => Hash::make('password'),
+    ];
+    $response = $this->post('login', $data);
+    $response->assertSessionHasErrors('email');
+});
 
-// /**
-//  *  check email and password mismatch
-//  *
-//  *   @return  bool True
-//  */
+
+test('email_not_verified', function () {
+    $data = [
+        'first_name' => 'Tester',
+        'last_name' => 'One',
+        'email' => 'testuser@mail.com',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+        'contact_number' => '0923434',
+        'email_verification_send_on' => null,
+    ];
+    $existingUser = UserEloquentModel::create($data);
+    $this->assertTrue($existingUser->email_verification_send_on === null);
+});
+
+test('email_verified', function () {
+    $data = [
+        'first_name' => 'Tester',
+        'last_name' => 'One',
+        'email' => 'testuser@mail.com',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+        'contact_number' => '0923434',
+        'email_verification_send_on' => now(),
+    ];
+
+    $existingUser = UserEloquentModel::create($data);
+    $this->assertTrue($existingUser->email_verification_send_on !== null);
+});
+
+/**
+ *  check email and password mismatch
+ *
+ *   @return  bool True
+ */
 // test('mismatch_login_password', function () {
 //     $data = [
-//         'first_name' => 'Admin',
+//         'first_name' => 'Tester',
 //         'last_name' => 'One',
-//         'email' => 'admin@admin.com',
+//         'email' => 'testuser@mail.com',
 //         'password' => 'password',
+//         'password_confirmation' => 'password',
+//         'contact_number' => '0923434',
 //         'email_verification_send_on' => Carbon::now(),
 //     ];
 //     $existingUser = UserEloquentModel::create($data);
-
 //     $response = $this->post('login', [
 //         'email' => $existingUser->email,
 //         'password' => Hash::make('passwords'),
 //     ]);
 
-//     // dd($response);
-
 //     $response->assertInertia(function (AssertableInertia $page) {
 //         $props = $page->toArray();
-//         expect($props['props']['errorMessage'])->toBe('Invalid Login Credential');
+//         // expect($props['props']['errorMessage'])->toBe('Invalid Login Credential');
 //     });
 // });
 
-// /***
-//  *  check user for valid login and redirect to home page
-//  *
-//  *
-//  */
+/***
+ *  check user for valid login and redirect to home page
+ *
+ *
+ */
 // test('match_login_password', function () {
 //     $data = [
 //         'first_name' => 'Admin',

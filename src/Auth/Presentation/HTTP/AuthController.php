@@ -326,6 +326,7 @@ class AuthController extends Controller
 
     public function chooseFreePlan(StoreRegisterRequest $request)
     {
+        // dd($request->email);
         try {
             $this->authInterface->chooseFreePlan($request);
         } catch (\Exception $e) {
