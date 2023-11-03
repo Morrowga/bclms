@@ -569,7 +569,6 @@ H5P.VideoYouTube = (function ($) {
 // Register video handler
 H5P.videoHandlers = H5P.videoHandlers || [];
 H5P.videoHandlers.push(H5P.VideoYouTube);
-console.log("Youtube");
 
 
 
