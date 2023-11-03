@@ -10,12 +10,6 @@ beforeEach(function () {
     Artisan::call('migrate:fresh');
     // Seed the database with test data
     Artisan::call('db:seed');
-
-    //login as superadmin
-    $this->post('/login', [
-        'email' => 'superadmin@mail.com',
-        'password' => 'password',
-    ]);
 });
 
 /***
@@ -30,8 +24,11 @@ beforeEach(function () {
 
 test('superadmin only create permission', function () {
 
-    //auth check
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $response = $this->post('/permissions', [
         'name' => 'new permission',
@@ -50,8 +47,11 @@ test('superadmin only create permission', function () {
  */
 test('create permission mission permission name', function () {
 
-    //auth check
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $response = $this->post('/permissions', [
         'name' => '',
@@ -89,8 +89,6 @@ test('create permission without not superadmin roles', function () {
         'role_id' => 2,
         'email_verified_at' => Carbon::now(),
     ]);
-
-    // $user->roles()->sync(2);
 
     if (Auth::attempt(['email' => 'testinguser@gmail.com', 'password' => 'password'])) {
         $response = $this->post('/permissions', [
