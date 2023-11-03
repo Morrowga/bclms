@@ -29,5 +29,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/conduct_lessons', [ConductLessonController::class, 'index'])->name('conduct_lessons.index');
     Route::get('/conduct_lessons/show', [ConductLessonController::class, 'show'])->name('conduct_lessons.show');
 
-    Route::get('/learning_activities/{storybook}', [LearningActivityController::class, 'index'])->name('learning_activities.index');
+    Route::get('/learning_activities/{storybook}/{student}', [LearningActivityController::class, 'index'])->name('learning_activities.index');
 });

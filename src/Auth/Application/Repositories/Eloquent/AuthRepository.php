@@ -156,7 +156,7 @@ class AuthRepository implements AuthRepositoryInterface
                 $parentEloquent = (new ParentEloquentModel());
                 $parentEloquent->user_id = $userEloquent->id;
                 $parentEloquent->type = "B2C";
-                $parentEloquent->curr_subscription_id = null;
+                $parentEloquent->curr_subscription_id = $subscriptionEloquent->id;
                 $parentEloquent->save();
 
                 $b2cSubEloquent = (new B2cSubscriptionEloquentModel());

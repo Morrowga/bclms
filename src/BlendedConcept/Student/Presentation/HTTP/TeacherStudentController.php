@@ -50,6 +50,7 @@ class TeacherStudentController
     {
         abort_if(authorize('show', TeacherStudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $student = (new ShowStudent($id))->handle();
+
         return Inertia::render(config('route.teacher_students.show'), compact('student'));
     }
     public function store(storeStudentRequest $request)

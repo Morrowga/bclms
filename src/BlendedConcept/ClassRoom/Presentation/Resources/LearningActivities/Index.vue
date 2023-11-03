@@ -3,7 +3,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import LearningActivity from "./components/LearningActivity.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { ref } from "vue";
-let props = defineProps(["storybook"]);
+let props = defineProps(["storybook", "h5p_contents", "student"]);
 let tab = ref(false);
 const setImage = () => {
     return props.storybook.thumbnail_img == "" || !props.storybook.thumbnail_img
@@ -85,17 +85,23 @@ const setImage = () => {
             </v-row>
             <v-row>
                 <v-col cols="12">
-                    <LearningActivity />
+                    <LearningActivity :h5p_contents="h5p_contents" />
                 </v-col>
                 <v-col cols="12" class="d-flex justify-center">
-                    <v-btn
-                        variant="flat"
-                        rounded
-                        color="rgba(55, 73, 233, 0.10)"
-                        class="text-primary"
-                        width="200"
-                        >Back</v-btn
+                    <Link
+                        :href="
+                            route('teacher_students.show', student.student_id)
+                        "
                     >
+                        <v-btn
+                            variant="flat"
+                            rounded
+                            color="rgba(55, 73, 233, 0.10)"
+                            class="text-primary"
+                            width="200"
+                            >Back</v-btn
+                        >
+                    </Link>
                 </v-col>
             </v-row>
         </VContainer>

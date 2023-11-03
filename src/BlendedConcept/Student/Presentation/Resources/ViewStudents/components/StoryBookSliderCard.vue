@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { router } from "@inertiajs/core";
 let is_description = ref(false);
 let is_chip = ref(true);
-const props = defineProps(["data"]);
+const props = defineProps(["data", "student_id"]);
 const setImage = () => {
     return props.data.thumbnail_img == "" || !props.data.thumbnail_img
         ? "/images/defaults/organisation_logo.png"
@@ -16,7 +16,10 @@ const setImage = () => {
         class="grab-pointer"
         @click="
             router.get(
-                route('learning_activities.index', { storybook: data.id })
+                route('learning_activities.index', {
+                    storybook: data.id,
+                    student: student_id,
+                })
             )
         "
     >
