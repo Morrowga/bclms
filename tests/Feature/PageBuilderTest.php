@@ -9,17 +9,16 @@ beforeEach(function () {
     Artisan::call('migrate:fresh');
     // Seed the database with test data
     Artisan::call('db:seed');
-
-    //login as superadmin
-    $this->post('/login', [
-        'email' => 'superadmin@mail.com',
-        'password' => 'password',
-    ]);
 });
 
 test('page builder   access for superadmin and back button to home', function () {
 
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
+
     $this->get('/bc/admin');
 
     $response = $this->get('/home');
