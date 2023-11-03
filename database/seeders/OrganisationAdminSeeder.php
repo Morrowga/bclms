@@ -64,6 +64,7 @@ class OrganisationAdminSeeder extends Seeder
         $b2bSubscriptionEloquent->num_student_license = 10;
         $b2bSubscriptionEloquent->num_teacher_license = 10;
         $b2bSubscriptionEloquent->save();
+
         $subdomain = Tenant::create([
             'id' => $organisationModel->sub_domain,
             'organisation_id' => $organisationModel->id,

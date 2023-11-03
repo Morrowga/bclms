@@ -30,7 +30,6 @@ class PlayListController
                 'playlists' => $playlists,
             ]);
         } catch (\Exception $e) {
-            dd($e);
             return redirect()->route('playlists.index')->with('errorMessage', $e->getMessage());
         }
     }
