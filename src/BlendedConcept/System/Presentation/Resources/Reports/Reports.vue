@@ -76,8 +76,7 @@ const exportExcel = async () => {
                     <span v-else class="report-text ruddy-bold">Reports</span>
                 </VCol>
                 <VCol cols="6"  v-if="
-                    user_role != 'BC Super Admin' ||
-                    user_role != 'BC Staff'
+                    user_role == 'Organisation Admin'
                 ">
                 <div class="text-right">
                     <VBtn prepend-icon="mdi-download" @click="exportExcel" class="ruddy-bold text-white">Export</VBtn>
