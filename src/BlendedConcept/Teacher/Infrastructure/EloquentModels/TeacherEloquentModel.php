@@ -41,6 +41,7 @@ class TeacherEloquentModel extends Authenticatable
     public function scopeFilter($query, $filters)
     {
     }
+
     public function classrooms()
     {
         return $this->belongsToMany(ClassRoomEloquentModel::class, 'classroom_teachers', 'teacher_id', 'classroom_id');

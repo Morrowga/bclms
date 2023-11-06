@@ -46,7 +46,12 @@ const setImage = (organisations_student) => {
         <v-container class="width-80">
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-img :src="setImage(organisations_student)" />
+                    <v-img
+                        :src="setImage(organisations_student)"
+                        width="540"
+                        :aspect-ratio="1"
+                        cover
+                    />
                 </v-col>
                 <v-col cols="12" md="6" class="pa-5">
                     <div class="d-flex justify-space-between align-center">

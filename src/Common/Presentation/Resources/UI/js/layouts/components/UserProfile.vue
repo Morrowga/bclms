@@ -30,6 +30,8 @@ const logout = () => {
             <VImg
                 v-if="userData?.data && userData?.data?.image"
                 :src="userData?.data?.image"
+                width="540"
+                :aspect-ratio="1"
             />
             <VIcon v-else icon="mdi-account-outline" />
 

@@ -15,7 +15,7 @@ const deleteTeacher = (id) => {
         onConfirm: () => {
             router.delete(id, {
                 onSuccess: () => {
-                    FlashMessage({ flash })
+                    FlashMessage({ flash });
                 },
             });
         },
@@ -32,7 +32,12 @@ const setImage = (teacher) => {
         <v-container>
             <v-row justify="center">
                 <v-col cols="6">
-                    <VImg :src="setImage(props.teacher.data)" />
+                    <VImg
+                        :src="setImage(props.teacher.data)"
+                        width="540"
+                        :aspect-ratio="1"
+                        cover
+                    />
                 </v-col>
                 <v-col cols="6">
                     <v-text class="teacherprofile-title">Profile</v-text>
