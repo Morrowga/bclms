@@ -2,10 +2,13 @@
 
 namespace Src\BlendedConcept\System\Presentation\HTTP;
 
-use Illuminate\Http\Response;
 use Inertia\Inertia;
-use Src\BlendedConcept\System\Application\Policies\ExportDataPolicy;
+use Illuminate\Http\Response;
+use Maatwebsite\Excel\Facades\Excel;
+use Src\Common\Application\Exports\ReportExport;
 use Src\Common\Infrastructure\Laravel\Controller;
+use Src\BlendedConcept\System\Application\Policies\ExportDataPolicy;
+use Src\BlendedConcept\System\Application\UseCases\Queries\Reports\ReportExportQuery;
 
 class ReportController extends Controller
 {
@@ -14,5 +17,12 @@ class ReportController extends Controller
         abort_if(authorize('view', ExportDataPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return Inertia::render(config('route.reports.reports'));
+    }
+
+    public function reportExport()
+    {
+        $data = (new ReportExportQuery())->handle();
+        
+        return Excel::download(new ReportExport($data), 'reports.xlsx');
     }
 }

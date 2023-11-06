@@ -4,20 +4,22 @@ namespace Src\BlendedConcept\System\Application\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-use Src\BlendedConcept\System\Application\Repositories\Eloquent\AnnouncementRepository;
-use Src\BlendedConcept\System\Application\Repositories\Eloquent\DashboardRepository;
-use Src\BlendedConcept\System\Application\Repositories\Eloquent\NotificationRepository;
-use Src\BlendedConcept\System\Application\Repositories\Eloquent\PageBuilderRepository;
-use Src\BlendedConcept\System\Application\Repositories\Eloquent\PlanRepository;
-use Src\BlendedConcept\System\Application\Repositories\Eloquent\SettingRepository;
-use Src\BlendedConcept\System\Application\Repositories\Eloquent\TechnicalSupportRepository;
-use Src\BlendedConcept\System\Domain\Repositories\AnnouncementRepositoryInterface;
-use Src\BlendedConcept\System\Domain\Repositories\DashboardRepositoryInterface;
-use Src\BlendedConcept\System\Domain\Repositories\NotificationRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\PageBuilderInterface;
 use Src\BlendedConcept\System\Domain\Repositories\PlanRepositoryInterface;
+use Src\BlendedConcept\System\Domain\Repositories\ReportRepositoryInterface;
 use Src\BlendedConcept\System\Domain\Repositories\SettingRepositoryInterface;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\PlanRepository;
+use Src\BlendedConcept\System\Domain\Repositories\DashboardRepositoryInterface;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\ReportRepository;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\SettingRepository;
+use Src\BlendedConcept\System\Domain\Repositories\AnnouncementRepositoryInterface;
+use Src\BlendedConcept\System\Domain\Repositories\NotificationRepositoryInterface;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\DashboardRepository;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\PageBuilderRepository;
 use Src\BlendedConcept\System\Domain\Repositories\TechnicalSupportRepositoryInterface;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\AnnouncementRepository;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\NotificationRepository;
+use Src\BlendedConcept\System\Application\Repositories\Eloquent\TechnicalSupportRepository;
 
 class SystemServiceProvider extends ServiceProvider
 {
@@ -58,6 +60,11 @@ class SystemServiceProvider extends ServiceProvider
         $this->app->bind(
             DashboardRepositoryInterface::class,
             DashboardRepository::class
+        );
+
+        $this->app->bind(
+            ReportRepositoryInterface::class,
+            ReportRepository::class
         );
     }
 }

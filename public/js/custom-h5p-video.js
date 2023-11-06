@@ -236,4 +236,3 @@ H5P.Video = (function ($, ContentCopyrights, MediaCopyright, handlers) {
   })(H5P.jQuery, H5P.ContentCopyrights, H5P.MediaCopyright, H5P.videoHandlers || []);
 
   
-  console.log("Video");
