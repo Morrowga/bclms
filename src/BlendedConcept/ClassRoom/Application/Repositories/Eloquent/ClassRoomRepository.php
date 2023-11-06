@@ -144,7 +144,8 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
                 "allocated_storage_limit" => $user->b2bUser->allocated_storage_limit,
                 "contact_number" => $user->contact_number,
                 "image_url" => $user->image_url,
-                "left_storage" => $left_storage
+                "left_storage" => $left_storage,
+                "b2b_user" => $user->b2bUser
             ];
         });
         return ["data" => $array_data];
