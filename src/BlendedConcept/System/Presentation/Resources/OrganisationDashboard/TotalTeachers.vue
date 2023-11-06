@@ -64,7 +64,12 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
             >
                 <TeacherAvatar
                     class="py-2"
-                    :route="route('organisations-teacher.show', teacher.id)"
+                    :route="
+                        route('organisations-teacher.show', {
+                            organisations_teacher: teacher.id,
+                            route: 'home',
+                        })
+                    "
                     :image="userImage(teacher)"
                     :title="teacher.full_name"
                     :phone_number="teacher.contact_number"
