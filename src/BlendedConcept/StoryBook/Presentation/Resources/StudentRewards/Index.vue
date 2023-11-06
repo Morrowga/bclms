@@ -146,6 +146,7 @@ onMounted(() => {
                                     isOpen == false &&
                                     getXPosition(sticker) < 100
                                 "
+                                :index="index"
                                 :data="sticker"
                                 :imageSrc="sticker.file_src"
                                 :pox="getXPosition(sticker)"

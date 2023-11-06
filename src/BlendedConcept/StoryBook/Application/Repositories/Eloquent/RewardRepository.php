@@ -142,19 +142,28 @@ class RewardRepository implements RewaredRepositoryInterface
         DB::beginTransaction();
         try {
             $student = auth()->user()->student;
-            if ($student->num_gold_coins <= 0 && $student->num_silver_coins <= 0) {
-                return throw new \Exception("Coins Not Enough!");
-            } else if ($student->num_gold_coins <= 0) {
+            $coin_type = request('coin_type');
+
+            if ($coin_type == 'gold' && $student->num_gold_coins <= 0) {
                 return throw new \Exception("Gold Coins Not Enough!");
-            } else if ($student->num_silver_coins <= 0) {
+            }
+            if ($coin_type == 'silver' && $student->num_silver_coins <= 0) {
                 return throw new \Exception("Silver Coins Not Enough!");
             } else {
-                $rest_gold_coins = $student->num_gold_coins - $reward->gold_coins_needed;
-                $rest_silver_coins = $student->num_silver_coins - $reward->silver_coins_needed;
-                $student->update([
-                    "num_gold_coins" => $rest_gold_coins,
-                    "num_silver_coins" => $rest_silver_coins
-                ]);
+                if ($coin_type == 'gold') {
+
+                    $rest_gold_coins = $student->num_gold_coins - $reward->gold_coins_needed;
+                    $student->update([
+                        "num_gold_coins" => $rest_gold_coins
+                    ]);
+                } else {
+                    $rest_silver_coins = $student->num_silver_coins - $reward->silver_coins_needed;
+                    $student->update([
+
+                        "num_silver_coins" => $rest_silver_coins
+                    ]);
+                }
+
                 $data = $reward->students()->attach([$student->student_id]);
             }
             DB::commit();

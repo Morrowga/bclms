@@ -4,14 +4,17 @@ import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
 let props = defineProps(["route", "data"]);
 let flash = computed(() => usePage().props.flash);
-const form = useForm({});
+const form = useForm({
+    coin_type: "",
+});
 const isDialogVisible = ref(false);
 
-const ownSticker = (id) => {
+const ownSticker = (id, coin_type) => {
+    form.coin_type = coin_type;
     form.post(route("own-sticker", { reward: id }), {
         onSuccess: () => {
             isDialogVisible.value = false;
-            FlashMessage({ flash })
+            FlashMessage({ flash });
         },
     });
 };
@@ -37,13 +40,13 @@ const ownSticker = (id) => {
                 </v-chip>
             </div>
         </VCard>
-        <VDialog v-model="isDialogVisible" width="800">
+        <VDialog v-model="isDialogVisible" width="850">
             <!-- Activator -->
             <!-- Dialog Content -->
             <VCard class="detail-card">
                 <VCardText>
                     <VRow>
-                        <VCol cols="6">
+                        <VCol cols="4">
                             <div class="d-flex justify-center">
                                 <img
                                     :src="data.image_url"
@@ -52,7 +55,7 @@ const ownSticker = (id) => {
                                 />
                             </div>
                         </VCol>
-                        <VCol cols="6">
+                        <VCol cols="8">
                             <div class="text-center">
                                 <span class="head-detail ruddy-bold">{{
                                     data.title
@@ -68,13 +71,20 @@ const ownSticker = (id) => {
                                     {{ data.description }}
                                 </span>
                             </div>
-                            <div class="mt-5 d-flex justify-center">
+                            <div class="mt-5 d-flex justify-center gap-6">
                                 <v-btn
-                                    @click="ownSticker(data.id)"
+                                    @click="ownSticker(data.id, 'silver')"
                                     class="detail-btn"
                                     variant="flat"
                                     color="#FF6262"
-                                    >Own This Sticker Now!</v-btn
+                                    >Buy With Silver Coin!</v-btn
+                                >
+                                <v-btn
+                                    @click="ownSticker(data.id, 'gold')"
+                                    class="detail-btn"
+                                    variant="flat"
+                                    color="#FF6262"
+                                    >Buy With Gold Coin!</v-btn
                                 >
                             </div>
                         </VCol>

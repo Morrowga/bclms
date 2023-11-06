@@ -23,6 +23,9 @@ const props = defineProps({
     poy: {
         default: 0,
     },
+    index: {
+        default: 0,
+    },
     data: {
         type: Object,
         default: null,
@@ -65,15 +68,24 @@ const stopDragging = (event) => {
         form.post(route("drop-sticker", { reward: props.data.id }), {
             preserveScroll: true,
             onSuccess: (e) => {
-                FlashMessage({ flash })
+                // FlashMessage({ flash })
             },
         });
         // Remove event listeners from the document
     } else {
         isDragging.value = false;
         emit("isDragging", false);
-        positionX.value = props.pox;
-        positionY.value = props.poy;
+        positionX.value = 0;
+        positionY.value = props.index * 80;
+        form.x_axis_position = 0;
+        form.y_axis_position = 0;
+        form.sticker_id = props.data.pivot.id;
+        form.post(route("drop-sticker", { reward: props.data.id }), {
+            preserveScroll: true,
+            onSuccess: (e) => {
+                // FlashMessage({ flash })
+            },
+        });
     }
     document.removeEventListener("mousemove", dragImage);
     document.removeEventListener("mouseup", stopDragging);
