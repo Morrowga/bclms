@@ -5,29 +5,32 @@ let props = defineProps(["route", "count", "iframeSrc"]);
 const isDialogVisible = ref(false);
 </script>
 <template #activator="{ props }">
-    <div class="d-flex justify-center">
-        <iframe
-            class="videoplayer"
-            :src="iframeSrc"
-            frameborder="0"
-            allowfullscreen
-        ></iframe>
-        <!-- <img :src="image" class="videoplayer" @click="isDialogVisible = true" alt=""> -->
+    <div>
+        <div class="d-flex justify-center">
+            <iframe
+                class="videoplayer"
+                :src="iframeSrc"
+                frameborder="0"
+                allowfullscreen
+            ></iframe>
+            <!-- <img :src="image" class="videoplayer" @click="isDialogVisible = true" alt=""> -->
+        </div>
+        <VDialog v-model="isDialogVisible" width="700">
+            <VCard class="gameover-card">
+                <VCardText>
+                    <div class="d-flex justify-center text-center">
+                        <span class="ruddy-bold gameover-text ruddy-bold"
+                            >congratulations,
+                            <strong class="ruddy-bold">100 Stars</strong> has
+                            been
+                            <br />
+                            added to your account!</span
+                        >
+                    </div>
+                </VCardText>
+            </VCard>
+        </VDialog>
     </div>
-    <VDialog v-model="isDialogVisible" width="700">
-        <VCard class="gameover-card">
-            <VCardText>
-                <div class="d-flex justify-center text-center">
-                    <span class="ruddy-bold gameover-text ruddy-bold"
-                        >congratulations,
-                        <strong class="ruddy-bold">100 Stars</strong> has been
-                        <br />
-                        added to your account!</span
-                    >
-                </div>
-            </VCardText>
-        </VCard>
-    </VDialog>
 </template>
 <style scoped>
 .gameover-card {
