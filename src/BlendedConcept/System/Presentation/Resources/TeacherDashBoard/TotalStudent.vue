@@ -57,6 +57,7 @@ const userImage = (user) => {
                 :key="student.id"
             >
                 <StudentAvatar
+                    :route="route('teacher_students.show', student.student_id)"
                     :image="userImage(student.user)"
                     :title="student?.user?.full_name"
                     :phone_number="student?.parent?.user?.contact_number"

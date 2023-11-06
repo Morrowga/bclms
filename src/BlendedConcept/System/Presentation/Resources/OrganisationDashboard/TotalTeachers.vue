@@ -64,10 +64,11 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
             >
                 <TeacherAvatar
                     class="py-2"
+                    :route="route('organisations-teacher.show', teacher.id)"
                     :image="userImage(teacher)"
                     :title="teacher.full_name"
                     :phone_number="teacher.contact_number"
-                    storage="135 MB/ 200 MB"
+                    :storage="`${teacher.used_storage}/ ${teacher.allocated_storage_limit}`"
                 />
             </v-col>
         </VRow>

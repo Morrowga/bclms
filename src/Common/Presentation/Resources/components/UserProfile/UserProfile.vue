@@ -21,31 +21,30 @@ const hasSurvey = ref(false);
 
 const logout = () => {
     const PREFIX =
-        (localStorage.getItem("tenant") != "" || Object.is(localStorage.getItem('tenant',null)))
-        ? `/${localStorage.getItem("tenant")}`
+        localStorage.getItem("tenant") != "" ||
+        Object.is(localStorage.getItem("tenant", null))
+            ? `/${localStorage.getItem("tenant")}`
             : "";
     localStorage.removeItem("menu_title");
 
-    if(localStorage.getItem("tenant") != "" || Object.is(localStorage.getItem('tenant',null)))
-    {
-        router.post('/logout');
-    }
-
-    else
-    {
+    if (
+        localStorage.getItem("tenant") != "" ||
+        Object.is(localStorage.getItem("tenant", null))
+    ) {
+        router.post("/logout");
+    } else {
         router.post(`${PREFIX}/logout`);
     }
-
 };
 
 const checkSurvey = () => {
-    if(user_survey_logout.value){
+    if (user_survey_logout.value) {
         hasSurvey.value = true;
         console.log(hasSurvey.value);
     } else {
-        logout()
+        logout();
     }
-}
+};
 
 const dynamicProfileLink = () => {
     console.log(user_role.value);
@@ -74,6 +73,8 @@ const dynamicProfileLink = () => {
             <VImg
                 v-if="userData?.data && userData?.data?.image"
                 :src="userData?.data?.image"
+                width="540"
+                :aspect-ratio="1"
             />
             <VIcon v-else icon="mdi-account-outline" />
 
@@ -146,8 +147,9 @@ const dynamicProfileLink = () => {
                 </VList>
             </VMenu>
             <UserExperienceSurvey
-            v-model:hasSurvey="hasSurvey"
-            :data="user_survey_logout" />
+                v-model:hasSurvey="hasSurvey"
+                :data="user_survey_logout"
+            />
             <!-- !SECTION -->
         </VAvatar>
     </VBadge>
