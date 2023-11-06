@@ -84,7 +84,7 @@ class AuthService
                 'email' => request('email'),
                 'password' => request('password'),
             ])) {
-                $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'from' => '', 'to' => '', 'icon' =>  'mdi-human-greeting', 'type' => 'success']));
+                // $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'from' => '', 'to' => '', 'icon' =>  'mdi-human-greeting', 'type' => 'success']));
 
                 return ['errorMessage' => 'Successfully', 'isCheck' => true];
             } else {
