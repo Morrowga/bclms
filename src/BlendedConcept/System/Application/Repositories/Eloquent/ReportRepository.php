@@ -9,11 +9,11 @@ use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentMode
 
 class ReportRepository implements ReportRepositoryInterface
 {
-    public function reportExport(){
-        $students = StudentEloquentModel::where('organisation_id', auth()->user()->org_admin->organisation_id)->with(['device'])->get();
-
+    public function reportExport()
+    {
         $excels = [];
 
+        $students = $this->checkUserType(auth()->user()->role->name);
         foreach($students as $student){
             $data = [
                 'Age of Child' => $this->calculateAge($student->dob),
@@ -39,5 +39,44 @@ class ReportRepository implements ReportRepositoryInterface
         $years = $age->y;
 
         return $years;
+    }
+
+    public function checkUserType($role)
+    {
+        $excels = [];
+
+        switch ($role) {
+            case 'Organisation Admin':
+                $students = StudentEloquentModel::where('organisation_id', auth()->user()->org_admin->organisation_id)->with(['device'])->get();
+                return $students;
+                break;
+            case 'B2C Parent':
+                $students = StudentEloquentModel::where('parent_id', auth()->user()->parents->parent_id)->with(['device'])->get();
+                return $students;
+                break;
+            case 'Both Parent':
+                $students = StudentEloquentModel::where('parent_id', auth()->user()->parents->parent_id)->with(['device'])->get();
+                return $students;
+                break;
+            case 'BC Subscriber':
+                $students = auth()->user()->b2bUser->students;
+                return $students;
+                break;
+            case 'Teacher':
+                $students = [];
+                $classrooms = auth()->user()->b2bUser->classrooms;
+                if($classrooms != null){
+                    foreach($classrooms as $classroom){
+                        foreach($classroom->students as $student){
+                            $students[] = $student;
+                        }
+                    }
+                    return $students;
+                }
+                break;
+            default:
+                break;
+        }
+
     }
 }

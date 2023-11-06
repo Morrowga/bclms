@@ -46,7 +46,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
                 $announmentEloquent->users()->attach($userArray, $is_cleared);
                 foreach ($userArray as $userId) {
                     $user = UserEloquentModel::find($userId);
-                    $user->notify(new BcNotification(['message' => $request->title, 'from' => $request->by, 'to' => $user->full_name,'icon' => $request->icon, 'type' => $request->type ?? '']));
+                    $user->notify(new BcNotification(['message' => $request->title, 'from' => $request->by, 'to' => $user->full_name,'icon' => $request->icon, 'type' => 'HomeAnnounce']));
                 }
             }
 
