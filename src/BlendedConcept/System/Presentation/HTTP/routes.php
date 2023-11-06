@@ -79,6 +79,8 @@ Route::group(['middleware' => ['auth']], function () {
     //reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
+    Route::post('/reports/excel', [ReportController::class, 'reportExport'])->name('reports.export');
+
 });
 
 Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
