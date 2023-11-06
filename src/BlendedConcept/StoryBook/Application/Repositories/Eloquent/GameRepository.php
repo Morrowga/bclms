@@ -69,8 +69,6 @@ class GameRepository implements GameRepositoryInterface
             if (request()->hasFile('game') && request()->file('game')->isValid()) {
                 $zipFile = request()->file('game');
 
-                $gameEloquent->addMediaFromRequest('game')->toMediaCollection('gamezip', 'media_game');
-
                 // Get the original file name
                 $originalFileName = pathinfo($zipFile->getClientOriginalName(), PATHINFO_FILENAME);
 
@@ -93,6 +91,8 @@ class GameRepository implements GameRepositoryInterface
                 // Check if the 'index.html' file exists in the extracted folder
                 $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
                 $gameEloquent->game_file = $indexPath;
+
+                $gameEloquent->addMediaFromRequest('game')->toMediaCollection('gamezip', 'media_game');
             }
 
             if ($gameEloquent->getMedia('thumbnail')->isNotEmpty()) {
@@ -156,14 +156,6 @@ class GameRepository implements GameRepositoryInterface
             }
 
             if (request()->hasFile('game') && request()->file('game')->isValid()) {
-                $oldgame_zip = $gameEloquent->getFirstMedia('gamezip');
-
-                if ($oldgame_zip != null) {
-                    $oldgame_zip->forceDelete();
-                }
-
-                $newGameZip = $gameEloquent->addMediaFromRequest('game')->toMediaCollection('gamezip', 'media_game');
-
                 $gameOldFile = str_replace('/index.html', '', $gameEloquent->game_file);
                 $oldFolderPath = public_path('gamefiles/' . $gameOldFile);
 
@@ -197,6 +189,14 @@ class GameRepository implements GameRepositoryInterface
 
                 $gameEloquent->game_file = $indexPath;
                 $gameEloquent->update();
+
+                $oldgame_zip = $gameEloquent->getFirstMedia('gamezip');
+
+                if ($oldgame_zip != null) {
+                    $oldgame_zip->forceDelete();
+                }
+
+                $newGameZip = $gameEloquent->addMediaFromRequest('game')->toMediaCollection('gamezip', 'media_game');
             }
 
             $tagCollection = collect(request()->tags);
