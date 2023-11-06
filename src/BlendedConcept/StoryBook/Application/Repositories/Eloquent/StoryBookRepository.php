@@ -18,6 +18,7 @@ use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquent
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\TagEloquentModel;
 
 class StoryBookRepository implements StoryBookRepositoryInterface
@@ -100,6 +101,15 @@ class StoryBookRepository implements StoryBookRepositoryInterface
 
             // Associate tags
             $storybookEloquent->associateTags(request()->tags);
+
+            $teachers = TeacherEloquentModel::pluck('id');
+            // foreach ($teachers as $teacherId) {
+
+            //     $storybookVersion = (new StoryBookVersionEloquentModel);
+            //     $storybookVersion->teacher_id = $teacher;
+            //     $storybookVersion
+            // }
+
             setcookie("h5p_id", "", time() - 3600, "/");
             // Add media to media library
             if (request()->hasFile('thumbnail_img') && request()->file('thumbnail_img')->isValid()) {
@@ -121,6 +131,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                     }
                 }
             }
+
             $organisations = OrganisationEloquentModel::get();
 
             foreach ($organisations  as $org) {

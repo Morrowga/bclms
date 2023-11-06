@@ -8,6 +8,8 @@ import { checkPermission } from "@actions/useCheckPermission";
 import { FlashMessage } from "@actions/useFlashMessage";
 let props = defineProps(["teacher"]);
 let flash = computed(() => usePage().props.flash);
+const buttonLink = ref("");
+
 const deleteTeacher = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",
@@ -26,6 +28,14 @@ const setImage = (teacher) => {
         ? "/images/defaults/upload_image.png"
         : teacher.profile_pic;
 };
+onMounted(() => {
+    let params = route().params;
+    if (params && params.route && params.route == "home") {
+        buttonLink.value = route("dashboard");
+    } else {
+        buttonLink.value = route("organisations-teacher.index");
+    }
+});
 </script>
 <template>
     <AdminLayout>
@@ -109,7 +119,7 @@ const setImage = (teacher) => {
             </v-row>
             <v-row justify="center">
                 <v-col cols="2">
-                    <Link :href="route('organisations-teacher.index')">
+                    <Link :href="buttonLink">
                         <v-btn
                             color="#e9eff0"
                             variant="flat"
