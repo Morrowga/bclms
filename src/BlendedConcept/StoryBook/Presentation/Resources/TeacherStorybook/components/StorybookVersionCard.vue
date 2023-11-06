@@ -67,7 +67,7 @@ const deleteItem = (id) => {
                     </v-list>
                 </v-menu>
             </v-btn>
-            <v-img :src="getImage(story_img)" />
+            <v-img :src="getImage(story_img)" height="150" cover />
         </v-card-title>
         <v-card-text class="text-center">
             <p class="text-subtitle-2 t-black">
