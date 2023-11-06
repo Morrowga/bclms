@@ -36,6 +36,7 @@ const isDialogVisible = ref(false)
 
 .videoplayer{
     width: 100%;
+    height: 100vh;
 }
 
 .gameoverimg{
