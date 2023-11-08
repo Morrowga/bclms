@@ -102,26 +102,65 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             // Associate tags
             $storybookEloquent->associateTags(request()->tags);
 
-            $teachers = TeacherEloquentModel::pluck('teacher_id');
-            foreach ($teachers as $teacherId) {
-                $storybookVersion = (new StoryBookVersionEloquentModel);
-                $storybookVersion->teacher_id = $teacherId;
-                $storybookVersion->h5p_id = $storyBook->h5p_id;
-                $storybookVersion->name = "Original Copy";
-                $storybookVersion->description = "Original Copy";
-                $storybookVersion->storybook_id = $storybookEloquent->id;
-                $storybookVersion->save();
+            $html_files = request()->html_files;
+
+            if (!empty($html_files) && count($html_files) > 0) {
+
+                foreach($html_files as $html_file){
+                    $zipFile = $html_file['file'];
+
+                    if (file_exists($zipFile) && is_file($zipFile)) {
+                        $originalFileName = pathinfo($zipFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                        $desiredFolderName = $originalFileName . $storybookEloquent->id;
+
+                        $bookDirectory = public_path('book_html5/' . $desiredFolderName);
+                        if (!file_exists($bookDirectory)) {
+                            mkdir($bookDirectory, 0755, true);
+                        }
+
+                        $zip = new ZipArchive;
+                        if ($zip->open($zipFile) === true) {
+                            $zip->extractTo($bookDirectory);
+                            $zip->close();
+                        }
+
+                        $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
+
+                        $teachers = TeacherEloquentModel::pluck('teacher_id');
+
+                        foreach ($teachers as $teacherId) {
+                            $storybookVersion = (new StoryBookVersionEloquentModel);
+                            $storybookVersion->teacher_id = $teacherId;
+                            $storybookVersion->h5p_id = null;
+                            $storybookVersion->name = $html_file['name'];
+                            $storybookVersion->description = "Original Copy";
+                            $storybookVersion->storybook_id = $storybookEloquent->id;
+                            $storybookVersion->storybook_id = $storybookEloquent->id;
+                            $storybookVersion->html5_file = $indexPath;
+                            $storybookVersion->save();
+                        }
+                    }
+                }
+            } else {
+                $teachers = TeacherEloquentModel::pluck('teacher_id');
+
+                foreach ($teachers as $teacherId) {
+                    $storybookVersion = (new StoryBookVersionEloquentModel);
+                    $storybookVersion->teacher_id = $teacherId;
+                    $storybookVersion->h5p_id = $storyBook->h5p_id;
+                    $storybookVersion->name = "Original Copy";
+                    $storybookVersion->description = "Original Copy";
+                    $storybookVersion->storybook_id = $storybookEloquent->id;
+                    $storybookVersion->save();
+                }
+
+                setcookie("h5p_id", "", time() - 3600, "/");
             }
 
-            setcookie("h5p_id", "", time() - 3600, "/");
-            // Add media to media library
             if (request()->hasFile('thumbnail_img') && request()->file('thumbnail_img')->isValid()) {
                 $storybookEloquent->addMediaFromRequest('thumbnail_img')
                     ->toMediaCollection('thumbnail_img', 'media_storybook');
-            }
-            if (request()->hasFile('storybook_file') && request()->file('storybook_file')->isValid()) {
-                $storybookEloquent->addMediaFromRequest('storybook_file')
-                    ->toMediaCollection('storybook_file', 'media_storybook');
             }
 
             if (request()->hasFile('image')) {
@@ -129,8 +168,6 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                     if ($file->isValid()) {
                         $uploadFile = $storybookEloquent->addMedia($file)
                             ->toMediaCollection('physical_resource_src', 'media_storybook');
-                        // $storybookEloquent->file_src = $uploadFile->getFirstMediaUrl('physical_resource_src'); // Corrected the method to get the media URL
-                        // $storybookEloquent->update();
                     }
                 }
             }
