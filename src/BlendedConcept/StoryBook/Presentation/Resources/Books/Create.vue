@@ -35,6 +35,7 @@ let flash = computed(() => page?.props?.flash);
 //this arrary describe as multiple select for each roles
 const gameTag = ref("");
 const tagError = ref("");
+const type = ref(null);
 const form = useForm({
     name: "",
     tag_name: "",
@@ -51,7 +52,18 @@ const form = useForm({
     thumbnail_img: "",
     image: "",
     h5p_id: "",
+    html5_files: [],
 });
+const items = ref([{ versionName: "", storybookFile: null }]);
+
+const addRow = () => {
+    items.value.push({ versionName: "", storybookFile: null });
+};
+const removeRow = (index) => {
+    if (index > 0) {
+        items.value.splice(index, 1);
+    }
+};
 const saveToH5p = () => {
     const saveButton =
         iframeRef.value.contentWindow.document.getElementById("save-button");
@@ -63,11 +75,30 @@ let onFormSubmit = () => {
     }
     refForm.value?.validate().then(({ valid }) => {
         if (valid && form.tags.length > 0) {
-            saveToH5p();
-            isLoading.value = true;
-            setTimeout(() => {
-                const curr_h5p_id = getCookie("h5p_id");
-                form.h5p_id = curr_h5p_id;
+            if (type.value == "H5P") {
+                saveToH5p();
+                isLoading.value = true;
+                setTimeout(() => {
+                    const curr_h5p_id = getCookie("h5p_id");
+                    form.h5p_id = curr_h5p_id;
+                    form.post(route("books.store"), {
+                        onSuccess: () => {
+                            FlashMessage({ flash });
+                            isLoading.value = false;
+                        },
+                        onError: (error) => {
+                            SuccessDialog({
+                                title: error.h5p_id,
+                                mainTitle: "Error!",
+                                color: "#ff6262",
+                                icon: "error",
+                            });
+                            isLoading.value = false;
+                        },
+                    });
+                }, 5000);
+            } else {
+                form.html5_files = items.value;
                 form.post(route("books.store"), {
                     onSuccess: () => {
                         FlashMessage({ flash });
@@ -83,7 +114,7 @@ let onFormSubmit = () => {
                         isLoading.value = false;
                     },
                 });
-            }, 5000);
+            }
         }
     });
 };
@@ -124,26 +155,51 @@ const backHome = () => {
     // }
     router.get(route("books.index"));
 };
-onMounted(() => {
-    iframeRef.value.style.display = "none";
-    iframeRef.value.addEventListener("load", () => {
-        iframeRef.value.style.display = "flex";
-        const cancelButton =
-            iframeRef.value.contentWindow.document.querySelector(
-                "#laravel-h5p-form fieldset div:nth-child(5) div div:nth-child(2) a"
-            );
+watch(type, (value) => {
+    console.log(value);
+    if (value == "H5P") {
+        setTimeout(() => {
+            iframeRef.value.style.display = "none";
+            iframeRef.value.style.display = "flex";
+            const cancelButton =
+                iframeRef.value.contentWindow.document.querySelector(
+                    "#laravel-h5p-form fieldset div:nth-child(5) div div:nth-child(2) a"
+                );
 
-        const saveButton =
-            iframeRef.value.contentWindow.document.getElementById(
-                "save-button"
-            );
-        if (cancelButton && saveButton) {
-            cancelButton.style.display = "none";
-            saveButton.style.display = "none";
-        } else {
-            console.error("Buttons not found!");
-        }
-    });
+            const saveButton =
+                iframeRef.value.contentWindow.document.getElementById(
+                    "save-button"
+                );
+            if (cancelButton && saveButton) {
+                cancelButton.style.display = "none";
+                saveButton.style.display = "none";
+            } else {
+                console.error("Buttons not found!");
+            }
+        }, 1000);
+    }
+});
+onMounted(() => {
+    // if (iframeRef.value) {
+    //     iframeRef.value.style.display = "none";
+    //     iframeRef.value.addEventListener("load", () => {
+    //         iframeRef.value.style.display = "flex";
+    //         const cancelButton =
+    //             iframeRef.value.contentWindow.document.querySelector(
+    //                 "#laravel-h5p-form fieldset div:nth-child(5) div div:nth-child(2) a"
+    //             );
+    //         const saveButton =
+    //             iframeRef.value.contentWindow.document.getElementById(
+    //                 "save-button"
+    //             );
+    //         if (cancelButton && saveButton) {
+    //             cancelButton.style.display = "none";
+    //             saveButton.style.display = "none";
+    //         } else {
+    //             console.error("Buttons not found!");
+    //         }
+    //     });
+    // }
 });
 </script>
 <template>
@@ -332,8 +388,17 @@ onMounted(() => {
                             v-model="form.image"
                         />
                     </VCol>
-
-                    <VCol cols="12" md="12">
+                    <VCol cols="12" md="6">
+                        <VLabel class="tiggie-label required"
+                            >Storybook Type</VLabel
+                        >
+                        <VSelect
+                            placeholder="choose storybook type"
+                            :items="['HTML5', 'H5P']"
+                            v-model="type"
+                        ></VSelect>
+                    </VCol>
+                    <VCol cols="12" md="12" v-if="type == 'H5P'">
                         <VLabel class="tiggie-label">Story Book Content</VLabel>
                         <iframe
                             :src="`${app_url}/admin/h5p/h5p/create`"
@@ -343,6 +408,64 @@ onMounted(() => {
                             ref="iframeRef"
                         ></iframe>
                     </VCol>
+                </VRow>
+                <!-- <VRow v-if="type == 'HTML5'">
+                    <VCol cols="12" md="12">
+                        <VLabel class="tiggie-label required"
+                            >Version Name</VLabel
+                        >
+                        <VTextField />
+                    </VCol>
+                    <VCol cols="12" md="12">
+                        <VLabel class="tiggie-label required"
+                            >Storybook File</VLabel
+                        >
+                        <ImageDropFile memeType="image" :id="4" />
+                    </VCol>
+                </VRow> -->
+                <div v-if="type == 'HTML5'">
+                    <div v-for="(item, index) in items" :key="index">
+                        <VRow>
+                            <VCol cols="12" md="6">
+                                <VLabel class="tiggie-label required"
+                                    >Version Name</VLabel
+                                >
+                                <VTextField
+                                    v-model="item.versionName"
+                                    :rules="[requiredValidator]"
+                                />
+
+                                <VBtn
+                                    class="mt-4"
+                                    v-if="index > 0"
+                                    @click="removeRow(index)"
+                                    color="candy-red"
+                                    >Remove Version</VBtn
+                                >
+                            </VCol>
+                            <VCol cols="12" md="6">
+                                <VLabel class="tiggie-label required"
+                                    >Storybook File</VLabel
+                                >
+                                <ImageDropFile
+                                    memeType="zip"
+                                    :id="index + 4"
+                                    v-model="item.storybookFile"
+                                />
+                            </VCol>
+                        </VRow>
+                    </div>
+                    <div class="d-flex justify-center my-6">
+                        <VBtn
+                            @click="addRow"
+                            width="300"
+                            color="teal"
+                            class="text-white"
+                            >Add Version</VBtn
+                        >
+                    </div>
+                </div>
+                <VRow>
                     <VCol cols="12" md="12">
                         <div class="d-flex justify-center aligns-center w-100">
                             <div>

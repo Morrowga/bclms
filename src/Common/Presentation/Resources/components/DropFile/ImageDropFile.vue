@@ -34,6 +34,12 @@ const checkMemeType = (selectedFile) => {
         );
     } else if (props.memeType == "video") {
         return selectedFile && selectedFile.type === "video/mp4";
+    } else if (props.memeType == "zip") {
+        return (
+            selectedFile &&
+            (selectedFile.type == "application/zip" ||
+                selectedFile.type == "application/x-zip-compressed")
+        );
     } else {
         return true;
     }
@@ -85,6 +91,8 @@ onMounted(() => {
         memeName.value = "PNG / JPEG";
     } else if (props.memeType == "video") {
         memeName.value = "MP4";
+    } else if (props.memeType == "zip") {
+        memeName.value = "ZIP";
     } else {
         memeName.value = "";
     }
