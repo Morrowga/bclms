@@ -136,7 +136,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                         $storybookVersion->teacher_id = null;
                         $storybookVersion->h5p_id = null;
                         $storybookVersion->name = $html_file['name'];
-                        $storybookVersion->description = "Original Copy";
+                        // $storybookVersion->description = "Original Copy";
                         $storybookVersion->storybook_id = $storybookEloquent->id;
                         $storybookVersion->storybook_id = $storybookEloquent->id;
                         $storybookVersion->html5_file = $indexPath;
