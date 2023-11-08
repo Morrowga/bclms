@@ -53,7 +53,7 @@ class StudentStoryBookController extends Controller
         try {
             // Get the filters from the request, or initialize an empty array if they are not present
             return Inertia::render(config('route.storybook-version'), [
-                'book' => $book_version
+                'book' => $book_version->load('storybook'),
             ]);
         } catch (Exception $e) {
             return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());

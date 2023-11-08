@@ -16,8 +16,7 @@ const props = defineProps({
         default: "",
     },
     id: {
-        type: Number,
-        default: 1,
+        type: String,
     },
     old_photo: {
         type: String,
