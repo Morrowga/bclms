@@ -3,6 +3,7 @@ import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
 import { checkPermission } from "@actions/useCheckPermission";
+import { checkB2c } from "@actions/useCheckB2c";
 
 import { usePage } from "@inertiajs/vue3";
 let props = defineProps(["students"]);
@@ -36,7 +37,9 @@ watch(filters, (newValue) => {
     <AdminLayout>
         <VContainer class="width-80">
             <div class="d-flex justify-space-between align-center mb-10">
-                <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
+                <h1 class="tiggie-sub-subtitle fs-40">
+                    {{ checkB2c() ? "Children" : "Students" }}
+                </h1>
 
                 <Link
                     :href="route('teacher_students.create')"

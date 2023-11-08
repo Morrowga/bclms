@@ -5,6 +5,8 @@ import { usePage } from "@inertiajs/vue3";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
 import { checkPermission } from "@actions/useCheckPermission";
+import { checkB2c } from "@actions/useCheckB2c";
+
 let onFormSubmit = () => {
     isConfirmedDialog({ title: "Are you sure want to delete it." });
 };
@@ -96,7 +98,11 @@ const deleteItem = (id) => {
                     rounded
                     v-if="checkPermission('access_assignStudent')"
                 >
-                    Manage Assignment to Students
+                    {{
+                        ` Manage Assignment to ${
+                            checkB2c() ? "Children" : "Students"
+                        }`
+                    }}
                 </v-btn>
             </Link>
         </div>

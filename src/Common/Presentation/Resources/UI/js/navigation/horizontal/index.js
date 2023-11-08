@@ -1,9 +1,5 @@
-/**
- * this below code will add prefix c. for organiation admin login
- *
- * user
- *
- */
+
+
 const PREFIX = localStorage.getItem("tenant") !="" ? `/${localStorage.getItem("tenant") }` : "";
 
 const DASHBOARD_URL = PREFIX != "" ? "/c" : "/home";
