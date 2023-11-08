@@ -16,6 +16,7 @@ use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterfac
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
 use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomGroupEloquentModel;
+use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 
 class ClassRoomRepository implements ClassRoomRepositoryInterface
 {
@@ -95,13 +96,13 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
 
             $org = $updateClassRoomEloquent->organisation->org_admin->user;
 
-            foreach($newStudents as $student){
+            foreach ($newStudents as $student) {
                 $studentUser = StudentEloquentModel::where('student_id', $student)->first();
                 $user = $studentUser->user;
-                $org->notify(new BcNotification(['message' => 'New Student ' . $user->full_name . ' joined class ' . $updateClassRoomEloquent->name, 'from' => 'System', 'to' => 'Organisation','icon' => 'fa:fa-light fa-user', 'type' => 'HomeAnnounce']));
-                foreach($updateClassRoomEloquent->teachers as $teacher){
+                $org->notify(new BcNotification(['message' => 'New Student ' . $user->full_name . ' joined class ' . $updateClassRoomEloquent->name, 'from' => 'System', 'to' => 'Organisation', 'icon' => 'fa:fa-light fa-user', 'type' => 'HomeAnnounce']));
+                foreach ($updateClassRoomEloquent->teachers as $teacher) {
                     $orgteacher = $teacher->user;
-                    $orgteacher->notify(new BcNotification(['message' => 'New Student ' . $user->full_name . ' joined class ' . $updateClassRoomEloquent->name, 'from' => 'System', 'to' => 'Teacher','icon' => 'fa:fa-light fa-user', 'type' => 'HomeAnnounce']));
+                    $orgteacher->notify(new BcNotification(['message' => 'New Student ' . $user->full_name . ' joined class ' . $updateClassRoomEloquent->name, 'from' => 'System', 'to' => 'Teacher', 'icon' => 'fa:fa-light fa-user', 'type' => 'HomeAnnounce']));
                 }
             }
 
@@ -116,14 +117,38 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
 
     public function getTeachers($filters)
     {
-        return UserEloquentModel::filter($filters)
+        $organisation_id = auth()->user()->organisation_id;
+        $data = UserEloquentModel::filter($filters)
             ->whereHas('role_user', function ($query) {
                 $query->where('name', 'Teacher');
             })
-            ->whereHas('b2bUser', function ($query) {
-                $query->where('organisation_id', auth()->user()->organisation_id);
+            ->whereHas('b2bUser', function ($query) use ($organisation_id) {
+                $query->where('organisation_id', $organisation_id);
             })
             ->paginate($filters['perPage'] ?? 10);
+
+        $array_data = $data->map(function ($user) use ($organisation_id) {
+            $usedStorage = MediaEloquentModel::where(function ($query) use ($organisation_id, $user) {
+                $query->where('collection_name', 'videos')
+                    ->where('organisation_id', $organisation_id)
+                    ->where('teacher_id', $user->id)
+                    ->whereIn('status', ['active', 'requested']);
+            })
+                ->sum('size');
+            $used_storage_mb = $usedStorage == 0 ? $usedStorage : (int)($usedStorage / 1024 / 1024);
+            $left_storage = $user->b2bUser->allocated_storage_limit - $used_storage_mb;
+            return [
+                "id" => $user->id,
+                "full_name" => $user->full_name,
+                "used_storage" => $used_storage_mb,
+                "allocated_storage_limit" => $user->b2bUser->allocated_storage_limit,
+                "contact_number" => $user->contact_number,
+                "image_url" => $user->image_url,
+                "left_storage" => $left_storage,
+                "b2b_user" => $user->b2bUser
+            ];
+        });
+        return ["data" => $array_data];
     }
 
     public function getStudents($filters)

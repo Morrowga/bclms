@@ -13,6 +13,40 @@ class StoreBookRequest extends FormRequest
 
     public function rules()
     {
+        if (request('type') == 'H5P') {
+            return [
+                'name' => [
+                    'required', 'string', 'unique:storybooks,name',
+                ],
+                'description' => [
+                    'required', 'string',
+                ],
+                'num_gold_coins' => [
+                    'required',
+                ],
+                'num_silver_coins' => [
+                    'required',
+                ],
+                'tags' => [
+                    'required', 'array',
+                ],
+                'sub_learning_needs' => [
+                    'required', 'array',
+                ],
+                'themes' => [
+                    'required', 'array',
+                ],
+                'disability_type' => [
+                    'required', 'array',
+                ],
+                'devices' => [
+                    'required', 'array',
+                ],
+
+                'h5p_id' => ['required']
+
+            ];
+        }
         return [
             'name' => [
                 'required', 'string', 'unique:storybooks,name',
@@ -41,7 +75,7 @@ class StoreBookRequest extends FormRequest
             'devices' => [
                 'required', 'array',
             ],
-            'h5p_id' => ['required']
+
         ];
     }
 

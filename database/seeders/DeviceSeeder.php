@@ -16,12 +16,12 @@ class DeviceSeeder extends Seeder
     public function run()
     {  $devices = [
             [
-            'name' => 'Ablenet Blue2',
+            'name' => 'Two Button',
             'description' => 'Dual switch',
             'status' => 'active'
             ],
             [
-            'name' => 'Ablenet Switch',
+            'name' => 'One Button',
             'description' => 'Single switch',
             'status' => 'active'
             ],

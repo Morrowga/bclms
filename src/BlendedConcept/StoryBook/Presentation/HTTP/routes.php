@@ -22,6 +22,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('games/gamedownload/{game}', [GameController::class, 'gameDownload'])->name('games.game-download');
     // storybook resources
     Route::resource('books', BookController::class);
+    Route::get('/books/version/{storybook}/edit', [BookController::class, 'editHtml'])->name('books.edit_html_version');
     Route::put('/update/physical_resources/{book}', [BookController::class, 'updatePhysicalResources'])->name('books.update_physical_resources');
     Route::resource('pathways', PathwayController::class);
     Route::resource('bookreviews', BookReviewController::class);

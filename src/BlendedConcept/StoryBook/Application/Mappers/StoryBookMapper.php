@@ -23,7 +23,8 @@ class StoryBookMapper
             themes: $request->themes,
             disability_type: $request->disability_type,
             devices: $request->devices,
-            h5p_id: $request->h5p_id
+            h5p_id: $request->h5p_id,
+            type: $request->type
         );
     }
 
@@ -42,6 +43,7 @@ class StoryBookMapper
         $storyBookEloquent->thumbnail_img = $storyBook->thumbnail_img;
         $storyBookEloquent->is_free = $storyBook->is_free;
         $storyBookEloquent->h5p_id = $storyBook->h5p_id;
+        $storyBookEloquent->type = $storyBook->type;
         return $storyBookEloquent;
     }
 }

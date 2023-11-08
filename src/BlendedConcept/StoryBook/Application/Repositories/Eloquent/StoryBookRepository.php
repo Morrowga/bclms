@@ -2,6 +2,8 @@
 
 namespace Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent;
 
+use File;
+use ZipArchive;
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\StoryBook\Domain\Model\StoryBook;
 use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookData;
@@ -9,6 +11,7 @@ use Src\Common\Infrastructure\Laravel\Notifications\BcNotification;
 use Src\BlendedConcept\StoryBook\Domain\Resources\StoryBookResource;
 use Src\BlendedConcept\StoryBook\Application\Mappers\StoryBookMapper;
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\TagEloquentModel;
 use Src\BlendedConcept\StoryBook\Domain\Repositories\StoryBookRepositoryInterface;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\ThemeEloquentModel;
@@ -18,7 +21,7 @@ use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookEloquent
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
-use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\TagEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
 
 class StoryBookRepository implements StoryBookRepositoryInterface
 {
@@ -86,6 +89,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
      */
     public function createStoryBook(StoryBook $storyBook)
     {
+        // dd(request()->all());
         DB::beginTransaction();
 
         try {
@@ -100,15 +104,64 @@ class StoryBookRepository implements StoryBookRepositoryInterface
 
             // Associate tags
             $storybookEloquent->associateTags(request()->tags);
-            setcookie("h5p_id", "", time() - 3600, "/");
-            // Add media to media library
+
+            $html_files = request()->html_files;
+
+            if (!empty($html_files) && count($html_files) > 0) {
+
+                foreach ($html_files as $html_file) {
+                    $zipFile = $html_file['file'];
+
+                    if (file_exists($zipFile) && is_file($zipFile)) {
+                        $originalFileName = pathinfo($zipFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                        $desiredFolderName = $originalFileName . $storybookEloquent->id;
+
+                        $bookDirectory = public_path('book_html5/' . $desiredFolderName);
+                        if (!file_exists($bookDirectory)) {
+                            mkdir($bookDirectory, 0755, true);
+                        }
+
+                        $zip = new ZipArchive;
+                        if ($zip->open($zipFile) === true) {
+                            $zip->extractTo($bookDirectory);
+                            $zip->close();
+                        }
+
+                        $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
+
+                        $teachers = TeacherEloquentModel::pluck('teacher_id');
+
+                        $storybookVersion = (new StoryBookVersionEloquentModel);
+                        $storybookVersion->teacher_id = null;
+                        $storybookVersion->h5p_id = null;
+                        $storybookVersion->name = $html_file['name'];
+                        // $storybookVersion->description = "Original Copy";
+                        $storybookVersion->storybook_id = $storybookEloquent->id;
+                        $storybookVersion->storybook_id = $storybookEloquent->id;
+                        $storybookVersion->html5_file = $indexPath;
+                        $storybookVersion->save();
+                    }
+                }
+            } else {
+                $teachers = TeacherEloquentModel::pluck('teacher_id');
+
+                foreach ($teachers as $teacherId) {
+                    $storybookVersion = (new StoryBookVersionEloquentModel);
+                    $storybookVersion->teacher_id = $teacherId;
+                    $storybookVersion->h5p_id = $storyBook->h5p_id;
+                    $storybookVersion->name = "Original Copy";
+                    $storybookVersion->description = "Original Copy";
+                    $storybookVersion->storybook_id = $storybookEloquent->id;
+                    $storybookVersion->save();
+                }
+
+                setcookie("h5p_id", "", time() - 3600, "/");
+            }
+
             if (request()->hasFile('thumbnail_img') && request()->file('thumbnail_img')->isValid()) {
                 $storybookEloquent->addMediaFromRequest('thumbnail_img')
                     ->toMediaCollection('thumbnail_img', 'media_storybook');
-            }
-            if (request()->hasFile('storybook_file') && request()->file('storybook_file')->isValid()) {
-                $storybookEloquent->addMediaFromRequest('storybook_file')
-                    ->toMediaCollection('storybook_file', 'media_storybook');
             }
 
             if (request()->hasFile('image')) {
@@ -116,11 +169,10 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                     if ($file->isValid()) {
                         $uploadFile = $storybookEloquent->addMedia($file)
                             ->toMediaCollection('physical_resource_src', 'media_storybook');
-                        // $storybookEloquent->file_src = $uploadFile->getFirstMediaUrl('physical_resource_src'); // Corrected the method to get the media URL
-                        // $storybookEloquent->update();
                     }
                 }
             }
+
             $organisations = OrganisationEloquentModel::get();
 
             foreach ($organisations  as $org) {
@@ -155,6 +207,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
      */
     public function updateStoryBook(StoryBookData $storyBookData)
     {
+        // dd(request()->all());
         DB::beginTransaction();
 
         try {
@@ -181,6 +234,99 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                 if ($newBookMedia->getUrl()) {
                     $updateStoryBookEloquent->thumbnail_img = $newBookMedia->getUrl();
                     $updateStoryBookEloquent->update();
+                }
+            }
+
+            $existing_files = request()->existing_files;
+
+            if (!empty($existing_files) && count($existing_files) > 0) {
+                foreach ($existing_files as $existing_file) {
+                    $storybookVersion = StoryBookVersionEloquentModel::find($existing_file['id']);
+                    $storybookVersion->name = $existing_file['name'];
+                    $zipFile = $existing_file['file'];
+                    if ($zipFile != null && file_exists($zipFile) && is_file($zipFile)) {
+                        $storybookOldFile = str_replace('/index.html', '', $storybookVersion->html5_file);
+                        $oldFolderPath = public_path('book_html5/' . $storybookOldFile);
+
+                        if (file_exists($oldFolderPath)) {
+                            File::deleteDirectory($oldFolderPath);
+                        }
+
+                        $originalFileName = pathinfo($zipFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                        $desiredFolderName = $originalFileName . $updateStoryBookEloquent->id;
+
+                        $bookDirectory = public_path('book_html5/' . $desiredFolderName);
+                        if (!file_exists($bookDirectory)) {
+                            mkdir($bookDirectory, 0755, true);
+                        }
+
+                        $zip = new ZipArchive;
+                        if ($zip->open($zipFile) === true) {
+                            $zip->extractTo($bookDirectory);
+                            $zip->close();
+                        }
+
+                        $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
+                        $storybookVersion->html5_file = $indexPath;
+                    }
+                    $storybookVersion->save();
+                }
+            }
+
+            $html_files = request()->html_files;
+
+            if (!empty($html_files) && count($html_files) > 0) {
+                foreach ($html_files as $html_file) {
+                    $zipFile = $html_file['file'];
+
+                    if (file_exists($zipFile) && is_file($zipFile)) {
+                        $originalFileName = pathinfo($zipFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                        $desiredFolderName = $originalFileName . $updateStoryBookEloquent->id;
+
+                        $bookDirectory = public_path('book_html5/' . $desiredFolderName);
+                        if (!file_exists($bookDirectory)) {
+                            mkdir($bookDirectory, 0755, true);
+                        }
+
+                        $zip = new ZipArchive;
+                        if ($zip->open($zipFile) === true) {
+                            $zip->extractTo($bookDirectory);
+                            $zip->close();
+                        }
+
+                        $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
+
+                        $teachers = TeacherEloquentModel::pluck('teacher_id');
+
+                        $storybookVersion = (new StoryBookVersionEloquentModel);
+                        $storybookVersion->teacher_id = null;
+                        $storybookVersion->h5p_id = null;
+                        $storybookVersion->name = $html_file['name'];
+                        $storybookVersion->description = "Original Copy";
+                        $storybookVersion->storybook_id = $updateStoryBookEloquent->id;
+                        $storybookVersion->storybook_id = $updateStoryBookEloquent->id;
+                        $storybookVersion->html5_file = $indexPath;
+                        $storybookVersion->save();
+                    }
+                }
+            }
+
+            $delete_files = request()->delete_ids;
+
+            if (!empty($delete_files) && count($delete_files) > 0) {
+                foreach ($delete_files as $delete_file) {
+                    $storybookVersion = StoryBookVersionEloquentModel::find($delete_file);
+                    if (!empty($storybookVersion)) {
+                        $storybookOldFile = str_replace('/index.html', '', $storybookVersion->html5_file);
+                        $oldFolderPath = public_path('book_html5/' . $storybookOldFile);
+
+                        if (file_exists($oldFolderPath)) {
+                            File::deleteDirectory($oldFolderPath);
+                        }
+                        $storybookVersion->delete();
+                    }
                 }
             }
 

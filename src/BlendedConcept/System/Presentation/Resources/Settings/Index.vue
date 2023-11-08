@@ -13,7 +13,7 @@ import {
 } from "@validators";
 
 let props = defineProps(["setting"]);
-let flash = computed(() => usePage().props.flash)
+let flash = computed(() => usePage().props.flash);
 let page = usePage();
 
 let form = useForm({
@@ -35,7 +35,7 @@ function handleUpdateSite() {
         if (valid) {
             form.post(route("updateSetting"), {
                 onSuccess: () => {
-                    FlashMessage({ flash })
+                    FlashMessage({ flash });
                 },
                 onError: (error) => {},
             });
@@ -128,7 +128,7 @@ function handleUpdateSite() {
                     </VCol>
                     <VCol cols="6">
                         <VRow>
-                            <VCol cols="12">
+                            <!-- <VCol cols="12">
                                 <h4 class="pb-2 tiggie-show-title">
                                     Website Logo
                                 </h4>
@@ -140,7 +140,7 @@ function handleUpdateSite() {
                                 <VBtn class="w-100" height="55" max-width="400"
                                     >Change Logo</VBtn
                                 >
-                            </VCol>
+                            </VCol> -->
                             <VCol cols="12">
                                 <h4 class="pb-2 tiggie-show-title">
                                     Website Favicon

@@ -7,6 +7,7 @@ import BookInteractivity from "./components/BookInteractivity.vue";
 import Subscribers from "./components/Subscribers.vue";
 import { ref } from "vue";
 import { usePage, useForm } from "@inertiajs/vue3";
+import axios from '@axios'
 
 let tabName = ref("");
 let page = usePage();
@@ -31,12 +32,39 @@ onMounted(() => {
         tabName.value = "usage";
     }
 });
+
+const exportExcel = async () => {
+    try {
+        const response = await axios.post('/reports/excel', null, {
+            responseType: 'blob', // Specify the response type as a blob
+        });
+
+        // Create a blob URL for the response data
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+
+        // Create an anchor element to trigger the download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reports.xlsx'; // Set the desired file name
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+
+        // Cleanup and remove the anchor element
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+    } catch (error) {
+        console.error('Error downloading file:', error);
+    }
+}
+
 </script>
 <template>
     <AdminLayout>
         <VContainer>
             <VRow>
-                <VCol cols="12">
+                <VCol cols="6">
                     <span
                         v-if="
                             user_role == 'BC Super Admin' ||
@@ -46,6 +74,13 @@ onMounted(() => {
                         >Export Data</span
                     >
                     <span v-else class="report-text ruddy-bold">Reports</span>
+                </VCol>
+                <VCol cols="6"  v-if="
+                    user_role == 'Organisation Admin' || user_role == 'B2C Parent' || user_role == 'Teacher' || user_role == 'BC Subscriber' || user_role == 'Both Parent'
+                ">
+                <div class="text-right">
+                    <VBtn prepend-icon="mdi-download" @click="exportExcel" class="ruddy-bold text-white">Export</VBtn>
+                </div>
                 </VCol>
                 <VCol cols="12">
                     <div class="d-flex align-center flex-wrap gap-10">

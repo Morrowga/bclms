@@ -8,7 +8,13 @@ import { checkPermission } from "@actions/useCheckPermission";
 let onFormSubmit = () => {
     isConfirmedDialog({ title: "Are you sure want to delete it." });
 };
-const props = defineProps(["storybook_versions", "story_img", "storybook_id"]);
+const props = defineProps([
+    "storybook_versions",
+    "story_img",
+    "storybook_id",
+    "hide",
+    "type",
+]);
 let flash = computed(() => usePage().props.flash);
 const getImage = (image) => {
     return image == "" || !image ? "/images/image8.png" : image;
@@ -30,7 +36,12 @@ const deleteItem = (id) => {
 <template>
     <v-card class="grab-pointer">
         <v-card-title>
-            <v-btn class="dotbtn" icon="true" color="rgba(255, 255, 255, 0.70)">
+            <v-btn
+                :hidden="props.hide || props.type == 'HTML5'"
+                class="dotbtn"
+                icon="true"
+                color="rgba(255, 255, 255, 0.70)"
+            >
                 <img src="/images/dot.png" width="10" height="18" alt="" />
                 <v-menu
                     activator="parent"
@@ -57,14 +68,16 @@ const deleteItem = (id) => {
                     </v-list>
                 </v-menu>
             </v-btn>
-            <v-img :src="getImage(story_img)" />
+            <v-img :src="getImage(story_img)" height="150" cover />
         </v-card-title>
         <v-card-text class="text-center">
             <p class="text-subtitle-2 t-black">
                 {{ storybook_versions.name }}
             </p>
 
-            <span class="text-subtitle-1 font-weight-bold">Original Copy</span>
+            <span class="text-subtitle-1 font-weight-bold">{{
+                storybook_versions.description
+            }}</span>
         </v-card-text>
 
         <div class="my-3 mx-2">

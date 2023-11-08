@@ -569,4 +569,3 @@ H5P.VideoVimeo = (function ($) {
   // Register video handler
   H5P.videoHandlers = H5P.videoHandlers || [];
   H5P.videoHandlers.push(H5P.VideoVimeo);
-  console.log("Vimeo");

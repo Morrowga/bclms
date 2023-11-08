@@ -494,4 +494,3 @@ H5P.VideoPanopto = (function ($) {
   // Register video handler
   H5P.videoHandlers = H5P.videoHandlers || [];
   H5P.videoHandlers.push(H5P.VideoPanopto);
-  console.log("Panopto");

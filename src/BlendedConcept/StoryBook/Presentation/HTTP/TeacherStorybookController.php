@@ -45,14 +45,18 @@ class TeacherStorybookController
                 $user_id = $student->teachers()->pluck('teachers.teacher_id');
             }
             $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
-                $query->whereIn('teacher_id', $user_id);
+                $query->whereIn('teacher_id', $user_id)->orWhere(function ($query) {
+                    $query->where('teacher_id', null)->where('parent_id', null);
+                });
             }]);
         } elseif ($auth == 'B2C Parent') {
             $parent = auth()->user()->parents;
 
             $user_id = $parent->parent_id;
             $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
-                $query->where('parent_id', $user_id);
+                $query->where('parent_id', $user_id)->orWhere(function ($query) {
+                    $query->where('teacher_id', null)->where('parent_id', null);
+                });;
             }]);
         } elseif ($auth == 'Both Parent') {
             $parent = auth()->user()->parents;
@@ -73,7 +77,9 @@ class TeacherStorybookController
         } else {
             $user_id = [auth()->user()->b2bUser->teacher_id];
             $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
-                $query->where('teacher_id', $user_id);
+                $query->where('teacher_id', $user_id)->orWhere(function ($query) {
+                    $query->where('teacher_id', null)->where('parent_id', null);
+                });;
             }]);
         }
         $filters = request(['search', 'filter', 'perPage', 'page']);

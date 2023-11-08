@@ -19,7 +19,8 @@ class StoryBook extends AggregateRoot
         public readonly array $themes,
         public readonly array $disability_type,
         public readonly array $devices,
-        public readonly ?int $h5p_id
+        public readonly ?int $h5p_id,
+        public readonly ?string $type
     ) {
     }
 
@@ -38,7 +39,8 @@ class StoryBook extends AggregateRoot
             'themes' => $this->themes,
             'disability_type' => $this->disability_type,
             'devices' => $this->devices,
-            'h5p_id' => $this->h5p_id
+            'h5p_id' => $this->h5p_id,
+            'type' => $this->type
         ];
     }
 }

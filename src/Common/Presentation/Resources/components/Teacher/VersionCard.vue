@@ -10,7 +10,11 @@ const setImage = (book) => {
         : book.thumbnail_img;
 };
 const userImage = (user) => {
-    return user.profile_pic ?? "/images/profile/profilefive.png";
+    if (user) {
+        return user.profile_pic ?? "/images/profile/profilefive.png";
+    } else {
+        return "/images/profile/profilefive.png";
+    }
 };
 
 const clickBook = (versions) => {
@@ -151,14 +155,16 @@ onMounted(() => {
                                         <v-img
                                             :src="
                                                 userImage(
-                                                    book_version.owner.user
+                                                    book_version.owner?.user
                                                 )
                                             "
                                             alt=""
                                         />
                                     </v-avatar>
                                     <span class="version-profile-text ml-2">{{
-                                        book_version.owner.user.full_name
+                                        book_version.owner
+                                            ? book_version.owner.user.full_name
+                                            : "SYSTEM"
                                     }}</span>
                                 </div>
                             </VCard>

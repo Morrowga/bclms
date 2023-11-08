@@ -8,6 +8,8 @@ import { checkPermission } from "@actions/useCheckPermission";
 import { FlashMessage } from "@actions/useFlashMessage";
 let props = defineProps(["teacher"]);
 let flash = computed(() => usePage().props.flash);
+const buttonLink = ref("");
+
 const deleteTeacher = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",
@@ -15,7 +17,7 @@ const deleteTeacher = (id) => {
         onConfirm: () => {
             router.delete(id, {
                 onSuccess: () => {
-                    FlashMessage({ flash })
+                    FlashMessage({ flash });
                 },
             });
         },
@@ -26,13 +28,26 @@ const setImage = (teacher) => {
         ? "/images/defaults/upload_image.png"
         : teacher.profile_pic;
 };
+onMounted(() => {
+    let params = route().params;
+    if (params && params.route && params.route == "home") {
+        buttonLink.value = route("dashboard");
+    } else {
+        buttonLink.value = route("organisations-teacher.index");
+    }
+});
 </script>
 <template>
     <AdminLayout>
         <v-container>
             <v-row justify="center">
                 <v-col cols="6">
-                    <VImg :src="setImage(props.teacher.data)" />
+                    <VImg
+                        :src="setImage(props.teacher.data)"
+                        width="540"
+                        :aspect-ratio="1"
+                        cover
+                    />
                 </v-col>
                 <v-col cols="6">
                     <v-text class="teacherprofile-title">Profile</v-text>
@@ -104,7 +119,7 @@ const setImage = (teacher) => {
             </v-row>
             <v-row justify="center">
                 <v-col cols="2">
-                    <Link :href="route('organisations-teacher.index')">
+                    <Link :href="buttonLink">
                         <v-btn
                             color="#e9eff0"
                             variant="flat"

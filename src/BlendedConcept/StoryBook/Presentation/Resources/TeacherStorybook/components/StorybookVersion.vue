@@ -26,13 +26,15 @@ onMounted(() => {});
         <div class="body-sec">
             <swiper :slides-per-view="4" :space-between="20">
                 <swiper-slide
-                    v-for="item in dataStoryBook.storybook_versions"
+                    v-for="(item, index) in dataStoryBook.storybook_versions"
                     :key="item.id"
                 >
                     <StorybookVersionCard
+                        :hide="index === 0 ? true : false"
                         :story_img="dataStoryBook.thumbnail_img"
                         :storybook_versions="item"
                         :storybook_id="dataStoryBook.id"
+                        :type="dataStoryBook.type"
                     />
                 </swiper-slide>
             </swiper>

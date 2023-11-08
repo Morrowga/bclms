@@ -80,6 +80,7 @@ return [
         'index' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/Index',
         'create' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/Create',
         'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/EditH5pBook',
+        'edit_html' => 'BlendedConcept/StoryBook/Presentation/Resources/Books/EditHtmlBook',
     ],
     'storybooksversions' => [
         'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/TeacherStorybook/EditH5pBookVersion'

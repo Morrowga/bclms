@@ -937,4 +937,3 @@ H5P.VideoHtml5 = (function ($) {
   H5P.videoHandlers = H5P.videoHandlers || [];
   H5P.videoHandlers.push(H5P.VideoHtml5);
 
-  console.log("Html-5");

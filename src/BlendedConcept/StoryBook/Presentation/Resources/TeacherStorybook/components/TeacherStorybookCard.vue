@@ -39,8 +39,8 @@ const getImage = (item) => {
                         <v-img
                             :src="getImage(item)"
                             aspect-ratio="16/9"
-                            min-width="200"
-                            min-height="100"
+                            height="150"
+                            cover
                         />
                         <div class="chip-page" v-if="is_chip">
                             <div class="chip-content">14 pages</div>

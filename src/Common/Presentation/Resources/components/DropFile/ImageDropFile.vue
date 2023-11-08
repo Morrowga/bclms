@@ -6,6 +6,7 @@ const file = ref(null);
 const thumbnail = ref(null);
 const dragging = ref(false);
 const old_image = ref("");
+const old_name = ref("");
 let memeName = ref("");
 const props = defineProps({
     modelValue: {
@@ -16,10 +17,13 @@ const props = defineProps({
         default: "",
     },
     id: {
-        type: Number,
-        default: 1,
+        type: String,
     },
     old_photo: {
+        type: String,
+        default: "",
+    },
+    old_filename: {
         type: String,
         default: "",
     },
@@ -34,6 +38,12 @@ const checkMemeType = (selectedFile) => {
         );
     } else if (props.memeType == "video") {
         return selectedFile && selectedFile.type === "video/mp4";
+    } else if (props.memeType == "zip") {
+        return (
+            selectedFile &&
+            (selectedFile.type == "application/zip" ||
+                selectedFile.type == "application/x-zip-compressed")
+        );
     } else {
         return true;
     }
@@ -85,12 +95,19 @@ onMounted(() => {
         memeName.value = "PNG / JPEG";
     } else if (props.memeType == "video") {
         memeName.value = "MP4";
+    } else if (props.memeType == "zip") {
+        memeName.value = "ZIP";
     } else {
         memeName.value = "";
     }
 
     if (props.old_photo) {
         old_image.value = props.old_photo;
+    }
+
+    if (props.old_filename) {
+        old_name.value = props.old_filename;
+        console.log(old_name);
     }
 });
 </script>
@@ -104,7 +121,7 @@ onMounted(() => {
         @drop.prevent="onDropGameFile"
     >
         <p
-            v-if="!file && !old_image"
+            v-if="!file && !old_image && !old_name"
             class="pppangram-normal"
             @click="handleFileInputClick"
         >
@@ -119,6 +136,10 @@ onMounted(() => {
             <button type="button" @click="() => (old_image = '')">
                 Remove
             </button>
+        </div>
+        <div v-else-if="old_name">
+            <p class="pppangram-normal">{{ old_name }}</p>
+            <button type="button" @click="() => (old_name = '')">Remove</button>
         </div>
         <div v-else>
             <v-img

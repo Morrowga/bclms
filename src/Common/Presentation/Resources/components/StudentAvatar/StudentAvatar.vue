@@ -1,6 +1,5 @@
 <script setup>
 const props = defineProps(["title", "route", "phone_number", "image"]);
-console.log(props.route)
 </script>
 <template>
     <div>

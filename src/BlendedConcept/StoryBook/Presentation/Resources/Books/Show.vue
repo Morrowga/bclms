@@ -53,7 +53,7 @@ const form = useForm({
 const handleUpdate = () => {
     form.post(route("books.update", form.id), {
         onSuccess: () => {
-            FlashMessage({ flash })
+            FlashMessage({ flash });
             dialog.value = false;
         },
         onError: (error) => {
@@ -184,10 +184,28 @@ onUpdated(() => {
                             <!-- <v-btn icon="mdi-edit" size="x-small" color="secondary" @click="isEdit = true"/> -->
                             <Link
                                 :href="route('books.edit', data.id)"
-                                v-if="checkPermission('edit_book')"
+                                v-if="
+                                    checkPermission('edit_book') &&
+                                    data.type == 'H5P'
+                                "
                             >
                                 <v-btn
                                     icon="mdi-upload"
+                                    size="x-small"
+                                    color="secondary"
+                                ></v-btn>
+                            </Link>
+                            <Link
+                                :href="
+                                    route('books.edit_html_version', data.id)
+                                "
+                                v-if="
+                                    checkPermission('edit_book') &&
+                                    data.type == 'HTML5'
+                                "
+                            >
+                                <v-btn
+                                    icon="mdi-content-copy"
                                     size="x-small"
                                     color="secondary"
                                 ></v-btn>

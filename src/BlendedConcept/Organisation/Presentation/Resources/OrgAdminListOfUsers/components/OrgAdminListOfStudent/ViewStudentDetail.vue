@@ -34,19 +34,33 @@ const deleteStudent = () => {
         },
     });
 };
+const buttonLink = ref("");
 const setImage = (organisations_student) => {
     return organisations_student.user.profile_pic == "" ||
         !organisations_student.user.profile_pic
         ? "/images/defaults/upload_image.png"
         : organisations_student.user.profile_pic;
 };
+onMounted(() => {
+    let params = route().params;
+    if (params && params.route && params.route == "home") {
+        buttonLink.value = route("dashboard");
+    } else {
+        buttonLink.value = route("organisations-teacher.index");
+    }
+});
 </script>
 <template>
     <AdminLayout>
         <v-container class="width-80">
             <v-row>
                 <v-col cols="12" md="6">
-                    <v-img :src="setImage(organisations_student)" />
+                    <v-img
+                        :src="setImage(organisations_student)"
+                        width="540"
+                        :aspect-ratio="1"
+                        cover
+                    />
                 </v-col>
                 <v-col cols="12" md="6" class="pa-5">
                     <div class="d-flex justify-space-between align-center">
@@ -190,7 +204,7 @@ const setImage = (organisations_student) => {
             </v-row>
             <v-row justify="center">
                 <v-col cols="2">
-                    <Link :href="route('organisations-teacher.index')">
+                    <Link :href="buttonLink">
                         <v-btn
                             color="#e9eff0"
                             variant="flat"
