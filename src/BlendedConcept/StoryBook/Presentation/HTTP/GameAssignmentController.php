@@ -15,14 +15,10 @@ class GameAssignmentController
 {
     public function index()
     {
-        $filters = request()->only(['search', 'name', 'perPage']) ?? [];
-        $disabilityTypes = (new ShowDisabilityTypes())->handle();
-        $devices = (new GetDevicesWithoutPagination())->handle();
+        $filters = request()->only(['search', 'name', 'perPage', 'filter']) ?? [];
         $games = (new GetGameList($filters))->handle();
         // return $games;
         return Inertia::render(config('route.assign_games.index'), [
-            'disabilityTypes' => $disabilityTypes,
-            'devices' => $devices,
             "games" => $games
         ]);
     }

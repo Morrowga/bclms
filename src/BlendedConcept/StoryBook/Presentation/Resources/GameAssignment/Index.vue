@@ -1,20 +1,32 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import Filter from "./components/Filter.vue";
+import SelectBox from "@mainRoot/components/SelectBox/SelectBox.vue";
+import Pagination from "@mainRoot/components/Pagination/Pagination.vue";
 import { router } from "@inertiajs/core";
 import {
-    serverParams,
     onColumnFilter,
+    serverParams,
     searchItems,
-    onPageChange,
-    onPerPageChange,
-    serverPage,
-    serverPerPage,
 } from "@Composables/useServerSideDatable.js";
+
 import { checkPermission } from "@actions/useCheckPermission";
 
-let props = defineProps(["disabilityTypes", "games", "devices"]);
+let props = defineProps(["games"]);
 
+let filters = ref(null);
+
+let filterDatas = ref([
+    { title: "A-Z", value: "asc" },
+    { title: "Z-A", value: "desc" },
+]);
+watch(filters, (newValue) => {
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
 </script>
 <template>
     <AdminLayout>
@@ -28,21 +40,34 @@ let props = defineProps(["disabilityTypes", "games", "devices"]);
                         > -->
                     </div>
                 </v-col>
-                <v-col cols="6">
-                    <div class="d-flex gap-5">
-                        <v-text-field
+                <div class="d-flex justify-end align-center mb-4">
+                <v-spacer></v-spacer>
+                <div class="search-field">
+                    <v-text-field
+                            density="compact"
+                            label="Search"
+                            append-inner-icon="mdi-magnify"
+                            single-line
+                            rounded
+                            hide-details
+                            class="mr-4"
+                            variant="solo"
                             @keyup.enter="searchItems"
                             v-model="serverParams.search"
+                        ></v-text-field>
+                    </div>
+
+                    <div class="sort-field">
+                        <selectBox
+                            v-model="filters"
+                            placeholder="Sort By"
+                            :datas="filterDatas"
                             density="compact"
-                            max-height="20px"
-                            max-width="100px"
-                        />
-                        <Filter
-                            :disabilityTypes="props.disabilityTypes.data"
-                            :devices="props.devices.data"
+                            item_title="title"
+                            item_value="value"
                         />
                     </div>
-                </v-col>
+                </div>
             </v-row>
             <VRow class="mt-5">
                 <VCol
