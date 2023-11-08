@@ -52,7 +52,8 @@ const form = useForm({
     thumbnail_img: "",
     image: "",
     h5p_id: "",
-    html5_files: [],
+    html_files: [],
+    type: "",
 });
 const items = ref([{ versionName: "", storybookFile: null }]);
 
@@ -75,6 +76,7 @@ let onFormSubmit = () => {
     }
     refForm.value?.validate().then(({ valid }) => {
         if (valid && form.tags.length > 0) {
+            form.type = type.value;
             if (type.value == "H5P") {
                 saveToH5p();
                 isLoading.value = true;
@@ -98,7 +100,7 @@ let onFormSubmit = () => {
                     });
                 }, 5000);
             } else {
-                form.html5_files = items.value;
+                form.html_files = items.value;
                 form.post(route("books.store"), {
                     onSuccess: () => {
                         FlashMessage({ flash });
@@ -156,7 +158,6 @@ const backHome = () => {
     router.get(route("books.index"));
 };
 watch(type, (value) => {
-    console.log(value);
     if (value == "H5P") {
         setTimeout(() => {
             iframeRef.value.style.display = "none";
@@ -394,6 +395,7 @@ onMounted(() => {
                         >
                         <VSelect
                             placeholder="choose storybook type"
+                            :rules="[requiredValidator]"
                             :items="['HTML5', 'H5P']"
                             v-model="type"
                         ></VSelect>

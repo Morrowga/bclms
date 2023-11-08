@@ -87,6 +87,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
      */
     public function createStoryBook(StoryBook $storyBook)
     {
+        dd(request()->all());
         DB::beginTransaction();
 
         try {
@@ -106,7 +107,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
 
             if (!empty($html_files) && count($html_files) > 0) {
 
-                foreach($html_files as $html_file){
+                foreach ($html_files as $html_file) {
                     $zipFile = $html_file['file'];
 
                     if (file_exists($zipFile) && is_file($zipFile)) {
