@@ -20,6 +20,7 @@ use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEl
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\TagEloquentModel;
+use ZipArchive;
 
 class StoryBookRepository implements StoryBookRepositoryInterface
 {
@@ -87,7 +88,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
      */
     public function createStoryBook(StoryBook $storyBook)
     {
-        dd(request()->all());
+        // dd(request()->all());
         DB::beginTransaction();
 
         try {

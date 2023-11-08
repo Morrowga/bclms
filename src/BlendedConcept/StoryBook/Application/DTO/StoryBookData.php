@@ -20,7 +20,8 @@ class StoryBookData
         public readonly ?array $disability_type,
         public readonly ?array $devices,
         public readonly ?int $h5p_id,
-        public readonly ?array $delete_tags
+        public readonly ?array $delete_tags,
+        public readonly ?string $type,
     ) {
     }
 
@@ -40,7 +41,8 @@ class StoryBookData
             disability_type: $request->disability_type,
             devices: $request->devices,
             h5p_id: $request->h5p_id,
-            delete_tags: $request->delete_tags
+            delete_tags: $request->delete_tags,
+            type: $request->type,
         );
     }
 
@@ -61,6 +63,7 @@ class StoryBookData
             'devices' => $this->devices,
             'h5p_id' => $this->h5p_id,
             'delete_tags' => $this->delete_tags,
+            'type' => $this->type
         ];
     }
 }

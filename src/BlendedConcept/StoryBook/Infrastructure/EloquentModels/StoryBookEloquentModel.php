@@ -39,7 +39,8 @@ class StoryBookEloquentModel extends Model implements HasMedia
         'num_gold_coins',
         'num_silver_coins',
         'is_free',
-        'h5p_id'
+        'h5p_id',
+        'type'
     ];
 
     public function getThumbnailImgAttribute()
