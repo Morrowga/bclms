@@ -19,8 +19,9 @@ class StudentGamesController extends Controller
                 'games' => $games,
             ]);
         } catch (Exception $e) {
-            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
-    }
+            dd($e->getMessage());
+            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
+        }
     }
 
     public function show(GameEloquentModel $game)
@@ -30,7 +31,7 @@ class StudentGamesController extends Controller
                 'game' => $game
             ]);
         } catch (Exception $e) {
-            return redirect()->route($this->route_url.'students.index')->with('sytemErrorMessage', $e->getMessage());
+            return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
     }
 }

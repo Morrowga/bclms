@@ -23,27 +23,41 @@ class GameRepository implements GameRepositoryInterface
     //get all games
     public function getGameList($filters)
     {
-        $filterItems = json_decode(request('filterItems'));
-        if ($filterItems) {
+        $auth = auth()->user()->role;
+
+
+        if ($auth->name == 'Student') {
+            $student_id = auth()->user()->student->student_id;
+            $games = GameResource::collection(GameEloquentModel::filter($filters)
+                ->whereHas('gameAssignments', function ($query) use ($student_id) {
+                    $query->where('student_id', $student_id);
+                })
+                ->orderBy('id', 'desc')
+                ->paginate($filters['perPage'] ?? 10));
         } else {
-            $filterItems = null;
+            $filterItems = json_decode(request('filterItems'));
+            if ($filterItems) {
+            } else {
+                $filterItems = null;
+            }
+            $games = GameResource::collection(GameEloquentModel::filter($filters)
+                ->with(['tags', 'disabilityTypes', 'devices'])
+                ->when($filterItems, function ($query, $filterItems) {
+                    $query->when($filterItems->disability_types, function ($query, $disability) {
+                        $query->whereHas('disabilityTypes', function ($query) use ($disability) {
+                            $query->whereIn('disability_types.id', $disability);
+                        });
+                    });
+                    $query->when($filterItems->devices, function ($query, $devices) {
+                        $query->whereHas('devices', function ($query) use ($devices) {
+                            $query->whereIn('devices.id', $devices);
+                        });
+                    });
+                })
+                ->orderBy('id', 'desc')
+                ->paginate($filters['perPage'] ?? 10));
         }
-        $games = GameResource::collection(GameEloquentModel::filter($filters)
-            ->with(['tags', 'disabilityTypes', 'devices'])
-            ->when($filterItems, function ($query, $filterItems) {
-                $query->when($filterItems->disability_types, function ($query, $disability) {
-                    $query->whereHas('disabilityTypes', function ($query) use ($disability) {
-                        $query->whereIn('disability_types.id', $disability);
-                    });
-                });
-                $query->when($filterItems->devices, function ($query, $devices) {
-                    $query->whereHas('devices', function ($query) use ($devices) {
-                        $query->whereIn('devices.id', $devices);
-                    });
-                });
-            })
-            ->orderBy('id', 'desc')
-            ->paginate($filters['perPage'] ?? 10));
+
 
         return $games;
     }
@@ -253,12 +267,17 @@ class GameRepository implements GameRepositoryInterface
         return $download;
     }
 
-    public function assignToStudent(){
+    public function assignToStudent()
+    {
         $studentIds = request()->student_ids;
-        if(count($studentIds) > 0){
-            foreach($studentIds as $student){
-                $checkRecord = GameAssignmentEloquentModel::where(['student_id', $student],['game_id', request()->game_id])->first();
-                if(!$checkRecord){
+
+        if (count($studentIds) > 0) {
+            foreach ($studentIds as $student) {
+                $checkRecord = GameAssignmentEloquentModel::where('student_id', $student)
+                    ->where('game_id', request()->game_id)
+                    ->first();
+                if (!$checkRecord) {
+
                     $gameAssignment = GameAssignmentEloquentModel::create([
                         "game_id" => request()->game_id,
                         "student_id" => $student

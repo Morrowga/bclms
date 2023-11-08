@@ -7,9 +7,15 @@ import {
     onColumnFilter,
     serverParams,
     searchItems,
+    onPageChange,
+    onPerPageChange,
+    serverPerPage,
+    serverPage,
 } from "@Composables/useServerSideDatable.js";
 const props = defineProps(["storyBooks"]);
 let filters = ref(null);
+serverPage.value = ref(props.storyBooks.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
 let filterDatas = ref([
     { title: "A-Z", value: "asc" },
     { title: "Z-A", value: "desc" },
@@ -27,7 +33,7 @@ watch(filters, (newValue) => {
         <v-container>
             <div class="tbook-head-section">
                 <div class="title-section">
-                    <p class="tbook-heading">Storybooks</p>
+                    <p class="heading ruddy-bold">Storybooks</p>
                 </div>
                 <div class="tbook-head-button"></div>
             </div>
@@ -71,7 +77,16 @@ watch(filters, (newValue) => {
                     <TeacherStorybookCard :item="item" />
                 </v-col>
                 <v-col cols="12" class="d-flex justify-center align-center">
-                    <Pagination />
+                    <VPagination
+                        v-model="serverPage"
+                        size="small"
+                        :total-visible="5"
+                        :length="props.storyBooks.meta.last_page"
+                        variant="outlined"
+                        @next="onPageChange"
+                        @prev="onPageChange"
+                        @click="onPageChange"
+                    />
                 </v-col>
             </v-row>
         </v-container>
@@ -111,5 +126,8 @@ watch(filters, (newValue) => {
 
 .v-card:not(.on-hover) {
     opacity: 1;
+}
+.heading {
+    color: #000 !important;
 }
 </style>

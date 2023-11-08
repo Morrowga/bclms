@@ -7,6 +7,8 @@ import avatar4 from "@images/avatars/avatar-4.png";
 import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
 import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { calculateAge } from "@actions/useCalculateAge";
+
 import {
     serverParams,
     onColumnFilter,
@@ -172,7 +174,7 @@ onMounted(() => {
                         </VCol>
                         <VCol cols="3">
                             <p class="tiggie-p">
-                                {{ data.age ? data.age : "---" }}
+                                {{ calculateAge(data.dob) }}
                             </p>
                         </VCol>
 

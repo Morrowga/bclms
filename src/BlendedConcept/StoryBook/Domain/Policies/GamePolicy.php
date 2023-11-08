@@ -36,4 +36,12 @@ class GamePolicy
     {
         return auth()->user()->hasPermission('delete_game');
     }
+    public static function assign()
+    {
+        return auth()->user()->hasPermission('access_gameAssign');
+    }
+    public static function assign_show()
+    {
+        return auth()->user()->hasPermission('access_gameAssign');
+    }
 }

@@ -37,7 +37,7 @@ watch(filters, (newValue) => {
     <AdminLayout>
         <VContainer class="width-80">
             <div class="d-flex justify-space-between align-center mb-10">
-                <h1 class="tiggie-sub-subtitle fs-40">
+                <h1 class="heading ruddy-bold fs-40">
                     {{ checkB2c() ? "Children" : "Students" }}
                 </h1>
 
@@ -105,4 +105,8 @@ watch(filters, (newValue) => {
         </VContainer>
     </AdminLayout>
 </template>
-<style scoped></style>
+<style scoped>
+.heading {
+    color: #000 !important;
+}
+</style>

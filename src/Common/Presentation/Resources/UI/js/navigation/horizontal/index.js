@@ -61,7 +61,7 @@ export default [
         title: 'Games',
         url: "/game-assign",
         icon: { icon: 'mdi-play-circle-outline' },
-        access_module: "access_teacherStorybook",
+        access_module: "access_gameAssign",
         route_name: "game-assign"
     },
     {

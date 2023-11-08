@@ -917,6 +917,11 @@ class PermissionTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'description' => 'Users has access student playlist and their configurations within the application.',
             ],
+            [
+                'name' => 'access_gameAssign',
+                'guard_name' => 'web',
+                'description' => 'Users has access game assign and their configurations within the application.',
+            ],
 
         ];
         foreach ($permissions as $permission) {

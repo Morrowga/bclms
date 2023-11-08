@@ -7,6 +7,8 @@ import avatar4 from "@images/avatars/avatar-4.png";
 import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
 import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 import { SuccessDialog } from "@actions/useSuccess";
+import { calculateAge } from "@actions/useCalculateAge";
+
 import {
     serverParams,
     onColumnFilter,
@@ -20,8 +22,8 @@ import {
 let props = defineProps(["students", "game", "assignments"]);
 
 serverPage.value = ref(props.students.meta.current_page ?? 1);
-let permissions = computed(() => usePage().props.auth.data.permissions);
 serverPerPage.value = ref(10);
+let permissions = computed(() => usePage().props.auth.data.permissions);
 
 let options = ref({
     enabled: true,
@@ -84,29 +86,28 @@ const getImage = (item) => {
         : item.thumbnail_img;
 };
 const backHome = () => {
-    router.get(route("game-assign.show", props.game.id));
+    router.get(route("game-assign"));
 };
 const userImage = (user) =>
     user.profile_pic ?? "/images/profile/profilefive.png";
 
 onMounted(() => {
-    form.student_ids = props.assignments?.map(
-        (game) => game.student_id
-    );
+    form.student_ids = props.assignments?.map((game) => game.student_id);
 });
 </script>
 <template>
     <div>
-        <section>
-
-        </section>
+        <section></section>
         <section class="mt-8">
             <h1 class="ruddy-bold head-text">Assign to Students</h1>
             <VCard class="mt-10">
                 <VDivider />
 
                 <VCol cols="12">
-                    <VRow class="bg-line mx-1 rounded pa-1 mb-5 mt-4" align="center">
+                    <VRow
+                        class="bg-line mx-1 rounded pa-1 mb-5 mt-4"
+                        align="center"
+                    >
                         <VCol cols="3" class="d-flex justify-center">
                             <VLabel class="tiggie-label"> Name </VLabel>
                             <VIcon icon="mdi-menu-down"></VIcon>
@@ -160,7 +161,7 @@ onMounted(() => {
                         </VCol>
                         <VCol cols="3">
                             <p class="tiggie-p">
-                                {{ data.age ? data.age : "---" }}
+                                {{ calculateAge(data.dob) }}
                             </p>
                         </VCol>
 
@@ -193,6 +194,7 @@ onMounted(() => {
             <v-row>
                 <v-col cols="12" class="d-flex justify-center">
                     <SecondaryBtn
+                        type="button"
                         class="mr-4"
                         title="Back"
                         @click="backHome()"
@@ -209,7 +211,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.head-text{
+.head-text {
     font-size: 30px !important;
     color: #000;
 }
