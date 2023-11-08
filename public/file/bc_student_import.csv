@@ -1,11 +1,11 @@
-first_name,last_name,gender,dob,education_level,contact_number,email
-Wren,Clark,female,1 01 2014,p3,91222222,JonathanWilliams@mail.com
-Madge,Dennis,male,2 02 2013,p4,91333333,KimberlyYeo@mail.com
-Alfred,Mitchell,male,3 03 2014,p3,91444444,JessicaLim@mail.com
-Troy,Sharp,male,4 04 2016,k2,91555555,ShirleyTan@mail.com
-Len,Davis,male,5 05 2017,k1,91666666,MaryLin@mail.com
-Kayden,Tan,male,6 01 2019,k1,91777777,ShirleyLee@mail.com
-Kacy,Yeo,female,7 07 2019,k1,91888888,shihui_tan@mail.com
-Mandy,Lee,female,8 08 2014,p3,91999999,StevenOng@mail.com
-Joyce,Lim,female,9 09 2015,p2,92111110,huiwenlee@mail.com
-David,Ong,male,10 10 2015,p2,92222221,jiajia@mail.com
+first_name,last_name,gender,dob,education_level,contact_number,email,parent_first_name,parent_last_name
+Wren,Clark,female,1 01 2014,p3,91222222,JonathanWilliams@mail.com,Wren,Clark
+Madge,Dennis,male,2 02 2013,p4,91333333,KimberlyYeo@mail.com,Madge,Dennis
+Alfred,Mitchell,male,3 03 2014,p3,91444444,JessicaLim@mail.com,Alfred,Mitchell
+Troy,Sharp,male,4 04 2016,k2,91555555,ShirleyTan@mail.com,Troy,Sharp
+Len,Davis,male,5 05 2017,k1,91666666,MaryLin@mail.com,Len,Davis
+Kayden,Tan,male,6 01 2019,k1,91777777,ShirleyLee@mail.com,Kayden,Tan
+Kacy,Yeo,female,7 07 2019,k1,91888888,shihui_tan@mail.com,Kacy,Yeo
+Mandy,Lee,female,8 08 2014,p3,91999999,StevenOng@mail.com,Mandy,Lee
+Joyce,Lim,female,9 09 2015,p2,92111110,huiwenlee@mail.com,Joyce,Lim
+David,Ong,male,10 10 2015,p2,92222221,jiajia@mail.com,David,Ong
