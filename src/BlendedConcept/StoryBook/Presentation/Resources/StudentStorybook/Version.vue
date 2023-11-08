@@ -110,8 +110,15 @@ onMounted(() => {
                 />
             </div>
             <div class="d-flex justify-center">
-                <iframe
+                <iframe v-if="props.book.storybook.type == 'H5P'"
                     :src="`${app_url}/admin/h5p/h5p/${props.book.h5p_id}`"
+                    frameborder="0"
+                    class="h5p-width"
+                    ref="iframeRef"
+                    id="myIframe"
+                ></iframe>
+                <iframe v-else
+                    :src="props.book.html5_file"
                     frameborder="0"
                     class="h5p-width"
                     ref="iframeRef"
