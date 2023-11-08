@@ -241,7 +241,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
 
             if (!empty($existing_files) && count($existing_files) > 0) {
                 foreach ($existing_files as $existing_file) {
-                    $storybookVersion = StoryBookVersionEloquentModel::find($existing_file);
+                    $storybookVersion = StoryBookVersionEloquentModel::find($existing_file['id']);
                     $storybookVersion->name = $existing_file['name'];
                     $zipFile = $existing_file['file'];
                     if ($zipFile != null && file_exists($zipFile) && is_file($zipFile)) {
@@ -313,7 +313,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                 }
             }
 
-            $delete_files = request()->delete_files;
+            $delete_files = request()->delete_ids;
 
             if (!empty($delete_files) && count($delete_files) > 0) {
                 foreach ($delete_files as $delete_file) {
