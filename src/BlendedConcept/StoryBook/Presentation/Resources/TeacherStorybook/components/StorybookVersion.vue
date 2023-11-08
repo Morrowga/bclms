@@ -34,6 +34,7 @@ onMounted(() => {});
                         :story_img="dataStoryBook.thumbnail_img"
                         :storybook_versions="item"
                         :storybook_id="dataStoryBook.id"
+                        :type="dataStoryBook.type"
                     />
                 </swiper-slide>
             </swiper>

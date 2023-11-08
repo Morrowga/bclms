@@ -13,6 +13,7 @@ const props = defineProps([
     "story_img",
     "storybook_id",
     "hide",
+    "type",
 ]);
 let flash = computed(() => usePage().props.flash);
 const getImage = (image) => {
@@ -36,7 +37,7 @@ const deleteItem = (id) => {
     <v-card class="grab-pointer">
         <v-card-title>
             <v-btn
-                :hidden="props.hide"
+                :hidden="props.hide || props.type == 'HTML5'"
                 class="dotbtn"
                 icon="true"
                 color="rgba(255, 255, 255, 0.70)"
