@@ -20,10 +20,16 @@ let props = defineProps({
     },
 });
 let emit = defineEmits();
-
+let organisation = ref("");
+let page = usePage();
 let toggle = () => {
     emit("openDrawer");
 };
+onMounted(() => {
+    organisation.value = page.props.user_info?.user_detail?.organisation_id
+        ? true
+        : false;
+});
 </script>
 <template>
     <v-app-bar elevation="0" class="app-bar-style-padd">
@@ -39,7 +45,13 @@ let toggle = () => {
             href="/home"
             class="d-none d-md-flex align-center"
         >
-            <img src="/images/sitelogotext.svg" width="200" height="200" />
+            <v-img
+                v-if="organisation"
+                src="/images/logoschool.png"
+                width="200"
+                height="200"
+            />
+            <v-img v-else src="/images/logohome.png" width="200" height="200" />
         </Link>
         <VSpacer />
 

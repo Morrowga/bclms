@@ -27,9 +27,13 @@ let flash = computed(() => page?.props?.flash);
 const form = useForm({
     name: "",
     description: "",
+    num_gold_coins: 0,
+    num_silver_coins: 0,
     html_files: [],
     existing_files: [],
     delete_ids: [],
+    type: "",
+    is_free: false,
     _method: "PUT",
 });
 const items = ref([]);
@@ -70,6 +74,10 @@ const backHome = () => {
 onMounted(() => {
     form.name = props.storybook.name;
     form.description = props.storybook.description;
+    form.num_gold_coins = props.storybook.num_gold_coins;
+    form.num_silver_coins = props.storybook.num_silver_coins;
+    form.is_free = props.storybook.is_free ? true : false;
+    form.type = props.storybook.type;
     form.existing_files = props.story_book_versions.map((book_version) => {
         return {
             id: book_version.id,
@@ -120,6 +128,7 @@ onMounted(() => {
                                     memeType="zip"
                                     :id="`existing${index}`"
                                     v-model="item.file"
+                                    :old_filename="`${item.name}.zip`"
                                 />
                             </VCol>
                         </VRow>

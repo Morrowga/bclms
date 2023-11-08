@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
     // Run migrations
@@ -25,7 +26,11 @@ test('without login not access set device', function () {
 });
 
 test('set device with org teacher roles', function () {
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'b2bteacher@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $disability_type = $this->post('/disability_type', [
         'name' => 'Example',

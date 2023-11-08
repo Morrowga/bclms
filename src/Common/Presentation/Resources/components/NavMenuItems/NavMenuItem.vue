@@ -1,6 +1,7 @@
 <script setup>
 import { router } from "@inertiajs/core";
 import { usePage } from "@inertiajs/vue3";
+import { checkB2c } from "@actions/useCheckB2c";
 
 const props = defineProps({
     item: {
@@ -21,7 +22,13 @@ let isLinkActive = (currentRoute) => {
 let goLink = (url) => {
     router.get(url);
 };
-
+let showItemTitle = (title) => {
+    if (title == "Students") {
+        return checkB2c() ? "Children" : "Students";
+    } else {
+        return title;
+    }
+};
 // let hiddenByPermission = (item) => {
 //     return !auth?.value?.data?.permissions?.includes(item?.access_module) &&
 //         item?.access_module != "access_dashboard"
@@ -56,7 +63,7 @@ let goLink = (url) => {
                     : 'color:#282828'
             "
         >
-            {{ item.title }}
+            {{ showItemTitle(item.title) }}
         </span>
     </v-btn>
 </template>

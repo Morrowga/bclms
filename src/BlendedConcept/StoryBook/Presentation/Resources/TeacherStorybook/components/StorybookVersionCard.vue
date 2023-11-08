@@ -5,6 +5,8 @@ import { usePage } from "@inertiajs/vue3";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
 import { SuccessDialog } from "@mainRoot/components/Actions/useSuccess";
 import { checkPermission } from "@actions/useCheckPermission";
+import { checkB2c } from "@actions/useCheckB2c";
+
 let onFormSubmit = () => {
     isConfirmedDialog({ title: "Are you sure want to delete it." });
 };
@@ -13,6 +15,7 @@ const props = defineProps([
     "story_img",
     "storybook_id",
     "hide",
+    "type",
 ]);
 let flash = computed(() => usePage().props.flash);
 const getImage = (image) => {
@@ -36,7 +39,7 @@ const deleteItem = (id) => {
     <v-card class="grab-pointer">
         <v-card-title>
             <v-btn
-                :hidden="props.hide"
+                :hidden="props.hide || props.type == 'HTML5'"
                 class="dotbtn"
                 icon="true"
                 color="rgba(255, 255, 255, 0.70)"
@@ -95,7 +98,11 @@ const deleteItem = (id) => {
                     rounded
                     v-if="checkPermission('access_assignStudent')"
                 >
-                    Manage Assignment to Students
+                    {{
+                        ` Manage Assignment to ${
+                            checkB2c() ? "Children" : "Students"
+                        }`
+                    }}
                 </v-btn>
             </Link>
         </div>

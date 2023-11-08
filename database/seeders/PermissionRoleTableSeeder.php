@@ -184,7 +184,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'access_pagebuilder',
                         'access_library',
                         'access_bcstaffOrganisation',
-                        'access_bcstaffSubscription',
+                        // 'access_bcstaffSubscription',
                         'access_game',
                         'delete_game',
                         'edit_game',

@@ -12,7 +12,11 @@ import {
     serverPage,
     serverPerPage,
 } from "@Composables/useServerSideDatable.js";
+import { usePage } from "@inertiajs/vue3";
+import { checkB2c } from "@actions/useCheckB2c";
+
 let props = defineProps(["students", "flash"]);
+let page = usePage();
 serverPage.value = ref(props.students.current_page ?? 1);
 serverPerPage.value = ref(10);
 
@@ -22,11 +26,12 @@ watch(serverPerPage, function (value) {
 const userImage = (user) => {
     return user.profile_pic ?? "/images/profile/profilefive.png";
 };
+onMounted(() => {});
 </script>
 <template>
     <div class="header">
         <div class="d-flex justify-space-between align-center mb-4">
-            <h1 class="tiggie-title">Student</h1>
+            <h1 class="tiggie-title">{{ checkB2c() ? "Child" : "Student" }}</h1>
 
             <div class="d-flex">
                 <div class="search-field">

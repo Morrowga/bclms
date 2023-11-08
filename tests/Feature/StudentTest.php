@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
     // Run migrations
@@ -18,7 +19,11 @@ beforeEach(function () {
 });
 
 test('import student excel with super admin role module', function () {
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $excelFile = new UploadedFile(
         public_path('file/bc_student_import.csv'),

@@ -19,7 +19,12 @@ beforeEach(function () {
 });
 test('only superadmin can access sitesetting and add settings', function () {
 
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
+
     $response = $this->get('/settings');
     $response->assertStatus(200);
 
@@ -35,7 +40,7 @@ test('only superadmin can access sitesetting and add settings', function () {
         'website_favicon' => '',
     ]);
 
-    $postData->assertStatus(200);
+    $postData->assertStatus(302);
     $this->assertDatabaseHas('system_settings', [
         'site_name' => 'Tiggie Kids',
         'site_time_zone' => 'UTC',

@@ -32,7 +32,7 @@ class StoreRegisterRequest extends FormRequest
             ],
             'contact_number' => [
                 'required'
-            ]
+            ],
         ];
     }
 }

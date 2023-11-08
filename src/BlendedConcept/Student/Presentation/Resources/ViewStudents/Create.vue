@@ -5,6 +5,8 @@ import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDo
 import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
 import { ref } from "vue";
+import { checkB2c } from "@actions/useCheckB2c";
+
 // import ImageUpload from "@Composables/ImageUpload.vue";
 import LargeDropFile from "@mainRoot/components/LargeDropFile/LargeDropFile.vue";
 import {
@@ -55,6 +57,9 @@ const createStudent = () => {
     //     color: "#17CAB6",
     // });
 };
+const changeTitle = () => {
+    return checkB2c() ? "Child" : "Student";
+};
 </script>
 <template>
     <AdminLayout>
@@ -66,7 +71,9 @@ const createStudent = () => {
                     </v-col>
                     <v-col cols="12" md="6" class="pa-5">
                         <div class="d-flex justify-space-between align-center">
-                            <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
+                            <h1 class="tiggie-sub-subtitle fs-40">
+                                {{ changeTitle() }}
+                            </h1>
                         </div>
                         <v-row>
                             <v-col cols="12">
