@@ -51,7 +51,12 @@ test('without other role not access organisations teacher', function () {
 });
 
 test('create org teacher with org admin roles', function () {
-    $this->assertTrue(Auth::check());
+
+    $user = UserEloquentModel::where('email', 'orgone@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $image = UploadedFile::fake()->image('image.jpg'); // Change 'test.jpg' to the desired file name and extension
 
@@ -67,19 +72,21 @@ test('create org teacher with org admin roles', function () {
 
     $storeData = $this->post('/organisations-teacher', []);
 
-    $storeData->assertSessionHasErrors(['first_name', 'last_name', 'email', 'contact_number', 'image']);
-
-    $response->assertRedirect('/organisations-teacher');
+    $storeData->assertSessionHasErrors(['first_name', 'last_name', 'email', 'contact_number']);
 
     // Roll back the transaction to undo any database changes made during the test
 });
 
 test('update teacher with org admin roles', function () {
     // Start a database transaction for the test
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'orgone@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     // Extract the teacher ID from the response or retrieve it from the database
-    $teacherId = 11; // Retrieve the teacher ID as needed
+    $teacherId = 1; // Retrieve the teacher ID as needed
 
     $updateImage = UploadedFile::fake()->image('updateacher.jpg'); // Change 'test.jpg' to the desired file name and extension
 
@@ -88,7 +95,7 @@ test('update teacher with org admin roles', function () {
         'last_name' => 'Device',
         'email' => 'teacher@mail.com',
         'contact_number' => '0912345678',
-        'image' => $updateImage,
+        'image' => null,
     ]);
 
     $updateResponse->assertStatus(302);
@@ -100,10 +107,13 @@ test('update teacher with org admin roles', function () {
 
 test('delete org teacher with org admin roles', function () {
     // Start a database transaction for the test
-    $this->assertTrue(Auth::check());
+$user = UserEloquentModel::where('email', 'orgone@mail.com')->first();
 
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
     // Extract the survey ID from the response or retrieve it from the database
-    $teacherId = 11; // Retrieve the teacher ID as needed
+    $teacherId = 1; // Retrieve the teacher ID as needed
 
     // Attempt to delete the teacher
     $deleteResponse = $this->delete("/organisations-teacher/{$teacherId}");

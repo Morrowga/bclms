@@ -24,7 +24,11 @@ beforeEach(function () {
  */
 test('super admin can only create roles', function () {
     //auth check
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $selectIds = PermissionEloquentModel::pluck('id');
 
@@ -42,7 +46,11 @@ test('super admin can only create roles', function () {
 
 test('super admin with empty name', function () {
 
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $selectIds = PermissionEloquentModel::pluck('id');
 

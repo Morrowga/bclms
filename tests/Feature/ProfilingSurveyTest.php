@@ -50,7 +50,11 @@ test('without other role not access profiling survey', function () {
 });
 
 test('add new question in profiling survey with bcstaff roles', function () {
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'orgone@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $surveyId = 1;
 
@@ -70,7 +74,11 @@ test('add new question in profiling survey with bcstaff roles', function () {
 });
 
 test('update existing question in profiling survey with bcstaff roles', function () {
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'orgone@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $surveyId = 1;
     // Create a new question for the survey
@@ -109,7 +117,11 @@ test('update existing question in profiling survey with bcstaff roles', function
 
 test('delete the question in profiling survey with bcstaff roles', function () {
     // Start a database transaction for the test
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'orgone@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $surveyId = 1;
     // Create a new question for the survey

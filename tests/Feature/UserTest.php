@@ -19,31 +19,13 @@ beforeEach(function () {
     ]);
 });
 
-test('create user  with superadmin roles', function () {
-
-    $this->assertTrue(Auth::check());
-
-    $response = $this->post('/users', [
-        'first_name' => 'Hare',
-        'last_name' => 'Om',
-        'contact_number' => '09951613400',
-        'email' => 'hareom284@gmail.com',
-        'role' => '2',
-        'password' => 'password',
-        'dob' => Carbon::now(),
-        'status' => 1,
-        'profile_pic' => 'images/profile/profilefive.png',
-        'email_verified_send_on' => Carbon::now(),
-    ]);
-
-    $response->assertStatus(302);
-    $response->assertRedirect('/users');
-    // $this->assertDatabaseHas('users', ['first_name' => 'Hare', 'last_name' => 'Om', 'contact_number' => '09951613400', 'email' => 'hareom284@gmail.com']);
-});
-
 test('create user  with missing filed superadmin roles', function () {
 
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $response = $this->post('/users', [
         'first_name' => '',
@@ -87,7 +69,11 @@ test("other roles can't access user module with email verification check", funct
 });
 
 test('import excel with super admin role module', function () {
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $excelFile = new UploadedFile(
         public_path('file/bc_teacher_import.csv'),

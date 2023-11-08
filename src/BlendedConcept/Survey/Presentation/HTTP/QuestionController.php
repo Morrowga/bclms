@@ -65,10 +65,8 @@ class QuestionController
             $updateQuestionCommand->execute();
 
             if ($request->type == 'profiling') {
-                dd('hoho');
                 return redirect()->route('profilling_survey.index')->with('successMessage', 'Question updated Successfully!');
             }
-            dd('haha');
             return redirect()->route('userexperiencesurvey.edit', $question->survey_id)->with('successMessage', 'Question updated Successfully!');
         } catch (\Exception $e) {
             /**

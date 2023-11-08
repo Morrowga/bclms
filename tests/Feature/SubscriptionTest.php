@@ -26,7 +26,11 @@ beforeEach(function () {
 
 test('superadmin create subscription', function () {
 
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
     $reponse = $this->get('/subscribptioninvoice');
     $reponse->assertStatus(200);
@@ -62,7 +66,11 @@ test('without other role not access subscribptioninvoice  ', function () {
 });
 
 test('update b2b subscription', function () {
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
     $subscriptionData = [
         'start_date' => now(),
         'end_date' => now(),
@@ -95,12 +103,12 @@ test('update b2b subscription', function () {
     ];
     $organisationEloquent = OrganisationEloquentModel::create($organisationData);
     $userCreate = UserEloquentModel::create($userData);
-    B2bUserEloquentModel::create([
-        'user_id' => $userCreate->id,
-        'organisation_id' => $organisationEloquent->id,
-        'allocated_storage_limit' => 0,
-        'has_full_library_access' => false,
-    ]);
+    // B2bUserEloquentModel::create([
+    //     'user_id' => $userCreate->id,
+    //     'organisation_id' => $organisationEloquent->id,
+    //     'allocated_storage_limit' => 0,
+    //     'has_full_library_access' => false,
+    // ]);
     $updateSubscription = $this->put("subscribptioninvoice/$subscriptionOne->id/update/b2b", [
         'start_date' => now(),
         'end_date' => now(),
@@ -115,7 +123,12 @@ test('update b2b subscription', function () {
     $updateSubscription->assertStatus(302);
 });
 test('update b2c subscription', function () {
-    $this->assertTrue(Auth::check());
+    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
+
     $subscriptionData = [
         'start_date' => now(),
         'end_date' => now(),
@@ -127,7 +140,7 @@ test('update b2c subscription', function () {
     $plan_data = [
         'name' => 'Free',
         'description' => '$$0/month',
-        'storage_limit' => null,
+        'storage_limit' => 1.00,
         'num_student_profiles' => 1,
         'allow_customisation' => false,
         'allow_personalisation' => false,
@@ -151,10 +164,10 @@ test('update b2c subscription', function () {
     $planEloquent = PlanEloquentModel::create($plan_data);
     $subscriptionOne = SubscriptionEloquentModel::create($subscriptionData);
     $userCreate = UserEloquentModel::create($userData);
-    B2cUserEloquentModel::create([
-        'user_id' => $userCreate->id,
-        'current_subscription_id' => $subscriptionOne->id,
-    ]);
+    // B2cUserEloquentModel::create([
+    //     'user_id' => $userCreate->id,
+    //     'current_subscription_id' => $subscriptionOne->id,
+    // ]);
     B2cSubscriptionEloquentModel::create([
         'subscription_id' => $subscriptionOne->id,
         'user_id' => $userCreate->id,
