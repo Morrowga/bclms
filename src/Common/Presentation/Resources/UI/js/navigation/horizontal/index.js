@@ -62,6 +62,13 @@ export default [
         route_name: "playlists",
     },
     {
+        title: 'Games',
+        url: "/game-assign",
+        icon: { icon: 'mdi-play-circle-outline' },
+        access_module: "access_teacherStorybook",
+        route_name: "game-assign"
+    },
+    {
         title: 'Accessibility',
         url: "/",
         icon: { icon: 'mdi-wheelchair' },

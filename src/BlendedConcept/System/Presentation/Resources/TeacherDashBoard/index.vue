@@ -9,6 +9,7 @@ import TotalStudents from "./TotalStudent.vue";
 const props = defineProps(["students", "user_survey"]);
 
 console.log(props.user_survey);
+
 </script>
 
 <template>

@@ -87,11 +87,6 @@ const openMenu = () => {
 };
 onMounted(() => {
     serverParams.value.columnFilters = {};
-    // onColumnFilter({
-    //     columnFilters: {
-    //         filter: "",
-    //     },
-    // });
 });
 </script>
 <template>

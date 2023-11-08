@@ -1,15 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Src\BlendedConcept\StoryBook\Presentation\HTTP\AssignRewardController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\BookController;
-use Src\BlendedConcept\StoryBook\Presentation\HTTP\BookReviewController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\GameController;
-use Src\BlendedConcept\StoryBook\Presentation\HTTP\PathwayController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\RewardController;
-use Src\BlendedConcept\StoryBook\Presentation\HTTP\StoryBookVersionController;
+use Src\BlendedConcept\StoryBook\Presentation\HTTP\PathwayController;
+use Src\BlendedConcept\StoryBook\Presentation\HTTP\BookReviewController;
+use Src\BlendedConcept\StoryBook\Presentation\HTTP\AssignRewardController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentGamesController;
+use Src\BlendedConcept\StoryBook\Presentation\HTTP\GameAssignmentController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentRewardsController;
+use Src\BlendedConcept\StoryBook\Presentation\HTTP\StoryBookVersionController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentStoryBookController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\TeacherStorybookController;
 
@@ -19,6 +20,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('changerewardStatus/{reward}', [RewardController::class, 'changerewardStatus'])->name('changerewardStatus');
     Route::resource('games', GameController::class);
+    Route::get('game-assign', [GameAssignmentController::class, 'index'])->name('game-assign');
+    Route::get('game-assign/{game}', [GameAssignmentController::class, 'show'])->name('gameassign.show');
+    Route::post('game-assign/assign', [GameAssignmentController::class, 'gameAssign'])->name('gameassign.assign');
+    // game-assign
     Route::post('games/gamedownload/{game}', [GameController::class, 'gameDownload'])->name('games.game-download');
     // storybook resources
     Route::resource('books', BookController::class);

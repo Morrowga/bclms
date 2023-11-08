@@ -90,6 +90,10 @@ return [
         'create' => 'BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Create',
         'edit' => 'BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Edit',
     ],
+    'assign_games' => [
+        'index' => 'BlendedConcept/StoryBook/Presentation/Resources/GameAssignment/Index',
+        'show' => 'BlendedConcept/StoryBook/Presentation/Resources/GameAssignment/Show',
+    ],
 
     'surveyresponse' => [
         'index' => 'BlendedConcept/Survey/Presentation/Resources/SurveyResponses/Index',

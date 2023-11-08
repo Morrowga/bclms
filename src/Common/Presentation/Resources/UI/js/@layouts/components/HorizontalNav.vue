@@ -14,6 +14,7 @@ const resolveNavItemComponent = (item) => {
 
     return NavMenuItem;
 };
+
 </script>
 
 <template>

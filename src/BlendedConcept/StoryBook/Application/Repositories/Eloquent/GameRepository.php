@@ -16,6 +16,7 @@ use Src\BlendedConcept\StoryBook\Domain\Resources\GameResource;
 use Src\BlendedConcept\StoryBook\Application\Mappers\GameMapper;
 use Src\BlendedConcept\StoryBook\Domain\Repositories\GameRepositoryInterface;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameAssignmentEloquentModel;
 
 class GameRepository implements GameRepositoryInterface
 {
@@ -250,5 +251,20 @@ class GameRepository implements GameRepositoryInterface
         $download = $game->getMedia('gamezip')->first();
 
         return $download;
+    }
+
+    public function assignToStudent(){
+        $studentIds = request()->student_ids;
+        if(count($studentIds) > 0){
+            foreach($studentIds as $student){
+                $checkRecord = GameAssignmentEloquentModel::where(['student_id', $student],['game_id', request()->game_id])->first();
+                if(!$checkRecord){
+                    $gameAssignment = GameAssignmentEloquentModel::create([
+                        "game_id" => request()->game_id,
+                        "student_id" => $student
+                    ]);
+                }
+            }
+        }
     }
 }

@@ -21,4 +21,6 @@ interface GameRepositoryInterface
     public function deleteGame(GameEloquentModel $game);
 
     public function gameDownload(GameEloquentModel $game);
+
+    public function assignToStudent();
 }

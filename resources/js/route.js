@@ -79,6 +79,11 @@ const pages = {
     "BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Create": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Create.vue'),
     "BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Edit": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/AssignRewards/Edit.vue'),
 
+
+    //assgin games
+    "BlendedConcept/StoryBook/Presentation/Resources/GameAssignment/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/GameAssignment/Index.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/GameAssignment/Show": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/GameAssignment/Show.vue'),
+
     //survey results
     "BlendedConcept/Survey/Presentation/Resources/SurveyResponses/Index": import('../../src/BlendedConcept/Survey/Presentation/Resources/SurveyResponses/Index.vue'),
     "BlendedConcept/Survey/Presentation/Resources/SurveyResponses/Show": import('../../src/BlendedConcept/Survey/Presentation/Resources/SurveyResponses/Show.vue'),

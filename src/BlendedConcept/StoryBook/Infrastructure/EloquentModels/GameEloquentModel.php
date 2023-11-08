@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameAssignmentEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 
 class GameEloquentModel extends Model implements HasMedia
@@ -60,6 +61,11 @@ class GameEloquentModel extends Model implements HasMedia
     public function devices()
     {
         return $this->belongsToMany(DeviceEloquentModel::class, 'game_devices', 'game_id', 'device_id');
+    }
+
+    public function gameAssignments()
+    {
+        return $this->hasMany(GameAssignmentEloquentModel::class, 'game_id', 'id');
     }
 
     public function scopeFilter($query, $filters)
