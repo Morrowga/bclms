@@ -268,8 +268,8 @@ class StoryBookRepository implements StoryBookRepositoryInterface
 
                         $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
                         $storybookVersion->html5_file = $indexPath;
-                        $storybookVersion->save();
                     }
+                    $storybookVersion->save();
                 }
             }
 
