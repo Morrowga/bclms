@@ -86,6 +86,7 @@ class BookController
      */
     public function update(UpdateStoryBookRequest $request, StoryBookEloquentModel $book)
     {
+        dd($request->all());
         abort_if(authorize('update', BookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
@@ -146,5 +147,12 @@ class BookController
         } catch (\Exception $e) {
             return redirect()->back()->with('errorMessage', $e->getMessage());
         }
+    }
+
+    public function editHtml(StoryBookEloquentModel $storybook)
+    {
+        abort_if(authorize('edit', BookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $story_book_versions = $storybook->with('book_versions')->get()->pluck('book_versions')->flatten();
+        return Inertia::render(config('route.books.edit_html'), compact('storybook', 'story_book_versions'));
     }
 }

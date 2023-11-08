@@ -55,10 +55,10 @@ const form = useForm({
     html_files: [],
     type: "",
 });
-const items = ref([{ versionName: "", storybookFile: null }]);
+const items = ref([{ name: "", file: null }]);
 
 const addRow = () => {
-    items.value.push({ versionName: "", storybookFile: null });
+    items.value.push({ name: "", file: null });
 };
 const removeRow = (index) => {
     if (index > 0) {
@@ -433,7 +433,7 @@ onMounted(() => {
                                     >Version Name</VLabel
                                 >
                                 <VTextField
-                                    v-model="item.versionName"
+                                    v-model="item.name"
                                     :rules="[requiredValidator]"
                                 />
 
@@ -452,7 +452,7 @@ onMounted(() => {
                                 <ImageDropFile
                                     memeType="zip"
                                     :id="index + 4"
-                                    v-model="item.storybookFile"
+                                    v-model="item.file"
                                 />
                             </VCol>
                         </VRow>
