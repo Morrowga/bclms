@@ -113,7 +113,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                     $zipFile = $html_file['file'];
 
                     if (file_exists($zipFile) && is_file($zipFile)) {
-                       $originalFileName = pathinfo($zipFile->getClientOriginalName(), PATHINFO_FILENAME);
+                        $originalFileName = pathinfo($zipFile->getClientOriginalName(), PATHINFO_FILENAME);
 
                         $desiredFolderName = $originalFileName . $storybookEloquent->id;
 
@@ -207,6 +207,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
      */
     public function updateStoryBook(StoryBookData $storyBookData)
     {
+        // dd(request()->all());
         DB::beginTransaction();
 
         try {
@@ -239,11 +240,11 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             $existing_files = request()->existing_files;
 
             if (!empty($existing_files) && count($existing_files) > 0) {
-                foreach($existing_files as $existing_file){
+                foreach ($existing_files as $existing_file) {
                     $storybookVersion = StoryBookVersionEloquentModel::find($existing_file);
                     $storybookVersion->name = $existing_file['name'];
                     $zipFile = $existing_file['file'];
-                    if($zipFile != null && file_exists($zipFile) && is_file($zipFile)){
+                    if ($zipFile != null && file_exists($zipFile) && is_file($zipFile)) {
                         $storybookOldFile = str_replace('/index.html', '', $storybookVersion->html5_file);
                         $oldFolderPath = public_path('book_html5/' . $storybookOldFile);
 
@@ -315,9 +316,9 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             $delete_files = request()->delete_files;
 
             if (!empty($delete_files) && count($delete_files) > 0) {
-                foreach($delete_files as $delete_file){
+                foreach ($delete_files as $delete_file) {
                     $storybookVersion = StoryBookVersionEloquentModel::find($delete_file);
-                    if(!empty($storybookVersion)){
+                    if (!empty($storybookVersion)) {
                         $storybookOldFile = str_replace('/index.html', '', $storybookVersion->html5_file);
                         $oldFolderPath = public_path('book_html5/' . $storybookOldFile);
 
