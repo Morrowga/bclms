@@ -3,6 +3,8 @@ import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps, ref } from "vue";
+import { checkPermission } from "@actions/useCheckPermission";
+
 import VersionCard from "@mainRoot/components/Teacher/VersionCard.vue";
 let props = defineProps(["flash", "auth", "books", "playlists", "pathways"]);
 let flash = computed(() => usePage().props.flash);
@@ -29,12 +31,25 @@ const getImage = (pathway) => pathway.image_url ?? "images/Pathway Card.png";
 onMounted(() => {
     setCookie("assigned");
 });
+let checkHide = computed(() => {
+    return (
+        checkPermission("access_studentAssign") ||
+        checkPermission("access_studentPathway") ||
+        checkPermission("access_studentPlaylist")
+    );
+});
 </script>
 <template>
     <StudentLayout>
         <section class="vh-m-100">
-            <v-navigation-drawer floating permanent class="story-sidebar">
+            <v-navigation-drawer
+                floating
+                permanent
+                class="story-sidebar"
+                v-if="checkHide"
+            >
                 <div
+                    v-if="checkPermission('access_studentAssign')"
                     @click="activeTab('assigned')"
                     :class="{ 'inside-div': active === 'assigned' }"
                     class="mt-5"
@@ -53,6 +68,7 @@ onMounted(() => {
                     </div>
                 </div>
                 <div
+                    v-if="checkPermission('access_studentPathway')"
                     @click="activeTab('pathway')"
                     :class="{ 'inside-div': active === 'pathway' }"
                     class="mt-5"
@@ -71,6 +87,7 @@ onMounted(() => {
                     </div>
                 </div>
                 <div
+                    v-if="checkPermission('access_studentPlaylist')"
                     @click="activeTab('playlist')"
                     :class="{ 'inside-div': active === 'playlist' }"
                     class="mt-5"
@@ -266,7 +283,7 @@ onMounted(() => {
 
 .story-sidebar {
     width: 90px !important;
-    height: 285px !important;
+    height: fit-content !important;
     margin-top: 15% !important;
     border-top: 4px solid #fff;
     border-bottom: 4px solid #fff;

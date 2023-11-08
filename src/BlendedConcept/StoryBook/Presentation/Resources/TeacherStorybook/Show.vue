@@ -29,6 +29,8 @@ const getImage = (item) => {
                         <v-img
                             :src="getImage(teacher_storybook)"
                             class="main-pic"
+                            cover
+                            aspect-ratio="16/9"
                         />
                         <div class="vector-background">
                             <img src="/images/bg.png" />

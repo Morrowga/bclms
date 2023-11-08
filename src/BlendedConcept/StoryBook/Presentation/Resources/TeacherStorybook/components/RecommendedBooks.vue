@@ -15,7 +15,7 @@ const props = defineProps(["storybooks"]);
             <div
                 class="d-flex justify-start justify-md-center align-center gap-10 f-wrap"
             >
-                <swiper :slides-per-view="4" :space-between="20">
+                <swiper :slides-per-view="4" :space-between="20" class="w-100">
                     <swiper-slide v-for="item in storybooks.data" :key="item">
                         <TeacherStorybookCard
                             :item="item"

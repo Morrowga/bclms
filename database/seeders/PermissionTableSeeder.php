@@ -902,6 +902,21 @@ class PermissionTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'description' => 'Users can delete teacherStudents and their configurations within the application.',
             ],
+            [
+                'name' => 'access_studentAssign',
+                'guard_name' => 'web',
+                'description' => 'Users has access student assign and their configurations within the application.',
+            ],
+            [
+                'name' => 'access_studentPathway',
+                'guard_name' => 'web',
+                'description' => 'Users has access student pathway and their configurations within the application.',
+            ],
+            [
+                'name' => 'access_studentPlaylist',
+                'guard_name' => 'web',
+                'description' => 'Users has access student playlist and their configurations within the application.',
+            ],
 
         ];
         foreach ($permissions as $permission) {

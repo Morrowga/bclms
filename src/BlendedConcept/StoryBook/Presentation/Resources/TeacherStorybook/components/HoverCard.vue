@@ -15,7 +15,7 @@ const getImage = (item) => {
 <template>
     <v-card @click="router.get(route('teacher_storybook.show', dataItem.id))">
         <v-card-title class="ps-relative">
-            <v-img :src="getImage(dataItem)" />
+            <v-img :src="getImage(dataItem)" height="150" cover />
         </v-card-title>
         <v-card-text>
             <h1 class="font-weight-bold text-h6 text-center pb-4">
