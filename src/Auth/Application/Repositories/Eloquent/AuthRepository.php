@@ -22,8 +22,7 @@ class AuthRepository implements AuthRepositoryInterface
     public function login($request)
     {
 
-        $user = UserEloquentModel::query()->where('email', $request->email)->first();
-
+        $user = UserEloquentModel::query()->where('email', $request->email)->orWhere('username', $request->email)->first();
         return $user;
     }
 

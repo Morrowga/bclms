@@ -37,6 +37,7 @@ const form = useForm({
     disability_types: [],
     parent_first_name: "",
     parent_last_name: "",
+    login_username: "",
     _method: "PUT",
 });
 
@@ -53,7 +54,7 @@ const createStudent = () => {
         ),
         {
             onSuccess: () => {
-                FlashMessage({ flash })
+                FlashMessage({ flash });
             },
             onError: (error) => {
                 console.log(error);
@@ -76,6 +77,7 @@ onMounted(() => {
     form.education_level = props.organisations_student.education_level;
     form.education_level = props.organisations_student.education_level;
     form.education_level = props.organisations_student.education_level;
+    form.login_username = props.organisations_student.user.username;
     form.learning_needs = props.organisations_student?.learningneeds.map(
         (learn) => learn.id
     );
@@ -196,6 +198,21 @@ onMounted(() => {
                                     variant="outlined"
                                     :rules="[requiredValidator, emailValidator]"
                                     :error-messages="form?.errors?.email"
+                                >
+                                </v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    Login Username
+                                </p>
+                                <v-text-field
+                                    v-model="form.login_username"
+                                    placeholder="e.g wren_clerk_1"
+                                    variant="outlined"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="
+                                        form?.errors?.login_username
+                                    "
                                 >
                                 </v-text-field>
                             </v-col>

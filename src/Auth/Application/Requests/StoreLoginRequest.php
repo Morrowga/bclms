@@ -16,11 +16,19 @@ class StoreLoginRequest extends FormRequest
         return [
             'email' => [
                 'required',
-                'email',
+                // 'email',
             ],
             'password' => [
                 'required',
             ],
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'email.required' => 'Enter your email or username address',
+            'password.required' => 'Enter your password'
+
         ];
     }
 }

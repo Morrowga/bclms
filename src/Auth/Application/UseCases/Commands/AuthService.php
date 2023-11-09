@@ -53,8 +53,10 @@ class AuthService
                 return ['errorMessage' => $error, 'isCheck' => false];
             }
 
+            // dd('hello');
 
             if ($user->parents) {
+
                 $login_user = $user->parents;
                 if ($login_user->type == 'B2B') {
                     $error = 'Invalid Login Credential';
@@ -92,6 +94,11 @@ class AuthService
             ])) {
                 // $user->notify(new BcNotification(['message' => 'Welcome ' . $user->name . ' !', 'from' => '', 'to' => '', 'icon' =>  'mdi-human-greeting', 'type' => 'success']));
 
+                return ['errorMessage' => 'Successfully', 'isCheck' => true];
+            } elseif (auth()->attempt([
+                'username' => request('email'),
+                'password' => request('password')
+            ])) {
                 return ['errorMessage' => 'Successfully', 'isCheck' => true];
             } else {
                 $error = 'Invalid Login Credential';

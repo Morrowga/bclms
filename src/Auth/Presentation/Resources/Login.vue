@@ -5,6 +5,8 @@ import { requiredValidator, emailValidator } from "@validators";
 import { Link, useForm } from "@inertiajs/vue3";
 import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue";
 import { toastAlert } from "@Composables/useToastAlert";
+import { SuccessDialog } from "@actions/useSuccess";
+
 const isPasswordVisible = ref(false);
 const rememberMe = ref(false);
 let props = defineProps(["errorMessage", "sytemErrorMessage", "tenant"]);
@@ -27,12 +29,18 @@ const onSubmit = () => {
             localStorage.setItem("tenant", props?.tenant ? "c" : "");
         },
         onError: (error) => {
-            toastAlert({
-                title: "Invalid Creditional",
+            // toastAlert({
+            //     title: "Invalid Creditional",
+            //     icon: "error",
+            //     bgColor: "red",
+            //     textColor: "white",
+            //     iconColor: "white",
+            // });
+            SuccessDialog({
+                title: "Invalid Credential",
+                mainTitle: "Error!",
+                color: "#ff6262",
                 icon: "error",
-                bgColor: "red",
-                textColor: "white",
-                iconColor: "white",
             });
         },
     });
@@ -91,12 +99,8 @@ const onSubmit = () => {
                                         <VTextField
                                             variant="solo"
                                             v-model="form.email"
-                                            type="email"
                                             class="bg-primary"
-                                            :rules="[
-                                                requiredValidator,
-                                                emailValidator,
-                                            ]"
+                                            :rules="[requiredValidator]"
                                             :error-messages="
                                                 form?.errors?.email
                                             "
