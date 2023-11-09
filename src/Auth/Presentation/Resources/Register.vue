@@ -57,10 +57,10 @@ watch(studentCode, (newVal) => {
     if (newVal.length === 6) {
         fetchDataFromServer(newVal);
     } else {
-        if(newVal.length > 6){
+        if (newVal.length > 6) {
             checkExist.value = false;
         } else {
-            checkExist.value = 'none';
+            checkExist.value = "none";
         }
     }
 });
@@ -84,7 +84,7 @@ async function fetchDataFromServer(value) {
 }
 
 const goToRegisterForm = (type) => {
-    form.student_code = studentCode.value == '' ? null : studentCode.value;
+    form.student_code = studentCode.value == "" ? null : studentCode.value;
     if (type == "teacher") {
         form.user_type = "Teacher";
         didChoose.value = true;
@@ -146,10 +146,6 @@ const goToRegisterForm = (type) => {
                                         <br />
                                         Join us to make a difference in the
                                         classroom!
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <br />
                                     </span>
                                 </div>
 
@@ -182,10 +178,10 @@ const goToRegisterForm = (type) => {
                                         <br />
                                         <br />
                                     </span>
-                                    <span class="ppangram-bold color-black"
+                                    <!-- <span class="ppangram-bold color-black"
                                         >Do you have a student code ?</span
-                                    >
-                                    <VTextField
+                                    > -->
+                                    <!-- <VTextField
                                         class="mt-3 custom-label-student-code"
                                         density="compact"
                                         placeholder="Student / Promotion Code ( optional )"
@@ -207,7 +203,7 @@ const goToRegisterForm = (type) => {
                                                 class="check-false mt-1"
                                             ></VIcon>
                                         </template>
-                                    </VTextField>
+                                    </VTextField> -->
                                 </div>
 
                                 <VBtn
