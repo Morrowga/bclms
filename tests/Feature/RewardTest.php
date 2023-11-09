@@ -20,7 +20,6 @@ beforeEach(function () {
         'email' => 'bcstaff@mail.com',
         'password' => 'password',
     ]);
-
 });
 
 test('can log out an authenticated user', function () {
@@ -93,7 +92,6 @@ test('cannot access read rewards with other roles', function () {
     $response = $this->get('/rewards');
 
     $response->assertStatus(403);
-
 });
 
 test('create rewards with bcstaff roles', function () {
@@ -124,44 +122,43 @@ test('create rewards with bcstaff roles', function () {
 });
 
 // Need to Fix
-// test('update Reward with bcstaff roles', function () {
-//     $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
+test('update Reward with bcstaff roles', function () {
+    $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
 
-//     // Log in as the existing user
-//     $this->actingAs($user);
+    // Log in as the existing user
+    $this->actingAs($user);
 
-//     $this->assertAuthenticated(); // Check if the user is authenticated
+    $this->assertAuthenticated(); // Check if the user is authenticated
 
-//     $this->assertFalse(authorize('update', RewardPolicy::class)); // permission check
+    $this->assertFalse(authorize('update', RewardPolicy::class)); // permission check
 
-//     $image = UploadedFile::fake()->image('test.jpg'); // Change 'test.jpg' to the desired file name and extension
-//     $reward = $this->post('/rewards', [
-//         'name' => 'Toy 1',
-//         'description' => 'nice Reward',
-//         'gold_coins_needed' => 1,
-//         'image' => $image,
-//         'silver_coins_needed' => 10,
-//         'rarity' => 'RARE',
-//     ])->assertStatus(302);
+    $image = UploadedFile::fake()->image('test.jpg'); // Change 'test.jpg' to the desired file name and extension
+    $reward = $this->post('/rewards', [
+        'name' => 'Toy 1',
+        'description' => 'nice Reward',
+        'gold_coins_needed' => 1,
+        'image' => $image,
+        'silver_coins_needed' => 10,
+        'rarity' => 'RARE',
+    ])->assertStatus(302);
 
-//     $id = 1;
-//     $updateResponse = $this->put("/rewards/{$id}", [
-//         'name' => 'Toy 1',
-//         'description' => 'nice Reward',
-//         'gold_coins_needed' => 1,
-//         'image' => $image,
-//         'file_src' => $image,
-//         'silver_coins_needed' => 10,
-//         'rarity' => 'RARE'
-//     ]);
+    $id = 1;
+    $updateResponse = $this->put("/rewards/{$id}", [
+        'name' => 'Toy 1',
+        'description' => 'nice Reward',
+        'gold_coins_needed' => 1,
+        'image' => $image,
+        'file_src' => $image,
+        'silver_coins_needed' => 10,
+        'rarity' => 'RARE'
+    ]);
 
-//     $updateResponse->assertStatus(302);
+    $updateResponse->assertStatus(302);
 
-//     $storeData = $this->put("/rewards/{$id}", []);
+    $storeData = $this->put("/rewards/{$id}", []);
 
-//     $storeData->assertSessionHasErrors(['name', 'gold_coins_needed', 'silver_coins_needed', 'rarity']);
-
-// });
+    $storeData->assertSessionHasErrors(['name', 'gold_coins_needed', 'silver_coins_needed', 'rarity']);
+});
 
 test('change Reward status with bcstaff roles', function () {
     // Assuming you have a reward with a status to change
@@ -187,5 +184,4 @@ test('change Reward status with bcstaff roles', function () {
 
     // Assuming your route for changing the status is '/changeRewardStatus/{id}' and uses 'PUT' or 'PATCH' method
     $changeStatus = $this->post("/changeRewardStatus/{$rewardId}");
-
 });

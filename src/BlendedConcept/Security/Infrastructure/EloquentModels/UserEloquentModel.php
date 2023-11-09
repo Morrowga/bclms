@@ -40,6 +40,7 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
         'first_name',
         'last_name',
         'email',
+        'username',
         'storage_limit',
         'password',
         'contact_number',

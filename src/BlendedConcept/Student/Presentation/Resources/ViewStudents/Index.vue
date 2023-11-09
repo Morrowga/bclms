@@ -85,7 +85,7 @@ watch(filters, (newValue) => {
                     </div>
                 </div>
             </div>
-            <VRow cols="6">
+            <VRow>
                 <VCol
                     cols="2"
                     class="pe-2"
@@ -100,6 +100,19 @@ watch(filters, (newValue) => {
                             img: item.user.profile_pic,
                         }"
                     />
+                </VCol>
+            </VRow>
+            <VRow v-if="checkB2c()">
+                <VCol cols="12" class="text-center mt-6">
+                    <Link :href="route('learning-portal')">
+                        <v-btn
+                            variant="flat"
+                            rounded
+                            color="#FF8015"
+                            class="text-white"
+                            >Enter Kids Mode</v-btn
+                        >
+                    </Link>
                 </VCol>
             </VRow>
         </VContainer>
