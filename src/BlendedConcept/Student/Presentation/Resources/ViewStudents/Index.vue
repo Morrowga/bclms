@@ -102,7 +102,7 @@ watch(filters, (newValue) => {
                     />
                 </VCol>
             </VRow>
-            <div>
+            <div v-if="checkB2c()">
                 <div class="d-flex justify-center my-4">
                     <Link :href="route('learning-portal')">
                         <v-btn
