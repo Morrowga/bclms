@@ -61,7 +61,8 @@ class StudentRepository implements StudentRepositoryInterface
                     'last_name' => $student->last_name,
                     'username' => $student->login_username,
                     'role_id' => 6,
-                    'password' => $student->login_password
+                    'password' => $student->login_password,
+                    'email_verification_send_on	' => now()
                 ];
                 $create_parent_data = [
                     'first_name' => $student->parent_first_name,
