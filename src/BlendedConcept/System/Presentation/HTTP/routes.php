@@ -21,6 +21,7 @@ Route::get('/admin', function () {
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/home', [DashBoardController::class, 'superAdminDashboard'])->name('dashboard');
+    Route::get('/learning-portal', [DashBoardController::class, 'learningPortal'])->name('learning-portal');
     // announcement
     Route::resource('announcements', AnnouncementController::class);
 
@@ -80,19 +81,18 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
     Route::post('/reports/excel', [ReportController::class, 'reportExport'])->name('reports.export');
-
 });
 
 Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
 
     // handle pagebuilder asset requests
-    Route::any(config('pagebuilder.general.assets_url').'{any}', [DashBoardController::class, 'getAssertUrl'])
+    Route::any(config('pagebuilder.general.assets_url') . '{any}', [DashBoardController::class, 'getAssertUrl'])
         ->where('any', '.*');
 
     // handle all website manager requests
     if (config('pagebuilder.website_manager.use_website_manager')) {
 
-        Route::any(config('pagebuilder.website_manager.url').'{any}', [DashBoardController::class, 'websiteManagerUrl'])->where('any', '.*');
+        Route::any(config('pagebuilder.website_manager.url') . '{any}', [DashBoardController::class, 'websiteManagerUrl'])->where('any', '.*');
     }
 
     // pass all remaining requests to the LaravelPageBuilder router
@@ -105,5 +105,5 @@ Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
 });
 
 // handle requests to retrieve uploaded file
-Route::any(config('pagebuilder.general.uploads_url').'{any}', [DashBoardController::class, 'uploadsUrl'])
+Route::any(config('pagebuilder.general.uploads_url') . '{any}', [DashBoardController::class, 'uploadsUrl'])
     ->where('any', '.*');

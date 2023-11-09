@@ -156,6 +156,11 @@ class AuthController extends Controller
                 }
                 $student = json_encode(auth()->user()->student);
                 setcookie('student', $student, time() + (86400 * 30), "/");
+                if ($parent = auth()->user()->parents) {
+                    if ($parent->type == 'B2C') {
+                        return redirect()->route('learing-portal');
+                    }
+                }
                 return redirect()->route('dashboard');
             } else {
                 // Render the login page with an error message

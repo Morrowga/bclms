@@ -62,4 +62,16 @@ class DashboardRepository implements DashboardRepositoryInterface
         }
         return $students;
     }
+
+    public function getParentStudentList()
+    {
+        $auth = auth()->user();
+        $parent = $auth->parents;
+        if ($parent->type == 'B2C') {
+            $students = StudentEloquentModel::whereHas('parent', function ($query) use ($parent) {
+                $query->where('parent_id', $parent->parent_id);
+            })->get();
+            return $students;
+        }
+    }
 }

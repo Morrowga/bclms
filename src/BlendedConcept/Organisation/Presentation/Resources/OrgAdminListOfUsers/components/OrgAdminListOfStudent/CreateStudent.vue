@@ -27,16 +27,20 @@ const form = useForm({
     parent_last_name: "",
     learning_needs: [],
     disability_types: [],
+    login_username: "",
+    login_password: "",
 });
 
 let refForm = ref();
 
 const gender = ref(["Male", "Female"]);
 let tab = ref(null);
+const isPasswordVisible = ref(false);
+
 const createStudent = () => {
     form.post(route("organisations-student.store"), {
         onSuccess: () => {
-            FlashMessage({ flash })
+            FlashMessage({ flash });
         },
         onError: (error) => {
             console.log(error);
@@ -104,7 +108,10 @@ const createStudent = () => {
                                     :rules="[requiredValidator]"
                                     :error-messages="form?.errors?.dob"
                                     density="compact"
-                                    :config="{ minDate: null, maxDate: 'today' }"
+                                    :config="{
+                                        minDate: null,
+                                        maxDate: 'today',
+                                    }"
                                 />
                             </v-col>
                             <!-- <v-col cols="12">
@@ -190,6 +197,45 @@ const createStudent = () => {
                                     :error-messages="form?.errors?.email"
                                 >
                                 </v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    Login Username
+                                </p>
+                                <v-text-field
+                                    v-model="form.login_username"
+                                    placeholder="e.g wren_clerk_1"
+                                    variant="outlined"
+                                    :rules="[requiredValidator]"
+                                    :error-messages="
+                                        form?.errors?.login_username
+                                    "
+                                >
+                                </v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <p class="text-subtitle-1 mb-0 required">
+                                    Login Password
+                                </p>
+                                <VTextField
+                                    variant="outlined"
+                                    v-model="form.login_password"
+                                    :rules="[requiredValidator]"
+                                    :type="
+                                        isPasswordVisible ? 'text' : 'password'
+                                    "
+                                    :error-messages="
+                                        form?.errors?.login_password
+                                    "
+                                    :append-inner-icon="
+                                        isPasswordVisible
+                                            ? 'mdi-eye-off-outline'
+                                            : 'mdi-eye-outline'
+                                    "
+                                    @click:append-inner="
+                                        isPasswordVisible = !isPasswordVisible
+                                    "
+                                />
                             </v-col>
                         </v-row>
                         <v-row>

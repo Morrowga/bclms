@@ -13,4 +13,5 @@ interface DashboardRepositoryInterface
     public function getRecentGames();
     public function getRecentSurveys($filters);
     public function getRecentStudents($filters);
+    public function getParentStudentList();
 }

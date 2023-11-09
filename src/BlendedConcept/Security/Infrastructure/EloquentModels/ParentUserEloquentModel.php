@@ -36,4 +36,8 @@ class ParentUserEloquentModel extends Model
     {
         return $this->belongsTo(SubscriptionEloquentModel::class, 'curr_subscription_id', 'id');
     }
+    public function students()
+    {
+        return $this->hasMany(StudentEloquentModel::class, 'student_id');
+    }
 }

@@ -27,7 +27,7 @@ class StudentData
         public readonly ?float $total_time_spent,
         public readonly ?array $disability_types,
         public readonly ?array $learning_needs,
-
+        public readonly ?string $login_username
     ) {
     }
 
@@ -54,6 +54,7 @@ class StudentData
             total_time_spent: $request->total_time_spent,
             disability_types: $request->disability_types,
             learning_needs: $request->learning_needs,
+            login_username: $request->login_username
         );
     }
 
@@ -80,7 +81,7 @@ class StudentData
             'learning_needs' => $this->learning_needs,
             'parent_first_name' => $this->parent_first_name,
             'parent_last_name' => $this->parent_last_name,
-
+            'login_username' => $this->login_username
         ];
     }
 }

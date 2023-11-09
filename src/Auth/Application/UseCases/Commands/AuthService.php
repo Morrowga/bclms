@@ -53,8 +53,14 @@ class AuthService
                 return ['errorMessage' => $error, 'isCheck' => false];
             }
 
-            if ($user->parent) {
-                $login_user = $user->parent;
+
+            if ($user->parents) {
+                $login_user = $user->parents;
+                if ($login_user->type == 'B2B') {
+                    $error = 'Invalid Login Credential';
+
+                    return ['errorMessage' => $error, 'isCheck' => false];
+                }
             } elseif ($user->b2bUser) {
                 $login_user = $user->b2bUser;
             } else {

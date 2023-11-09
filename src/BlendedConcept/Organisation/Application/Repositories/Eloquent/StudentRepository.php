@@ -59,9 +59,9 @@ class StudentRepository implements StudentRepositoryInterface
                 $create_user_data = [
                     'first_name' => $student->first_name,
                     'last_name' => $student->last_name,
-
+                    'username' => $student->login_username,
                     'role_id' => 6,
-                    'password' => 'password'
+                    'password' => $student->login_password
                 ];
                 $create_parent_data = [
                     'first_name' => $student->parent_first_name,
@@ -69,7 +69,8 @@ class StudentRepository implements StudentRepositoryInterface
                     'contact_number' => $student->contact_number,
                     'email' => $student->email,
                     'role_id' => 7,
-                    'password' => 'password'
+                    'password' => 'password',
+                    'email_verification_send_on	' => now()
                 ];
                 $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
@@ -79,9 +80,9 @@ class StudentRepository implements StudentRepositoryInterface
                     "type" => "B2B"
                 ]);
 
-                $bcstaff = UserEloquentModel::where('role_id', 3)->first();
+                // $bcstaff = UserEloquentModel::where('role_id', 3)->first();
 
-                \Mail::to($userParentEloquent->email)->send(new EmailVerify($userParentEloquent->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userParentEloquent->email), $bcstaff->email, $bcstaff->contact_number));
+                // \Mail::to($userParentEloquent->email)->send(new EmailVerify($userParentEloquent->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userParentEloquent->email), $bcstaff->email, $bcstaff->contact_number));
 
                 $userEloquent = UserEloquentModel::create($create_user_data);
                 $studentEloquentModel = StudentMapper::toEloquent($student);

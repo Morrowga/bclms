@@ -25,6 +25,8 @@ class Student extends Entity
         public readonly ?string $parent_last_name,
         public readonly ?array $disability_types,
         public readonly ?array $learning_needs,
+        public readonly ?string $login_username,
+        public readonly ?string $login_password
     ) {
     }
 
@@ -48,7 +50,8 @@ class Student extends Entity
             'disability_types' => $this->disability_types,
             'learning_needs' => $this->learning_needs,
             'parent_first_name' => $this->parent_first_name,
-            'parent_last_name' => $this->parent_last_name
+            'parent_last_name' => $this->parent_last_name,
+            'login_username' => $this->login_username
         ];
     }
 }

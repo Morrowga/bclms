@@ -28,7 +28,9 @@ class StudentMapper
             disability_types: $request->disability_types,
             learning_needs: $request->learning_needs,
             parent_first_name: $request->parent_first_name,
-            parent_last_name: $request->parent_last_name
+            parent_last_name: $request->parent_last_name,
+            login_username: $request->login_username,
+            login_password: $request->login_password
         );
     }
 

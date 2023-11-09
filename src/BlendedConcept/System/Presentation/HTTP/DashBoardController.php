@@ -25,6 +25,7 @@ use Src\BlendedConcept\System\Application\UseCases\Queries\SuperAdminDashboard\G
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetStudentForAdminDashBoard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgAdminDashboard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgTeacherDashboard;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetParentStudentList;
 
 class DashBoardController extends Controller
 {
@@ -186,6 +187,16 @@ class DashBoardController extends Controller
             $surveys = (new GetRecentUserSurveys($filters));
             $datas = $surveys->handle();
             return response()->json($datas);
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
+
+    public function learningPortal()
+    {
+        try {
+            $students = (new GetParentStudentList)->handle();
+            dd($students);
         } catch (\Exception $exception) {
             return $exception->getMessage();
         }
