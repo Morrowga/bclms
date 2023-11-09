@@ -4,6 +4,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
+import { checkB2c } from "@actions/useCheckB2c";
 
 import { ref } from "vue";
 // import ImageUpload from "@Composables/ImageUpload.vue";
@@ -15,14 +16,14 @@ import {
 } from "@validators";
 const props = defineProps(["learningNeeds", "disabilityTypes", "student"]);
 let refForm = ref();
-let flash = computed(() => usePage().props.flash)
+let flash = computed(() => usePage().props.flash);
 
 const gender = ref(["Male", "Female"]);
 let tab = ref(null);
 const updateStudent = () => {
     form.post(route("teacher_students.update", props.student.data.student_id), {
         onSuccess: () => {
-            FlashMessage({ flash })
+            FlashMessage({ flash });
         },
         onError: (error) => {
             console.log(error);
@@ -71,7 +72,9 @@ let form = useForm({
                     </v-col>
                     <v-col cols="12" md="6" class="pa-5">
                         <div class="d-flex justify-space-between align-center">
-                            <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
+                            <h1 class="tiggie-sub-subtitle fs-40">
+                                {{ checkB2c() ? "Child" : "Student" }}
+                            </h1>
                         </div>
                         <v-row>
                             <v-col cols="12">

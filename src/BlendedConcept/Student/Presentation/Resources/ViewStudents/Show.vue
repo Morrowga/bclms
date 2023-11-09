@@ -11,6 +11,7 @@ import { router } from "@inertiajs/core";
 import { ref } from "vue";
 import { format } from "date-fns";
 import { checkPermission } from "@actions/useCheckPermission";
+import { checkB2c } from "@actions/useCheckB2c";
 
 let tab = ref(null);
 let props = defineProps(["student"]);
@@ -94,7 +95,9 @@ const formatDate = (dateString) => {
                 </v-col>
                 <v-col cols="12" md="6" class="pa-5">
                     <div class="d-flex justify-space-between align-center">
-                        <h1 class="tiggie-sub-subtitle fs-40">Students</h1>
+                        <h1 class="tiggie-sub-subtitle fs-40">
+                            {{ checkB2c() ? "Child" : "Student" }}
+                        </h1>
                         <div>
                             <Link
                                 :href="
@@ -130,7 +133,7 @@ const formatDate = (dateString) => {
                     <v-row>
                         <v-col cols="12" class="mt-10">
                             <p class="text-h5 font-weight-bold mb-0">
-                                Student Details
+                                {{ checkB2c() ? "Child" : "Student" }} Details
                             </p>
                         </v-col>
                         <v-col cols="12">
@@ -304,7 +307,8 @@ const formatDate = (dateString) => {
             <VContainer class="header width-80">
                 <div class="d-flex justify-space-between align-center mb-4">
                     <h1 class="text-h4 font-weight-bold">
-                        Storybooks Assigned to Student
+                        Storybooks Assigned to
+                        {{ checkB2c() ? "Child" : "Student" }}
                     </h1>
                     <v-spacer></v-spacer>
 
