@@ -143,7 +143,7 @@ class TeacherStudentController
             Auth::logout();
             Auth::login($user);
 
-            return redirect()->route('learning-portal'); // Redirect to the kid's home page.
+            return redirect()->route('teacher_students.show', $request->student_id); // Redirect to the kid's home page.
         } catch (\Exception $error) {
             return redirect()->back()->with('errorMessage', $error->getMessage());
         }
