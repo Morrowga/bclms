@@ -56,32 +56,32 @@ const openStdMenu = () => {
     <v-app-bar elevation="0" class="std-head-bar">
         <!-- mobile side navigation -->
         <StudentProfile
-            class="d-flex pe-3"
+            class="d-none d-lg-flex pe-3"
             v-if="route().current() === 'dashboard'"
             @openStdMenu="openStdMenu()"
         />
 
-        <VSpacer />
-
         <v-app-bar-nav-icon
             variant="text"
             @click="toggle"
-            class="d-flex d-md-none"
+            class="d-flex d-lg-none"
         ></v-app-bar-nav-icon>
 
         <Link
             href="/home"
             v-if="!is_drawer"
-            class="d-none d-md-flex align-center"
+            class="d-none d-lg-flex align-center"
         >
             <img src="/images/logowhite.png" width="200" height="55" />
         </Link>
-        <VSpacer />
 
-        <HorizontalNavStudent
-            :nav-items="navItems"
-            :current_user_role="user_role"
-        />
+        <VSpacer />
+        <div class="d-none d-md-flex">
+            <HorizontalNavStudent
+                :nav-items="navItems"
+                :current_user_role="user_role"
+            />
+        </div>
 
         <VSpacer />
 

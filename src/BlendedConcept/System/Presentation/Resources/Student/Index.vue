@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps } from "vue";
 import { router } from "@inertiajs/core";
-import { usePage,useForm } from "@inertiajs/vue3";
+import { usePage, useForm } from "@inertiajs/vue3";
 import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
 import UserExperienceSurvey from "./components/UserExperienceSurvey.vue";
 
@@ -11,41 +11,41 @@ let props = defineProps({
         default: true,
     },
     user_survey: {
-        type: Object
-    }
+        type: Object,
+    },
 });
 const teacher_id = ref(null);
 const page = usePage();
 const user = computed(() => page.props.auth.data);
-const userData = user.value
+const userData = user.value;
 
 const getCookie = () => {
-  const cookieName = "teacher_id"; // Replace with your cookie name
-  const cookies = document.cookie.split("; ");
-  for (const cookie of cookies) {
-    const [name, value] = cookie.split("=");
-    if (name === cookieName) {
-        teacher_id.value = value;
-      return;
+    const cookieName = "teacher_id"; // Replace with your cookie name
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+        const [name, value] = cookie.split("=");
+        if (name === cookieName) {
+            teacher_id.value = value;
+            return;
+        }
     }
-  }
 };
-console.log(getCookie()+ 'teacher_id')
+console.log(getCookie() + "teacher_id");
 
 onMounted(() => {
-  // Load initial data for page 1
-  getCookie();
+    // Load initial data for page 1
+    getCookie();
 });
 </script>
 
 <template>
     <section class="section-student-home vh-m-86">
         <VRow>
-            <VCol cols="12" lg="3" md="6">
+            <VCol cols="12" sm="6" lg="3">
                 <VFadeTransition>
                     <VCard
-                        v-if="props.isOpenMenu"
                         class="text-center card-student ml-5"
+                        v-if="props.isOpenMenu"
                     >
                         <div class="d-flex justify-center mt-2">
                             <img
@@ -57,7 +57,9 @@ onMounted(() => {
                             <p class="studentname pppangram-bold">
                                 {{ userData.full_name }}
                             </p>
-                            <p class="semi-text pppangram-medium">{{ userData.student.gender}}</p>
+                            <p class="semi-text pppangram-medium">
+                                {{ userData.student.gender }}
+                            </p>
                         </div>
                         <VRow class="mx-2 my-2">
                             <VCol cols="5" class="text-left mt-3">
@@ -66,7 +68,7 @@ onMounted(() => {
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
-                                        {{userData.student.dob}}
+                                        {{ userData.student.dob }}
                                     </p>
                                 </div>
                             </VCol>
@@ -87,7 +89,7 @@ onMounted(() => {
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
-                                        {{userData.student.education_level}}
+                                        {{ userData.student.education_level }}
                                     </p>
                                 </div>
                             </VCol>
@@ -106,9 +108,20 @@ onMounted(() => {
                                 </div>
                             </VCol>
                             <VCol cols="7" class="text-left">
-                                <div class="ml-5" v-if="userData.student.disability_types.length > 0">
-                                    <p class="value-student pppangram-medium" v-for="diabilitytype in userData.student.disability_types" :key="diabilitytype.id">
-                                        {{ diabilitytype.name  }}
+                                <div
+                                    class="ml-5"
+                                    v-if="
+                                        userData.student.disability_types
+                                            .length > 0
+                                    "
+                                >
+                                    <p
+                                        class="value-student pppangram-medium"
+                                        v-for="diabilitytype in userData.student
+                                            .disability_types"
+                                        :key="diabilitytype.id"
+                                    >
+                                        {{ diabilitytype.name }}
                                     </p>
                                 </div>
                                 <div class="ml-5" v-else>
@@ -133,8 +146,14 @@ onMounted(() => {
                             </VCol>
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
-                                    <span class="value-student pppangram-medium"
-                                        >{{ userData.student.device === null || userData.student.device === '' ? 'No Device': userData.student.device.name }}</span
+                                    <span
+                                        class="value-student pppangram-medium"
+                                        >{{
+                                            userData.student.device === null ||
+                                            userData.student.device === ""
+                                                ? "No Device"
+                                                : userData.student.device.name
+                                        }}</span
                                     >
                                 </div>
                             </VCol>
@@ -147,8 +166,12 @@ onMounted(() => {
                             </VCol>
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
-                                    <span class="value-student pppangram-medium"
-                                        >{{ userData.student.student_code ?? 'No Code' }}</span
+                                    <span
+                                        class="value-student pppangram-medium"
+                                        >{{
+                                            userData.student.student_code ??
+                                            "No Code"
+                                        }}</span
                                     >
                                 </div>
                             </VCol>
@@ -165,7 +188,10 @@ onMounted(() => {
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
-                                        {{ userData.student.parent.user.full_name }}
+                                        {{
+                                            userData.student.parent.user
+                                                .full_name
+                                        }}
                                     </p>
                                 </div>
                             </VCol>
@@ -193,7 +219,10 @@ onMounted(() => {
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
-                                        {{ userData.student.parent.user.contact_number }}
+                                        {{
+                                            userData.student.parent.user
+                                                .contact_number
+                                        }}
                                     </p>
                                 </div>
                             </VCol>
@@ -213,13 +242,16 @@ onMounted(() => {
                             </VCol>
                         </VRow>
                         <div class="mt-1 my-3 mx-3">
-                            <ExitMode :teacher_id="teacher_id" :student_id="userData.student.student_id" />
+                            <ExitMode
+                                :teacher_id="teacher_id"
+                                :student_id="userData.student.student_id"
+                            />
                         </div>
                     </VCard>
                 </VFadeTransition>
             </VCol>
-            <VCol cols="12" lg="5" md="6">
-                <div class="ml-10 d-none d-md-flex">
+            <VCol cols="12" sm="6" lg="5">
+                <div class="ml-10">
                     <img
                         src="/images/Storybooks.png"
                         @click="() => router.get(route('storybooks'))"
@@ -227,16 +259,16 @@ onMounted(() => {
                         alt=""
                     />
                 </div>
-                <div class="d-flex d-sm-none">
+                <!-- <div class="d-flex d-sm-none">
                     <img
                         src="/images/Storybooks.png"
                         @click="() => router.get(route('storybooks'))"
                         class="storybook"
                         alt=""
                     />
-                </div>
+                </div> -->
             </VCol>
-            <VCol cols="12" lg="4" md="6" class="text-center">
+            <VCol cols="12" sm="6" lg="4" class="text-center">
                 <div class="text-center">
                     <img
                         src="/images/Games.png"
@@ -255,7 +287,10 @@ onMounted(() => {
                 </div>
             </VCol>
         </VRow>
-        <UserExperienceSurvey v-if="props.user_survey ?? false" :data="props.user_survey" />
+        <UserExperienceSurvey
+            v-if="props.user_survey ?? false"
+            :data="props.user_survey"
+        />
     </section>
 </template>
 

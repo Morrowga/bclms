@@ -36,6 +36,7 @@ const openMenu = () => {
             <DefaultLayoutWithVerticalNav
                 v-bind="layoutAttrs"
                 :user_role="user_role"
+                @openMenu="openMenu()"
             >
                 <slot />
             </DefaultLayoutWithVerticalNav>

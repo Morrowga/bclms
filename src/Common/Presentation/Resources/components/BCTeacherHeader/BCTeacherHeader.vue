@@ -31,18 +31,20 @@ onMounted(() => {
 });
 </script>
 <template>
-    <v-app-bar elevation="0" class="app-bar-style-bc-padd">
+    <v-app-bar elevation="0">
         <!-- mobile side navigation -->
+        <div class="left-padd d-none d-lg-flex"></div>
+
         <v-app-bar-nav-icon
             variant="text"
             @click="toggle"
-            class="d-flex d-md-none"
+            class="d-flex d-lg-none"
         ></v-app-bar-nav-icon>
 
         <Link
             v-if="!is_drawer"
             href="/home"
-            class="d-none d-md-flex align-center"
+            class="d-none d-lg-flex align-center"
         >
             <v-img
                 v-if="organisation"
@@ -53,14 +55,12 @@ onMounted(() => {
             <v-img v-else src="/images/logohome.png" width="200" height="200" />
         </Link>
         <VSpacer />
-
-        <HorizontalNav :nav-items="navItems" />
+        <div class="d-none d-lg-flex">
+            <HorizontalNav :nav-items="navItems" />
+        </div>
 
         <VSpacer />
-        <Link
-            :href="route('techsupports')"
-            class="d-none d-md-flex align-center"
-        >
+        <Link :href="route('techsupports')" class="align-center">
             <VBtn icon color="secondary">
                 <v-icon style="font-size: 23px !important"
                     >mdi-chat-question-outline</v-icon
@@ -74,6 +74,7 @@ onMounted(() => {
         <UserProfile v-if="!is_drawer" class="d-flex d-md-none pe-3" />
 
         <UserProfile v-if="is_drawer" class="d-flex pe-3" />
+        <div class="right-padd d-none d-lg-flex"></div>
     </v-app-bar>
 </template>
 <style scoped>
