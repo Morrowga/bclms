@@ -70,7 +70,7 @@ class DashboardRepository implements DashboardRepositoryInterface
         if ($parent->type == 'B2C') {
             $students = StudentEloquentModel::whereHas('parent', function ($query) use ($parent) {
                 $query->where('parent_id', $parent->parent_id);
-            })->get();
+            })->with(['user'])->get();
             return $students;
         }
     }

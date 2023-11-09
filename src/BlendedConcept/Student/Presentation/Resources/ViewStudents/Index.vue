@@ -102,6 +102,25 @@ watch(filters, (newValue) => {
                     />
                 </VCol>
             </VRow>
+            <div>
+                <div class="d-flex justify-center my-4">
+                        <Link
+                            :href="
+                                route(
+                                    'learning-portal',
+                                )
+                            "
+                        >
+                            <v-btn
+                                variant="flat"
+                                rounded
+                                color="#FF8015"
+                                class="text-white"
+                                >Enter Kids Mode</v-btn
+                            >
+                        </Link>
+                    </div>
+            </div>
         </VContainer>
     </AdminLayout>
 </template>
