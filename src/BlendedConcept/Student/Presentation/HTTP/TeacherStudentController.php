@@ -140,10 +140,19 @@ class TeacherStudentController
         try {
             $request->validated();
 
-            Auth::logout();
-            Auth::login($user);
+            $student = StudentEloquentModel::find($request->student_id);
+            if(!empty($student)){
+                if($student->organisation_id != null){
+                    Auth::logout();
 
-            return redirect()->route('teacher_students.show', $request->student_id); // Redirect to the kid's home page.
+                    return redirect()->route('login');
+                } else {
+                    Auth::logout();
+                    Auth::login($user);
+
+                    return redirect()->route('teacher_students.show', $request->student_id);
+                }
+            }
         } catch (\Exception $error) {
             return redirect()->back()->with('errorMessage', $error->getMessage());
         }
