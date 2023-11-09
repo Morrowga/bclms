@@ -124,6 +124,7 @@ class TeacherStudentController
             $teacher_id = Auth::user()->id;
 
             setcookie('teacher_id', $teacher_id, time() + (86400 * 30), "/");
+            setcookie('kidmode', true, time() + (86400 * 30), "/");
             Auth::logout();
             Auth::login($user);
             $student = json_encode(auth()->user()->student);
@@ -141,11 +142,18 @@ class TeacherStudentController
             $request->validated();
 
             $student = StudentEloquentModel::find($request->student_id);
+
             if(!empty($student)){
                 if($student->organisation_id != null){
-                    Auth::logout();
+                    if(isset($_COOKIE['kidmode'])) {
+                        Auth::logout();
+                        Auth::login($user);
 
-                    return redirect()->route('login');
+                        return redirect()->route('teacher_students.show', $request->student_id);
+                    } else {
+                        Auth::logout();
+                        return redirect()->route('login');
+                    }
                 } else {
                     Auth::logout();
                     Auth::login($user);
