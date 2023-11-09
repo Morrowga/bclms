@@ -165,6 +165,12 @@ onMounted(() => {
                                 {{ organisations_student?.parent?.user?.email }}
                             </p>
                         </v-col>
+                        <v-col cols="12">
+                            <p class="text-subtitle-1 mb-0">Login Username</p>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                {{ organisations_student?.user?.username }}
+                            </p>
+                        </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12">

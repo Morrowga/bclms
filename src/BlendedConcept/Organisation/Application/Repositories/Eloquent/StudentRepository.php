@@ -132,6 +132,7 @@ class StudentRepository implements StudentRepositoryInterface
             $userEloquentModel->update([
                 'first_name' => $studentData->first_name,
                 'last_name' => $studentData->last_name,
+                'username' => $studentData->login_username
             ]);
             $parentEloquentModel = ParentEloquentModel::find($parent_id);
 
