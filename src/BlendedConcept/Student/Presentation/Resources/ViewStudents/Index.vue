@@ -102,8 +102,8 @@ watch(filters, (newValue) => {
                     />
                 </VCol>
             </VRow>
-            <VRow v-if="checkB2c()">
-                <VCol cols="12" class="text-center mt-6">
+            <div>
+                <div class="d-flex justify-center my-4">
                     <Link :href="route('learning-portal')">
                         <v-btn
                             variant="flat"
@@ -113,8 +113,8 @@ watch(filters, (newValue) => {
                             >Enter Kids Mode</v-btn
                         >
                     </Link>
-                </VCol>
-            </VRow>
+                </div>
+            </div>
         </VContainer>
     </AdminLayout>
 </template>

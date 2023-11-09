@@ -60,6 +60,9 @@ const pages = {
     //manage disabilty device
     "BlendedConcept/Disability/Presentation/Resources/Disability/Index": import('../../src/BlendedConcept/Disability/Presentation/Resources/Disability/Index.vue'),
 
+    //learning portal
+    "BlendedConcept/System/Presentation/Resources/LearningPortal/Index": import('../../src/BlendedConcept/System/Presentation/Resources/LearningPortal/Index.vue'),
+
     //manage accessibility device
     "BlendedConcept/Disability/Presentation/Resources/Accessibility/Index": import('../../src/BlendedConcept/Disability/Presentation/Resources/Accessibility/Index.vue'),
     "BlendedConcept/Disability/Presentation/Resources/Accessibility/Create": import('../../src/BlendedConcept/Disability/Presentation/Resources/Accessibility/Create.vue'),

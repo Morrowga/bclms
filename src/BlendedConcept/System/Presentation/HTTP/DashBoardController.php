@@ -196,7 +196,9 @@ class DashBoardController extends Controller
     {
         try {
             $students = (new GetParentStudentList)->handle();
-            dd($students);
+            return Inertia::render(config('route.learning-portal.index'), [
+                "students" => $students
+            ]);
         } catch (\Exception $exception) {
             return $exception->getMessage();
         }

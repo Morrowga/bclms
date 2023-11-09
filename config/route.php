@@ -190,6 +190,10 @@ return [
     'editCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Edit',
     'createCopy' => 'BlendedConcept/ClassRoom/Presentation/Resources/ClassRoom/Create',
 
+    'learning-portal' => [
+        'index' => 'BlendedConcept/System/Presentation/Resources/LearningPortal/Index',
+    ],
+
     'org-teacher-classroom' => [
         'index' => 'BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Index',
         'show' => 'BlendedConcept/ClassRoom/Presentation/Resources/OrgTeacherClassroom/Show',
