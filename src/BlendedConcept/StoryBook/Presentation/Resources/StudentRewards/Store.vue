@@ -1,19 +1,25 @@
 <script setup>
 import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
-import { computed, defineProps,onMounted,onBeforeMount,onBeforeUnmount } from "vue";
+import {
+    computed,
+    defineProps,
+    onMounted,
+    onBeforeMount,
+    onBeforeUnmount,
+} from "vue";
 import { router } from "@inertiajs/core";
 
 let props = defineProps(["flash"]);
 let flash = computed(() => usePage().props.flash);
 
 onMounted(() => {
-  // Attempt to lock the orientation to landscape
-  if (window.screen.orientation) {
-    window.screen.orientation.lock('landscape').catch(error => {
-      console.log('Failed to lock orientation:', error);
-    });
-  }
+    // Attempt to lock the orientation to landscape
+    //   if (window.screen.orientation) {
+    //     window.screen.orientation.lock('landscape').catch(error => {
+    //       console.log('Failed to lock orientation:', error);
+    //     });
+    //   }
 });
 </script>
 
@@ -58,9 +64,9 @@ onMounted(() => {
                 </VCol>
             </VRow>
         </section>
-        <section>
+        <!-- <section>
             <p>Please rotate your device to landscape mode for the best experience.</p>
-        </section>
+        </section> -->
     </StudentLayout>
 </template>
 
