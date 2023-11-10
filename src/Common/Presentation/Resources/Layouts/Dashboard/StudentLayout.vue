@@ -33,7 +33,7 @@ const openMenu = () => {
 };
 
 onMounted(() => {
-    var myScreenOrientation = window.screen.orientation;
+    var myScreenOrientation = screen.orientation;
     if (myScreenOrientation.type.startsWith("portrait")) {
         openDialog.value = true;
     } else {
