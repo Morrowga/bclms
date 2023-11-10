@@ -1,6 +1,7 @@
 <script setup>
 import { useSkins } from "@core/composable/useSkins";
 import { useThemeConfig } from "@core/composable/useThemeConfig";
+import FullScreenComponent from "./FullScreenComponent.vue";
 import AppLayout from "./AppLayout.vue";
 
 // @layouts plugin
@@ -26,29 +27,26 @@ let props = defineProps(["user"]);
 let page = usePage();
 let user_role = computed(() => page.props.user_info.user_role.name);
 let emit = defineEmits();
+let openDialog = ref(false);
 const openMenu = () => {
     emit("openMenu");
 };
-// function forceLandscape() {
-//     var myScreenOrientation = window.screen.orientation;
-//     if (myScreenOrientation && myScreenOrientation.lock) {
-//         myScreenOrientation.type.startsWith("portrait")
-//             ? myScreenOrientation.lock("landscape-primary")
-//             : "";
-//     }
-// }
 
 onMounted(() => {
-    // if (isPortraitMode()) {
-    //     let rotate_screen = document.getElementById("rotate-screen");
-    //     setTimeout(() => {
-    //         rotate_screen.click();
-    //     }, 1000);
-    // }
+    var myScreenOrientation = window.screen.orientation;
+    if (myScreenOrientation.type.startsWith("portrait")) {
+        openDialog.value = true;
+    } else {
+        openDialog.value = false;
+    }
 });
 </script>
 <template>
     <AppLayout class="student">
+        <FullScreenComponent
+            @close_orientation="openDialog = false"
+            :openDialog="openDialog"
+        />
         <template v-if="appContentLayoutNav === AppContentLayoutNav.Vertical">
             <DefaultLayoutWithVerticalNav
                 v-bind="layoutAttrs"
