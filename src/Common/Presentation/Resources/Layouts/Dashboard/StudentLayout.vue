@@ -37,28 +37,34 @@ const openMenu = () => {
 //             : "";
 //     }
 // }
-// const lockScreenOrientation = async () => {
-//     try {
-//         await document.documentElement.requestFullscreen();
-//         await screen.orientation.lock("landscape-primary");
-//         console.log("Orientation locked successfully");
-//     } catch (error) {
-//         console.error("Failed to lock orientation:", error);
-//     }
-// };
+const lockScreenOrientation = async () => {
+    try {
+        await document.documentElement.requestFullscreen();
+        await screen.orientation.lock("landscape-primary");
+        console.log("Orientation locked successfully");
+    } catch (error) {
+        console.error("Failed to lock orientation:", error);
+    }
+};
 
-// const isPortraitMode = () => {
-//     return window.innerHeight > window.innerWidth;
-// };
+const isPortraitMode = () => {
+    return window.innerHeight > window.innerWidth;
+};
 
 onMounted(() => {
-    // if (isPortraitMode()) {
-    //     lockScreenOrientation();
-    // }
+    if (isPortraitMode()) {
+        let rotate_screen = document.getElementById("rotate-screen");
+        rotate_screen.click();
+    }
 });
 </script>
 <template>
     <AppLayout class="student">
+        <button
+            hidden
+            @click="lockScreenOrientation"
+            id="rotate-screen"
+        ></button>
         <template v-if="appContentLayoutNav === AppContentLayoutNav.Vertical">
             <DefaultLayoutWithVerticalNav
                 v-bind="layoutAttrs"
