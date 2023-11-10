@@ -29,6 +29,17 @@ let emit = defineEmits();
 const openMenu = () => {
     emit("openMenu");
 };
+function forceLandscape() {
+    if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.type.startsWith("portrait")
+            ? screen.orientation.lock("landscape")
+            : "";
+    }
+}
+
+onMounted(() => {
+    forceLandscape();
+});
 </script>
 <template>
     <AppLayout class="student">
