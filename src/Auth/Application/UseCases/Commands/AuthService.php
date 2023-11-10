@@ -53,7 +53,7 @@ class AuthService
                 return ['errorMessage' => $error, 'isCheck' => false];
             }
 
-            // dd('hello');
+
 
             if ($user->parents) {
 

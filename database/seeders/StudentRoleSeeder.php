@@ -19,7 +19,7 @@ class StudentRoleSeeder extends Seeder
     public function run()
     {
         $parent = [
-            'role_id' => 7,
+            'role_id' => 8,
             'first_name' => 'Parent',
             'last_name' => 'One',
             'email' => 'parentone@mail.com',

@@ -51,6 +51,8 @@ let props = defineProps({
 });
 let isStudent = ref(false);
 let page = usePage().props;
+let organisation = ref("");
+
 const resolveHeaderComponent = () => {
     switch (props.user_role) {
         case "BC Super Admin":
@@ -83,27 +85,37 @@ const resolveHeaderComponent = () => {
     // showMenubar.value = false;
     // return StudentHeader;
 };
+onMounted(() => {
+    organisation.value = page.user_info?.user_detail?.organisation_id
+        ? true
+        : false;
+});
 </script>
 <template>
     <v-layout :class="isStudent ? 'std-layout' : ''">
         <VNavigation-drawer v-model="drawer" style="position: fixed">
             <template v-slot:prepend>
-                <Link to="/" class="d-flex align-center gap-x-2 pa-5">
+                <!-- <Link to="/" class="d-flex align-center gap-x-2 pa-5">
                     <img
                         src="/images/sitelogotext.svg"
                         width="200"
                         height="200"
                     />
-                    <!-- <img
-                        :src="$page?.props?.site_logo"
-                        width="40"
-                        height="40"
+                   
+                </Link> -->
+                <Link href="/home" class="d-flex align-center gap-x-2 pa-5">
+                    <v-img
+                        v-if="organisation"
+                        src="/images/logoschool.png"
+                        width="200"
+                        height="200"
                     />
-                    <h1
-                        class="font-weight-bold leading-normal text-truncate text-xl"
-                    >
-                        {{ $page?.props?.site_settings?.site_name }}
-                    </h1> -->
+                    <v-img
+                        v-else
+                        src="/images/logohome.png"
+                        width="200"
+                        height="200"
+                    />
                 </Link>
             </template>
 
