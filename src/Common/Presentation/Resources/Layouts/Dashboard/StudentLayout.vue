@@ -37,24 +37,24 @@ const openMenu = () => {
 //             : "";
 //     }
 // }
-const lockScreenOrientation = async () => {
-    try {
-        await document.documentElement.requestFullscreen();
-        await screen.orientation.lock("landscape-primary");
-        console.log("Orientation locked successfully");
-    } catch (error) {
-        console.error("Failed to lock orientation:", error);
-    }
-};
+// const lockScreenOrientation = async () => {
+//     try {
+//         await document.documentElement.requestFullscreen();
+//         await screen.orientation.lock("landscape-primary");
+//         console.log("Orientation locked successfully");
+//     } catch (error) {
+//         console.error("Failed to lock orientation:", error);
+//     }
+// };
 
-const isPortraitMode = () => {
-    return window.innerHeight > window.innerWidth;
-};
+// const isPortraitMode = () => {
+//     return window.innerHeight > window.innerWidth;
+// };
 
 onMounted(() => {
-    if (isPortraitMode()) {
-        lockScreenOrientation();
-    }
+    // if (isPortraitMode()) {
+    //     lockScreenOrientation();
+    // }
 });
 </script>
 <template>

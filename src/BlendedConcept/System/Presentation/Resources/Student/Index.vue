@@ -30,17 +30,34 @@ const getCookie = () => {
         }
     }
 };
+const lockScreenOrientation = async () => {
+    try {
+        await document.documentElement.requestFullscreen();
+        await screen.orientation.lock("landscape-primary");
+        console.log("Orientation locked successfully");
+    } catch (error) {
+        console.error("Failed to lock orientation:", error);
+    }
+};
+
+const isPortraitMode = () => {
+    return window.innerHeight > window.innerWidth;
+};
 console.log(getCookie() + "teacher_id");
 
 onMounted(() => {
     // Load initial data for page 1
     getCookie();
+    // if (isPortraitMode()) {
+    //     lockScreenOrientation();
+    // }
 });
 </script>
 
 <template>
     <section class="section-student-home vh-m-86">
         <VRow>
+            <VBtn @click="lockScreenOrientation()">Orientation</VBtn>
             <VCol cols="12" sm="6" lg="3">
                 <VFadeTransition>
                     <VCard
