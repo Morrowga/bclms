@@ -99,6 +99,7 @@ class AuthService
                 'username' => request('email'),
                 'password' => request('password')
             ])) {
+                setcookie("kidmode", false, time() + (86400 * 30), "/");
                 return ['errorMessage' => 'Successfully', 'isCheck' => true];
             } else {
                 $error = 'Invalid Login Credential';
