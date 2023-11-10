@@ -29,17 +29,26 @@ let emit = defineEmits();
 const openMenu = () => {
     emit("openMenu");
 };
-function forceLandscape() {
-    var myScreenOrientation = window.screen.orientation;
-    if (myScreenOrientation && myScreenOrientation.lock) {
-        myScreenOrientation.type.startsWith("portrait")
-            ? myScreenOrientation.lock("landscape-primary")
-            : "";
+// function forceLandscape() {
+//     var myScreenOrientation = window.screen.orientation;
+//     if (myScreenOrientation && myScreenOrientation.lock) {
+//         myScreenOrientation.type.startsWith("portrait")
+//             ? myScreenOrientation.lock("landscape-primary")
+//             : "";
+//     }
+// }
+const lockScreenOrientation = async () => {
+    try {
+        await document.documentElement.requestFullscreen();
+        await screen.orientation.lock("landscape-primary");
+        console.log("Orientation locked successfully");
+    } catch (error) {
+        console.error("Failed to lock orientation:", error);
     }
-}
+};
 
 onMounted(() => {
-    forceLandscape();
+    lockScreenOrientation();
 });
 </script>
 <template>
