@@ -7,29 +7,19 @@ import { router } from "@inertiajs/core";
 let props = defineProps(["flash"]);
 let flash = computed(() => usePage().props.flash);
 
-const isWideScreen = ref(false);
-
-const checkScreenSize = () => {
-  // Check if the screen width is wide enough for landscape content
-  isWideScreen.value = window.innerWidth >= 768;
-};
-
 onMounted(() => {
-  checkScreenSize();
-  // Listen for window resize events
-  window.addEventListener('resize', checkScreenSize);
+  // Attempt to lock the orientation to landscape
+  if (window.screen.orientation) {
+    window.screen.orientation.lock('landscape').catch(error => {
+      console.log('Failed to lock orientation:', error);
+    });
+  }
 });
-
-onBeforeUnmount(() => {
-  // Remove the event listener to prevent memory leaks
-  window.removeEventListener('resize', checkScreenSize);
-});
-
 </script>
 
 <template>
     <StudentLayout>
-        <section class="mb-3" v-if="isWideScreen">
+        <section class="mb-3">
             <VRow>
                 <VCol cols="1">
                     <img
@@ -68,7 +58,7 @@ onBeforeUnmount(() => {
                 </VCol>
             </VRow>
         </section>
-        <section v-else>
+        <section>
             <p>Please rotate your device to landscape mode for the best experience.</p>
         </section>
     </StudentLayout>
