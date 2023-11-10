@@ -1,11 +1,12 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Http\Testing\File;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\HttpFoundation\Response;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
     // Run migrations
@@ -42,6 +43,18 @@ test('without other role not access games', function () {
     }
     $reponse = $this->get('/games');
     $reponse->assertStatus(403);
+});
+
+test('can access game with bcstaff roles', function () {
+    $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // check if the user is authenticated
+
+    $response = $this->get('/games');
+
+    $response->assertStatus(200);
 });
 
 test('create game with bcstaff roles', function () {

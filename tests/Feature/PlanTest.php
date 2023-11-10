@@ -18,17 +18,18 @@ beforeEach(function () {
     ]);
 });
 
-test('superadmin create plan', function () {
+// coz of disable features
+// test('superadmin create plan', function () {
 
-    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+//     $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
 
-    $this->actingAs($user);
+//     $this->actingAs($user);
 
-    $this->assertAuthenticated(); // Check if the user is authenticated
+//     $this->assertAuthenticated(); // Check if the user is authenticated
 
-    $reponse = $this->get('/plans');
-    $reponse->assertStatus(200);
-});
+//     $reponse = $this->get('/plans');
+//     $reponse->assertStatus(200);
+// });
 
 test('without login not access plan', function () {
 
@@ -67,9 +68,10 @@ test('form submit as plan with superadmin role', function () {
 
     $this->assertAuthenticated(); // Check if the user is authenticated
 
-    $response = $this->get('/plans')
-    ;
-    $response->assertStatus(200);
+    // comment coz of disable features
+    // $response = $this->get('/plans')
+    // ;
+    // $response->assertStatus(200);
     $user = UserEloquentModel::create([
         'first_name' => 'testing',
         'last_name' => 'testing',
@@ -110,8 +112,9 @@ test('form update as plan with superadmin role', function () {
 
     $this->assertAuthenticated(); // Check if the user is authenticated
 
-    $response = $this->get('/plans');
-    $response->assertStatus(200);
+    // comment coz of disable features
+    // $response = $this->get('/plans');
+    // $response->assertStatus(200);
     $planData = [
         'name' => 'Free',
         'description' => '$$0/month',

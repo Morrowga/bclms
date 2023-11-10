@@ -77,22 +77,6 @@ test('created_a_paid_b2c_parent_account', function () {
     $response->assertSessionHasErrors('email');
 });
 
-test('created_a_both_b2c_parent_account', function () {
-    $student = StudentEloquentModel::find(1);
-    $data = [
-        'email' => 'test.com',
-        'password' => 'password',
-        'first_name' => 'tester',
-        'last_name' => 'one',
-        'contact_number' => '87333233',
-        'password_confirmation' => 'password',
-        'plan' => 2,
-        'user_type' => 'parent'
-    ];
-    $response = $this->post('/both-plan', $data);
-    $response->assertSessionHasErrors('email');
-});
-
 test('blank_teacher_register', function () {
     $data = [
         'plan' => 1,

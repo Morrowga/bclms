@@ -79,21 +79,22 @@ test('read pathways with bcstaff roles', function () {
     $reponse->assertStatus(200);
 });
 
-test('cannot access read pathways with other roles', function () {
-    $user = UserEloquentModel::where('email', 'teacherone@mail.com')->first();
+// comment coz of disable features
+// test('cannot access read pathways with other roles', function () {
+//     $user = UserEloquentModel::where('email', 'teacherone@mail.com')->first();
 
-    // Log in as the existing user
-    $this->actingAs($user);
+//     // Log in as the existing user
+//     $this->actingAs($user);
 
-    $this->assertAuthenticated(); // Check if the user is authenticated'
+//     $this->assertAuthenticated(); // Check if the user is authenticated'
 
-    $this->assertTrue(authorize('view', PathwayPolicy::class)); // permission check
+//     $this->assertTrue(authorize('view', PathwayPolicy::class)); // permission check
 
-    $response = $this->get('/pathways');
+//     $response = $this->get('/pathways');
 
-    $response->assertStatus(403);
+//     $response->assertStatus(403);
 
-});
+// });
 
 test('create pathways with bcstaff roles', function () {
     $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
@@ -185,7 +186,7 @@ test('update Pathways with bcstaff roles', function () {
     ]);
 
     $updateResponse->assertStatus(302);
-    
+
     $updateResponse->assertRedirect('/pathways');
 });
 

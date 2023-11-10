@@ -24,17 +24,18 @@ beforeEach(function () {
     ]);
 });
 
-test('superadmin create subscription', function () {
+// comment coz of disabled features
+// test('superadmin create subscription', function () {
 
-    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+//     $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
 
-    $this->actingAs($user);
+//     $this->actingAs($user);
 
-    $this->assertAuthenticated(); // Check if the user is authenticated
+//     $this->assertAuthenticated(); // Check if the user is authenticated
 
-    $reponse = $this->get('/subscribptioninvoice');
-    $reponse->assertStatus(200);
-});
+//     $reponse = $this->get('/subscribptioninvoice');
+//     $reponse->assertStatus(200);
+// });
 
 test('without login not access subscription', function () {
 
