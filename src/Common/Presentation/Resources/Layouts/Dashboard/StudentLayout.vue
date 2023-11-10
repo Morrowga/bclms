@@ -47,8 +47,14 @@ const lockScreenOrientation = async () => {
     }
 };
 
+const isPortraitMode = () => {
+    return window.innerHeight > window.innerWidth;
+};
+
 onMounted(() => {
-    lockScreenOrientation();
+    if (isPortraitMode()) {
+        lockScreenOrientation();
+    }
 });
 </script>
 <template>
