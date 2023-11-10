@@ -14,12 +14,13 @@ let props = defineProps(["flash"]);
 let flash = computed(() => usePage().props.flash);
 
 onMounted(() => {
-    // Attempt to lock the orientation to landscape
-    //   if (window.screen.orientation) {
-    //     window.screen.orientation.lock('landscape').catch(error => {
-    //       console.log('Failed to lock orientation:', error);
-    //     });
-    //   }
+  // Attempt to lock the orientation to landscape
+  if (window.screen.orientation) {
+    // window.screen.orientation.lock("landscape-");
+    window.screen.orientation.lock('landscape').catch(error => {
+      console.log('Failed to lock orientation:', error);
+    });
+  }
 });
 </script>
 
@@ -64,9 +65,6 @@ onMounted(() => {
                 </VCol>
             </VRow>
         </section>
-        <!-- <section>
-            <p>Please rotate your device to landscape mode for the best experience.</p>
-        </section> -->
     </StudentLayout>
 </template>
 
