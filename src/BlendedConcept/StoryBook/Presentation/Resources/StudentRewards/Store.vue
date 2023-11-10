@@ -1,42 +1,35 @@
 <script setup>
 import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
-import { computed, defineProps,onMounted,onBeforeMount } from "vue";
+import { computed, defineProps,onMounted,onBeforeMount,onBeforeUnmount } from "vue";
 import { router } from "@inertiajs/core";
 
 let props = defineProps(["flash"]);
 let flash = computed(() => usePage().props.flash);
 
-const isPortrait = ref(false);
+const isWideScreen = ref(false);
 
-const checkOrientation = () => {
-  // Check if the device is in portrait mode
-  isPortrait.value = window.orientation === 0 || window.orientation === 180;
-
-  // Enforce landscape mode on iPad
-  if (isPortrait.value && window.screen.orientation) {
-    window.screen.orientation.lock('landscape').catch(error => {
-      console.error('Failed to lock orientation:', error);
-    });
-  }
+const checkScreenSize = () => {
+  // Check if the screen width is wide enough for landscape content
+  isWideScreen.value = window.innerWidth >= 768;
 };
 
 onMounted(() => {
-  checkOrientation();
-  // Listen for orientation change events
-  window.addEventListener('orientationchange', checkOrientation);
+  checkScreenSize();
+  // Listen for window resize events
+  window.addEventListener('resize', checkScreenSize);
 });
 
 onBeforeUnmount(() => {
   // Remove the event listener to prevent memory leaks
-  window.removeEventListener('orientationchange', checkOrientation);
+  window.removeEventListener('resize', checkScreenSize);
 });
 
 </script>
 
 <template>
     <StudentLayout>
-        <section class="mb-3" v-if="!isPortrait">
+        <section class="mb-3" v-if="isWideScreen">
             <VRow>
                 <VCol cols="1">
                     <img
@@ -74,6 +67,9 @@ onBeforeUnmount(() => {
                     </div>
                 </VCol>
             </VRow>
+        </section>
+        <section v-else>
+            <p>Please rotate your device to landscape mode for the best experience.</p>
         </section>
     </StudentLayout>
 </template>
