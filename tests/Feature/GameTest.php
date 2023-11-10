@@ -6,6 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\File as FileCopy;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
@@ -59,6 +60,10 @@ test('can access game with bcstaff roles', function () {
 
 test('create game with bcstaff roles', function () {
     $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
+    $sourcePath = public_path('testcase/jolly-jumper-gh-pages.zip');
+    $destinationPath = public_path('testcase/jolly-jumper-gh-pages1.zip');
+
+    FileCopy::copy($sourcePath, $destinationPath);
 
     // Log in as the existing user
     $this->actingAs($user);
@@ -67,7 +72,16 @@ test('create game with bcstaff roles', function () {
 
     $thumbFile = UploadedFile::fake()->image('thumb.jpg'); // Change 'test.jpg' to the desired file name and extension
 
-    $gameFile = UploadedFile::fake()->create('game.zip', 1024); // Change 'test.zip' to the desired filename
+    $existingZipFilePath = public_path('testcase/jolly-jumper-gh-pages1.zip'); // Adjust the path and filename as needed
+
+    $gameFile = new UploadedFile(
+        $existingZipFilePath,
+        'game.zip', // Rename the file if needed
+        'application/zip',
+        null,
+        true // Indicates that the file is a test file
+    );
+
 
     $disability_type = $this->post('/disability_type', [
         'name' => 'Example',
@@ -88,8 +102,8 @@ test('create game with bcstaff roles', function () {
     $response = $this->post('/games', [
         'name' => 'Example Game',
         'description' => 'Game Description',
-        'thumb' => $thumbFile, // Use the created file instance
-        'game' => $gameFile, // Use the created file instance
+        'thumb' => $thumbFile,
+        'game' => $gameFile,
         'disability_type_id' => [1],
         'devices' => [1],
         'num_gold_coins' => 0,
@@ -109,6 +123,12 @@ test('create game with bcstaff roles', function () {
 test('update game with bcstaff roles', function () {
     $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
 
+    $sourcePath = public_path('testcase/jolly-jumper-gh-pages.zip');
+    $destinationPath = public_path('testcase/jolly-jumper-gh-pages1.zip');
+    $updateDestinationPath = public_path('testcase/jolly-jumper-gh-pages2.zip');
+
+    FileCopy::copy($sourcePath, $destinationPath);
+
     // Log in as the existing user
     $this->actingAs($user);
 
@@ -116,7 +136,16 @@ test('update game with bcstaff roles', function () {
 
     $thumbFile = UploadedFile::fake()->image('thumb.jpg'); // Change 'test.jpg' to the desired file name and extension
 
-    $gameFile = UploadedFile::fake()->create('game.zip', 1024); // Change 'test.zip' to the desired filename
+    $existingZipFilePath = public_path('testcase/jolly-jumper-gh-pages1.zip'); // Adjust the path and filename as needed
+
+    $gameFile = new UploadedFile(
+        $existingZipFilePath,
+        'game.zip', // Rename the file if needed
+        'application/zip',
+        null,
+        true // Indicates that the file is a test file
+    );
+
 
     $disability_type = $this->post('/disability_type', [
         'name' => 'Example',
@@ -150,9 +179,22 @@ test('update game with bcstaff roles', function () {
 
     // Extract the teacher ID from the response or retrieve it from the database
     $gameId = 1; // Retrieve the teacher ID as needed
+
+    FileCopy::copy($sourcePath, $updateDestinationPath);
+
     $thumbUpdateFile = UploadedFile::fake()->image('thumbUpdate.jpg'); // Change 'test.jpg' to the desired file name and extension
 
     $gameUpdateFile = UploadedFile::fake()->create('gameUpdate.zip', 1024); // Change 'test.zip' to the desired filename
+
+    $updateExistingZipFilePath = public_path('testcase/jolly-jumper-gh-pages2.zip'); // Adjust the path and filename as needed
+
+    $gameUpdateFile = new UploadedFile(
+        $updateExistingZipFilePath,
+        'game.zip', // Rename the file if needed
+        'application/zip',
+        null,
+        true // Indicates that the file is a test file
+    );
 
     $update_disability_type = $this->post('/disability_type', [
         'name' => 'Example Update',
@@ -196,14 +238,27 @@ test('update game with bcstaff roles', function () {
 
 test('delete game with bcstaff roles', function () {
     $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
+    $sourcePath = public_path('testcase/jolly-jumper-gh-pages.zip');
+    $destinationPath = public_path('testcase/jolly-jumper-gh-pages1.zip');
 
+    FileCopy::copy($sourcePath, $destinationPath);
+
+    // Log in as the existing user
     $this->actingAs($user);
 
     $this->assertAuthenticated(); // Check if the user is authenticated
 
     $thumbFile = UploadedFile::fake()->image('thumb.jpg'); // Change 'test.jpg' to the desired file name and extension
 
-    $gameFile = UploadedFile::fake()->create('gameUpdate.zip', 1024); // Change 'test.zip' to the desired filename
+    $existingZipFilePath = public_path('testcase/jolly-jumper-gh-pages1.zip'); // Adjust the path and filename as needed
+
+    $gameFile = new UploadedFile(
+        $existingZipFilePath,
+        'game.zip', // Rename the file if needed
+        'application/zip',
+        null,
+        true // Indicates that the file is a test file
+    );
 
     $disability_type = $this->post('/disability_type', [
         'name' => 'Example',
