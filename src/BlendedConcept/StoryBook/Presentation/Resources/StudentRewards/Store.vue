@@ -1,16 +1,42 @@
 <script setup>
 import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
-import { computed, defineProps } from "vue";
+import { computed, defineProps,onMounted,onBeforeMount } from "vue";
 import { router } from "@inertiajs/core";
 
 let props = defineProps(["flash"]);
 let flash = computed(() => usePage().props.flash);
+
+const isPortrait = ref(false);
+
+const checkOrientation = () => {
+  // Check if the device is in portrait mode
+  isPortrait.value = window.orientation === 0 || window.orientation === 180;
+
+  // Enforce landscape mode on iPad
+  if (isPortrait.value && window.screen.orientation) {
+    window.screen.orientation.lock('landscape').catch(error => {
+      console.error('Failed to lock orientation:', error);
+    });
+  }
+};
+
+onMounted(() => {
+  checkOrientation();
+  // Listen for orientation change events
+  window.addEventListener('orientationchange', checkOrientation);
+});
+
+onBeforeUnmount(() => {
+  // Remove the event listener to prevent memory leaks
+  window.removeEventListener('orientationchange', checkOrientation);
+});
+
 </script>
 
 <template>
     <StudentLayout>
-        <section class="mb-3">
+        <section class="mb-3" v-if="!isPortrait">
             <VRow>
                 <VCol cols="1">
                     <img
