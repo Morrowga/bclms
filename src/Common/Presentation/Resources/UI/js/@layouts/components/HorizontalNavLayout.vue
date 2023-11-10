@@ -33,7 +33,7 @@ let open = ref(false);
             </div>
             <!-- 👉 Navigation -->
 
-            <div class="layout-horizontal-nav d-none d-md-flex toolbar-fixed">
+            <div class="layout-horizontal-nav d-none d-sm-flex toolbar-fixed">
                 <slot name="menubar" />
             </div>
         </div>
