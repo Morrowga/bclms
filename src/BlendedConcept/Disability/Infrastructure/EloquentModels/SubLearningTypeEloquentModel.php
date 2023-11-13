@@ -15,7 +15,7 @@ class SubLearningTypeEloquentModel extends Model
 
     protected $fillable = [
         'id',
-        'learning_need_id',
+        'learning_needs_id',
         'name',
     ];
 
