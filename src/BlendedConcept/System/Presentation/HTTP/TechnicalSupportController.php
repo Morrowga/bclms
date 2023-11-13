@@ -54,9 +54,6 @@ class TechnicalSupportController extends Controller
 
             return redirect()->route('techsupports')->with('successMessage', 'Asked question successfully!');
         } catch (\Exception $error) {
-
-            dd($error->getMessage());
-
             return redirect()->route('techsupports')->with(['systemErrorMessage' => $error->getMessage()]);
         }
     }
@@ -75,7 +72,7 @@ class TechnicalSupportController extends Controller
 
     public function deleteSupportQuestion(TechnicalSupportEloquentModel $support_ticket)
     {
-        abort_if(authorize('delete', TechSupportPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(authorize('destroy', TechSupportPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
             (new DeleteTicketCommand($support_ticket))->execute();

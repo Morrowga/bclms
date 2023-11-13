@@ -28,8 +28,10 @@ class TechnicalSupportRepository implements TechnicalSupportRepositoryInterface
             $technicalSupportEloquent->has_responded = false;
             $technicalSupportEloquent->save();
         } catch (\Exception $e) {
-
-            dd($e->getMessage());
+            DB::rollBack();
+            config('app.env') == 'production'
+                ? throw new \Exception('Something Wrong! Please try again.')
+                : throw new \Exception($e->getMessage());
         }
     }
 

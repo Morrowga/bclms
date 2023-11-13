@@ -298,3 +298,151 @@ test('delete game with bcstaff roles', function () {
 
     $response->assertRedirect('/games');
 });
+
+
+test('access game assign with bcsubscriber roles', function () {
+    $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
+    $sourcePath = public_path('testcase/jolly-jumper-gh-pages.zip');
+    $destinationPath = public_path('testcase/jolly-jumper-gh-pages1.zip');
+
+    FileCopy::copy($sourcePath, $destinationPath);
+
+    // Log in as the existing user
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
+
+    $thumbFile = UploadedFile::fake()->image('thumb.jpg'); // Change 'test.jpg' to the desired file name and extension
+
+    $existingZipFilePath = public_path('testcase/jolly-jumper-gh-pages1.zip'); // Adjust the path and filename as needed
+
+    $gameFile = new UploadedFile(
+        $existingZipFilePath,
+        'game.zip', // Rename the file if needed
+        'application/zip',
+        null,
+        true // Indicates that the file is a test file
+    );
+
+
+    $disability_type = $this->post('/disability_type', [
+        'name' => 'Example',
+        'description' => 'Disability Type Description',
+    ]);
+
+    $disability_type->assertStatus(302);
+
+    $device = $this->post('/accessibility_device', [
+        'name' => 'Example Device',
+        'description' => 'Device Description',
+        'disability_types' => [1],
+        'status' => 'INACTIVE',
+    ]);
+
+    $device->assertStatus(302);
+
+    $response = $this->post('/games', [
+        'name' => 'Example Game',
+        'description' => 'Game Description',
+        'thumb' => $thumbFile,
+        'game' => $gameFile,
+        'disability_type_id' => [1],
+        'devices' => [1],
+        'num_gold_coins' => 0,
+        'num_silver_coins' => 0,
+        'tags' => ['example', 'example2'],
+    ]);
+
+    $response->assertStatus(302);
+
+    Auth::logout();
+
+    //login as bc subscriber to access game-assign page
+    $user = UserEloquentModel::where('email', 'teacherone@mail.com')->first();
+
+    // Log in as the teacher one
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
+
+    $gameId = 1;
+
+    $gameResponse = $this->get("/game-assign/{$gameId}");
+
+    $gameResponse->assertStatus(200);
+});
+
+test('assign game to student with bcsubscriber roles', function() {
+    $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
+    $sourcePath = public_path('testcase/jolly-jumper-gh-pages.zip');
+    $destinationPath = public_path('testcase/jolly-jumper-gh-pages1.zip');
+
+    FileCopy::copy($sourcePath, $destinationPath);
+
+    // Log in as the existing user
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
+
+    $thumbFile = UploadedFile::fake()->image('thumb.jpg'); // Change 'test.jpg' to the desired file name and extension
+
+    $existingZipFilePath = public_path('testcase/jolly-jumper-gh-pages1.zip'); // Adjust the path and filename as needed
+
+    $gameFile = new UploadedFile(
+        $existingZipFilePath,
+        'game.zip', // Rename the file if needed
+        'application/zip',
+        null,
+        true // Indicates that the file is a test file
+    );
+
+
+    $disability_type = $this->post('/disability_type', [
+        'name' => 'Example',
+        'description' => 'Disability Type Description',
+    ]);
+
+    $disability_type->assertStatus(302);
+
+    $device = $this->post('/accessibility_device', [
+        'name' => 'Example Device',
+        'description' => 'Device Description',
+        'disability_types' => [1],
+        'status' => 'INACTIVE',
+    ]);
+
+    $device->assertStatus(302);
+
+    $response = $this->post('/games', [
+        'name' => 'Example Game',
+        'description' => 'Game Description',
+        'thumb' => $thumbFile,
+        'game' => $gameFile,
+        'disability_type_id' => [1],
+        'devices' => [1],
+        'num_gold_coins' => 0,
+        'num_silver_coins' => 0,
+        'tags' => ['example', 'example2'],
+    ]);
+
+    $response->assertStatus(302);
+
+    Auth::logout();
+
+    //login as bc subscriber to access game-assign page
+    $user = UserEloquentModel::where('email', 'teacherone@mail.com')->first();
+
+    // Log in as the teacher one
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
+
+    $gameId = 1;
+
+    $gameResponse = $this->post('game-assign/assign', [
+        'student_ids' => [1],
+        'game_id' => $gameId
+    ]);
+
+    $gameResponse->assertStatus(302);
+});
