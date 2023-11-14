@@ -144,17 +144,16 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                     }
                 }
             } else {
-                $teachers = TeacherEloquentModel::pluck('teacher_id');
+                // $teachers = TeacherEloquentModel::pluck('teacher_id');
 
-                foreach ($teachers as $teacherId) {
-                    $storybookVersion = (new StoryBookVersionEloquentModel);
-                    $storybookVersion->teacher_id = $teacherId;
-                    $storybookVersion->h5p_id = $storyBook->h5p_id;
-                    $storybookVersion->name = "Original Copy";
-                    $storybookVersion->description = "Original Copy";
-                    $storybookVersion->storybook_id = $storybookEloquent->id;
-                    $storybookVersion->save();
-                }
+                // foreach ($teachers as $teacherId) {
+                $storybookVersion = (new StoryBookVersionEloquentModel);
+                $storybookVersion->h5p_id = $storyBook->h5p_id;
+                $storybookVersion->name = "Original Copy";
+                $storybookVersion->description = "Original Copy";
+                $storybookVersion->storybook_id = $storybookEloquent->id;
+                $storybookVersion->save();
+                // }
 
                 setcookie("h5p_id", "", time() - 3600, "/");
             }

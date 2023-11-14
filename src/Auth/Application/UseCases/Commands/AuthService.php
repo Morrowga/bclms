@@ -47,10 +47,12 @@ class AuthService
                 }
             }
             //this check verify email or not
-            if (!$user->email_verification_send_on) {
-                $error = 'Please Verify your email';
+            if ($user->role_id != 6) {
+                if (!$user->email_verification_send_on) {
+                    $error = 'Please Verify your email';
 
-                return ['errorMessage' => $error, 'isCheck' => false];
+                    return ['errorMessage' => $error, 'isCheck' => false];
+                }
             }
 
 

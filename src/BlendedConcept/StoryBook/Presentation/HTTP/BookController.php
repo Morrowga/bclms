@@ -152,7 +152,8 @@ class BookController
     public function editHtml(StoryBookEloquentModel $storybook)
     {
         abort_if(authorize('edit', BookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $story_book_versions = $storybook->with('book_versions')->get()->pluck('book_versions')->flatten();
+        $story_book_versions = $storybook->load('book_versions')->book_versions;
+        // $story_book_versions = $storybook->with('book_versions')->get()->pluck('book_versions')->flatten();
         return Inertia::render(config('route.books.edit_html'), compact('storybook', 'story_book_versions'));
     }
 }

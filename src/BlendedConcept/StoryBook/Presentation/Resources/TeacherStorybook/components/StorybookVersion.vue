@@ -19,7 +19,10 @@ onMounted(() => {});
         <div class="header-sec d-flex justify-center align-center">
             <span> Storybook Versions </span>
             <CreateStorybookVersion
-                v-if="checkPermission('access_createVersion')"
+                v-if="
+                    checkPermission('access_createVersion') &&
+                    dataStoryBook.type == 'H5P'
+                "
                 :dataStoryBook="dataStoryBook"
             />
         </div>

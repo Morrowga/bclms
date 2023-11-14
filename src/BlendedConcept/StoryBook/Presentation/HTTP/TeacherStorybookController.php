@@ -50,14 +50,14 @@ class TeacherStorybookController
                 });
             }]);
         } elseif ($auth == 'BC Subscriber') {
-            if(auth()->user()->b2bUser == null){
+            if (auth()->user()->b2bUser == null) {
                 $parent = auth()->user()->parents;
 
                 $user_id = $parent->parent_id;
                 $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
                     $query->where('parent_id', $user_id)->orWhere(function ($query) {
                         $query->where('teacher_id', null)->where('parent_id', null);
-                    });;
+                    })->orderBy('id', 'asc');
                 }]);
             } else {
                 $teacher = auth()->user()->b2bUser;
@@ -67,7 +67,7 @@ class TeacherStorybookController
                 $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
                     $query->where('teacher_id', $user_id)->orWhere(function ($query) {
                         $query->where('teacher_id', null)->where('parent_id', null);
-                    });;
+                    })->orderBy('id', 'asc');
                 }]);
             }
         } else {

@@ -27,7 +27,7 @@ return new class extends Migration
                 ->on('h5p_contents')->onDelete('cascade');
             $table->string('html5_file')->nullable();
             $table->string('name');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }
