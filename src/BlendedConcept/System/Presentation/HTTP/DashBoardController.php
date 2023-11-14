@@ -80,7 +80,7 @@ class DashBoardController extends Controller
         } else if ($current_user_role == "Student") {
 
             $orgainzations_users = (new GetUserForAdminDashBoard())->handle();
-        } else if ($current_user_role == "BC Subscriber" || $current_user_role == "B2B Parent" || $current_user_role == "B2C Parent" || $current_user_role == "Both Parent") {
+        } else if ($current_user_role == "BC Subscriber") {
             $students = (new GetRecentStudents($filters = request(['search', 'perPage', 'page'])))->handle();
         }
         $user_survey = (new GetUserSurveyByRole('LOG_IN'))->handle();

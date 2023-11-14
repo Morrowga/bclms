@@ -19,7 +19,7 @@ class StudentRoleSeeder extends Seeder
     public function run()
     {
         $parent = [
-            'role_id' => 8,
+            'role_id' => 2,
             'first_name' => 'Parent',
             'last_name' => 'One',
             'email' => 'parentone@mail.com',
@@ -49,7 +49,7 @@ class StudentRoleSeeder extends Seeder
             "user_id" => $parentUserCreate->id,
             "organisation_id" => null,
             "curr_subscription_id" => $subscription->id,
-            "type" => 'B2B'
+            "type" => 'B2C'
         ];
 
         $parentCreate = ParentEloquentModel::create($parentData);
