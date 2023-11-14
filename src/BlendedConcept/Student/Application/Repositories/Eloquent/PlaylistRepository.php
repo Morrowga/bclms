@@ -25,32 +25,24 @@ class PlaylistRepository implements PlaylistRepositoryInterface
                 ->whereIn('teacher_id', $user_id)
                 ->orderBy('id', 'desc')
                 ->paginate($filters['perPage'] ?? 10));
-        } elseif ($auth == 'B2C Parent') {
-            $parent = auth()->user()->parents;
-            $user_id = $parent->parent_id;
-            $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
-                ->with(['storybooks', 'student.user'])
-                ->where('parent_id', $user_id)
-                ->orderBy('id', 'desc')
-                ->paginate($filters['perPage'] ?? 10));
-        } elseif ($auth == 'Both Parent') {
-            $parent = auth()->user()->parents;
-            $user_id = $parent->parent_id;
-            $student = StudentEloquentModel::with('teachers')->where('parent_id', $parent->parent_id)->first();
-            if ($parent->organisation_id) {
-                $teacher = $student->classrooms()->with('teachers')->get()->pluck('teachers')->flatten();
-                $teacher_id = $teacher->map(function ($teacher) {
-                    return $teacher->teacher_id;
-                });
+        } elseif ($auth == 'BC Subscriber') {
+            if(auth()->user()->b2bUser == null){
+                $parent = auth()->user()->parents;
+                $user_id = $parent->parent_id;
+                $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
+                    ->with(['storybooks', 'student.user'])
+                    ->where('parent_id', $user_id)
+                    ->orderBy('id', 'desc')
+                    ->paginate($filters['perPage'] ?? 10));
             } else {
-                $teacher_id = $student->teachers()->pluck('teachers.teacher_id');
+                $teacher = auth()->user()->b2bUser;
+                $user_id = $teacher->teacher_id;
+                $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
+                    ->with(['storybooks', 'student.user'])
+                    ->where('teacher_id', $user_id)
+                    ->orderBy('id', 'desc')
+                    ->paginate($filters['perPage'] ?? 10));
             }
-            $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
-                ->with(['storybooks', 'student.user'])
-                ->where('parent_id', $user_id)
-                ->orWhereIn('teacher_id', $teacher_id)
-                ->orderBy('id', 'desc')
-                ->paginate($filters['perPage'] ?? 10));
         } else {
             $user_id = [auth()->user()->b2bUser->teacher_id];
             $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
@@ -59,6 +51,26 @@ class PlaylistRepository implements PlaylistRepositoryInterface
                 ->orderBy('id', 'desc')
                 ->paginate($filters['perPage'] ?? 10));
         }
+
+        // elseif ($auth == 'Both Parent') {
+        //     $parent = auth()->user()->parents;
+        //     $user_id = $parent->parent_id;
+        //     $student = StudentEloquentModel::with('teachers')->where('parent_id', $parent->parent_id)->first();
+        //     if ($parent->organisation_id) {
+        //         $teacher = $student->classrooms()->with('teachers')->get()->pluck('teachers')->flatten();
+        //         $teacher_id = $teacher->map(function ($teacher) {
+        //             return $teacher->teacher_id;
+        //         });
+        //     } else {
+        //         $teacher_id = $student->teachers()->pluck('teachers.teacher_id');
+        //     }
+        //     $playlists = PlaylistResource::collection(PlaylistEloquentModel::filter($filters)
+        //         ->with(['storybooks', 'student.user'])
+        //         ->where('parent_id', $user_id)
+        //         ->orWhereIn('teacher_id', $teacher_id)
+        //         ->orderBy('id', 'desc')
+        //         ->paginate($filters['perPage'] ?? 10));
+        // }
 
 
         return $playlists;

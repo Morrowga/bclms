@@ -41,18 +41,18 @@ class UpdateResourceRequest extends FormRequest
             ];
         }
 
-        if (auth()->user()->role->name == 'B2C Parent' || auth()->user()->role->name == 'Both Parent') {
-            return [
-                'filename' => [
-                    'required',
-                ],
-                'file' => [
-                    'required',
-                    'file',
-                    'max:' . $this->checkB2CParentStorageLimit(), // Validate file size against the allocated storage size
-                ],
-            ];
-        }
+        // if (auth()->user()->role->name == 'B2C Parent' || auth()->user()->role->name == 'Both Parent') {
+        //     return [
+        //         'filename' => [
+        //             'required',
+        //         ],
+        //         'file' => [
+        //             'required',
+        //             'file',
+        //             'max:' . $this->checkB2CParentStorageLimit(), // Validate file size against the allocated storage size
+        //         ],
+        //     ];
+        // }
 
         return [
             'filename' => [
@@ -132,9 +132,13 @@ class UpdateResourceRequest extends FormRequest
 
     public function checkB2CTeacherStorageLimit()
     {
-        $storage = auth()->user()->b2bUser->subscription == null ? 0 : (auth()->user()->b2bUser->subscription->b2c_subscription == null ? 0 : (auth()->user()->b2bUser->subscription->b2c_subscription->plan == null ? 0 : auth()->user()->b2bUser->subscription->b2c_subscription->plan->storage_limit * 1024));
+        if(auth()->user()->b2bUser == null){
+            $storage = auth()->user()->parents->subscription == null ? 0 : (auth()->user()->parents->subscription->b2c_subscription == null ? 0 : (auth()->user()->parents->subscription->b2c_subscription->plan == null ? 0 : auth()->user()->parents->subscription->b2c_subscription->plan->storage_limit * 1024));
+        } else {
+            $storage = auth()->user()->b2bUser->subscription == null ? 0 : (auth()->user()->b2bUser->subscription->b2c_subscription == null ? 0 : (auth()->user()->b2bUser->subscription->b2c_subscription->plan == null ? 0 : auth()->user()->b2bUser->subscription->b2c_subscription->plan->storage_limit * 1024));
+        }
+
         $storage = (int) $storage;
-        // Retrieve the allocated storage size for the user
         $teacherEloquent = auth()->user()->b2bUser;
         $userEloquentModel = auth()->user();
         if ($storage > 0) {
@@ -159,32 +163,32 @@ class UpdateResourceRequest extends FormRequest
         return 1;
     }
 
-    public function checkB2CParentStorageLimit()
-    {
-        $storage = auth()->user()->parents->subscription == null ? 0 : (auth()->user()->parents->subscription->b2c_subscription == null ? 0 : (auth()->user()->parents->subscription->b2c_subscription->plan == null ? 0 : auth()->user()->parents->subscription->b2c_subscription->plan->storage_limit * 1024));
-        $storage = (int) $storage;
-        // Retrieve the allocated storage size for the user
-        $parentEloquent = auth()->user()->parents;
-        $userEloquentModel = auth()->user();
-        if ($storage > 0) {
-            $usedStorage = MediaEloquentModel::where(function ($query) use ($parentEloquent, $userEloquentModel) {
-                $query->where('collection_name', 'videos')
-                    ->where('teacher_id', $userEloquentModel->id)
-                    ->whereIn('status', ['active', 'requested']);
-                })
-                ->sum('size');
+    // public function checkB2CParentStorageLimit()
+    // {
+    //     $storage = auth()->user()->parents->subscription == null ? 0 : (auth()->user()->parents->subscription->b2c_subscription == null ? 0 : (auth()->user()->parents->subscription->b2c_subscription->plan == null ? 0 : auth()->user()->parents->subscription->b2c_subscription->plan->storage_limit * 1024));
+    //     $storage = (int) $storage;
+    //     // Retrieve the allocated storage size for the user
+    //     $parentEloquent = auth()->user()->parents;
+    //     $userEloquentModel = auth()->user();
+    //     if ($storage > 0) {
+    //         $usedStorage = MediaEloquentModel::where(function ($query) use ($parentEloquent, $userEloquentModel) {
+    //             $query->where('collection_name', 'videos')
+    //                 ->where('teacher_id', $userEloquentModel->id)
+    //                 ->whereIn('status', ['active', 'requested']);
+    //             })
+    //             ->sum('size');
 
-            if ($usedStorage > 0) {
-                $usedKilobytes = $usedStorage / 1024;
+    //         if ($usedStorage > 0) {
+    //             $usedKilobytes = $usedStorage / 1024;
 
-                $leftStorageLimit = $storage - $usedKilobytes;
+    //             $leftStorageLimit = $storage - $usedKilobytes;
 
-                return (int) $leftStorageLimit;
-            }
+    //             return (int) $leftStorageLimit;
+    //         }
 
-            return $storage;
-        }
+    //         return $storage;
+    //     }
 
-        return 1;
-    }
+    //     return 1;
+    // }
 }

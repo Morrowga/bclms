@@ -130,17 +130,26 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function getStudentsByPagination($filters)
     {
+        // if ($auth->name == 'B2C Parent' || $auth->name == 'Both Parent') {
+        //     $user_id = auth()->user()->parents->parent_id;
+        //     return StudentEloquentModel::filter($filters)->whereHas('parent', function ($query) use ($user_id) {
+        //         $query->where('parent_id', $user_id);
+        //     })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+        // } else
+
         $auth = auth()->user()->role;
-        if ($auth->name == 'B2C Parent' || $auth->name == 'Both Parent') {
-            $user_id = auth()->user()->parents->parent_id;
-            return StudentEloquentModel::filter($filters)->whereHas('parent', function ($query) use ($user_id) {
-                $query->where('parent_id', $user_id);
-            })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
-        } elseif ($auth->name == "BC Subscriber") {
-            $user_id = auth()->user()->b2bUser->teacher_id;
-            return StudentEloquentModel::filter($filters)->whereHas('teachers', function ($query) use ($user_id) {
-                $query->where('teacher_id', $user_id);
-            })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+        if ($auth->name == "BC Subscriber") {
+            if(auth()->user()->b2bUser == null){
+                $user_id = auth()->user()->parents->parent_id;
+                return StudentEloquentModel::filter($filters)->whereHas('parent', function ($query) use ($user_id) {
+                    $query->where('parent_id', $user_id);
+                })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+            } else {
+                $user_id = auth()->user()->b2bUser->teacher_id;
+                return StudentEloquentModel::filter($filters)->whereHas('teachers', function ($query) use ($user_id) {
+                    $query->where('teacher_id', $user_id);
+                })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+            }
         } else {
             $organisation_id = auth()->user()->organisation_id;
 
@@ -192,22 +201,30 @@ class StudentRepository implements StudentRepositoryInterface
         DB::beginTransaction();
         $auth = auth()->user()->role;
         try {
-            if ($auth->name == 'Both Parent' || $auth->name == 'B2C Parent') {
-                $subscription = auth()->user()->parents->subscription;
-                $num_student_profiles = $subscription->b2c_subscription->plan->num_student_profiles;
-                $current_student_count = StudentEloquentModel::where('parent_id', auth()->user()->parents->parent_id)->count();
+            // if ($auth->name == 'Both Parent' || $auth->name == 'B2C Parent') {
+            //     $subscription = auth()->user()->parents->subscription;
+            //     $num_student_profiles = $subscription->b2c_subscription->plan->num_student_profiles;
+            //     $current_student_count = StudentEloquentModel::where('parent_id', auth()->user()->parents->parent_id)->count();
 
-                $coming_student_count = $current_student_count + 1;
-                if ($coming_student_count > $num_student_profiles) {
-                    return throw new \Exception("License not enough to create student");
+            //     $coming_student_count = $current_student_count + 1;
+            //     if ($coming_student_count > $num_student_profiles) {
+            //         return throw new \Exception("License not enough to create student");
+            //     }
+            // } else
+
+            if ($auth->name == 'BC Subscriber') {
+                if(auth()->user()->b2bUser == null){
+                    $subscription = auth()->user()->parents->subscription;
+                    $num_student_profiles = $subscription->b2c_subscription->plan->num_student_profiles;
+                    $current_student_count = StudentEloquentModel::where('parent_id', auth()->user()->parents->parent_id)->count();
+                } else {
+                    $teacher_id = auth()->user()->b2bUser->teacher_id;
+                    $subscription = auth()->user()->b2bUser->subscription;
+                    $num_student_profiles = $subscription->b2c_subscription->plan->num_student_profiles;
+                    $current_student_count = StudentEloquentModel::whereHas('teachers', function ($query) use ($teacher_id) {
+                        $query->where('teachers.teacher_id', $teacher_id);
+                    })->count();
                 }
-            } elseif ($auth->name == 'BC Subscriber') {
-                $teacher_id = auth()->user()->b2bUser->teacher_id;
-                $subscription = auth()->user()->b2bUser->subscription;
-                $num_student_profiles = $subscription->b2c_subscription->plan->num_student_profiles;
-                $current_student_count = StudentEloquentModel::whereHas('teachers', function ($query) use ($teacher_id) {
-                    $query->where('teachers.teacher_id', $teacher_id);
-                })->count();
 
                 $coming_student_count = $current_student_count + 1;
                 if ($coming_student_count > $num_student_profiles) {
@@ -222,33 +239,37 @@ class StudentRepository implements StudentRepositoryInterface
             ];
             $userEloquent = UserEloquentModel::create($create_user_data);
 
-            if ($auth->name != 'B2C Parent' && $auth->name != 'Both Parent') {
-                $teacher_id = auth()->user()->b2bUser->teacher_id;
-                $create_parent_data = [
-                    'first_name' => $student->parent_first_name,
-                    'last_name' => $student->parent_last_name,
-                    'contact_number' => $student->contact_number,
-                    'email' => $student->email,
-                    'role_id' => 7,
-                    'password' => 'password'
-                ];
 
-                $userParentEloquent = UserEloquentModel::create($create_parent_data);
+            if ($auth->name == 'BC Subscriber') {
+                if(auth()->user()->b2bUser == null){
+                    $teacher_id = auth()->user()->b2bUser->teacher_id;
+                    $create_parent_data = [
+                        'first_name' => $student->parent_first_name,
+                        'last_name' => $student->parent_last_name,
+                        'contact_number' => $student->contact_number,
+                        'email' => $student->email,
+                        'role_id' => 7,
+                        'password' => 'password'
+                    ];
 
-                $parentEloquent = ParentUserEloquentModel::create([
-                    "user_id" => $userParentEloquent->id,
-                    "curr_subscription_id" => null,
-                    "organisation_id" => null,
-                    "type" => "B2B"
-                ]);
-                $bcstaff = UserEloquentModel::where('role_id', 3)->first();
+                    $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
-                \Mail::to($userParentEloquent->email)->send(new EmailVerify($userParentEloquent->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userParentEloquent->email), $bcstaff->email, $bcstaff->contact_number));
+                    $parentEloquent = ParentUserEloquentModel::create([
+                        "user_id" => $userParentEloquent->id,
+                        "curr_subscription_id" => null,
+                        "organisation_id" => null,
+                        "type" => "B2B"
+                    ]);
+                    $bcstaff = UserEloquentModel::where('role_id', 3)->first();
 
-                $parent_id = $parentEloquent->parent_id;
-            } else {
-                $parent_id = auth()->user()->parents->parent_id;
+                    \Mail::to($userParentEloquent->email)->send(new EmailVerify($userParentEloquent->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userParentEloquent->email), $bcstaff->email, $bcstaff->contact_number));
+
+                    $parent_id = $parentEloquent->parent_id;
+                } else {
+                    $parent_id = auth()->user()->parents->parent_id;
+                }
             }
+
             $createStudentEloquent = StudentMapper::toEloquent($student);
             $createStudentEloquent->user_id = $userEloquent->id;
             $createStudentEloquent->student_code = generateUniqueCode();

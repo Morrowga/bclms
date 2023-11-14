@@ -49,31 +49,27 @@ class TeacherStorybookController
                     $query->where('teacher_id', null)->where('parent_id', null);
                 });
             }]);
-        } elseif ($auth == 'B2C Parent') {
-            $parent = auth()->user()->parents;
+        } elseif ($auth == 'BC Subscriber') {
+            if(auth()->user()->b2bUser == null){
+                $parent = auth()->user()->parents;
 
-            $user_id = $parent->parent_id;
-            $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
-                $query->where('parent_id', $user_id)->orWhere(function ($query) {
-                    $query->where('teacher_id', null)->where('parent_id', null);
-                });;
-            }]);
-        } elseif ($auth == 'Both Parent') {
-            $parent = auth()->user()->parents;
-            $student = StudentEloquentModel::with('teachers')->where('parent_id', $parent->parent_id)->first();
-
-            if ($parent->organisation_id) {
-                $teacher = $student->classrooms()->with('teachers')->get()->pluck('teachers')->flatten();
-                $teacher_id = $teacher->map(function ($teacher) {
-                    return $teacher->teacher_id;
-                });
+                $user_id = $parent->parent_id;
+                $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
+                    $query->where('parent_id', $user_id)->orWhere(function ($query) {
+                        $query->where('teacher_id', null)->where('parent_id', null);
+                    });;
+                }]);
             } else {
-                $teacher_id = $student->teachers()->pluck('teachers.teacher_id');
+                $teacher = auth()->user()->b2bUser;
+
+                $user_id = $teacher->teacher_id;
+
+                $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
+                    $query->where('teacher_id', $user_id)->orWhere(function ($query) {
+                        $query->where('teacher_id', null)->where('parent_id', null);
+                    });;
+                }]);
             }
-            $user_id = $parent->parent_id;
-            $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id, $teacher_id) {
-                $query->where('parent_id', $user_id)->orWhereIn('teacher_id', $teacher_id);
-            }]);
         } else {
             $user_id = [auth()->user()->b2bUser->teacher_id];
             $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
@@ -82,6 +78,23 @@ class TeacherStorybookController
                 });;
             }]);
         }
+        // elseif ($auth == 'Both Parent') {
+        //     $parent = auth()->user()->parents;
+        //     $student = StudentEloquentModel::with('teachers')->where('parent_id', $parent->parent_id)->first();
+
+        //     if ($parent->organisation_id) {
+        //         $teacher = $student->classrooms()->with('teachers')->get()->pluck('teachers')->flatten();
+        //         $teacher_id = $teacher->map(function ($teacher) {
+        //             return $teacher->teacher_id;
+        //         });
+        //     } else {
+        //         $teacher_id = $student->teachers()->pluck('teachers.teacher_id');
+        //     }
+        //     $user_id = $parent->parent_id;
+        //     $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id, $teacher_id) {
+        //         $query->where('parent_id', $user_id)->orWhereIn('teacher_id', $teacher_id);
+        //     }]);
+        // }
         $filters = request(['search', 'filter', 'perPage', 'page']);
 
         $games = (new GetGameList($filters))->handle();
