@@ -12,6 +12,9 @@ let props = defineProps(["route", "count", "teacher_id", "student_id"]);
 
 const page = usePage();
 let user_survey_logout = computed(() => page?.props?.user_survey_logout);
+
+console.log(props.teacher_id);
+
 const isDialogVisible = ref(false);
 const hasSurvey = ref(false);
 let passwordVisible = ref(false);
@@ -22,7 +25,8 @@ const togglePasswordVisibility = () => {
 
 const form = useForm({
     password: null,
-    student_id: props.student_id
+    student_id: props.student_id,
+    user_id: props.teacher_id
 })
 
 const checkSurvey = () => {
@@ -33,9 +37,21 @@ const checkSurvey = () => {
     }
 }
 
+const getCookie = (name) => {
+  const cookies = document.cookie.split('; ');
+  for (const cookie of cookies) {
+    const [cookieName, cookieValue] = cookie.split('=');
+    if (cookieName === name) {
+      return cookieValue;
+    }
+  }
+  return null;
+};
+
+const cookieValue = getCookie('kidmode');
 
 const logout = () => {
-    form.post(route("teacher_students.exitmode", props.teacher_id), {
+    form.post(route("teacher_students.exitmode"), {
     onSuccess: () => {
     },
     onError: (error) => {
@@ -54,7 +70,7 @@ const logout = () => {
             class="textcolor w-100 pppangram-bold"
             rounded
         >
-            Log Out
+           {{ cookieValue == 1 ?'Exit Kids Mode' :  'Log Out'}}
         </v-btn>
         <VDialog v-model="isDialogVisible" width="500">
             <VForm @submit.prevent="logout()">

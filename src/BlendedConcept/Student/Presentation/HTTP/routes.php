@@ -18,7 +18,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/teacher_students', TeacherStudentController::class);
     // Route::put('/teacher_students/student_update/{student_id}', [TeacherStudentController::class, 'updateTeacherStudent'])->name('teacher_students.update_student');
     Route::get('/teacher_student/kidmode/{user}', [TeacherStudentController::class, 'kidMode'])->name('teacher_students.kidmode');
-    Route::post('/teacher_student/exitmode/{user}', [TeacherStudentController::class, 'exitMode'])->name('teacher_students.exitmode');
+    Route::post('/teacher_student/exitmode', [TeacherStudentController::class, 'exitMode'])->name('teacher_students.exitmode');
 
     Route::get('/teacher_student/profiling_surveys/{user}', [ProfilingSurveyController::class, 'index'])->name('teacher_students.profiling_surveys');
     // Route::get('/view_students/show', [ViewStudentController::class, 'show'])->name('view_students.show');

@@ -124,7 +124,7 @@ class TeacherStudentController
             $teacher_id = Auth::user()->id;
 
             setcookie('teacher_id', $teacher_id, time() + (86400 * 30), "/");
-            setcookie('kidmode', true, time() + (86400 * 30), "/");
+            setcookie('kidmode', 1, time() + (86400 * 30), "/");
             Auth::logout();
             Auth::login($user);
             $student = json_encode(auth()->user()->student);
@@ -136,16 +136,15 @@ class TeacherStudentController
         }
     }
 
-    public function exitMode(PasswordRequest $request, UserEloquentModel $user)
+    public function exitMode(PasswordRequest $request)
     {
         try {
             $request->validated();
-
             $student = StudentEloquentModel::find($request->student_id);
-
             if(!empty($student)){
                 if($student->organisation_id != null){
-                    if(isset($_COOKIE['kidmode'])) {
+                    if($_COOKIE['kidmode'] == 1) {
+                        $user = UserEloquentModel::find($request->user_id);
                         Auth::logout();
                         Auth::login($user);
 

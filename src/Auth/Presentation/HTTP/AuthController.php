@@ -135,7 +135,6 @@ class AuthController extends Controller
              *
              *  */
 
-            // dd($request->all());
             $isAuthenticated = $this->authservices->login($request);
 
             /***
@@ -156,6 +155,8 @@ class AuthController extends Controller
                 }
                 $student = json_encode(auth()->user()->student);
                 setcookie('student', $student, time() + (86400 * 30), "/");
+                setcookie('kidmode', 0, time() + (86400 * 30), "/");
+                // setcookie('teacher_id', auth()->user()->, time() + (86400 * 30), "/");
                 if (auth()->user()->role->name == 'BC Subscriber') {
                     $parent = auth()->user()->parents;
                     if ($parent) {
