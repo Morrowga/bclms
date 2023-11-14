@@ -37,6 +37,13 @@ export default [
         access_module: "access_teacherStorybook",
     },
     {
+        title: 'Games',
+        url: "/game-assign",
+        icon: { icon: 'mdi-play-circle-outline' },
+        access_module: "access_gameAssign",
+        route_name: "game-assign"
+    },
+    {
         title: 'Resources',
         url: "/resource",
         icon: { icon: 'mdi-folder-outline' },
@@ -57,13 +64,7 @@ export default [
         access_module: "access_playlist",
         route_name: "playlists",
     },
-    {
-        title: 'Games',
-        url: "/game-assign",
-        icon: { icon: 'mdi-play-circle-outline' },
-        access_module: "access_gameAssign",
-        route_name: "game-assign"
-    },
+
     {
         title: 'Accessibility',
         url: "/",
