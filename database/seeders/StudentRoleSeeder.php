@@ -65,6 +65,5 @@ class StudentRoleSeeder extends Seeder
         ];
 
         $studentCreate = StudentEloquentModel::create($studentData);
-        $studentCreate->teachers()->sync([1]);
     }
 }

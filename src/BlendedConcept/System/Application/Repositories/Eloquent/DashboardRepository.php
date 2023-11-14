@@ -52,7 +52,7 @@ class DashboardRepository implements DashboardRepositoryInterface
 
         $students = [];
         if ($curr_role_name == "BC Subscriber" || $curr_role_name == "Teacher") {
-            $user_type = auth()->user()->b2b_user ? "Teacher" : "Parent";
+            $user_type = auth()->user()->b2bUser ? "Teacher" : "Parent";
             if ($user_type == "Teacher") {
                 $user_id = auth()->user()->id;
                 $students = $query->whereHas('teachers', function ($query) use ($user_id) {
@@ -74,11 +74,15 @@ class DashboardRepository implements DashboardRepositoryInterface
     {
         $auth = auth()->user();
         $parent = $auth->parents;
-        if ($parent->type == 'B2C') {
+        if ($parent) {
             $students = StudentEloquentModel::whereHas('parent', function ($query) use ($parent) {
                 $query->where('parent_id', $parent->parent_id);
             })->with(['user'])->get();
-            return $students;
+        } else {
+            $students = StudentEloquentModel::whereHas('teachers', function ($query) use ($parent) {
+                $query->where('teachers.teacher_id', auth()->user()->b2bUser->teacher_id);
+            })->with(['user'])->get();
         }
+        return $students;
     }
 }
