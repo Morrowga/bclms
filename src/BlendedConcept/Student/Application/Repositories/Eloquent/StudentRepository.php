@@ -41,13 +41,15 @@ class StudentRepository implements StudentRepositoryInterface
 
                     if ($auth == 'BC Super Admin') {
                     } elseif ($auth == 'BC Subscriber') {
-                        $query->whereHas('teachers', function ($query) {
-                            $query->where('user_id', auth()->user()->id);
-                        });
-                    } elseif ($auth == 'B2B Parent' || $auth == 'B2C Parent' || $auth == 'Both Parent') {
-                        $query->whereHas('parent', function ($query) {
-                            $query->where('user_id', auth()->user()->id);
-                        });
+                        if(auth()->user()->b2bUser == null){
+                            $query->whereHas('parent', function ($query) {
+                                $query->where('user_id', auth()->user()->id);
+                            });
+                        } else {
+                            $query->whereHas('teachers', function ($query) {
+                                $query->where('user_id', auth()->user()->id);
+                            });
+                        }
                     } elseif ($auth == 'Teacher') {
                         $classroom_ids = [];
                         $teachers = TeacherEloquentModel::with('classrooms')->where('user_id', auth()->user()->id)->first();
