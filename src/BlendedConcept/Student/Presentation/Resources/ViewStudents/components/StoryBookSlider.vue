@@ -13,7 +13,7 @@ const props = defineProps(["datas", "student_id"]);
             </div>
         </v-slide-group-item>
     </v-slide-group> -->
-    <swiper :slides-per-view="5" :space-between="10">
+    <swiper :slides-per-view="4" :space-between="10">
         <swiper-slide v-for="data in props.datas" :key="data.id">
             <StoryBookSliderCard
                 :data="data.storybook"

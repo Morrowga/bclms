@@ -330,7 +330,7 @@ const formatDate = (dateString) => {
             <div></div>
         </div>
 
-        <div class="playlist">
+        <div class="playlist" v-if="checkPermission('access_playlist')">
             <VContainer class="header width-80">
                 <div class="d-flex justify-space-between align-center mb-4">
                     <h1 class="text-h4 font-weight-bold">Playlists</h1>

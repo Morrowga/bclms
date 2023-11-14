@@ -12,8 +12,7 @@ const setImage = () => {
 </script>
 <template>
     <v-card
-        min-width="275"
-        class="grab-pointer"
+        class="grab-pointer w-100 h-100"
         @click="
             router.get(
                 route('learning_activities.index', {
@@ -24,7 +23,7 @@ const setImage = () => {
         "
     >
         <v-card-title class="ps-relative">
-            <v-img :src="setImage()" />
+            <v-img :src="setImage()" aspect-ratio="16/9" height="150" cover />
             <div class="chip-page" v-if="is_chip">
                 <div class="chip-content">70%</div>
             </div>

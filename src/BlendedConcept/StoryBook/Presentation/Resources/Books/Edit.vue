@@ -29,7 +29,7 @@ const props = defineProps({
         required: true,
     },
 });
-let flash = computed(() => usePage().props?.flash)
+let flash = computed(() => usePage().props?.flash);
 let emit = defineEmits();
 let dialog = ref(false);
 let thumbnailDialog = ref(false);
@@ -255,7 +255,8 @@ onUpdated(() => {
             @click="toggleDialog"
             icon="mdi-edit"
             size="x-small"
-            color="secondary"
+            class="text-white"
+            color="#000"
         ></v-btn>
         <v-dialog v-model="dialog" width="100%" max-width="800" persistent>
             <v-card>

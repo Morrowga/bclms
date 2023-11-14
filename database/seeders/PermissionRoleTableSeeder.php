@@ -85,7 +85,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'create_siteTheme',
                         'edit_siteTheme',
                         'delete_siteTheme',
-                        'access_exportData',
+                        // 'access_exportData',
                         'access_techSupport',
                         'create_techSupport',
                         'edit_techSupport',
@@ -205,7 +205,7 @@ class PermissionRoleTableSeeder extends Seeder
                         'edit_organisation',
                         // 'access_subscription',
                         'create_subscription',
-                        'access_reports',
+                        // 'access_reports',
                         'access_bookReview',
                         'show_bookReview',
                         'create_bookReview',
@@ -273,8 +273,8 @@ class PermissionRoleTableSeeder extends Seeder
                 $permission = PermissionEloquentModel::whereIn(
                     'name',
                     [
-                        'access_reports',
-                        'access_exportData',
+                        // 'access_reports',
+                        // 'access_exportData',
                         // 'access_resources',
                         'show_resources',
                         'create_resources',

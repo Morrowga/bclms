@@ -176,6 +176,14 @@ onUpdated(() => {
                                 size="x-small"
                                 color="secondary"
                             ></v-btn> -->
+                            <v-btn
+                                v-if="checkPermission('delete_book')"
+                                icon="mdi-bin"
+                                size="x-small"
+                                class="text-white"
+                                color="#000"
+                                @click="deleteBook(data.id)"
+                            ></v-btn>
                             <Edit
                                 v-if="checkPermission('edit_book')"
                                 :datas="data"
@@ -192,11 +200,16 @@ onUpdated(() => {
                                     data.type == 'H5P'
                                 "
                             >
-                                <v-btn
+                                <!-- <v-btn
                                     icon="mdi-upload"
                                     size="x-small"
                                     color="secondary"
-                                ></v-btn>
+                                ></v-btn> -->
+                                <v-avatar size="33">
+                                    <v-img
+                                        src="/images/icons/h5pIcon.png"
+                                    ></v-img>
+                                </v-avatar>
                             </Link>
                             <Link
                                 :href="
@@ -210,17 +223,10 @@ onUpdated(() => {
                                 <v-btn
                                     icon="mdi-content-copy"
                                     size="x-small"
-                                    color="secondary"
+                                    class="text-white"
+                                    color="#000"
                                 ></v-btn>
                             </Link>
-
-                            <v-btn
-                                v-if="checkPermission('delete_book')"
-                                icon="mdi-bin"
-                                size="x-small"
-                                color="secondary"
-                                @click="deleteBook(data.id)"
-                            ></v-btn>
                         </div>
                         <div class="close-btn">
                             <v-btn
