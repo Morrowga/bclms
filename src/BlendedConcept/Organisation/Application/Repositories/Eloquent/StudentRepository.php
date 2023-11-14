@@ -23,12 +23,20 @@ class StudentRepository implements StudentRepositoryInterface
     public function getStudents($filters)
     {
         $auth = auth()->user()->role;
-        if ($auth->name == 'B2C Parent' || $auth->name == "Both Parent") {
-            $parent = auth()->user()->parents;
-            $users = StudentResource::collection(StudentEloquentModel::filter($filters)
-                ->where('parent_id', $parent->parent_id)
+        if ($auth->name == 'BC Subscriber') {
+            if(auth()->user()->b2bUser == null) {
+                $users = StudentResource::collection(StudentEloquentModel::filter($filters)
+                ->where('parent_id', auth()->user()->parents->parent_id)
                 ->with(['organisation', 'user', 'disability_types', 'learningneeds', 'parent'])
                 ->paginate($filters['perPage'] ?? 10));
+            } else {
+                $userIds = auth()->user()->b2bUser->students->pluck('student_id')->toArray();
+
+                $users = StudentResource::collection(StudentEloquentModel::filter($filters)
+                ->whereIn('student_id', $userIds)
+                ->with(['organisation', 'user', 'disability_types', 'learningneeds', 'parent'])
+                ->paginate($filters['perPage'] ?? 10));
+            }
         } else {
             $users = StudentResource::collection(StudentEloquentModel::filter($filters)
                 ->where('organisation_id', auth()->user()->organisation_id)
