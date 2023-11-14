@@ -2,6 +2,7 @@
 import StudentProfile from "./components/StudentInfo.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import StoryBookSlider from "./components/StoryBookSlider.vue";
+import GameSlider from "./components/GameSlider.vue";
 import PlaylistSlider from "./components/PlaylistSlider.vue";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 import { isConfirmedDialog } from "@mainRoot/components/Actions/useConfirm";
@@ -160,7 +161,7 @@ const formatDate = (dateString) => {
                                 {{ props.student.data.education_level }}
                             </p>
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="12" v-if="!checkB2c">
                             <p class="text-subtitle-1 mb-0">
                                 Parent's First Name
                             </p>
@@ -170,7 +171,7 @@ const formatDate = (dateString) => {
                                 }}
                             </p>
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="12" v-if="!checkB2c">
                             <p class="text-subtitle-1 mb-0">
                                 Parent's Last Name
                             </p>
@@ -180,7 +181,7 @@ const formatDate = (dateString) => {
                                 }}
                             </p>
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="12" v-if="!checkB2c">
                             <p class="text-subtitle-1 mb-0">
                                 Parent's Contact Number
                             </p>
@@ -191,7 +192,7 @@ const formatDate = (dateString) => {
                                 }}
                             </p>
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="12" v-if="!checkB2c">
                             <p class="text-subtitle-1 mb-0">
                                 Parent's Email Address
                             </p>
@@ -324,6 +325,32 @@ const formatDate = (dateString) => {
                 </div>
                 <StoryBookSlider
                     :datas="props.student.data.book_versions"
+                    :student_id="props.student.data.student_id"
+                />
+            </VContainer>
+            <div></div>
+        </div>
+        <div class="storybooks-assign mb-4">
+            <VContainer class="header width-80">
+                <div class="d-flex justify-space-between align-center mb-4">
+                    <h1 class="text-h4 font-weight-bold">
+                        Game Assigned to
+                        {{ checkB2c() ? "Child" : "Student" }}
+                    </h1>
+                    <v-spacer></v-spacer>
+
+                    <v-text-field
+                        density="compact"
+                        label="Search"
+                        append-inner-icon="mdi-magnify"
+                        single-line
+                        rounded
+                        hide-details
+                        class="mr-4"
+                    ></v-text-field>
+                </div>
+                <GameSlider
+                    :datas="props.student.data.game_assignments"
                     :student_id="props.student.data.student_id"
                 />
             </VContainer>

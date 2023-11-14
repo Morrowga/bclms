@@ -14,8 +14,9 @@ use Src\BlendedConcept\Student\Application\Mappers\StudentMapper;
 use Src\BlendedConcept\Student\Application\Requests\PasswordRequest;
 use Src\BlendedConcept\Student\Application\Requests\storeStudentRequest;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\ShowStudent;
+use Src\BlendedConcept\Student\Application\Policies\TeacherStudentPolicy;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
 use Src\BlendedConcept\Organisation\Application\Requests\UpdateStudentRequest;
-use Src\BlendedConcept\Organisation\Application\UseCases\Commands\Student\DeleteStudentCommand;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetUserSurveyByRole;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreStudentCommand;
@@ -25,8 +26,8 @@ use Src\BlendedConcept\Student\Application\UseCases\Queries\GetLearningNeedsForS
 use Src\BlendedConcept\Student\Application\UseCases\Commands\StoreTeacherStudentCommand;
 use Src\BlendedConcept\Student\Application\UseCases\Commands\UpdateTeacherStudentCommand;
 use Src\BlendedConcept\Student\Application\UseCases\Queries\GetDisabilityTypesForStudent;
+use Src\BlendedConcept\Organisation\Application\UseCases\Commands\Student\DeleteStudentCommand;
 use Src\BlendedConcept\Organisation\Application\UseCases\Commands\Student\UpdateStudentCommand;
-use Src\BlendedConcept\Student\Application\Policies\TeacherStudentPolicy;
 
 class TeacherStudentController
 {
@@ -49,15 +50,14 @@ class TeacherStudentController
     public function show($id)
     {
         abort_if(authorize('show', TeacherStudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $filters = request()->only(['search', 'name', 'perPage', 'filter']) ?? [];
         $student = (new ShowStudent($id))->handle();
-
         return Inertia::render(config('route.teacher_students.show'), compact('student'));
     }
     public function store(storeStudentRequest $request)
     {
 
         abort_if(authorize('store', TeacherStudentPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($request->all());
         try {
 
             $request->validated();
