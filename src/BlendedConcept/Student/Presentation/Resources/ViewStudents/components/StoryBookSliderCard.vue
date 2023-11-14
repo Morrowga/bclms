@@ -24,9 +24,9 @@ const setImage = () => {
     >
         <v-card-title class="ps-relative">
             <v-img :src="setImage()" aspect-ratio="16/9" height="150" cover />
-            <div class="chip-page" v-if="is_chip">
+            <!-- <div class="chip-page" v-if="is_chip">
                 <div class="chip-content">70%</div>
-            </div>
+            </div> -->
         </v-card-title>
         <v-card-text>
             <h1 class="font-weight-bold text-h6 text-center pb-4">

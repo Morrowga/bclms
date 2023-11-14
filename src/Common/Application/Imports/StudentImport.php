@@ -42,6 +42,7 @@ class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithH
                 $create_user_data = [
                     'first_name' => $row['first_name'],
                     'last_name' => $row['last_name'],
+                    'username' => $row['username'],
                     'role_id' => 6,
                 ];
                 $create_parent_data = [

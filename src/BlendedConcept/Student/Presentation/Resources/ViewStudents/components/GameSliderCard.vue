@@ -14,17 +14,13 @@ const setImage = () => {
     <v-card
         min-width="275"
         class="grab-pointer"
-        @click="
-            router.get(
-                route('gameassign.show', props.data.id)
-            )
-        "
+        @click="router.get(route('gameassign.show', props.data.id))"
     >
         <v-card-title class="ps-relative">
             <v-img :src="setImage()" />
-            <div class="chip-page" v-if="is_chip">
+            <!-- <div class="chip-page" v-if="is_chip">
                 <div class="chip-content">70%</div>
-            </div>
+            </div> -->
         </v-card-title>
         <v-card-text>
             <h1 class="font-weight-bold text-h6 text-center pb-4">
