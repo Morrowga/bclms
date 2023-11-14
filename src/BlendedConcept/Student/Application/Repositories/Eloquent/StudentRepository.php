@@ -241,9 +241,10 @@ class StudentRepository implements StudentRepositoryInterface
             ];
             $userEloquent = UserEloquentModel::create($create_user_data);
 
-
             if ($auth->name == 'BC Subscriber') {
                 if(auth()->user()->b2bUser == null){
+                    $parent_id = auth()->user()->parents->parent_id;
+                } else {
                     $teacher_id = auth()->user()->b2bUser->teacher_id;
                     $create_parent_data = [
                         'first_name' => $student->parent_first_name,
@@ -267,8 +268,6 @@ class StudentRepository implements StudentRepositoryInterface
                     \Mail::to($userParentEloquent->email)->send(new EmailVerify($userParentEloquent->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userParentEloquent->email), $bcstaff->email, $bcstaff->contact_number));
 
                     $parent_id = $parentEloquent->parent_id;
-                } else {
-                    $parent_id = auth()->user()->parents->parent_id;
                 }
             }
 
