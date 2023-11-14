@@ -151,6 +151,9 @@ onUpdated(() => {
                         <div class="book-title d-flex align-center">
                             <p>{{ data.name }}</p>
                             <div class="px-4 d-flex">
+                                <v-chip size="small" color="warning">
+                                    {{ data.type }}
+                                </v-chip>
                                 <v-chip
                                     size="small"
                                     color="success"

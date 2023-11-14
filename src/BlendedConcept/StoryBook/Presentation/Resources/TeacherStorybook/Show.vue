@@ -39,12 +39,13 @@ const getImage = (item) => {
                 </v-col>
                 <v-col cols="12" md="6">
                     <VRow>
-                        <VCol cols="12" md="6">
+                        <VCol cols="12" md="10">
                             <h1 class="tiggie-sub-subtitle ml-10 fs-40">
                                 {{ teacher_storybook.name }}
+                                {{ teacher_storybook.type }}
                             </h1>
                         </VCol>
-                        <VCol cols="12" md="6" class="text-end">
+                        <VCol cols="12" md="2" class="text-end">
                             <ReviewDialog
                                 :storybook_id="teacher_storybook.id"
                             />
