@@ -156,14 +156,17 @@ class AuthController extends Controller
                 }
                 $student = json_encode(auth()->user()->student);
                 setcookie('student', $student, time() + (86400 * 30), "/");
-                $parent = auth()->user()->parents;
-                if ($parent) {
-                    if ($parent->type == 'B2C') {
+                if (auth()->user()->role->name == 'BC Subscriber') {
+                    $parent = auth()->user()->parents;
+                    if ($parent) {
+                        if ($parent->type == 'B2C') {
+                            return redirect()->route('learning-portal');
+                        }
+                    } else {
                         return redirect()->route('learning-portal');
                     }
-                } else {
-                    return redirect()->route('dashboard');
                 }
+                return redirect()->route('dashboard');
             } else {
                 // Render the login page with an error message
                 return Inertia::render(config('route.login'), [
