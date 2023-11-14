@@ -39,11 +39,13 @@ const getImage = (item) => {
                 </v-col>
                 <v-col cols="12" md="6">
                     <VRow>
-                        <VCol cols="12" md="10">
+                        <VCol cols="12" md="10" class="d-flex align-center">
                             <h1 class="tiggie-sub-subtitle ml-10 fs-40">
                                 {{ teacher_storybook.name }}
-                                {{ teacher_storybook.type }}
                             </h1>
+                            <v-chip size="small" color="info" class="ml-2">
+                                {{ teacher_storybook.type }}
+                            </v-chip>
                         </VCol>
                         <VCol cols="12" md="2" class="text-end">
                             <ReviewDialog
