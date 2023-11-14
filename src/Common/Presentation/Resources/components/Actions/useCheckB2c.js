@@ -9,7 +9,9 @@ const checkB2c = ()=>{
             
         case 'B2C Parent':
             return true;
-            
+        
+        case 'BC Subscriber':
+            return true;
         default:
             return false;
             
