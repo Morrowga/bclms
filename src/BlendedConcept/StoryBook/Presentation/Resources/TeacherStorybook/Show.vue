@@ -39,7 +39,7 @@ const getImage = (item) => {
                 </v-col>
                 <v-col cols="12" md="6">
                     <VRow>
-                        <VCol cols="12" md="10" class="d-flex align-center">
+                        <VCol cols="12" md="9" class="d-flex align-center">
                             <h1 class="tiggie-sub-subtitle ml-10 fs-40">
                                 {{ teacher_storybook.name }}
                             </h1>
@@ -47,7 +47,7 @@ const getImage = (item) => {
                                 {{ teacher_storybook.type }}
                             </v-chip>
                         </VCol>
-                        <VCol cols="12" md="2" class="text-end">
+                        <VCol cols="12" md="3" class="text-end">
                             <ReviewDialog
                                 :storybook_id="teacher_storybook.id"
                             />
