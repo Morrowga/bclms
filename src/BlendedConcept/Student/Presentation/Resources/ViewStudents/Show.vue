@@ -16,6 +16,7 @@ import { checkB2c } from "@actions/useCheckB2c";
 
 let tab = ref(null);
 let props = defineProps(["student"]);
+let isPassword = ref(false);
 const form = useForm({});
 
 const deleteStudent = () => {
@@ -161,7 +162,7 @@ const formatDate = (dateString) => {
                                 {{ props.student.data.education_level }}
                             </p>
                         </v-col>
-                        <v-col cols="12" v-if="!checkB2c">
+                        <v-col cols="12" v-if="!checkB2c()">
                             <p class="text-subtitle-1 mb-0">
                                 Parent's First Name
                             </p>
@@ -171,7 +172,7 @@ const formatDate = (dateString) => {
                                 }}
                             </p>
                         </v-col>
-                        <v-col cols="12" v-if="!checkB2c">
+                        <v-col cols="12" v-if="!checkB2c()">
                             <p class="text-subtitle-1 mb-0">
                                 Parent's Last Name
                             </p>
@@ -181,7 +182,7 @@ const formatDate = (dateString) => {
                                 }}
                             </p>
                         </v-col>
-                        <v-col cols="12" v-if="!checkB2c">
+                        <v-col cols="12" v-if="!checkB2c()">
                             <p class="text-subtitle-1 mb-0">
                                 Parent's Contact Number
                             </p>
@@ -192,13 +193,48 @@ const formatDate = (dateString) => {
                                 }}
                             </p>
                         </v-col>
-                        <v-col cols="12" v-if="!checkB2c">
+                        <v-col cols="12" v-if="!checkB2c()">
                             <p class="text-subtitle-1 mb-0">
                                 Parent's Email Address
                             </p>
                             <p class="text-h6 font-weight-bold mx-4">
                                 {{ props.student.data?.parent?.user?.email }}
                             </p>
+                        </v-col>
+                        <v-col cols="12" v-if="!checkB2c()">
+                            <p class="text-subtitle-1 mb-0">Login Username</p>
+                            <p class="text-h6 font-weight-bold mx-4">
+                                {{ props.student.data?.user?.username }}
+                            </p>
+                        </v-col>
+                        <v-col cols="12" v-if="!checkB2c()">
+                            <p class="text-subtitle-1 mb-0">Login Password</p>
+                            <div
+                                v-if="isPassword"
+                                class="d-flex justify-space-between align-center"
+                            >
+                                <p class="text-h6 font-weight-bold mx-4 mb-0">
+                                    ***********************
+                                </p>
+                                <v-btn
+                                    @click="isPassword = false"
+                                    variant="text"
+                                    icon="mdi-eye-off"
+                                ></v-btn>
+                            </div>
+                            <div
+                                v-else
+                                class="d-flex justify-space-between align-center"
+                            >
+                                <p class="text-h6 font-weight-bold mx-4 mb-0">
+                                    ***********************
+                                </p>
+                                <v-btn
+                                    @click="isPassword = true"
+                                    variant="text"
+                                    icon="mdi-eye"
+                                ></v-btn>
+                            </div>
                         </v-col>
                     </v-row>
                     <!-- <v-row>
