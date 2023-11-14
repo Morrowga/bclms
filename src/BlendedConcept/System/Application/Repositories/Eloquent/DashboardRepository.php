@@ -49,17 +49,24 @@ class DashboardRepository implements DashboardRepositoryInterface
         $query =  StudentEloquentModel::with('user', 'teachers', 'organisation', 'disability_types', 'parent')
             ->filter($filters)
             ->orderBy('student_id', 'desc');
-        // dd($query->get());
+
         $students = [];
         if ($curr_role_name == "BC Subscriber" || $curr_role_name == "Teacher") {
-            $user_id = auth()->user()->id;
-            $students = $query->whereHas('teachers', function ($query) use ($user_id) {
-                return $query->where('user_id', $user_id);
-            })->paginate($filters['perPage'] ?? 10);
-        } else if ($curr_role_name == "B2B Parent" || $curr_role_name == "B2C Parent" || $curr_role_name == "Both Parent") {
-            $user_id = auth()->user()->parents->parent_id;
-            $students = $query->where('parent_id', $user_id)->paginate($filters['perPage'] ?? 10);
+            $user_type = auth()->user()->b2b_user ? "Teacher" : "Parent";
+            if ($user_type == "Teacher") {
+                $user_id = auth()->user()->id;
+                $students = $query->whereHas('teachers', function ($query) use ($user_id) {
+                    return $query->where('user_id', $user_id);
+                })->paginate($filters['perPage'] ?? 10);
+            } else {
+                $user_id = auth()->user()->parents->parent_id;
+                $students = $query->where('parent_id', $user_id)->paginate($filters['perPage'] ?? 10);
+            }
         }
+        // else if ($curr_role_name == "B2B Parent" || $curr_role_name == "B2C Parent" || $curr_role_name == "Both Parent") {
+        //     $user_id = auth()->user()->parents->parent_id;
+        //     $students = $query->where('parent_id', $user_id)->paginate($filters['perPage'] ?? 10);
+        // }
         return $students;
     }
 
