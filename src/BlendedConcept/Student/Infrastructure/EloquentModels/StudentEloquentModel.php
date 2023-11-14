@@ -4,22 +4,25 @@ declare(strict_types=1);
 
 namespace Src\BlendedConcept\Student\Infrastructure\EloquentModels;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
-use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomGroupEloquentModel;
-use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
-use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
-use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
-use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
-use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\RewardEloquentModel;
-use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
 use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\B2cUserEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\RewardEloquentModel;
+use Src\BlendedConcept\Student\Infrastructure\EloquentModels\PlaylistEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\PathwayEloquentModel;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
+use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomGroupEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameAssignmentEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
 
 class StudentEloquentModel extends Model implements HasMedia
 {
@@ -148,5 +151,10 @@ class StudentEloquentModel extends Model implements HasMedia
     public function device()
     {
         return $this->belongsTo(DeviceEloquentModel::class, 'device_id', 'id');
+    }
+
+    public function gameAssignments()
+    {
+        return $this->hasMany(GameAssignmentEloquentModel::class, 'student_id', 'student_id');
     }
 }
