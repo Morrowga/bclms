@@ -54,7 +54,7 @@ const logout = () => {
             class="textcolor w-100 pppangram-bold"
             rounded
         >
-            Exit Kids Mode
+            Log Out
         </v-btn>
         <VDialog v-model="isDialogVisible" width="500">
             <VForm @submit.prevent="logout()">
