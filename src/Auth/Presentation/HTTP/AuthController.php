@@ -166,6 +166,7 @@ class AuthController extends Controller
                         return redirect()->route('learning-portal');
                     }
                 }
+
                 return redirect()->route('dashboard');
             } else {
                 // Render the login page with an error message
