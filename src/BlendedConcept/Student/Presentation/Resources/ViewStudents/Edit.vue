@@ -144,7 +144,7 @@ let form = useForm({
                                     "
                                 />
                             </v-col>
-                            <v-col cols="12">
+                            <v-col cols="12" v-if="!checkB2c()">
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's First Name
                                 </p>
@@ -158,7 +158,7 @@ let form = useForm({
                                     "
                                 />
                             </v-col>
-                            <v-col cols="12">
+                            <v-col cols="12" v-if="!checkB2c()">
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's Last Name
                                 </p>
@@ -172,7 +172,7 @@ let form = useForm({
                                     "
                                 />
                             </v-col>
-                            <v-col cols="12">
+                            <v-col cols="12" v-if="!checkB2c()">
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's Contact Number
                                 </p>
@@ -190,7 +190,7 @@ let form = useForm({
                                     "
                                 />
                             </v-col>
-                            <v-col cols="12">
+                            <v-col cols="12" v-if="!checkB2c()">
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's Email Address
                                 </p>
