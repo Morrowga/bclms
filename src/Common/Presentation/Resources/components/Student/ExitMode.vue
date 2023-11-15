@@ -13,8 +13,6 @@ let props = defineProps(["route", "count", "teacher_id", "student_id"]);
 const page = usePage();
 let user_survey_logout = computed(() => page?.props?.user_survey_logout);
 
-console.log(props.teacher_id);
-
 const isDialogVisible = ref(false);
 const hasSurvey = ref(false);
 let passwordVisible = ref(false);
@@ -49,6 +47,7 @@ const getCookie = (name) => {
 };
 
 const cookieValue = getCookie('kidmode');
+console.log(props.teacher_id);
 
 const logout = () => {
     form.post(route("teacher_students.exitmode"), {
@@ -59,6 +58,7 @@ const logout = () => {
   });
 };
 
+console.log(cookieValue);
 
 </script>
 <template #activator="{ props }">

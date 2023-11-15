@@ -148,16 +148,17 @@ class TeacherStudentController
                         Auth::logout();
                         Auth::login($user);
 
-                        return redirect()->route('teacher_students.show', $request->student_id);
+                        return redirect()->route('learning-portal');
                     } else {
                         Auth::logout();
                         return redirect()->route('login');
                     }
                 } else {
+                    $user = UserEloquentModel::find($request->user_id);
                     Auth::logout();
                     Auth::login($user);
 
-                    return redirect()->route('teacher_students.show', $request->student_id);
+                    return redirect()->route('learning-portal');
                 }
             }
         } catch (\Exception $error) {

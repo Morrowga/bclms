@@ -19,21 +19,21 @@ const page = usePage();
 const user = computed(() => page.props.auth.data);
 const userData = user.value;
 
-const getCookie = () => {
-    const cookieName = "teacher_id"; // Replace with your cookie name
-    const cookies = document.cookie.split("; ");
-    for (const cookie of cookies) {
-        const [name, value] = cookie.split("=");
-        if (name === cookieName) {
-            teacher_id.value = value;
-            return;
-        }
+
+const getCookie = (name) => {
+  const cookies = document.cookie.split('; ');
+  for (const cookie of cookies) {
+    const [cookieName, cookieValue] = cookie.split('=');
+    if (cookieName === name) {
+      return cookieValue;
     }
+  }
+  return null;
 };
+
 
 onMounted(() => {
     // Load initial data for page 1
-    getCookie();
 });
 </script>
 
@@ -242,7 +242,7 @@ onMounted(() => {
                         </VRow>
                         <div class="mt-1 my-3 mx-3">
                             <ExitMode
-                                :teacher_id="teacher_id"
+                                :teacher_id="getCookie('teacher_id')"
                                 :student_id="userData.student.student_id"
                             />
                         </div>
