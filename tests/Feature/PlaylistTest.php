@@ -84,6 +84,7 @@ test('create playlist with org teacher roles', function () {
     $response->assertRedirect('/playlists');
 });
 
+//comment out coz of disabled features
 test('create playlist with parent roles', function () {
     $user = [
         'role_id' => 8,
@@ -149,39 +150,40 @@ test('create playlist with parent roles', function () {
     $response->assertRedirect('/playlists');
 });
 
-test('create playlist with b2c teacher roles', function () {
-    $user = UserEloquentModel::where('email', 'teacherone@mail.com')->first();
+//comment out coz of disabled features
+// test('create playlist with b2c teacher roles', function () {
+//     $user = UserEloquentModel::where('email', 'teacherone@mail.com')->first();
 
-    $this->actingAs($user);
+//     $this->actingAs($user);
 
-    $this->assertAuthenticated(); // Check if the user is authenticated
+//     $this->assertAuthenticated(); // Check if the user is authenticated
 
-    $playlistImage = UploadedFile::fake()->image('playlistimage.jpg'); // Change 'test.jpg' to the desired file name and extension
+//     $playlistImage = UploadedFile::fake()->image('playlistimage.jpg'); // Change 'test.jpg' to the desired file name and extension
 
-    $createStoryBook = StoryBookEloquentModel::create([
-        'name' => 'Toy Story 1',
-        'description' => 'nice book',
-        'thumbnail_img' => '/images/image2.png',
-        'num_gold_coins' => 1,
-        'num_silver_coins' => 10,
-        'is_free' => true,
-    ]);
+//     $createStoryBook = StoryBookEloquentModel::create([
+//         'name' => 'Toy Story 1',
+//         'description' => 'nice book',
+//         'thumbnail_img' => '/images/image2.png',
+//         'num_gold_coins' => 1,
+//         'num_silver_coins' => 10,
+//         'is_free' => true,
+//     ]);
 
-    $response = $this->post('/playlists', [
-        'name' => 'Example Device',
-        'student_id' => 1,
-        'image' => $playlistImage,
-        'storybooks' => [$createStoryBook->id],
-    ]);
+//     $response = $this->post('/playlists', [
+//         'name' => 'Example Device',
+//         'student_id' => 1,
+//         'image' => $playlistImage,
+//         'storybooks' => [$createStoryBook->id],
+//     ]);
 
-    $response->assertStatus(302);
+//     $response->assertStatus(302);
 
-    $storeData = $this->post('/playlists', []);
+//     $storeData = $this->post('/playlists', []);
 
-    $storeData->assertSessionHasErrors(['name', 'student_id', 'image', 'storybooks']);
+//     $storeData->assertSessionHasErrors(['name', 'student_id', 'image', 'storybooks']);
 
-    $response->assertRedirect('/playlists');
-});
+//     $response->assertRedirect('/playlists');
+// });
 
 test('update playlist with org teacher roles', function () {
     // Start a database transaction for the test

@@ -20,9 +20,9 @@ class UpdateStoryBookRequest extends FormRequest
             'name' => [
                 'required'
             ],
-            'description' => [
-                'required', 'string',
-            ],
+            // 'description' => [
+            //     'required', 'string',
+            // ],
         ];
     }
 

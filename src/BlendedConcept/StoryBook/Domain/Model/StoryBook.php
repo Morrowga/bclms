@@ -9,16 +9,16 @@ class StoryBook extends AggregateRoot
     public function __construct(
         public readonly ?int $id,
         public readonly string $name,
-        public readonly string $description,
+        public readonly ?string $description,
         public readonly ?string $thumbnail_img,
         public readonly int $num_gold_coins,
         public readonly int $num_silver_coins,
         public readonly bool $is_free,
-        public readonly array $tags,
-        public readonly array $sub_learning_needs,
-        public readonly array $themes,
-        public readonly array $disability_type,
-        public readonly array $devices,
+        public readonly ?array $tags,
+        public readonly ?array $sub_learning_needs,
+        public readonly ?array $themes,
+        public readonly ?array $disability_type,
+        public readonly ?array $devices,
         public readonly ?int $h5p_id,
         public readonly ?string $type
     ) {

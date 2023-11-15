@@ -18,30 +18,30 @@ class StoreBookRequest extends FormRequest
                 'name' => [
                     'required', 'string', 'unique:storybooks,name',
                 ],
-                'description' => [
-                    'required', 'string',
-                ],
+                // 'description' => [
+                //     'required', 'string',
+                // ],
                 'num_gold_coins' => [
                     'required',
                 ],
                 'num_silver_coins' => [
                     'required',
                 ],
-                'tags' => [
-                    'required', 'array',
-                ],
-                'sub_learning_needs' => [
-                    'required', 'array',
-                ],
-                'themes' => [
-                    'required', 'array',
-                ],
-                'disability_type' => [
-                    'required', 'array',
-                ],
-                'devices' => [
-                    'required', 'array',
-                ],
+                // 'tags' => [
+                //     'required', 'array',
+                // ],
+                // 'sub_learning_needs' => [
+                //     'required', 'array',
+                // ],
+                // 'themes' => [
+                //     'required', 'array',
+                // ],
+                // 'disability_type' => [
+                //     'required', 'array',
+                // ],
+                // 'devices' => [
+                //     'required', 'array',
+                // ],
 
                 'h5p_id' => ['required']
 
@@ -51,30 +51,30 @@ class StoreBookRequest extends FormRequest
             'name' => [
                 'required', 'string', 'unique:storybooks,name',
             ],
-            'description' => [
-                'required', 'string',
-            ],
+            // 'description' => [
+            //     'required', 'string',
+            // ],
             'num_gold_coins' => [
                 'required',
             ],
             'num_silver_coins' => [
                 'required',
             ],
-            'tags' => [
-                'required', 'array',
-            ],
-            'sub_learning_needs' => [
-                'required', 'array',
-            ],
-            'themes' => [
-                'required', 'array',
-            ],
-            'disability_type' => [
-                'required', 'array',
-            ],
-            'devices' => [
-                'required', 'array',
-            ],
+            // 'tags' => [
+            //     'required', 'array',
+            // ],
+            // 'sub_learning_needs' => [
+            //     'required', 'array',
+            // ],
+            // 'themes' => [
+            //     'required', 'array',
+            // ],
+            // 'disability_type' => [
+            //     'required', 'array',
+            // ],
+            // 'devices' => [
+            //     'required', 'array',
+            // ],
 
         ];
     }
