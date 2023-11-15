@@ -7,7 +7,7 @@ import { checkPermission } from "@actions/useCheckPermission";
 
 let props = defineProps(["playlist"]);
 
-console.log(props.playlist);
+// console.log(props.playlist);
 const deletePlaylist = (id) => {
     isConfirmedDialog({
         title: "You won't be able to revert this!",

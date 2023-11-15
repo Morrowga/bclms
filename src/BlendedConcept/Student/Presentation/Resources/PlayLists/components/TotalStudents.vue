@@ -33,7 +33,7 @@ const props = defineProps({
     },
 });
 
-console.log(props.form.student_id);
+// console.log(props.form.student_id);
 routeName.value = "playlists.getStudents";
 
 //## start datatable section

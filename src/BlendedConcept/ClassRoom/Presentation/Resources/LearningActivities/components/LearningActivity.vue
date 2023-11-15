@@ -88,20 +88,26 @@ let columns = [
 
 //make as previous
 const rows = computed(() => {
-  if (props.h5p_contents.data) {
-    return props.h5p_contents.data.map(content => ({
-      image: content.image ?? '/images/art3.png',
-      type: {
-        title: JSON.parse(content.parameters)?.interactiveVideo?.assets?.interactions[0]?.libraryTitle ?? '-',
-        subtitle: '',
-      },
-      description: JSON.parse(content.parameters)?.interactiveVideo?.assets?.interactions[0]?.libraryTitle ?? '-',
-      timestamp: JSON.parse(content.parameters).interactiveVideo?.assets?.endscreens[0]?.time ?? '-',
-      completed: content.completed ? "Yes" : "No",
-      correct: content.correct ? `${content.correct}%` : "-",
-      created_by: content.eloquent_user?.full_name ?? '-',
-    }));
-  }
+    if (props.h5p_contents.data) {
+        return props.h5p_contents.data.map((content) => ({
+            image: content.image ?? "/images/art3.png",
+            type: {
+                title:
+                    JSON.parse(content.parameters)?.interactiveVideo?.assets
+                        ?.interactions[0]?.libraryTitle ?? "-",
+                subtitle: "",
+            },
+            description:
+                JSON.parse(content.parameters)?.interactiveVideo?.assets
+                    ?.interactions[0]?.libraryTitle ?? "-",
+            timestamp:
+                JSON.parse(content.parameters).interactiveVideo?.assets
+                    ?.endscreens[0]?.time ?? "-",
+            completed: content.completed ? "Yes" : "No",
+            correct: content.correct ? `${content.correct}%` : "-",
+            created_by: content.eloquent_user?.full_name ?? "-",
+        }));
+    }
 });
 
 //## truncatedText
@@ -116,7 +122,7 @@ let truncatedText = (text) => {
 };
 
 const selectionChanged = (data) => {
-    console.log(data.selectedRows);
+    // console.log(data.selectedRows);
 };
 </script>
 <template>
@@ -167,7 +173,9 @@ const selectionChanged = (data) => {
                             <VIcon icon="mdi-menu-down"></VIcon>
                         </VCol>
                         <VCol cols="2">
-                            <VLabel class="tiggie-label pr-3">Created By</VLabel>
+                            <VLabel class="tiggie-label pr-3"
+                                >Created By</VLabel
+                            >
                             <VIcon icon="mdi-menu-down"></VIcon>
                         </VCol>
                     </VRow>

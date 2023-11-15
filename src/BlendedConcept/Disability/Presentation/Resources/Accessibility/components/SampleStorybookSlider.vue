@@ -22,7 +22,7 @@ const props = defineProps({
     },
 });
 const toggleDialog = (id) => {
-    console.log("id", id);
+    // console.log("id", id);
     // dialog.value = !dialog.value;
 };
 let isSelected = ref("");

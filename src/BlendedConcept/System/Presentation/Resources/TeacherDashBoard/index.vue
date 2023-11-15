@@ -8,8 +8,7 @@ import TotalStudents from "./TotalStudent.vue";
 
 const props = defineProps(["students", "user_survey"]);
 
-console.log(props.user_survey);
-
+// console.log(props.user_survey);
 </script>
 
 <template>
@@ -21,7 +20,10 @@ console.log(props.user_survey);
                 </VCol>
             </VRow>
         </VContainer>
-        <UserExperienceSurvey v-if="props.user_survey ?? false" :data="props.user_survey" />
+        <UserExperienceSurvey
+            v-if="props.user_survey ?? false"
+            :data="props.user_survey"
+        />
     </section>
 </template>
 

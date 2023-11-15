@@ -37,7 +37,7 @@ const ratity = ref([
 let handleSubmit = () => {
     form.post(route("rewards.store"), {
         onSuccess: (response) => {
-            console.log(response);
+            // console.log(response);
             FlashMessage({ flash });
         },
         onError: (error) => {

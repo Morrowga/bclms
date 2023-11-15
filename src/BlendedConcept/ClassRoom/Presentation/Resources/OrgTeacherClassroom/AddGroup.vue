@@ -28,7 +28,7 @@ const form = useForm({
     students: [],
 });
 const handleSubmit = () => {
-    console.log(form);
+    // console.log(form);
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
             form.post(route("org-teacher-classroom.store-group"), {

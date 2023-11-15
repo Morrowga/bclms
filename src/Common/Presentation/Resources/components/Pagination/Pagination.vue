@@ -1,28 +1,27 @@
 <script setup>
 import { ref } from "vue";
 const props = defineProps({
-  metadata: {
-    type: Object,
-    required: true,
-  },
+    metadata: {
+        type: Object,
+        required: true,
+    },
 });
 
 const meta = ref({
-  current_page: 1, // Default to the first page
-  last_page: 1,  // Default to a single page
+    current_page: 1, // Default to the first page
+    last_page: 1, // Default to a single page
 });
 
-console.log(meta.value)
+// console.log(meta.value)
 
 const changePage = (page) => {
-  // Handle page change here, e.g., emit a custom event
-  emit("page-changed", page);
+    // Handle page change here, e.g., emit a custom event
+    emit("page-changed", page);
 };
-
 
 // Update the meta data when the component receives new data
 watch(props.data, (newData) => {
-  meta.value = newData.meta;
+    meta.value = newData.meta;
 });
 </script>
 <template>

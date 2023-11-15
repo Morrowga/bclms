@@ -48,14 +48,14 @@ const getNotifications = () => {
             })
         )
         .then((resp) => {
-            console.log(resp);
+            // console.log(resp);
             notifications.value = resp.data.notifications.data;
-            console.log(notifications.value);
+            // console.log(notifications.value);
         });
 };
 
 const removeNotification = (notificationId) => {
-    console.log("asda");
+    // console.log("asda");
     form.post(route("markAsRead", { id: notificationId }), {
         onSuccess: () => {
             notifications.value = notifications.value.filter(

@@ -13,7 +13,7 @@ let dialog = ref(false);
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
-console.log(props.data.devices);
+// console.log(props.data.devices);
 
 const formatDate = (dateString) => {
     // Parse the date string into a Date object

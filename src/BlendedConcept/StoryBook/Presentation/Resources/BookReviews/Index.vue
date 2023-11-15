@@ -90,7 +90,7 @@ watch(filters, (newValue) => {
     });
 });
 const showDetail = (params) => {
-    console.log(params.row);
+    // console.log(params.row);
     storybooksDetails.value = params.row;
     isDialogVisible.value = !isDialogVisible.value;
 };

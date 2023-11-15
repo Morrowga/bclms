@@ -19,7 +19,7 @@ const options = ref([""]);
 
 const HideOption = ref(false);
 
-console.log(options.value);
+// console.log(options.value);
 
 const randomCombination = ref("");
 

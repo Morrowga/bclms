@@ -91,11 +91,11 @@ const checkboxClick = (questionId, optionId) => {
         questionOptions.push(optionId);
     }
 
-    console.log(selectedOptions.value);
+    // console.log(selectedOptions.value);
 };
 
 const submitProfiling = () => {
-    console.log(selectedOptions.value);
+    // console.log(selectedOptions.value);
 };
 
 const questionType = (questionType) => {

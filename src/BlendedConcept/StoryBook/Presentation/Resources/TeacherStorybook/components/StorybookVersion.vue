@@ -11,7 +11,7 @@ import "swiper/css";
 const modules = [Pagination];
 const props = defineProps(["dataStoryBook"]);
 
-console.log(props.dataStoryBook);
+// console.log(props.dataStoryBook);
 onMounted(() => {});
 </script>
 <template>

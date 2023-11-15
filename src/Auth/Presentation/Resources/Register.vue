@@ -88,7 +88,6 @@ const goToRegisterForm = (type) => {
     if (type == "teacher") {
         form.user_type = "Teacher";
         didChoose.value = true;
-        console.log(form.student_code);
     } else {
         form.user_type = "Parent";
         if (checkExist.value == true) {

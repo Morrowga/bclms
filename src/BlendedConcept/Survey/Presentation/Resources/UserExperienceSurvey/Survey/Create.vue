@@ -52,14 +52,14 @@ function deleteSurveyForm(id) {
 }
 
 const handleEditSurveyFormSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
 };
 
 const openEditSurveyForm = (id) => {
     for (let i = 0; i < addSurveyForm.value.length; i++) {
         if (addSurveyForm.value[i].id == id) {
             editSurveyData.value = addSurveyForm.value[i];
-            console.log(editSurveyData.value);
+            // console.log(editSurveyData.value);
             isEditSurveryAdd.value = true;
             break; // Exit the loop after removing the item
         }
@@ -73,7 +73,7 @@ const handleModalSubmit = (data) => {
         question: data.question,
         options: data.question_type == "SHORT_ANSWER" ? [] : data.options,
     });
-    console.log(addSurveyForm.value);
+    // console.log(addSurveyForm.value);
 };
 const handleSettingModalSubmit = (data) => {
     form.user_type = JSON.stringify(data.user_type);
@@ -82,7 +82,7 @@ const handleSettingModalSubmit = (data) => {
     form.end_date = data.end_date;
     form.required = data.required;
     form.repeat = data.repeat;
-    console.log(addSurveyForm.value.length);
+    // console.log(addSurveyForm.value.length);
     form.questions =
         addSurveyForm.value.length > 0
             ? JSON.stringify(addSurveyForm.value)

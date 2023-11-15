@@ -6,7 +6,7 @@ import { computed, defineEmits } from "vue";
 import { router } from "@inertiajs/core";
 const ability = useAppAbility();
 const userData = computed(() => usePage().props.auth);
-console.log(userData);
+// console.log(userData);
 const logout = () => {
     const PREFIX =
         localStorage.getItem("tenant") != ""

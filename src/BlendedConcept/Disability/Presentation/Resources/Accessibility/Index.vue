@@ -132,7 +132,7 @@ let truncatedText = (text) => {
 };
 
 const selectionChanged = (data) => {
-    console.log(data.selectedRows);
+    // console.log(data.selectedRows);
 };
 
 const goRoute = (route) => {

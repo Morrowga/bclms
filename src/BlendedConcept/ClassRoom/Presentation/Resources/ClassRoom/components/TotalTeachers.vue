@@ -67,7 +67,7 @@ let truncatedText = (text) => {
     }
 };
 const selectionChanged = (data) => {
-    console.log(data.selectedRows);
+    // console.log(data.selectedRows);
 };
 const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
 </script>

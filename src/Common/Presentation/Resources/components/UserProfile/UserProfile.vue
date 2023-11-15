@@ -40,14 +40,14 @@ const logout = () => {
 const checkSurvey = () => {
     if (user_survey_logout.value) {
         hasSurvey.value = true;
-        console.log(hasSurvey.value);
+        // console.log(hasSurvey.value);
     } else {
         logout();
     }
 };
 
 const dynamicProfileLink = () => {
-    console.log(user_role.value);
+    // console.log(user_role.value);
     switch (user_role.value) {
         case "Teacher":
             return route("profiles.org-teacher");

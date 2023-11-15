@@ -96,7 +96,7 @@ const deleteOnclick = () => {
         onConfirm: () => {
             router.delete("/resource/" + props.data.id, {
                 onSuccess: () => {
-                    FlashMessage({ flash })
+                    FlashMessage({ flash });
                 },
             });
         },
@@ -110,11 +110,17 @@ const publish = () => {
         denyButtonText: "Yes,publish it!",
         icon: "success",
         onConfirm: () => {
-            publishForm.post('/resource/request-publish/' + props.data.id + '?size=' + props.data.size, {
-                onSuccess: () => {
-                    FlashMessage({ flash })
-                },
-            });
+            publishForm.post(
+                "/resource/request-publish/" +
+                    props.data.id +
+                    "?size=" +
+                    props.data.size,
+                {
+                    onSuccess: () => {
+                        FlashMessage({ flash });
+                    },
+                }
+            );
         },
     });
 };
@@ -157,7 +163,7 @@ const openFileInput = () => {
 };
 
 onMounted(() => {
-    console.log(props.data);
+    // console.log(props.data);
 });
 </script>
 <template #activator="{ props }">

@@ -17,7 +17,7 @@ const emit = defineEmits(["submit", "update:isDialogVisible"]);
 
 const options = ref([""]);
 
-console.log(options.value);
+// console.log(options.value);
 
 const randomCombination = ref("");
 
@@ -55,7 +55,6 @@ const onFormSubmit = () => {
     form.options = options.value;
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
-
             emit("submit", form);
             generateRandomCombination();
             form.id = randomCombination.value; // Assuming id should be cleared

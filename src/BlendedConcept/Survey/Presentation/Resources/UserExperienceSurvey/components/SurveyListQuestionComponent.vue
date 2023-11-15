@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps(["item", "title", "subtitle"]);
 
-console.log(props);
+// console.log(props);
 </script>
 
 <template>
@@ -54,7 +54,7 @@ console.log(props);
                             <template #prepend>
                                 <VIcon :icon="item.icon" />
                             </template>
-                            <VListItemTitle>{{  item.text }}</VListItemTitle>
+                            <VListItemTitle>{{ item.text }}</VListItemTitle>
                         </VListItem>
                     </VList>
                 </VCol>

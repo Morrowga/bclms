@@ -1,16 +1,23 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-let props = defineProps(["auth", "flash", 'user_info']);
+let props = defineProps(["auth", "flash", "user_info"]);
 const profileImage = ref(props.auth.data.image ?? null);
-console.log(props.auth.data);
+// console.log(props.auth.data);
 </script>
 <template>
     <AdminLayout>
         <VContainer>
             <VRow justify="center">
                 <VCol cols="6">
-                    <VImg :src="profileImage == null || profileImage == '' ? '/images/teacherimg.png' : profileImage" class="profileAvatar" />
+                    <VImg
+                        :src="
+                            profileImage == null || profileImage == ''
+                                ? '/images/teacherimg.png'
+                                : profileImage
+                        "
+                        class="profileAvatar"
+                    />
                 </VCol>
                 <VCol cols="6">
                     <VText class="teacherprofile-title">Profile</VText>
@@ -40,7 +47,9 @@ console.log(props.auth.data);
                         </VCol>
                         <VCol cols="12" class="py-2">
                             <h6 class="tiggie-small-label">Contact Number</h6>
-                            <p class="tiggie-p">{{ props.auth.data.contact_number }}</p>
+                            <p class="tiggie-p">
+                                {{ props.auth.data.contact_number }}
+                            </p>
                         </VCol>
                     </VRow>
                     <!-- contact user plan -->

@@ -69,7 +69,7 @@ const getPrice = (organisation) => {
 };
 
 onMounted(() => {
-    console.log(props.organisation);
+    // console.log(props.organisation);
 });
 </script>
 <template>

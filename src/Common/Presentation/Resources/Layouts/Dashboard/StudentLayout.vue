@@ -32,13 +32,33 @@ const openMenu = () => {
     emit("openMenu");
 };
 
-onMounted(() => {
-    var myScreenOrientation = screen.orientation;
-    if (myScreenOrientation.type.startsWith("portrait")) {
+// onMounted(() => {
+//     var myScreenOrientation = screen.orientation;
+//     if (myScreenOrientation.type.startsWith("portrait")) {
+//         openDialog.value = true;
+//     } else {
+//         openDialog.value = false;
+//     }
+// });
+const handleOrientationChange = () => {
+    if (screen.orientation.type.startsWith("portrait")) {
         openDialog.value = true;
     } else {
         openDialog.value = false;
     }
+};
+
+onMounted(() => {
+    // Initial check for orientation
+    handleOrientationChange();
+
+    // Add an event listener for orientation change
+    window.addEventListener("orientationchange", handleOrientationChange);
+});
+
+onUnmounted(() => {
+    // Remove the event listener when the component is unmounted
+    window.removeEventListener("orientationchange", handleOrientationChange);
 });
 </script>
 <template>

@@ -32,7 +32,7 @@ const props = defineProps({
 const panel = ref(0);
 
 const extractStudentId = (studentId) => {
-    console.log("Student ID:", studentId);
+    // console.log("Student ID:", studentId);
 };
 
 const selectedStorybooks = ref([]);
@@ -45,7 +45,7 @@ const toggleSelectedStorybook = (storybookId) => {
     } else {
         selectedStorybooks.value.splice(index, 1);
     }
-    console.log(selectedStorybooks.value);
+    // console.log(selectedStorybooks.value);
 };
 </script>
 

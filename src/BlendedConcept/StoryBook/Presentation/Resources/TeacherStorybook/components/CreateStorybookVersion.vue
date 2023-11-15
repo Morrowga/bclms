@@ -43,7 +43,7 @@ const CreateStoryBookVersion = () => {
         form.h5p_id = curr_h5p_id;
         form.post(route("storybooksversions.store"), {
             onSuccess: () => {
-                console.log(" test");
+                // console.log(" test");
                 FlashMessage({ flash });
                 dialog.value = false;
                 isLoading.value = false;

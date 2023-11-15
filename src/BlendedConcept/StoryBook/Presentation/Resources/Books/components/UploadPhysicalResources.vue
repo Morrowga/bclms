@@ -64,7 +64,7 @@ const removeUploadedItem = (index) => {
 const removeOldUploadedItem = (index, id) => {
     form.delete_physical_resources.push(id);
     oldImages.value.splice(index, 1);
-    console.log(form.delete_physical_resources);
+    // console.log(form.delete_physical_resources);
 };
 const handleFileInputClick = () => {
     const fileInput = document.getElementById("file-input");

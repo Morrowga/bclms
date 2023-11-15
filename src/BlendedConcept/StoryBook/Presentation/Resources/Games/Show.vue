@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps, ref } from "vue";
 import Edit from "./Edit.vue";
-import axios from '@axios'
+import axios from "@axios";
 import { format } from "date-fns";
 import { isConfirmedDialog } from "@actions/useConfirm";
 import { router } from "@inertiajs/core";
@@ -29,7 +29,7 @@ let dialog = ref(false);
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
-console.log(props.data.devices);
+// console.log(props.data.devices);
 
 const formatDate = (dateString) => {
     // Parse the date string into a Date object
@@ -60,31 +60,31 @@ const deleteGame = () => {
 
 const download = async () => {
     try {
-        const response = await axios.post('/games/gamedownload/' + props.data.id, {
-            responseType: 'blob', // Specify the response type as a blob
-        });
+        const response = await axios.post(
+            "/games/gamedownload/" + props.data.id,
+            {
+                responseType: "blob", // Specify the response type as a blob
+            }
+        );
         // Create a blob URL for the response data
         const blob = new Blob([response.data]);
         const url = window.URL.createObjectURL(blob);
 
         // Create an anchor element to trigger the download
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = url;
-        a.download = props.data.name + '.zip'; // Set the desired file name
-        a.style.display = 'none';
+        a.download = props.data.name + ".zip"; // Set the desired file name
+        a.style.display = "none";
         document.body.appendChild(a);
         a.click();
 
         // Cleanup and remove the anchor element
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
-
-
     } catch (error) {
-        console.error('Error downloading file:', error);
+        console.error("Error downloading file:", error);
     }
 };
-
 </script>
 <template>
     <div>
@@ -117,7 +117,13 @@ const download = async () => {
                         <div class="faded-overlay"></div>
                         <div class="book-title">
                             <span>{{ data.name }}</span>
-                            <VIcon icon="mdi-tray-arrow-down" class="ml-3 mb-3 cursor-pointer" @click="download()" color="#000" size="25"></VIcon>
+                            <VIcon
+                                icon="mdi-tray-arrow-down"
+                                class="ml-3 mb-3 cursor-pointer"
+                                @click="download()"
+                                color="#000"
+                                size="25"
+                            ></VIcon>
                         </div>
                         <div class="edit-icon">
                             <Edit

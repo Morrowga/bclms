@@ -24,7 +24,7 @@ let filterDatas = ref([
     { title: "Z-A", value: "desc" },
     { title: "Contact Number", value: "contact_number" },
 ]);
-console.log(props.data);
+// console.log(props.data);
 watch(filters, (newValue) => {
     onColumnFilter({
         columnFilters: {

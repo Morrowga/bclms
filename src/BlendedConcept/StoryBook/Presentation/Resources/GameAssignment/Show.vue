@@ -7,7 +7,7 @@ import { ref } from "vue";
 import AssignStudentsTable from "./components/AssignStudentsTable.vue";
 
 const props = defineProps(["game", "students"]);
-console.log(props.game);
+// console.log(props.game);
 
 let tab = ref(false);
 </script>
@@ -35,9 +35,7 @@ let tab = ref(false);
                                 {{ props.game.name }}
                             </h1>
                         </VCol>
-                        <VCol cols="12" md="6" class="text-end">
-
-                        </VCol>
+                        <VCol cols="12" md="6" class="text-end"> </VCol>
                     </VRow>
                     <p class="text-subtitle-1 mt-10 mx-10">
                         {{ props.game.description }}
@@ -52,7 +50,8 @@ let tab = ref(false);
                             <v-window v-model="tab">
                                 <v-window-item value="disability">
                                     <ChipWithBlueDot
-                                        v-for="item in props.game.disability_types"
+                                        v-for="item in props.game
+                                            .disability_types"
                                         :key="item.id"
                                         :title="item.name"
                                     />

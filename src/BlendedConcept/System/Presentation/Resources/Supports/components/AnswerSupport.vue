@@ -22,10 +22,10 @@ const form = useForm({
 });
 
 onUpdated(() => {
-    console.log("hello");
+    // console.log("hello");
     form.id = props.dataPropsRow.id;
     form.question = props.dataPropsRow.question;
-    console.log(form.question);
+    // console.log(form.question);
 });
 
 const isDialogVisible = ref(false);

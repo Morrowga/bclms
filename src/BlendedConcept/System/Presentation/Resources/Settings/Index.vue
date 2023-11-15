@@ -28,7 +28,7 @@ let form = useForm({
     url: props?.setting?.url,
     sub_domain: "",
 });
-console.log(form);
+// console.log(form);
 let refForm = ref();
 function handleUpdateSite() {
     refForm.value?.validate().then(({ valid }) => {
