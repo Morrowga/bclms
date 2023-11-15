@@ -64,20 +64,21 @@ test('without other role not access pathways', function () {
     $reponse->assertStatus(403);
 });
 
-test('read pathways with bcstaff roles', function () {
-    $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
+//comment out coz of disabled features
+// test('read pathways with bcstaff roles', function () {
+//     $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
 
-    // Log in as the existing user
-    $this->actingAs($user);
+//     // Log in as the existing user
+//     $this->actingAs($user);
 
-    $this->assertAuthenticated(); // Check if the user is authenticated'
+//     $this->assertAuthenticated(); // Check if the user is authenticated'
 
-    $this->assertFalse(authorize('view', PathwayPolicy::class)); // permission check
+//     $this->assertFalse(authorize('view', PathwayPolicy::class)); // permission check
 
-    $reponse = $this->get('/pathways');
+//     $reponse = $this->get('/pathways');
 
-    $reponse->assertStatus(200);
-});
+//     $reponse->assertStatus(200);
+// });
 
 // comment coz of disable features
 // test('cannot access read pathways with other roles', function () {
