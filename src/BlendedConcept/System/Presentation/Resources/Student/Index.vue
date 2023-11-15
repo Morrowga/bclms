@@ -19,7 +19,6 @@ const page = usePage();
 const user = computed(() => page.props.auth.data);
 const userData = user.value;
 
-
 const getCookie = (name) => {
   const cookies = document.cookie.split('; ');
   for (const cookie of cookies) {
@@ -31,6 +30,9 @@ const getCookie = (name) => {
   return null;
 };
 
+const logout = () => {
+    router.post('/logout');
+};
 
 onMounted(() => {
     // Load initial data for page 1
@@ -245,6 +247,13 @@ onMounted(() => {
                                 :teacher_id="getCookie('teacher_id')"
                                 :student_id="userData.student.student_id"
                             />
+                            <VBtn
+                            color="#BFC0C1"
+                            @click="logout"
+                            v-if="userData.student.organisation_id == null"
+                            variant="flat"
+                            class="textcolor w-100 pppangram-bold mt-3"
+                            rounded>Logout</VBtn>
                         </div>
                     </VCard>
                 </VFadeTransition>

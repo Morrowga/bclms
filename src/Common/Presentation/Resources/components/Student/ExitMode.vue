@@ -50,12 +50,16 @@ const cookieValue = getCookie('kidmode');
 console.log(props.teacher_id);
 
 const logout = () => {
-    form.post(route("teacher_students.exitmode"), {
-    onSuccess: () => {
-    },
-    onError: (error) => {
-    },
-  });
+    if(cookieValue == 1){
+        form.post(route("teacher_students.exitmode"), {
+            onSuccess: () => {
+            },
+            onError: (error) => {
+            },
+        });
+    } else {
+        router.post('/logout');
+    }
 };
 
 console.log(cookieValue);
