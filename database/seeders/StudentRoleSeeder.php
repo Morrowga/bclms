@@ -33,7 +33,7 @@ class StudentRoleSeeder extends Seeder
             'role_id' => 6,
             'first_name' => 'Student',
             'password' => 'password',
-            'email' => 'studentone@mail.com',
+            'username' => 'student_one',
             'last_name' => 'One',
             'status' => 'ACTIVE',
             'email_verification_send_on' => now(),
