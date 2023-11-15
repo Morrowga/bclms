@@ -145,10 +145,7 @@ const changeTitle = () => {
                             </v-col>
                             <v-col
                                 cols="12"
-                                v-if="
-                                    user_role == 'BC Subscriber' ||
-                                    user_role == 'Teacher'
-                                "
+                                v-if="!checkB2c()"
                             >
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's First Name
@@ -165,10 +162,7 @@ const changeTitle = () => {
                             </v-col>
                             <v-col
                                 cols="12"
-                                v-if="
-                                    user_role == 'BC Subscriber' ||
-                                    user_role == 'Teacher'
-                                "
+                                v-if="!checkB2c()"
                             >
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's Last Name
@@ -185,10 +179,7 @@ const changeTitle = () => {
                             </v-col>
                             <v-col
                                 cols="12"
-                                v-if="
-                                    user_role == 'BC Subscriber' ||
-                                    user_role == 'Teacher'
-                                "
+                                v-if="!checkB2c()"
                             >
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's Contact Number
@@ -209,10 +200,7 @@ const changeTitle = () => {
                             </v-col>
                             <v-col
                                 cols="12"
-                                v-if="
-                                    user_role == 'BC Subscriber' ||
-                                    user_role == 'Teacher'
-                                "
+                                v-if="!checkB2c()"
                             >
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's Email Address
