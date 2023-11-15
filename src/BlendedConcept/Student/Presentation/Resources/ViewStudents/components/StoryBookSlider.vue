@@ -18,6 +18,7 @@ const props = defineProps(["datas", "student_id"]);
             <StoryBookSliderCard
                 :data="data.storybook"
                 :student_id="student_id"
+                :version_name="data.name"
             />
         </swiper-slide>
     </swiper>

@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { router } from "@inertiajs/core";
 let is_description = ref(false);
 let is_chip = ref(true);
-const props = defineProps(["data", "student_id"]);
+const props = defineProps(["data", "student_id", "version_name"]);
 const setImage = () => {
     return props.data.thumbnail_img == "" || !props.data.thumbnail_img
         ? "/images/defaults/organisation_logo.png"
@@ -32,6 +32,7 @@ const setImage = () => {
             <h1 class="font-weight-bold text-h6 text-center pb-4">
                 {{ data.name }}
             </h1>
+            <p class="text-center">{{ version_name }}</p>
             <p v-if="is_description">
                 {{ data.description }}
             </p>
