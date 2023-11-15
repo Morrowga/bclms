@@ -168,7 +168,7 @@ const handleThumbFileInputClick = () => {
                                 </v-col>
                             </v-col>
                             <VCol cols="12" md="6" class="game-tag-add">
-                                <VLabel class="tiggie-label required">Tags</VLabel>
+                                <VLabel class="tiggie-label">Tags</VLabel>
                                 <div
                                     class="d-flex my-4"
                                     v-if="form.tags.length > 0"
@@ -199,7 +199,7 @@ const handleThumbFileInputClick = () => {
                             </VCol>
                             <v-col cols="12" md="12" class="py-0">
                                 <v-col cols="12" md="12">
-                                    <VLabel class="tiggie-label required"
+                                    <VLabel class="tiggie-label"
                                         >Game Description</VLabel
                                     >
                                     <v-textarea
@@ -216,7 +216,7 @@ const handleThumbFileInputClick = () => {
                             </v-col>
                             <v-col cols="12" md="6" class="py-0">
                                 <v-col cols="12" md="12">
-                                    <VLabel class="tiggie-label required"
+                                    <VLabel class="tiggie-label"
                                         >Disability Type</VLabel
                                     >
                                     <v-select
@@ -238,7 +238,7 @@ const handleThumbFileInputClick = () => {
                             </v-col>
                             <v-col cols="12" md="6" class="py-0">
                                 <v-col cols="12" md="12">
-                                    <VLabel class="tiggie-label required"
+                                    <VLabel class="tiggie-label"
                                         >Supported Accessibility Devices</VLabel
                                     >
                                     <v-select

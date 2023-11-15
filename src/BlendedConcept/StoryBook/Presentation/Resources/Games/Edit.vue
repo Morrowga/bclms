@@ -221,7 +221,7 @@ const setImage = () => {
                         </div>
                         <br />
                         <div class="disability">
-                            <span class="font-weight-black text-black required"
+                            <span class="font-weight-black text-black"
                                 >Disability Types</span
                             ><br />
                             <div class="d-flex mt-3">
@@ -267,7 +267,7 @@ const setImage = () => {
                         </div>
                         <br />
                         <div class="supported">
-                            <span class="font-weight-black text-black required"
+                            <span class="font-weight-black text-black"
                                 >Supported Accessibility Devices</span
                             ><br />
                             <div class="d-flex">
