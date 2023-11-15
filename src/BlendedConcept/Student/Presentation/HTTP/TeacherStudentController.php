@@ -148,7 +148,7 @@ class TeacherStudentController
                         Auth::logout();
                         Auth::login($user);
 
-                        return redirect()->route('learning-portal');
+                        return redirect()->route('teacher_students.show', $request->student_id);
                     } else {
                         Auth::logout();
                         return redirect()->route('login');
