@@ -30,12 +30,12 @@ class StoreGameRequest extends FormRequest
     {
         return [
             'name' => 'Name is required',
-            'description' => 'Description is required',
+            // 'description' => 'Description is required',
             'game' => 'Game file is required',
             'thumb' => 'Thumbnail image is required',
-            'disability_type_id' => 'Disability Type is required',
-            'tags' => 'Tag is required',
-            'devices' => 'Devices is required',
+            // 'disability_type_id' => 'Disability Type is required',
+            // 'tags' => 'Tag is required',
+            // 'devices' => 'Devices is required',
         ];
     }
 }

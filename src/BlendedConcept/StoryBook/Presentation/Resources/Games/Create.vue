@@ -207,10 +207,6 @@ const handleThumbFileInputClick = () => {
                                         v-model="form.description"
                                         rows="5"
                                         density="compact"
-                                        :rules="[requiredValidator]"
-                                        :error-messages="
-                                            form?.errors?.description
-                                        "
                                     />
                                 </v-col>
                             </v-col>
@@ -229,10 +225,6 @@ const handleThumbFileInputClick = () => {
                                         class="tiggie-resize-input-text disability-type-input"
                                         placeholder="Select disability type"
                                         density="compact"
-                                        :rules="[requiredValidator]"
-                                        :error-messages="
-                                            form?.errors?.disability_type_id
-                                        "
                                     />
                                 </v-col>
                             </v-col>
@@ -251,8 +243,6 @@ const handleThumbFileInputClick = () => {
                                         class="tiggie-resize-input-text disability-type-input"
                                         placeholder="Select devices"
                                         density="compact"
-                                        :rules="[requiredValidator]"
-                                        :error-messages="form?.errors?.devices"
                                     />
                                 </v-col>
                             </v-col>

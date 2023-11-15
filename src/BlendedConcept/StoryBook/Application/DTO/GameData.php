@@ -9,7 +9,7 @@ class GameData
     public function __construct(
         public readonly ?int $id,
         public readonly string $name,
-        public readonly string $description,
+        public readonly ?string $description,
         public readonly ?string $game_file,
         public readonly ?string $thumbnail,
         public readonly int $num_gold_coins,
