@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->string('game_file')->nullable();
             $table->string('thumbnail')->nullable();
             $table->integer('num_gold_coins')->default(0);

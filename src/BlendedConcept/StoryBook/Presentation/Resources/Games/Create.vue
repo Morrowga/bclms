@@ -26,6 +26,8 @@ let dialog = ref(false);
 const isPersistant = ref(false);
 const gameTag = ref("");
 const gameFile = ref(null);
+const thumbFile = ref(true);
+const gameValidationFile = ref(true);
 const thumbnail = ref(null);
 const dragging = ref(false);
 const thumbnailFile = ref(null);
@@ -78,7 +80,6 @@ const onDropGameFile = (event) => {
     gameFile.value = files[0];
 
     if (files[0].type === "application/zip" || files[0].name.endsWith(".zip")) {
-        // The file is a zip file
         game_file_validation.value = true;
     } else {
         game_file_validation.value = false;
@@ -112,11 +113,16 @@ let onFormSubmit = () => {
             isPersistant.value = true;
             form.setError("name", error?.name);
             form.setError("description", error?.description);
-            form.setError("game", error?.game);
-            form.setError("thumb", error?.thumb);
             form.setError("disability_type_id", error?.disability_type_id);
             form.setError("tags", error?.tags);
             form.setError("devices", error?.devices);
+            if(error?.game){
+                gameValidationFile.value = false
+            }
+
+            if(error?.thumb){
+                thumbFile.value = false
+            }
         },
     });
     // SuccessDialog({ title: "Successfully Game added" });
@@ -265,16 +271,29 @@ const handleThumbFileInputClick = () => {
                                             </p>
                                         </div>
                                         <div v-else>
-                                            <p v-if="!gameFile">
-                                                Drag & Drop game file or
-                                                <span
-                                                    class="browse"
-                                                    @click="
-                                                        handleGameFileInputClick
-                                                    "
-                                                    >Browse File</span
-                                                >
-                                            </p>
+                                            <div v-if="!gameFile">
+                                                <p v-if="gameValidationFile">
+                                                    Drag & Drop game file or
+                                                    <span
+                                                        class="browse"
+                                                        @click="
+                                                            handleGameFileInputClick
+                                                        "
+                                                        >Browse File</span
+                                                    >
+                                                </p>
+                                                <p v-else class="error-message">
+                                                    game zip is required
+                                                    <br>
+                                                    <span
+                                                        class="browse"
+                                                        @click="
+                                                            handleThumbFileInputClick
+                                                        "
+                                                        >Browse File</span
+                                                    >
+                                                </p>
+                                            </div>
                                             <div v-else>
                                                 <p>
                                                     File Name:
@@ -318,16 +337,29 @@ const handleThumbFileInputClick = () => {
                                             style="display: none"
                                             @change="handleThumbnailChange"
                                         />
-                                        <p v-if="!thumbnail">
-                                            Drag & Drop thumbnail or
-                                            <span
-                                                class="browse"
-                                                @click="
-                                                    handleThumbFileInputClick
-                                                "
-                                                >Browse File</span
-                                            >
-                                        </p>
+                                        <div v-if="!thumbnail">
+                                            <p v-if="thumbFile">
+                                                Drag & Drop thumbnail or
+                                                <span
+                                                    class="browse"
+                                                    @click="
+                                                        handleThumbFileInputClick
+                                                    "
+                                                    >Browse File</span
+                                                >
+                                            </p>
+                                            <p class="error-message" v-else>
+                                                thumbnail image is required
+                                                <br>
+                                                <span
+                                                    class="browse"
+                                                    @click="
+                                                        handleThumbFileInputClick
+                                                    "
+                                                    >Browse File</span
+                                                >
+                                            </p>
+                                        </div>
                                         <div v-else>
                                             <v-img
                                                 :src="thumbnail"
