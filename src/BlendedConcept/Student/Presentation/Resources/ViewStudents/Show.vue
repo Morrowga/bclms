@@ -207,7 +207,7 @@ const formatDate = (dateString) => {
                                 {{ props.student.data?.user?.username }}
                             </p>
                         </v-col>
-                        <v-col cols="12" v-if="!checkB2c()">
+                        <!-- <v-col cols="12" v-if="!checkB2c()">
                             <p class="text-subtitle-1 mb-0">Login Password</p>
                             <div
                                 v-if="isPassword"
@@ -235,7 +235,7 @@ const formatDate = (dateString) => {
                                     icon="mdi-eye"
                                 ></v-btn>
                             </div>
-                        </v-col>
+                        </v-col> -->
                     </v-row>
                     <!-- <v-row>
                         <v-col cols="12" class="mt-3">
