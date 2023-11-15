@@ -120,8 +120,6 @@ class GameController
 
     public function gameDownload(GameEloquentModel $game)
     {
-        $download =  (new GetGameFileDownload($game))->handle();
-
-        return \Response::download($download->getPath(), $download->file_name);
+        return (new GetGameFileDownload($game))->handle();
     }
 }

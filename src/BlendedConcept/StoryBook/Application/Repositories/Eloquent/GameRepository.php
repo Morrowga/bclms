@@ -263,8 +263,8 @@ class GameRepository implements GameRepositoryInterface
     public function gameDownload(GameEloquentModel $game)
     {
         $download = $game->getMedia('gamezip')->first();
-
-        return $download;
+        return \Response::download($download->getPath(), $download->file_name);
+        // return $download;
     }
 
     public function assignToStudent()

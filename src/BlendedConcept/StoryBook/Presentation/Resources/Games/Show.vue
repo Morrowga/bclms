@@ -62,29 +62,38 @@ const download = async () => {
     try {
         const response = await axios.post(
             "/games/gamedownload/" + props.data.id,
+            {},
             {
                 responseType: "blob", // Specify the response type as a blob
             }
         );
+
         // Create a blob URL for the response data
         const blob = new Blob([response.data]);
-        const url = window.URL.createObjectURL(blob);
 
-        // Create an anchor element to trigger the download
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = props.data.name + ".zip"; // Set the desired file name
-        a.style.display = "none";
-        document.body.appendChild(a);
-        a.click();
+        // Create a link element
+        const link = document.createElement("a");
 
-        // Cleanup and remove the anchor element
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
+        // Set the href attribute with the blob URL
+        link.href = window.URL.createObjectURL(blob);
+
+        // Set the download attribute with the desired file name
+        link.download = props.data.name + ".zip";
+
+        // Append the link to the document body
+        document.body.appendChild(link);
+
+        // Trigger a click on the link to initiate the download
+        link.click();
+
+        // Remove the link from the document body
+        document.body.removeChild(link);
     } catch (error) {
         console.error("Error downloading file:", error);
     }
 };
+
+
 </script>
 <template>
     <div>
