@@ -153,7 +153,7 @@ const handleThumbFileInputClick = () => {
                         <v-row>
                             <v-col cols="12" md="6" class="pb-0">
                                 <v-col cols="12" md="12">
-                                    <VLabel class="tiggie-label"
+                                    <VLabel class="tiggie-label required"
                                         >Game Name</VLabel
                                     >
                                     <VTextField
@@ -259,7 +259,7 @@ const handleThumbFileInputClick = () => {
 
                             <v-col cols="12" md="6" class="py-0 mt-5">
                                 <v-col cols="12" md="12">
-                                    <VLabel class="tiggie-label"
+                                    <VLabel class="tiggie-label required"
                                         >Game File</VLabel
                                     >
                                     <div
@@ -312,7 +312,7 @@ const handleThumbFileInputClick = () => {
                             </v-col>
                             <v-col cols="12" md="6" class="py-0 mt-5">
                                 <v-col cols="12" md="12">
-                                    <VLabel class="tiggie-label"
+                                    <VLabel class="tiggie-label required"
                                         >Thumbnail Picture</VLabel
                                     >
                                     <div

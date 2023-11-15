@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref } from "vue";
+import { defineProps, ref, watch } from "vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
 import { useForm } from "@inertiajs/vue3";
@@ -35,6 +35,7 @@ let flash = computed(() => page?.props?.flash);
 //this arrary describe as multiple select for each roles
 const gameTag = ref("");
 const tagError = ref("");
+const thumbnailError = ref("");
 const type = ref(null);
 const form = useForm({
     name: "",
@@ -71,11 +72,11 @@ const saveToH5p = () => {
     saveButton.click();
 };
 let onFormSubmit = () => {
-    if (form.tags.length == 0) {
-        tagError.value = "At least one tag is required";
+    if (!form.thumbnail_img) {
+        thumbnailError.value = "Thumbnail upload is required";
     }
     refForm.value?.validate().then(({ valid }) => {
-        if (valid && form.tags.length > 0) {
+        if (valid && form.thumbnail_img) {
             form.type = type.value;
             if (type.value == "H5P") {
                 saveToH5p();
@@ -122,7 +123,7 @@ let onFormSubmit = () => {
 };
 
 const addToSublearningArray = (e) => {
-    tagError.value = "";
+    // tagError.value = "";
     if (gameTag.value) {
         form.tags.push(gameTag.value);
         gameTag.value = "";
@@ -180,6 +181,11 @@ watch(type, (value) => {
         }, 1000);
     }
 });
+watch(form, (value) => {
+    if (value.thumbnail_img) {
+        thumbnailError.value = "";
+    }
+});
 onMounted(() => {
     // if (iframeRef.value) {
     //     iframeRef.value.style.display = "none";
@@ -229,7 +235,7 @@ onMounted(() => {
                         />
                     </VCol>
                     <VCol cols="12" md="6" class="game-tag-add">
-                        <VLabel class="tiggie-label required">Tags</VLabel>
+                        <VLabel class="tiggie-label">Tags</VLabel>
                         <div class="d-flex my-4" v-if="form.tags.length > 0">
                             <div
                                 class="ps-relative"
@@ -264,7 +270,7 @@ onMounted(() => {
                         </div>
                     </VCol>
                     <VCol cols="12" md="12">
-                        <VLabel class="tiggie-label required"
+                        <VLabel class="tiggie-label"
                             >Storybook Description</VLabel
                         >
                         <VTextarea
@@ -272,14 +278,11 @@ onMounted(() => {
                             type="text"
                             rows="5"
                             density="compact"
-                            :rules="[requiredValidator]"
                             :error-messages="form?.errors?.description"
                         />
                     </VCol>
                     <VCol cols="12" md="6">
-                        <VLabel class="tiggie-label required"
-                            >Learning Needs</VLabel
-                        >
+                        <VLabel class="tiggie-label">Learning Needs</VLabel>
                         <VSelect
                             type="text"
                             placeholder="Select devices"
@@ -287,7 +290,6 @@ onMounted(() => {
                             v-model="form.sub_learning_needs"
                             :items="props.learningneeds"
                             :error-messages="form?.errors?.sub_learning_needs"
-                            :rules="[requiredValidator]"
                             item-title="name"
                             item-value="id"
                             multiple
@@ -295,7 +297,7 @@ onMounted(() => {
                         />
                     </VCol>
                     <VCol cols="12" md="6">
-                        <VLabel class="tiggie-label required">Themes</VLabel>
+                        <VLabel class="tiggie-label">Themes</VLabel>
                         <VSelect
                             type="text"
                             placeholder="Select devices"
@@ -303,7 +305,6 @@ onMounted(() => {
                             v-model="form.themes"
                             :items="props.themes"
                             :error-messages="form?.errors?.themes"
-                            :rules="[requiredValidator]"
                             item-title="name"
                             item-value="id"
                             multiple
@@ -311,9 +312,7 @@ onMounted(() => {
                         />
                     </VCol>
                     <VCol cols="12" md="6">
-                        <VLabel class="tiggie-label required"
-                            >Disability Type</VLabel
-                        >
+                        <VLabel class="tiggie-label">Disability Type</VLabel>
                         <VSelect
                             type="text"
                             class="tiggie-resize-input-text mb-14"
@@ -322,7 +321,6 @@ onMounted(() => {
                             :items="props.disability_types"
                             v-model="form.disability_type"
                             :error-messages="form?.errors?.disability_type"
-                            :rules="[requiredValidator]"
                             item-title="name"
                             item-value="id"
                             multiple
@@ -330,7 +328,7 @@ onMounted(() => {
                         />
                     </VCol>
                     <VCol cols="12" md="6">
-                        <VLabel class="tiggie-label required">
+                        <VLabel class="tiggie-label">
                             Supported Accessibility Devices
                         </VLabel>
                         <VSelect
@@ -341,7 +339,6 @@ onMounted(() => {
                             :items="props.devices"
                             v-model="form.devices"
                             :error-messages="form?.errors?.devices"
-                            :rules="[requiredValidator]"
                             item-title="name"
                             item-value="id"
                             multiple
@@ -353,6 +350,7 @@ onMounted(() => {
                             Number of Gold Coins
                         </VLabel>
                         <VTextField
+                            :rules="[requiredValidator]"
                             v-model="form.num_gold_coins"
                             type="number"
                             placeholder="Type here ..."
@@ -363,6 +361,7 @@ onMounted(() => {
                             Number of Silver Coins
                         </VLabel>
                         <VTextField
+                            :rules="[requiredValidator]"
                             type="number"
                             v-model="form.num_silver_coins"
                             placeholder="Type here ..."
@@ -378,11 +377,12 @@ onMounted(() => {
                             memeType="image"
                             :id="3"
                         />
+                        <span class="text-error pt-2">{{
+                            thumbnailError
+                        }}</span>
                     </VCol>
                     <VCol cols="12" md="6">
-                        <VLabel class="tiggie-label required"
-                            >Physical Resource</VLabel
-                        >
+                        <VLabel class="tiggie-label">Physical Resource</VLabel>
                         <ImageUpload
                             :hide_count="true"
                             data_type="user"
