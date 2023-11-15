@@ -40,12 +40,37 @@ const openMenu = () => {
 //         openDialog.value = false;
 //     }
 // });
+// const handleOrientationChange = () => {
+//     if (screen.orientation.type.startsWith("portrait")) {
+//         openDialog.value = true;
+//     } else {
+//         openDialog.value = false;
+//     }
+// };
+
+// onMounted(() => {
+//     // Initial check for orientation
+//     handleOrientationChange();
+
+//     // Add an event listener for orientation change
+//     window.addEventListener("orientationchange", handleOrientationChange);
+// });
+
+// onUnmounted(() => {
+//     // Remove the event listener when the component is unmounted
+//     window.removeEventListener("orientationchange", handleOrientationChange);
+// });
 const handleOrientationChange = () => {
-    if (screen.orientation.type.startsWith("portrait")) {
+    if (isPortrait()) {
         openDialog.value = true;
     } else {
         openDialog.value = false;
     }
+};
+
+const isPortrait = () => {
+    // Check whether the screen is in portrait mode
+    return window.innerHeight > window.innerWidth;
 };
 
 onMounted(() => {
@@ -53,12 +78,12 @@ onMounted(() => {
     handleOrientationChange();
 
     // Add an event listener for orientation change
-    window.addEventListener("orientationchange", handleOrientationChange);
+    window.addEventListener("resize", handleOrientationChange);
 });
 
 onUnmounted(() => {
     // Remove the event listener when the component is unmounted
-    window.removeEventListener("orientationchange", handleOrientationChange);
+    window.removeEventListener("resize", handleOrientationChange);
 });
 </script>
 <template>
