@@ -43,7 +43,7 @@ let datas = [
 ];
 
 const toggleDialog = (id) => {
-    console.log("id", id);
+    // console.log("id", id);
     // dialog.value = !dialog.value;
 };
 </script>

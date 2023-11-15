@@ -1,10 +1,10 @@
 <script setup>
 import { router } from "@inertiajs/core";
-import { usePage,useForm } from "@inertiajs/vue3";
+import { usePage, useForm } from "@inertiajs/vue3";
 import {
-  emailValidator,
-  requiredValidator,
-  integerValidator,
+    emailValidator,
+    requiredValidator,
+    integerValidator,
 } from "@validators";
 import LogoutUserExperienceSurvey from "../../../../../BlendedConcept/System/Presentation/Resources/Student/components/LogoutUserExperienceSurvey.vue";
 
@@ -24,42 +24,39 @@ const togglePasswordVisibility = () => {
 const form = useForm({
     password: null,
     student_id: props.student_id,
-    user_id: props.teacher_id
-})
+    user_id: props.teacher_id,
+});
 
 const checkSurvey = () => {
-    if(user_survey_logout.value != ''){
-        hasSurvey.value = true
+    if (user_survey_logout.value != "") {
+        hasSurvey.value = true;
     } else {
-        isDialogVisible.value = true
+        isDialogVisible.value = true;
     }
-}
-
-const getCookie = (name) => {
-  const cookies = document.cookie.split('; ');
-  for (const cookie of cookies) {
-    const [cookieName, cookieValue] = cookie.split('=');
-    if (cookieName === name) {
-      return cookieValue;
-    }
-  }
-  return null;
 };
 
-const cookieValue = getCookie('kidmode');
-console.log(props.teacher_id);
+const getCookie = (name) => {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+        const [cookieName, cookieValue] = cookie.split("=");
+        if (cookieName === name) {
+            return cookieValue;
+        }
+    }
+    return null;
+};
+
+const cookieValue = getCookie("kidmode");
+// console.log(props.teacher_id);
 
 const logout = () => {
     form.post(route("teacher_students.exitmode"), {
-    onSuccess: () => {
-    },
-    onError: (error) => {
-    },
-  });
+        onSuccess: () => {},
+        onError: (error) => {},
+    });
 };
 
-console.log(cookieValue);
-
+// console.log(cookieValue);
 </script>
 <template #activator="{ props }">
     <div>
@@ -70,7 +67,7 @@ console.log(cookieValue);
             class="textcolor w-100 pppangram-bold"
             rounded
         >
-           {{ cookieValue == 1 ?'Exit Kids Mode' :  'Log Out'}}
+            {{ cookieValue == 1 ? "Exit Kids Mode" : "Log Out" }}
         </v-btn>
         <VDialog v-model="isDialogVisible" width="500">
             <VForm @submit.prevent="logout()">
@@ -137,7 +134,8 @@ console.log(cookieValue);
         <LogoutUserExperienceSurvey
             v-model:hasSurvey="hasSurvey"
             v-model:isDialogVisible="isDialogVisible"
-            :data="user_survey_logout" />
+            :data="user_survey_logout"
+        />
     </div>
 </template>
 <style scoped>

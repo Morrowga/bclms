@@ -51,7 +51,7 @@ let columns = [
 ];
 
 const selectionChanged = (data) => {
-    console.log(data.selectedRows);
+    // console.log(data.selectedRows);
 };
 
 const handleSetInActive = () => {

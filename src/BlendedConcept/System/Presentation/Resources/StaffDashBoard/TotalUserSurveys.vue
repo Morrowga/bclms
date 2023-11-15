@@ -93,7 +93,7 @@ watch(filters, (newValue) => {
     });
 });
 const selectionChanged = (data) => {
-    console.log(data.selectedRows);
+    // console.log(data.selectedRows);
 };
 const deleteSurvey = (id) => {
     isConfirmedDialog({

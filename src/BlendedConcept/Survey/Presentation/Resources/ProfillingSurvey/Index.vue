@@ -45,7 +45,7 @@ function deleteSurveyForm(id) {
             router.delete("questions/" + id + "?type=profiling", {
                 onSuccess: () => {
                     reload("profilling_survey.index");
-                    FlashMessage({ flash })
+                    FlashMessage({ flash });
                 },
             });
         },
@@ -53,7 +53,7 @@ function deleteSurveyForm(id) {
 }
 
 const handleEditSurveyFormSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     let newOptions = [];
     data.options.forEach((item) => {
         newOptions.push(item);
@@ -65,14 +65,17 @@ const handleEditSurveyFormSubmit = (data) => {
         question_type: data.question_type,
         question: data.question,
         order: data.order,
-        options: data.question_type == 'SHORT_ANSWER' ? '' : JSON.stringify(newOptions),
+        options:
+            data.question_type == "SHORT_ANSWER"
+                ? ""
+                : JSON.stringify(newOptions),
         type: "profiling",
     });
 
     updateData.put(route("questions.update", data.id), {
         onSuccess: () => {
             reload("profilling_survey.index");
-            console.log(flash.value.successMessage + ' test')
+            console.log(flash.value.successMessage + " test");
             FlashMessage({ flash });
         },
         onError: (error) => {},
@@ -106,12 +109,15 @@ const openEditSurveyForm = (id) => {
 const handleModalSubmit = (data) => {
     addNewQuestionForm.question_type = data.question_type;
     addNewQuestionForm.question = data.question;
-    addNewQuestionForm.options = data.question_type == 'SHORT_ANSWER' ? '' : JSON.stringify(data.options);
+    addNewQuestionForm.options =
+        data.question_type == "SHORT_ANSWER"
+            ? ""
+            : JSON.stringify(data.options);
     addNewQuestionForm.post(route("questions.store"), {
         onSuccess: () => {
             reload("profilling_survey.index");
 
-            FlashMessage({ flash })
+            FlashMessage({ flash });
         },
         onError: (error) => {
             addNewQuestionForm.setError("question_type", error?.question_type);
@@ -123,11 +129,16 @@ const handleModalSubmit = (data) => {
 
 const handleDrag = (event) => {
     const DragForm = useForm({
-        "questions": JSON.stringify(addSurveyForm.value)
-    })
-    axios.post(route("profilling_survey.order-saving", props.survey.data.id), DragForm).then((res) => {
-        console.log('drag saved');
+        questions: JSON.stringify(addSurveyForm.value),
     });
+    axios
+        .post(
+            route("profilling_survey.order-saving", props.survey.data.id),
+            DragForm
+        )
+        .then((res) => {
+            console.log("drag saved");
+        });
 };
 
 const reload = (routeName, param) => {
@@ -183,19 +194,32 @@ const optionsWithText = (option) => {
                     </div>
                 </v-col>
                 <div v-if="addSurveyForm.length > 0">
-                    <draggable v-model="addSurveyForm" @change="handleDrag" :options="{ handle: '.drag-handle' }">
+                    <draggable
+                        v-model="addSurveyForm"
+                        @change="handleDrag"
+                        :options="{ handle: '.drag-handle' }"
+                    >
                         <template v-slot:item="{ element, index }">
                             <Vcol cols="12" :key="index">
-                                <VCard style="width: 81vw" class="mt-4 draggable-item">
+                                <VCard
+                                    style="width: 81vw"
+                                    class="mt-4 draggable-item"
+                                >
                                     <VCardTitle class="tiggie-subtitle">
-                                        <div class="d-flex justify-space-between">
+                                        <div
+                                            class="d-flex justify-space-between"
+                                        >
                                             <div>
                                                 Question {{ index + 1 }} .
                                                 {{ element.question_type }}
                                             </div>
                                             <div>
                                                 <v-menu>
-                                                    <template v-slot:activator="{ props }">
+                                                    <template
+                                                        v-slot:activator="{
+                                                            props,
+                                                        }"
+                                                    >
                                                         <div
                                                             class="cursor-pointer"
                                                             v-bind="props"
@@ -230,17 +254,38 @@ const optionsWithText = (option) => {
                                             </div>
                                         </div>
                                     </VCardTitle>
-                                    <VCardSubTitle class="pl-4 tiggie-p" v-if="element.question_type != 'SHORT_ANSWER'">
-                                        {{element.question}}
+                                    <VCardSubTitle
+                                        class="pl-4 tiggie-p"
+                                        v-if="
+                                            element.question_type !=
+                                            'SHORT_ANSWER'
+                                        "
+                                    >
+                                        {{ element.question }}
                                     </VCardSubTitle>
-                                    <VCardSubTitle class="pl-4 tiggie-p shortanswer" v-else>
-                                        {{element.question}}
+                                    <VCardSubTitle
+                                        class="pl-4 tiggie-p shortanswer"
+                                        v-else
+                                    >
+                                        {{ element.question }}
                                     </VCardSubTitle>
-                                    <VDivider v-if="element.question_type != 'SHORT_ANSWER'"/>
-                                    <VCardText v-if="element.question_type != 'SHORT_ANSWER'">
+                                    <VDivider
+                                        v-if="
+                                            element.question_type !=
+                                            'SHORT_ANSWER'
+                                        "
+                                    />
+                                    <VCardText
+                                        v-if="
+                                            element.question_type !=
+                                            'SHORT_ANSWER'
+                                        "
+                                    >
                                         <VRow no-gutters justify="start">
                                             <VCol cols="1">
-                                                <h4 class="tiggie-subtitle">Options</h4>
+                                                <h4 class="tiggie-subtitle">
+                                                    Options
+                                                </h4>
                                             </VCol>
                                             <VCol
                                                 cols="4"
@@ -249,7 +294,9 @@ const optionsWithText = (option) => {
                                             >
                                                 <VList>
                                                     <VListItem
-                                                        v-for="(option, i) in element.options"
+                                                        v-for="(
+                                                            option, i
+                                                        ) in element.options"
                                                         :key="i"
                                                     >
                                                         <template #prepend>
@@ -257,8 +304,14 @@ const optionsWithText = (option) => {
                                                                 :icon="'mdi-circle-small'"
                                                             />
                                                         </template>
-                                                        <VListItemTitle class="tiggie-p">
-                                                            {{ optionsWithText(option) }}
+                                                        <VListItemTitle
+                                                            class="tiggie-p"
+                                                        >
+                                                            {{
+                                                                optionsWithText(
+                                                                    option
+                                                                )
+                                                            }}
                                                         </VListItemTitle>
                                                     </VListItem>
                                                 </VList>

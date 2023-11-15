@@ -28,7 +28,7 @@ let props = defineProps([
     "organisations",
 ]);
 let currentAnnouncement = ref();
-console.log(props.announcements);
+// console.log(props.announcements);
 const isAddNewAnnouncementDrawerVisible = ref(false);
 const isEditAnnouncementDrawerVisible = ref(false);
 

@@ -92,7 +92,7 @@ watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
 const selectionChanged = (data) => {
-    console.log(data.selectedRows);
+    // console.log(data.selectedRows);
 };
 
 const deletePlan = () => {

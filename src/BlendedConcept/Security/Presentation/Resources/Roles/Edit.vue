@@ -38,7 +38,7 @@ let headers = [
     },
 ];
 let props = defineProps(["permissions", "flash", "role", "exists_permissions"]);
-let flash = computed(() => usePage().props.flash)
+let flash = computed(() => usePage().props.flash);
 let permissionsFilter = computed(() =>
     props.permissions.filter((item) => item.name?.includes(searchName.value))
 );
@@ -55,7 +55,7 @@ let updateRole = (id) => {
         if (valid) {
             form.put(route("roles.update", { id: id }), {
                 onSuccess: () => {
-                    FlashMessage({ flash })
+                    FlashMessage({ flash });
                 },
                 onError: (error) => {
                     form.setError("name", error?.name);
@@ -99,7 +99,7 @@ onMounted(() => {
     selectedIds.value = props.exists_permissions;
     form.name = props.role.name;
     form.description = props.role.description;
-    console.log(form.selectedIds);
+    // console.log(form.selectedIds);
 });
 </script>
 <template>

@@ -95,7 +95,7 @@ watch(serverPerPage, function (value) {
 
 const items = ["Foo", "Bar"];
 const selectionChanged = (data) => {
-    console.log(data.selectedRows);
+    // console.log(data.selectedRows);
 };
 const getInvoice = () => {
     SuccessDialog({ title: "You have successfully downloaded invoice" });

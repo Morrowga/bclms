@@ -43,7 +43,7 @@ const handleDrop = (event) => {
 const importUser = () => {
     form.post(route("teachers.import"), {
         onSuccess: (response) => {
-            console.log(response);
+            // console.log(response);
             if (export_errors.value && export_errors.value?.length > 0) {
                 const data = export_errors.value;
                 const fileName = "FailToImportStudent";
@@ -55,7 +55,7 @@ const importUser = () => {
             emit("closeDialog");
         },
         onError: (error) => {
-            console.log(error, "not okay par");
+            // console.log(error, "not okay par");
         },
     });
 };

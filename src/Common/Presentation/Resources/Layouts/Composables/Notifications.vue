@@ -16,7 +16,7 @@ const items = ref([1]);
 let current_page = ref(usePage().props.notifications?.current_page);
 let last_page = ref(usePage().props.notifications?.last_page);
 
-console.log(allNotifications);
+// console.log(allNotifications);
 
 const scroll_el = ref("");
 

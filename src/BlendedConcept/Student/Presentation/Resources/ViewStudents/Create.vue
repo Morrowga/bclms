@@ -18,7 +18,7 @@ const props = defineProps(["learningNeeds", "disabilityTypes"]);
 let flash = computed(() => usePage().props.flash);
 let user_role = computed(() => usePage().props.user_info.user_role.name);
 
-console.log(props.disabilityTypes);
+// console.log(props.disabilityTypes);
 const form = useForm({
     first_name: "",
     last_name: "",
@@ -143,10 +143,7 @@ const changeTitle = () => {
                                     "
                                 />
                             </v-col>
-                            <v-col
-                                cols="12"
-                                v-if="!checkB2c()"
-                            >
+                            <v-col cols="12" v-if="!checkB2c()">
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's First Name
                                 </p>
@@ -160,10 +157,7 @@ const changeTitle = () => {
                                     "
                                 />
                             </v-col>
-                            <v-col
-                                cols="12"
-                                v-if="!checkB2c()"
-                            >
+                            <v-col cols="12" v-if="!checkB2c()">
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's Last Name
                                 </p>
@@ -177,10 +171,7 @@ const changeTitle = () => {
                                     "
                                 />
                             </v-col>
-                            <v-col
-                                cols="12"
-                                v-if="!checkB2c()"
-                            >
+                            <v-col cols="12" v-if="!checkB2c()">
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's Contact Number
                                 </p>
@@ -198,10 +189,7 @@ const changeTitle = () => {
                                     "
                                 />
                             </v-col>
-                            <v-col
-                                cols="12"
-                                v-if="!checkB2c()"
-                            >
+                            <v-col cols="12" v-if="!checkB2c()">
                                 <p class="text-subtitle-1 mb-0 required">
                                     Parent's Email Address
                                 </p>

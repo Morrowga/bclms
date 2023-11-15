@@ -42,7 +42,7 @@ async function fetchData() {
 }
 function handleSlideChange(swiper) {
     currentPage.value = swiper.activeIndex;
-    console.log(totalPage.value);
+    // console.log(totalPage.value);
     let results = datas.value[swiper.activeIndex].map((book, index) => {
         return {
             id: book.id,

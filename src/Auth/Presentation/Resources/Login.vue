@@ -11,7 +11,6 @@ const isPasswordVisible = ref(false);
 const rememberMe = ref(false);
 let props = defineProps(["errorMessage", "sytemErrorMessage", "tenant"]);
 
-console.log(props.errorMessage);
 let form = useForm({
     email: "",
     password: "",

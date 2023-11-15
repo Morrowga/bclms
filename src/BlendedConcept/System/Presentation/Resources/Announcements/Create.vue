@@ -11,17 +11,19 @@ import {
     integerValidator,
 } from "@validators";
 import MultiSelectBox from "@mainRoot/components/MultiSelectBox/MultiSelectBox.vue";
-let props = defineProps(["organisations", "b2cUsers", "teachers", "bcStaff", "auth"]);
+let props = defineProps([
+    "organisations",
+    "b2cUsers",
+    "teachers",
+    "bcStaff",
+    "auth",
+]);
 
 let groupSelectBox = ["Super Admin", "BC Staff", "Organisation Admin"];
-console.log(props.auth.data.roles.id);
+// console.log(props.auth.data.roles.id);
 const tos = ref(null);
-if(props.auth.data.roles.id === 3){
-    tos.value = [
-        "Organisation Admin",
-        "Organisation Teacher",
-        "B2C Users",
-    ];
+if (props.auth.data.roles.id === 3) {
+    tos.value = ["Organisation Admin", "Organisation Teacher", "B2C Users"];
 } else {
     tos.value = [
         "BC Staff",
@@ -30,7 +32,6 @@ if(props.auth.data.roles.id === 3){
         "B2C Users",
     ];
 }
-
 
 const visibleToSelectBox = ref(true);
 const visibleToOriginizationList = ref(true);
@@ -82,7 +83,7 @@ watch(
 );
 
 watch(orglist, (newValue, oldValue) => {
-    console.log(newValue);
+    // console.log(newValue);
     getTeacherByOrganisation(newValue);
 });
 
@@ -118,7 +119,7 @@ watch(
     }
 );
 
-console.log(props.organisations.data);
+// console.log(props.organisations.data);
 
 const org_array = ref([]);
 const orgAdminData = ref(props.organisations.data);
@@ -127,7 +128,7 @@ for (let i = 0; i < orgAdminData.value.length; i++) {
     org_array.value.push({
         id: orgAdminData.value[i].user.id,
         name: orgAdminData.value[i].user.full_name,
-        org_id: orgAdminData.value[i].organisation.id
+        org_id: orgAdminData.value[i].organisation.id,
     });
 }
 const org_teacher_array = ref([]);
@@ -168,7 +169,7 @@ const b2bteacherbyorg = ref([]);
 const toSelect = ref(null);
 
 // let author_id = computed(() => usePage().props.auth.data.roles.name);
-let flash = computed(() => usePage().props.flash)
+let flash = computed(() => usePage().props.flash);
 
 const showDialog = ref(false);
 const icon = ref("");
@@ -794,7 +795,7 @@ const saveIcon = (selectedIcon) => {
     icon.value = "mdi-" + selectedIcon;
     chosenIcon.value = selectedIcon;
     form.icon = icon.value;
-    console.log(chosenIcon.value);
+    // console.log(chosenIcon.value);
     showDialog.value = false;
 };
 
@@ -1423,7 +1424,7 @@ let onFormSubmit = () => {
     for (let i = 0; i < bc_staff_ids.value.length; i++) {
         form.users.push(bc_staff_ids.value[i]);
     }
-    console.log(bc_staff_ids.value);
+    // console.log(bc_staff_ids.value);
 
     for (let i = 0; i < b2c_user_ids.value.length; i++) {
         form.users.push(b2c_user_ids.value[i]);
@@ -1451,10 +1452,10 @@ let onFormSubmit = () => {
     form.post(route("announcements.store"), {
         onSuccess: () => {
             form.users = originalUserArray;
-            FlashMessage({ flash })
+            FlashMessage({ flash });
         },
         onError: (error) => {
-            console.log(originalUserArray);
+            // console.log(originalUserArray);
             form.users = originalUserArray;
             form.setError("title", error?.title);
             form.setError("icon", error?.icon);

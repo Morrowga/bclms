@@ -17,7 +17,7 @@ import {
 } from "@Composables/useServerSideDatable.js";
 import { checkPermission } from "@actions/useCheckPermission";
 let props = defineProps(["pathways", "flash"]);
-let flash = computed(() => usePage().props?.flash)
+let flash = computed(() => usePage().props?.flash);
 //## start datatable section
 let columns = [
     {
@@ -75,14 +75,14 @@ const deletePathway = (id) => {
         onConfirm: () => {
             router.delete(route("pathways.destroy", id), {
                 onSuccess: () => {
-                    FlashMessage({ flash })
+                    FlashMessage({ flash });
                 },
             });
         },
     });
 };
 const selectionChanged = (data) => {
-    console.log(data.selectedRows);
+    // console.log(data.selectedRows);
 };
 const goEdit = (id) => {
     router.get(route("pathways.edit", id));

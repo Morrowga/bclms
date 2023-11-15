@@ -29,7 +29,7 @@ const props = defineProps({
 const emit = defineEmits(["update:hasSurvey", "update:isDialogVisible"]);
 const isError = ref(false);
 
-console.log(props.hasSurvey);
+// console.log(props.hasSurvey);
 
 let user_id = computed(() => page.props.user_info.user_detail.id);
 
@@ -88,14 +88,14 @@ const checkboxClick = (questionId, optionId) => {
         questionOptions.push(optionId);
     }
 
-    console.log(selectedOptions.value);
+    // console.log(selectedOptions.value);
 };
 
 const radioClick = (questionId, optionId) => {
-    console.log(questionId);
+    // console.log(questionId);
     // Reset the selectedOptions array for this question
     selectedOptions.value[questionId] = [optionId];
-    console.log(selectedOptions.value);
+    // console.log(selectedOptions.value);
 };
 
 const onFormSubmit = () => {

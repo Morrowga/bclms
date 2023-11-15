@@ -21,7 +21,7 @@ const props = defineProps({
     },
 });
 let flash = computed(() => usePage().props.flash);
-console.log(props.devices);
+// console.log(props.devices);
 let dialog = ref(false);
 const isPersistant = ref(false);
 const gameTag = ref("");

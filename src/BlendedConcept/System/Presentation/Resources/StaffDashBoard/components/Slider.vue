@@ -33,7 +33,7 @@ const props = defineProps({
 });
 let dialog = ref(false);
 const toggleDialog = (id) => {
-    console.log("id", id);
+    // console.log("id", id);
     // dialog.value = !dialog.value;
 };
 const resolveComponent = () => {
@@ -41,7 +41,7 @@ const resolveComponent = () => {
 
     return ShowBookDetail;
 };
-console.log("datas", props.datas);
+// console.log("datas", props.datas);
 </script>
 <template>
     <div class="control-position">

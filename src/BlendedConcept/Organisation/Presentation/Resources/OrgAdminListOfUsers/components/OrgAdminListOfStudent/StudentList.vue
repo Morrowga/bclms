@@ -8,7 +8,7 @@ import {
     searchItems,
 } from "@Composables/useServerSideDatable.js";
 let props = defineProps(["students", "total_students"]);
-console.log(props.students);
+// console.log(props.students);
 let filters = ref(null);
 let filterDatas = ref([
     { title: "A-Z", value: "asc" },
@@ -28,7 +28,6 @@ function calculatePercentageByCount(specificCount, totalCount) {
     }
     return (specificCount / totalCount) * 100;
 }
-// console.log(props, "fuck");
 </script>
 <template>
     <VContainer>

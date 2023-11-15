@@ -6,8 +6,7 @@ import { router } from "@inertiajs/core";
 
 let props = defineProps(["students"]);
 
-console.log(props.students);
-
+// console.log(props.students);
 </script>
 <template>
     <section>
@@ -19,11 +18,19 @@ console.log(props.students);
                         v-if="!is_drawer"
                         class="d-none d-md-flex align-center"
                     >
-                        <img src="/images/logowhite.png" width="200" height="55" />
+                        <img
+                            src="/images/logowhite.png"
+                            width="200"
+                            height="55"
+                        />
                     </Link>
                 </div>
                 <div class="mx-15 mt-1">
-                    <img src="/images/Tiggie Face Blue.png" width="80" height="55" />
+                    <img
+                        src="/images/Tiggie Face Blue.png"
+                        width="80"
+                        height="55"
+                    />
                 </div>
             </div>
         </div>
@@ -31,7 +38,9 @@ console.log(props.students);
             <VCard class="mx-15 learning-card">
                 <VCardText>
                     <div class="text-center">
-                        <span class="head-text ruddy-bold">Who is learning</span>
+                        <span class="head-text ruddy-bold"
+                            >Who is learning</span
+                        >
                         <div class="students mx-15 my-10">
                             <VRow cols="12">
                                 <VCol
@@ -44,9 +53,11 @@ console.log(props.students);
                                         :studentInfo="{
                                             id: item.student_id,
                                             name: item.user.full_name,
-                                            contact_number: item.parent?.user?.contact_number,
+                                            contact_number:
+                                                item.parent?.user
+                                                    ?.contact_number,
                                             img: item.user.profile_pic,
-                                            user_id: item.user_id
+                                            user_id: item.user_id,
                                         }"
                                     />
                                 </VCol>
@@ -58,13 +69,10 @@ console.log(props.students);
 
             <div class="d-flex justify-center my-10">
                 <VBtn
-                @click="
-                    () => router.get(route('dashboard'))
-                "
-                class="settingbtn">
-                    <span class="ruddy-bold" >
-                        Enter Setting Page
-                    </span>
+                    @click="() => router.get(route('dashboard'))"
+                    class="settingbtn"
+                >
+                    <span class="ruddy-bold"> Enter Setting Page </span>
                 </VBtn>
             </div>
         </VContainer>
@@ -79,20 +87,19 @@ section {
     height: 830px;
 }
 
-
-.learning-card{
+.learning-card {
     background: #4066e4;
     margin-top: 8%;
     border: 4px solid #fff;
 }
 
-.settingbtn{
+.settingbtn {
     border: 3px solid #fff;
     background: #4066e4;
     height: 50px;
 }
 
-.head-text{
+.head-text {
     font-size: 30px !important;
     color: #fff;
 }
@@ -101,5 +108,4 @@ section {
     background: #000;
     padding: 3px;
 }
-
 </style>

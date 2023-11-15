@@ -18,7 +18,7 @@ const props = defineProps({
     },
     plans: {
         type: Object,
-    }
+    },
 });
 const emit = defineEmits(["update:hasSurvey", "update:isDialogVisible"]);
 
@@ -43,9 +43,12 @@ let emailAddress = props.form.email;
 async function initialize(data) {
     try {
         let stripeData = [{ id: data.id }];
-        const response = await axios.post("/create-stripe?cost=" + parseInt(data.price), {
-            body: JSON.stringify({ stripeData }),
-        });
+        const response = await axios.post(
+            "/create-stripe?cost=" + parseInt(data.price),
+            {
+                body: JSON.stringify({ stripeData }),
+            }
+        );
 
         const { clientSecret } = response.data;
 
@@ -100,90 +103,93 @@ async function checkStatus() {
 }
 
 async function handleSubmit(e) {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
+    setLoading(true);
 
-  const stripe = await stripePromise; // Wait for Stripe to load
+    const stripe = await stripePromise; // Wait for Stripe to load
 
-  stripe
-    .confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        receipt_email: emailAddress,
-      },
-      redirect: 'if_required',
-    })
-    .then((result) => {
-      if (result.error) {
-        // Handle any errors
-        if (result.error.type === "card_error" || result.error.type === "validation_error") {
-            setLoading(false);
-          showMessage(result.error.message);
-        } else {
-          setLoading(false);
-          showMessage("An unexpected error occurred.");
-        }
-      } else {
-        console.log(result.paymentIntent.status)
-        if(result.paymentIntent.status == 'succeeded'){
-            emit("update:isDialogVisible", false);
-            isDialogVisible.value = false;
-            console.log(props.form.student_code)
-            props.form.student_code != null ? chooseBothPlan() : choosePaidPlan()
-            // if(props.form.student_code != null || props.form.student_code != ''){
-            //     chooseBothPlan()
-            // } else {
-            //     choosePaidPlan()
-            // }
-            isDonePayment.value = true;
-        }
-        // Payment was successful, you can handle success here
-        showMessage("Payment was successful!");
-        // You can redirect to a success page or perform any other action you need
-      }
-    });
+    stripe
+        .confirmPayment({
+            elements,
+            confirmParams: {
+                // Make sure to change this to your payment completion page
+                receipt_email: emailAddress,
+            },
+            redirect: "if_required",
+        })
+        .then((result) => {
+            if (result.error) {
+                // Handle any errors
+                if (
+                    result.error.type === "card_error" ||
+                    result.error.type === "validation_error"
+                ) {
+                    setLoading(false);
+                    showMessage(result.error.message);
+                } else {
+                    setLoading(false);
+                    showMessage("An unexpected error occurred.");
+                }
+            } else {
+                if (result.paymentIntent.status == "succeeded") {
+                    emit("update:isDialogVisible", false);
+                    isDialogVisible.value = false;
 
-  function showMessage(messageText) {
-    const messageContainer = document.querySelector("#payment-message");
+                    props.form.student_code != null
+                        ? chooseBothPlan()
+                        : choosePaidPlan();
+                    // if(props.form.student_code != null || props.form.student_code != ''){
+                    //     chooseBothPlan()
+                    // } else {
+                    //     choosePaidPlan()
+                    // }
+                    isDonePayment.value = true;
+                }
+                // Payment was successful, you can handle success here
+                showMessage("Payment was successful!");
+                // You can redirect to a success page or perform any other action you need
+            }
+        });
 
-    messageContainer.classList.remove("hidden");
-    messageContainer.textContent = messageText;
+    function showMessage(messageText) {
+        const messageContainer = document.querySelector("#payment-message");
 
-    setTimeout(function () {
-      messageContainer.classList.add("hidden");
-      messageContainer.textContent = "";
-    }, 4000);
-  }
+        messageContainer.classList.remove("hidden");
+        messageContainer.textContent = messageText;
 
-  function setLoading(isLoading) {
-    if (isLoading) {
-      // Disable the button and show a spinner
-      disable.value = true;
-      spinner.value = true;
-    } else {
-      disable.value = false;
-      spinner.value = false;
+        setTimeout(function () {
+            messageContainer.classList.add("hidden");
+            messageContainer.textContent = "";
+        }, 4000);
     }
-  }
-}
 
+    function setLoading(isLoading) {
+        if (isLoading) {
+            // Disable the button and show a spinner
+            disable.value = true;
+            spinner.value = true;
+        } else {
+            disable.value = false;
+            spinner.value = false;
+        }
+    }
+}
 
 const showPayment = (data) => {
     isDialogVisible.value = true;
-    props.form.plan = data.id
-    props.form.price = data.price
+    props.form.plan = data.id;
+    props.form.price = data.price;
     initialize(data);
     checkStatus();
 };
 
 const chooseFreePlan = () => {
-    if(props.form.student_code != null){
-        chooseBothPlan()
+    if (props.form.student_code != null) {
+        chooseBothPlan();
     } else {
         props.form.post(route("choose-free-plan"), {
             onSuccess: () => {
-                isDonePayment.value = true
+                isDonePayment.value = true;
             },
         });
     }
@@ -195,12 +201,12 @@ const resend = () => {
             // router.get(route("login"));
         },
     });
-}
+};
 
 const closeAndLogin = () => {
-    isDonePayment.value = false
+    isDonePayment.value = false;
     router.get(route("login"));
-}
+};
 
 const choosePaidPlan = () => {
     props.form.post(route("choose-paid-plan"), {
@@ -281,18 +287,24 @@ const chooseBothPlan = () => {
                         </th>
                         <th v-for="plan in props.plans" :key="plan.id">
                             <div class="th-width">
-                                <p class="th-text pppangram-bold mt-5">{{ plan.name }}</p>
+                                <p class="th-text pppangram-bold mt-5">
+                                    {{ plan.name }}
+                                </p>
 
                                 <p
                                     class="text-left ml-3 plan-mini-text textmargin"
                                 >
-                                    {{  plan.description }}
+                                    {{ plan.description }}
                                     <!-- ss<strong>0</strong> <br />
                                     /month -->
                                 </p>
                             </div>
                             <VBtn
-                                @click="plan.id == 1 ? chooseFreePlan() : showPayment(plan)"
+                                @click="
+                                    plan.id == 1
+                                        ? chooseFreePlan()
+                                        : showPayment(plan)
+                                "
                                 class="th-btn mb-5"
                                 color="#FC0"
                                 variant="flat"
@@ -367,18 +379,28 @@ const chooseBothPlan = () => {
                 </thead>
                 <tbody>
                     <tr class="text-left">
-                        <td >Free Student Profile</td>
-                        <td v-for="plan in props.plans" :key="plan.id">{{ plan.num_student_profiles }}</td>
+                        <td>Free Student Profile</td>
+                        <td v-for="plan in props.plans" :key="plan.id">
+                            {{ plan.num_student_profiles }}
+                        </td>
                     </tr>
                     <tr class="text-left">
                         <td>Additional Student Profile</td>
                         <td v-for="plan in props.plans" :key="plan.id">
-                          <VIcon :icon="plan.id == 1 ? 'mdi-close' : 'mdi-check'"></VIcon>
+                            <VIcon
+                                :icon="plan.id == 1 ? 'mdi-close' : 'mdi-check'"
+                            ></VIcon>
                         </td>
                     </tr>
                     <tr class="text-left">
                         <td>Storage Space</td>
-                        <td v-for="plan in props.plans" :key="plan.id">{{ plan.storage_limit == '0.00' ? 'NA' : plan.storage_limit + ' GB'}}</td>
+                        <td v-for="plan in props.plans" :key="plan.id">
+                            {{
+                                plan.storage_limit == "0.00"
+                                    ? "NA"
+                                    : plan.storage_limit + " GB"
+                            }}
+                        </td>
                     </tr>
                     <tr class="text-left">
                         <td>Free Library Access</td>
@@ -389,37 +411,73 @@ const chooseBothPlan = () => {
                     <tr class="text-left">
                         <td>Personalization</td>
                         <td v-for="plan in props.plans" :key="plan.id">
-                            <VIcon :icon="plan.allow_personalisation != 1 ? 'mdi-close' : 'mdi-check'"></VIcon>
+                            <VIcon
+                                :icon="
+                                    plan.allow_personalisation != 1
+                                        ? 'mdi-close'
+                                        : 'mdi-check'
+                                "
+                            ></VIcon>
                         </td>
                     </tr>
                     <tr class="text-left">
                         <td>Customization</td>
                         <td v-for="plan in props.plans" :key="plan.id">
-                            <VIcon :icon="plan.allow_customisation != 1 ? 'mdi-close' : 'mdi-check'"></VIcon>
+                            <VIcon
+                                :icon="
+                                    plan.allow_customisation != 1
+                                        ? 'mdi-close'
+                                        : 'mdi-check'
+                                "
+                            ></VIcon>
                         </td>
                     </tr>
                     <tr class="text-left">
                         <td>Full Library Access</td>
                         <td v-for="plan in props.plans" :key="plan.id">
-                            <VIcon :icon="plan.full_library_access != 1 ? 'mdi-close' : 'mdi-check'"></VIcon>
+                            <VIcon
+                                :icon="
+                                    plan.full_library_access != 1
+                                        ? 'mdi-close'
+                                        : 'mdi-check'
+                                "
+                            ></VIcon>
                         </td>
                     </tr>
                     <tr class="text-left">
                         <td>Concurrent Access</td>
                         <td v-for="plan in props.plans" :key="plan.id">
-                            <VIcon :icon="plan.concurrent_access != 1 ? 'mdi-close' : 'mdi-check'"></VIcon>
+                            <VIcon
+                                :icon="
+                                    plan.concurrent_access != 1
+                                        ? 'mdi-close'
+                                        : 'mdi-check'
+                                "
+                            ></VIcon>
                         </td>
                     </tr>
                     <tr class="text-left">
                         <td>Weekly Learning Progress Report</td>
                         <td v-for="plan in props.plans" :key="plan.id">
-                            <VIcon :icon="plan.weekly_learning_report != 1 ? 'mdi-close' : 'mdi-check'"></VIcon>
+                            <VIcon
+                                :icon="
+                                    plan.weekly_learning_report != 1
+                                        ? 'mdi-close'
+                                        : 'mdi-check'
+                                "
+                            ></VIcon>
                         </td>
                     </tr>
                     <tr class="text-left">
                         <td>Dedicated Student Report</td>
                         <td v-for="plan in props.plans" :key="plan.id">
-                            <VIcon :icon="plan.dedicated_student_report != 1 ? 'mdi-close' : 'mdi-check'"></VIcon>
+                            <VIcon
+                                :icon="
+                                    plan.dedicated_student_report != 1
+                                        ? 'mdi-close'
+                                        : 'mdi-check'
+                                "
+                            ></VIcon>
                         </td>
                     </tr>
                 </tbody>
@@ -678,11 +736,11 @@ tr:nth-child(even) {
     margin-top: 5px !important;
 }
 
-.check-circle{
+.check-circle {
     color: green;
 }
 
-.check-false{
+.check-false {
     color: red;
 }
 

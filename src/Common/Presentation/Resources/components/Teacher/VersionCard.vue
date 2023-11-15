@@ -32,7 +32,7 @@ const readVersion = (book_version_id) => {
     router.get(route("storybooks.version", { book_version: book_version_id }));
 };
 const setIsClaimed = (student_assigns) => {
-    console.log(student_assigns);
+    // console.log(student_assigns);
     let condition = student_assigns?.find(
         (assign) => assign.pivot.completed_once == 1
     );

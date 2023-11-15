@@ -107,7 +107,7 @@ onMounted(() => {
 
     if (props.old_filename) {
         old_name.value = props.old_filename;
-        console.log(old_name);
+        // console.log(old_name);
     }
 });
 </script>

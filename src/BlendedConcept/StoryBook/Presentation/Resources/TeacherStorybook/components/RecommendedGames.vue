@@ -4,7 +4,7 @@ import CreateStorybookVersion from "./CreateStorybookVersion.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 
 const props = defineProps(["games"]);
-console.log(props.games);
+// console.log(props.games);
 </script>
 <template>
     <div>
