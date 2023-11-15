@@ -6,7 +6,7 @@ import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
 import UploadThumbnail from "./components/UploadThumbnail.vue";
 import UploadPhysicalResources from "./components/UploadPhysicalResources.vue";
-import { integerValidator } from "@validators";
+import { integerValidator, requiredValidator } from "@validators";
 const props = defineProps({
     datas: {
         type: Object,
@@ -55,6 +55,7 @@ const form = useForm({
     name: "",
     tag_name: "",
     is_free: 0,
+    type: "",
     description: "",
     tags: [],
     sub_learning_needs: [],
@@ -233,6 +234,8 @@ const removeFromTagIdArray = (tag_id) => {
 };
 
 onUpdated(() => {
+    tags.value = [];
+    form.tags = [];
     form.id = props.datas.id;
     form.name = props.datas.name;
     form.description = props.datas.description;
@@ -247,6 +250,7 @@ onUpdated(() => {
     form.h5p_id = props.datas.h5p_id;
     form.num_gold_coins = props.datas.num_gold_coins;
     form.num_silver_coins = props.datas.num_silver_coins;
+    form.type = props.datas.type;
 });
 </script>
 <template>
@@ -316,6 +320,8 @@ onUpdated(() => {
                                     <v-text-field
                                         class="r-title"
                                         v-model="form.name"
+                                        :error-messages="form?.errors?.name"
+                                        :rules="[requiredValidator]"
                                     ></v-text-field>
                                 </VCol>
                                 <VCol cols="4" class="f-title">

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('storybooks', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->string('thumbnail_img')->nullable();
             $table->integer('num_gold_coins')->default(0);
             $table->integer('num_silver_coins')->default(0);

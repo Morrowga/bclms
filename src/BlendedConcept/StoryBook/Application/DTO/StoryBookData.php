@@ -9,7 +9,7 @@ class StoryBookData
     public function __construct(
         public readonly ?int $id,
         public readonly string $name,
-        public readonly string $description,
+        public readonly ?string $description,
         public readonly ?string $thumbnail_img,
         public readonly int $num_gold_coins,
         public readonly int $num_silver_coins,

@@ -119,13 +119,15 @@ class StoryBookEloquentModel extends Model implements HasMedia
         return $this->hasMany(StoryBookVersionEloquentModel::class, 'storybook_id', 'id');
     }
 
-    public function associateTags(array $tagNames)
+    public function associateTags($tagNames)
     {
-        foreach ($tagNames as $tagName) {
-            $tag = TagEloquentModel::firstOrCreate(['name' => $tagName]);
+        if ($tagNames) {
+            foreach ($tagNames as $tagName) {
+                $tag = TagEloquentModel::firstOrCreate(['name' => $tagName]);
 
-            // Attach the tag to the game
-            $this->tags()->attach($tag->id);
+                // Attach the tag to the game
+                $this->tags()->attach($tag->id);
+            }
         }
     }
 
