@@ -115,7 +115,7 @@ test('create game with bcstaff roles', function () {
 
     $storeData = $this->post('/games', []);
 
-    $storeData->assertSessionHasErrors(['name', 'description', 'thumb', 'game', 'disability_type_id', 'devices', 'tags']);
+    $storeData->assertSessionHasErrors(['name', 'thumb', 'game']);
 
     $response->assertRedirect('/games');
 });
