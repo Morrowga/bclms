@@ -101,6 +101,12 @@ class AuthService
                 'username' => request('email'),
                 'password' => request('password')
             ])) {
+
+                if (!auth()->user()->student->organisation_id) {
+                    $error = 'Invalid Login Credential';
+
+                    return ['errorMessage' => $error, 'isCheck' => false];
+                }
                 setcookie("kidmode", false, time() + (86400 * 30), "/");
                 return ['errorMessage' => 'Successfully', 'isCheck' => true];
             } else {
