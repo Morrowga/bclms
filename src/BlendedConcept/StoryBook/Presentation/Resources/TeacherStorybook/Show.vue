@@ -112,11 +112,11 @@ const getImage = (item) => {
                 </v-col>
             </v-row>
 
-            <v-row class="recommended-games mtop">
+            <!-- <v-row class="recommended-games mtop">
                 <v-col cols="12">
                     <RecommendedGames :games="games" />
                 </v-col>
-            </v-row>
+            </v-row> -->
             <v-row
                 class="physical mtop"
                 v-if="teacher_storybook.physical_resources.length > 0"
@@ -129,11 +129,11 @@ const getImage = (item) => {
                     />
                 </v-col>
             </v-row>
-            <v-row class="recommended-books mtop">
+            <!-- <v-row class="recommended-books mtop">
                 <v-col cols="12">
                     <RecommendedBooks :storybooks="storybooks" />
                 </v-col>
-            </v-row>
+            </v-row> -->
             <v-row>
                 <v-col cols="12" class="d-flex justify-center">
                     <SecondaryBtn
