@@ -41,7 +41,7 @@ let checkHide = computed(() => {
 </script>
 <template>
     <StudentLayout>
-        <section class="vh-m-100">
+        <section>
             <v-navigation-drawer
                 floating
                 permanent

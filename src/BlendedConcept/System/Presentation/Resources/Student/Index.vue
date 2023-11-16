@@ -30,6 +30,8 @@ const getCookie = (name) => {
   return null;
 };
 
+console.log(userData.name);
+
 const logout = () => {
     router.post('/logout');
 };
@@ -40,7 +42,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <section class="section-student-home vh-m-86">
+    <section class="section-student-home">
         <VRow>
             <VCol cols="12" sm="6" lg="3">
                 <VFadeTransition>
@@ -56,46 +58,108 @@ onMounted(() => {
                         </div>
                         <div class="mt-2">
                             <p class="studentname pppangram-bold">
-                                {{ userData.full_name }}
+                                {{ userData.name }}
                             </p>
-                            <p class="semi-text pppangram-medium">
+                            <p class="semi-text pppangram-bold">
                                 {{ userData.student.gender }}
                             </p>
                         </div>
-                        <VRow class="mx-2 my-2">
+                        <VRow class="mx-2 mt-1">
                             <VCol cols="5" class="text-left mt-3">
                                 <p class="label-student pppangram-bold">DOB</p>
+                                <div class="mt-7">
+                                    <div>
+                                        <p class="label-student pppangram-bold">
+                                            Education
+                                        </p>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="label-student pppangram-bold">
+                                            Level
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="mt-7">
+                                    <div>
+                                        <p class="label-student pppangram-bold">
+                                            Disability
+                                        </p>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="label-student pppangram-bold">
+                                            Types
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="mt-7">
+                                    <div>
+                                        <p class="label-student pppangram-bold">
+                                            Accessibility
+                                        </p>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="label-student pppangram-bold">
+                                            Device
+                                        </p>
+                                    </div>
+                                </div>
+                                <div>
+                                        <span class="label-student pppangram-bold"
+                                        >Student Code</span
+                                    >
+                                </div>
                             </VCol>
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
                                         {{ userData.student.dob }}
-                                    </p>
-                                </div>
-                            </VCol>
-                        </VRow>
-                        <VRow class="mx-2 my-1">
-                            <VCol cols="5" class="text-left">
-                                <div>
-                                    <p class="label-student pppangram-bold">
-                                        Education
-                                    </p>
-                                </div>
-                                <div class="text-left">
-                                    <p class="label-student pppangram-bold">
-                                        Level
-                                    </p>
-                                </div>
-                            </VCol>
-                            <VCol cols="7" class="text-left">
-                                <div class="ml-5">
-                                    <p class="value-student pppangram-medium">
+                                        <br>
                                         {{ userData.student.education_level }}
                                     </p>
+                                    <div
+                                        v-if="
+                                            userData.student.disability_types
+                                                .length > 0
+                                        "
+                                    >
+                                        <p
+                                            class="value-student pppangram-medium"
+                                            v-for="diabilitytype in userData.student
+                                                .disability_types"
+                                            :key="diabilitytype.id"
+                                        >
+                                            {{ diabilitytype.name }}
+                                        </p>
+                                    </div>
+                                    <div v-else>
+                                        <p class="value-student pppangram-medium">
+                                            No Disability Type
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <span
+                                            class="value-student pppangram-medium"
+                                            >{{
+                                                userData.student.device === null ||
+                                                userData.student.device === ""
+                                                    ? "No Device"
+                                                    : userData.student.device.name
+                                            }}</span
+                                        >
+                                    </div>
+                                    <div class="mt-2">
+                                        <span
+                                            class="value-student pppangram-medium"
+                                            >{{
+                                                userData.student.student_code ??
+                                                "No Code"
+                                            }}</span
+                                        >
+                                    </div>
                                 </div>
                             </VCol>
                         </VRow>
-                        <VRow class="mx-2 my-0">
+                        <!-- <VRow class="mx-2">
                             <VCol cols="5" class="text-left">
                                 <div>
                                     <p class="label-student pppangram-bold">
@@ -131,8 +195,8 @@ onMounted(() => {
                                     </p>
                                 </div>
                             </VCol>
-                        </VRow>
-                        <VRow class="mx-2 my-0">
+                        </VRow> -->
+                        <!-- <VRow class="mx-2 my-0">
                             <VCol cols="5" class="text-left">
                                 <div>
                                     <p class="label-student pppangram-bold">
@@ -158,8 +222,8 @@ onMounted(() => {
                                     >
                                 </div>
                             </VCol>
-                        </VRow>
-                        <VRow class="mx-2 my-0">
+                        </VRow> -->
+                        <!-- <VRow class="mx-2 my-0">
                             <VCol cols="5" class="text-left">
                                 <span class="label-student pppangram-bold"
                                     >Student Code</span
@@ -176,15 +240,24 @@ onMounted(() => {
                                     >
                                 </div>
                             </VCol>
-                        </VRow>
-                        <div class="text-center mt-6">
-                            <p class="semi-text pppangram-medium">
+                        </VRow> -->
+                        <div class="text-center mt-9">
+                            <p class="semi-text pppangram-bold">
                                 Parent's Details
                             </p>
                         </div>
-                        <VRow class="mx-2 my-4">
+                        <VRow class="mx-2 my-2">
                             <VCol cols="5" class="text-left mt-3">
                                 <p class="label-student pppangram-bold">Name</p>
+                                <p class="label-student pppangram-bold mt-8">
+                                    Relationship
+                                </p>
+                                <p class="label-student pppangram-bold mt-8">
+                                    Contact No.
+                                </p>
+                                <p class="label-student pppangram-bold mt-8">
+                                    Email
+                                </p>
                             </VCol>
                             <VCol cols="7" class="text-left">
                                 <div class="ml-5">
@@ -193,11 +266,20 @@ onMounted(() => {
                                             userData.student.parent.user
                                                 .full_name
                                         }}
+                                        <br>
+                                        Parent
+                                        <br>
+                                        {{
+                                            userData.student.parent.user
+                                                .contact_number
+                                        }}
+                                        <br>
+                                        {{ userData.student.parent.user.email }}
                                     </p>
                                 </div>
                             </VCol>
                         </VRow>
-                        <VRow class="mx-2 my-0">
+                        <!-- <VRow class="mx-2 my-0">
                             <VCol cols="5" class="text-left mt-3">
                                 <p class="label-student pppangram-bold">
                                     Relationship
@@ -210,8 +292,8 @@ onMounted(() => {
                                     </p>
                                 </div>
                             </VCol>
-                        </VRow>
-                        <VRow class="mx-2 my-0">
+                        </VRow> -->
+                        <!-- <VRow class="mx-2 my-0">
                             <VCol cols="5" class="text-left mt-3">
                                 <p class="label-student pppangram-bold">
                                     Contact No.
@@ -241,7 +323,7 @@ onMounted(() => {
                                     </p>
                                 </div>
                             </VCol>
-                        </VRow>
+                        </VRow> -->
                         <div class="mt-1 my-3 mx-3">
                             <ExitMode
                                 :teacher_id="getCookie('teacher_id')"
@@ -342,12 +424,13 @@ onMounted(() => {
 .value-student {
     color: #000 !important;
     font-size: 13px !important;
+    line-height: 2.4 !important;
     /* line-height:  !important; */
 }
 
 .semi-text {
     color: var(--text, #161616);
-    font-size: 11px !important;
+    font-size: 13px !important;
     font-style: normal;
     font-weight: 700;
     margin: 0 !important;

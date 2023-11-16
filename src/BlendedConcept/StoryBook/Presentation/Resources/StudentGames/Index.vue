@@ -10,7 +10,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 <template>
     <StudentLayout>
-        <section class="vh-m-100">
+        <section>
             <VContainer class="mb-3">
                 <VRow>
                     <VCol cols="4"  v-for="game in props.games.data" :key="game.id">
@@ -159,16 +159,18 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     </StudentLayout>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .app-user-search-filter {
     inline-size: 24.0625rem;
 }
 
-// .student .layout-page-content{
-//     background: url('/images/artbg.png') no-repeat !important;
-//     background-size: cover !important;
-//     background-position: center !important;
-// }
+.student .layout-page-content{
+    background: url('/images/artbg.png') no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+    min-height: 92.1vh !important;
+    overflow:  hidden !important;
+}
 
 .bookname {
     color: var(--white, #fff) !important;
