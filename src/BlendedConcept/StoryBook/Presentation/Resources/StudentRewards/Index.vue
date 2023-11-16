@@ -265,7 +265,7 @@ onMounted(() => {
 .left-panel {
     position: absolute;
     left: 0;
-    top: 100px;
+    top: 30px;
     bottom: 0;
     z-index: 1;
 }
