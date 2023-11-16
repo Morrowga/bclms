@@ -191,7 +191,9 @@ class TeacherController extends Controller
             } else {
                 $import = new StudentImport($request);
             }
-            $import->import($request->file('file'));
+
+            $import->import($request->file('file')[0]);
+
             if ($import->failures()->count() > 0) {
                 $errorRows = [];
                 $currentRow = null;
