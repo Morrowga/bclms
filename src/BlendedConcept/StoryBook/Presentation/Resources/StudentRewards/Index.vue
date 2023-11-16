@@ -174,7 +174,6 @@ onMounted(() => {
 }
 
 .section-bg .layout-page-content {
-    height: 1000px;
     background: url("/images/rewardbg2.png") no-repeat !important;
     background-size: cover !important;
     background-position: center !important;
@@ -195,8 +194,8 @@ onMounted(() => {
 .storereward {
     cursor: pointer;
     position: absolute;
-    left: 39.8%;
-    top: 12.7%;
+    left: 41.8%;
+    top: 10.7%;
     z-index: 2;
 }
 
@@ -271,8 +270,8 @@ onMounted(() => {
     z-index: 1;
 }
 .store-reward-img {
-    width: 214px;
-    height: 234px;
+    width: 172px;
+    height: 184px;
 }
 
 .sticker-bar {

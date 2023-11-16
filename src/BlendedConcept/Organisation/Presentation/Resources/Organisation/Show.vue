@@ -273,7 +273,9 @@ onMounted(() => {
                 <VCol cols="4">
                     <Link
                         v-if="checkPermission('edit_organisation')"
-                        :href="route('organisations.edit', 1)"
+                        :href="
+                            route('organisations.edit', props.organisation.id)
+                        "
                         class="text-white"
                     >
                         <VBtn
