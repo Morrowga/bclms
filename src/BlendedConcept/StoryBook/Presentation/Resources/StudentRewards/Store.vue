@@ -60,7 +60,7 @@ onMounted(() => {});
     </StudentLayout>
 </template>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
 .app-user-search-filter {
     inline-size: 24.0625rem;
 }

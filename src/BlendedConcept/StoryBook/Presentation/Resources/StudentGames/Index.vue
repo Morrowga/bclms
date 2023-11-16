@@ -10,7 +10,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 <template>
     <StudentLayout>
-        <section class="vh-m-100">
+        <section>
             <VContainer class="mb-3">
                 <VRow>
                     <VCol cols="4"  v-for="game in props.games.data" :key="game.id">
@@ -168,6 +168,8 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     background: url('/images/artbg.png') no-repeat !important;
     background-size: cover !important;
     background-position: center !important;
+    min-height: 92.1vh !important;
+    overflow:  hidden !important;
 }
 
 .bookname {
