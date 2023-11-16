@@ -42,7 +42,7 @@ class UserImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithHead
                     'last_name' => $row['last_name'],
                     'email' => $row['work_email'],
                     'contact_number' => $row['contact_number'],
-                    'password' => 'password',
+                    'password' => $row['password'],
                     'role_id' => 4,
                     'email_verification_send_on' => now()
                 ];
