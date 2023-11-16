@@ -159,7 +159,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     </StudentLayout>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .app-user-search-filter {
     inline-size: 24.0625rem;
 }
@@ -168,7 +168,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     background: url('/images/artbg.png') no-repeat !important;
     background-size: cover !important;
     background-position: center !important;
-    min-height: 92.1vh !important;
+    // min-height: auto !important;
 }
 
 .bookname {
