@@ -31,6 +31,7 @@ let openDialog = ref(false);
 const openMenu = () => {
     emit("openMenu");
 };
+let current_route_name = route().current();
 
 // onMounted(() => {
 //     var myScreenOrientation = screen.orientation;
@@ -98,7 +99,15 @@ onUnmounted(() => {
                 :user_role="user_role"
                 @openMenu="openMenu()"
             >
-                <slot />
+                <div
+                    class="reward-bg"
+                    v-if="current_route_name == 'student-rewards'"
+                >
+                    <slot />
+                </div>
+                <div v-else>
+                    <slot />
+                </div>
             </DefaultLayoutWithVerticalNav>
         </template>
         <template v-else>
@@ -123,9 +132,20 @@ onUnmounted(() => {
     background-position: center !important;
     background-attachment: fixed !important;
     min-height: 92.1vh !important;
-    overflow:  hidden !important;
+    overflow: hidden !important;
 }
 .student .layout-footer {
     display: none !important;
+}
+.reward-bg {
+    background: url("/images/rewardbg2.png") no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 64px;
+    overflow: hidden;
 }
 </style>

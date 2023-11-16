@@ -47,7 +47,7 @@ const onSubmit = () => {
 </script>
 
 <template>
-    <div class="container">
+    <div class="login-container container">
         <div class="layout-navbar">
             <div
                 class="navbar-content-container d-flex justify-space-between px-10 py-5"
@@ -70,19 +70,17 @@ const onSubmit = () => {
                 sytemErrorMessage="Something is wrong"
                 v-if="form?.errors.length"
             />
-            <VRow
-                no-gutters
-                class="auth-wrapper d-flex justify-center align-center hv-100"
-            >
+            <VRow class="h-100 auth-wrapper d-flex justify-center">
                 <VCol
                     cols="12"
-                    md="4"
+                    sm="12"
+                    lg="5"
                     class="auth-card-v2 d-flex align-center justify-center bg-surface"
                 >
-                    <div :max-width="500" class="mt-12 mt-sm-0 pa-4">
+                    <div :max-width="500" class="mt-sm-0 pa-4 h-100">
                         <VCardText>
                             <h5
-                                class="text-h4 text-center font-weight-semibold mb-1 primary"
+                                class="text-h4 text-center font-weight-semibold mb-1 primary lh-h"
                             >
                                 Enter your email address
                             </h5>
@@ -184,9 +182,9 @@ const onSubmit = () => {
 
 .login-bg {
     background: url("/public/images/register.png") 100% no-repeat;
-    height: 100%;
-    background-size: 100% 100%;
-    z-index: -1;
+    background-size: cover !important;
+    background-position: center !important;
+    min-height: calc(100vh - 66px);
 }
 
 .v-messages__message {
@@ -198,5 +196,8 @@ const onSubmit = () => {
 .red-top {
     color: red !important;
     padding-top: 10px !important;
+}
+.lh-h {
+    line-height: 45px !important;
 }
 </style>

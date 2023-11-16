@@ -194,8 +194,8 @@ onMounted(() => {
 .storereward {
     cursor: pointer;
     position: absolute;
-    left: 41.8%;
-    top: 13.7%;
+    left: 42.5%;
+    top: 16.7%;
     z-index: 2;
 }
 
@@ -270,8 +270,8 @@ onMounted(() => {
     z-index: 1;
 }
 .store-reward-img {
-    width: 172px;
-    height: 184px;
+    width: 150px;
+    height: 170px;
 }
 
 .sticker-bar {
