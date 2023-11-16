@@ -127,6 +127,8 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
             })
             ->paginate($filters['perPage'] ?? 10);
 
+        // dd($data);
+
         $array_data = $data->map(function ($user) use ($organisation_id) {
             $usedStorage = MediaEloquentModel::where(function ($query) use ($organisation_id, $user) {
                 $query->where('collection_name', 'videos')

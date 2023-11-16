@@ -46,11 +46,11 @@ watch(selectedOrganisation, (newValue) => {
                 organisation_name.value = organisation.name;
                 secondSelectItems.value = [
                     {
-                        display: `${organisation?.teachers_count} Teachers`,
+                        display: `Teachers`,
                         value: "teacher",
                     },
                     {
-                        display: `${organisation?.students_count} Students`,
+                        display: `Students`,
                         value: "student",
                     },
                 ];
