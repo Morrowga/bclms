@@ -41,6 +41,7 @@
         fetch(baseUrl +"/api/landingpage")
             .then((response) => response.json())
             .then((json) => {
+                console.log(json);
                 addCardToHTML(json.data.books, story_card, 'toy', noDataToy, no_data_text_toy);
                 addCardToHTML(json.data.games, game_card, 'game', noDataGame, no_data_text);
 
@@ -78,7 +79,8 @@
                 noData.innerHTML += '<h4 class="text-center muted mt-3">No Data</h4>';
             }else{
                 data.forEach(d => {
-                    var thumbnail_img = d.thumbnail_img == '' ? '/images/image1.png' : d.thumbnail_img;
+                    var thumbnail = card == 'game' ? d.thumbnail : d.thumbnail_img;
+                    var thumbnail_img = thumbnail == '' ? '/images/image1.png' : thumbnail;
                     var content = `<div class="col-sm-4 splide__slide m-2">
                                         <div class="card-wrapper d-flex justify-content-around">
                                             <div class="card p-3" style="width: 300px !important">
