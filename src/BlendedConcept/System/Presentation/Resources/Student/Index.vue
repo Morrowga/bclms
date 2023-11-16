@@ -42,7 +42,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <section class="section-student-home vh-m-86">
+    <section class="section-student-home">
         <VRow>
             <VCol cols="12" sm="6" lg="3">
                 <VFadeTransition>

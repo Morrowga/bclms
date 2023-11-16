@@ -168,7 +168,6 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     background: url('/images/artbg.png') no-repeat !important;
     background-size: cover !important;
     background-position: center !important;
-    // min-height: auto !important;
 }
 
 .bookname {

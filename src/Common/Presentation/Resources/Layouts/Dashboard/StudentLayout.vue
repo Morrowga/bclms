@@ -122,7 +122,8 @@ onUnmounted(() => {
     background-size: cover !important;
     background-position: center !important;
     background-attachment: fixed !important;
-    min-height: auto !important;
+    min-height: 92.1vh !important;
+    overflow:  hidden !important;
 }
 .student .layout-footer {
     display: none !important;
