@@ -153,6 +153,7 @@ onMounted(() => {
                             <div class="d-flex align-center">
                                 <div class="d-flex align-center">
                                     <v-checkbox
+                                        class="custom-checkbox"
                                         v-model="form.student_ids"
                                         :value="data.student_id"
                                     />

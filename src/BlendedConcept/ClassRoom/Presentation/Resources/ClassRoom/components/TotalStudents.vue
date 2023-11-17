@@ -47,7 +47,8 @@ watch(serverPerPage, function (value) {
 const selectionChanged = (data) => {
     // console.log(data.selectedRows);
 };
-const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
+const userImage = (user) =>
+    user?.user?.profile_pic ?? "/images/profile/profilefive.png";
 </script>
 <template>
     <section>
@@ -84,6 +85,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                         <div class="d-flex align-center">
                             <div class="d-flex align-center">
                                 <v-checkbox
+                                    class="custom-checkbox"
                                     v-model="props.form.students"
                                     :value="data.student_id"
                                 />

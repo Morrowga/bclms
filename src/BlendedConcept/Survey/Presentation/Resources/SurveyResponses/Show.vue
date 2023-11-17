@@ -105,6 +105,7 @@ onMounted(() => {
                                 </span>
                                 <div>
                                     <v-checkbox
+                                        class="custom-checkbox"
                                         v-for="option in surveyresponse.question
                                             .options"
                                         :key="option.id"

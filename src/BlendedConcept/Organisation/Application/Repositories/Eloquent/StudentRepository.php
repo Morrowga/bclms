@@ -24,19 +24,27 @@ class StudentRepository implements StudentRepositoryInterface
     {
         $auth = auth()->user()->role;
         if ($auth->name == 'BC Subscriber') {
-            if(auth()->user()->b2bUser == null) {
+            if (auth()->user()->b2bUser == null) {
                 $users = StudentResource::collection(StudentEloquentModel::filter($filters)
-                ->where('parent_id', auth()->user()->parents->parent_id)
-                ->with(['organisation', 'user', 'disability_types', 'learningneeds', 'parent'])
-                ->paginate($filters['perPage'] ?? 10));
+                    ->where('parent_id', auth()->user()->parents->parent_id)
+                    ->with(['organisation', 'user', 'disability_types', 'learningneeds', 'parent'])
+                    ->paginate($filters['perPage'] ?? 10));
             } else {
                 $userIds = auth()->user()->b2bUser->students->pluck('student_id')->toArray();
 
                 $users = StudentResource::collection(StudentEloquentModel::filter($filters)
-                ->whereIn('student_id', $userIds)
+                    ->whereIn('student_id', $userIds)
+                    ->with(['organisation', 'user', 'disability_types', 'learningneeds', 'parent'])
+                    ->paginate($filters['perPage'] ?? 10));
+            }
+        } else if ($auth->name == 'Teacher') {
+            $classroomIds = auth()->user()->b2bUser->classrooms()->pluck('id');
+            $users = StudentResource::collection(StudentEloquentModel::filter($filters)
+                ->whereHas('classrooms', function ($query) use ($classroomIds) {
+                    $query->whereIn('id', $classroomIds);
+                })
                 ->with(['organisation', 'user', 'disability_types', 'learningneeds', 'parent'])
                 ->paginate($filters['perPage'] ?? 10));
-            }
         } else {
             $users = StudentResource::collection(StudentEloquentModel::filter($filters)
                 ->where('organisation_id', auth()->user()->organisation_id)

@@ -46,6 +46,9 @@ const formattedImageUrl = (imageUrl) => {
         return imageUrl;
     }
 };
+const getImage = (user) => {
+    return user?.profile_pic ?? "/images/profile/profilefive.png";
+};
 function calculatePercentageByCount(specificCount, totalCount) {
     if (totalCount === 0) {
         return 0; // To avoid division by zero error
@@ -131,7 +134,7 @@ const showUsedStorage = (teacher) => {
                 <!--  -->
                 <TeacherAvatar
                     class="teacherAvatar"
-                    :image="formattedImageUrl(item.user.profile_pic)"
+                    :image="getImage(item.user)"
                     :route="route('organisations-teacher.show', item.user.id)"
                     :title="item.user.first_name + ' ' + item.user.last_name"
                     :phone_number="item.user.contact_number"
