@@ -307,4 +307,25 @@ onMounted(() => {
 .clickable-icon {
     cursor: pointer;
 }
+
+/* Tablets in portrait mode */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .storereward {
+        left: 38.5% !important;
+        top: 11.7% !important;
+    }
+    .dragsticker {
+        left: 10.8%;
+    }
+}
+/* Tablets in landscape mode */
+@media only screen and (min-width: 1025px) and (max-width: 1280px) {
+    .storereward {
+        left: 38.5% !important;
+        top: 11.7% !important;
+    }
+    .dragsticker {
+        left: 10.8%;
+    }
+}
 </style>

@@ -111,6 +111,7 @@ onMounted(() => {
             left: `${positionX}px`,
         }"
         @mousedown="startDragging"
+        @touchstart="startDragging"
     >
         <img :src="imageSrc" alt="Draggable Image" />
     </div>
