@@ -18,33 +18,50 @@ const teacher_id = ref(null);
 const page = usePage();
 const user = computed(() => page.props.auth.data);
 const userData = user.value;
-
+let isLandscape = ref(false);
 const getCookie = (name) => {
-  const cookies = document.cookie.split('; ');
-  for (const cookie of cookies) {
-    const [cookieName, cookieValue] = cookie.split('=');
-    if (cookieName === name) {
-      return cookieValue;
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+        const [cookieName, cookieValue] = cookie.split("=");
+        if (cookieName === name) {
+            return cookieValue;
+        }
     }
-  }
-  return null;
+    return null;
 };
 
 console.log(userData.name);
 
 const logout = () => {
-    router.post('/logout');
+    router.post("/logout");
+};
+
+const handleOrientationChange = () => {
+    if (isPortrait()) {
+        isLandscape.value = false;
+    } else {
+        isLandscape.value = true;
+    }
+};
+
+const isPortrait = () => {
+    // Check whether the screen is in portrait mode
+    return window.innerHeight > window.innerWidth;
 };
 
 onMounted(() => {
-    // Load initial data for page 1
+    // Initial check for orientation
+    handleOrientationChange();
+
+    // Add an event listener for orientation change
+    window.addEventListener("resize", handleOrientationChange);
 });
 </script>
 
 <template>
     <section class="section-student-home">
         <VRow>
-            <VCol cols="12" sm="6" lg="3">
+            <VCol cols="12" sm="4" lg="3">
                 <VFadeTransition>
                     <VCard
                         class="text-center card-student ml-5"
@@ -104,7 +121,7 @@ onMounted(() => {
                                     </div>
                                 </div>
                                 <div>
-                                        <span class="label-student pppangram-bold"
+                                    <span class="label-student pppangram-bold"
                                         >Student Code</span
                                     >
                                 </div>
@@ -113,7 +130,7 @@ onMounted(() => {
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
                                         {{ userData.student.dob }}
-                                        <br>
+                                        <br />
                                         {{ userData.student.education_level }}
                                     </p>
                                     <div
@@ -124,15 +141,17 @@ onMounted(() => {
                                     >
                                         <p
                                             class="value-student pppangram-medium"
-                                            v-for="diabilitytype in userData.student
-                                                .disability_types"
+                                            v-for="diabilitytype in userData
+                                                .student.disability_types"
                                             :key="diabilitytype.id"
                                         >
                                             {{ diabilitytype.name }}
                                         </p>
                                     </div>
                                     <div v-else>
-                                        <p class="value-student pppangram-medium">
+                                        <p
+                                            class="value-student pppangram-medium"
+                                        >
                                             No Disability Type
                                         </p>
                                     </div>
@@ -140,10 +159,12 @@ onMounted(() => {
                                         <span
                                             class="value-student pppangram-medium"
                                             >{{
-                                                userData.student.device === null ||
+                                                userData.student.device ===
+                                                    null ||
                                                 userData.student.device === ""
                                                     ? "No Device"
-                                                    : userData.student.device.name
+                                                    : userData.student.device
+                                                          .name
                                             }}</span
                                         >
                                     </div>
@@ -266,14 +287,14 @@ onMounted(() => {
                                             userData.student.parent.user
                                                 .full_name
                                         }}
-                                        <br>
+                                        <br />
                                         Parent
-                                        <br>
+                                        <br />
                                         {{
                                             userData.student.parent.user
                                                 .contact_number
                                         }}
-                                        <br>
+                                        <br />
                                         {{ userData.student.parent.user.email }}
                                     </p>
                                 </div>
@@ -330,18 +351,20 @@ onMounted(() => {
                                 :student_id="userData.student.student_id"
                             />
                             <VBtn
-                            color="#BFC0C1"
-                            @click="logout"
-                            v-if="userData.student.organisation_id == null"
-                            variant="flat"
-                            class="textcolor w-100 pppangram-bold mt-3"
-                            rounded>Logout</VBtn>
+                                color="#BFC0C1"
+                                @click="logout"
+                                v-if="userData.student.organisation_id == null"
+                                variant="flat"
+                                class="textcolor w-100 pppangram-bold mt-3"
+                                rounded
+                                >Logout</VBtn
+                            >
                         </div>
                     </VCard>
                 </VFadeTransition>
             </VCol>
-            <VCol cols="12" sm="6" lg="5">
-                <div class="ml-10">
+            <VCol cols="12" sm="5" lg="5">
+                <div :class="isLandscape ? '' : 'ml-10'">
                     <img
                         src="/images/Storybooks.png"
                         @click="() => router.get(route('storybooks'))"
@@ -358,12 +381,12 @@ onMounted(() => {
                     />
                 </div> -->
             </VCol>
-            <VCol cols="12" sm="6" lg="4" class="text-center">
+            <VCol cols="12" sm="3" lg="4" class="md-text-center">
                 <div class="text-center">
                     <img
                         src="/images/Games.png"
                         @click="() => router.get(route('student-games'))"
-                        class="games"
+                        :class="isLandscape ? 'games-landscape' : 'games'"
                         alt=""
                     />
                 </div>
@@ -371,7 +394,7 @@ onMounted(() => {
                     <img
                         src="/images/Rewards.png"
                         @click="() => router.get(route('student-rewards'))"
-                        class="rewards"
+                        :class="isLandscape ? 'rewards-landscape' : 'rewards'"
                         alt=""
                     />
                 </div>
@@ -407,6 +430,17 @@ onMounted(() => {
 .rewards {
     cursor: pointer !important;
     width: 60%;
+    height: 250px;
+}
+.games-landscape {
+    width: 100%;
+    height: 250px;
+    cursor: pointer !important;
+}
+
+.rewards-landscape {
+    cursor: pointer !important;
+    width: 100%;
     height: 250px;
 }
 

@@ -52,7 +52,7 @@ let props = defineProps({
 let isStudent = ref(false);
 let page = usePage().props;
 let organisation = ref("");
-
+let isLandscape = ref(false);
 const resolveHeaderComponent = () => {
     switch (props.user_role) {
         case "BC Super Admin":
@@ -85,10 +85,28 @@ const resolveHeaderComponent = () => {
     // showMenubar.value = false;
     // return StudentHeader;
 };
+const handleOrientationChange = () => {
+    if (isPortrait()) {
+        isLandscape.value = false;
+    } else {
+        isLandscape.value = true;
+    }
+};
+
+const isPortrait = () => {
+    // Check whether the screen is in portrait mode
+    return window.innerHeight > window.innerWidth;
+};
+
 onMounted(() => {
     organisation.value = page.user_info?.user_detail?.organisation_id
         ? true
         : false;
+    // Initial check for orientation
+    handleOrientationChange();
+
+    // Add an event listener for orientation change
+    window.addEventListener("resize", handleOrientationChange);
 });
 </script>
 <template>
@@ -149,7 +167,7 @@ onMounted(() => {
         <!-- 👉 Customizer -->
         <!-- <TheCustomizer /> -->
         <v-main style="min-height: 100vh">
-            <v-container>
+            <v-container :fluid="isLandscape ? true : false">
                 <slot />
             </v-container>
         </v-main>
