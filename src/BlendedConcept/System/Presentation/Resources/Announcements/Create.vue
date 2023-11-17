@@ -1674,7 +1674,6 @@ let getTeacherByOrganisation = (id) => {
                                         >
                                             <template v-slot:prepend>
                                                 <v-checkbox-btn
-                                                    class="custom-checkbox"
                                                     :input-value="isAllSelected"
                                                 ></v-checkbox-btn>
                                             </template>

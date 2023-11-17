@@ -115,7 +115,7 @@ const deletePlaylist = (id) => {
                                 <v-checkbox
                                     v-if="checkPermission('edit_playlist')"
                                     label=""
-                                    class="checkmenu ml-2 custom-checkbox"
+                                    class="checkmenu ml-2"
                                 ></v-checkbox>
                                 <VImg
                                     :src="

@@ -176,7 +176,6 @@ onMounted(() => {
                                                     </td>
                                                     <td>
                                                         <v-checkbox
-                                                            class="custom-checkbox"
                                                             :model-value="
                                                                 checkingExistsId(
                                                                     item.id

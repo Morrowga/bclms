@@ -84,7 +84,6 @@ const userImage = (user) =>
                         <div class="d-flex align-center">
                             <div class="d-flex align-center">
                                 <v-checkbox
-                                    class="custom-checkbox"
                                     v-model="props.form.students"
                                     :value="data.student_id"
                                 />

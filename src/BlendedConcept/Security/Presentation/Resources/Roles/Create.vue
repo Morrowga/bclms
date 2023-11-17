@@ -5,7 +5,7 @@ import { watch, defineProps, computed, ref } from "vue";
 import { requiredValidator } from "@validators";
 import { SuccessDialog } from "@actions/useSuccess";
 import { router } from "@inertiajs/core";
-import { FlashMessage } from "@actions/useFlashMessage";
+import { FlashMessage } from "@actions/useFlashMessage"
 
 //## start for form submit
 let form = useForm({
@@ -38,7 +38,7 @@ let headers = [
     },
 ];
 let props = defineProps(["permissions", "flash"]);
-let flash = computed(() => usePage().props.flash);
+let flash = computed(() => usePage().props.flash)
 let permissionsFilter = computed(() =>
     props.permissions.filter((item) => item.name?.includes(searchName.value))
 );
@@ -55,7 +55,7 @@ const saveRole = () => {
         if (valid) {
             form.post(route("roles.store"), {
                 onSuccess: () => {
-                    FlashMessage({ flash });
+                    FlashMessage({ flash })
                 },
                 onError: (error) => {
                     // form.setError("name", error?.name);
@@ -166,7 +166,6 @@ const insertIds = (id) => {
                                                     </td>
                                                     <td>
                                                         <v-checkbox
-                                                            class="custom-checkbox"
                                                             @click="
                                                                 insertIds(
                                                                     item.id

@@ -109,7 +109,6 @@ class TeacherStorybookController
         abort_if(authorize('assign', TeacherBookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $filters = request(['search', 'first_name', 'last_name']) ?? [];
         $students = (new GetStudentList($filters))->handle();
-        // dd($students);
         $teacher_storybook->load(['learningneeds', 'themes', 'disability_types', 'devices']);
         $version = $version->load('storybook_assigments');
         // dd($students);
