@@ -364,7 +364,7 @@ onMounted(() => {
                 </VFadeTransition>
             </VCol>
             <VCol cols="12" sm="5" lg="5">
-                <div :class="isLandscape ? '' : 'ml-10'">
+                <div class="margin-left">
                     <img
                         src="/images/Storybooks.png"
                         @click="() => router.get(route('storybooks'))"
@@ -386,7 +386,7 @@ onMounted(() => {
                     <img
                         src="/images/Games.png"
                         @click="() => router.get(route('student-games'))"
-                        :class="isLandscape ? 'games-landscape' : 'games'"
+                        class="games"
                         alt=""
                     />
                 </div>
@@ -394,7 +394,7 @@ onMounted(() => {
                     <img
                         src="/images/Rewards.png"
                         @click="() => router.get(route('student-rewards'))"
-                        :class="isLandscape ? 'rewards-landscape' : 'rewards'"
+                        class="rewards"
                         alt=""
                     />
                 </div>
@@ -513,13 +513,39 @@ onMounted(() => {
 .head-button {
     align-self: flex-end;
 }
-
+.margin-left {
+    margin-left: 40;
+}
 @media only screen and (max-width: 600px) {
     .games {
         width: 100% !important;
     }
     .rewards {
         width: 100% !important;
+    }
+}
+/* Tablets in portrait mode */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .games {
+        width: 100% !important;
+    }
+    .rewards {
+        width: 100% !important;
+    }
+    .margin-left {
+        margin-left: 0 !important;
+    }
+}
+/* Tablets in landscape mode */
+@media only screen and (min-width: 1025px) and (max-width: 1280px) {
+    .games {
+        width: 100% !important;
+    }
+    .rewards {
+        width: 100% !important;
+    }
+    .margin-left {
+        margin-left: 0 !important;
     }
 }
 </style>
