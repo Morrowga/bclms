@@ -1,8 +1,9 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Artisan;
+use Tests\TestCase;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 
 beforeEach(function () {
@@ -12,16 +13,16 @@ beforeEach(function () {
     Artisan::call('db:seed');
 });
 
-test('superadmin create announcement', function () {
+function asAdmin(): TestCase
+{
     $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
 
-    // Log in as the existing user
-    $this->actingAs($user);
+    return test()->actingAs($user);
+}
 
-    $this->assertAuthenticated(); // Check if the user is authenticated
+test('superadmin create announcement', function () {
 
-    $response = $this->get('/announcements');
-    $response->assertStatus(200);
+    asAdmin()->get('/announcements')->assertOk();
 });
 
 test('without login not access announcement', function () {
@@ -55,26 +56,16 @@ test('without other role not access announcement  ', function () {
 
 test('form submit as announcement with superadmin role', function () {
 
-    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+    asAdmin()->get('/announcements')->assertOk();
 
-    // Log in as the existing user
-    $this->actingAs($user);
-
-    $this->assertAuthenticated(); // Check if the user is authenticated
-
-    $response = $this->get('/announcements');
-    $response->assertStatus(200);
-
-    $postData = $this->post('/announcements', [
+    asAdmin()->post('/announcements', [
         'title' => 'announcement name',
         'icon' => 'mdi-alert',
         'message' => 'message here',
         'by' => 'Super Admin',
         'to' => 'B2B Teachers,B2C Users, Organisation Admin',
         'users' => json_encode([2, 3, 4, 5, 6, 7, 8]),
-    ]);
-
-    $postData->assertStatus(302);
+    ])->assertStatus(302);
 
     $this->assertDatabaseHas(
         'announcements',
@@ -87,6 +78,5 @@ test('form submit as announcement with superadmin role', function () {
         ]
     );
 
-    $postData = $this->post('/announcements', []);
-    $postData->assertSessionHasErrors(['title', 'icon', 'message', 'by', 'to']);
+    asAdmin()->post('/announcements', [])->assertSessionHasErrors(['title', 'icon', 'message', 'by', 'to']);
 });

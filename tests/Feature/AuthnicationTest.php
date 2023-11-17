@@ -162,15 +162,14 @@ test('blank login email or password', function () {
 //  *
 //  *  @return bool True
 //  */
-// comment out coz of logic change
-// test('invalid_login_email', function () {
-//     $data = [
-//         'email' => 'testing.com',
-//         'password' => Hash::make('password'),
-//     ];
-//     $response = $this->post('login', $data);
-//     // $response->assertSessionHasErrors('email');
-// });
+test('invalid_login_email', function () {
+    $data = [
+        'email' => 'testing.com',
+        'password' => Hash::make('password'),
+    ];
+    $response = $this->post('login', $data);
+    $response->assertSessionHasErrors('email');
+})->skip('disabled features');
 
 
 test('email_not_verified', function () {

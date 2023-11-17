@@ -84,7 +84,6 @@ test('create playlist with org teacher roles', function () {
     $response->assertRedirect('/playlists');
 });
 
-//comment out coz of disabled features
 test('create playlist with parent roles', function () {
     $user = [
         'role_id' => 8,
@@ -148,42 +147,41 @@ test('create playlist with parent roles', function () {
     $storeData->assertSessionHasErrors(['name', 'student_id', 'image', 'storybooks']);
 
     $response->assertRedirect('/playlists');
+})->skip('disabled features');
+
+test('create playlist with b2c teacher roles', function () {
+    $user = UserEloquentModel::where('email', 'teacherone@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
+
+    $playlistImage = UploadedFile::fake()->image('playlistimage.jpg'); // Change 'test.jpg' to the desired file name and extension
+
+    $createStoryBook = StoryBookEloquentModel::create([
+        'name' => 'Toy Story 1',
+        'description' => 'nice book',
+        'thumbnail_img' => '/images/image2.png',
+        'num_gold_coins' => 1,
+        'num_silver_coins' => 10,
+        'is_free' => true,
+    ]);
+
+    $response = $this->post('/playlists', [
+        'name' => 'Example Device',
+        'student_id' => 1,
+        'image' => $playlistImage,
+        'storybooks' => [$createStoryBook->id],
+    ]);
+
+    $response->assertStatus(302);
+
+    $storeData = $this->post('/playlists', []);
+
+    $storeData->assertSessionHasErrors(['name', 'student_id', 'image', 'storybooks']);
+
+    $response->assertRedirect('/playlists');
 });
-
-//comment out coz of disabled features
-// test('create playlist with b2c teacher roles', function () {
-//     $user = UserEloquentModel::where('email', 'teacherone@mail.com')->first();
-
-//     $this->actingAs($user);
-
-//     $this->assertAuthenticated(); // Check if the user is authenticated
-
-//     $playlistImage = UploadedFile::fake()->image('playlistimage.jpg'); // Change 'test.jpg' to the desired file name and extension
-
-//     $createStoryBook = StoryBookEloquentModel::create([
-//         'name' => 'Toy Story 1',
-//         'description' => 'nice book',
-//         'thumbnail_img' => '/images/image2.png',
-//         'num_gold_coins' => 1,
-//         'num_silver_coins' => 10,
-//         'is_free' => true,
-//     ]);
-
-//     $response = $this->post('/playlists', [
-//         'name' => 'Example Device',
-//         'student_id' => 1,
-//         'image' => $playlistImage,
-//         'storybooks' => [$createStoryBook->id],
-//     ]);
-
-//     $response->assertStatus(302);
-
-//     $storeData = $this->post('/playlists', []);
-
-//     $storeData->assertSessionHasErrors(['name', 'student_id', 'image', 'storybooks']);
-
-//     $response->assertRedirect('/playlists');
-// });
 
 test('update playlist with org teacher roles', function () {
     // Start a database transaction for the test
@@ -340,7 +338,7 @@ test('update playlist with parent roles', function () {
     $updateData->assertSessionHasErrors(['name', 'student_id', 'storybooks']);
 
     $response->assertRedirect('/playlists');
-});
+})->skip('disabled feature');
 
 test('update playlist with b2c teacher roles', function () {
     // Start a database transaction for the test
