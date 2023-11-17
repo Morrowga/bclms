@@ -22,15 +22,15 @@ import {
 } from "@Composables/useServerSideDatable.js";
 let props = defineProps(["students", "game", "assignments"]);
 
-serverPage.value = ref(props.students.meta.current_page ?? 1);
+serverPage.value = ref(props.students.current_page ?? 1);
 serverPerPage.value = ref(10);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 
 let options = ref({
     enabled: true,
     mode: "pages",
-    perPage: props.students.meta.per_page,
-    setCurrentPage: props.students.meta.current_page,
+    perPage: props.students.per_page,
+    setCurrentPage: props.students.current_page,
     perPageDropdown: [10, 20, 50, 100],
     dropdownAllowAll: false,
 });
@@ -180,7 +180,7 @@ onMounted(() => {
                             v-model="serverPage"
                             size="small"
                             :total-visible="5"
-                            :length="props.students.meta.last_page"
+                            :length="props.students.last_page"
                             @next="onPageChange"
                             @prev="onPageChange"
                             @click="onPageChange"
