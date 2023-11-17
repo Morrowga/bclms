@@ -395,7 +395,7 @@ const goToRegisterForm = (type) => {
                                 ></VRadio>
                             </div> -->
                             <div class="my-3 d-flex align-center">
-                                <v-checkbox></v-checkbox>
+                                <v-checkbox class="custom-checkbox"></v-checkbox>
                                 <VLabel class="required">
                                     I agree to the terms and services
                                 </VLabel>
@@ -464,5 +464,18 @@ const goToRegisterForm = (type) => {
 
 .color-black {
     color: #000 !important;
+}
+
+// .custom-checkbox .v-input--selection-controls .v-input__control {
+//   background-color: red !important;
+//   border: 2px solid red !important;
+// }
+
+.custom-checkbox .v-input__control .v-selection-control .v-selection-control__wrapper {
+  color: #BFC0C1 !important;
+}
+.custom-checkbox .v-input__control .v-selection-control .v-selection-control__wrapper .v-selection-control__input svg {
+    width: 24px;
+    height: 24px;
 }
 </style>
