@@ -8,6 +8,7 @@ import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
 import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { calculateAge } from "@actions/useCalculateAge";
+import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 
 import {
     serverParams,
@@ -21,15 +22,15 @@ import {
 } from "@Composables/useServerSideDatable.js";
 let props = defineProps(["students", "storybook", "version"]);
 
-serverPage.value = ref(props.students.meta.current_page ?? 1);
+serverPage.value = ref(props.students.current_page ?? 1);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 serverPerPage.value = ref(10);
 
 let options = ref({
     enabled: true,
     mode: "pages",
-    perPage: props.students.meta.per_page,
-    setCurrentPage: props.students.meta.current_page,
+    perPage: props.students.per_page,
+    setCurrentPage: props.students.current_page,
     perPageDropdown: [10, 20, 50, 100],
     dropdownAllowAll: false,
 });
@@ -89,7 +90,7 @@ const backHome = () => {
     router.get(route("teacher_storybook.show", props.storybook.id));
 };
 const userImage = (user) =>
-    user.profile_pic ?? "/images/profile/profilefive.png";
+    user?.profile_pic ?? "/images/profile/profilefive.png";
 
 onMounted(() => {
     form.student_ids = props.version?.storybook_assigments?.map(
@@ -153,6 +154,7 @@ onMounted(() => {
                             <div class="d-flex align-center">
                                 <div class="d-flex align-center">
                                     <v-checkbox
+                                        class="custom-checkbox"
                                         v-model="form.student_ids"
                                         :value="data.student_id"
                                     />
@@ -191,7 +193,7 @@ onMounted(() => {
                             v-model="serverPage"
                             size="small"
                             :total-visible="5"
-                            :length="props.students.meta.last_page"
+                            :length="props.students.last_page"
                             @next="onPageChange"
                             @prev="onPageChange"
                             @click="onPageChange"

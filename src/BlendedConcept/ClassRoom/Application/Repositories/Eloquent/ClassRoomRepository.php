@@ -155,9 +155,19 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
 
     public function getStudents($filters)
     {
-        return StudentEloquentModel::filter($filters)
-            ->where('organisation_id', auth()->user()->organisation_id)
-            ->with('user', 'disability_types', 'parent')->paginate($filters['perPage'] ?? 10);
+        $auth = auth()->user();
+        if ($auth->role->name == 'Teacher') {
+            $classRoom_ids = $auth->b2bUser->classrooms()->pluck('id');
+            return StudentEloquentModel::filter($filters)
+                ->whereHas('classrooms', function ($query) use ($classRoom_ids) {
+                    $query->whereIn('id', $classRoom_ids);
+                })
+                ->with('user', 'disability_types', 'parent')->paginate($filters['perPage'] ?? 10);
+        } else {
+            return StudentEloquentModel::filter($filters)
+                ->where('organisation_id', auth()->user()->organisation_id)
+                ->with('user', 'disability_types', 'parent')->paginate($filters['perPage'] ?? 10);
+        }
     }
 
     public function getOrgTeacherClassrooms($filters)

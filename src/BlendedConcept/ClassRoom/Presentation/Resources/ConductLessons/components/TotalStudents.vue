@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import avatar4 from "@images/avatars/avatar-4.png";
 import { toastAlert } from "@Composables/useToastAlert";
 import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
+import { calculateAge } from "@actions/useCalculateAge";
 
 import axios from "axios";
 import {
@@ -47,7 +48,9 @@ watch(serverPerPage, function (value) {
 const selectionChanged = (data) => {
     // console.log(data.selectedRows);
 };
-const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
+const userImage = (user) => {
+    return user?.user?.profile_pic ?? "/images/profile/profilefive.png";
+};
 </script>
 <template>
     <section>
@@ -84,6 +87,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                         <div class="d-flex align-center">
                             <div class="d-flex align-center">
                                 <v-checkbox
+                                    class="custom-checkbox"
                                     v-model="props.form.students"
                                     :value="data.student_id"
                                 />
@@ -105,7 +109,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                     </VCol>
                     <VCol cols="3">
                         <p class="tiggie-p">
-                            {{ data.age ? data.age : "---" }}
+                            {{ calculateAge(data.dob) }}
                         </p>
                     </VCol>
 

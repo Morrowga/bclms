@@ -8,6 +8,7 @@ import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
 import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { calculateAge } from "@actions/useCalculateAge";
+import ChipWithBlueDot from "@mainRoot/components/ChipWithBlueDot/ChipWithBlueDot.vue";
 
 import {
     serverParams,
@@ -140,6 +141,7 @@ onMounted(() => {
                             <div class="d-flex align-center">
                                 <div class="d-flex align-center">
                                     <v-checkbox
+                                        class="custom-checkbox"
                                         v-model="form.student_ids"
                                         :value="data.student_id"
                                     />

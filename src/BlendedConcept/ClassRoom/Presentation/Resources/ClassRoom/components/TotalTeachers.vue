@@ -100,6 +100,7 @@ const userImage = (user) => user.image_url ?? "/images/profile/profilefive.png";
                         <div class="d-flex align-center">
                             <div class="d-flex align-center">
                                 <v-checkbox
+                                    class="custom-checkbox"
                                     v-model="props.form.teachers"
                                     :value="data.b2b_user?.teacher_id"
                                 />

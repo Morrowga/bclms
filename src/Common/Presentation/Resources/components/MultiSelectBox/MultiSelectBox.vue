@@ -79,6 +79,7 @@ function filterItems() {
             <v-list-item title="Select All" @click="toggleSelectAll">
                 <template v-slot:prepend>
                     <v-checkbox-btn
+                        class="custom-checkbox"
                         :input-value="isAllSelected"
                     ></v-checkbox-btn>
                 </template>

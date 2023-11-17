@@ -41,7 +41,7 @@ class StudentRepository implements StudentRepositoryInterface
 
                     if ($auth == 'BC Super Admin') {
                     } elseif ($auth == 'BC Subscriber') {
-                        if(auth()->user()->b2bUser == null){
+                        if (auth()->user()->b2bUser == null) {
                             $query->whereHas('parent', function ($query) {
                                 $query->where('user_id', auth()->user()->id);
                             });
@@ -141,7 +141,7 @@ class StudentRepository implements StudentRepositoryInterface
 
         $auth = auth()->user()->role;
         if ($auth->name == "BC Subscriber") {
-            if(auth()->user()->b2bUser == null){
+            if (auth()->user()->b2bUser == null) {
                 $user_id = auth()->user()->parents->parent_id;
                 return StudentEloquentModel::filter($filters)->whereHas('parent', function ($query) use ($user_id) {
                     $query->where('parent_id', $user_id);
@@ -152,6 +152,16 @@ class StudentRepository implements StudentRepositoryInterface
                     $query->where('teacher_id', $user_id);
                 })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
             }
+        } else if ($auth->name == "Teacher") {
+            $classRoom_ids = auth()->user()->b2bUser->classrooms()->pluck('id');
+            return StudentEloquentModel::filter($filters)
+                ->whereHas('classrooms', function ($query) use ($classRoom_ids) {
+                    $query->whereIn('id', $classRoom_ids);
+                })
+                ->with('user', 'disability_types', 'parent')->paginate($filters['perPage'] ?? 10);
+            // return StudentEloquentModel::filter($filters)->whereHas('teachers', function ($query) use ($user_id) {
+            //     $query->where('teacher_id', $user_id);
+            // })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
         } else {
             $organisation_id = auth()->user()->organisation_id;
 
@@ -215,7 +225,7 @@ class StudentRepository implements StudentRepositoryInterface
             // } else
 
             if ($auth->name == 'BC Subscriber') {
-                if(auth()->user()->b2bUser == null){
+                if (auth()->user()->b2bUser == null) {
                     $subscription = auth()->user()->parents->subscription;
                     $num_student_profiles = $subscription->b2c_subscription->plan->num_student_profiles;
                     $current_student_count = StudentEloquentModel::where('parent_id', auth()->user()->parents->parent_id)->count();
@@ -242,7 +252,7 @@ class StudentRepository implements StudentRepositoryInterface
             $userEloquent = UserEloquentModel::create($create_user_data);
 
             if ($auth->name == 'BC Subscriber') {
-                if(auth()->user()->b2bUser == null){
+                if (auth()->user()->b2bUser == null) {
                     $parent_id = auth()->user()->parents->parent_id;
                 } else {
                     $teacher_id = auth()->user()->b2bUser->teacher_id;
