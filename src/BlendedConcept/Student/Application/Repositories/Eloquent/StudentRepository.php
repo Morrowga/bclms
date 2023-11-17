@@ -149,7 +149,7 @@ class StudentRepository implements StudentRepositoryInterface
             } else {
                 $user_id = auth()->user()->b2bUser->teacher_id;
                 return StudentEloquentModel::filter($filters)->whereHas('teachers', function ($query) use ($user_id) {
-                    $query->where('teacher_id', $user_id);
+                    $query->where('teachers.teacher_id', $user_id);
                 })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
             }
         } else if ($auth->name == "Teacher") {
