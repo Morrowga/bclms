@@ -163,6 +163,18 @@ class ClassRoomRepository implements ClassRoomRepositoryInterface
                     $query->whereIn('id', $classRoom_ids);
                 })
                 ->with('user', 'disability_types', 'parent')->paginate($filters['perPage'] ?? 10);
+        } else if ($auth->name == "BC Subscriber") {
+            if (auth()->user()->b2bUser == null) {
+                $user_id = auth()->user()->parents->parent_id;
+                return StudentEloquentModel::filter($filters)->whereHas('parent', function ($query) use ($user_id) {
+                    $query->where('parent_id', $user_id);
+                })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+            } else {
+                $user_id = auth()->user()->b2bUser->teacher_id;
+                return StudentEloquentModel::filter($filters)->whereHas('teachers', function ($query) use ($user_id) {
+                    $query->where('teacher_id', $user_id);
+                })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+            }
         } else {
             return StudentEloquentModel::filter($filters)
                 ->where('organisation_id', auth()->user()->organisation_id)
