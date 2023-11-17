@@ -82,7 +82,7 @@ const deleteItem = (id) => {
             }}</span>
         </v-card-text>
 
-        <div class="my-3 mx-2">
+        <div class="my-3 assign-btn d-flex justify-center">
             <Link
                 :href="
                     route('teacher_storybook_version.show', {
@@ -94,6 +94,7 @@ const deleteItem = (id) => {
                 <v-btn
                     class="manage-btn"
                     variant="flat"
+                    expand="block"
                     color="#FF8015"
                     rounded
                     v-if="checkPermission('access_assignStudent')"
@@ -112,6 +113,15 @@ const deleteItem = (id) => {
 .header-sec {
     width: 100%;
     gap: 10px;
+}
+
+.grab-pointer{
+    padding: 5px;
+}
+
+.assign-btn{
+/* margin-left: 20px; */
+width: 100%;
 }
 
 .dotbtn {

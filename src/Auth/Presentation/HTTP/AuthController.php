@@ -136,7 +136,7 @@ class AuthController extends Controller
              *  */
 
             $isAuthenticated = $this->authservices->login($request);
-
+            // dd($isAuthenticated['isCheck']);
             /***
              * Set session variable to indicate page builder login status
              *
@@ -148,7 +148,6 @@ class AuthController extends Controller
 
             // Check if the authentication was successful
             if ($isAuthenticated['isCheck']) {
-
                 // Redirect the authenticated user to the dashboard page
                 if (tenant('id')) {
                     return redirect()->route('c.organisationaadmin');
@@ -167,7 +166,6 @@ class AuthController extends Controller
                         return redirect()->route('learning-portal');
                     }
                 }
-
                 return redirect()->route('dashboard');
             } else {
                 // Render the login page with an error message
