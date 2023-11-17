@@ -92,7 +92,7 @@ const deleteItem = (id) => {
                 "
             >
                 <v-btn
-                    class="manage-btn"
+                    class="manage-btn materialDesignButton"
                     variant="flat"
                     color="#FF8015"
                     rounded
@@ -109,6 +109,9 @@ const deleteItem = (id) => {
     </v-card>
 </template>
 <style scoped>
+.materialDesignButton {
+    white-space: pre-wrap;
+}
 .header-sec {
     width: 100%;
     gap: 10px;
