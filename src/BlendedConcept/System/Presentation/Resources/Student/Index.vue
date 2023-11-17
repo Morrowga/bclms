@@ -514,7 +514,7 @@ onMounted(() => {
     align-self: flex-end;
 }
 .margin-left {
-    margin-left: 40;
+    margin-left: 40px !important;
 }
 @media only screen and (max-width: 600px) {
     .games {
