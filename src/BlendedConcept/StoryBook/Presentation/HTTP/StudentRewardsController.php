@@ -30,6 +30,20 @@ class StudentRewardsController extends Controller
         }
     }
 
+    public function studentReward()
+    {
+        try {
+            $stickers = (new GetStudentsReward())->handle();
+
+            return Inertia::render(config('route.student-rewards-two'), [
+                "stickers" => $stickers['stickers'],
+                "placed_stickers" => $stickers['placed_stickers']
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->with('errorMessage', $e->getMessage());
+        }
+    }
+
     public function store()
     {
         try {

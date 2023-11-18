@@ -214,6 +214,7 @@ return [
 
     //Rewards student
     'student-rewards' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/Index',
+    'student-rewards-two' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/IndexTwo',
     'reward-store' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/Store',
     'be-lucky' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BeLucky',
     'buy-sticker' => 'BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BuySticker',

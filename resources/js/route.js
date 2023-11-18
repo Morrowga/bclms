@@ -283,6 +283,7 @@ const pages = {
 
     //Student rewards
     "BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/Index": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/Index.vue'),
+    "BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/IndexTwo": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/IndexTwo.vue'),
     "BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/Store": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/Store.vue'),
     "BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BeLucky": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BeLucky.vue'),
     "BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BuySticker": import('../../src/BlendedConcept/StoryBook/Presentation/Resources/StudentRewards/BuySticker.vue'),
