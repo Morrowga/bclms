@@ -36,10 +36,10 @@ const deleteStudent = () => {
 };
 const buttonLink = ref("");
 const setImage = (organisations_student) => {
-    return organisations_student.user.profile_pic == "" ||
-        !organisations_student.user.profile_pic
+    return organisations_student.user?.profile_pic == "" ||
+        !organisations_student.user?.profile_pic
         ? "/images/defaults/upload_image.png"
-        : organisations_student.user.profile_pic;
+        : organisations_student.user?.profile_pic;
 };
 onMounted(() => {
     let params = route().params;
@@ -103,7 +103,7 @@ onMounted(() => {
                         <v-col cols="12">
                             <p class="text-subtitle-1 mb-0">Fullname</p>
                             <p class="text-h6 font-weight-bold mx-4">
-                                {{ organisations_student.user.full_name }}
+                                {{ organisations_student.user?.full_name }}
                             </p>
                         </v-col>
                         <v-col cols="12">

@@ -2,19 +2,17 @@
 
 namespace Src\BlendedConcept\Organisation\Application\UseCases\Queries\Student;
 
-use Src\BlendedConcept\ClassRoom\Application\Repositories\Eloquent\ClassRoomRepository;
-use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\Organisation\Domain\Repositories\StudentRepositoryInterface;
 use Src\Common\Domain\QueryInterface;
 
 class GetStudentList implements QueryInterface
 {
-    private ClassRoomRepository $repository;
+    private StudentRepositoryInterface $repository;
 
     public function __construct(
         private readonly array $filters
     ) {
-        $this->repository = app()->make(ClassRoomRepositoryInterface::class);
+        $this->repository = app()->make(StudentRepositoryInterface::class);
     }
 
     public function handle()

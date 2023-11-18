@@ -149,19 +149,17 @@ class StudentRepository implements StudentRepositoryInterface
             } else {
                 $user_id = auth()->user()->b2bUser->teacher_id;
                 return StudentEloquentModel::filter($filters)->whereHas('teachers', function ($query) use ($user_id) {
-                    $query->where('teacher_id', $user_id);
+                    $query->where('teachers.teacher_id', $user_id);
                 })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
             }
         } else if ($auth->name == "Teacher") {
-            $classRoom_ids = auth()->user()->b2bUser->classrooms()->pluck('id');
+            $classroomIds = auth()->user()->b2bUser->classrooms()->pluck('id');
             return StudentEloquentModel::filter($filters)
-                ->whereHas('classrooms', function ($query) use ($classRoom_ids) {
-                    $query->whereIn('id', $classRoom_ids);
+                ->whereHas('classrooms', function ($query) use ($classroomIds) {
+                    $query->whereIn('id', $classroomIds);
                 })
-                ->with('user', 'disability_types', 'parent')->paginate($filters['perPage'] ?? 10);
-            // return StudentEloquentModel::filter($filters)->whereHas('teachers', function ($query) use ($user_id) {
-            //     $query->where('teacher_id', $user_id);
-            // })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
+                ->with(['user', 'disability_types', 'parent'])
+                ->paginate($filters['perPage'] ?? 10);
         } else {
             $organisation_id = auth()->user()->organisation_id;
 

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Src\BlendedConcept\ClassRoom\Infrastructure\EloquentModels\ClassRoomEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DeviceEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
@@ -106,5 +107,9 @@ class StudentEloquentModel extends Model implements HasMedia
     public function parent()
     {
         return $this->belongsTo(ParentUserEloquentModel::class, 'parent_id')->with('user');
+    }
+    public function classrooms()
+    {
+        return $this->belongsToMany(ClassRoomEloquentModel::class, 'classroom_students', 'student_id', 'classroom_id');
     }
 }

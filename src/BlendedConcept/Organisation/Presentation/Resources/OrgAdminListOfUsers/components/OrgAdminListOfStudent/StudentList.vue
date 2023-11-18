@@ -28,6 +28,9 @@ function calculatePercentageByCount(specificCount, totalCount) {
     }
     return (specificCount / totalCount) * 100;
 }
+const getImage = (user) => {
+    return user?.profile_pic ?? "/images/profile/profilefive.png";
+};
 </script>
 <template>
     <VContainer>
@@ -105,8 +108,8 @@ function calculatePercentageByCount(specificCount, totalCount) {
                     :route="
                         route('organisations-student.show', item.student_id)
                     "
-                    :image="item.user.profile_pic"
-                    :title="item.user.full_name"
+                    :image="getImage(item.user)"
+                    :title="item.user?.full_name"
                     :phone_number="item.parent?.user?.contact_number"
                 />
             </VCol>

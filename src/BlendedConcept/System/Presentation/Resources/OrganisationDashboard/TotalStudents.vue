@@ -22,8 +22,9 @@ watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
 
-const userImage = (user) =>
-    user.profile_pic ?? "/images/profile/profilefive.png";
+const userImage = (user) => {
+    return user?.profile_pic ?? "/images/profile/profilefive.png";
+};
 </script>
 <template>
     <div class="header">
