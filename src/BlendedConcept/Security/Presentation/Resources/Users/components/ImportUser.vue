@@ -62,7 +62,7 @@ watch(selectedOrganisation, (newValue) => {
 
 watch(selectedValueForSecondSelect, () => {
     if (selectedValueForSecondSelect.value) {
-        showSecondSelect.value = false;
+        // showSecondSelect.value = false;
         // console.log(selectedValueForSecondSelect.value.value); // This should now display the selected value
         selectedType.value = selectedValueForSecondSelect.value.value;
     }

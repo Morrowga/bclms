@@ -29,7 +29,7 @@ const openImports = () => {
 };
 watch(selectedValueForSecondSelect, () => {
     if (selectedValueForSecondSelect.value) {
-        showSecondSelect.value = false;
+        // showSecondSelect.value = false;
 
         selectedType.value = selectedValueForSecondSelect.value.value;
     }
