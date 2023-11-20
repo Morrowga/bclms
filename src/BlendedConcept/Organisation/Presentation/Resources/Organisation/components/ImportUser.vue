@@ -11,26 +11,34 @@ const props = defineProps(["organisation"]);
 const showSecondSelect = ref(false);
 const secondSelectItems = ref([
     {
-        display: `${props.organisation.teachers_count} Teachers`,
+        display: `Teachers`,
         value: "teacher",
     },
     {
-        display: `${props.organisation.students_count} Students`,
+        display: `Students`,
         value: "student",
     },
 ]);
 const selectedValueForSecondSelect = ref(null);
+const isImportDialogVisible = ref(false);
 
 const selectedType = ref(null);
 const organisation_name = ref(props.organisation.name);
-
+const openImports = () => {
+    isImportDialogVisible.value = true;
+};
 watch(selectedValueForSecondSelect, () => {
     if (selectedValueForSecondSelect.value) {
         showSecondSelect.value = false;
-        console.log(selectedValueForSecondSelect.value.value); // This should now display the selected value
+
         selectedType.value = selectedValueForSecondSelect.value.value;
     }
 });
+const closeDialog = () => {
+    isDialogVisible.value = false;
+    selectedValueForSecondSelect.value = null;
+    selectedType.value = null;
+};
 </script>
 
 <template>
@@ -54,11 +62,34 @@ watch(selectedValueForSecondSelect, () => {
                     icon="mdi-file-download"
                     color="tiggie-blue"
                     size="30px"
+                    @click="openImports()"
                 />
+                <VDialog v-model="isImportDialogVisible" max-width="400">
+                    <VCard>
+                        <VCardText>
+                            <div
+                                class="d-flex justify-center align-center gap-3"
+                            >
+                                <a
+                                    href="/imports/bc_student_import.csv"
+                                    download
+                                >
+                                    <VBtn>Students</VBtn>
+                                </a>
+                                <a
+                                    href="/imports/bc_teacher_import.csv"
+                                    download
+                                >
+                                    <VBtn>Teachers</VBtn>
+                                </a>
+                            </div>
+                        </VCardText>
+                    </VCard>
+                </VDialog>
             </VCardTitle>
             <VCardText>
                 <VLabel class="tiggie-label required" v-if="!showSecondSelect"
-                    >Organisation</VLabel
+                    >User Type</VLabel
                 >
                 <div v-else>
                     <VLabel class="tiggie-label"
@@ -89,7 +120,7 @@ watch(selectedValueForSecondSelect, () => {
                     color="gray"
                     variant="flat"
                     width="164px"
-                    @click="isDialogVisible = false"
+                    @click="closeDialog"
                     height="51px"
                 >
                     <span class="text-light">Cancel</span>
@@ -97,7 +128,7 @@ watch(selectedValueForSecondSelect, () => {
                 <ImportUserTypeData
                     :type="selectedType"
                     :organisation_id="props.organisation.id"
-                    @closeDialog="isDialogVisible = false"
+                    @closeDialog="closeDialog"
                 />
             </VCardActions>
         </VCard>

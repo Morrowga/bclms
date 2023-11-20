@@ -23,10 +23,6 @@ const organisation_name = ref("");
 
 const openImports = () => {
     isImportDialogVisible.value = true;
-    // const files = ["bc_student_import.csv", "bc_teacher_import.csv"]; // List of files to download
-    // files.forEach((file) => {
-    //     downloadFile(file);
-    // });
 };
 const downloadFile = (file) => {
     // const downloadUrl = `/public/imports/${file}`;
@@ -73,6 +69,7 @@ watch(selectedValueForSecondSelect, () => {
 });
 const clearForm = () => {
     selectedOrganisation.value = "";
+    selectedType.value = null;
     isDialogVisible.value = false;
 };
 </script>
@@ -173,7 +170,7 @@ const clearForm = () => {
                 <ImportUserTypeData
                     :type="selectedType"
                     :organisation_id="selectedOrganisation"
-                    @closeDialog="isDialogVisible = false"
+                    @closeDialog="clearForm()"
                 />
             </VCardActions>
         </VCard>

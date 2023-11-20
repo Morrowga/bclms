@@ -17,6 +17,7 @@ let props = defineProps({
 const teacher_id = ref(null);
 const page = usePage();
 const user = computed(() => page.props.auth.data);
+const userInfo = computed(() => page.props.user_info.user_detail);
 const userData = user.value;
 let isLandscape = ref(false);
 const getCookie = (name) => {
@@ -48,7 +49,9 @@ const isPortrait = () => {
     // Check whether the screen is in portrait mode
     return window.innerHeight > window.innerWidth;
 };
-
+const getImage = (user) => {
+    return userInfo.value?.profile_pic ?? "/images/profile/profilefive.png";
+};
 onMounted(() => {
     // Initial check for orientation
     handleOrientationChange();
@@ -68,10 +71,7 @@ onMounted(() => {
                         v-if="props.isOpenMenu"
                     >
                         <div class="d-flex justify-center mt-2">
-                            <img
-                                src="/images/classroom1.jpeg"
-                                class="studentimg"
-                            />
+                            <img :src="getImage()" class="studentimg" />
                         </div>
                         <div class="mt-2">
                             <p class="studentname pppangram-bold">
@@ -285,7 +285,7 @@ onMounted(() => {
                                     <p class="value-student pppangram-medium">
                                         {{
                                             userData.student.parent.user
-                                                .full_name
+                                                ?.full_name
                                         }}
                                         <br />
                                         Parent

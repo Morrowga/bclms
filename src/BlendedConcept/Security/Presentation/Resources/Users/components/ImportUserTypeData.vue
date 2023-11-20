@@ -1,10 +1,12 @@
 <script setup>
 import { ref, defineEmits } from "vue";
 import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
-import { SuccessDialog } from "@actions/useSuccess";
+
 import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import exportFromJSON from "export-from-json";
+import { SuccessDialog } from "@actions/useSuccess";
+
 const isDialogVisible = ref(false);
 let props = defineProps(["type", "organisation_id"]);
 const emit = defineEmits();
@@ -48,10 +50,20 @@ const importUser = () => {
                 const data = export_errors.value;
                 const fileName = "FailToImportStudent";
                 const exportType = exportFromJSON.types.csv;
-                if (data) exportFromJSON({ data, fileName, exportType });
+                if (data) {
+                    exportFromJSON({ data, fileName, exportType });
+                    SuccessDialog({
+                        title: "Failed to upload users, please ensure that the csv file is in the correct format",
+                        mainTitle: "Error!",
+                        color: "#ff6262",
+                        icon: "error",
+                    });
+                }
+                closeDialog();
+                emit("closeDialog");
                 return;
             }
-            isDialogVisible.value = false;
+            closeDialog();
             emit("closeDialog");
         },
         onError: (error) => {
@@ -67,6 +79,13 @@ const removeUploadedItem = (index) => {
 const handleImport = () => {
     alert("okay par");
 };
+const closeDialog = () => {
+    form.organisation_id = "";
+    form.type = "";
+    form.file = null;
+    isDialogVisible.value = false;
+};
+
 onUpdated(() => {
     form.organisation_id = props.organisation_id;
     form.type = props.type;
@@ -78,6 +97,7 @@ onUpdated(() => {
         <!-- Activator -->
         <template #activator="{ props }">
             <VBtn
+                :disabled="!form.organisation_id || !form.type"
                 v-bind="props"
                 color="tiggie-blue"
                 variant="flat"
@@ -94,14 +114,28 @@ onUpdated(() => {
                 class="d-flex justify-space-between align-center ml-7 mr-7 gap-16"
             >
                 <h4 class="tiggie-title">Upload {{ props.type }}</h4>
-                <VIcon
-                    icon="mdi-file-download"
-                    class="ml-10"
-                    color="tiggie-blue"
-                    size="30px"
-                />
+                <a
+                    v-if="form.type == 'student'"
+                    href="/imports/bc_student_import.csv"
+                    download
+                >
+                    <VIcon
+                        icon="mdi-file-download"
+                        class="ml-10"
+                        color="tiggie-blue"
+                        size="30px"
+                    />
+                </a>
+                <a v-else href="/imports/bc_teacher_import.csv" download>
+                    <VIcon
+                        icon="mdi-file-download"
+                        class="ml-10"
+                        color="tiggie-blue"
+                        size="30px"
+                    />
+                </a>
             </VCardTitle>
-            <ImageUpload data_type="user" v-model="form.file" />
+            <ImageUpload class="px-5" data_type="user" v-model="form.file" />
 
             <VCardActions
                 class="d-flex justify-space-between gap-5 ml-7 mr-7 mt-5"
@@ -110,7 +144,7 @@ onUpdated(() => {
                     color="gray"
                     variant="flat"
                     width="164px"
-                    @click="isDialogVisible = false"
+                    @click="closeDialog"
                     height="51px"
                 >
                     <span class="text-light">Cancel</span>
