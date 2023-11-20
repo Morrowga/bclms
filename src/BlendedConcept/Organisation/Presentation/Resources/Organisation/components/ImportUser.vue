@@ -11,11 +11,11 @@ const props = defineProps(["organisation"]);
 const showSecondSelect = ref(false);
 const secondSelectItems = ref([
     {
-        display: `${props.organisation.teachers_count} Teachers`,
+        display: `Teachers`,
         value: "teacher",
     },
     {
-        display: `${props.organisation.students_count} Students`,
+        display: `Students`,
         value: "student",
     },
 ]);
@@ -27,10 +27,15 @@ const organisation_name = ref(props.organisation.name);
 watch(selectedValueForSecondSelect, () => {
     if (selectedValueForSecondSelect.value) {
         showSecondSelect.value = false;
-        console.log(selectedValueForSecondSelect.value.value); // This should now display the selected value
+
         selectedType.value = selectedValueForSecondSelect.value.value;
     }
 });
+const closeDialog = () => {
+    isDialogVisible.value = false;
+    selectedValueForSecondSelect.value = null;
+    selectedType.value = null;
+};
 </script>
 
 <template>
@@ -58,7 +63,7 @@ watch(selectedValueForSecondSelect, () => {
             </VCardTitle>
             <VCardText>
                 <VLabel class="tiggie-label required" v-if="!showSecondSelect"
-                    >Organisation</VLabel
+                    >User Type</VLabel
                 >
                 <div v-else>
                     <VLabel class="tiggie-label"
@@ -89,7 +94,7 @@ watch(selectedValueForSecondSelect, () => {
                     color="gray"
                     variant="flat"
                     width="164px"
-                    @click="isDialogVisible = false"
+                    @click="closeDialog"
                     height="51px"
                 >
                     <span class="text-light">Cancel</span>
@@ -97,7 +102,7 @@ watch(selectedValueForSecondSelect, () => {
                 <ImportUserTypeData
                     :type="selectedType"
                     :organisation_id="props.organisation.id"
-                    @closeDialog="isDialogVisible = false"
+                    @closeDialog="closeDialog"
                 />
             </VCardActions>
         </VCard>

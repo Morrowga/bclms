@@ -49,10 +49,10 @@ const importUser = () => {
                 const fileName = "FailToImportStudent";
                 const exportType = exportFromJSON.types.csv;
                 if (data) exportFromJSON({ data, fileName, exportType });
-                isDialogVisible.value = false;
-                emit("closeDialog");
                 return;
             }
+            emit("closeDialog");
+            closeDialog();
         },
         onError: (error) => {
             // console.log(error, "not okay par");
@@ -67,6 +67,12 @@ const removeUploadedItem = (index) => {
 const handleImport = () => {
     alert("okay par");
 };
+const closeDialog = () => {
+    form.organisation_id = "";
+    form.type = "";
+    form.file = null;
+    isDialogVisible.value = false;
+};
 onUpdated(() => {
     form.organisation_id = props.organisation_id;
     form.type = props.type;
@@ -78,6 +84,7 @@ onUpdated(() => {
         <!-- Activator -->
         <template #activator="{ props }">
             <VBtn
+                :disabled="!form.organisation_id || !form.type"
                 v-bind="props"
                 color="tiggie-blue"
                 variant="flat"
@@ -101,7 +108,7 @@ onUpdated(() => {
                     size="30px"
                 />
             </VCardTitle>
-            <ImageUpload data_type="user" v-model="form.file" />
+            <ImageUpload class="px-5" data_type="user" v-model="form.file" />
 
             <VCardActions
                 class="d-flex justify-space-between gap-5 ml-7 mr-7 mt-5"
@@ -110,7 +117,7 @@ onUpdated(() => {
                     color="gray"
                     variant="flat"
                     width="164px"
-                    @click="isDialogVisible = false"
+                    @click="closeDialog"
                     height="51px"
                 >
                     <span class="text-light">Cancel</span>

@@ -173,7 +173,7 @@ const clearForm = () => {
                 <ImportUserTypeData
                     :type="selectedType"
                     :organisation_id="selectedOrganisation"
-                    @closeDialog="isDialogVisible = false"
+                    @closeDialog="clearForm()"
                 />
             </VCardActions>
         </VCard>
