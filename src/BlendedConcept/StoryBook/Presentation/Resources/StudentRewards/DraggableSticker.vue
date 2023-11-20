@@ -39,12 +39,20 @@ let emit = defineEmits();
 const startDragging = (event) => {
     isDragging.value = true;
     emit("isDragging", true);
-    offsetX = event.clientX - positionX.value;
-    offsetY = event.clientY - positionY.value;
+    const clientX =
+        event.type === "touchstart" ? event.touches[0].clientX : event.clientX;
+    const clientY =
+        event.type === "touchstart" ? event.touches[0].clientY : event.clientY;
+
+    offsetX = clientX - positionX.value;
+    offsetY = clientY - positionY.value;
 
     // Attach event listeners to the document
+
     document.addEventListener("mousemove", dragImage);
+    document.addEventListener("touchmove", dragImage);
     document.addEventListener("mouseup", stopDragging);
+    document.addEventListener("touchend", stopDragging);
 
     // Prevent the default browser behavior for dragging
     event.preventDefault();
@@ -52,8 +60,17 @@ const startDragging = (event) => {
 
 const dragImage = (event) => {
     if (isDragging.value) {
-        positionX.value = event.clientX - offsetX;
-        positionY.value = event.clientY - offsetY;
+        const clientX =
+            event.type === "touchmove"
+                ? event.touches[0].clientX
+                : event.clientX;
+        const clientY =
+            event.type === "touchmove"
+                ? event.touches[0].clientY
+                : event.clientY;
+
+        positionX.value = clientX - offsetX;
+        positionY.value = clientY - offsetY;
     }
 };
 
@@ -88,13 +105,17 @@ const stopDragging = (event) => {
         });
     }
     document.removeEventListener("mousemove", dragImage);
+    document.removeEventListener("touchmove", dragImage);
     document.removeEventListener("mouseup", stopDragging);
+    document.removeEventListener("touchend", stopDragging);
 };
 
 // Clean up event listeners when the component is unmounted
 onUnmounted(() => {
     document.removeEventListener("mousemove", dragImage);
+    document.removeEventListener("touchmove", dragImage);
     document.removeEventListener("mouseup", stopDragging);
+    document.removeEventListener("touchend", stopDragging);
 });
 
 onMounted(() => {

@@ -164,6 +164,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 .reward-img {
     position: relative;
     height: 85vh;
+    width: 100%;
 }
 
 .overlay-container {

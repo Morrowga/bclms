@@ -165,7 +165,9 @@ const selectionChanged = () => {};
                                         src="/images/defaults/avator.png"
                                         class="user-profile-image"
                                     />
-                                    <span>{{ props.row?.user.full_name }}</span>
+                                    <span>{{
+                                        props.row?.user?.full_name ?? "-----"
+                                    }}</span>
                                 </div>
                             </div>
                             <div v-if="props.column.field == 'email'">
