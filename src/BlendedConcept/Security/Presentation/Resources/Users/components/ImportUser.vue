@@ -23,10 +23,6 @@ const organisation_name = ref("");
 
 const openImports = () => {
     isImportDialogVisible.value = true;
-    // const files = ["bc_student_import.csv", "bc_teacher_import.csv"]; // List of files to download
-    // files.forEach((file) => {
-    //     downloadFile(file);
-    // });
 };
 const downloadFile = (file) => {
     // const downloadUrl = `/public/imports/${file}`;

@@ -20,10 +20,13 @@ const secondSelectItems = ref([
     },
 ]);
 const selectedValueForSecondSelect = ref(null);
+const isImportDialogVisible = ref(false);
 
 const selectedType = ref(null);
 const organisation_name = ref(props.organisation.name);
-
+const openImports = () => {
+    isImportDialogVisible.value = true;
+};
 watch(selectedValueForSecondSelect, () => {
     if (selectedValueForSecondSelect.value) {
         showSecondSelect.value = false;
@@ -59,7 +62,30 @@ const closeDialog = () => {
                     icon="mdi-file-download"
                     color="tiggie-blue"
                     size="30px"
+                    @click="openImports()"
                 />
+                <VDialog v-model="isImportDialogVisible" max-width="400">
+                    <VCard>
+                        <VCardText>
+                            <div
+                                class="d-flex justify-center align-center gap-3"
+                            >
+                                <a
+                                    href="/imports/bc_student_import.csv"
+                                    download
+                                >
+                                    <VBtn>Students</VBtn>
+                                </a>
+                                <a
+                                    href="/imports/bc_teacher_import.csv"
+                                    download
+                                >
+                                    <VBtn>Teachers</VBtn>
+                                </a>
+                            </div>
+                        </VCardText>
+                    </VCard>
+                </VDialog>
             </VCardTitle>
             <VCardText>
                 <VLabel class="tiggie-label required" v-if="!showSecondSelect"

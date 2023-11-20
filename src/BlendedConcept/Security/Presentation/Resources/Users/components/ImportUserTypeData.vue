@@ -73,6 +73,7 @@ const closeDialog = () => {
     form.file = null;
     isDialogVisible.value = false;
 };
+
 onUpdated(() => {
     form.organisation_id = props.organisation_id;
     form.type = props.type;
@@ -101,12 +102,26 @@ onUpdated(() => {
                 class="d-flex justify-space-between align-center ml-7 mr-7 gap-16"
             >
                 <h4 class="tiggie-title">Upload {{ props.type }}</h4>
-                <VIcon
-                    icon="mdi-file-download"
-                    class="ml-10"
-                    color="tiggie-blue"
-                    size="30px"
-                />
+                <a
+                    v-if="form.type == 'student'"
+                    href="/imports/bc_student_import.csv"
+                    download
+                >
+                    <VIcon
+                        icon="mdi-file-download"
+                        class="ml-10"
+                        color="tiggie-blue"
+                        size="30px"
+                    />
+                </a>
+                <a v-else href="/imports/bc_teacher_import.csv" download>
+                    <VIcon
+                        icon="mdi-file-download"
+                        class="ml-10"
+                        color="tiggie-blue"
+                        size="30px"
+                    />
+                </a>
             </VCardTitle>
             <ImageUpload class="px-5" data_type="user" v-model="form.file" />
 
