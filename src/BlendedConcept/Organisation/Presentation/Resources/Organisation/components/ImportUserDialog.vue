@@ -1,10 +1,12 @@
 <script setup>
 import { ref, defineEmits } from "vue";
 import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
-import { SuccessDialog } from "@actions/useSuccess";
+
 import { useForm, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import exportFromJSON from "export-from-json";
+import { SuccessDialog } from "@actions/useSuccess";
+
 const isDialogVisible = ref(false);
 let props = defineProps(["type", "organisation_id"]);
 const emit = defineEmits();
@@ -48,7 +50,17 @@ const importUser = () => {
                 const data = export_errors.value;
                 const fileName = "FailToImportStudent";
                 const exportType = exportFromJSON.types.csv;
-                if (data) exportFromJSON({ data, fileName, exportType });
+                if (data) {
+                    SuccessDialog({
+                        title: "Failed to upload users, please ensure that the csv file is in the correct format",
+                        mainTitle: "Error!",
+                        color: "#ff6262",
+                        icon: "error",
+                    });
+                    exportFromJSON({ data, fileName, exportType });
+                }
+                closeDialog();
+                emit("closeDialog");
                 return;
             }
             emit("closeDialog");
