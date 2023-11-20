@@ -113,6 +113,9 @@ let onFormSubmit = () => {
             console.log(flash.value.errorMessage + " test");
             FlashMessage({ flash });
             form.reset();
+            gameFile.value = null;
+            thumbnail.value = null;
+            thumbnailFile.value = null;
         },
         onError: (error) => {
             isPersistant.value = true;
