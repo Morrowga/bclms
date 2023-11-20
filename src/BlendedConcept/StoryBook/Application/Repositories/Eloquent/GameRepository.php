@@ -103,11 +103,12 @@ class GameRepository implements GameRepositoryInterface
                     $zip->close();
                 }
 
-                // Check if the 'index.html' file exists in the extracted folder
-                $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
-                $gameEloquent->game_file = $indexPath;
-
-                $gameEloquent->addMediaFromRequest('game')->toMediaCollection('gamezip', 'media_game');
+                $indexPath = $this->findIndexHtmlPath($gameDirectory);
+                if ($indexPath) {
+                    $relativePath = str_replace($gameDirectory . DIRECTORY_SEPARATOR, '', $indexPath);
+                    $gameEloquent->game_file = $desiredFolderName . '/' .  $relativePath;
+                    $gameEloquent->addMediaFromRequest('game')->toMediaCollection('gamezip', 'media_game');
+                }
             }
 
             if ($gameEloquent->getMedia('thumbnail')->isNotEmpty()) {
@@ -200,18 +201,20 @@ class GameRepository implements GameRepositoryInterface
                 }
 
                 // Check if the 'index.html' file exists in the extracted folder
-                $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
+                $indexPath = $this->findIndexHtmlPath($gameDirectory);
+                if ($indexPath) {
+                    $relativePath = str_replace($gameDirectory . DIRECTORY_SEPARATOR, '', $indexPath);
+                    $gameEloquent->game_file = $desiredFolderName . '/' .  $relativePath;
+                    $gameEloquent->update();
 
-                $gameEloquent->game_file = $indexPath;
-                $gameEloquent->update();
+                    $oldgame_zip = $gameEloquent->getFirstMedia('gamezip');
 
-                $oldgame_zip = $gameEloquent->getFirstMedia('gamezip');
+                    if ($oldgame_zip != null) {
+                        $oldgame_zip->forceDelete();
+                    }
 
-                if ($oldgame_zip != null) {
-                    $oldgame_zip->forceDelete();
+                    $newGameZip = $gameEloquent->addMediaFromRequest('game')->toMediaCollection('gamezip', 'media_game');
                 }
-
-                $newGameZip = $gameEloquent->addMediaFromRequest('game')->toMediaCollection('gamezip', 'media_game');
             }
 
             $tagCollection = collect(request()->tags);
@@ -286,4 +289,18 @@ class GameRepository implements GameRepositoryInterface
             }
         }
     }
+
+function findIndexHtmlPath($directory) {
+    $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+
+    foreach ($iterator as $file) {
+        if ($file->isFile() && $file->getFilename() === 'index.html') {
+            // Found the index.html file
+            return $file->getPathname();
+        }
+    }
+
+    // index.html not found
+    return null;
+}
 }

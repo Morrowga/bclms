@@ -4,6 +4,8 @@ namespace Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent;
 
 use File;
 use ZipArchive;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
 use Illuminate\Support\Facades\DB;
 use Src\BlendedConcept\StoryBook\Domain\Model\StoryBook;
 use Src\BlendedConcept\StoryBook\Application\DTO\StoryBookData;
@@ -128,7 +130,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                             $zip->close();
                         }
 
-                        $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
+                        $indexPath = $this->findIndexHtmlPath($bookDirectory);
 
                         $teachers = TeacherEloquentModel::pluck('teacher_id');
 
@@ -136,10 +138,15 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                         $storybookVersion->teacher_id = null;
                         $storybookVersion->h5p_id = null;
                         $storybookVersion->name = $html_file['name'];
+                        if ($indexPath) {
+                            $relativePath = str_replace($bookDirectory . DIRECTORY_SEPARATOR, '', $indexPath);
+                            $storybookVersion->html5_file = $desiredFolderName . '/' .  $relativePath;
+                        } else {
+                            $storybookVersion->html5_file = '';
+                        }
                         // $storybookVersion->description = "Original Copy";
                         $storybookVersion->storybook_id = $storybookEloquent->id;
                         $storybookVersion->storybook_id = $storybookEloquent->id;
-                        $storybookVersion->html5_file = $indexPath;
                         $storybookVersion->save();
                     }
                 }
@@ -268,8 +275,13 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                             $zip->close();
                         }
 
-                        $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
-                        $storybookVersion->html5_file = $indexPath;
+                        $indexPath = $this->findIndexHtmlPath($bookDirectory);
+                        if ($indexPath) {
+                            $relativePath = str_replace($bookDirectory . DIRECTORY_SEPARATOR, '', $indexPath);
+                            $storybookVersion->html5_file = $desiredFolderName . '/' .  $relativePath;
+                        } else {
+                            $storybookVersion->html5_file = '';
+                        }
                     }
                     $storybookVersion->save();
                 }
@@ -297,7 +309,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                             $zip->close();
                         }
 
-                        $indexPath = $desiredFolderName . '/' . $originalFileName . '/index.html';
+                        $indexPath = $this->findIndexHtmlPath($bookDirectory);
 
                         $teachers = TeacherEloquentModel::pluck('teacher_id');
 
@@ -308,7 +320,12 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                         $storybookVersion->description = "Original Copy";
                         $storybookVersion->storybook_id = $updateStoryBookEloquent->id;
                         $storybookVersion->storybook_id = $updateStoryBookEloquent->id;
-                        $storybookVersion->html5_file = $indexPath;
+                        if ($indexPath) {
+                            $relativePath = str_replace($bookDirectory . DIRECTORY_SEPARATOR, '', $indexPath);
+                            $storybookVersion->html5_file = $desiredFolderName . '/' .  $relativePath;
+                        } else {
+                            $storybookVersion->html5_file = '';
+                        }
                         $storybookVersion->save();
                     }
                 }
@@ -497,5 +514,20 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                 ? throw new \Exception('Something Wrong! Please try again.')
                 : throw new \Exception($e->getMessage());
         }
+    }
+
+
+    function findIndexHtmlPath($directory) {
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+
+        foreach ($iterator as $file) {
+            if ($file->isFile() && $file->getFilename() === 'index.html') {
+                // Found the index.html file
+                return $file->getPathname();
+            }
+        }
+
+        // index.html not found
+        return null;
     }
 }
