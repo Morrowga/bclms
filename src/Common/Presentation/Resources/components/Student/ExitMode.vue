@@ -21,20 +21,6 @@ const togglePasswordVisibility = () => {
     passwordVisible.value = !passwordVisible.value;
 };
 
-const form = useForm({
-    password: null,
-    student_id: props.student_id,
-    user_id: props.teacher_id,
-});
-
-const checkSurvey = () => {
-    if (user_survey_logout.value != "") {
-        hasSurvey.value = true;
-    } else {
-        isDialogVisible.value = true;
-    }
-};
-
 const getCookie = (name) => {
     const cookies = document.cookie.split("; ");
     for (const cookie of cookies) {
@@ -47,6 +33,25 @@ const getCookie = (name) => {
 };
 
 const cookieValue = getCookie("kidmode");
+
+const form = useForm({
+    password: null,
+    student_id: props.student_id,
+    user_id: props.teacher_id,
+});
+
+const checkSurvey = () => {
+    if (user_survey_logout.value != "") {
+        hasSurvey.value = true;
+    } else {
+        if(cookieValue != 1){
+            router.post('/logout');
+        } else {
+            isDialogVisible.value = true;
+        }
+    }
+};
+
 // console.log(props.teacher_id);
 
 const logout = () => {
@@ -138,6 +143,7 @@ const logout = () => {
             </VForm>
         </VDialog>
         <LogoutUserExperienceSurvey
+            :cookieValue="cookieValue"
             v-model:hasSurvey="hasSurvey"
             v-model:isDialogVisible="isDialogVisible"
             :data="user_survey_logout"

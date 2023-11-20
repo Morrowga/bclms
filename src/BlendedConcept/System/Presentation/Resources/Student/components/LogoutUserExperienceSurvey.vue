@@ -24,11 +24,15 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    cookieValue: {
+        type: Number
+    }
 });
 
 const emit = defineEmits(["update:hasSurvey", "update:isDialogVisible"]);
 const isError = ref(false);
 
+console.log(props.cookieValue);
 // console.log(props.hasSurvey);
 
 let user_id = computed(() => page.props.user_info.user_detail.id);
@@ -108,7 +112,11 @@ const onFormSubmit = () => {
         form.post(route("surveyresponse.store"), {
             onSuccess: () => {
                 emit("update:hasSurvey", false);
-                emit("update:isDialogVisible", true);
+                if(props.cookieValue != 1){
+                    router.post('/logout');
+                } else {
+                    emit("update:isDialogVisible", true);
+                }
             },
             onError: (error) => {
                 form.results = selectedOptions.value;
@@ -122,7 +130,11 @@ const onFormSubmit = () => {
 
 const directLogout = () => {
     emit("update:hasSurvey", false);
-    emit("update:isDialogVisible", true);
+    if(props.cookieValue != 1){
+        router.post('/logout');
+    } else {
+        emit("update:isDialogVisible", true);
+    }
 };
 
 const dialogVisibleUpdate = (val) => {

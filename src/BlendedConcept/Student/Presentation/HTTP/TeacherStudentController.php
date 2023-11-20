@@ -158,7 +158,7 @@ class TeacherStudentController
                     Auth::logout();
                     Auth::login($user);
 
-                    return redirect()->route('learning-portal');
+                    return redirect()->route('dashboard');
                 }
             }
         } catch (\Exception $error) {
