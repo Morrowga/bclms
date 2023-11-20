@@ -98,6 +98,11 @@ const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
 
+const removeValidate = () => {
+    game_file_validation.value = true;
+    gameFile.value = null;
+}
+
 let onFormSubmit = () => {
     form.game = gameFile.value;
     form.thumb = thumbnailFile.value;
@@ -269,6 +274,13 @@ const handleThumbFileInputClick = () => {
                                             <p class="error-message">
                                                 Game file must be type of .zip
                                             </p>
+                                            <button
+                                                    type="button"
+                                                    @click="removeValidate"
+                                                    class="remove"
+                                                >
+                                                Remove
+                                            </button>
                                         </div>
                                         <div v-else>
                                             <div v-if="!gameFile">

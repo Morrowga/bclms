@@ -31,6 +31,11 @@ const removeGameFile = () => {
   gameFile.value = null;
 };
 
+const removeValidate = () => {
+    game_file_validation.value = true;
+    gameFile.value = null;
+}
+
 const onDropGameFile = (event) => {
   event.preventDefault();
   dragging.value = false;
@@ -93,6 +98,7 @@ const handleFileInputClick = () => {
                         >
                         <div v-if="!game_file_validation" @click="handleFileInputClick">
                             <p class="error-message">Game file must be type of .zip</p>
+                            <button type="button" @click="removeValidate" class="remove">Remove</button>
                         </div>
                         <div v-else>
                             <p v-if="!gameFile" class="pppangram-normal" @click="handleFileInputClick">
