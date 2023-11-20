@@ -69,6 +69,7 @@ watch(selectedValueForSecondSelect, () => {
 });
 const clearForm = () => {
     selectedOrganisation.value = "";
+    selectedType.value = null;
     isDialogVisible.value = false;
 };
 </script>
