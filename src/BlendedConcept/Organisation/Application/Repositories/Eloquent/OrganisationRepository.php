@@ -4,6 +4,8 @@ namespace Src\BlendedConcept\Organisation\Application\Repositories\Eloquent;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Crypt;
+use Src\Auth\Application\Mails\EmailVerify;
 use Src\BlendedConcept\Finance\Domain\Model\Subscription;
 use Src\BlendedConcept\Organisation\Domain\Model\Organisation;
 use Src\BlendedConcept\Finance\Application\DTO\SubscriptionData;
@@ -99,6 +101,9 @@ class OrganisationRepository implements OrganisationRepositoryInterface
             $organisationAdminEloquent = OrganisationAdminMapper::toEloquent($organisationAdmin);
             $organisationAdminEloquent->organisation_id = $organisationEloquent->id;
             $organisationAdminEloquent->save();
+            $bcstaff = UserEloquentModel::where('role_id', 3)->first();
+
+            \Mail::to($organisationAdminEloquent->user->email)->send(new EmailVerify($organisationAdminEloquent->user->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($organisationAdminEloquent->user->email), $bcstaff->email, $bcstaff->contact_number));
 
 
             // Upload the organisation's image if provided
