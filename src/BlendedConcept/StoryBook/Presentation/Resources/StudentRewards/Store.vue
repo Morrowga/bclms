@@ -18,7 +18,7 @@ onMounted(() => {});
 
 <template>
     <StudentLayout>
-        <section class="mb-3">
+        <section class="pa-5">
             <VRow>
                 <VCol cols="1">
                     <img

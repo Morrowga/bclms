@@ -18,8 +18,8 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 <template>
     <StudentLayout>
-        <section class="mb-6">
-            <div class="ml-2">
+        <section>
+            <div class="fixed-back-icon">
                 <img
                     src="/images/back.png"
                     @click="() => router.get(route('student-games'))"
@@ -34,7 +34,12 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     </StudentLayout>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.fixed-back-icon {
+    position: absolute;
+    top: 100px;
+    left: 30px;
+}
 .app-user-search-filter {
     inline-size: 24.0625rem;
 }

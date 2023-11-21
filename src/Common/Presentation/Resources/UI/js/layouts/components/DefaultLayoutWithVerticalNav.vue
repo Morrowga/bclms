@@ -167,7 +167,10 @@ onMounted(() => {
         <!-- 👉 Customizer -->
         <!-- <TheCustomizer /> -->
         <v-main style="min-height: 100vh">
-            <v-container :fluid="isLandscape ? true : false">
+            <v-container
+                :fluid="isLandscape ? true : false"
+                :style="isLandscape ? 'padding:0 !important' : ''"
+            >
                 <slot />
             </v-container>
         </v-main>

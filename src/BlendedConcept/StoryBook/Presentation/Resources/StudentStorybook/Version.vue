@@ -100,8 +100,8 @@ onMounted(() => {
 </script>
 <template>
     <StudentLayout>
-        <section class="book_view">
-            <div class="">
+        <section>
+            <div class="fixed-back-icon">
                 <img
                     src="/images/back.png"
                     @click="() => router.get(route('storybooks'))"
@@ -122,7 +122,7 @@ onMounted(() => {
                     v-else
                     :src="`${app_url}/book_html5/${props.book.html5_file}`"
                     frameborder="0"
-                    class="h5p-width"
+                    class="html5-width"
                     ref="iframeRef"
                     id="myIframe"
                 ></iframe>
@@ -132,8 +132,13 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+.fixed-back-icon {
+    position: absolute;
+    top: 100px;
+    left: 30px;
+}
 .book_view {
-    min-height: 100vh;
+    // min-height: calc(100vh - 100px);
 }
 .backarrow {
     cursor: pointer;
@@ -141,8 +146,14 @@ onMounted(() => {
     height: 40px !important;
 }
 .h5p-width {
+    padding: 50px 0;
     width: 75%;
     height: 840px;
+}
+.html5-width {
+    display: block;
+    width: 100%;
+    min-height: calc(100vh - 55px);
 }
 
 // .student .layout-page-content{

@@ -11,7 +11,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 <template>
     <StudentLayout>
-        <section>
+        <section class="pa-5">
             <VRow>
                 <VCol cols="1">
                     <img

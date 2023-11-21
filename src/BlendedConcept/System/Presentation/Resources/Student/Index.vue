@@ -474,6 +474,7 @@ onMounted(() => {
 }
 
 .section-student-home {
+    padding: 10px;
     overflow: hidden !important;
 }
 

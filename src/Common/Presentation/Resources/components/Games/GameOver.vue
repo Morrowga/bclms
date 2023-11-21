@@ -8,7 +8,7 @@ const isDialogVisible = ref(false);
     <div>
         <div class="d-flex justify-center">
             <iframe
-                class="videoplayer"
+                class="html5-width"
                 :src="iframeSrc"
                 frameborder="0"
                 allowfullscreen
@@ -33,6 +33,11 @@ const isDialogVisible = ref(false);
     </div>
 </template>
 <style scoped>
+.html5-width {
+    display: block;
+    width: 100%;
+    min-height: calc(100vh - 55px);
+}
 .gameover-card {
     /* height: 400px; */
     background: url("/images/Game Pop Up.png") no-repeat;
