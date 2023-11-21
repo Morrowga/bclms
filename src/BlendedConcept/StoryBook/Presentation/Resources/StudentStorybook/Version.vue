@@ -23,11 +23,9 @@ onMounted(() => {
         iframeRef.value.style.display = "flex";
         let iframe = iframeRef.value.contentWindow.document;
         let innerIframe = iframe.querySelector(
-            "#app .container-fluid .h5p-content-wrap .h5p-iframe-wrapper iframe"
+            "#app .container .h5p-content-wrap .h5p-iframe-wrapper iframe"
         );
-        // innerIframe.style.height = "height:65vh;";
-        // innerIframe.style.overflow = "hidden";
-        // innerIframe.style.height = "calc(100vh - 75px)";
+
         let innerFrameConent = innerIframe.contentWindow.document.querySelector(
             ".h5p-content .h5p-video-wrapper"
         );
@@ -46,9 +44,6 @@ onMounted(() => {
         );
 
         let video = innerFrameConent.querySelector("video");
-        // video.style.height = "68vh";
-        // innerFrameConent.style.display = "block";
-        // innerFrameConent.style.height = "65vh";
 
         let fullscreenClicked = false;
 
