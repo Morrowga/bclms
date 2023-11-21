@@ -118,7 +118,7 @@ const items = ref([
                                         block
                                         @click="addOption"
                                     >
-                                        <span class="typemore pppangram-bold">Type to add more options</span>
+                                        <span class="typemore pppangram-bold">Click to add more options</span>
                                     </VBtn>
                                 </VCol>
 

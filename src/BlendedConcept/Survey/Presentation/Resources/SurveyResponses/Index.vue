@@ -118,9 +118,13 @@ const deleteItem = (id) => {
     });
 };
 
+// const detailPage = (surveyId, userId) => {
+//     router.get("/surveyresponse");
+// }
+
 const showInfo = (e) => {
-    // console.log(e.row);
-    router.get(route("surveyresponse.show", e.row.id));
+    console.log(e);
+    router.get("/surveyresponse/" + e.row.survey.id + '?user_id=' + e.row.user.id);
 };
 </script>
 <template>
@@ -173,7 +177,8 @@ const showInfo = (e) => {
                                     <div
                                         v-if="dataProps.column.field == 'user'"
                                     >
-                                        <span>{{
+                                        <span
+                                            >{{
                                             dataProps.row.user.full_name
                                         }}</span>
                                     </div>

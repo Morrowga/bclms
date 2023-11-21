@@ -200,7 +200,7 @@ watch(
                                     @click="addOption"
                                 >
                                     <span class="pppangram-bold typemore"
-                                        >Type to add more options</span
+                                        >Click to add more options</span
                                     >
                                 </VBtn>
                             </VCol>

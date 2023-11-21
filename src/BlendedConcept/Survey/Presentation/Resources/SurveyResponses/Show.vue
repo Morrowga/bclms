@@ -1,154 +1,214 @@
 <script setup>
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import { format } from "date-fns";
 
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
-const props = defineProps(["surveyresponse"]);
+const props = defineProps(["surveyresponse", 'user']);
 const selectedValue = ref(null);
-onMounted(() => {
-    let ids = [];
-    const data = props.surveyresponse.question.options.filter((option) => {
-        props.surveyresponse.options.map((ans_option) => {
-            if (ans_option.id == option.id) {
-                ids.push(option.id);
+const questions = ref([]);
+
+const formatDate = (dateString) => {
+    // Parse the date string into a Date object
+    const date = new Date(dateString);
+    // Format the date using date-fns
+    return format(date, "dd/M/yyyy, hh:mm:ss a"); // Customize the format string as needed
+};
+
+if(props.surveyresponse.data.responses?.length > 0){
+    props.surveyresponse.data.responses.forEach((item) => {
+        console.log(item);
+        if(item.question.question_type == 'SINGLE_CHOICE'){
+            let questionWithAnswerOptionId = {
+                ...item.question,
+                answer_option_id: item.options?.length > 0 ? item.options[0].id : null,
+                response_date: formatDate(item.response_datetime)
+            };
+
+            questions.value.push(questionWithAnswerOptionId);
+        } else if(item.question.question_type == 'SINGLE_CHOICE'){
+            let questionWithAnswerOptionId = {
+                ...item.question,
+                answer_option_id: item.options?.length > 0 ? item.options[0].id : null,
+                response_date: formatDate(item.response_datetime)
+            };
+
+            questions.value.push(questionWithAnswerOptionId);
+        } else if(item.question.question_type == 'MULTIPLE_RESPONSE') {
+            let multipleOptionArray = [];
+            if(item.options?.length > 0){
+                    item.options.forEach((option) => {
+                    multipleOptionArray.push(option.id);
+                })
             }
-        });
+
+            let questionWithAnswerOptionId = {
+                ...item.question,
+                answer_option_id: multipleOptionArray,
+                response_date: formatDate(item.response_datetime)
+            };
+            questions.value.push(questionWithAnswerOptionId);
+        } else if(item.question.question_type == 'SHORT_ANSWER'){
+            let questionWithAnswerOptionId = {
+                ...item.question,
+                answer_option_id: item.answer,
+                response_date: formatDate(item.response_datetime)
+            };
+
+            questions.value.push(questionWithAnswerOptionId);
+        }
     });
-    if (
-        props.surveyresponse.question.question_type == "MULTIPLE_RESPONSE" ||
-        props.surveyresponse.question.question_type == "RATING"
-    ) {
-        selectedValue.value = ids;
-    } else {
-        selectedValue.value = props.surveyresponse.options?.[0]?.id;
+}
+
+const addSurveyForm = ref(
+    questions.value.length > 0 ? questions.value : []
+);
+
+console.log(questions.value);
+
+const questionType = (questionType) => {
+    if (questionType === "SINGLE_CHOICE" || questionType === "Rating") {
+        return "[Choose one option]";
+    } else if (questionType === "MULTIPLE_RESPONSE") {
+        return "[Please select all that apply]";
     }
-});
+};
+
 </script>
 <template>
     <AdminLayout>
         <VContainer>
-            <div class="d-flex">
-                <h1 class="tiggie-title mb-4">
-                    {{ surveyresponse.survey.title }}
-                </h1>
-                <v-spacer></v-spacer>
-                <span class="mt-2 survey_name font-weight-bold">{{
-                    surveyresponse.user.full_name
-                }}</span>
-                <v-spacer></v-spacer>
-                <v-spacer></v-spacer>
-            </div>
-            <v-row>
-                <v-col cols="12" md="12">
-                    <!-- {{ surveyresponse.question.question }} -->
-                    <v-card
-                        v-if="
-                            surveyresponse.question.question_type ==
-                            'SINGLE_CHOICE'
-                        "
-                    >
-                        <v-card-title>
-                            <span class="h3 font-weight-bold"
-                                >Question {{ 1 }} .</span
-                            >
-                            <span>{{
-                                surveyresponse.question.question_type
-                            }}</span>
-                        </v-card-title>
-                        <v-card-subtitle class="pb-2">
-                            {{ surveyresponse.question.question }}
-                        </v-card-subtitle>
-                        <v-divider class="border-opacity-100"></v-divider>
-                        <v-card-text>
-                            <div class="d-flex">
-                                <span class="h4 font-weight-bold pt-2 pr-3"
-                                    >Options:
-                                </span>
-                                <div>
-                                    <v-radio-group v-model="selectedValue">
-                                        <v-radio
-                                            v-for="option in surveyresponse
-                                                .question.options"
-                                            :key="option.id"
-                                            :label="option.content"
-                                            :value="option.id"
-                                        ></v-radio>
-                                    </v-radio-group>
-                                </div>
-                            </div>
-                        </v-card-text>
-                    </v-card>
+            <VRow>
+                <VCol cols="4">
+                    <h1 class="tiggie-title">
+                        {{ props.surveyresponse.data.title }}
+                    </h1>
+                </VCol>
+                <VCol cols="4" class="mt-2">
+                    <span class="survey_name font-weight-bold text-black text-capitalize">
+                        {{ props.user.full_name }}
+                    </span>
+                </VCol>
 
-                    <v-card
-                        v-if="
-                            surveyresponse.question.question_type ==
-                                'MULTIPLE_RESPONSE' ||
-                            surveyresponse.question.question_type == 'RATING'
-                        "
-                    >
-                        <v-card-title>
-                            <span class="h3 font-weight-bold"
-                                >Question {{ 1 }} .</span
-                            >
-                            <span>{{
-                                surveyresponse.question.question_type
-                            }}</span>
-                        </v-card-title>
-                        <v-card-subtitle class="pb-2">
-                            {{ surveyresponse.question.question }}
-                        </v-card-subtitle>
-                        <v-divider class="border-opacity-100"></v-divider>
-                        <v-card-text>
-                            <div class="d-flex">
-                                <span class="h4 font-weight-bold pt-2 pr-3"
-                                    >Options:
-                                </span>
-                                <div>
-                                    <v-checkbox
-                                        class="custom-checkbox"
-                                        v-for="option in surveyresponse.question
-                                            .options"
-                                        :key="option.id"
-                                        :label="option.content"
-                                        :value="option.id"
-                                        v-model="selectedValue"
-                                    ></v-checkbox>
-                                </div>
-                            </div>
-                        </v-card-text>
-                    </v-card>
+                <v-spacer></v-spacer>
 
-                    <v-card
-                        v-else-if="
-                            surveyresponse.question.question_type ==
-                            'SHORT_ANSWER'
-                        "
-                    >
-                        <v-card-title>
-                            <span class="h3 font-weight-bold"
-                                >Question {{ 1 }} .</span
+                <div v-if="addSurveyForm.length > 0">
+                    <VCol cols="12" v-for="(item, i) in addSurveyForm" :key="i">
+                        <VCard style="width: 81vw" class="mt-4 question-card">
+                            <VCardTitle class="tiggie-subtitle">
+                                <div class="d-flex justify-space-between">
+                                    <span class="question-text mt-2">
+                                        <strong
+                                            class="pppangram-bold question-label"
+                                            >Question {{ i + 1 }} :
+                                        </strong>
+                                        {{ item.question }}
+                                    </span>
+                                    <span class="pppangram responseDate">
+                                        <VIcon icon="mdi-clock" class="mr-2 mb-1"></VIcon>{{  item.response_date  }}
+                                    </span>
+                                </div>
+                            </VCardTitle>
+                            <VRow
+                                no-gutters
+                                justify="start"
+                                v-if="
+                                    item.question_type === 'MULTIPLE_RESPONSE'
+                                "
                             >
-                            <span>{{
-                                surveyresponse.question.question_type
-                            }}</span>
-                        </v-card-title>
-                        <v-card-subtitle class="pb-2">
-                            {{ surveyresponse.question.question }}
-                        </v-card-subtitle>
-                        <v-divider class="border-opacity-100"></v-divider>
-                        <v-card-text>
-                            <div class="d-flex">
-                                <div>{{ surveyresponse.answer }}</div>
-                            </div>
-                        </v-card-text>
-                    </v-card>
-                </v-col>
-            </v-row>
+                                <VCol
+                                    cols="12"
+                                    v-for="(option, i) in item.options"
+                                    :key="i"
+                                    style="text-align: left"
+                                >
+                                    <VList class="question-option">
+                                        <VListItem>
+                                            <template #prepend>
+                                                <v-checkbox
+                                                    @click="
+                                                        checkboxClick(
+                                                            item.id,
+                                                            option.id
+                                                        )
+                                                    "
+                                                    v-model="item.answer_option_id"
+                                                    :value="option.id"
+                                                    :disabled="true"
+                                                />
+                                            </template>
+                                            <VListItemTitle class="tiggie-p">
+                                                <span>{{
+                                                    option.content
+                                                }}</span>
+                                            </VListItemTitle>
+                                        </VListItem>
+                                    </VList>
+                                </VCol>
+                            </VRow>
+                            <VRow
+                                no-gutters
+                                justify="start"
+                                v-else-if="
+                                    item.question_type === 'SINGLE_CHOICE' ||
+                                    item.question_type === 'RATING'
+                                "
+                            >
+                                <VCol
+                                    cols="12"
+                                    v-for="(option, i) in item.options"
+                                    :key="i"
+                                    style="text-align: left"
+                                >
+                                    <VList class="question-option">
+                                        <VListItem>
+                                            <template #prepend>
+                                                <VRadio
+                                                    :value="option.id"
+                                                    @click="
+                                                        radioClick(
+                                                            item.id,
+                                                            option.id
+                                                        )
+                                                    "
+                                                    v-model="item.answer_option_id"
+                                                    :disabled="true"
+                                                />
+                                            </template>
+                                            <VListItemTitle class="tiggie-p">
+                                                <span>{{
+                                                    option.content
+                                                }}</span>
+                                            </VListItemTitle>
+                                        </VListItem>
+                                    </VList>
+                                </VCol>
+                            </VRow>
+                            <VRow no-gutters justify="start" v-else-if="
+                                    item.question_type === 'SHORT_ANSWER'
+                            ">
+                                <VCol cols="12">
+                                    <p class="mx-5">{{item.answer_option_id}}</p>
+                                </VCol>
+                            </VRow>
+                        </VCard>
+                    </VCol>
+                </div>
+            </VRow>
         </VContainer>
     </AdminLayout>
 </template>
 <style scoped>
 .survey_name {
     font-size: 26px !important;
+}
+
+.responseDate{
+    font-size: 15px !important;
+    opacity: 0.4;
+}
+
+.question-card{
+    box-shadow: 2px 7px 6px rgb(0,0,0,0.3) !important;
 }
 </style>

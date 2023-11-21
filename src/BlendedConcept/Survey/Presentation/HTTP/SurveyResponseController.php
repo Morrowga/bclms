@@ -3,15 +3,17 @@
 namespace Src\BlendedConcept\Survey\Presentation\HTTP;
 
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Src\BlendedConcept\Survey\Domain\Policies\SurveyResponsePolicy;
 use Src\BlendedConcept\Survey\Application\Requests\StoreSurveyResponseRequest;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\ResponseEloquentModel;
 use Src\BlendedConcept\Survey\Application\UseCases\Commands\Response\DeleteResponseCommand;
 use Src\BlendedConcept\Survey\Application\UseCases\Commands\Survey\StoreSurveyResponseCommand;
 use Src\BlendedConcept\Survey\Application\UseCases\Queries\SurveyResponses\GetSurveyResponses;
-use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
+use Src\BlendedConcept\Survey\Application\UseCases\Queries\SurveyResponses\GetUserSurveyResponses;
 
 class SurveyResponseController
 {
@@ -23,7 +25,7 @@ class SurveyResponseController
             $filters = request()->only(['question', 'search', 'perPage', 'filter']);
 
             $surveyResponses = (new GetSurveyResponses($filters))->handle();
-            // dd($surveyResponses);
+
             return Inertia::render(config('route.surveyresponse.index'), [
                 'surveyResponses' => $surveyResponses,
             ]);
@@ -33,14 +35,16 @@ class SurveyResponseController
         }
     }
 
-    public function show(ResponseEloquentModel $surveyresponse)
+    public function show(SurveyEloquentModel $surveyresponse, Request $request)
     {
-
         abort_if(authorize('view', SurveyResponsePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // dd($surveyresponse->load('user', 'survey', 'question.options', 'options'));
-        // dd($surveyresponse->load('survey_settings', 'questions.options', 'responses.user', 'responses.options', 'responses.question'));
+
+        $userSurveyResponse = (new GetUserSurveyResponses($surveyresponse->id, $request->query('user_id')))->handle();
+        $user = UserEloquentModel::find($request->query('user_id'));
+        
         return Inertia::render(config('route.surveyresponse.show'), [
-            'surveyresponse' => $surveyresponse->load('user', 'survey', 'options', 'question.options',)
+        'surveyresponse' => $userSurveyResponse,
+        'user' => $user
         ]);
     }
 

@@ -200,9 +200,9 @@ const optionsWithText = (option) => {
                         :options="{ handle: '.drag-handle' }"
                     >
                         <template v-slot:item="{ element, index }">
-                            <Vcol cols="12" :key="index">
+                            <VCol cols="2" :key="index">
                                 <VCard
-                                    style="width: 81vw"
+                                    style="width: 60vw"
                                     class="mt-4 draggable-item"
                                 >
                                     <VCardTitle class="tiggie-subtitle">
@@ -282,7 +282,7 @@ const optionsWithText = (option) => {
                                         "
                                     >
                                         <VRow no-gutters justify="start">
-                                            <VCol cols="1">
+                                            <VCol cols="2">
                                                 <h4 class="tiggie-subtitle">
                                                     Options
                                                 </h4>
@@ -319,7 +319,7 @@ const optionsWithText = (option) => {
                                         </VRow>
                                     </VCardText>
                                 </VCard>
-                            </Vcol>
+                            </VCol>
                         </template>
                     </draggable>
                 </div>

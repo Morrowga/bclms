@@ -18,6 +18,7 @@ let page = usePage();
 let props = defineProps(["profilingSurvey", "user"]);
 const selectedOptions = ref([]);
 const shortanswer = ref([]);
+const validateSurvey = ref(true);
 
 const questionsExist = computed(() => {
     return (
@@ -53,28 +54,35 @@ addSurveyForm.value.forEach((item) => {
 });
 
 const onFormSubmit = () => {
-    // Convert the filteredSelectedOptions to JSON
-    form.results = JSON.stringify(selectedOptions.value);
-    form.shortanswer = JSON.stringify(shortanswer.value);
-    form.post(route("surveyresponse.store"), {
-        onSuccess: () => {
-            SuccessDialog({
-                title: "You've successfully submited profiling survey.",
-            });
-        },
-        onError: (error) => {
-            form.results = selectedOptions.value;
-            form.shortanswer = shortanswer.value;
-        },
-    });
+    // Check if every item in selectedOptions has a value
+    const isAllOptionsFilled = Object.values(selectedOptions.value).every((options) => options.length > 0);
+
+    // Check if every item in shortanswer has a value
+    const isAllShortAnswerFilled = Object.values(shortanswer.value).every((answer) => answer.answer !== "");
+
+    if (isAllOptionsFilled && isAllShortAnswerFilled) {
+        // Convert the filteredSelectedOptions to JSON
+        form.results = JSON.stringify(selectedOptions.value);
+        form.shortanswer = JSON.stringify(shortanswer.value);
+
+        form.post(route("surveyresponse.store"), {
+            onSuccess: () => {
+                SuccessDialog({
+                    title: "You've successfully submitted the survey.",
+                });
+            },
+            onError: (error) => {
+                form.results = selectedOptions.value;
+                form.shortanswer = shortanswer.value;
+            },
+        });
+    } else {
+        validateSurvey.value = false;
+        setTimeout(() => {
+            validateSurvey.value = true;
+        }, 3000);
+    }
 };
-// let addNewQuestionForm = useForm({
-//     "survey_id" : props.profilingSurvey.data.id,
-//     "question_type" : null,
-//     "question" : null,
-//     "options" : null,
-//     "type": "profiling"
-// })
 
 const radioClick = (questionId, optionId) => {
     selectedOptions.value[questionId].push(optionId);
@@ -90,12 +98,6 @@ const checkboxClick = (questionId, optionId) => {
     } else {
         questionOptions.push(optionId);
     }
-
-    // console.log(selectedOptions.value);
-};
-
-const submitProfiling = () => {
-    // console.log(selectedOptions.value);
 };
 
 const questionType = (questionType) => {
@@ -225,7 +227,10 @@ const questionType = (questionType) => {
                         </VCard>
                     </VCol>
                     <v-col cols="12">
-                        <div class="d-flex justify-center">
+                        <div v-if="!validateSurvey" class="text-center">
+                            <span class="error-message pppangram-bold">All Questions need to answer.</span>
+                        </div>
+                        <div class="d-flex justify-center mt-5">
                             <Link
                                 :href="
                                     route(
@@ -262,6 +267,10 @@ const questionType = (questionType) => {
 <style scoped>
 .question-label {
     font-size: 25px !important;
+}
+
+.error-message{
+    color: red !important;
 }
 
 .question-text {

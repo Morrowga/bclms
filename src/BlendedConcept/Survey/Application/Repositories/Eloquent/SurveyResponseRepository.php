@@ -5,9 +5,11 @@ namespace Src\BlendedConcept\Survey\Application\Repositories\Eloquent;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Src\BlendedConcept\Survey\Domain\Resources\SurveyResource;
 use Src\BlendedConcept\Survey\Domain\Resources\SurveyResponseResource;
 use Src\BlendedConcept\Survey\Application\Mappers\SurveyResponseMapper;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\ResponseEloquentModel;
 use Src\BlendedConcept\Survey\Domain\Repositories\SurveyResponseRepositoryInterface;
 
@@ -16,7 +18,27 @@ class SurveyResponseRepository implements SurveyResponseRepositoryInterface
 {
     public function GetSurveyResponses($filters)
     {
-        $surveyResponses = SurveyResponseResource::collection(ResponseEloquentModel::filter($filters)->with(['user.role', 'student', 'survey'])->orderBy('id', 'desc')->paginate($filters['perPage'] ?? 10));
+        $surveyResponses = SurveyResponseResource::collection(
+            ResponseEloquentModel::filter($filters)
+                ->selectRaw('MAX(id) as max_id, survey_id, user_id, MAX(response_datetime) as response_datetime')
+                ->groupBy('survey_id', 'user_id')
+                ->orderBy('max_id', 'desc')
+                ->with(['user.role', 'student', 'survey'])
+                ->paginate($filters['perPage'] ?? 10)
+        );
+
+        return $surveyResponses;
+    }
+
+    public function GetUserSurveyResponses($survey_id, $user_id)
+    {
+        $surveyResponses = new SurveyResource(
+            SurveyEloquentModel::where('id', $survey_id)
+                ->with(['responses' => function ($query) use ($user_id) {
+                    $query->where('user_id', $user_id)->with(['user.role', 'student', 'question.options', 'options']);
+                }])
+                ->first()
+        );
 
         return $surveyResponses;
     }
