@@ -1,22 +1,22 @@
 @extends(config('laravel-h5p.layout'))
 
 @section('h5p')
-    <div class="container-fluid">
+    <div class="container">
 
         <div class="row">
 
             <div class="col-md-12">
-                <div class="h5p-content-wrap">
+                <div class="h5p-content-wrap" style="overflow: hidden !important;">
                     {!! $embed_code !!}
                 </div>
 
                 <br />
-                <p class='text-center'>
+                {{-- <p class='text-center'>
 
                     <a href="{{ url()->previous() }}" class="btn btn-default"><i class="fa fa-reply"></i>
                         {{ trans('laravel-h5p.content.cancel') }}</a>
 
-                </p>
+                </p> --}}
             </div>
 
         </div>

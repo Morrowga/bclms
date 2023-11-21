@@ -164,7 +164,7 @@ onMounted(() => {
                                     <span class="version-profile-text ml-2">{{
                                         book_version.owner
                                             ? book_version.owner.user.full_name
-                                            : "SYSTEM"
+                                            : "Blended Concept"
                                     }}</span>
                                 </div>
                             </VCard>
