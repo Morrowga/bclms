@@ -41,10 +41,10 @@ class SurveyResponseController
 
         $userSurveyResponse = (new GetUserSurveyResponses($surveyresponse->id, $request->query('user_id')))->handle();
         $user = UserEloquentModel::find($request->query('user_id'));
-        
+
         return Inertia::render(config('route.surveyresponse.show'), [
-        'surveyresponse' => $userSurveyResponse,
-        'user' => $user
+            'surveyresponse' => $userSurveyResponse,
+            'user' => $user
         ]);
     }
 
@@ -65,7 +65,7 @@ class SurveyResponseController
             // Creates a new StoreSurveyResponseCommand object and executes it.
             $storeSurveyResponseCommand = new StoreSurveyResponseCommand($request);
             $storeSurveyResponseCommand->execute();
-            return redirect()->back();
+            return redirect()->route('teacher_students.index');
         } catch (\Exception $e) {
             // Handle the exception here
             return redirect()->back()->with('errorMessage', $e->getMessage());
