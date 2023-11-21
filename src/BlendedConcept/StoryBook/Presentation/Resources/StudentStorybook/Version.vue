@@ -25,9 +25,18 @@ onMounted(() => {
         let innerIframe = iframe.querySelector(
             "#app .container-fluid .h5p-content-wrap .h5p-iframe-wrapper iframe"
         );
+        // innerIframe.style.height = "height:65vh;";
+        // innerIframe.style.overflow = "hidden";
+        // innerIframe.style.height = "calc(100vh - 75px)";
         let innerFrameConent = innerIframe.contentWindow.document.querySelector(
             ".h5p-content .h5p-video-wrapper"
         );
+
+        let innerFrameContentActions =
+            innerIframe.contentWindow.document.querySelector(
+                ".h5p-content .h5p-actions"
+            );
+        innerFrameContentActions.style.display = "none";
 
         let h5pControls = innerIframe.contentWindow.document.querySelector(
             ".h5p-content .h5p-controls"
@@ -37,6 +46,10 @@ onMounted(() => {
         );
 
         let video = innerFrameConent.querySelector("video");
+        // video.style.height = "68vh";
+        // innerFrameConent.style.display = "block";
+        // innerFrameConent.style.height = "65vh";
+
         let fullscreenClicked = false;
 
         document.addEventListener("keydown", (event) => {
@@ -114,7 +127,7 @@ onMounted(() => {
                     v-if="props.book.storybook.type == 'H5P'"
                     :src="`${app_url}/admin/h5p/h5p/${props.book.h5p_id}`"
                     frameborder="0"
-                    class="h5p-width"
+                    class="h5p-book-width"
                     ref="iframeRef"
                     id="myIframe"
                 ></iframe>
@@ -145,10 +158,12 @@ onMounted(() => {
     width: 40px !important;
     height: 40px !important;
 }
-.h5p-width {
-    padding: 50px 0;
-    width: 75%;
-    height: 840px;
+
+.h5p-book-width {
+    display: block !important;
+    background: black;
+    width: 100%;
+    min-height: 105vh !important;
 }
 .html5-width {
     display: block;
