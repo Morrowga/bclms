@@ -136,7 +136,7 @@ const questionType = (questionType) => {
                             style="width: 60vw"
                             class="mt-4 question-card">
                             <VCardTitle class="tiggie-subtitle">
-                                <div class="d-flex justify-space-between">
+                                <div class="d-flex justify-space-between text-left">
                                     <span class="question-text">
                                         <strong
                                             class="pppangram-bold question-label"
@@ -282,7 +282,9 @@ const questionType = (questionType) => {
 }
 
 .question-text {
-    font-size: 25px !important;
+    font-size: 20px !important;
+    white-space: normal !important;
+    line-height: 1.5 !important;
 }
 
 .question-card {
