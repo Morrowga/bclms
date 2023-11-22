@@ -132,7 +132,9 @@ const questionType = (questionType) => {
                         </div>
                     </v-col>
                     <VCol cols="12" v-for="(item, i) in addSurveyForm" :key="i">
-                        <VCard style="width: 81vw" class="mt-4 question-card">
+                        <VCard
+                            style="width: 60vw"
+                            class="mt-4 question-card">
                             <VCardTitle class="tiggie-subtitle">
                                 <div class="d-flex justify-space-between">
                                     <span class="question-text">
@@ -284,7 +286,7 @@ const questionType = (questionType) => {
 }
 
 .question-card {
-    border: none;
+    /* border: none; */
     box-shadow: none;
     background: #f7f7f9 !important;
 }
