@@ -54,6 +54,12 @@ let onFormSubmit = () => {
                     onSuccess: () => {
                         SuccessDialog({ title: "Success" });
                         isLoading.value = false;
+                        router.get(
+                            route(
+                                "teacher_storybook.show",
+                                props.book.storybook_id
+                            )
+                        );
                     },
                     onError: (error) => {
                         console.log(error);
