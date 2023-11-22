@@ -213,7 +213,7 @@ const deleteItem = (status, id) => {
                                             item_value="value"
                                         />
                                         <!-- 👉 Add button -->
-                                        <DefaultBtn
+                                        <!-- <DefaultBtn
                                             v-if="
                                                 checkPermission(
                                                     'create_accessibility'
@@ -227,7 +227,7 @@ const deleteItem = (status, id) => {
                                                     )
                                                 )
                                             "
-                                        />
+                                        /> -->
                                     </div>
                                 </div>
                             </VCardText>
