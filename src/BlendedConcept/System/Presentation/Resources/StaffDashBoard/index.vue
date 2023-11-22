@@ -14,7 +14,7 @@ const props = defineProps(["recent_books", "recent_games", "usercount"]);
                 title="Organisations"
                 btnText="Manage"
                 :totalText="`Total ${usercount?.organisation_count}  Organisations`"
-                :url="route('organisations.index')"
+                :url="route('staff_organisations')"
             />
             <RoleCard
                 title="Subscriptions"
