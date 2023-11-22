@@ -12,12 +12,13 @@ class GetUserSurveyResponses implements QueryInterface
     public function __construct(
         private readonly int $survey_id,
         private readonly int $user_id,
+        private readonly string $response_datetime,
     ) {
         $this->repository = app()->make(SurveyResponseRepositoryInterface::class);
     }
 
     public function handle()
     {
-        return $this->repository->GetUserSurveyResponses($this->survey_id, $this->user_id);
+        return $this->repository->GetUserSurveyResponses($this->survey_id, $this->user_id, $this->response_datetime);
     }
 }

@@ -10,7 +10,7 @@ interface SurveyResponseRepositoryInterface
     public function GetSurveyResponses($filters);
 
     //get each user survey responses
-    public function GetUserSurveyResponses($survey_id, $user_id);
+    public function GetUserSurveyResponses($survey_id, $user_id, $response_datetime);
 
     //create survey response
     public function createSurveyResponse(Request $request);

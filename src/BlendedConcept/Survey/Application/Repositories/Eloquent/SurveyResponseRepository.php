@@ -21,7 +21,7 @@ class SurveyResponseRepository implements SurveyResponseRepositoryInterface
         $surveyResponses = SurveyResponseResource::collection(
             ResponseEloquentModel::filter($filters)
                 ->selectRaw('MAX(id) as max_id, survey_id, user_id, MAX(response_datetime) as response_datetime')
-                ->groupBy('survey_id', 'user_id')
+                ->groupBy('survey_id', 'user_id', 'response_datetime')
                 ->orderBy('max_id', 'desc')
                 ->with(['user.role', 'student', 'survey'])
                 ->paginate($filters['perPage'] ?? 10)
@@ -30,12 +30,15 @@ class SurveyResponseRepository implements SurveyResponseRepositoryInterface
         return $surveyResponses;
     }
 
-    public function GetUserSurveyResponses($survey_id, $user_id)
+    public function GetUserSurveyResponses($survey_id, $user_id, $response_datetime)
     {
         $surveyResponses = new SurveyResource(
             SurveyEloquentModel::where('id', $survey_id)
-                ->with(['responses' => function ($query) use ($user_id) {
-                    $query->where('user_id', $user_id)->with(['user.role', 'student', 'question.options', 'options']);
+                ->with(['responses' => function ($query) use ($user_id, $response_datetime) {
+                    $query
+                    ->where('user_id', $user_id)
+                    ->where('response_datetime', $response_datetime)
+                    ->with(['user.role', 'student', 'question.options', 'options']);
                 }])
                 ->first()
         );
