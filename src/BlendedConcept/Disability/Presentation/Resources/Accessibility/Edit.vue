@@ -61,6 +61,7 @@ onMounted(() => {
                         <VCol cols="12" md="12">
                             <VLabel class="tiggie-label">Name</VLabel>
                             <VTextField
+                                :disabled="true"
                                 type="text"
                                 class="tiggie-resize-input-text"
                                 placeholder="Text here"
