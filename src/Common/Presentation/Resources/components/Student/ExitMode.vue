@@ -98,8 +98,11 @@ const logout = () => {
                                     placeholder="Password"
                                     :rules="[requiredValidator]"
                                     :error-messages="form?.errors?.password"
+                                    :append-inner-icon="passwordVisible
+                                                ? 'mdi-eye-off-outline'
+                                                : 'mdi-eye-outline'"
                                 />
-                                <span
+                                <!-- <span
                                     class="toggle-password"
                                     v-on:click="togglePasswordVisibility"
                                 >
@@ -110,7 +113,7 @@ const logout = () => {
                                                 : 'mdi-eye-outline'
                                         "
                                     />
-                                </span>
+                                </span> -->
                             </div>
                         </div>
 
@@ -199,5 +202,9 @@ const logout = () => {
     right: 24%;
     transform: translateY(-50%);
     cursor: pointer;
+}
+
+:deep(.passwordinput .v-field__append-inner) {
+    margin-top: 5px !important;
 }
 </style>
