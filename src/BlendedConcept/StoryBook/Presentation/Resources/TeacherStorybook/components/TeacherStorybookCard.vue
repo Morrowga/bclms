@@ -22,14 +22,16 @@ const getImage = (item) => {
 };
 </script>
 <template>
-    <div>
+    <div class="h-100">
         <v-hover
+            class="h-100"
             v-slot="{ isHovering, props }"
             open-delay="200"
             :disabled="props.isDisabled"
         >
-            <div class="main-card-book">
+            <div class="main-card-book h-100">
                 <v-card
+                    class="h-100"
                     @click="
                         router.get(route('teacher_storybook.show', item.id))
                     "
@@ -114,6 +116,7 @@ const getImage = (item) => {
 }
 .main-card-book {
     position: relative;
+    height: 100%;
 }
 .card-hover {
     position: absolute;

@@ -12,7 +12,7 @@ const setImage = () => {
 </script>
 <template>
     <v-card
-        class="grab-pointer w-100 h-100"
+        class="grab-pointer w-100 slider-frame"
         @click="
             router.get(
                 route('learning_activities.index', {
@@ -108,5 +108,8 @@ const setImage = () => {
     position: absolute;
     right: 27px;
     bottom: 17px;
+}
+.slider-frame {
+    height: 85%;
 }
 </style>

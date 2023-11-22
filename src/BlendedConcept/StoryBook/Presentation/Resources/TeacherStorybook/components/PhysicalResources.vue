@@ -1,10 +1,13 @@
 <script setup>
 import PhysicalResourcesCard from "./PhysicalResourcesCard.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-
+import { Pagination } from "swiper/modules";
+import "swiper/css/pagination";
+import "swiper/css";
 import { ref } from "vue";
 
 let model = ref(false);
+const modules = [Pagination];
 const props = defineProps(["physical_resources"]);
 </script>
 <template>
@@ -13,7 +16,13 @@ const props = defineProps(["physical_resources"]);
             <span> Physical Resources </span>
         </div>
         <div class="body-sec">
-            <swiper :slides-per-view="3" :space-between="20">
+            <swiper
+                :modules="modules"
+                :slides-per-view="3"
+                :space-between="20"
+                class="h-100"
+                :pagination="true"
+            >
                 <swiper-slide
                     v-for="(data, key) in props.physical_resources"
                     :key="key"
@@ -41,5 +50,6 @@ const props = defineProps(["physical_resources"]);
 }
 .body-sec {
     padding-top: 40px;
+    height: 450px;
 }
 </style>
