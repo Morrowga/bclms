@@ -101,13 +101,13 @@ onMounted(() => {
                             />
                         </VCol>
                     </VCol>
-                    <VCol cols="12" class="pt-0">
+                    <!-- <VCol cols="12" class="pt-0">
                         <SampleStorybookSlider
                             title="Select Sample Storybook"
                             :books="props.books"
                             :form="form"
                         />
-                    </VCol>
+                    </VCol> -->
                     <VCol cols="12" class="pt-0">
                         <div class="d-flex justify-center aligns-center w-100">
                             <div>
