@@ -78,9 +78,9 @@ let onFormSubmit = () => {
                     </v-row>
                 </v-card-text>
             </v-card>
-            <!-- <div>
+            <div>
                 <v-row>
-                    <v-col cols="12" md="6" offset-md="3" class="pa-10">
+                    <!-- <v-col cols="12" md="6" offset-md="3" class="pa-10">
                         <v-card>
                             <v-card-title>
                                 <v-img src="/images/deviceImg.png" />
@@ -96,7 +96,7 @@ let onFormSubmit = () => {
                                 </div>
                             </v-card-text>
                         </v-card>
-                    </v-col>
+                    </v-col> -->
                     <v-col cols="12">
                         <div class="d-flex justify-center">
                             <VBtn
@@ -119,7 +119,7 @@ let onFormSubmit = () => {
                         </div>
                     </v-col>
                 </v-row>
-            </div> -->
+            </div>
         </VForm>
     </div>
 </template>
