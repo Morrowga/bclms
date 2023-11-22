@@ -55,10 +55,14 @@ addSurveyForm.value.forEach((item) => {
 
 const onFormSubmit = () => {
     // Check if every item in selectedOptions has a value
-    const isAllOptionsFilled = Object.values(selectedOptions.value).every((options) => options.length > 0);
+    const isAllOptionsFilled = Object.values(selectedOptions.value).every(
+        (options) => options.length > 0
+    );
 
     // Check if every item in shortanswer has a value
-    const isAllShortAnswerFilled = Object.values(shortanswer.value).every((answer) => answer.answer !== "");
+    const isAllShortAnswerFilled = Object.values(shortanswer.value).every(
+        (answer) => answer.answer !== ""
+    );
 
     if (isAllOptionsFilled && isAllShortAnswerFilled) {
         // Convert the filteredSelectedOptions to JSON
@@ -228,7 +232,9 @@ const questionType = (questionType) => {
                     </VCol>
                     <v-col cols="12">
                         <div v-if="!validateSurvey" class="text-center">
-                            <span class="error-message pppangram-bold">All Questions need to answer.</span>
+                            <span class="error-message pppangram-bold"
+                                >All Questions need to answer.</span
+                            >
                         </div>
                         <div class="d-flex justify-center mt-5">
                             <Link
@@ -269,7 +275,7 @@ const questionType = (questionType) => {
     font-size: 25px !important;
 }
 
-.error-message{
+.error-message {
     color: red !important;
 }
 
