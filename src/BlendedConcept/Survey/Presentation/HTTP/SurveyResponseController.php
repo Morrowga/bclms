@@ -25,7 +25,6 @@ class SurveyResponseController
             $filters = request()->only(['question', 'search', 'perPage', 'filter']);
 
             $surveyResponses = (new GetSurveyResponses($filters))->handle();
-
             return Inertia::render(config('route.surveyresponse.index'), [
                 'surveyResponses' => $surveyResponses,
             ]);
@@ -39,7 +38,7 @@ class SurveyResponseController
     {
         abort_if(authorize('view', SurveyResponsePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $userSurveyResponse = (new GetUserSurveyResponses($surveyresponse->id, $request->query('user_id')))->handle();
+        $userSurveyResponse = (new GetUserSurveyResponses($surveyresponse->id, $request->query('user_id'), $request->query('response_datetime')))->handle();
         $user = UserEloquentModel::find($request->query('user_id'));
 
         return Inertia::render(config('route.surveyresponse.show'), [

@@ -28,7 +28,7 @@ const formatDate = (dateString) => {
     // Parse the date string into a Date object
     const date = new Date(dateString);
     // Format the date using date-fns
-    return format(date, "dd/M/yyyy"); // Customize the format string as needed
+    return format(date, "dd/M/yyyy, hh:mm:ss a"); // Customize the format string as needed
 };
 //## start datatable section
 let columns = [
@@ -124,7 +124,7 @@ const deleteItem = (id) => {
 
 const showInfo = (e) => {
     console.log(e);
-    router.get("/surveyresponse/" + e.row.survey.id + '?user_id=' + e.row.user.id);
+    router.get("/surveyresponse/" + e.row.survey.id + '?user_id=' + e.row.user.id + '&response_datetime=' + e.row.response_datetime);
 };
 </script>
 <template>
