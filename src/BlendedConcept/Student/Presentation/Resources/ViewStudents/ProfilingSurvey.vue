@@ -36,6 +36,7 @@ const form = useForm({
     type: "PROFILING",
     survey_id: props.profilingSurvey.data.id,
     user_id: user_id.value,
+    student_id: props.user?.student?.student_id,
 });
 
 const addSurveyForm = ref(

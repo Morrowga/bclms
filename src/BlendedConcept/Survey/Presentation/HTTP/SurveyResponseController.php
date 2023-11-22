@@ -58,13 +58,13 @@ class SurveyResponseController
     public function store(StoreSurveyResponseRequest $request)
     {
         // abort_if(authorize('store', SurveyResponsePolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        // dd($request->all());
         try {
             $request->validated();
             // Creates a new StoreSurveyResponseCommand object and executes it.
             $storeSurveyResponseCommand = new StoreSurveyResponseCommand($request);
             $storeSurveyResponseCommand->execute();
-            return redirect()->route('teacher_students.index');
+            return redirect()->route('teacher_students.show', $request->student_id);
         } catch (\Exception $e) {
             // Handle the exception here
             return redirect()->back()->with('errorMessage', $e->getMessage());
