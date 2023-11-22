@@ -99,14 +99,23 @@ let onFormSubmit = () => {
                     </v-col> -->
                     <v-col cols="12">
                         <div class="d-flex justify-center">
-                            <VBtn
-                                color="#e9eff0"
-                                variant="flat"
-                                rounded
-                                class="pl-16 pr-16 mr-4"
+                            <Link
+                                :href="
+                                    route(
+                                        'teacher_students.show',
+                                        props.student_id
+                                    )
+                                "
                             >
-                                <span class="text-primary">Cancel</span>
-                            </VBtn>
+                                <VBtn
+                                    color="#e9eff0"
+                                    variant="flat"
+                                    rounded
+                                    class="pl-16 pr-16 mr-4"
+                                >
+                                    <span class="text-primary">Cancel</span>
+                                </VBtn>
+                            </Link>
                             <VBtn
                                 type="submit"
                                 color="primary"
