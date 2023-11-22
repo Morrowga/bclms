@@ -7,36 +7,35 @@ import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
 
 const props = defineProps({
-  devices: {
-    type: Object,
-    required: true,
-  },
-  selectedId: {
-    type: Number,
-    required: true,
-  },
-  student_id: {
-    type: Number,
-    required: true,
-  }
+    devices: {
+        type: Object,
+        required: true,
+    },
+    selectedId: {
+        type: Number,
+        required: true,
+    },
+    student_id: {
+        type: Number,
+        required: true,
+    },
 });
-let flash = computed(() => usePage().props.flash)
+let flash = computed(() => usePage().props.flash);
 let tab = ref(null);
 const selectedDevice = computed(() => {
-  // Find the selected device object based on selectedValue
-  return props.devices.find((device) => device.id === props.selectedId);
+    // Find the selected device object based on selectedValue
+    return props.devices.find((device) => device.id === props.selectedId);
 });
 const form = useForm({
-    "device_id": selectedDevice.value.id,
-})
+    device_id: selectedDevice.value.id,
+});
 let onFormSubmit = () => {
-  form.post(route("set_accessibility_device.store", props.student_id), {
-    onSuccess: () => {
-      FlashMessage({ flash });
-    },
-    onError: (error) => {
-    },
-  });
+    form.post(route("set_accessibility_device.store", props.student_id), {
+        onSuccess: () => {
+            FlashMessage({ flash });
+        },
+        onError: (error) => {},
+    });
 };
 </script>
 <template>
@@ -50,10 +49,10 @@ let onFormSubmit = () => {
                         </v-col>
                         <v-col cols="12" md="6" class="pa-10">
                             <h1 class="text-h4 font-weight-bold mb-4 t-black">
-                                {{selectedDevice.name}}
+                                {{ selectedDevice.name }}
                             </h1>
                             <p class="text-subtitle-1">
-                                {{selectedDevice.description}}
+                                {{ selectedDevice.description }}
                             </p>
                             <br />
                             <div class="tab">
@@ -81,7 +80,7 @@ let onFormSubmit = () => {
             </v-card>
             <div>
                 <v-row>
-                    <v-col cols="12" md="6" offset-md="3" class="pa-10">
+                    <!-- <v-col cols="12" md="6" offset-md="3" class="pa-10">
                         <v-card>
                             <v-card-title>
                                 <v-img src="/images/deviceImg.png" />
@@ -97,7 +96,7 @@ let onFormSubmit = () => {
                                 </div>
                             </v-card-text>
                         </v-card>
-                    </v-col>
+                    </v-col> -->
                     <v-col cols="12">
                         <div class="d-flex justify-center">
                             <VBtn
