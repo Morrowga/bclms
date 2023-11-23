@@ -13,7 +13,7 @@ const setImage = () => {
 <template>
     <v-card
         min-width="275"
-        class="grab-pointer"
+        class="grab-pointer slider-frame"
         @click="router.get(route('gameassign.show', props.data.id))"
     >
         <v-card-title class="ps-relative">
@@ -101,5 +101,8 @@ const setImage = () => {
     position: absolute;
     right: 27px;
     bottom: 17px;
+}
+.slider-frame {
+    height: 85%;
 }
 </style>

@@ -118,13 +118,13 @@ const deleteItem = (id) => {
     gap: 10px;
 }
 
-.grab-pointer{
+.grab-pointer {
     padding: 5px;
 }
 
-.assign-btn{
-/* margin-left: 20px; */
-width: 100%;
+.assign-btn {
+    /* margin-left: 20px; */
+    width: 100%;
 }
 
 .dotbtn {

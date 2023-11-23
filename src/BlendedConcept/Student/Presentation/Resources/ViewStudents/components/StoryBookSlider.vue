@@ -2,29 +2,38 @@
 import { ref, defineProps } from "vue";
 import StoryBookSliderCard from "./StoryBookSliderCard.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
+import { Pagination } from "swiper/modules";
+import "swiper/css/pagination";
+import "swiper/css";
 let model = ref(false);
+const modules = [Pagination];
+
 const props = defineProps(["datas", "student_id"]);
 </script>
 <template>
-    <!-- <v-slide-group v-model="model" center-active show-arrows mandatory>
-        <v-slide-group-item v-for="data in 8" :key="data">
-            <div class="mx-4 card-container">
-                <StoryBookSliderCard />
-            </div>
-        </v-slide-group-item>
-    </v-slide-group> -->
-    <swiper :slides-per-view="4" :space-between="10">
-        <swiper-slide v-for="data in props.datas" :key="data.id">
-            <StoryBookSliderCard
-                :data="data.storybook"
-                :student_id="student_id"
-                :version_name="data.name"
-            />
-        </swiper-slide>
-    </swiper>
+    <div class="body-sec">
+        <swiper
+            :slides-per-view="4"
+            :space-between="10"
+            :modules="modules"
+            class="h-100"
+            :pagination="true"
+        >
+            <swiper-slide v-for="data in props.datas" :key="data.id">
+                <StoryBookSliderCard
+                    :data="data.storybook"
+                    :student_id="student_id"
+                    :version_name="data.name"
+                />
+            </swiper-slide>
+        </swiper>
+    </div>
 </template>
 
 <style>
+.body-sec {
+    height: 400px;
+}
 .control-position {
     position: relative;
 }

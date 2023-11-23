@@ -1,7 +1,7 @@
 <script setup>
 import StorybookVersionCard from "./StorybookVersionCard.vue";
 import CreateStorybookVersion from "./CreateStorybookVersion.vue";
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper/modules";
 import { checkPermission } from "@actions/useCheckPermission";
@@ -10,7 +10,6 @@ import "swiper/css/pagination";
 import "swiper/css";
 const modules = [Pagination];
 const props = defineProps(["dataStoryBook"]);
-
 </script>
 <template>
     <div>
@@ -25,7 +24,13 @@ const props = defineProps(["dataStoryBook"]);
             />
         </div>
         <div class="body-sec">
-            <swiper :slides-per-view="2" :space-between="20">
+            <swiper
+                class="h-100"
+                :slides-per-view="2"
+                :space-between="20"
+                :modules="modules"
+                :pagination="true"
+            >
                 <swiper-slide
                     v-for="(item, index) in dataStoryBook.storybook_versions"
                     :key="item.id"
@@ -58,6 +63,7 @@ const props = defineProps(["dataStoryBook"]);
     text-transform: capitalize !important;
 }
 .body-sec {
+    height: 450px;
     padding-top: 40px;
 }
 </style>
