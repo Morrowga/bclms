@@ -26,23 +26,24 @@ class OrganisationTeacherController
         abort_if(authorize('view', OrganisationUserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
-        $organisation_id = auth()->user()->organisation_id;
-        $filters = request(['search', 'first_name', 'last_name', 'email', 'filter']) ?? [];
-        $organisation = OrganisationEloquentModel::with('subscription.b2b_subscription')->find($organisation_id);
-        $teachers = (new GetTeacherList($filters))->handle();
-        $total_teachers = 0;
-        $total_students = 0;
-        if (isset($organisation->subscription->b2b_subscription)) {
-            $total_students = $organisation->subscription->b2b_subscription->num_student_license;
-            $total_teachers = $organisation->subscription->b2b_subscription->num_teacher_license;
-        }
-        $studentListWithPagniation = (new GetStudentList($filters))->handle();
-        return Inertia::render(config('route.organisations-teacher.index'), [
-            'teachers' => $teachers,
-            'students' => $studentListWithPagniation,
-            'total_teachers' => $total_teachers,
-            'total_students' => $total_students
-        ]);
+            $organisation_id = auth()->user()->organisation_id;
+            $filters = request(['search', 'first_name', 'last_name', 'email', 'filter']) ?? [];
+            $organisation = OrganisationEloquentModel::with('subscription.b2b_subscription')->find($organisation_id);
+            $teachers = (new GetTeacherList($filters))->handle();
+            $total_teachers = 0;
+            $total_students = 0;
+            if (isset($organisation->subscription->b2b_subscription)) {
+                $total_students = $organisation->subscription->b2b_subscription->num_student_license;
+                $total_teachers = $organisation->subscription->b2b_subscription->num_teacher_license;
+            }
+            $studentListWithPagniation = (new GetStudentList($filters))->handle();
+            return Inertia::render(config('route.organisations-teacher.index'), [
+                'teachers' => $teachers,
+                'students' => $studentListWithPagniation,
+                'total_teachers' => $total_teachers,
+                'total_students' => $total_students,
+                'organisation' => $organisation
+            ]);
         } catch (\Exception $e) {
 
             return redirect()->back()->with('errorMessage', $e->getMessage());
