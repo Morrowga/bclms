@@ -2,7 +2,7 @@
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 
-let props = defineProps(["version", "video"]);
+let props = defineProps(["version", "video", "type"]);
 const is_interactive = ref(true);
 const videoSrc = ref(props.video);
 const h5pIframe = ref(null);
@@ -37,8 +37,16 @@ const app_url = computed(() => page?.props?.route_site_url);
                 <br />
                 <div class="mt-10" v-if="is_interactive">
                     <iframe
+                        v-if="props.type != 'HTML5'"
                         ref="h5pIframe"
                         :src="app_url + '/admin/h5p/h5p/' + props.version.h5p_id"
+                        frameborder="0"
+                        scrolling="auto"
+                        class="h5p-width"
+                    ></iframe>
+                    <iframe v-else
+                        ref="h5pIframe"
+                        :src="app_url + '/book_html5/' + props.video"
                         frameborder="0"
                         scrolling="auto"
                         class="h5p-width"
@@ -46,6 +54,7 @@ const app_url = computed(() => page?.props?.route_site_url);
                 </div>
                 <div v-else>
                     <iframe
+                    v-if="props.type != 'HTML5'"
                     :src="videoSrc"
                     frameborder="0"
                     scrolling="auto"
