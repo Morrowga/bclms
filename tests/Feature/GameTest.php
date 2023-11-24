@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\File as FileCopy;
+use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
 
 beforeEach(function () {
     // Run migrations
@@ -58,7 +60,7 @@ test('can access game with bcstaff roles', function () {
     $response->assertStatus(200);
 });
 
-test('create game with bcstaff roles', function () {
+test('create game and search, filter game with bcstaff roles', function () {
     $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
     $sourcePath = public_path('testcase/jolly-jumper-gh-pages.zip');
     $destinationPath = public_path('testcase/jolly-jumper-gh-pages1.zip');
@@ -112,6 +114,14 @@ test('create game with bcstaff roles', function () {
     ]);
 
     $response->assertStatus(302);
+
+    $gameId = 1; // retrieve as needed
+    $disabilityTypeId = 1; // retrieve as needed
+    $game = GameEloquentModel::find($gameId);
+    $disabilityType = DisabilityTypeEloquentModel::find($disabilityTypeId);
+
+    asBcStaff()->get("games?page=1&perPage=10&search={$game->name}")->assertSee("{$game->name}"); //searching with new created game name
+    asBcStaff()->get("games?page=1&perPage=10&filterItems=disability_types:{{$disabilityType->id},devices:[]}"); //searching with new created game name
 
     $storeData = $this->post('/games', []);
 

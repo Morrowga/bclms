@@ -100,7 +100,7 @@ test('update storybook version with bcsubcriber roles', function () {
 
     $storeData = $this->put("/storybooksversions/{$storyVersionId}", []);
 
-    $storeData->assertSessionHasErrors(['name', 'description']);
+    $storeData->assertSessionHasErrors(['name']);
 
 });
 

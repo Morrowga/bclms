@@ -19,7 +19,7 @@ beforeEach(function () {
 });
 
 test('import student excel with super admin role module', function () {
-    $user = UserEloquentModel::where('email', 'superadmin@mail.com')->first();
+    $user = UserEloquentModel::where('email', 'bcstaff@mail.com')->first();
 
     $this->actingAs($user);
 
@@ -35,9 +35,15 @@ test('import student excel with super admin role module', function () {
 
     $response = $this->post('/teacher/import', [
         'organisation_id' => 1,
-        'file' => $excelFile,
+        'file' => [$excelFile],
         'type' => 'student',
     ]);
 
     $response->assertStatus(302);
+
+    // Query the database to check if the email exists
+    $usernameExist = UserEloquentModel::where('username', 'wren_clark')->exists();
+
+    // Assert that the email exists in the database
+    $this->assertTrue($usernameExist);
 });

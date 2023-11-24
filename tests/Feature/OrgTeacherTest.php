@@ -50,6 +50,32 @@ test('without other role not access organisations teacher', function () {
     $reponse->assertStatus(403);
 });
 
+test('access organisation teacher with org admin roles', function() {
+    $user = UserEloquentModel::where('email', 'orgone@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
+
+    $response = $this->get('/organisations-teacher');
+
+    $response->assertStatus(200);
+});
+
+test('details organisation teacher with org admin roles', function() {
+    $user = UserEloquentModel::where('email', 'orgone@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
+
+    $teacherId = 1;
+
+    $response = $this->get("/organisations-teacher/{$teacherId}");
+
+    $response->assertStatus(200);
+});
+
 test('create org teacher with org admin roles', function () {
 
     $user = UserEloquentModel::where('email', 'orgone@mail.com')->first();
@@ -73,6 +99,29 @@ test('create org teacher with org admin roles', function () {
     $storeData = $this->post('/organisations-teacher', []);
 
     $storeData->assertSessionHasErrors(['first_name', 'last_name', 'email', 'contact_number']);
+
+    // Roll back the transaction to undo any database changes made during the test
+});
+
+test('cannot create duplicate org teacher with org admin roles', function () {
+
+    $user = UserEloquentModel::where('email', 'orgone@mail.com')->first();
+
+    $this->actingAs($user);
+
+    $this->assertAuthenticated(); // Check if the user is authenticated
+
+    $image = UploadedFile::fake()->image('image.jpg'); // Change 'test.jpg' to the desired file name and extension
+
+    $response = $this->post('/organisations-teacher', [
+        'first_name' => 'Example',
+        'last_name' => 'Teacher',
+        'email' => 'teacherone@mail.com',
+        'contact_number' => '0912345678',
+        'image' => $image,
+    ]);
+
+    $response->assertSessionHasErrors(['email']);
 
     // Roll back the transaction to undo any database changes made during the test
 });

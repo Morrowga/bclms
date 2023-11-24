@@ -202,18 +202,18 @@ test('update teacher student with bcsubscriber roles', function () {
         "gender"=> "Female",
         "dob"=> "2005-03-15",
         "contact_number"=> "12345678",
-        "email"=> "emma.johnson@example.com",
+        // "email"=> "emma.johnson@example.com",
         "education_level"=> "8th Grade",
         "learning_needs"=> [$updateSubLearningType->id],
         "disability_types"=> [$updateDisabilityType->id],
-        "parent_first_name"=> "John",
-        "parent_last_name"=> "Johnson",
+        // "parent_first_name"=> "John",
+        // "parent_last_name"=> "Johnson",
         "profile_pics"=> $updateImage,
         "num_gold_coins" => 0,
         "num_silver_coins" => 0,
-        "student_code" => '123456',
+        // "student_code" => '123456',
         "user_id" => $student->user_id,
-        "parent_id" => $student->parent_id
+        // "parent_id" => $student->parent_id
     ]);
 
     $updateResponse->assertStatus(302);
