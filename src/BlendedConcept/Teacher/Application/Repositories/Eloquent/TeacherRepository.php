@@ -20,6 +20,7 @@ class TeacherRepository implements TeacherRepositoryInterface
      */
     public function getTeachers($filters = [])
     {
+        // dd('hello');
         //set roles
         $users = TeacherResource::collection(UserEloquentModel::filter($filters)
             ->where('organisation_id', auth()->user()->organisation_id)

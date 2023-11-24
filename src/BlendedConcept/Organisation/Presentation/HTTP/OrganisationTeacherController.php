@@ -29,6 +29,7 @@ class OrganisationTeacherController
             $organisation_id = auth()->user()->organisation_id;
             $filters = request(['search', 'first_name', 'last_name', 'email', 'filter']) ?? [];
             $organisation = OrganisationEloquentModel::with('subscription.b2b_subscription')->find($organisation_id);
+
             $teachers = (new GetTeacherList($filters))->handle();
             $total_teachers = 0;
             $total_students = 0;
@@ -66,6 +67,7 @@ class OrganisationTeacherController
      */
     public function store(StoreTeacherRequest $request)
     {
+
         abort_if(authorize('store', OrganisationUserPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {

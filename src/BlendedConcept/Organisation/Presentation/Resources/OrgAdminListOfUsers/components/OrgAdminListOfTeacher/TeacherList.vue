@@ -133,15 +133,15 @@ const showUsedStorage = (teacher) => {
                 lg="2"
                 class="pe-2"
                 v-for="item in props.data.data"
-                :key="item.user.id"
+                :key="item.user?.id"
             >
                 <!--  -->
                 <TeacherAvatar
                     class="teacherAvatar"
                     :image="getImage(item.user)"
-                    :route="route('organisations-teacher.show', item.user.id)"
-                    :title="item.user.first_name + ' ' + item.user.last_name"
-                    :phone_number="item.user.contact_number"
+                    :route="route('organisations-teacher.show', item.user?.id)"
+                    :title="item.user?.first_name + ' ' + item.user?.last_name"
+                    :phone_number="item.user?.contact_number"
                     :storage="showUsedStorage(item)"
                 />
             </VCol>
