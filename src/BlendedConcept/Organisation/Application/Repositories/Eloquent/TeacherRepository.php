@@ -91,7 +91,7 @@ class TeacherRepository implements TeacherRepositoryInterface
             if ($total_teachers_licenses >= $coming_teacher_count) {
                 $userEloquent = TeacherMapper::toEloquent($teacher);
                 //verify teacher just now
-                $userEloquent->email_verification_send_on = now();
+
                 $userEloquent->save();
 
                 if (request()->hasFile('image') && request()->file('image')->isValid()) {
