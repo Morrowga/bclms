@@ -1,6 +1,7 @@
 <script setup>
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
+import { ref, onMounted,onBeforeUnmount } from 'vue';
 
 let props = defineProps(["version", "video", "type"]);
 const is_interactive = ref(true);
@@ -13,6 +14,46 @@ const app_url = computed(() => page?.props?.route_site_url);
  const changeMode = (bool) => {
     is_interactive.value = bool;
  }
+
+ const storybookData = ref({
+  timeSpend: '10mins',
+  completed: 'yes',
+  progress: '100%',
+  accuracy: '5%'
+});
+
+// Retrieve data from localStorage on component mount
+onMounted(() => {
+  localStorage.setItem('storybook', JSON.stringify(storybookData.value));
+  setCookie('storybook', JSON.stringify(storybookData.value), 30); // 30 days expiration
+});
+
+onBeforeUnmount(() => {
+    const storedData = localStorage.getItem('storybook');
+    if (storedData) {
+        const storageData = JSON.parse(storedData);
+        alert('that is storage data ' + storageData.timeSpend + ',' + storageData.completed + ',' + storageData.progress + ',' + storageData.accuracy);
+    }
+
+    const storedCookie = getCookie('storybook');
+    if (storedCookie) {
+        const parsedData = JSON.parse(storedCookie);
+        alert('that is cookie data ' + parsedData.timeSpend + ',' + parsedData.completed + ',' + parsedData.progress + ',' + parsedData.accuracy);
+    }
+});
+
+function setCookie(name, value, days) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+}
+
+// Function to get a cookie value
+function getCookie(name) {
+    const keyValue = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
+    return keyValue ? keyValue[2] : null;
+}
+
 </script>
 <template>
     <AdminLayout>
