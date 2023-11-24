@@ -1,6 +1,7 @@
 <?php
 
 namespace Src\Common\Presentation\CLI;
+
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -10,6 +11,7 @@ use Src\BlendedConcept\Organisation\Domain\Mail\TeacherExpirationNotice;
 use Src\BlendedConcept\Organisation\Domain\Mail\OrganisationExpirationNotice;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
+use Src\BlendedConcept\Teacher\Infrastructure\EloquentModels\TeacherEloquentModel;
 
 class ExpirationNoticeCommand extends Command
 {
@@ -64,11 +66,11 @@ class ExpirationNoticeCommand extends Command
                 $hoursUntilExpiration = Carbon::now()->diffInHours($end_date, false);
 
 
-                if ($hoursUntilExpiration <= 2) {
+                if ($hoursUntilExpiration <= 1) {
                     $title = 'Your Subscription Expires Soon';
                     $message = 'Dear ' . $organisation->name . ', your subscription is expiring soon in ' . $hoursUntilExpiration . ' hours.';
-
-                    Mail::to($organisation->contact_email)
+                    $orgadmin = $organisation->org_admin->user;
+                    Mail::to($orgadmin->email)
                         ->send(new OrganisationExpirationNotice($organisation, $title, $message));
 
                     Log::info("Expiration notice sent to organization: {$organisation->name}");
