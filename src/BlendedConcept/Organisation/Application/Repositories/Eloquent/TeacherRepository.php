@@ -2,7 +2,9 @@
 
 namespace Src\BlendedConcept\Organisation\Application\Repositories\Eloquent;
 
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Src\Auth\Application\Mails\EmailVerify;
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\Organisation\Application\DTO\TeacherData;
 use Src\BlendedConcept\Organisation\Domain\Model\Entities\Teacher;
@@ -28,9 +30,11 @@ class TeacherRepository implements TeacherRepositoryInterface
         //     ->where('organisation_id', auth()->user()->organisation_id)
         //     ->orderBy('teacher_id', 'desc')
         //     ->paginate($filters['perPage'] ?? 10))
+
         $organisation_id = auth()->user()->organisation_id;
         $teachers = TeacherResource::collection(TeacherEloquentModel::filter($filters)
             ->with(['user'])
+
             ->where('organisation_id', auth()->user()->organisation_id)
             ->orderBy('teacher_id', 'desc')
             ->paginate($filters['perPage'] ?? 10));
@@ -87,7 +91,7 @@ class TeacherRepository implements TeacherRepositoryInterface
             if ($total_teachers_licenses >= $coming_teacher_count) {
                 $userEloquent = TeacherMapper::toEloquent($teacher);
                 //verify teacher just now
-                $userEloquent->email_verification_send_on = now();
+
                 $userEloquent->save();
 
                 if (request()->hasFile('image') && request()->file('image')->isValid()) {
@@ -103,7 +107,8 @@ class TeacherRepository implements TeacherRepositoryInterface
                 $teacher->user_id = $userEloquent->id;
                 $teacher->organisation_id = $org_id;
                 $teacher->save();
-
+                $bcstaff = UserEloquentModel::where('role_id', 3)->first();
+                \Mail::to($userEloquent->email)->send(new EmailVerify($userEloquent->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userEloquent->email), $bcstaff->email, $bcstaff->contact_number));
                 DB::commit();
             } else {
                 return throw new \Exception("License not enough to create teacher");
@@ -153,8 +158,10 @@ class TeacherRepository implements TeacherRepositoryInterface
 
     public function delete(int $teacher_id): void
     {
+
         $teacher = UserEloquentModel::query()->findOrFail($teacher_id);
         $teacher->clearMediaCollection('image'); // Replace with the actual collection name
+        $teacher->b2bUser()->delete();
         $teacher->delete();
     }
 }

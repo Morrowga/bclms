@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Src\BlendedConcept\Teacher\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
@@ -14,6 +15,7 @@ use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEl
 
 class TeacherEloquentModel extends Authenticatable
 {
+    use SoftDeletes;
     protected $table = 'teachers';
     protected $primaryKey = 'teacher_id';
     protected $fillable = [
@@ -22,7 +24,7 @@ class TeacherEloquentModel extends Authenticatable
         'organisation_id',
         'allocated_storage_limit',
         'curr_subscription_id',
-];
+    ];
 
     public function user()
     {
@@ -50,6 +52,6 @@ class TeacherEloquentModel extends Authenticatable
 
     public function students()
     {
-        return $this->belongsToMany(StudentEloquentModel::class,'teacher_students', 'teacher_id', 'student_id')->with(['disability_types', 'device']);
+        return $this->belongsToMany(StudentEloquentModel::class, 'teacher_students', 'teacher_id', 'student_id')->with(['disability_types', 'device']);
     }
 }
