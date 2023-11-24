@@ -6,8 +6,13 @@ import {
     onColumnFilter,
     serverParams,
     searchItems,
+    onPageChange,
+    serverPerPage,
+    serverPage,
 } from "@Composables/useServerSideDatable.js";
 let props = defineProps(["students", "total_students"]);
+serverPage.value = ref(props.students.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
 // console.log(props.students);
 let filters = ref(null);
 let filterDatas = ref([
@@ -115,7 +120,16 @@ const getImage = (user) => {
             </VCol>
         </VRow>
         <div class="d-flex justify-center">
-            <Pagination />
+            <VPagination
+                v-model="serverPage"
+                size="small"
+                :total-visible="5"
+                :length="props.students.meta.last_page"
+                variant="outlined"
+                @next="onPageChange"
+                @prev="onPageChange"
+                @click="onPageChange"
+            />
         </div>
     </VContainer>
 </template>

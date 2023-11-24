@@ -7,6 +7,9 @@ import {
     onColumnFilter,
     serverParams,
     searchItems,
+    onPageChange,
+    serverPerPage,
+    serverPage,
 } from "@Composables/useServerSideDatable.js";
 const props = defineProps({
     data: {
@@ -17,7 +20,8 @@ const props = defineProps({
         default: 0,
     },
 });
-
+serverPage.value = ref(props.data.meta.current_page ?? 1);
+serverPerPage.value = ref(10);
 let filters = ref(null);
 let filterDatas = ref([
     { title: "A-Z", value: "asc" },
@@ -143,7 +147,16 @@ const showUsedStorage = (teacher) => {
             </VCol>
         </VRow>
         <div class="d-flex justify-center">
-            <Pagination :metadata="props.data.meta" />
+            <VPagination
+                v-model="serverPage"
+                size="small"
+                :total-visible="5"
+                :length="props.data.meta.last_page"
+                variant="outlined"
+                @next="onPageChange"
+                @prev="onPageChange"
+                @click="onPageChange"
+            />
         </div>
     </VContainer>
 </template>

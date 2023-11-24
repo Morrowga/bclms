@@ -13,6 +13,8 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+
+use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\ParentUserEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Student\Infrastructure\EloquentModels\StudentEloquentModel;
@@ -34,50 +36,74 @@ class StudentImport implements SkipsOnError, SkipsOnFailure, ToCollection, WithH
 
     public function collection(Collection $rows)
     {
-        // dd($rows);
+
+
         DB::beginTransaction();
 
         try {
-            foreach ($rows as $row) {
-                $create_user_data = [
-                    'first_name' => $row['first_name'],
-                    'last_name' => $row['last_name'],
-                    'username' => $row['username'],
-                    'role_id' => 6,
-                    'password' => $row['password'],
-                ];
-                $create_parent_data = [
-                    'first_name' => $row['parent_first_name'],
-                    'last_name' => $row['parent_last_name'],
-                    'contact_number' => $row['contact_number'],
-                    'email' => $row['email'],
-                    'role_id' => 7
-                ];
-                $userParentEloquent = UserEloquentModel::create($create_parent_data);
+            $organisation = OrganisationEloquentModel::find($this->request->organisation_id);
+            if ($organisation->subscription) {
 
-                $parentEloquent = ParentUserEloquentModel::create([
-                    "user_id" => $userParentEloquent->id,
-                    "organisation_id" => $this->request->organisation_id,
-                    "type" => "B2B"
-                ]);
+                $b2b_subscription = $organisation->subscription->b2b_subscription;
+                if ($b2b_subscription) {
+                    $total_student_licenses = $b2b_subscription->num_student_license;
+                    $current_total_student_licenses = 0;
+                    if ($organisation->all_students) {
+                        $current_total_student_licenses = $organisation->all_students()->count();
+                    }
+                    $avaliable_licenses = $total_student_licenses - $current_total_student_licenses;
+                    $enter_rows = count($rows);
+                    if ($enter_rows > $avaliable_licenses) {
+                        return throw new \Exception("License not enough to create student");
+                    } else {
+                        foreach ($rows as $row) {
+                            $create_user_data = [
+                                'first_name' => $row['first_name'],
+                                'last_name' => $row['last_name'],
+                                'username' => $row['username'],
+                                'role_id' => 6,
+                                'password' => $row['password'],
+                            ];
+                            $create_parent_data = [
+                                'first_name' => $row['parent_first_name'],
+                                'last_name' => $row['parent_last_name'],
+                                'contact_number' => $row['contact_number'],
+                                'email' => $row['email'],
+                                'role_id' => 7
+                            ];
+                            $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
-                $userEloquent = UserEloquentModel::create($create_user_data);
-                $dateFormat = Carbon::createFromFormat('j m Y', $row['dob']);
-                $dob = $dateFormat->format('Y-m-d');
-                $create_student = [
-                    'user_id' => $userEloquent->id,
-                    'parent_id' => $parentEloquent->parent_id,
-                    'gender' => $row['gender'],
-                    'dob' => $dob,
-                    'education_level' => $row['education_level'],
-                    'student_code' => generateUniqueCode(),
-                    'organisation_id' => $this->request->organisation_id
-                ];
-                $studentEloquent = StudentEloquentModel::create($create_student);
+                            $parentEloquent = ParentUserEloquentModel::create([
+                                "user_id" => $userParentEloquent->id,
+                                "organisation_id" => $this->request->organisation_id,
+                                "type" => "B2B"
+                            ]);
+
+                            $userEloquent = UserEloquentModel::create($create_user_data);
+                            $dateFormat = Carbon::createFromFormat('j m Y', $row['dob']);
+                            $dob = $dateFormat->format('Y-m-d');
+                            $create_student = [
+                                'user_id' => $userEloquent->id,
+                                'parent_id' => $parentEloquent->parent_id,
+                                'gender' => $row['gender'],
+                                'dob' => $dob,
+                                'education_level' => $row['education_level'],
+                                'student_code' => generateUniqueCode(),
+                                'organisation_id' => $this->request->organisation_id
+                            ];
+                            $studentEloquent = StudentEloquentModel::create($create_student);
+                        }
+                    }
+                } else {
+                    return throw new \Exception("Organisation doesn't have subscription!");
+                }
+            } else {
+                return throw new \Exception("Organisation doesn't have subscription!");
             }
+
             DB::commit();
         } catch (\Exception $e) {
-            dd($e);
+            throw new \Exception($e->getMessage());
             DB::rollBack();
         }
     }

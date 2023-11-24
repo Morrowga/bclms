@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\Teacher\Presentation\HTTP;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 use Src\BlendedConcept\Library\Infrastructure\EloquentModels\MediaEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Security\Application\Requests\StoreUserRequest;
@@ -185,33 +186,40 @@ class TeacherController extends Controller
 
     public function import_excel(Request $request)
     {
-        if ($request->hasFile('file')) {
-            if ($request->type == 'teacher') {
-                $import = new UserImport($request);
-            } else {
-                $import = new StudentImport($request);
-            }
-
-            $import->import($request->file('file')[0]);
-
-            if ($import->failures()->count() > 0) {
-                $errorRows = [];
-                $currentRow = null;
-                foreach ($import->failures() as $failure) {
-                    $currentRow = $failure->row();
-                    if ($currentRow == $failure->row()) {
-                        if (!in_array($failure->values(), $errorRows)) {
-                            array_push($errorRows, $failure->values());
-                        }
-                    }
+        try {
+            if ($request->hasFile('file')) {
+                // $excelFile = $request->file('file')[0];
+                // $totalRows = Excel::load($excelFile)->getSheet()->count();
+                // dd($totalRows);
+                if ($request->type == 'teacher') {
+                    $import = new UserImport($request);
+                } else {
+                    $import = new StudentImport($request);
                 }
 
-                return redirect()->back()->with('export_errors', $errorRows)->with('successMessage', 'Import Successfully!');
-            }
+                $import->import($request->file('file')[0]);
 
-            return back();
-        } else {
-            return redirect()->back()->with('systemError', 'You need to import excel file');
+                if ($import->failures()->count() > 0) {
+                    $errorRows = [];
+                    $currentRow = null;
+                    foreach ($import->failures() as $failure) {
+                        $currentRow = $failure->row();
+                        if ($currentRow == $failure->row()) {
+                            if (!in_array($failure->values(), $errorRows)) {
+                                array_push($errorRows, $failure->values());
+                            }
+                        }
+                    }
+
+                    return redirect()->back()->with('export_errors', $errorRows)->with('successMessage', 'Import Successfully!');
+                }
+
+                return back();
+            } else {
+                return redirect()->back()->with('errorMessage', 'You need to import excel file');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('errorMessage', $e->getMessage());
         }
     }
 }

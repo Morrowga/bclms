@@ -20,8 +20,8 @@ const changePage = (page) => {
 };
 
 // Update the meta data when the component receives new data
-watch(props.data, (newData) => {
-    meta.value = newData.meta;
+watch(props.metadata, (newData) => {
+    meta.value = newData;
 });
 </script>
 <template>

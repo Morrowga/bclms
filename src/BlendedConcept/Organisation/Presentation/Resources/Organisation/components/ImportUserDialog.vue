@@ -18,6 +18,7 @@ const items = [
 ];
 const uploadedImages = ref([]);
 const fileInput = ref(null);
+let flash = computed(() => usePage().props.flash);
 
 let export_errors = computed(() => usePage().props.export_errors);
 
@@ -46,7 +47,14 @@ const importUser = () => {
     form.post(route("teachers.import"), {
         onSuccess: (response) => {
             // console.log(response);
-            if (export_errors.value && export_errors.value?.length > 0) {
+            if (flash.value.errorMessage) {
+                SuccessDialog({
+                    title: flash.value.errorMessage,
+                    mainTitle: "Error!",
+                    color: "#ff6262",
+                    icon: "error",
+                });
+            } else if (export_errors.value && export_errors.value?.length > 0) {
                 const data = export_errors.value;
                 const fileName = "FailToImportStudent";
                 const exportType = exportFromJSON.types.csv;
@@ -62,6 +70,10 @@ const importUser = () => {
                 closeDialog();
                 emit("closeDialog");
                 return;
+            } else {
+                SuccessDialog({
+                    title: "Import Successfully!",
+                });
             }
             emit("closeDialog");
             closeDialog();

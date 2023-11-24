@@ -76,8 +76,8 @@ const importUser = () => {
                     title: "Import Successfully!",
                 });
             }
-            closeDialog();
             emit("closeDialog");
+            closeDialog();
         },
         onError: (error) => {
             // console.log(error, "not okay par");
@@ -98,7 +98,6 @@ const closeDialog = () => {
     form.file = null;
     isDialogVisible.value = false;
 };
-
 onUpdated(() => {
     form.organisation_id = props.organisation_id;
     form.type = props.type;
@@ -106,7 +105,7 @@ onUpdated(() => {
 </script>
 
 <template>
-    <VDialog v-model="isDialogVisible" width="500">
+    <VDialog v-model="isDialogVisible" width="550">
         <!-- Activator -->
         <template #activator="{ props }">
             <VBtn
@@ -126,7 +125,7 @@ onUpdated(() => {
             <VCardTitle
                 class="d-flex justify-space-between align-center ml-7 mr-7 gap-16"
             >
-                <h4 class="tiggie-title">Upload {{ props.type }}</h4>
+                <h4 class="tiggie-teacher-title">Upload {{ props.type }}</h4>
                 <a
                     v-if="form.type == 'student'"
                     href="/imports/bc_student_import.csv"
@@ -135,16 +134,16 @@ onUpdated(() => {
                     <VIcon
                         icon="mdi-file-download"
                         class="ml-10"
-                        color="tiggie-blue"
-                        size="30px"
+                        color="#000"
+                        size="40"
                     />
                 </a>
                 <a v-else href="/imports/bc_teacher_import.csv" download>
                     <VIcon
                         icon="mdi-file-download"
                         class="ml-10"
-                        color="tiggie-blue"
-                        size="30px"
+                        color="#000"
+                        size="40"
                     />
                 </a>
             </VCardTitle>

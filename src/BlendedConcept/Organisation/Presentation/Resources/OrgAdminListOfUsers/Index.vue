@@ -4,12 +4,15 @@ import StudentList from "./components/OrgAdminListOfStudent/StudentList.vue";
 import TeacherList from "./components/OrgAdminListOfTeacher/TeacherList.vue";
 import { ref } from "vue";
 import { checkPermission } from "@actions/useCheckPermission";
+import ImportUser from "./components/ImportUser.vue";
+
 let tab = ref("teacher");
 let props = defineProps([
     "teachers",
     "students",
     "total_teachers",
     "total_students",
+    "organisation",
 ]);
 
 const changeTab = (tabName) => {
@@ -24,6 +27,7 @@ const changeTab = (tabName) => {
                     <VCol cols="12" md="6">
                         <div class="d-flex align-center">
                             <VBtn
+                                class="mr-2"
                                 variant="flat"
                                 rounded
                                 :color="
@@ -69,6 +73,7 @@ const changeTab = (tabName) => {
                                 <VBtn
                                     variant="flat"
                                     rounded
+                                    height="40"
                                     color="primary"
                                     class="text-white"
                                     prepend-icon="mdi-plus"
@@ -77,7 +82,7 @@ const changeTab = (tabName) => {
                                 </VBtn>
                             </Link>
 
-                            <VBtn
+                            <!-- <VBtn
                                 variant="flat"
                                 rounded
                                 color="primary"
@@ -85,7 +90,8 @@ const changeTab = (tabName) => {
                                 prepend-icon="mdi-upload"
                             >
                                 Upload
-                            </VBtn>
+                            </VBtn> -->
+                            <ImportUser :organisation="props.organisation" />
                         </div>
                         <div
                             v-if="tab == 'teacher'"
@@ -98,6 +104,7 @@ const changeTab = (tabName) => {
                                     color="#17CAB6"
                                     class="text-white"
                                     prepend-icon="mdi-plus"
+                                    height="40"
                                 >
                                     Allocate Storage
                                 </VBtn>
@@ -120,7 +127,7 @@ const changeTab = (tabName) => {
                                 </VBtn>
                             </Link>
 
-                            <VBtn
+                            <!-- <VBtn
                                 variant="flat"
                                 rounded
                                 color="primary"
@@ -128,7 +135,8 @@ const changeTab = (tabName) => {
                                 prepend-icon="mdi-upload"
                             >
                                 Upload
-                            </VBtn>
+                            </VBtn> -->
+                            <ImportUser :organisation="props.organisation" />
                         </div>
                     </VCol>
                 </v-row>
