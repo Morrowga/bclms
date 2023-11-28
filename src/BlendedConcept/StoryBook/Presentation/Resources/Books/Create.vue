@@ -4,7 +4,7 @@ import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
 import { useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import ImageUpload from "@mainRoot/components/DropZone/Index.vue";
+import PdfUpload from "./components/PdfUpload.vue";
 import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
@@ -383,7 +383,7 @@ onMounted(() => {
                     </VCol>
                     <VCol cols="12" md="6">
                         <VLabel class="tiggie-label">Physical Resource</VLabel>
-                        <ImageUpload
+                        <PdfUpload
                             :hide_count="true"
                             data_type="user"
                             v-model="form.image"

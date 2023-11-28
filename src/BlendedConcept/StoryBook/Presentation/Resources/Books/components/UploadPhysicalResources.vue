@@ -18,6 +18,7 @@ const props = defineProps({
 });
 const emit = defineEmits(["update:isPhysicalDialog"]);
 const uploadedImages = ref([]);
+const validationFile = ref(true);
 const oldImages = ref([]);
 const form = useForm({
     physical_resources: [],
@@ -27,35 +28,57 @@ const form = useForm({
 const handleFileUpload = (event) => {
     event.preventDefault();
     const files = event.target.files;
+
     if (files.length > 0) {
-        // emit("update:modelValue", event.dataTransfer.files[0]);
         for (const file of files) {
-            uploadedImages.value.push({
-                id: null,
-                file: file,
-                src: URL.createObjectURL(file),
-                name: file.name,
-            });
-            form.physical_resources.push(file);
+            // Check if the file is a PDF
+            if (file.type === 'application/pdf') {
+                uploadedImages.value.push({
+                    id: null,
+                    file: file,
+                    src: URL.createObjectURL(file),
+                    name: file.name,
+                });
+                form.physical_resources.push(file);
+            } else {
+                validationFile.value = false;
+                setTimeout(() => {
+                    validationFile.value = true;
+                }, 3000); // Adjust the timeout duration as needed
+            }
         }
+        emit("update:modelValue", form.physical_resources);
     }
 };
+
 const handleDrop = (event) => {
     event.preventDefault();
     const files = event.dataTransfer.files;
 
     if (files.length > 0) {
         for (const file of files) {
-            uploadedImages.value.push({
-                id: null,
-                file: file,
-                src: URL.createObjectURL(file),
-                name: file.name,
-            });
-            form.physical_resources.push(file);
+            // Check if the file is a PDF
+            if (file.type === 'application/pdf') {
+                uploadedImages.value.push({
+                    id: null,
+                    file: file,
+                    src: URL.createObjectURL(file),
+                    name: file.name,
+                });
+                form.physical_resources.push(file);
+            } else {
+                validationFile.value = false;
+                setTimeout(() => {
+                    validationFile.value = true;
+                }, 3000); // Adjust the timeout duration as needed
+            }
         }
+
+        // Assuming you have a ref for the form, emit the update
+        emit("update:modelValue", form.physical_resources);
     }
 };
+
 
 const removeUploadedItem = (index) => {
     uploadedImages.value.splice(index, 1);
@@ -119,6 +142,7 @@ onMounted(() => {
         <VCard>
             <VForm ref="refForm" @submit.prevent="onFormSubmit">
                 <VCardText class="pa-0 file-drop">
+                    <h1 class="tiggie-title ml-3">Physical Resources</h1>
                     <div class="mt-3">
                         <div
                             id="old"
@@ -129,7 +153,7 @@ onMounted(() => {
                             <div class="d-flex justify-space-between">
                                 <div class="d-flex">
                                     <img
-                                        :src="image.src"
+                                        :src="'/images/pdf.png'"
                                         class="import-file-img mt-2 ml-3"
                                     />
                                     <p class="ml-3 mt-3">
@@ -159,7 +183,7 @@ onMounted(() => {
                             <div class="d-flex justify-space-between">
                                 <div class="d-flex">
                                     <img
-                                        :src="image.src"
+                                        :src="'/images/pdf.png'"
                                         class="import-file-img mt-2 ml-3"
                                     />
                                     <p class="ml-3 mt-3">
@@ -184,14 +208,19 @@ onMounted(() => {
                                 class="text-center"
                                 @click="handleFileInputClick()"
                             >
-                                <p class="pppangram-normal">
-                                    Drag & Drop
-                                    <strong class="colorprimary"></strong>
-                                    file here
-                                    <br />
-                                    or <br />
-                                    Click to browser files
-                                </p>
+                                <div>
+                                    <p v-if="validationFile" class="pppangram-normal">
+                                        Drag & Drop
+                                        <strong class="colorprimary">pdf</strong>
+                                        file here
+                                        <br />
+                                        or <br />
+                                        Click to browser files
+                                    </p>
+                                    <p class="error-message" v-else>
+                                        File type need to be PDF
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <input
@@ -300,5 +329,13 @@ onMounted(() => {
     height: 200px;
     border: 1px dashed black;
     border-radius: 10px;
+}
+
+.error-message{
+    color: red !important;
+}
+
+.colorprimary {
+    color: #4066e4 !important;
 }
 </style>
