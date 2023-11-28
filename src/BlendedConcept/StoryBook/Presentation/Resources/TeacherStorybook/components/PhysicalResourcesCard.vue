@@ -20,10 +20,25 @@ const imageType = (type) => {
             break;
     }
 };
+const showPreview = (data) => {
+    // Replace 'path/to/your_pdf_file.pdf' with the actual path to your PDF file
+    var pdfUrl = data.data.url;
+    // Create HTML content for the new window
+    var content = `<html><head><title>PDF Viewer</title></head><body style="margin:0;"><iframe src="${pdfUrl}" style="width:100%; height:100%; border: none;"></iframe></body></html>`;
+
+    // Open a new window with the HTML content
+    var newPopup = window.open("", "_blank", "width=800,height=600");
+    newPopup.document.write(content);
+    newPopup.document.close();
+};
 </script>
 <template>
     <v-hover v-slot="{ isHovering, props }">
-        <v-card class="mr-5 grab-pointer" v-bind="props">
+        <v-card
+            class="mr-5 grab-pointer"
+            style="z-index: 9 !important"
+            v-bind="props"
+        >
             <div class="resource-main">
                 <img src="/images/pdf.png" alt="" />
                 <div
@@ -45,22 +60,50 @@ const imageType = (type) => {
                                 <span>{{ dataProps.data?.size }} KB</span>
                                 <br />
                                 <br />
-                                <a
-                                    :href="dataProps.data.url"
-                                    :download="dataProps.data?.name"
+                                <div
+                                    class="d-flex align-center gap-4"
+                                    style="flex-wrap: wrap"
                                 >
+                                    <a
+                                        style="z-index: 10 !important"
+                                        :href="dataProps.data.url"
+                                        :download="dataProps.data?.name"
+                                    >
+                                        <VBtn
+                                            size="small"
+                                            variant="outlined"
+                                            color="secondary"
+                                            class="w-25"
+                                        >
+                                            <v-tooltip
+                                                activator="parent"
+                                                location="top"
+                                                >Download</v-tooltip
+                                            >
+                                            <v-icon
+                                                icon="mdi-download"
+                                                color="#fff"
+                                            ></v-icon>
+                                        </VBtn>
+                                    </a>
                                     <VBtn
                                         size="small"
                                         variant="outlined"
                                         color="secondary"
-                                        class="w-50"
+                                        class="w-25"
+                                        @click="showPreview(dataProps)"
                                     >
+                                        <v-tooltip
+                                            activator="parent"
+                                            location="top"
+                                            >Preview</v-tooltip
+                                        >
                                         <v-icon
-                                            icon="mdi-download"
+                                            icon="mdi-eye"
                                             color="#fff"
                                         ></v-icon>
                                     </VBtn>
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -108,7 +151,7 @@ const imageType = (type) => {
     background: rgba(22, 22, 22, 0.8) !important;
 }
 .icon-size {
-    width: 50px;
+    width: 25px;
 }
 .download-btn {
     width: 30px !important;

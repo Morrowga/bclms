@@ -13,7 +13,6 @@ class OrganisationService
         $userEloquent->contact_number = $request->org_admin_contact_number;
         $userEloquent->email = $request->login_email;
         $userEloquent->password = $request->login_password;
-        $userEloquent->email_verification_send_on = now();
         $userEloquent->role_id = 5;
         $userEloquent->save();
 

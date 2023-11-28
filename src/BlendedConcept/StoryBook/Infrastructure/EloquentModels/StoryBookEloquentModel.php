@@ -59,7 +59,7 @@ class StoryBookEloquentModel extends Model implements HasMedia
                 "file_name" => $psy->file_name ?? '',
                 "type" => $psy->mime_type,
                 "size" => $psy->size,
-                "url" => $psy->original_url ?? ''
+                "url" => $psy->original_url ?? '',
             ];
         });
     }
