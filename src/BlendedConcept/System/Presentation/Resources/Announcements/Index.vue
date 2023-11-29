@@ -110,35 +110,37 @@ const deleteAnnouncement = (id) => {
             <h1 class="tiggie-title mb-4">Announcements</h1>
             <section>
                 <VCard>
-                    <VCardText class="d-flex flex-wrap gap-4">
+                    <VCardText>
                         <!-- 👉 Export button -->
                         <!-- 👉 Search  -->
-                        <div class="search-field">
-                            <VTextField
-                                @keyup.enter="searchItems"
-                                v-model="serverParams.search"
-                                placeholder="Search Announcement"
-                                density="compact"
-                                variant="solo"
-                            />
-                        </div>
-                        <VSpacer />
+                        <div class="d-flex justify-space-between">
+                            <div class="search-field">
+                                <VTextField
+                                    @keyup.enter="searchItems"
+                                    v-model="serverParams.search"
+                                    placeholder="Search Announcement"
+                                    density="compact"
+                                    variant="solo"
+                                />
+                            </div>
+                            <VSpacer />
 
-                        <div
-                            class="app-user-search-filter d-flex justify-end align-center"
-                        >
-                            <!-- 👉 Add Announcement button -->
-                            <VBtn
-                                class="tiggie-btn"
-                                v-if="checkPermission('create_announcement')"
+                            <div
+                                class="app-user-search-filter d-flex justify-end align-center"
                             >
-                                <Link
-                                    :href="route('announcements.create')"
-                                    class="text-white"
+                                <!-- 👉 Add Announcement button -->
+                                <VBtn
+                                    class="tiggie-btn"
+                                    v-if="checkPermission('create_announcement')"
                                 >
-                                    Add Announcement
-                                </Link>
-                            </VBtn>
+                                    <Link
+                                        :href="route('announcements.create')"
+                                        class="text-white"
+                                    >
+                                        Add Announcement
+                                    </Link>
+                                </VBtn>
+                            </div>
                         </div>
                     </VCardText>
 
