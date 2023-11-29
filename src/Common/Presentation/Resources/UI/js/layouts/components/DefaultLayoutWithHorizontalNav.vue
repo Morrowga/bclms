@@ -87,6 +87,7 @@ const openMenu = () => {
 };
 onMounted(() => {
     serverParams.value.columnFilters = {};
+    serverParams.value.search = "";
 });
 </script>
 <template>
