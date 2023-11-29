@@ -47,14 +47,19 @@ const isParentActive = (routeList) => {
         route()?.current()?.includes(item.route_name)
     );
 };
-const goLink = (item, pitem) => {
+const goLink = (pitem) => {
     emit("open_menu", pitem.title);
-    if (item?.isNativeLink) {
-        window.location.href = item.url;
+    if (pitem?.isNativeLink) {
+        window.location.href = pitem.url;
     } else {
-        router.get(item.url);
+        router.get(pitem.url);
     }
 };
+// if (item?.isNativeLink) {
+//     window.location.href = item.url;
+// } else {
+//     router.get(item.url);
+// }
 const filterItem = computed(() =>
     props.item.children.filter((sitem) => {
         if (
