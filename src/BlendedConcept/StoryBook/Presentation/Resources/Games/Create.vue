@@ -303,7 +303,7 @@ const handleThumbFileInputClick = () => {
                                                     <span
                                                         class="browse"
                                                         @click="
-                                                            handleThumbFileInputClick
+                                                            handleGameFileInputClick
                                                         "
                                                         >Browse File</span
                                                     >
