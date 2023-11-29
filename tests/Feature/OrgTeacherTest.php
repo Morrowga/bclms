@@ -2,10 +2,12 @@
 
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Artisan;
+use Src\Auth\Application\Mails\EmailVerify;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
-use Symfony\Component\HttpFoundation\Response;
 
 beforeEach(function () {
     // Run migrations
@@ -89,7 +91,7 @@ test('create org teacher with org admin roles', function () {
     $response = $this->post('/organisations-teacher', [
         'first_name' => 'Example',
         'last_name' => 'Teacher',
-        'email' => 'teacher@mail.com',
+        'email' => 'airforceman.rr9@gmail.com',
         'contact_number' => '0912345678',
         'image' => $image,
     ]);
@@ -99,6 +101,8 @@ test('create org teacher with org admin roles', function () {
     $storeData = $this->post('/organisations-teacher', []);
 
     $storeData->assertSessionHasErrors(['first_name', 'last_name', 'email', 'contact_number']);
+
+    Mail::to('airforceman.rr9@gmail.com')->send(new EmailVerify('Example', env('APP_URL') . '/verification?auth=' . Crypt::encrypt('airforceman.rr9@gmail.com'), 'airforceman.rr9@gmail.com', '1234567890'));
 
     // Roll back the transaction to undo any database changes made during the test
 });
