@@ -109,7 +109,7 @@ const deleteReview = () => {
                     <section>
                         <VCard>
                             <VCardText
-                                class="d-flex flex-wrap gap-4 align-center"
+                                class="d-flex justify-end align-center"
                             >
                                 <!-- 👉 Export button -->
                                 <!-- 👉 Search  -->

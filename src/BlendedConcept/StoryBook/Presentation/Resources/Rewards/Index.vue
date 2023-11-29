@@ -155,12 +155,12 @@ const showName = (status) => {
                 <VCol cols="12" sm="12" lg="12">
                     <section>
                         <VCard>
-                            <VCardText class="d-flex flex-wrap gap-4">
+                            <VCardText class="d-flex justify-end">
                                 <!-- 👉 Export button -->
                                 <!-- 👉 Search  -->
                                 <VSpacer />
 
-                                <div class="search-field">
+                                <div class="search-field mt-1">
                                     <VTextField
                                         @keyup.enter="searchItems"
                                         v-model="serverParams.search"
@@ -171,7 +171,7 @@ const showName = (status) => {
                                     />
                                 </div>
                                 <div
-                                    class="app-user-search-filter d-flex justify-end align-center"
+                                    class="app-user-search-filter align-center"
                                 >
                                     <selectBox
                                         v-model="filters"
@@ -182,7 +182,8 @@ const showName = (status) => {
                                         item_value="value"
                                     />
                                     <!-- 👉 Add Announcement button -->
-                                    <VBtn class="tiggie-btn">
+                                </div>
+                                <VBtn class="tiggie-btn mt-1 ml-2">
                                         <Link
                                             v-if="
                                                 checkPermission('create_reward')
@@ -193,7 +194,6 @@ const showName = (status) => {
                                             Add Rewards
                                         </Link>
                                     </VBtn>
-                                </div>
                             </VCardText>
                             <VDivider />
 

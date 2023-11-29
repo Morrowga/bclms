@@ -89,37 +89,47 @@ const handleSubmit = ({ title }) => {
                 <section>
                     <VCard>
                         <VCardText
-                            class="d-flex justify-between flex-wrap gap-4"
+                            class="d-flex justify-end align-center"
                         >
-                            <!-- 👉 Export button -->
-                            <div class="search-field">
-                                <VTextField
-                                    label="Search Disabilities"
-                                    single-line
-                                    density="compact"
-                                    variant="solo"
-                                    @keyup.enter="searchItems"
-                                    v-model="serverParams.search"
-                                />
-                            </div>
-                            <VSpacer />
+                                <!-- 👉 Export button -->
+                                <div class="search-field">
+                                    <VTextField
+                                        label="Search Disabilities"
+                                        single-line
+                                        density="compact"
+                                        variant="solo"
+                                        @keyup.enter="searchItems"
+                                        v-model="serverParams.search"
+                                    />
+                                </div>
 
-                            <div
-                                class="app-user-search-filter d-flex justify-end align-center gap-6"
-                            >
-                                <VRow align="center">
-                                    <VCol cols="6"></VCol>
-                                    <VCol cols="6" class="text-end">
-                                        <Create
-                                            v-if="
-                                                checkPermission(
-                                                    'create_disability'
-                                                )
-                                            "
-                                        />
-                                    </VCol>
-                                </VRow>
-                            </div>
+                                <VSpacer />
+                                
+                                <VBtn class="tiggie-btn mt-1 ml-2">
+                                    <Create
+                                        v-if="
+                                            checkPermission(
+                                                'create_disability'
+                                            )
+                                        "
+                                    />
+                                </VBtn>
+                                <!-- <div
+                                    class="app-user-search-filter align-center"
+                                >
+                                    <VRow align="center">
+                                        <VCol cols="6"></VCol>
+                                        <VCol cols="6" class="text-end">
+                                            <Create
+                                                v-if="
+                                                    checkPermission(
+                                                        'create_disability'
+                                                    )
+                                                "
+                                            />
+                                        </VCol>
+                                    </VRow>
+                                </div> -->
                         </VCardText>
 
                         <VDivider />

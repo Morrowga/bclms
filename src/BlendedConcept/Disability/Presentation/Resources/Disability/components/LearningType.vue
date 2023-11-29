@@ -94,7 +94,7 @@ const handleSubmit = ({ title }) => {
         <VCol cols="12" sm="12" lg="12">
             <section>
                 <VCard>
-                    <VCardText class="d-flex justify-between flex-wrap gap-4">
+                    <VCardText class="d-flex justify-end">
                         <!-- 👉 Export button -->
                         <div class="search-field">
                             <VTextField
@@ -108,20 +108,13 @@ const handleSubmit = ({ title }) => {
                         </div>
                         <VSpacer />
 
-                        <div
-                            class="app-user-search-filter d-flex justify-end align-center gap-6"
-                        >
-                            <VRow align="center">
-                                <VCol cols="6"></VCol>
-                                <VCol cols="6" class="text-end">
-                                    <Create
-                                        v-if="
-                                            checkPermission('create_learning')
-                                        "
-                                    />
-                                </VCol>
-                            </VRow>
-                        </div>
+                        <VBtn class="tiggie-btn mt-1 ml-2">
+                            <Create
+                                v-if="
+                                    checkPermission('create_learning')
+                                "
+                            />
+                        </VBtn>
                     </VCardText>
 
                     <VDivider />

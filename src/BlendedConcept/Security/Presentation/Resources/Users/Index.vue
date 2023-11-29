@@ -174,9 +174,7 @@ const showOrg = (user) => {
         <VContainer fluid>
             <h1 class="tiggie-title mb-2">Users</h1>
             <VCard>
-                <VCardText class="d-flex flex-wrap gap-4">
-                    <!-- 👉 Export button -->
-                    <!-- <IconOutlineBtn icon="mdi-export-variant" title="Export" /> -->
+                <VCardText class="d-flex justify-space-between">
                     <VBtn
                         v-if="checkPermission('create_user')"
                         variant="tonal"
@@ -186,32 +184,27 @@ const showOrg = (user) => {
                     >
                         Export
                     </VBtn>
-                    <VSpacer />
-                    <VSpacer />
-                    <div class="search-field">
-                        <VTextField
-                            @keyup.enter="searchItems"
-                            v-model="serverParams.search"
-                            placeholder="Search Users"
-                            density="compact"
-                            variant="solo"
-                        />
-                    </div>
-
-                    <div class="d-flex">
-                        <div
-                            class="app-user-search-filter d-flex align-center justify-end gap-3"
-                        >
-                            <selectBox
-                                v-model="filters"
-                                placeholder="Sort By"
-                                :datas="filterDatas"
+                    <div class="d-flex justify-space-between">
+                        <div class="search-field mt-1 mr-3">
+                            <VTextField
+                                @keyup.enter="searchItems"
+                                v-model="serverParams.search"
+                                placeholder="Search Users"
                                 density="compact"
-                                item_title="title"
-                                item_value="value"
+                                variant="solo"
                             />
-                            <ImportUser :organisations="props.organisations" />
                         </div>
+
+                        <SelectBox
+                            v-model="filters"
+                            placeholder="Sort By"
+                            :datas="filterDatas"
+                            density="compact"
+                            item_title="title"
+                            class="mr-2"
+                            item_value="value"
+                        />
+                        <ImportUser :organisations="props.organisations" />
                     </div>
                 </VCardText>
 

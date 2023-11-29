@@ -140,11 +140,12 @@ const showInfo = (e) => {
         <VContainer fluid>
             <h1 class="tiggie-title">Organisations</h1>
             <VCard>
-                <VCardText class="d-flex align-center flex-wrap gap-4">
+                <VCardText class="d-flex align-center justify-space-between">
                     <!-- 👉 Export button -->
                     <VBtn
                         variant="tonal"
                         color="primary"
+                        class="mr-1"
                         prepend-icon="mdi-tray-arrow-up"
                     >
                         Export
@@ -152,7 +153,7 @@ const showInfo = (e) => {
 
                     <VSpacer />
 
-                    <div class="search-field">
+                    <div class="search-field mr-2 mb-1">
                         <VTextField
                             placeholder="Search User ..."
                             density="compact"
@@ -163,7 +164,7 @@ const showInfo = (e) => {
                     </div>
 
                     <div
-                        class="app-user-search-filter d-flex align-center gap-6"
+                        class="app-user-search-filter"
                     >
                         <!-- 👉 Search  -->
                         <SelectBox

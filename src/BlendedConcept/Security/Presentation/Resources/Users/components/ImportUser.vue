@@ -78,7 +78,7 @@ const clearForm = () => {
     <VDialog v-model="isDialogVisible" width="500">
         <!-- Activator -->
         <template #activator="{ props }">
-            <VBtn v-bind="props" height="40" density="compact">
+            <VBtn v-bind="props" height="40" class="mt-1" density="compact">
                 <span class="text-uppercase text-white"> Import </span>
             </VBtn>
         </template>

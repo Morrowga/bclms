@@ -102,12 +102,13 @@ const selectionChanged = () => {};
             />
             <section>
                 <VCard>
-                    <VCardText class="d-flex flex-wrap gap-4">
+                    <VCardText class="d-flex justify-space-between gap-4">
                         <!-- 👉 Export button -->
                         <!-- <IconOutlineBtn icon="mdi-export-variant" title="Export" /> -->
                         <VBtn
                             variant="tonal"
                             color="primary"
+                            class="mt-2"
                             prepend-icon="mdi-tray-arrow-up"
                             @click="exportUser()"
                         >
@@ -115,7 +116,7 @@ const selectionChanged = () => {};
                         </VBtn>
 
                         <VSpacer />
-                        <div class="search-field">
+                        <div class="search-field mt-1">
                             <VTextField
                                 @keyup.enter="searchItems"
                                 v-model="serverParams.search"

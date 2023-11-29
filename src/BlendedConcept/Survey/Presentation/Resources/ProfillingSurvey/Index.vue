@@ -200,11 +200,11 @@ const optionsWithText = (option) => {
                         :options="{ handle: '.drag-handle' }"
                     >
                         <template v-slot:item="{ element, index }">
-                            <VCol cols="2" :key="index">
+                            <VCol cols="12" :key="index">
                                 <VCard
-                                    style="width: 60vw"
-                                    class="mt-4 draggable-item"
+                                    class="mt-4 draggable-item align-center"
                                 >
+
                                     <VCardTitle class="tiggie-subtitle">
                                         <div
                                             class="d-flex justify-space-between"
@@ -255,19 +255,19 @@ const optionsWithText = (option) => {
                                         </div>
                                     </VCardTitle>
                                     <VCardSubTitle
-                                        class="pl-4 tiggie-p"
+                                        class="pl-4"
                                         v-if="
                                             element.question_type !=
                                             'SHORT_ANSWER'
                                         "
                                     >
-                                        {{ element.question }}
+                                        <p class="question-text ml-3">{{ element.question}}</p>
                                     </VCardSubTitle>
                                     <VCardSubTitle
-                                        class="pl-4 tiggie-p shortanswer"
+                                        class="pl-4 question-text shortanswer"
                                         v-else
                                     >
-                                        {{ element.question }}
+                                        <p class="question-text ml-3">{{ element.question }}</p>
                                     </VCardSubTitle>
                                     <VDivider
                                         v-if="
@@ -479,4 +479,13 @@ const optionsWithText = (option) => {
         />
     </AdminLayout>
 </template>
-<style scoped></style>
+<style scoped>
+.question-text{
+    padding: 5px;
+    color: rgba(40, 40, 40, 0.50) !important;
+    font-size: 20px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 32px !important;
+}
+</style>
