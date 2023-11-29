@@ -26,7 +26,7 @@ test('import student excel with super admin role module', function () {
     $this->assertAuthenticated(); // Check if the user is authenticated
 
     $excelFile = new UploadedFile(
-        public_path('file/bc_student_import.csv'),
+        public_path('imports/bc_student_import.csv'),
         'bc_student_import.csv',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         null,

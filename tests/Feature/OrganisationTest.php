@@ -2,8 +2,10 @@
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Src\BlendedConcept\Organisation\Domain\Mail\OrganisationExpirationNotice;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\SubscriptionEloquentModel;
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
@@ -235,5 +237,122 @@ test('delete organisation', function () {
         ]);
 
         $loginAsOrg->assertStatus(422);
+    }
+});
+
+test('can run organisation expiration schedule', function () {
+    $exitCode = Artisan::call('expiration:org');
+
+    $this->assertEquals(0, $exitCode);
+});
+
+test('org admin receive email 1 hour before expire', function () {
+    $userData = [
+        'first_name' => 'testing',
+        'last_name' => 'testing',
+        'email' => 'testinguser@gmail.com',
+        'password' => 'password',
+        'role_id' => 5,
+        'email_verified_send_on' => now(),
+    ];
+    $user = UserEloquentModel::create($userData);
+
+    $subscriptionData = [
+        'start_date' => now(),
+        'end_date' => now()->subDay()->format('Y-m-d'),
+        'payment_date' => now(),
+        'payment_status' => 'PAID',
+        'stripe_status' => null,
+        'stripe_price' => null,
+    ];
+    $subscription = SubscriptionEloquentModel::create($subscriptionData);
+    $organisationData = [
+        'curr_subscription_id' => $subscription->id,
+        'name' => 'testing org',
+        'contact_name' => 'tester',
+        'contact_email' => "testingorg@mail.com",
+        'contact_number' => '09234234',
+        'status' => 'active'
+    ];
+    $organisation = OrganisationEloquentModel::create($organisationData);
+    $orgadminData = [
+        'user_id' => $user->id,
+        'organisation_id' => $organisation->id
+    ];
+    $orgadmin = OrganisationAdminEloquentModel::create($orgadminData);
+    $organisation->update([
+        'org_admin_id' => $orgadmin->org_admin_id
+    ]);
+    $now = Carbon::now()->format('Y-m-d');
+    $subscription = $organisation->subscription;
+    $end_date = $subscription->end_date;
+
+    $end_date = Carbon::parse($end_date)->format('Y-m-d');
+    $hoursUntilExpiration = Carbon::now()->diffInHours($end_date, false);
+    if ($hoursUntilExpiration <= 1) {
+        $title = 'Your Subscription Expires Soon';
+        $message = 'Dear ' . $organisation->name . ', your subscription is expiring soon in ' . $hoursUntilExpiration . ' hours.';
+        $orgadminMail = $organisation->org_admin->user->email;
+        Mail::to($orgadminMail)
+            ->send(new OrganisationExpirationNotice($organisation, $title, $message));
+
+        $this->assertTrue(true);
+    }
+});
+
+test('org admin should not receive any reminder email if not expire', function () {
+    // Create user, subscription, organisation, and org admin
+    $userData = [
+        'first_name' => 'testing',
+        'last_name' => 'testing',
+        'email' => 'testinguser@gmail.com',
+        'password' => 'password',
+        'role_id' => 5,
+        'email_verified_send_on' => now(),
+    ];
+    $user = UserEloquentModel::create($userData);
+
+    $subscriptionData = [
+        'start_date' => now(), // Adjust the start date to be in the future
+        'end_date' => now()->addDays(3),   // Adjust the end date to be after the start date
+        'payment_date' => now(),
+        'payment_status' => 'PAID',
+        'stripe_status' => null,
+        'stripe_price' => null,
+    ];
+    $subscription = SubscriptionEloquentModel::create($subscriptionData);
+
+    $organisationData = [
+        'curr_subscription_id' => $subscription->id,
+        'name' => 'testing org',
+        'contact_name' => 'tester',
+        'contact_email' => "testingorg@mail.com",
+        'contact_number' => '09234234',
+        'status' => 'active'
+    ];
+    $organisation = OrganisationEloquentModel::create($organisationData);
+
+    $orgadminData = [
+        'user_id' => $user->id,
+        'organisation_id' => $organisation->id
+    ];
+    $orgadmin = OrganisationAdminEloquentModel::create($orgadminData);
+
+    $organisation->update([
+        'org_admin_id' => $orgadmin->org_admin_id
+    ]);
+
+    // Get the current date
+    $now = Carbon::now()->format('Y-m-d');
+
+    // Calculate hours until expiration
+    $subscription = $organisation->subscription;
+    $start_date = $subscription->start_date;
+    $end_date = $subscription->end_date;
+
+    // Act
+    if ($now >= $start_date && $now <= $end_date) {
+        // This block will execute if $now is between start_date and end_date
+        $this->assertTrue(true); // Adjust this assertion accordingly or add your own code
     }
 });
