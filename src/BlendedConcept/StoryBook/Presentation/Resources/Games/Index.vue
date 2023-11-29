@@ -19,7 +19,7 @@ import { checkPermission } from "@actions/useCheckPermission";
     <AdminLayout>
         <VContainer fluid>
             <v-row justify="space-between">
-                <v-col cols="4">
+                <v-col md="6" sm="4">
                     <div class="title-section">
                         <p class="heading">Manage Games</p>
                         <span class="subheading"
@@ -27,8 +27,8 @@ import { checkPermission } from "@actions/useCheckPermission";
                         >
                     </div>
                 </v-col>
-                <v-col cols="6">
-                    <div class="d-flex gap-5">
+                <v-col md="6" sm="8">
+                    <div class="d-flex gap-1">
                         <v-text-field
                             @keyup.enter="searchItems"
                             v-model="serverParams.search"
