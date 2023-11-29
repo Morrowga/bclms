@@ -65,7 +65,7 @@ watch(serverPerPage, function (value) {
     <AdminLayout>
         <VContainer fluid>
             <VCard>
-                <VCardText class="d-flex flex-wrap gap-4">
+                <VCardText class="d-flex justify-space-between">
                     <!-- 👉 Export button -->
                     <!-- 👉 Search  -->
                     <div class="search-field">

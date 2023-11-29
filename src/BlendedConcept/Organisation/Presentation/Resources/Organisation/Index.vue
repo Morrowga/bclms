@@ -153,20 +153,16 @@ const showInfo = (e) => {
 
                     <VSpacer />
 
-                    <div class="search-field mr-2 mb-1">
-                        <VTextField
-                            placeholder="Search User ..."
-                            density="compact"
-                            variant="solo"
-                            @keyup.enter="searchItems"
-                            v-model="serverParams.search"
-                        />
-                    </div>
-
-                    <div
-                        class="app-user-search-filter"
-                    >
-                        <!-- 👉 Search  -->
+                    <div class="d-flex justify-end">
+                        <div class="search-field mr-2 mb-1 mt-1">
+                            <VTextField
+                                placeholder="Search User ..."
+                                density="compact"
+                                variant="solo"
+                                @keyup.enter="searchItems"
+                                v-model="serverParams.search"
+                            />
+                        </div>
                         <SelectBox
                             v-model="filters"
                             placeholder="Sort By"
@@ -181,7 +177,7 @@ const showInfo = (e) => {
                             v-if="checkPermission('create_organisation')"
                         >
                             <!-- {{ checkPermission("create_organisation") }} -->
-                            <VBtn height="40" density="compact">
+                            <VBtn height="40" class="mt-1 ml-2" density="compact">
                                 <span class="text-capatlize text-white">
                                     Add New
                                 </span>

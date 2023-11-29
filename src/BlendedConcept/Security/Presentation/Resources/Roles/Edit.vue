@@ -108,6 +108,7 @@ onMounted(() => {
             <h1 class="tiggie-title mb-0">Edit Role</h1>
 
             <VForm
+                class="mt-3"
                 ref="refForm"
                 v-model="isFormValid"
                 @submit.prevent="updateRole(props.role.id)"
