@@ -186,13 +186,13 @@ const deleteItem = (status, id) => {
                     <section>
                         <VCard>
                             <VCardText
-                                class="d-flex flex-wrap gap-4 align-center"
+                                class="d-flex justify-space-between align-center"
                             >
                                 <!-- 👉 Export button -->
 
                                 <VSpacer />
 
-                                <div class="search-field">
+                                <div class="search-field mr-2">
                                     <VTextField
                                         placeholder="Search Users"
                                         density="compact"

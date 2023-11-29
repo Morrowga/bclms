@@ -126,20 +126,18 @@ const selectionChanged = () => {};
                             />
                         </div>
 
-                        <div class="d-flex">
-                            <div
-                                class="app-user-search-filter d-flex align-center justify-end gap-3 width-200"
-                            >
-                                <selectBox
-                                    v-model="filters"
-                                    placeholder="Sort By"
-                                    :datas="filterDatas"
-                                    density="compact"
-                                    item_title="title"
-                                    item_value="value"
-                                />
-                                <!-- 👉 Add User button -->
-                            </div>
+                        <div
+                            class="app-user-search-filter d-flex align-center justify-end gap-3"
+                        >
+                            <selectBox
+                                v-model="filters"
+                                placeholder="Sort By"
+                                :datas="filterDatas"
+                                density="compact"
+                                item_title="title"
+                                item_value="value"
+                            />
+                            <!-- 👉 Add User button -->
                         </div>
                     </VCardText>
                     <VDivider />
