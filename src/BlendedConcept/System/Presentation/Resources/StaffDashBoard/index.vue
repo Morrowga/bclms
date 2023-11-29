@@ -48,7 +48,7 @@ const props = defineProps(["recent_books", "recent_games", "usercount"]);
                 type="games"
             /><br />
         </div>
-        <VRow>
+        <!-- <VRow>
             <VCol>
                 <div class="header">
                     <div class="head-section">
@@ -61,7 +61,7 @@ const props = defineProps(["recent_books", "recent_games", "usercount"]);
                 </div>
                 <br />
             </VCol>
-        </VRow>
+        </VRow> -->
     </VContainer>
 </template>
 

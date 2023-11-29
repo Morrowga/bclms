@@ -54,6 +54,7 @@ class StudentController extends Controller
 
             // Retrieve users with pagination using the provided filters
             $students = (new GetStudentWithPagination($filters))->handle()['paginate_students'];
+
             return Inertia::render(config('route.students'), compact('students'));
         } catch (\Exception $e) {
             return redirect()->route($this->route_url . 'students.index')->with('errorMessage', $e->getMessage());

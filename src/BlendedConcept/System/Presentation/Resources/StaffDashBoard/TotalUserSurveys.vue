@@ -162,7 +162,7 @@ const surveys = computed(() => datas.value);
                                         item_title="title"
                                         item_value="value"
                                     />
-                                    <Link
+                                    <!-- <Link
                                         :href="
                                             route('userexperiencesurvey.create')
                                         "
@@ -172,7 +172,7 @@ const surveys = computed(() => datas.value);
                                                 Add Survey
                                             </span>
                                         </VBtn>
-                                    </Link>
+                                    </Link> -->
                                 </div>
                             </div>
                         </VCardText>

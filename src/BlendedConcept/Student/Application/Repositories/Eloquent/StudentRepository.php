@@ -39,7 +39,7 @@ class StudentRepository implements StudentRepositoryInterface
                 ->filter($filters)
                 ->when($auth, function ($query, $auth) {
 
-                    if ($auth == 'BC Super Admin') {
+                    if ($auth == 'BC Super Admin' || $auth == "BC Staff") {
                     } elseif ($auth == 'BC Subscriber') {
                         if (auth()->user()->b2bUser == null) {
                             $query->whereHas('parent', function ($query) {
