@@ -48,10 +48,10 @@ const handleSubmit = () => {
             <VContainer>
                 <span class="span-text ruddy-bold">Create Classroom</span>
                 <VRow class="mt-3">
-                    <VCol cols="12" md="6">
+                    <VCol md="6">
                         <LargeDropFile v-model="form.image" />
                     </VCol>
-                    <VCol cols="12" sm="6" md="6">
+                    <VCol md="6">
                         <span class="semi-label pppangram-bold"
                             >Classroom Details</span
                         >

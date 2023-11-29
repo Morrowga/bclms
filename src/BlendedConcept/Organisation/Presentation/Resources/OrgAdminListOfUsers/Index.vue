@@ -21,10 +21,10 @@ const changeTab = (tabName) => {
 </script>
 <template>
     <AdminLayout>
-        <VContainer class="width-80">
+        <VContainer>
             <div class="mb-10">
-                <v-row>
-                    <VCol cols="12" md="6">
+                <div class="d-flex justify-space-between">
+                    <div>
                         <div class="d-flex align-center">
                             <VBtn
                                 class="mr-2"
@@ -58,11 +58,10 @@ const changeTab = (tabName) => {
                                 Students
                             </VBtn>
                         </div>
-                    </VCol>
-                    <VCol cols="12" md="6" class="d-flex justify-end">
+                    </div>
+                    <div class="d-flex justify-end">
                         <div
                             v-if="tab == 'student'"
-                            class="d-flex justify-end gap-10"
                         >
                             <Link
                                 v-if="
@@ -75,34 +74,24 @@ const changeTab = (tabName) => {
                                     rounded
                                     height="40"
                                     color="primary"
-                                    class="text-white"
+                                    class="text-white mr-2"
                                     prepend-icon="mdi-plus"
                                 >
                                     Add
                                 </VBtn>
                             </Link>
 
-                            <!-- <VBtn
-                                variant="flat"
-                                rounded
-                                color="primary"
-                                class="text-white"
-                                prepend-icon="mdi-upload"
-                            >
-                                Upload
-                            </VBtn> -->
                             <ImportUser :organisation="props.organisation" />
                         </div>
                         <div
                             v-if="tab == 'teacher'"
-                            class="d-flex justify-end gap-10"
                         >
                             <Link :href="route('listoforgteacher')">
                                 <VBtn
                                     variant="flat"
                                     rounded
                                     color="#17CAB6"
-                                    class="text-white"
+                                    class="text-white mr-2"
                                     prepend-icon="mdi-plus"
                                     height="40"
                                 >
@@ -120,26 +109,16 @@ const changeTab = (tabName) => {
                                     variant="flat"
                                     rounded
                                     color="primary"
-                                    class="text-white"
+                                    class="text-white mr-2"
                                     prepend-icon="mdi-plus"
                                 >
                                     Add
                                 </VBtn>
                             </Link>
-
-                            <!-- <VBtn
-                                variant="flat"
-                                rounded
-                                color="primary"
-                                class="text-white"
-                                prepend-icon="mdi-upload"
-                            >
-                                Upload
-                            </VBtn> -->
                             <ImportUser :organisation="props.organisation" />
                         </div>
-                    </VCol>
-                </v-row>
+                    </div>
+                </div>
             </div>
             <div class="tab-list">
                 <section v-if="tab == 'student'">
