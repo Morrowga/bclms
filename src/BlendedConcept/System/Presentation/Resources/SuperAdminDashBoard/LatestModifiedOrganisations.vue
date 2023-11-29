@@ -96,7 +96,7 @@ const organisations = computed(() => datas.value);
 <template>
     <section>
         <VCard>
-            <VCardText class="d-flex align-center flex-wrap gap-4">
+            <VCardText class="d-flex align-center justify-space-between">
                 <!-- 👉 Export button -->
                 <VBtn
                     variant="tonal"
@@ -107,40 +107,41 @@ const organisations = computed(() => datas.value);
                 </VBtn>
 
                 <VSpacer />
+                <div class="d-flex justify-end">
+                    <div class="search-field mt-1 mr-2">
+                        <VTextField
+                            placeholder="Search Organisation"
+                            density="compact"
+                            width="100"
+                            variant="solo"
+                            @keyup.enter="searchItems"
+                            v-model="serverParams.search"
+                        />
+                    </div>
 
-                <div class="search-field">
-                    <VTextField
-                        placeholder="Search Organisation"
-                        density="compact"
-                        width="100"
-                        variant="solo"
-                        @keyup.enter="searchItems"
-                        v-model="serverParams.search"
-                    />
-                </div>
-
-                <div class="app-user-search-filter d-flex align-center gap-6">
-                    <!-- 👉 Search  -->
-                    <SelectBox
-                        v-model="selectedRole"
-                        placeholder="Sort By"
-                        :datas="[
-                            'Name',
-                            'Email',
-                            'Contact Number',
-                            'Admin',
-                            'Status',
-                        ]"
-                        density="compact"
-                    />
-                    <!-- 👉 Add user button -->
-                    <Link :href="route('organisations.index')">
-                        <VBtn height="40" density="compact">
-                            <span class="text-uppercase text-white">
-                                View More
-                            </span>
-                        </VBtn>
-                    </Link>
+                    <!-- <div class="app-user-search-filter d-flex align-center gap-6"> -->
+                        <!-- 👉 Search  -->
+                        <SelectBox
+                            v-model="selectedRole"
+                            placeholder="Sort By"
+                            :datas="[
+                                'Name',
+                                'Email',
+                                'Contact Number',
+                                'Admin',
+                                'Status',
+                            ]"
+                            density="compact"
+                        />
+                        <!-- 👉 Add user button -->
+                        <Link :href="route('organisations.index')">
+                            <VBtn height="40" class="mt-1 ml-2" density="compact">
+                                <span class="text-uppercase text-white">
+                                    View More
+                                </span>
+                            </VBtn>
+                        </Link>
+                    <!-- </div> -->
                 </div>
             </VCardText>
 

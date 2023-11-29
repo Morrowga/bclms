@@ -85,7 +85,7 @@ const users = computed(() => datas.value);
 <template>
     <section>
         <VCard>
-            <VCardText class="d-flex align-center flex-wrap gap-4">
+            <VCardText class="d-flex align-center justify-space-between">
                 <!-- 👉 Export button -->
                 <VBtn
                     variant="tonal"
@@ -96,18 +96,16 @@ const users = computed(() => datas.value);
                 </VBtn>
 
                 <VSpacer />
-                <div class="search-field">
-                    <VTextField
-                        placeholder="Search User ..."
-                        density="compact"
-                        variant="solo"
-                        @keyup.enter="searchItems"
-                        v-model="serverParams.search"
-                    />
-                </div>
-
-                <div class="app-user-search-filter d-flex align-center gap-6">
-                    <!-- 👉 Search  -->
+                <div class="d-flex justify-end">
+                    <div class="search-field mt-1 mr-2">
+                        <VTextField
+                            placeholder="Search User ..."
+                            density="compact"
+                            variant="solo"
+                            @keyup.enter="searchItems"
+                            v-model="serverParams.search"
+                        />
+                    </div>
                     <SelectBox
                         v-model="selectedRole"
                         placeholder="Sort By"
@@ -122,13 +120,16 @@ const users = computed(() => datas.value);
                     />
                     <!-- 👉 Add user button -->
                     <Link :href="route('users.index')">
-                        <VBtn height="40" density="compact">
+                        <VBtn height="40" class="mt-1 ml-2" density="compact">
                             <span class="text-uppercase text-white">
                                 Vew More
                             </span>
                         </VBtn>
                     </Link>
                 </div>
+                <!-- <div class="app-user-search-filter d-flex align-center gap-6">
+
+                </div> -->
             </VCardText>
             <VDivider />
 
