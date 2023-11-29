@@ -15,12 +15,12 @@ let handleSubmit = () => {
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
             form.post(route("disability_themes.store"), {
-                onSuccess: ({props}) => {
+                onSuccess: ({ props }) => {
                     let success = props.flash?.successMessage;
-                    if(success !== null)
-                    {
+                    if (success !== null) {
                         SuccessDialog({ title: success });
-                    }else{
+                        form.reset();
+                    } else {
                         SuccessDialog({
                             title: props.flash?.errorMessage,
                             mainTitle: "Error!",
