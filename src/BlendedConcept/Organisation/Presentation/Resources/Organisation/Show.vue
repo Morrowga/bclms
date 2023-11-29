@@ -25,7 +25,11 @@ const deleteOrganisation = () => {
         denyButtonText: "Yes,delete it!",
         onConfirm: () => {
             router.delete(
-                route("organisations.destroy", props.organisation.id),
+                route("organisations.destroy", {
+                    organisation: props.organisation.id,
+                    _query: { type: "detail" },
+                }),
+
                 {
                     onSuccess: () => {
                         SuccessDialog({ title: flash?.successMessage });
