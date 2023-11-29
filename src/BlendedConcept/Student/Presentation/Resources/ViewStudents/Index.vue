@@ -56,33 +56,33 @@ watch(filters, (newValue) => {
                     </v-btn>
                 </Link>
             </div>
-            <div class="d-flex justify-end mb-4 align-center">
-                <v-spacer></v-spacer>
 
+            <div class="d-flex justify-end align-center mb-4">
+                <v-spacer></v-spacer>
                 <div class="search-field">
-                    <VTextField
-                        placeholder="Search User ..."
+                    <v-text-field
                         density="compact"
+                        label="Search"
+                        append-inner-icon="mdi-magnify"
+                        single-line
+                        rounded
+                        hide-details
                         class="mr-4"
                         variant="solo"
                         @keyup.enter="searchItems"
                         v-model="serverParams.search"
-                    />
+                    ></v-text-field>
                 </div>
-                <div class="d-flex">
-                    <div
-                        class="app-user-search-filter d-flex align-center justify-end gap-3 width-200"
-                    >
-                        <selectBox
-                            v-model="filters"
-                            placeholder="Sort By"
-                            :datas="filterDatas"
-                            density="compact"
-                            item_title="title"
-                            item_value="value"
-                        />
-                        <!-- 👉 Add User button -->
-                    </div>
+
+                <div class="sort-field">
+                    <selectBox
+                        v-model="filters"
+                        placeholder="Sort By"
+                        :datas="filterDatas"
+                        density="compact"
+                        item_title="title"
+                        item_value="value"
+                    />
                 </div>
             </div>
             <VRow>
