@@ -2,6 +2,7 @@
 
 namespace Src\BlendedConcept\Organisation\Presentation\HTTP;
 
+use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Stancl\Tenancy\Database\Models\Domain;
 use Symfony\Component\HttpFoundation\Response;
@@ -204,10 +205,15 @@ class OrganisationController extends Controller
             // $tenant = Tenant::get();
             // Domain::where('tenant_id', $tenant->id)->delete();
             // $tenant->delete();
+            $type = request('type');
             $deleteOrganisation = (new DeleteOrganisationCommand($organisation));
             $deleteOrganisation->execute();
+            if ($type && $type == 'detail') {
+                return redirect()->route('organisations.index')->with('successMessage', 'Organisations Deleted Successfully!');
+            } else {
 
-            return redirect()->back()->with('successMessage', 'Organisations Deleted Successfully!');
+                return redirect()->back()->with('successMessage', 'Organisations Deleted Successfully!');
+            }
         } catch (\Exception $error) {
             dd($error);
             return redirect()
