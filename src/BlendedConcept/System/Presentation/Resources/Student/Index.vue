@@ -31,7 +31,7 @@ const getCookie = (name) => {
     return null;
 };
 
-console.log(userData.name);
+console.log(userData);
 
 const logout = () => {
     router.post("/logout");
@@ -284,18 +284,34 @@ onMounted(() => {
                                 <div class="ml-5">
                                     <p class="value-student pppangram-medium">
                                         {{
-                                            userData.student.parent.user
-                                                ?.full_name
+                                            userData.student.parent
+                                                ? userData.student.parent?.user
+                                                      .full_name
+                                                : userData.student.teachers?.[0]
+                                                      ?.user?.full_name
                                         }}
-                                        <br />
-                                        Parent
                                         <br />
                                         {{
-                                            userData.student.parent.user
-                                                .contact_number
+                                            userData.student.parent
+                                                ? "Parent"
+                                                : "Teacher"
                                         }}
                                         <br />
-                                        {{ userData.student.parent.user.email }}
+                                        {{
+                                            userData.student.parent
+                                                ? userData.student.parent?.user
+                                                      .contact_number
+                                                : userData.student.teachers?.[0]
+                                                      ?.user.contact_number
+                                        }}
+                                        <br />
+                                        {{
+                                            userData.student.parent
+                                                ? userData.student.parent?.user
+                                                      .email
+                                                : userData.student.teachers?.[0]
+                                                      ?.user.email
+                                        }}
                                     </p>
                                 </div>
                             </VCol>

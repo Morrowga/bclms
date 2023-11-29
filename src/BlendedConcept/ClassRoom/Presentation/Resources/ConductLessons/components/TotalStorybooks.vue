@@ -53,7 +53,7 @@ const selectedStorybook = ref(null);
 
 async function clickStoryBook(id) {
     const book_versions = datas.value[id].book_versions;
-    selectedStorybook.value = datas.value[id]
+    selectedStorybook.value = datas.value[id];
     versions.value = book_versions;
     isDialogVisible.value = true;
 }
@@ -63,9 +63,9 @@ const selectionChanged = (data) => {
 };
 
 const selectVersion = (id) => {
-    isBordered.value = id
-    props.form.storybooks = id
-}
+    isBordered.value = id;
+    props.form.storybooks = id;
+};
 </script>
 <template>
     <section>
@@ -73,14 +73,24 @@ const selectVersion = (id) => {
             <VDivider />
             <VCol cols="12">
                 <VRow>
-                    <VCol cols="3" v-for="(item,index) in datas" :key="index" class="pa-1">
-                            <VCard @click="clickStoryBook(index)">
-                                <VImg
-                                    :src="item.thumbnail_img == '' || item.thumbnail_img == null  ? '/images/2.jpg' : item.thumbnail_img"
-                                    height="282px"
-                                    cover
-                                />
-                                <!-- <div class="select-box">
+                    <VCol
+                        cols="3"
+                        v-for="(item, index) in datas"
+                        :key="index"
+                        class="pa-1"
+                    >
+                        <VCard @click="clickStoryBook(index)">
+                            <VImg
+                                :src="
+                                    item.thumbnail_img == '' ||
+                                    item.thumbnail_img == null
+                                        ? '/images/2.jpg'
+                                        : item.thumbnail_img
+                                "
+                                height="282px"
+                                cover
+                            />
+                            <!-- <div class="select-box">
                                     <VRadio
                                         color="secondary"
                                         class="checkbox-position"
@@ -89,23 +99,27 @@ const selectVersion = (id) => {
                                         @click="extractStorybookId(item.id)"
                                     />
                                 </div> -->
-                                <VCardItem>
-                                    <VCardTitle
-                                        class="text-center tiggie-teacher-p tiggie-black-color fw-700"
-                                        >
-                                        {{ item.name }}
-                                    </VCardTitle>
-                                    <ChipWithBlueDot v-for="item in item.disability_types" :key="item.id" :title="item.name" />
-                                </VCardItem>
-                                <VCardActions>
-                                    <div class="d-flex gap-1">
-                                        <GreenChip title="Switch" />
-                                        <GreenChip title="Eye-Gaze" />
-                                        <GreenChip title="Touch" />
-                                    </div>
-                                </VCardActions>
-                            </VCard>
-                        </VCol>
+                            <VCardItem>
+                                <VCardTitle
+                                    class="text-center tiggie-teacher-p tiggie-black-color fw-700"
+                                >
+                                    {{ item.name }}
+                                </VCardTitle>
+                                <ChipWithBlueDot
+                                    v-for="item in item.disability_types"
+                                    :key="item.id"
+                                    :title="item.name"
+                                />
+                            </VCardItem>
+                            <VCardActions>
+                                <div class="d-flex gap-1">
+                                    <GreenChip title="Switch" />
+                                    <GreenChip title="Eye-Gaze" />
+                                    <GreenChip title="Touch" />
+                                </div>
+                            </VCardActions>
+                        </VCard>
+                    </VCol>
                 </VRow>
                 <VRow justify="center" align="center">
                     <VPagination
@@ -123,50 +137,70 @@ const selectVersion = (id) => {
 
             <VDivider />
         </VCard>
-        <VDialog
-            v-model="isDialogVisible"
-            width="100%"
-        >
-        <VCard>
-            <VCardText v-if="versions.length > 0">
-                <VRow>
-                    <VCol cols="3">
-                        <VCard v-for="version in versions" :key="version.id" :class="isBordered === version.id ? 'blue-border' : ''" @click="selectVersion(version.id)">
-                            <VCardText>
-                                <VImg
-                                    :src="selectedStorybook.thumbnail_img == '' || selectedStorybook.thumbnail_img == null  ? '/images/2.jpg' : selectedStorybook.thumbnail_img"
-                                    height="282px"
-                                    cover
-                                />
-                                <!-- <VImg
+        <VDialog v-model="isDialogVisible" width="100%">
+            <VCard>
+                <VCardText v-if="versions.length > 0">
+                    <VRow>
+                        <VCol
+                            cols="3"
+                            v-for="version in versions"
+                            :key="version.id"
+                        >
+                            <VCard
+                                :class="
+                                    isBordered === version.id
+                                        ? 'blue-border'
+                                        : ''
+                                "
+                                @click="selectVersion(version.id)"
+                            >
+                                <VCardText>
+                                    <VImg
+                                        :src="
+                                            selectedStorybook.thumbnail_img ==
+                                                '' ||
+                                            selectedStorybook.thumbnail_img ==
+                                                null
+                                                ? '/images/2.jpg'
+                                                : selectedStorybook.thumbnail_img
+                                        "
+                                        height="282px"
+                                        cover
+                                    />
+                                    <!-- <VImg
                                     :src="'/images/2.jpg'"
                                     height="282px"
                                     cover
                                 /> -->
-                                <div class="text-center mt-4">
-                                    <span class="pppangram-bold">{{ version.name }}</span>
-                                </div>
-                                <div class="text-center">
-                                    <span>{{ version.description }}</span>
-                                </div>
-                            </VCardText>
-                        </VCard>
-                    </VCol>
-                </VRow>
-            </VCardText>
-            <VCardText v-else>
-                <h1 class="text-center">No StoryBook Version</h1>
-            </VCardText>
+                                    <div class="text-center mt-4">
+                                        <span class="pppangram-bold">{{
+                                            version.name
+                                        }}</span>
+                                    </div>
+                                    <div class="text-center">
+                                        <span>{{ version.description }}</span>
+                                    </div>
+                                </VCardText>
+                            </VCard>
+                        </VCol>
+                    </VRow>
+                </VCardText>
+                <VCardText v-else>
+                    <h1 class="text-center">No StoryBook Version</h1>
+                </VCardText>
 
-            <div>
-                <div class="d-flex justify-center mt-5 mb-5">
-                    <PrimaryBtn :block="true"
-                    @click="isDialogVisible = false"
-                    :isLink="false"
-                    type="button" title="Confirm" />
+                <div>
+                    <div class="d-flex justify-center mt-5 mb-5">
+                        <PrimaryBtn
+                            :block="true"
+                            @click="isDialogVisible = false"
+                            :isLink="false"
+                            type="button"
+                            title="Confirm"
+                        />
+                    </div>
                 </div>
-            </div>
-        </VCard>
+            </VCard>
         </VDialog>
     </section>
 </template>
@@ -182,7 +216,7 @@ const selectVersion = (id) => {
     border-bottom: 1px solid #dcdfe6;
 }
 
-.blue-border{
+.blue-border {
     border: 3px solid #4066e4;
 }
 
