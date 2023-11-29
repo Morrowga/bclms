@@ -787,4 +787,23 @@ tr:nth-child(even) {
         min-width: initial;
     }
 }
+
+@media (max-width: 768px) {
+  .th-text {
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .th-text {
+    font-size: 18px !important;
+  }
+}
+
+/* Media query for iPad Air (landscape) */
+@media (max-width: 820px) {
+  .th-text {
+    font-size: 18px !important;
+  }
+}
 </style>
