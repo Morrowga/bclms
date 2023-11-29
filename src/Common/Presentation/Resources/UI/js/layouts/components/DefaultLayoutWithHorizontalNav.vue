@@ -85,7 +85,12 @@ const siteName = computed(() => page?.site_settings?.site_name);
 const openMenu = () => {
     emit("openMenu");
 };
-onMounted(() => {
+// onMounted(() => {
+//     serverParams.value.columnFilters = {};
+//     serverParams.value.search = "";
+
+// });
+onBeforeMount(() => {
     serverParams.value.columnFilters = {};
     serverParams.value.search = "";
 });

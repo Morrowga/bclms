@@ -14,6 +14,8 @@ import ParentHeader from "@mainRoot/components/ParentHeader/ParentHeader.vue";
 import Footer from "@mainRoot/components/Footer/Footer.vue";
 import UserProfile from "@mainRoot/components/UserProfile/UserProfile.vue";
 import { onMounted, ref, computed, defineProps } from "vue";
+import { serverParams } from "@Composables/useServerSideDatable.js";
+
 const resolveNavItemComponent = (item) => {
     if ("children" in item) return VerticalNavGroup;
 
@@ -107,6 +109,10 @@ onMounted(() => {
 
     // Add an event listener for orientation change
     window.addEventListener("resize", handleOrientationChange);
+});
+onBeforeMount(() => {
+    serverParams.value.columnFilters = {};
+    serverParams.value.search = "";
 });
 </script>
 <template>
