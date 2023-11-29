@@ -16,15 +16,30 @@ const form = useForm({
 const showCondult = () => {
     let storybook_id = form.storybooks;
     let students = form.students;
+    if (!form.storybooks) {
+        SuccessDialog({
+            title: "Storybook is required!",
+            mainTitle: "Error!",
+            color: "#ff6262",
+            icon: "error",
+        });
+    } else if (form.students.length <= 0) {
+        SuccessDialog({
+            title: "Need to choose at least one student!",
+            mainTitle: "Error!",
+            color: "#ff6262",
+            icon: "error",
+        });
+    } else {
+        // Replace 'your.route.name' with the actual Ziggy route name you want to call
+        const url = route("conduct_lessons.show", {
+            storybook_id: storybook_id,
+        });
 
-    // Replace 'your.route.name' with the actual Ziggy route name you want to call
-    const url = route('conduct_lessons.show', {
-        storybook_id: storybook_id,
-    });
-
-    // Now you can use 'url' to navigate to the route or perform any other actions with it
-    window.location.href = url; // Navigate to the URL
-}
+        // Now you can use 'url' to navigate to the route or perform any other actions with it
+        window.location.href = url; // Navigate to the URL
+    }
+};
 </script>
 
 <template>

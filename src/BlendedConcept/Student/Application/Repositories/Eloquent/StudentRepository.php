@@ -221,12 +221,13 @@ class StudentRepository implements StudentRepositoryInterface
             //         return throw new \Exception("License not enough to create student");
             //     }
             // } else
-
+            $parent_id = null;
             if ($auth->name == 'BC Subscriber') {
                 if (auth()->user()->b2bUser == null) {
                     $subscription = auth()->user()->parents->subscription;
                     $num_student_profiles = $subscription->b2c_subscription->plan->num_student_profiles;
                     $current_student_count = StudentEloquentModel::where('parent_id', auth()->user()->parents->parent_id)->count();
+                    $parent_id = auth()->user()->parents->parent_id;
                 } else {
                     $teacher_id = auth()->user()->b2bUser->teacher_id;
                     $subscription = auth()->user()->b2bUser->subscription;
@@ -249,35 +250,35 @@ class StudentRepository implements StudentRepositoryInterface
             ];
             $userEloquent = UserEloquentModel::create($create_user_data);
 
-            if ($auth->name == 'BC Subscriber') {
-                if (auth()->user()->b2bUser == null) {
-                    $parent_id = auth()->user()->parents->parent_id;
-                } else {
-                    $teacher_id = auth()->user()->b2bUser->teacher_id;
-                    $create_parent_data = [
-                        'first_name' => $student->parent_first_name,
-                        'last_name' => $student->parent_last_name,
-                        'contact_number' => $student->contact_number,
-                        'email' => $student->email,
-                        'role_id' => 7,
-                        'password' => 'password'
-                    ];
+            // if ($auth->name == 'BC Subscriber') {
+            //     if (auth()->user()->b2bUser == null) {
+            //         $parent_id = auth()->user()->parents->parent_id;
+            //     } else {
+            //         $teacher_id = auth()->user()->b2bUser->teacher_id;
+            //         $create_parent_data = [
+            //             'first_name' => $student->parent_first_name,
+            //             'last_name' => $student->parent_last_name,
+            //             'contact_number' => $student->contact_number,
+            //             'email' => $student->email,
+            //             'role_id' => 7,
+            //             'password' => 'password'
+            //         ];
 
-                    $userParentEloquent = UserEloquentModel::create($create_parent_data);
+            //         $userParentEloquent = UserEloquentModel::create($create_parent_data);
 
-                    $parentEloquent = ParentUserEloquentModel::create([
-                        "user_id" => $userParentEloquent->id,
-                        "curr_subscription_id" => null,
-                        "organisation_id" => null,
-                        "type" => "B2B"
-                    ]);
-                    $bcstaff = UserEloquentModel::where('role_id', 3)->first();
+            //         $parentEloquent = ParentUserEloquentModel::create([
+            //             "user_id" => $userParentEloquent->id,
+            //             "curr_subscription_id" => null,
+            //             "organisation_id" => null,
+            //             "type" => "B2B"
+            //         ]);
+            //         $bcstaff = UserEloquentModel::where('role_id', 3)->first();
 
-                    \Mail::to($userParentEloquent->email)->send(new EmailVerify($userParentEloquent->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userParentEloquent->email), $bcstaff->email, $bcstaff->contact_number));
+            //         \Mail::to($userParentEloquent->email)->send(new EmailVerify($userParentEloquent->full_name, env('APP_URL') . '/verification?auth=' . Crypt::encrypt($userParentEloquent->email), $bcstaff->email, $bcstaff->contact_number));
 
-                    $parent_id = $parentEloquent->parent_id;
-                }
-            }
+            //         $parent_id = $parentEloquent->parent_id;
+            //     }
+            // }
 
             $createStudentEloquent = StudentMapper::toEloquent($student);
             $createStudentEloquent->user_id = $userEloquent->id;
@@ -335,15 +336,16 @@ class StudentRepository implements StudentRepositoryInterface
                 'last_name' => $studentData->last_name,
             ]);
             $parentEloquentModel = ParentEloquentModel::find($parent_id);
+            if ($parentEloquentModel) {
+                $parentUserEloquemtModel = UserEloquentModel::find($parentEloquentModel->user_id);
+                $parentUserEloquemtModel->update([
+                    'first_name' => $studentData->parent_first_name,
+                    'last_name' => $studentData->parent_last_name,
+                    'email' => $studentData->email,
+                    'contact_number' => $studentData->contact_number,
 
-            $parentUserEloquemtModel = UserEloquentModel::find($parentEloquentModel->user_id);
-            $parentUserEloquemtModel->update([
-                'first_name' => $studentData->parent_first_name,
-                'last_name' => $studentData->parent_last_name,
-                'email' => $studentData->email,
-                'contact_number' => $studentData->contact_number,
-
-            ]);
+                ]);
+            }
             //for media file upload
 
             if (request()->hasFile('profile_pics') && request()->file('profile_pics')->isValid()) {

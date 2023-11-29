@@ -111,7 +111,11 @@ onMounted(() => {
 </script>
 <template>
     <v-layout :class="isStudent ? 'std-layout' : ''">
-        <VNavigation-drawer v-model="drawer" style="position: fixed">
+        <VNavigation-drawer
+            v-model="drawer"
+            style="position: fixed"
+            disable-resize-watcher
+        >
             <template v-slot:prepend>
                 <!-- <Link to="/" class="d-flex align-center gap-x-2 pa-5">
                     <img
