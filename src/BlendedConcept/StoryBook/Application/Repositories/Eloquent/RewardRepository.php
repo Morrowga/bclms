@@ -219,37 +219,37 @@ class RewardRepository implements RewaredRepositoryInterface
     {
         $numberOfRolls = $time;
 
-        $rarityProbabilities = [
-            'LEGENDARY' => 0.01,
-            'EPIC' => 0.05,
-            'SUPERRARE' => 0.10,
-            'RARE' => 0.20,
-            'COMMON' => 0.64,
-        ];
+        // $rarityProbabilities = [
+        //     'LEGENDARY' => 0.01,
+        //     'EPIC' => 0.05,
+        //     'SUPERRARE' => 0.10,
+        //     'RARE' => 0.20,
+        //     'COMMON' => 0.64,
+        // ];
 
-        $selectedRarities = [];
+        // $selectedRarities = [];
 
-        // Generate the selected rarities based on probabilities
-        for ($i = 0; $i < $numberOfRolls; $i++) {
-            $randomNumber = mt_rand() / mt_getrandmax();
-            $selectedRarity = '';
+        // // Generate the selected rarities based on probabilities
+        // for ($i = 0; $i < $numberOfRolls; $i++) {
+        //     $randomNumber = mt_rand() / mt_getrandmax();
+        //     $selectedRarity = '';
 
-            foreach ($rarityProbabilities as $rarity => $probability) {
-                if ($randomNumber < $probability) {
-                    $selectedRarity = $rarity;
-                    break;
-                } else {
-                    $randomNumber -= $probability;
-                }
-            }
+        //     foreach ($rarityProbabilities as $rarity => $probability) {
+        //         if ($randomNumber < $probability) {
+        //             $selectedRarity = $rarity;
+        //             break;
+        //         } else {
+        //             $randomNumber -= $probability;
+        //         }
+        //     }
 
-            $selectedRarities[] = $selectedRarity;
-        }
+        //     $selectedRarities[] = $selectedRarity;
+        // }
 
         if ($time == 1) {
             // $student
-            $records = RewardEloquentModel::whereIn('rarity', $selectedRarities)
-                ->where('status', 'ACTIVE')
+            // whereIn('rarity', $selectedRarities)
+            $records = RewardEloquentModel::where('status', 'ACTIVE')
                 ->inRandomOrder()
                 ->first();
 
@@ -261,8 +261,8 @@ class RewardRepository implements RewaredRepositoryInterface
                 $coinUpdate->save();
             }
         } else {
-            $records = RewardEloquentModel::whereIn('rarity', $selectedRarities)
-                ->where('status', 'ACTIVE')
+            // whereIn('rarity', $selectedRarities)
+            $records = RewardEloquentModel::where('status', 'ACTIVE')
                 ->inRandomOrder()
                 ->limit($time)->get();
 
