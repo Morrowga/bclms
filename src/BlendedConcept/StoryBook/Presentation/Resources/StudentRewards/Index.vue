@@ -21,7 +21,7 @@ const toggleBar = () => {
     isOpen.value = !isOpen.value;
 };
 const getXPosition = (sticker) => {
-    return sticker.pivot.x_axis_position ? sticker.pivot.x_axis_position : 0;
+    return sticker.pivot.x_axis_position ? sticker.pivot.x_axis_position : 30;
 };
 
 const getYPosition = (sticker, index) => {
