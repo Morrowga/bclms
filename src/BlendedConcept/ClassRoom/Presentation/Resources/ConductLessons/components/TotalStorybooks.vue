@@ -79,7 +79,7 @@ const selectVersion = (id) => {
                         :key="index"
                         class="pa-1"
                     >
-                        <VCard @click="clickStoryBook(index)">
+                        <VCard @click="clickStoryBook(index)" class="h-100">
                             <VImg
                                 :src="
                                     item.thumbnail_img == '' ||
@@ -87,7 +87,7 @@ const selectVersion = (id) => {
                                         ? '/images/2.jpg'
                                         : item.thumbnail_img
                                 "
-                                height="282px"
+                                aspect-ratio="1/1"
                                 cover
                             />
                             <!-- <div class="select-box">
@@ -147,6 +147,7 @@ const selectVersion = (id) => {
                             :key="version.id"
                         >
                             <VCard
+                                class="h-100"
                                 :class="
                                     isBordered === version.id
                                         ? 'blue-border'
@@ -164,7 +165,7 @@ const selectVersion = (id) => {
                                                 ? '/images/2.jpg'
                                                 : selectedStorybook.thumbnail_img
                                         "
-                                        height="282px"
+                                        aspect-ratio="1/1"
                                         cover
                                     />
                                     <!-- <VImg
