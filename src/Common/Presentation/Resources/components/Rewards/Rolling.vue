@@ -26,6 +26,10 @@ const roll = (num) => {
     } else {
         isInsufficientVisible.value = true;
     }
+
+    setTimeout(() => {
+        fetchData(currentTime.value);
+    }, 3000);
 };
 
 const rollStop = () => {
@@ -42,7 +46,7 @@ async function fetchData(num) {
         isDialogVisible.value = false;
         const response = await axios.get("/roll-sticker?count=" + num);
         // console.log(response.data);
-        if (response.data !== "") {
+        if (response.data !== "" && (!Array.isArray(response.data) || response.data.length > 0)) {
             rolledData.value = response.data;
             isRewardVisible.value = true;
         } else {
@@ -93,7 +97,6 @@ async function fetchData(num) {
         <VCard class="rolling-card">
             <VCardText>
                 <v-img
-                    @click="rollStop()"
                     src="/images/rolling.gif"
                     cover
                 ></v-img>

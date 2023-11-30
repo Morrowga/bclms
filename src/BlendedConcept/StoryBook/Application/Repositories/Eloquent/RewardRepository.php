@@ -251,27 +251,31 @@ class RewardRepository implements RewaredRepositoryInterface
             $records = RewardEloquentModel::whereIn('rarity', $selectedRarities)
                 ->where('status', 'ACTIVE')
                 ->inRandomOrder()
-                ->firstOrFail();
+                ->first();
 
-            $student = auth()->user()->student;
-            $student->stickers()->attach([$records->id]);
-            $coinUpdate = StudentEloquentModel::find($student->student_id);
-            $coinUpdate->num_gold_coins -= 1;
-            $coinUpdate->save();
+            if(!empty($records)){
+                $student = auth()->user()->student;
+                $student->stickers()->attach([$records->id]);
+                $coinUpdate = StudentEloquentModel::find($student->student_id);
+                $coinUpdate->num_gold_coins -= 1;
+                $coinUpdate->save();
+            }
         } else {
             $records = RewardEloquentModel::whereIn('rarity', $selectedRarities)
                 ->where('status', 'ACTIVE')
                 ->inRandomOrder()
                 ->limit($time)->get();
 
-            $ids = $records->pluck('id');
+            if($records->count() > 0){
+                $ids = $records->pluck('id');
 
-            $student = auth()->user()->student;
-            $student->stickers()->attach($ids);
+                $student = auth()->user()->student;
+                $student->stickers()->attach($ids);
 
-            $coinUpdate = StudentEloquentModel::find($student->student_id);
-            $coinUpdate->num_gold_coins -= 8;
-            $coinUpdate->save();
+                $coinUpdate = StudentEloquentModel::find($student->student_id);
+                $coinUpdate->num_gold_coins -= 8;
+                $coinUpdate->save();
+            }
         }
         // Fetch records based on the selected rarities
         return $records ?? '';
