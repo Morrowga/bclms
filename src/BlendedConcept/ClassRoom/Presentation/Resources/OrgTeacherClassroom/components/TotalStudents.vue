@@ -16,7 +16,7 @@ import {
     serverPerPage,
     routeParam,
 } from "@Composables/useServerSideDatable.js";
-
+import { format, differenceInYears } from "date-fns";
 const props = defineProps({
     form: {
         type: Object,
@@ -45,7 +45,11 @@ serverPerPage.value = ref(10);
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
-
+function calculateAge(dateOfBirth) {
+    const currentDate = new Date();
+    const formattedDob = format(new Date(dateOfBirth), "yyyy-MM-dd");
+    return differenceInYears(currentDate, new Date(formattedDob));
+}
 const userImage = (user) =>
     user.profile_pic ?? "/images/profile/profilefive.png";
 </script>
@@ -106,7 +110,7 @@ const userImage = (user) =>
                     </VCol>
                     <VCol cols="3">
                         <p class="tiggie-p">
-                            {{ data.age ? data.age : "---" }}
+                            {{ data.dob ? calculateAge(data.dob) : "---" }}
                         </p>
                     </VCol>
 

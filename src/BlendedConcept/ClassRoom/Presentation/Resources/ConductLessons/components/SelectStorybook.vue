@@ -31,7 +31,7 @@ const props = defineProps({
         </v-expansion-panel-title>
         <v-expansion-panel-text>
             <VRow justify="end">
-                <VCol cols="2">
+                <VCol cols="4">
                     <VTextField
                         density="compact"
                         label="Search"
@@ -44,10 +44,6 @@ const props = defineProps({
                         v-model="serverParams.search"
                     >
                     </VTextField>
-                </VCol>
-                <VCol cols="2">
-                    <SelectBox placeholder="Sort By" density="compact" rounded>
-                    </SelectBox>
                 </VCol>
             </VRow>
             <v-row>
