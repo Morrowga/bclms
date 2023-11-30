@@ -253,7 +253,7 @@ class RewardRepository implements RewaredRepositoryInterface
                 ->inRandomOrder()
                 ->first();
 
-            if(!empty($records)){
+            if (!empty($records)) {
                 $student = auth()->user()->student;
                 $student->stickers()->attach([$records->id]);
                 $coinUpdate = StudentEloquentModel::find($student->student_id);
@@ -266,7 +266,7 @@ class RewardRepository implements RewaredRepositoryInterface
                 ->inRandomOrder()
                 ->limit($time)->get();
 
-            if($records->count() > 0){
+            if ($records->count() > 0) {
                 $ids = $records->pluck('id');
 
                 $student = auth()->user()->student;
@@ -291,7 +291,7 @@ class RewardRepository implements RewaredRepositoryInterface
             $query->where('student_sticker.student_id', $student->student_id);
         })->find($student->student_id);
         $placed_stickers = $studentEloquent ? $studentEloquent->stickers : '';
-        $stickers = $studentEloquent ? $studentEloquent->stickers()->paginate(7) : '';
+        $stickers = $studentEloquent ? $studentEloquent->stickers()->paginate(6) : '';
 
         return ["stickers" => $stickers, "placed_stickers" => $placed_stickers];
     }

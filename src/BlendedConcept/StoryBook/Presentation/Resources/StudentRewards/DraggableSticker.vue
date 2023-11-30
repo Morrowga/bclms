@@ -92,7 +92,7 @@ const stopDragging = (event) => {
     } else {
         isDragging.value = false;
         emit("isDragging", false);
-        positionX.value = 0;
+        positionX.value = 30;
         positionY.value = props.index * 80;
         form.x_axis_position = 0;
         form.y_axis_position = 0;
