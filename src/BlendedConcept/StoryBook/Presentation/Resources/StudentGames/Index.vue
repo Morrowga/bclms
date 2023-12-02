@@ -3,7 +3,8 @@ import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
-let props = defineProps(["flash", "auth", "games"]);
+
+let props = defineProps(["flash", "auth", "games", "user_survey"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 </script>
@@ -35,124 +36,6 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                             <span class="bookname ruddy-bold">{{ game.name }}</span>
                         </div>
                     </VCol>
-                    <!-- <VCol cols="4">
-                        <VCard class="card-story">
-                            <v-img
-                                src="/images/storybook2.jpeg"
-                                class="showimg"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    @click="
-                                        () => router.get(route('games.show'))
-                                    "
-                                    class="playButton"
-                                    alt=""
-                                />
-                            </div>
-                        </VCard>
-                        <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold"
-                                >Tower Crash 3D</span
-                            >
-                        </div>
-                    </VCol>
-                    <VCol cols="4">
-                        <VCard class="card-story">
-                            <v-img
-                                src="/images/storybook1.jpeg"
-                                class="showimg"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    @click="
-                                        () => router.get(route('games.show'))
-                                    "
-                                    class="playButton"
-                                    alt=""
-                                />
-                            </div>
-                        </VCard>
-                        <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold"
-                                >Endless Truck</span
-                            >
-                        </div>
-                    </VCol>
-                    <VCol cols="4">
-                        <VCard class="card-story">
-                            <v-img
-                                src="/images/storybook2.jpeg"
-                                class="showimg"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    @click="
-                                        () => router.get(route('games.show'))
-                                    "
-                                    class="playButton"
-                                    alt=""
-                                />
-                            </div>
-                        </VCard>
-                        <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold"
-                                >Color Strings</span
-                            >
-                        </div>
-                    </VCol>
-                    <VCol cols="4">
-                        <VCard class="card-story">
-                            <v-img
-                                src="/images/storybook1.jpeg"
-                                class="showimg"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    @click="
-                                        () => router.get(route('games.show'))
-                                    "
-                                    class="playButton"
-                                    alt=""
-                                />
-                            </div>
-                        </VCard>
-                        <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold">Find Me</span>
-                        </div>
-                    </VCol>
-                    <VCol cols="4">
-                        <VCard class="card-story">
-                            <v-img
-                                src="/images/storybook2.jpeg"
-                                class="showimg"
-                                cover
-                            ></v-img>
-                            <div class="d-flex justify-center">
-                                <img
-                                    src="/images/Play Button.png"
-                                    @click="
-                                        () => router.get(route('games.show'))
-                                    "
-                                    class="playButton"
-                                    alt=""
-                                />
-                            </div>
-                        </VCard>
-                        <div class="text-center mt-3">
-                            <span class="bookname ruddy-bold"
-                                >Pendguin Rush</span
-                            >
-                        </div>
-                    </VCol> -->
                 </VRow>
             </VContainer>
         </section>

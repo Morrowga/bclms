@@ -5,13 +5,13 @@ import { router } from "@inertiajs/core";
 import { computed, defineProps } from "vue";
 import GameOver from "@mainRoot/components/Games/GameOver.vue";
 import JSZip from "jszip";
+import GameEndUserExperienceSurvey from "./components/GameEndUserExperienceSurvey.vue";
 
-let props = defineProps(["flash", "auth", "game"]);
+let props = defineProps(["flash", "auth", "game", "user_survey"]);
 
 const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
 
-// console.log(props.game);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 </script>
@@ -29,6 +29,10 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
             </div>
             <GameOver
                 :iframeSrc="app_url + '/gamefiles/' + props.game.game_file"
+            />
+            <GameEndUserExperienceSurvey
+                v-if="props.user_survey ?? false"
+                :data="props.user_survey"
             />
         </section>
     </StudentLayout>

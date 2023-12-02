@@ -6,6 +6,7 @@ use Exception;
 use Inertia\Inertia;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetUserSurveyByRole;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
 
 class StudentGamesController extends Controller
@@ -27,9 +28,13 @@ class StudentGamesController extends Controller
     public function show(GameEloquentModel $game)
     {
         try {
+            $user_survey = (new GetUserSurveyByRole('GAME_END', $game->id))->handle();
+
             return Inertia::render(config('route.game-show'), [
-                'game' => $game
+                'game' => $game,
+                'user_survey' => $user_survey
             ]);
+            
         } catch (Exception $e) {
             return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
         }

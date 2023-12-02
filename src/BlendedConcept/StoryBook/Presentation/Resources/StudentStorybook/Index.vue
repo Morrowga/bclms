@@ -27,6 +27,7 @@ const activeTab = (name) => {
     active.value = name;
     setCookie(name);
 };
+
 const getImage = (pathway) => pathway.image_url ?? "images/Pathway Card.png";
 onMounted(() => {
     setCookie("assigned");

@@ -31,5 +31,5 @@ interface SurveyRepositoryInterface
 
     public function storeOrder(Request $request, SurveyEloquentModel $survey);
 
-    public function getSurveyByRole($appear_on);
+    public function getSurveyByRole($appear_on, $id = null);
 }

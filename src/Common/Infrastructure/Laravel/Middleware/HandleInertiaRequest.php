@@ -48,7 +48,7 @@ class HandleInertiaRequest extends Middleware
                 'user_detail' => Auth::check() == true ? Auth::user() : ' ',
                 'user_role' => Auth::check() == true ? Auth::user()->role : ' ',
             ],
-            'user_survey_logout' => Auth::check() == true ? (new GetUserSurveyByRole('LOG_OUT'))->handle() : '',
+            'user_survey_logout' => Auth::check() == true ? (new GetUserSurveyByRole('LOG_OUT', null))->handle() : '',
             'notifications' => getNotifications() != null ? getNotifications()['notifications'] : null,
             'unreadNotificationsCount' => getNotifications() != null ? getNotifications()['unread'] : 0,
             'auth' => auth()->check() ? new AuthResource(auth()->user()) : '',

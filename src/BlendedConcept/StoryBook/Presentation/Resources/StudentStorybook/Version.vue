@@ -4,8 +4,9 @@ import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps, ref } from "vue";
 import { onMounted, nextTick } from "vue";
+import BookEndUserExperienceSurvey from "./components/BookEndUserExperienceSurvey.vue";
 
-let props = defineProps(["book"]);
+let props = defineProps(["book", "user_survey"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 let iframeRef = ref("");
@@ -136,6 +137,10 @@ onMounted(() => {
                 ></iframe>
             </div>
         </section>
+        <BookEndUserExperienceSurvey
+            v-if="props.user_survey ?? false"
+            :data="props.user_survey"
+        />
     </StudentLayout>
 </template>
 

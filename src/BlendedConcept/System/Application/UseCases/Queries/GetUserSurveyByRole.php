@@ -11,6 +11,7 @@ class GetUserSurveyByRole implements QueryInterface
 
     public function __construct(
         private readonly String $appear_on,
+        private readonly ?Int $id,
     )
     {
         $this->repository = app()->make(SurveyRepositoryInterface::class);
@@ -18,6 +19,6 @@ class GetUserSurveyByRole implements QueryInterface
 
     public function handle()
     {
-        return $this->repository->getSurveyByRole($this->appear_on);
+        return $this->repository->getSurveyByRole($this->appear_on, $this->id ?? null);
     }
 }

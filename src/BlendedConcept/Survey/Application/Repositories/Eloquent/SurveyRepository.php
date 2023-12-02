@@ -18,6 +18,8 @@ use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\SurveyEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\QuestionEloquentModel;
 use Src\BlendedConcept\Survey\Infrastructure\EloquentModels\ResponseEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameAssignmentEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookAssignmentEloquentModel;
 
 class SurveyRepository implements SurveyRepositoryInterface
 {
@@ -288,14 +290,14 @@ class SurveyRepository implements SurveyRepositoryInterface
         }
     }
 
-    public function getSurveyByRole($appear_on)
+    public function getSurveyByRole($appear_on, $id = null)
     {
         $user = auth()->user();
         $user_type = $this->checkRole($user->role->name);
         if ($user_type != 'BC') {
             $currentDateTime = now()->format('Y-m-d H:i:s'); // Format current datetime
-
-            $surveyEloquentModel = SurveyEloquentModel::where('appear_on', $appear_on)
+            if($appear_on == 'LOG_IN' || $appear_on == 'LOG_OUT'){
+                $surveyEloquentModel = SurveyEloquentModel::where('appear_on', $appear_on)
                 ->where('type', 'USEREXP')
                 ->whereHas('survey_settings', function ($query) use ($user_type) {
                     $query->where('user_type', $user_type);
@@ -310,7 +312,49 @@ class SurveyRepository implements SurveyRepositoryInterface
                 ])
                 ->latest()->first();
 
-            return ($surveyEloquentModel && $surveyEloquentModel->responses->count() == 0) ? $surveyEloquentModel : '';
+                return ($surveyEloquentModel && $surveyEloquentModel->responses->count() == 0) ? $surveyEloquentModel : '';
+            } else {
+                if($appear_on == 'GAME_END'){
+                    $surveyEloquentModel = SurveyEloquentModel::where('appear_on', $appear_on)
+                    ->where('type', 'USEREXP')
+                    ->whereHas('survey_settings', function ($query) use ($user_type) {
+                        $query->where('user_type', $user_type);
+                    })
+                    ->where('start_date', '<=', $currentDateTime) // Check if start_date is less than or equal to the current datetime
+                    ->where('end_date', '>=', $currentDateTime) // Check if end_date is greater than or equal to the current datetime
+                    ->with([
+                        'questions.options',
+                        'responses'
+                    ])
+                    ->latest()->first();
+
+                    $student_id = auth()->user()->student->student_id;
+                    $gameAssign = GameAssignmentEloquentModel::where('game_id', $id)->where('student_id',$student_id)->first();
+                    if(!empty($gameAssign)){
+                        return $surveyEloquentModel ?? '';
+                    }
+                } else {
+                    $surveyEloquentModel = SurveyEloquentModel::where('appear_on', $appear_on)
+                    ->where('type', 'USEREXP')
+                    ->whereHas('survey_settings', function ($query) use ($user_type) {
+                        $query->where('user_type', $user_type);
+                    })
+                    ->where('start_date', '<=', $currentDateTime) // Check if start_date is less than or equal to the current datetime
+                    ->where('end_date', '>=', $currentDateTime) // Check if end_date is greater than or equal to the current datetime
+                    ->with([
+                        'questions.options',
+                        'responses'
+                    ])
+                    ->latest()->first();
+
+                    $student_id = auth()->user()->student->student_id;
+                    $storyBookAssign = StoryBookAssignmentEloquentModel::where('storybook_version_id', $id)->where('student_id',$student_id)->first();
+                    if(!empty($storyBookAssign) && $storyBookAssign->completed_once != 1){
+                        return $surveyEloquentModel ?? '';
+                    }
+                }
+            }
+
         } else {
             return '';
         }
