@@ -462,14 +462,10 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             $query->whereHas('storybook_assigments', function ($queryTwo) use ($student_id) {
                 $queryTwo->where('storybook_assignments.student_id', $student_id);
             });
-        })->with(['book_versions' => function ($query) use ($student_id) {
-            $query->whereHas('storybook_assigments', function ($queryTwo) use ($student_id) {
-                $queryTwo->where('storybook_assignments.student_id', $student_id);
-            });
-        }, 'result', 'book_versions.storybook_assigments'])->orderBy('id', 'desc')
+        })->with(['book_versions.storybook_assigments' => function ($query) use ($student_id) {
+            $query->where('storybook_assignments.student_id', $student_id);
+        }, 'result'])->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10);
-
-        // dd($books[0]);
         return $books;
     }
 
@@ -517,7 +513,8 @@ class StoryBookRepository implements StoryBookRepositoryInterface
     }
 
 
-    function findIndexHtmlPath($directory) {
+    function findIndexHtmlPath($directory)
+    {
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
 
         foreach ($iterator as $file) {

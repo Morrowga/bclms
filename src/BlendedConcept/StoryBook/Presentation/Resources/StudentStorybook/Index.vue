@@ -30,6 +30,7 @@ const activeTab = (name) => {
 
 const getImage = (pathway) => pathway.image_url ?? "images/Pathway Card.png";
 onMounted(() => {
+    console.log("books", props.books.data);
     setCookie("assigned");
 });
 let checkHide = computed(() => {
