@@ -18,7 +18,8 @@ class LearningActivityController
         $verionIds = $storybook->storybook_versions->whereIn('id', $storybook_version_ids)->pluck('h5p_id'); // get h5p_id from storybook version
 
         $h5pContents = H5pContent::with('eloquent_user')->whereIn('id', $verionIds)->paginate($filters['perPage'] ?? 10); // get all h5p content realated with storybook versions
-        // dd($h5pContents);
+        // dd($h5pContents);   
+        // dd($storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions']));
         return Inertia::render(config('route.learning_activities.index'), [
             'storybook' => $storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions']),
             'h5p_contents' => $h5pContents,
