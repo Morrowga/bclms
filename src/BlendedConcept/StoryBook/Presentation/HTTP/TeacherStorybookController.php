@@ -75,7 +75,7 @@ class TeacherStorybookController
             $teacher_storybook->load(['devices', 'learningneeds', 'themes', 'disability_types', 'storybook_versions' => function ($query) use ($user_id) {
                 $query->where('teacher_id', $user_id)->orWhere(function ($query) {
                     $query->where('teacher_id', null)->where('parent_id', null);
-                });;
+                })->orderBy('id', 'asc');
             }]);
         }
         // elseif ($auth == 'Both Parent') {
@@ -100,7 +100,7 @@ class TeacherStorybookController
         $games = (new GetGameList($filters))->handle();
 
         $storybooks = (new GetStoryBook($filters = []))->handle();
-
+        // dd($storybooks);
         return Inertia::render(config('route.teacher_storybook.show'), compact('teacher_storybook', 'games', 'storybooks'));
     }
 

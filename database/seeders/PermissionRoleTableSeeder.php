@@ -138,7 +138,7 @@ class PermissionRoleTableSeeder extends Seeder
                 $permission = PermissionEloquentModel::whereIn(
                     'name',
                     [
-                        // 'access_userSurveys',
+                        'access_userSurveys',
                         'access_profillingSurveys',
                         'access_surveys',
                         'access_storybook',
