@@ -95,7 +95,7 @@ class OrganisationController extends Controller
                 'organisations' => $organisations['paginate_organisations'],
             ]);
         } catch (\Exception $e) {
-
+            dd($e);
             return redirect()
                 ->route('organisations.index')
                 ->with([
