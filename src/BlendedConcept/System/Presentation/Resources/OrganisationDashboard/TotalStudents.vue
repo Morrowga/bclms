@@ -17,9 +17,20 @@ import {
 
 serverPage.value = ref(datas.value?.current_page ?? 1);
 serverPerPage.value = ref(10);
+let filters = ref(null);
 routeName.value = "classrooms.getStudents";
+
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
+});
+
+watch(filters, (newValue) => {
+    console.log(newValue);
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
 });
 
 const userImage = (user) => {
@@ -46,6 +57,7 @@ const userImage = (user) => {
                 <div class="sort-field">
                     <SelectBox
                         placeholder="Sort By"
+                        v-model="filters"
                         :datas="['A-Z', 'Z-A', 'Contact Number']"
                         density="compact"
                     />

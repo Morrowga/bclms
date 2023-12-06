@@ -16,6 +16,6 @@ class GetTeachersWithPagination implements QueryInterface
 
     public function handle()
     {
-        return $this->repository->getTeachers($this->filters);
+    return $this->repository->getTeachers($this->filters);
     }
 }

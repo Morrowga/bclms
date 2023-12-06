@@ -122,6 +122,12 @@ class UserEloquentModel extends Authenticatable implements HasMedia, MustVerifyE
                 $query->orderBy('first_name', 'desc');
             } elseif ($filter == 'role') {
                 $query->join('roles', 'users.role_id', 'roles.id')->orderBy('name', config('sorting.orderBy'))->select('users.*');
+            } elseif ($filter == 'A-Z') {
+                $query->orderBy('first_name', 'asc');
+            } elseif ($filter == 'Z-A') {
+                $query->orderBy('first_name', 'desc');
+            } elseif($filter == 'Contact Number'){
+                $query->orderBy('contact_number', 'asc');
             } else {
                 $query->orderBy($filter, config('sorting.orderBy'));
             }

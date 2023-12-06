@@ -84,6 +84,15 @@ class StudentEloquentModel extends Model implements HasMedia
                     ->orderBy('users.first_name', 'desc');
             } elseif ($filter == 'role') {
                 $query->join('roles', 'users.role_id', 'roles.id')->orderBy('name', config('sorting.orderBy'));
+            } elseif ($filter == 'A-Z') {
+                $query->join('users', 'students.user_id', '=', 'users.id')
+                    ->orderBy('users.first_name', 'asc');
+            } elseif ($filter == 'Z-A') {
+                $query->join('users', 'students.user_id', '=', 'users.id')
+                    ->orderBy('users.first_name', 'desc');
+            } elseif ($filter == 'Contact Number') {
+                $query->join('users', 'students.user_id', '=', 'users.id')
+                    ->orderBy('users.contact_number', 'asc');
             } else {
                 $query->join('users', 'students.user_id', '=', 'users.id')
                     ->orderBy("users.$filter", config('sorting.orderBy'));

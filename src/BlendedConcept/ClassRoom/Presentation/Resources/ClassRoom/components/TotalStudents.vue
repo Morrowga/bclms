@@ -33,6 +33,7 @@ const props = defineProps({
         },
     },
 });
+
 routeName.value = "classrooms.getStudents";
 let students = ref([]);
 //## start datatable section
