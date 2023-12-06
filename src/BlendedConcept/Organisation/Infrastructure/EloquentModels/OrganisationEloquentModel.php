@@ -95,7 +95,38 @@ class OrganisationEloquentModel extends Model implements HasMedia
             $query->where('name', 'like', '%' . $search . '%');
         });
         $query->when($filters['filter'] ?? false, function ($query, $filter) {
-            if ($filter == 'role') {
+            if ($filter == 'name') {
+                $query->orderBy($filter, 'asc');
+            } else if($filter == 'teacher_usage'){
+                 $query->leftJoin(
+                    \DB::raw('(SELECT organisation_id, COUNT(*) as teacher_count FROM teachers GROUP BY organisation_id) as teacher_counts'),
+                    'teacher_counts.organisation_id',
+                    '=',
+                    'organisations.id'
+                )
+                ->orderBy('teacher_counts.teacher_count', 'asc')
+                ->select('organisations.*');
+            } else if($filter == 'student_usage'){
+                $query->leftJoin(
+                    \DB::raw('(SELECT organisation_id, COUNT(*) as student_count FROM students GROUP BY organisation_id) as student_counts'),
+                    'student_counts.organisation_id',
+                    '=',
+                    'organisations.id'
+                )
+                ->orderBy('student_counts.student_count', 'asc')
+                ->select('organisations.*');
+            } else if($filter == 'storage_usage'){
+                $query->orderBy(function ($query) {
+                    // Assuming 'id' is the organization_id field
+                    $query->selectRaw('SUM(size) as storage_usage')
+                          ->from('media') // Replace with your actual media table name
+                          ->where('collection_name', 'videos')
+                          ->where('organisation_id', '=', 'organisations.id') // Adjust the column names as needed
+                          ->where('status', '=', 'active')
+                          ->groupBy('organisation_id');
+                }, 'asc');
+            } else if($filter == 'status'){
+                $query->orderBy('status', 'asc');
             } else {
                 $query->orderBy($filter, config('sorting.orderBy'));
             }

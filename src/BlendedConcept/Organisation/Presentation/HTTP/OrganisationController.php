@@ -79,7 +79,7 @@ class OrganisationController extends Controller
         // Authorize user to view organisation
         abort_if(authorize('viewBc', OrganisationPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        try {
+        // try {
 
             // Get filters from the request
             $filters = request()->only(['page', 'search', 'perPage', 'filter']);
@@ -94,14 +94,13 @@ class OrganisationController extends Controller
             return Inertia::render(config('route.organisations.index'), [
                 'organisations' => $organisations['paginate_organisations'],
             ]);
-        } catch (\Exception $e) {
-            dd($e);
-            return redirect()
-                ->route('organisations.index')
-                ->with([
-                    'systemErrorMessage' => $e->getMessage(),
-                ]);
-        }
+        // } catch (\Exception $e) {
+        //     return redirect()
+        //         ->route('staff_organisations')
+        //         ->with([
+        //             'systemErrorMessage' => $e->getMessage(),
+        //         ]);
+        // }
     }
 
     public function create()
