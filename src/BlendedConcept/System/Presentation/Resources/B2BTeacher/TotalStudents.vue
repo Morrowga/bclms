@@ -15,14 +15,24 @@ import {
 let props = defineProps(["students", "flash"]);
 serverPage.value = ref(props.students.current_page ?? 1);
 serverPerPage.value = ref(10);
+let filters = ref(null);
 
 watch(serverPerPage, function (value) {
     onPerPageChange(value);
 });
 
+watch(filters, (newValue) => {
+    console.log(newValue);
+    onColumnFilter({
+        columnFilters: {
+            filter: newValue,
+        },
+    });
+});
+
 const userImage = (user) =>
     user.profile_pic ?? "/images/profile/profilefive.png";
-    
+
 </script>
 <template>
     <div class="header">
@@ -43,6 +53,7 @@ const userImage = (user) =>
 
                 <div class="sort-field">
                     <SelectBox
+                        v-model="filters"
                         placeholder="Sort By"
                         :datas="['A-Z', 'Z-A', 'Contact Number']"
                         density="compact"
