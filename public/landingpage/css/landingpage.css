@@ -552,6 +552,10 @@ body .bg-7{
     /* height: 40vh; */
   }
 
+  .border-custom{
+    border-radius: 20px;
+  }
+
   .text-e8e2ff{
     color: #E8E2FF;
   }
