@@ -10,8 +10,14 @@
     font-family: "theme-style-font";
     src: url('../fonts/Ruddy-Bold.ttf') format("truetype");
 }
+
+@font-face {
+    font-family: 'theme-codec-font';
+    src: url('../fonts/CodecPro-News.ttf') format("truetype");
+    /* Add other font formats if needed */
+}
 body{
-    font-family: "theme-normal-font";
+    font-family: "theme-codec-font";
     background-color: #ffff;
     position: relative;
     overflow-x: hidden;
@@ -90,7 +96,7 @@ h6{
     font-weight: 500;
     line-height: 1.625;
     color: #f6f6f6;
-    font-family: PP Pangram Sans, 'Source Sans Pro';
+    font-family: "theme-codec-font";
     white-space: nowrap;
     display: flex;
     align-items: center;
@@ -581,7 +587,7 @@ body .bg-7{
   }
 
 .primary-button{
-    width: 23vh;
+    width: 27vh;
     height: 7vh;
 }
 

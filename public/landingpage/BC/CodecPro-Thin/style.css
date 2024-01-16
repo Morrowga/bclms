@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Codec Pro';
+    src: local('Codec Pro Thin'), local('Codec-Pro-Thin'),
+        url('CodecPro-Thin.woff2') format('woff2'),
+        url('CodecPro-Thin.woff') format('woff'),
+        url('CodecPro-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+  }
