@@ -70,10 +70,10 @@ const checkUserRole = () => {
 const forbiddenRole = () => {
     return user_role.value != "BC Subscriber" || user_role.value != "Teacher";
 };
-let isOpenMenu = ref(true);
-let toggleMenu = () => {
-    isOpenMenu.value = !isOpenMenu.value;
-};
+// let isOpenMenu = ref(false);
+// let toggleMenu = () => {
+//     isOpenMenu.value = !isOpenMenu.value;
+// };
 
 onMounted(() => {
     getNotifications();
@@ -160,7 +160,6 @@ onMounted(() => {
         <StudentDashboard
             :user_survey="props.user_survey"
             :orgainzations_users="props.orgainzations_users"
-            :isOpenMenu="isOpenMenu"
         >
         </StudentDashboard>
     </StudentLayout>

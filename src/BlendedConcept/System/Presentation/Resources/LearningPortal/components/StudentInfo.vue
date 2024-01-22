@@ -9,12 +9,12 @@ const props = defineProps(["studentInfo"]);
             route(
                 'teacher_students.kidmode',
                 props.studentInfo.user_id
-            )
+        )
         "
         >
-            <VImg
+            <img
                 :src="props.studentInfo.img"
-                class="tggie-student-img"
+                class="learning-student-img"
             />
         </Link>
         <h4 class="tiggie-subtitle">{{  props.studentInfo.name }}</h4>

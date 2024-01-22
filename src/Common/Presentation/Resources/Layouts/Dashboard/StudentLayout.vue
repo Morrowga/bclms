@@ -128,7 +128,7 @@ onUnmounted(() => {
 
 .student .layout-page-content {
     padding: 0 !important;
-    background: url("/images/artbg.png") no-repeat !important;
+    background: url("/images/studentbg.webp") no-repeat !important;
     background-size: cover !important;
     background-position: center !important;
     background-attachment: fixed !important;

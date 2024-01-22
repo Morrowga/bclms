@@ -463,6 +463,13 @@ thead {
     border-radius: 180px;
 }
 
+.learning-student-img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover !important;
+    flex-shrink: 0;
+    border-radius: 180px;
+}
 
 
 .required::after {

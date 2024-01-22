@@ -35,10 +35,13 @@ let props = defineProps(["students"]);
             </div>
         </div>
         <VContainer>
+            <div class="d-flex justify-center mt-5">
+                <img src="/images/logowhite.png">
+            </div>
             <VCard class="mx-15 learning-card">
                 <VCardText>
                     <div class="text-center">
-                        <span class="head-text ruddy-bold"
+                        <span class="head-text ruddy-bold whoislearning"
                             >Who is learning</span
                         >
                         <div class="students mx-15 my-10">
@@ -49,17 +52,19 @@ let props = defineProps(["students"]);
                                     v-for="item in props.students"
                                     :key="item"
                                 >
-                                    <StudentProfile
-                                        :studentInfo="{
-                                            id: item.student_id,
-                                            name: item.user.full_name,
-                                            contact_number:
-                                                item.parent?.user
-                                                    ?.contact_number,
-                                            img: item.user.profile_pic,
-                                            user_id: item.user_id,
-                                        }"
-                                    />
+                                    <div class="studentprofile-card">
+                                        <StudentProfile class="pt-10"
+                                            :studentInfo="{
+                                                id: item.student_id,
+                                                name: item.user.full_name,
+                                                contact_number:
+                                                    item.parent?.user
+                                                        ?.contact_number,
+                                                img: item.user.profile_pic,
+                                                user_id: item.user_id,
+                                            }"
+                                        />
+                                    </div>
                                 </VCol>
                             </VRow>
                         </div>
@@ -80,23 +85,26 @@ let props = defineProps(["students"]);
 </template>
 <style scoped>
 section {
-    background: url("/images/artbg.png") no-repeat !important;
+    background: url("/images/learningportal.png") no-repeat !important;
     background-size: cover !important;
     background-position: center !important;
-    background-attachment: fixed !important;
     height: 830px;
 }
 
 .learning-card {
-    background: #4066e4;
-    margin-top: 8%;
-    border: 4px solid #fff;
+    background: transparent;
+    margin-top: 0%;
+    box-shadow: none !important;
+    /* border: 4px solid #fff; */
 }
 
 .settingbtn {
     border: 3px solid #fff;
-    background: #4066e4;
+    background: rgba(247, 255, 254, 0.31) !important;
     height: 50px;
+    color: #000 !important;
+    border: 0px solid #000;
+    border-radius: 16px;
 }
 
 .head-text {
@@ -107,5 +115,16 @@ section {
 .navbar {
     background: #000;
     padding: 3px;
+}
+
+.studentprofile-card{
+    /* border: 2px solid #000000; */
+    background: rgba(0, 0, 0, 0.5); /* Adjust the last parameter for opacity (0 to 1) */
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.whoislearning{
+    margin-left: 13vh;
 }
 </style>

@@ -6,20 +6,22 @@ import ExitMode from "@mainRoot/components/Student/ExitMode.vue";
 import UserExperienceSurvey from "./components/UserExperienceSurvey.vue";
 
 let props = defineProps({
-    isOpenMenu: {
-        type: Boolean,
-        default: true,
-    },
+    // isOpenMenu: {
+    //     type: Boolean,
+    //     default: true,
+    // },
     user_survey: {
         type: Object,
     },
 });
+
 const teacher_id = ref(null);
 const page = usePage();
 const user = computed(() => page.props.auth.data);
 const userInfo = computed(() => page.props.user_info.user_detail);
 const userData = user.value;
 let isLandscape = ref(false);
+
 const getCookie = (name) => {
     const cookies = document.cookie.split("; ");
     for (const cookie of cookies) {
@@ -45,6 +47,12 @@ const handleOrientationChange = () => {
     }
 };
 
+const isOpenMenu = ref(false);
+
+const menuOpener = () => {
+    isOpenMenu.value = !isOpenMenu.value;
+}
+
 const isPortrait = () => {
     // Check whether the screen is in portrait mode
     return window.innerHeight > window.innerWidth;
@@ -65,21 +73,28 @@ onMounted(() => {
     <section class="section-student-home">
         <VRow>
             <VCol cols="12" sm="4" lg="3">
+                <VBtn
+                @click="menuOpener"
+                color="#BFC0C1"
+                class="ml-5 opener"
+                :icon="isOpenMenu ? 'mdi-chevron-down' : 'mdi-chevron-right'"
+                >
+                </VBtn>
                 <VFadeTransition>
                     <VCard
-                        class="text-center card-student ml-5"
-                        v-if="props.isOpenMenu"
+                        class="text-center card-student ml-5 mt-4"
+                        v-if="isOpenMenu"
                     >
                         <div class="d-flex justify-center mt-2">
                             <img :src="getImage()" class="studentimg" />
-                        </div>
-                        <div class="mt-2">
-                            <p class="studentname pppangram-bold">
-                                {{ userData.name }}
-                            </p>
-                            <p class="semi-text pppangram-bold">
-                                {{ userData.student.gender }}
-                            </p>
+                            <div class="mt-2 mx-4">
+                                <p class="studentname pppangram-bold">
+                                    {{ userData.name }}
+                                </p>
+                                <p class="semi-text pppangram-bold">
+                                    {{ userData.student.gender }}
+                                </p>
+                            </div>
                         </div>
                         <VRow class="mx-2 mt-1">
                             <VCol cols="5" class="text-left mt-3">
@@ -380,7 +395,7 @@ onMounted(() => {
                 </VFadeTransition>
             </VCol>
             <VCol cols="12" sm="5" lg="5">
-                <div class="margin-left">
+                <div class="margin-left mt-15">
                     <img
                         src="/images/Storybooks.png"
                         @click="() => router.get(route('storybooks'))"
@@ -398,7 +413,7 @@ onMounted(() => {
                 </div> -->
             </VCol>
             <VCol cols="12" sm="3" lg="4" class="md-text-center">
-                <div class="text-center">
+                <div class="text-center mt-14">
                     <img
                         src="/images/Games.png"
                         @click="() => router.get(route('student-games'))"
@@ -423,7 +438,7 @@ onMounted(() => {
     </section>
 </template>
 
-<style>
+<style scoped>
 /* .student .layout-page-content{
     background: url('/images/artbg.png') no-repeat !important;
     background-size: cover !important;
@@ -533,6 +548,13 @@ onMounted(() => {
 .margin-left {
     margin-left: 40px !important;
 }
+
+
+:deep(.opener span.v-btn__content > svg) {
+    color: #000 !important;
+    font-size: 30px !important;
+}
+
 @media only screen and (max-width: 600px) {
     .games {
         width: 100% !important;
