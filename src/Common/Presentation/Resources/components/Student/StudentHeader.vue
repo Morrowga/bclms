@@ -22,9 +22,11 @@ let page = usePage();
 let tiggieImage = "";
 let user_role = computed(() => page.props.user_info.user_role.name);
 let student = computed(() => page.props.auth.data.student);
+
 let toggle = () => {
     emit("openDrawer");
 };
+
 onMounted(() => {
     switch (route()?.current()) {
         case "dashboard":
@@ -53,11 +55,10 @@ const openStdMenu = () => {
 };
 </script>
 <template>
-    <v-app-bar elevation="0" class="std-head-bar">
+    <v-app-bar elevation="0" class="std-head-bar" v-if="route()?.current() == 'student-games'">
         <!-- mobile side navigation -->
         <StudentProfile
             class="d-none d-lg-flex pe-3"
-            v-if="route().current() === 'dashboard'"
             @openStdMenu="openStdMenu()"
         />
 

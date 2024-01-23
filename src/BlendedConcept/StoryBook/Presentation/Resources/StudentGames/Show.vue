@@ -41,11 +41,15 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 <style lang="scss" scoped>
 .fixed-back-icon {
     position: absolute;
-    top: 100px;
-    left: 30px;
+    top: 20px;
+    left: 20px;
 }
 .app-user-search-filter {
     inline-size: 24.0625rem;
+}
+
+:deep(.layout-navbar-and-nav-container > .layout-navbar) {
+    display: none !important;
 }
 
 .videoplayer {

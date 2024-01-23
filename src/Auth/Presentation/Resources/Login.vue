@@ -199,11 +199,11 @@ const onSubmit = () => {
                             </div>
                         </div>
                     </VCol>
-                    <VCol cols="12" sm="6" lg="6" class="d-flex justify-center bg-surface-variant">
+                    <!-- <VCol cols="12" sm="6" lg="6" class="d-flex justify-center bg-surface-variant">
                         <div class="d-flex align-end mx-3">
                             <img :src="'../images/logon-img.png'" width="360">
                         </div>
-                    </VCol>
+                    </VCol> -->
                 </VRow>
             </div>
         </div>

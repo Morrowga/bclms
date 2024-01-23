@@ -53,7 +53,7 @@ let props = defineProps(["students"]);
                                     :key="item"
                                 >
                                     <div class="studentprofile-card">
-                                        <StudentProfile class="pt-10"
+                                        <StudentProfile class="py-10"
                                             :studentInfo="{
                                                 id: item.student_id,
                                                 name: item.user.full_name,
@@ -65,6 +65,7 @@ let props = defineProps(["students"]);
                                             }"
                                         />
                                     </div>
+                                    <h4 class="studentprofile-fullname mt-5">{{  item.user.full_name }}</h4>
                                 </VCol>
                             </VRow>
                         </div>
@@ -126,5 +127,10 @@ section {
 
 .whoislearning{
     margin-left: 13vh;
+}
+
+.studentprofile-fullname{
+    color: #fff;
+    font-size: 30px !important;
 }
 </style>

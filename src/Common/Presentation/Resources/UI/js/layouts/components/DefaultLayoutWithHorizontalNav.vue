@@ -96,7 +96,7 @@ onBeforeMount(() => {
 });
 </script>
 <template>
-    <HorizontalNavLayout>
+    <HorizontalNavLayout >
         <!-- :point_right: navbar -->
         <template #mobilenav>
             <HorizontalMobileNav>

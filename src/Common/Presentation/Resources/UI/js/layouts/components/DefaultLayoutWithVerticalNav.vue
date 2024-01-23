@@ -42,6 +42,7 @@ let toggle = () => {
 };
 let emit = defineEmits();
 
+
 const openMenu = () => {
     emit("openMenu");
 };
@@ -129,7 +130,7 @@ onBeforeMount(() => {
                         width="200"
                         height="200"
                     />
-                   
+
                 </Link> -->
                 <Link href="/home" class="d-flex align-center gap-x-2 pa-5">
                     <v-img

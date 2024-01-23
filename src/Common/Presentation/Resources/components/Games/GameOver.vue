@@ -36,7 +36,7 @@ const isDialogVisible = ref(false);
 .html5-width {
     display: block;
     width: 100%;
-    min-height: calc(100vh - 55px);
+    min-height: calc(100vh - 0px);
 }
 .gameover-card {
     /* height: 400px; */

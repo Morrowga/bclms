@@ -17,6 +17,5 @@ const props = defineProps(["studentInfo"]);
                 class="learning-student-img"
             />
         </Link>
-        <h4 class="tiggie-subtitle">{{  props.studentInfo.name }}</h4>
     </div>
 </template>
