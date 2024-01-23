@@ -2,9 +2,10 @@
 import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import { computed, defineProps } from "vue";
+import { computed, defineProps,onBeforeUnmount } from "vue";
 import GameOver from "@mainRoot/components/Games/GameOver.vue";
 import JSZip from "jszip";
+import axios from "axios";
 import GameEndUserExperienceSurvey from "./components/GameEndUserExperienceSurvey.vue";
 
 let props = defineProps(["flash", "auth", "game", "user_survey"]);
@@ -14,6 +15,40 @@ const app_url = computed(() => page?.props?.route_site_url);
 
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
+
+console.log(props.auth);
+
+function getAllCookies () {
+    const cookies = document.cookie.split(";").reduce((acc, cookie) => {
+    const [key, value] = cookie.trim().split("=");
+    acc[key] = value;
+    return acc;
+    }, {});
+    return cookies;
+}
+
+const handleBeforeUnmount = () => {
+  const leavePage = window.confirm('Are you sure you want to leave this page?');
+
+  if (!leavePage) {
+    throw new Error('User canceled leaving the page');
+  } else {
+    // console.log(getAllCookies())
+    // const scoreData = {
+    //     student_id:  props.auth.data.student.student_id,
+    //     game_id:  props.game.id,
+    //     duration: getCookie('Totaltime'),
+    //     accuracy: getCookie('TotalSelection'),
+    //     score: getCookie('Percentage_correct')
+    // };
+
+    // console.log(scoreData)
+  }
+};
+
+onBeforeUnmount(() => {
+    handleBeforeUnmount()
+});
 </script>
 
 <template>
@@ -42,7 +77,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 .fixed-back-icon {
     position: absolute;
     top: 20px;
-    left: 20px;
+    left: 13px;
 }
 .app-user-search-filter {
     inline-size: 24.0625rem;

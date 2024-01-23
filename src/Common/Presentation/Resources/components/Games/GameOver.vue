@@ -3,6 +3,7 @@ import { router } from "@inertiajs/core";
 
 let props = defineProps(["route", "count", "iframeSrc"]);
 const isDialogVisible = ref(false);
+
 </script>
 <template #activator="{ props }">
     <div>

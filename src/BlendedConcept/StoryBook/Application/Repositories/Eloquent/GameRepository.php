@@ -3,6 +3,7 @@
 namespace Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent;
 
 use ZipArchive;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
@@ -290,17 +291,22 @@ class GameRepository implements GameRepositoryInterface
         }
     }
 
-function findIndexHtmlPath($directory) {
-    $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+    function findIndexHtmlPath($directory) {
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
 
-    foreach ($iterator as $file) {
-        if ($file->isFile() && $file->getFilename() === 'index.html') {
-            // Found the index.html file
-            return $file->getPathname();
+        foreach ($iterator as $file) {
+            if ($file->isFile() && $file->getFilename() === 'index.html') {
+                // Found the index.html file
+                return $file->getPathname();
+            }
         }
+
+        // index.html not found
+        return null;
     }
 
-    // index.html not found
-    return null;
-}
+    public function gameScore(Request $request){
+        $game = GameEloquentModel::findOrFail($request->game_id);
+        $game->update([$request->score, $request->accuracy, $request->duration]);
+    }
 }

@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Src\Common\Infrastructure\Laravel\Controller;
 use Src\BlendedConcept\StoryBook\Application\UseCases\Queries\GetGameList;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetUserSurveyByRole;
+use Src\BlendedConcept\StoryBook\Application\UseCases\Commands\GameScoreCommand;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\GameEloquentModel;
 
 class StudentGamesController extends Controller
@@ -34,7 +35,7 @@ class StudentGamesController extends Controller
                 'game' => $game,
                 'user_survey' => $user_survey
             ]);
-            
+
         } catch (Exception $e) {
             return redirect()->route($this->route_url . 'students.index')->with('sytemErrorMessage', $e->getMessage());
         }
