@@ -306,7 +306,21 @@ class GameRepository implements GameRepositoryInterface
     }
 
     public function gameScore(Request $request){
-        $game = GameEloquentModel::findOrFail($request->game_id);
-        $game->update([$request->score, $request->accuracy, $request->duration]);
+        DB::beginTransaction();
+        try {
+            $game = GameAssignmentEloquentModel::findOrFail($request->game_id);
+            $game->update([
+                'score' => $request->score,
+                'accuracy' => $request->accuracy,
+                'duration' => $request->duration,
+            ]);
+
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            // config('app.env') == 'production'
+            //     ? throw new \Exception('Something Wrong! Please try again.')
+            throw new \Exception($error->getMessage());
+        }
     }
 }

@@ -1,14 +1,62 @@
 <script setup>
 import { router } from "@inertiajs/core";
+import { computed, defineProps,onBeforeUnmount } from "vue";
+import axios from "axios";
 
-let props = defineProps(["route", "count", "iframeSrc"]);
+let props = defineProps(["route", "count", "iframeSrc","game", "auth"]);
 const isDialogVisible = ref(false);
 
+const parseCookie = (cookieString) => {
+  const cookies = {};
+  cookieString.split(';').forEach(cookie => {
+    const [key, value] = cookie.trim().split('=');
+    cookies[key] = decodeURIComponent(value);
+  });
+  return cookies;
+};
+
+const postData = async (postData) => {
+  try {
+    const response = await axios.post('game-score', postData);
+
+    console.log('Response:', response.data);
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
+};
+
+const handleBeforeUnmount = () => {
+  const leavePage = window.confirm('Are you sure you want to leave this page?');
+
+  if (!leavePage) {
+    throw new Error('User canceled leaving the page');
+  } else {
+    const iframeDocument = document.getElementById('gameiframe').contentDocument;
+    const cookies = parseCookie(iframeDocument.cookie);
+    const Totaltime = parseFloat(cookies.Totaltime);
+    const Percentage_correct = parseFloat(cookies.Percentage_correct);
+    const TotalSelection = parseInt(cookies.TotalSelection);
+    const scoreData = {
+        student_id:  props.auth.data.student.student_id,
+        game_id:  props.game.id,
+        duration: Totaltime,
+        accuracy: Percentage_correct,
+        score: TotalSelection
+    };
+
+    postData(scoreData);
+  }
+};
+
+onBeforeUnmount(() => {
+    handleBeforeUnmount()
+});
 </script>
 <template #activator="{ props }">
     <div>
         <div class="d-flex justify-center">
             <iframe
+                id="gameiframe"
                 class="html5-width"
                 :src="iframeSrc"
                 frameborder="0"
