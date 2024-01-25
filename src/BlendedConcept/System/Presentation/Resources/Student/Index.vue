@@ -72,14 +72,14 @@ onMounted(() => {
 <template>
     <section class="section-student-home">
         <VRow>
-            <VCol cols="12" sm="4" lg="3">
-                <!-- <VBtn
+            <!-- <VCol cols="12" sm="4" lg="3">
+                <VBtn
                 @click="menuOpener"
                 color="#BFC0C1"
                 class="ml-5 opener"
                 :icon="isOpenMenu ? 'mdi-chevron-down' : 'mdi-chevron-right'"
                 >
-                </VBtn> -->
+                </VBtn>
                 <VFadeTransition>
                     <VCard
                         class="text-center card-student ml-5 mt-4"
@@ -194,88 +194,6 @@ onMounted(() => {
                                 </div>
                             </VCol>
                         </VRow>
-                        <!-- <VRow class="mx-2">
-                            <VCol cols="5" class="text-left">
-                                <div>
-                                    <p class="label-student pppangram-bold">
-                                        Disability
-                                    </p>
-                                </div>
-                                <div class="text-left">
-                                    <p class="label-student pppangram-bold">
-                                        Types
-                                    </p>
-                                </div>
-                            </VCol>
-                            <VCol cols="7" class="text-left">
-                                <div
-                                    class="ml-5"
-                                    v-if="
-                                        userData.student.disability_types
-                                            .length > 0
-                                    "
-                                >
-                                    <p
-                                        class="value-student pppangram-medium"
-                                        v-for="diabilitytype in userData.student
-                                            .disability_types"
-                                        :key="diabilitytype.id"
-                                    >
-                                        {{ diabilitytype.name }}
-                                    </p>
-                                </div>
-                                <div class="ml-5" v-else>
-                                    <p class="value-student pppangram-medium">
-                                        No Disability Type
-                                    </p>
-                                </div>
-                            </VCol>
-                        </VRow> -->
-                        <!-- <VRow class="mx-2 my-0">
-                            <VCol cols="5" class="text-left">
-                                <div>
-                                    <p class="label-student pppangram-bold">
-                                        Accessibility
-                                    </p>
-                                </div>
-                                <div class="text-left">
-                                    <p class="label-student pppangram-bold">
-                                        Device
-                                    </p>
-                                </div>
-                            </VCol>
-                            <VCol cols="7" class="text-left">
-                                <div class="ml-5">
-                                    <span
-                                        class="value-student pppangram-medium"
-                                        >{{
-                                            userData.student.device === null ||
-                                            userData.student.device === ""
-                                                ? "No Device"
-                                                : userData.student.device.name
-                                        }}</span
-                                    >
-                                </div>
-                            </VCol>
-                        </VRow> -->
-                        <!-- <VRow class="mx-2 my-0">
-                            <VCol cols="5" class="text-left">
-                                <span class="label-student pppangram-bold"
-                                    >Student Code</span
-                                >
-                            </VCol>
-                            <VCol cols="7" class="text-left">
-                                <div class="ml-5">
-                                    <span
-                                        class="value-student pppangram-medium"
-                                        >{{
-                                            userData.student.student_code ??
-                                            "No Code"
-                                        }}</span
-                                    >
-                                </div>
-                            </VCol>
-                        </VRow> -->
                         <div class="text-center mt-9">
                             <p class="semi-text pppangram-bold">
                                 Parent's Details
@@ -330,51 +248,6 @@ onMounted(() => {
                                 </div>
                             </VCol>
                         </VRow>
-                        <!-- <VRow class="mx-2 my-0">
-                            <VCol cols="5" class="text-left mt-3">
-                                <p class="label-student pppangram-bold">
-                                    Relationship
-                                </p>
-                            </VCol>
-                            <VCol cols="7" class="text-left">
-                                <div class="ml-5">
-                                    <p class="value-student pppangram-medium">
-                                        Parent
-                                    </p>
-                                </div>
-                            </VCol>
-                        </VRow> -->
-                        <!-- <VRow class="mx-2 my-0">
-                            <VCol cols="5" class="text-left mt-3">
-                                <p class="label-student pppangram-bold">
-                                    Contact No.
-                                </p>
-                            </VCol>
-                            <VCol cols="7" class="text-left">
-                                <div class="ml-5">
-                                    <p class="value-student pppangram-medium">
-                                        {{
-                                            userData.student.parent.user
-                                                .contact_number
-                                        }}
-                                    </p>
-                                </div>
-                            </VCol>
-                        </VRow>
-                        <VRow class="mx-2 my-0">
-                            <VCol cols="5" class="text-left mt-3">
-                                <p class="label-student pppangram-bold">
-                                    Email
-                                </p>
-                            </VCol>
-                            <VCol cols="7" class="text-left">
-                                <div class="ml-5">
-                                    <p class="value-student pppangram-medium">
-                                        {{ userData.student.parent.user.email }}
-                                    </p>
-                                </div>
-                            </VCol>
-                        </VRow> -->
                         <div class="mt-1 my-3 mx-3">
                             <ExitMode
                                 :teacher_id="getCookie('teacher_id')"
@@ -392,9 +265,9 @@ onMounted(() => {
                         </div>
                     </VCard>
                 </VFadeTransition>
-            </VCol>
-            <VCol cols="12" sm="5" lg="5">
-                <div class="margin-left mt-15">
+            </VCol> -->
+            <VCol cols="12" sm="6" lg="7">
+                <div class="mt-15 text-right">
                     <img
                         src="/images/Storybooks.png"
                         @click="() => router.get(route('storybooks'))"
@@ -402,16 +275,8 @@ onMounted(() => {
                         alt=""
                     />
                 </div>
-                <!-- <div class="d-flex d-sm-none">
-                    <img
-                        src="/images/Storybooks.png"
-                        @click="() => router.get(route('storybooks'))"
-                        class="storybook"
-                        alt=""
-                    />
-                </div> -->
             </VCol>
-            <VCol cols="12" sm="3" lg="4" class="md-text-left">
+            <VCol cols="12" sm="3" lg="5" class="md-text-left">
                 <div class="text-left mt-14">
                     <img
                         src="/images/Games.png"
@@ -452,14 +317,14 @@ onMounted(() => {
 }
 
 .games {
-    width: 60%;
+    width: 40%;
     height: 250px;
     cursor: pointer !important;
 }
 
 .rewards {
     cursor: pointer !important;
-    width: 60%;
+    width: 40%;
     height: 250px;
 }
 .games-landscape {
@@ -476,7 +341,7 @@ onMounted(() => {
 
 .storybook {
     cursor: pointer !important;
-    width: 100%;
+    width: 65%;
     height: 506px;
 }
 

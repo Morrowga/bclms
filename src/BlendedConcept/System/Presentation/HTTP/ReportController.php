@@ -7,8 +7,11 @@ use Illuminate\Http\Response;
 use Maatwebsite\Excel\Facades\Excel;
 use Src\Common\Application\Exports\ReportExport;
 use Src\Common\Infrastructure\Laravel\Controller;
+use Src\Common\Application\Exports\ReportGameExport;
 use Src\BlendedConcept\System\Application\Policies\ExportDataPolicy;
+use Src\BlendedConcept\System\Application\UseCases\Queries\Reports\ReportGameQuery;
 use Src\BlendedConcept\System\Application\UseCases\Queries\Reports\ReportExportQuery;
+use Src\BlendedConcept\System\Application\UseCases\Queries\Reports\ReportStorybookQuery;
 
 class ReportController extends Controller
 {
@@ -22,7 +25,21 @@ class ReportController extends Controller
     public function reportExport()
     {
         $data = (new ReportExportQuery())->handle();
-        
+
         return Excel::download(new ReportExport($data), 'reports.xlsx');
+    }
+
+    public function gameExport()
+    {
+        $data = (new ReportGameQuery())->handle();
+
+        return Excel::download(new ReportGameExport($data), 'game-reports.xlsx');
+    }
+
+    public function storybookExport()
+    {
+        $data = (new ReportStorybookQuery())->handle();
+
+        return Excel::download(new ReportExport($data), 'storybook-reports.xlsx');
     }
 }

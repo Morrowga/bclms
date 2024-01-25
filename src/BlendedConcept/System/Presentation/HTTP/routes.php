@@ -81,6 +81,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
     Route::post('/reports/excel', [ReportController::class, 'reportExport'])->name('reports.export');
+    Route::post('/reports/game-score', [ReportController::class, 'gameExport'])->name('game.export');
+    Route::post('/reports/storybook-score', [ReportController::class, 'storybookExport'])->name('storybook.export');
 });
 
 Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {

@@ -59,6 +59,58 @@ const exportExcel = async () => {
     }
 }
 
+const exportGame = async () => {
+    try {
+        const response = await axios.post('/reports/game-score', null, {
+            responseType: 'blob', // Specify the response type as a blob
+        });
+
+        // Create a blob URL for the response data
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+
+        // Create an anchor element to trigger the download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reports.xlsx'; // Set the desired file name
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+
+        // Cleanup and remove the anchor element
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+    } catch (error) {
+        console.error('Error downloading file:', error);
+    }
+}
+
+const exportStorybook = async () => {
+    try {
+        const response = await axios.post('/reports/storybook-score', null, {
+            responseType: 'blob', // Specify the response type as a blob
+        });
+
+        // Create a blob URL for the response data
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+
+        // Create an anchor element to trigger the download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reports.xlsx'; // Set the desired file name
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+
+        // Cleanup and remove the anchor element
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+    } catch (error) {
+        console.error('Error downloading file:', error);
+    }
+}
+
 </script>
 <template>
     <AdminLayout>
@@ -79,7 +131,9 @@ const exportExcel = async () => {
                     user_role == 'Organisation Admin' || user_role == 'B2C Parent' || user_role == 'Teacher' || user_role == 'BC Subscriber' || user_role == 'Both Parent'
                 ">
                 <div class="text-right">
-                    <VBtn prepend-icon="mdi-download" @click="exportExcel" class="ruddy-bold text-white">Export</VBtn>
+                    <VBtn prepend-icon="mdi-download" @click="exportGame" class="ruddy-bold text-white">Game Export</VBtn>
+                    <VBtn prepend-icon="mdi-download" @click="exportStorybook" class="ruddy-bold text-white mx-2">Storybook Export</VBtn>
+                    <VBtn prepend-icon="mdi-download" @click="exportExcel" class="ruddy-bold text-white mx-2">Export</VBtn>
                 </div>
                 </VCol>
                 <VCol cols="12">
