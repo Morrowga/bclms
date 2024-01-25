@@ -40,6 +40,7 @@ class ReportRepository implements ReportRepositoryInterface
                     'Name' => $student->user->full_name,
                     'Gender' => $student->gender ?? '-',
                     'Device Used' => $student->device ? $student->device->name : '-',
+                    'Game Name' => $assignment->game ? $assignment->game->name : '-',
                     'Score' => $assignment->score,
                     'Accuracy' => $assignment->accuracy,
                     'Duration' => $assignment->duration,
