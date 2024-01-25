@@ -9,6 +9,8 @@ import GameEndUserExperienceSurvey from "./components/GameEndUserExperienceSurve
 
 let props = defineProps(["flash", "auth", "game", "user_survey"]);
 
+console.log(props.game);
+
 const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
 

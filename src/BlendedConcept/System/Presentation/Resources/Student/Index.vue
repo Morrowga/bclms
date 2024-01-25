@@ -73,17 +73,16 @@ onMounted(() => {
     <section class="section-student-home">
         <VRow>
             <VCol cols="12" sm="4" lg="3">
-                <VBtn
+                <!-- <VBtn
                 @click="menuOpener"
                 color="#BFC0C1"
                 class="ml-5 opener"
                 :icon="isOpenMenu ? 'mdi-chevron-down' : 'mdi-chevron-right'"
                 >
-                </VBtn>
+                </VBtn> -->
                 <VFadeTransition>
                     <VCard
                         class="text-center card-student ml-5 mt-4"
-                        v-if="isOpenMenu"
                     >
                         <div class="d-flex justify-center mt-2">
                             <img :src="getImage()" class="studentimg" />
@@ -412,8 +411,8 @@ onMounted(() => {
                     />
                 </div> -->
             </VCol>
-            <VCol cols="12" sm="3" lg="4" class="md-text-center">
-                <div class="text-center mt-14">
+            <VCol cols="12" sm="3" lg="4" class="md-text-left">
+                <div class="text-left mt-14">
                     <img
                         src="/images/Games.png"
                         @click="() => router.get(route('student-games'))"
@@ -421,7 +420,7 @@ onMounted(() => {
                         alt=""
                     />
                 </div>
-                <div class="text-center">
+                <div class="text-left">
                     <img
                         src="/images/Rewards.png"
                         @click="() => router.get(route('student-rewards'))"

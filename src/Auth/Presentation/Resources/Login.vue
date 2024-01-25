@@ -52,11 +52,12 @@ const onSubmit = () => {
             <div
                 class="navbar-content-container d-flex justify-space-between px-10 py-5"
             >
-                <h1
-                    class="text-h5 font-weight-bold leading-normal text-capitalize"
+                <Link
+                    href="/"
+                    class="d-none d-lg-flex align-center"
                 >
-                    {{ themeConfig.app.title }}
-                </h1>
+                    <img src="/images/logoblack.png" width="200" height="55" />
+                </Link>
                 <VBtn color="primary" class="b-0 text-white">
                     <Link :href="route('register')" class="text-white">
                         Register
