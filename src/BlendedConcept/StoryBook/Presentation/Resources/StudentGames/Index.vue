@@ -7,6 +7,24 @@ import { computed, defineProps } from "vue";
 let props = defineProps(["flash", "auth", "games", "user_survey"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
+
+const page = usePage();
+const app_url = computed(() => page?.props?.route_site_url);
+
+const setCurrentGameUrlCookie = (cookieName, cookieValue) => {
+      const expires = 1;
+
+      const date = new Date();
+      date.setTime(date.getTime() + expires * 24 * 60 * 60 * 1000);
+      const expiresString = 'expires=' + date.toUTCString();
+
+      document.cookie = `${cookieName}=${cookieValue};${expiresString};path=/`;
+}
+
+const goToGamePage  = (game) => {
+    router.get(route('games.show', game.id))
+    setCurrentGameUrlCookie('gameUrl', app_url.value + '/gamefiles/' + game.game_file)
+}
 </script>
 
 <template>
@@ -24,9 +42,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                             <div class="d-flex justify-center">
                                 <img
                                     src="/images/Play Button.png"
-                                    @click="
-                                        () => router.get(route('games.show', game.id))
-                                    "
+                                    @click="goToGamePage(game)"
                                     class="playButton"
                                     alt=""
                                 />
