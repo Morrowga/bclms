@@ -4,7 +4,11 @@ import { computed, defineProps,onBeforeUnmount } from "vue";
 import axios from "axios";
 
 let props = defineProps(["route", "count", "iframeSrc","game", "auth"]);
+
+console.log(props.game)
 const isDialogVisible = ref(false);
+
+console.log(props.iframeSrc);
 
 const parseCookie = (cookieString) => {
   const cookies = {};
@@ -24,6 +28,26 @@ const postData = async (postData) => {
     console.error('Error:', error.message);
   }
 };
+
+const setCookieInIframe = (cookieName, cookieValue, cookiePath) => {
+    // Get the iframe element
+    const iframe = document.getElementById('gameiframe');
+
+    // Construct the cookie string
+    const cookieString = `${cookieName}=${encodeURIComponent(cookieValue)}; path=${cookiePath}`;
+
+    // Access the contentDocument of the iframe
+    const iframeDocument = iframe.contentDocument;
+
+    // Set the cookie inside the iframe document
+    iframeDocument.cookie = cookieString;
+}
+
+onMounted(() => {
+    let path =  '/gamefiles/' + props.game.game_file.replace(/\/index\.html$/, '');
+
+    setCookieInIframe('gameURL', props.iframeSrc, path);
+});
 
 const handleBeforeUnmount = () => {
   const leavePage = window.confirm('Are you sure you want to leave this page?');

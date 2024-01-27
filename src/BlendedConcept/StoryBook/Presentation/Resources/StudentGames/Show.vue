@@ -16,7 +16,6 @@ const app_url = computed(() => page?.props?.route_site_url);
 
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
-
 </script>
 
 <template>

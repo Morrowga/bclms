@@ -11,7 +11,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
 
-const setCurrentGameUrlCookie = (cookieName, cookieValue) => {
+const setCurrentGameUrlCookie = (cookieName, cookieValue, game) => {
       const expires = 1;
 
       const date = new Date();
@@ -23,7 +23,7 @@ const setCurrentGameUrlCookie = (cookieName, cookieValue) => {
 
 const goToGamePage  = (game) => {
     router.get(route('games.show', game.id))
-    setCurrentGameUrlCookie('gameUrl', app_url.value + '/gamefiles/' + game.game_file)
+    // setCurrentGameUrlCookie('gameUrl', app_url.value + '/gamefiles/' + game.game_file, game)
 }
 </script>
 
