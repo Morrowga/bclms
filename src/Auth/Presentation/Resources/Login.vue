@@ -1,6 +1,7 @@
 <script setup>
 import { VForm } from "vuetify/components";
 import { themeConfig } from "@themeConfig";
+import { router } from "@inertiajs/core";
 import { requiredValidator, emailValidator } from "@validators";
 import { Link, useForm } from "@inertiajs/vue3";
 import SystemErrorAlert from "@mainRoot/components/SystemErrorAlert.vue";
@@ -21,6 +22,10 @@ let form = useForm({
  *   this will get tenant route name that extends @route c.login-post  if it has
  *   organiztion or just simple @route login-post
  */
+
+ const signUpRoute = () => {
+    router.get("/register");
+ }
 
 const onSubmit = () => {
     form.post(route(`${props?.tenant}login-post`), {
@@ -149,9 +154,10 @@ const onSubmit = () => {
                                                         </VCol>
                                                         <VCol cols="6">
                                                             <VBtn
+                                                                @click="signUpRoute"
                                                                 block
                                                                 class="bg-signup"
-                                                                type="submit"
+                                                                type="button"
                                                                 rounded
                                                             >
                                                                 Sign Up
