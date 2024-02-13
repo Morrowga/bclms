@@ -21,6 +21,7 @@ Route::get('/admin', function () {
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/home', [DashBoardController::class, 'superAdminDashboard'])->name('dashboard');
+    Route::get('/profiling-survey-b2c', [DashBoardController::class, 'profilingSurvey'])->name('profilingSurvey');
     Route::get('/learning-portal', [DashBoardController::class, 'learningPortal'])->name('learning-portal');
     // announcement
     Route::resource('announcements', AnnouncementController::class);

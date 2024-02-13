@@ -279,6 +279,22 @@ class SurveyRepository implements SurveyRepositoryInterface
         return $profilingSurvey;
     }
 
+    public function getB2CProfilingSurvey()
+    {
+        $user = auth()->user();
+        $profilingSurvey = new SurveyResource(SurveyEloquentModel::with(['questions' => function ($query) {
+            $query->orderBy('order', 'asc'); // Replace 'your_question_column' with the actual column name in the questions table
+        }, 'questions.options'])->where('type', 'PROFILING')->first());
+
+        $isAnswer = ResponseEloquentModel::where('user_id', $user->id)->where('survey_id', $profilingSurvey->id)->first();
+
+        if(empty($isAnswer)){
+            return $profilingSurvey;
+        }
+
+        return null;
+    }
+
     public function storeOrder(Request $request, SurveyEloquentModel $survey)
     {
         $questions = json_decode($request->questions, true);

@@ -11,8 +11,10 @@ use Src\BlendedConcept\Security\Application\Requests\UpdateUserProfileRequest;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetUserSurveyByRole;
 use Src\BlendedConcept\System\Domain\Repositories\DashboardRepositoryInterface;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetParentStudentList;
 use Src\BlendedConcept\ClassRoom\Domain\Repositories\ClassRoomRepositoryInterface;
 use Src\BlendedConcept\System\Application\UseCases\Queries\GetSuperAdminListCount;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetUserProfilingSurvey;
 use Src\BlendedConcept\System\Application\UseCases\Queries\BCStaffDashboard\GetRecentBooks;
 use Src\BlendedConcept\System\Application\UseCases\Queries\BCStaffDashboard\GetRecentGames;
 use Src\BlendedConcept\System\Application\UseCases\Queries\SuperAdminDashboard\GetRecentUsers;
@@ -25,7 +27,6 @@ use Src\BlendedConcept\System\Application\UseCases\Queries\SuperAdminDashboard\G
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetStudentForAdminDashBoard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgAdminDashboard;
 use Src\BlendedConcept\Security\Application\UseCases\Queries\DashBoardUser\GetClassroomForOrgTeacherDashboard;
-use Src\BlendedConcept\System\Application\UseCases\Queries\GetParentStudentList;
 
 class DashBoardController extends Controller
 {
@@ -54,6 +55,7 @@ class DashBoardController extends Controller
         $current_user_role = auth()->user()->role->name;
         $user = Auth::user();
         $user_survey = [];
+        $profilingSurvey = [];
         $orgainzations_users = [];
         $students = [];
         $UserCount = [];
@@ -78,9 +80,12 @@ class DashBoardController extends Controller
             $org_teacher_classrooms = (new GetClassroomForOrgTeacherDashboard($filters = []))->handle();
             $org_teacher_students = (new GetStudentsForOrgTeacherDashboard($filters = request(['search', 'perPage', 'page'])))->handle();
         } else if ($current_user_role == "Student") {
-
             $orgainzations_users = (new GetUserForAdminDashBoard())->handle();
         } else if ($current_user_role == "BC Subscriber") {
+            $profilingSurvey = (new GetUserProfilingSurvey())->handle();
+            if($profilingSurvey != null){
+                return redirect()->route('profilingSurvey');
+            }
             $students = (new GetRecentStudents($filters = request(['search', 'perPage', 'page'])))->handle();
         }
         $user_survey = (new GetUserSurveyByRole('LOG_IN', null))->handle();
@@ -104,6 +109,7 @@ class DashBoardController extends Controller
     {
         return $this->pageBuilderInterface->generalAssetUrl();
     }
+
 
     /**
      * Use the website manager in the page builder.
@@ -202,5 +208,18 @@ class DashBoardController extends Controller
         } catch (\Exception $exception) {
             return $exception->getMessage();
         }
+    }
+
+    public function profilingSurvey()
+    {
+        $profilingSurvey = (new GetUserProfilingSurvey())->handle();
+        if($profilingSurvey != null){
+            return Inertia::render(config('route.profilingSurvey'), [
+                "profilingSurvey" => $profilingSurvey
+            ]);
+        }
+
+        return redirect()->route('dashboard');
+
     }
 }

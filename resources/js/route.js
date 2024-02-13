@@ -3,6 +3,7 @@ const pages = {
 
     // admin dashboard
     "BlendedConcept/System/Presentation/Resources/index": import('../../src/BlendedConcept/System/Presentation/Resources/index.vue'),
+    "BlendedConcept/System/Presentation/Resources/TeacherDashBoard/ProfilingSurvey": import('../../src/BlendedConcept/System/Presentation/Resources/TeacherDashBoard/ProfilingSurvey.vue'),
 
     /***
      * this below contains  Orgainzations lists that will used for superadmin

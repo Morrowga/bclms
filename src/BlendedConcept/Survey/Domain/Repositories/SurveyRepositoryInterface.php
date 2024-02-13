@@ -29,6 +29,8 @@ interface SurveyRepositoryInterface
 
     public function getProfilingSurvey();
 
+    public function getB2CProfilingSurvey();
+
     public function storeOrder(Request $request, SurveyEloquentModel $survey);
 
     public function getSurveyByRole($appear_on, $id = null);

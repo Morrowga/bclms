@@ -2,7 +2,7 @@
 
 return [
     'dashboard' => 'BlendedConcept/System/Presentation/Resources/index',
-
+    'profilingSurvey' => 'BlendedConcept/System/Presentation/Resources/TeacherDashBoard/ProfilingSurvey',
     'users' => [
         'index' => 'BlendedConcept/Security/Presentation/Resources/Users/Index',
         'show' => 'BlendedConcept/Security/Presentation/Resources/Users/Show',

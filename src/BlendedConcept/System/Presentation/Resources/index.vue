@@ -95,7 +95,7 @@ onMounted(() => {
             <span class="welcome-text ruddy-bold"
                 >Welcome, {{ user_detail }}</span
             >
-            <br /><br />
+        <br /><br />
             <SystemAlert
                 v-for="homeNotification in homeNotifications"
                 :key="homeNotification.id"
