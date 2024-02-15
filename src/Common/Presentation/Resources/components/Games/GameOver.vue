@@ -55,21 +55,19 @@ const handleBeforeUnmount = () => {
     throw new Error('User canceled leaving the page');
   } else {
     const iframeDocument = document.getElementById('gameiframe').contentDocument;
-    alert(iframeDocument.cookie);
-    // const cookies = parseCookie(iframeDocument.cookie);
-    // console.log(cookies);
-    // const Totaltime = parseFloat(cookies.Totaltime);
-    // const Percentage_correct = parseFloat(cookies.Percentage_correct);
-    // const TotalSelection = parseInt(cookies.TotalSelection);
-    // const scoreData = {
-    //     student_id:  props.auth.data.student.student_id,
-    //     game_id:  props.game.id,
-    //     duration: Totaltime,
-    //     accuracy: Percentage_correct,
-    //     score: TotalSelection
-    // };
+    const cookies = parseCookie(iframeDocument.cookie);
+    const Totaltime = parseFloat(cookies.Totaltime);
+    const Percentage_correct = parseFloat(cookies.Percentage_correct);
+    const TotalSelection = parseInt(cookies.TotalSelection);
+    const scoreData = {
+        student_id:  props.auth.data.student.student_id,
+        game_id:  props.game.id,
+        duration: Totaltime,
+        accuracy: Percentage_correct,
+        score: TotalSelection
+    };
 
-    // postData(scoreData);
+    postData(scoreData);
   }
 };
 
