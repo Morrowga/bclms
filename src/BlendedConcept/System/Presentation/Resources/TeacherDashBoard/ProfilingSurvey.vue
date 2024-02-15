@@ -194,12 +194,12 @@ const onFormSubmit = () => {
                                     </h4>
 
                                     <VRow class="margin-10" align="center">
-                                        <VCol cols="3" class="text-center">
+                                        <VCol cols="2" class="text-center">
                                             <p class="tiggie-label-custome fs-20 font-weight-bold text-dark">
                                                 Not satisfied at all
                                             </p>
                                         </VCol>
-                                        <VCol cols="6">
+                                        <VCol cols="8">
                                             <VRow class="d-flex justify-center">
                                                 <VCol
                                                     v-for="(option, index) in question.options"
