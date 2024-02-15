@@ -5,7 +5,7 @@ import axios from "axios";
 
 let props = defineProps(["route", "count", "iframeSrc","game", "auth"]);
 
-console.log(props.game)
+alert('asd');
 const isDialogVisible = ref(false);
 
 console.log(props.iframeSrc);
@@ -55,6 +55,7 @@ const handleBeforeUnmount = () => {
   if (!leavePage) {
     throw new Error('User canceled leaving the page');
   } else {
+    alert('asad');
     const iframeDocument = document.getElementById('gameiframe').contentDocument;
     const cookies = parseCookie(iframeDocument.cookie);
     const Totaltime = parseFloat(cookies.Totaltime);
