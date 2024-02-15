@@ -157,25 +157,22 @@ const onFormSubmit = () => {
                                     </h4>
 
                                     <VRow class="margin-10" align="center">
-                                        <VCol cols="12">
-                                            <VRow>
-                                                <VCol
-                                                    v-for="(option, index) in question.options"
-                                                    :key="index"
-                                                    cols="6"
-                                                    class="d-flex justify-center"
+                                        <VCol cols="12" class="d-flex justify-center">
+                                            <div
+                                                v-for="(option, index) in question.options"
+                                                :key="index"
+                                            >
+                                                <div
+                                                    class="text-center mx-5"
                                                 >
-                                                    <div
-                                                        class="d-flex flex-column text-center"
+                                                    <p
+                                                        class="tiggie-label-custome fs-20"
+                                                        >{{ option.content }}</p
                                                     >
-                                                        <VLabel
-                                                            class="tiggie-label-custome fs-20"
-                                                            >{{ option.content }}</VLabel
-                                                        >
-                                                        <VRadio
-                                                            v-model="
-                                                                selectedOptions[question.id]
-                                                            "
+                                                    <div class="text-center d-flex justify-center">
+                                                        <v-radio
+                                                            class="custom-radio"
+                                                            v-model="selectedOptions[question.id]"
                                                             :value="option.id"
                                                             @click="
                                                                 radioClick(
@@ -183,10 +180,10 @@ const onFormSubmit = () => {
                                                                     option.id
                                                                 )
                                                             "
-                                                        />
+                                                        ></v-radio>
                                                     </div>
-                                                </VCol>
-                                            </VRow>
+                                                </div>
+                                            </div>
                                         </VCol>
                                     </VRow>
                                 </div>
@@ -210,7 +207,7 @@ const onFormSubmit = () => {
                                                     cols="2"
                                                 >
                                                     <div
-                                                        class="d-flex flex-column"
+                                                        class="text-center"
                                                     >
                                                         <VLabel
                                                             class="tiggie-label-custome fs-20"
@@ -254,13 +251,14 @@ const onFormSubmit = () => {
                                                     cols="2"
                                                 >
                                                     <div
-                                                        class="d-flex flex-column justify-center"
+                                                        class="text-center"
                                                     >
                                                         <VLabel
                                                             class="tiggie-label-custome fs-20"
                                                             >{{ option.content }}</VLabel
                                                         >
                                                         <VCheckbox
+                                                            class="v-checkbox"
                                                             @click="
                                                                 checkboxClick(
                                                                     question.id,
@@ -355,13 +353,15 @@ const onFormSubmit = () => {
 }
 
 :deep(.v-radio) {
-    font-size: 16px;
-    /* Adjust the font size as needed */
-    width: 32px;
-    /* Adjust the width as needed */
-    height: 32px;
-    /* Adjust the height as needed */
+   display: flex;
+   justify-content: center;
 }
+
+:deep(.v-checkbox) {
+   display: flex;
+   justify-content: center;
+}
+
 
 .margin-10{
     margin-top: 10vh;
@@ -373,5 +373,24 @@ const onFormSubmit = () => {
 
 .text-EC5F65{
     color: #EC5F65;
+}
+
+/* Hide the SVG icon when the radio button is checked */
+:deep(.v-radio > div > div > svg) {
+  padding: 18px;
+  border-radius: 50%;
+  color: #fff;
+  background: #3749E9;
+}
+
+:deep(.v-checkbox > div > div > div > div >  svg) {
+  padding: 18px;
+  border-radius: 50%;
+  color: #fff;
+  background: #3749E9;
+}
+
+:deep(.v-radio > div > div) {
+    border: 2px solid #ADADAD;
 }
 </style>
