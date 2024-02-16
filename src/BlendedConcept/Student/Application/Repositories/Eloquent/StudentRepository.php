@@ -132,13 +132,6 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function getStudentsByPagination($filters)
     {
-        // if ($auth->name == 'B2C Parent' || $auth->name == 'Both Parent') {
-        //     $user_id = auth()->user()->parents->parent_id;
-        //     return StudentEloquentModel::filter($filters)->whereHas('parent', function ($query) use ($user_id) {
-        //         $query->where('parent_id', $user_id);
-        //     })->with('parent', 'user', 'disability_types')->paginate($filters['perPage'] ?? 10);
-        // } else
-
         $auth = auth()->user()->role;
         if ($auth->name == "BC Subscriber") {
             if (auth()->user()->b2bUser == null) {

@@ -226,33 +226,10 @@ const chooseBothPlan = () => {
 </script>
 
 <template>
-    <div>
-        <div class="layout-navbar">
-            <div
-                class="navbar-content-container d-flex justify-space-between px-10 py-5"
-            >
-                <h1
-                    class="text-h5 font-weight-bold leading-normal text-capitalize"
-                >
-                    {{ themeConfig.app.title }}
-                </h1>
-                <VBtn color="primary" class="b-0 text-white">
-                    <Link :href="route('login')" class="text-white">
-                        Login
-                    </Link>
-                </VBtn>
-            </div>
-        </div>
-        <SystemErrorAlert
-            :sytemErrorMessage="sytemErrorMessage"
-            v-if="sytemErrorMessage"
-        />
-
-        <VDivider></VDivider>
-
+    <div class="plan-border">
         <div class="text-center mt-5">
             <p class="pppangram-bold plan-title">Plans</p>
-            <VRow class="mt-10">
+            <VRow>
                 <VCol cols="3"> </VCol>
                 <VCol cols="6" class="text-left input-awine">
                     <p class="plan-text pppangram-bold">
@@ -629,7 +606,7 @@ const chooseBothPlan = () => {
 }
 
 .textmargin {
-    margin-top: 12vh;
+    margin-top: 4vh;
 }
 
 .textmargin1 {
@@ -656,7 +633,7 @@ const chooseBothPlan = () => {
 
 .heavyTable {
     width: 100%;
-    height: 326px;
+    height: auto;
     border-collapse: collapse;
     border: 1px solid #38678f;
     margin: 50px auto;
@@ -696,7 +673,7 @@ tr:nth-child(even) {
 .th-width {
     width: 100px;
     padding: 10px !important;
-    height: 300px;
+    height: 30vh;
 }
 
 .td-width {

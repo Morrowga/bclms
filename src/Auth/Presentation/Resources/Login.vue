@@ -86,7 +86,7 @@ const onSubmit = () => {
                     >
                         <div class="d-flex justify-center">
                             <div class="login-head-text">
-                                <h1 class="px-3 py-2">Login</h1>
+                                <h1 class="px-3 py-5">Login</h1>
                             </div>
                             <div class="login-form pt-3" style="width: 50vh; height: 70vh;">
                                 <VCardText>
