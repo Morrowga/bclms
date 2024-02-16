@@ -13,10 +13,16 @@ const parseCookie = (cookieString) => {
   const cookies = {};
   cookieString.split(';').forEach(cookie => {
     const [key, value] = cookie.trim().split('=');
-    cookies[key] = decodeURIComponent(value);
+    try {
+      cookies[key] = decodeURIComponent(value);
+    } catch (error) {
+      console.error(`Error decoding value for cookie '${key}':`, error);
+      console.log("Value:", value);
+    }
   });
   return cookies;
 };
+
 
 const postData = async (postData) => {
   try {
