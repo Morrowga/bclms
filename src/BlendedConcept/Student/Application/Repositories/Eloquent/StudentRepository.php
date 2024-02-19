@@ -281,7 +281,7 @@ class StudentRepository implements StudentRepositoryInterface
             $createStudentEloquent->num_silver_coins = 0;
             $createStudentEloquent->save();
 
-            if ($auth->name != 'B2C Parent' && $auth->name != 'Both Parent') {
+            if ($auth->name != 'B2C Parent' && $auth->name != 'Both Parent' && $auth->name != 'BC Subscriber') {
                 $createStudentEloquent->teachers()->sync([$teacher_id]);
             }
 
