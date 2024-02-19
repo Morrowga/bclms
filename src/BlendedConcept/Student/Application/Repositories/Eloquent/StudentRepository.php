@@ -215,6 +215,8 @@ class StudentRepository implements StudentRepositoryInterface
             //     }
             // } else
             $parent_id = null;
+            $teacher_id = null;
+            
             if ($auth->name == 'BC Subscriber') {
                 if (auth()->user()->b2bUser == null) {
                     $subscription = auth()->user()->parents->subscription;
@@ -281,7 +283,7 @@ class StudentRepository implements StudentRepositoryInterface
             $createStudentEloquent->num_silver_coins = 0;
             $createStudentEloquent->save();
 
-            if ($auth->name != 'B2C Parent' && $auth->name != 'Both Parent' && $auth->name != 'BC Subscriber') {
+            if ($auth->name != 'B2C Parent' && $auth->name != 'Both Parent') {
                 $createStudentEloquent->teachers()->sync([$teacher_id]);
             }
 
