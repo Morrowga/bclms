@@ -5,6 +5,8 @@ import { Link, useForm } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { toastAlert } from "@Composables/useToastAlert";
 import Plan from "./Plan.vue";
+import SecondaryBtn from "@mainRoot/components/SecondaryBtn/SecondaryBtn.vue";
+import PrimaryBtn from "@mainRoot/components/PrimaryBtn/PrimaryBtn.vue";
 import axios from "axios";
 import {
     emailValidator,
@@ -18,7 +20,8 @@ let organisation = ref(false);
 let isAlertVisible = ref(true);
 const selectedUserType = ref("Teacher");
 const checkExist = ref("none");
-
+const gender = ref(["Male", "Female"]);
+const isDoneRegister = ref(false);
 const studentCode = ref(null);
 const isFormValid = ref(false);
 const isRegisterFormFilled = ref(false);
@@ -38,14 +41,44 @@ let form = useForm({
     password_confirmation: "",
     user_type: "Teacher",
     student_code: studentCode.value,
+    child_first_name: "",
+    child_last_name: "",
+    child_gender: "",
+    child_dob: "",
+    child_education_level: ""
 });
 
-const goPlan = () => {
+const goChildRegister = () => {
     refForm.value?.validate().then(({ valid }) => {
         if (valid) {
             isRegisterFormFilled.value = true;
         }
     });
+};
+
+const  register = () => {
+    if(form.child_first_name == "" || form.child_first_name == ""){
+        isRegisterFormFilled.value = true;
+    } else {
+        form.post(route("choose-free-plan"), {
+            onSuccess: () => {
+                isDoneRegister.value = true;
+            },
+        });
+    }
+}
+
+const resend = () => {
+    form.post(route("resend"), {
+        onSuccess: () => {
+            // router.get(route("login"));
+        },
+    });
+};
+
+const closeAndLogin = () => {
+    isDoneRegister.value = false;
+    router.get(route("login"));
 };
 
 const radioClick = (type) => {
@@ -83,21 +116,21 @@ async function fetchDataFromServer(value) {
     }
 }
 
-const goToRegisterForm = (type) => {
-    form.student_code = studentCode.value == "" ? null : studentCode.value;
-    if (type == "teacher") {
-        form.user_type = "Teacher";
-        didChoose.value = true;
-    } else {
-        form.user_type = "Parent";
-        if (checkExist.value == true) {
-            didChoose.value = true;
-            isRegisterFormFilled.value = true;
-        } else {
-            didChoose.value = true;
-        }
-    }
-};
+// const goToRegisterForm = (type) => {
+//     form.student_code = studentCode.value == "" ? null : studentCode.value;
+//     if (type == "teacher") {
+//         form.user_type = "Teacher";
+//         didChoose.value = true;
+//     } else {
+//         form.user_type = "Parent";
+//         if (checkExist.value == true) {
+//             didChoose.value = true;
+//             isRegisterFormFilled.value = true;
+//         } else {
+//             didChoose.value = true;
+//         }
+//     }
+// };
 </script>
 
 <template>
@@ -210,7 +243,7 @@ const goToRegisterForm = (type) => {
         <img src="images/signup-v3.png" alt="Snow" style="width:100%; height: auto !important;">
         <div class="top-left">
             <div>
-                <div v-if="!isRegisterFormFilled">
+                <div>
                     <div class="layout-navbar">
                         <div
                             class="navbar-content-container px-10 py-5"
@@ -236,13 +269,13 @@ const goToRegisterForm = (type) => {
                                 <VForm
                                     ref="refForm"
                                     v-model="isFormValid"
-                                    @submit.prevent="goPlan"
+                                    @submit.prevent="register"
                                 >
                                     <VRow class="mt-5">
                                         <VCol cols="3"> </VCol>
                                         <VCol cols="6" class="text-left">
                                             <div class="form-border">
-                                                <div class="py-5">
+                                                <div class="py-5" v-if="!isRegisterFormFilled">
                                                     <VRow>
                                                         <VCol cols="6">
                                                             <div>
@@ -370,6 +403,90 @@ const goToRegisterForm = (type) => {
                                                             "
                                                         />
                                                     </div>
+                                                    <VBtn
+                                                        block
+                                                        type="submit"
+                                                        variant="flat"
+                                                        class="primary my-3"
+                                                        rounded
+                                                    >
+                                                        Next
+                                                    </VBtn>
+                                                </div>
+                                                <div class="py-5" v-else>
+                                                    <h3 class="pppangram-bold text-dark">Child Information</h3>
+                                                    <VRow>
+                                                        <VCol cols="6">
+                                                            <div>
+                                                                <VTextField
+                                                                    class="mt-3 custom-label-color"
+                                                                    placeholder=""
+                                                                    label="First Name"
+                                                                    density="compact"
+                                                                    variant="solo"
+                                                                    v-model="form.child_first_name"
+                                                                    :rules="[requiredValidator]"
+                                                                    :error-messages="
+                                                                        form?.errors?.child_first_name
+                                                                    "
+                                                                />
+                                                            </div>
+                                                        </VCol>
+                                                        <VCol size="6">
+                                                            <div>
+                                                                <VTextField
+                                                                    class="mt-3 custom-label-color"
+                                                                    placeholder=""
+                                                                    label="Last Name"
+                                                                    density="compact"
+                                                                    variant="solo"
+                                                                    v-model="form.child_last_name"
+                                                                    :rules="[requiredValidator]"
+                                                                    :error-messages="
+                                                                        form?.errors?.child_last_name
+                                                                    "
+                                                                />
+                                                            </div>
+                                                        </VCol>
+                                                    </VRow>
+                                                    <div class="mt-5">
+                                                        <v-select
+                                                            label="Gender"
+                                                            class="select-custom"
+                                                            v-model="form.child_gender"
+                                                            :items="gender"
+                                                            variant="outlined"
+                                                            :rules="[requiredValidator]"
+                                                            :error-messages="form?.errors?.chil_gender"
+                                                        />
+                                                    </div>
+                                                    <div class="mt-7">
+                                                        <AppDateTimePicker
+                                                            label="Date Of Birth"
+                                                            v-model="form.child_dob"
+                                                            :rules="[requiredValidator]"
+                                                            :error-messages="form?.errors?.child_dob"
+                                                            density="compact"
+                                                            :config="{
+                                                                minDate: null,
+                                                                maxDate: 'today',
+                                                            }"
+                                                        />
+                                                    </div>
+                                                    <div class="mt-4">
+                                                        <VTextField
+                                                            class="mt-3 custom-label-color"
+                                                            placeholder=""
+                                                            label="Education Level"
+                                                            density="compact"
+                                                            variant="solo"
+                                                            v-model="form.child_education_level"
+                                                            :rules="[requiredValidator]"
+                                                            :error-messages="
+                                                                form?.errors?.child_education_level
+                                                            "
+                                                        />
+                                                    </div>
                                                     <div class="d-flex justify-start">
                                                         <div class="sign-up-as">
                                                             <span>Sign up as </span>
@@ -419,10 +536,58 @@ const goToRegisterForm = (type) => {
                         </VCol>
                     </VRow>
                 </div>
-                <Plan v-model:form="form" :plans="props.plans" v-else></Plan>
+                <VDialog v-model="isDoneRegister" width="50%">
+                    <VCard class="pa-16">
+                        <div class="text-end">
+                            <VBtn
+                                color="secondary"
+                                variant="text"
+                                @click="isDoneRegister = false"
+                                icon
+                            >
+                                <VIcon>mdi-close</VIcon>
+                            </VBtn>
+                        </div>
+
+                        <VCardSubtitle class="text-center">
+                            <span class="pppangram-bold head-signup"
+                                >Thank You For Signing Up!</span
+                            >
+                            <p class="mt-4">
+                                We've sent a verification email to
+                                <Link href="">{{ form.email }}</Link> to verify your
+                                email address and <br />
+                                activate your account. The link is your email will
+                                expire in 24 hours.
+                            </p>
+                        </VCardSubtitle>
+
+                        <VCardActions class="mt-10">
+                            <VRow justify="center">
+                                <VCol cols="5">
+                                    <SecondaryBtn
+                                        type="button"
+                                        @click="closeAndLogin"
+                                        title="Close"
+                                    />
+                                </VCol>
+                                <VCol cols="5">
+                                    <PrimaryBtn
+                                        @click="resend"
+                                        :isLink="false"
+                                        type="button"
+                                        title="Resend Email"
+                                    />
+                                </VCol>
+                            </VRow>
+                        </VCardActions>
+                    </VCard>
+                </VDialog>
+                <!-- <Plan v-model:form="form" :plans="props.plans" v-else></Plan> -->
             </div>
         </div>
     </div>
+
 </template>
 
 <style lang="scss" scoped>
@@ -483,6 +648,10 @@ const goToRegisterForm = (type) => {
     font-size: 15px !important;
 }
 
+:deep(.select-custom > .v-input__control){
+    border-radius: 10px;
+}
+
 :deep(.custom-label-color > .v-input__control){
     border: 2px solid #000 !important;
     border-radius: 10px;
@@ -531,5 +700,10 @@ const goToRegisterForm = (type) => {
 
 :deep(.v-messages__message){
     color: red !important;
+}
+
+.head-signup {
+    font-size: 20px !important;
+    color: #000;
 }
 </style>

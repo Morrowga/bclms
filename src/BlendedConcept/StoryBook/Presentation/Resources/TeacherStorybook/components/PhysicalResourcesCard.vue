@@ -10,6 +10,8 @@ let truncatedText = (text) => {
     }
 };
 
+// console.log(dataProps.data.url);
+
 const imageType = (type) => {
     switch (type) {
         case "application/pdf":

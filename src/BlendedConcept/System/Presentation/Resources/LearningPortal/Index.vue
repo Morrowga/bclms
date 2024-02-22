@@ -60,7 +60,7 @@ let props = defineProps(["students"]);
                                                 contact_number:
                                                     item.parent?.user
                                                         ?.contact_number,
-                                                img: item.user.profile_pic,
+                                                img: item.user.profile_pic == null ? 'https://ui-avatars.com/api/?size=128&name=' + item?.user?.full_name : item.user.profile_pic,
                                                 user_id: item.user_id,
                                             }"
                                         />

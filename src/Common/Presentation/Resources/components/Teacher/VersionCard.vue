@@ -17,6 +17,28 @@ const userImage = (user) => {
     }
 };
 
+const downloadResource = (url) =>  {
+      const anchor = document.createElement("a");
+      anchor.style.display = "none";
+      anchor.href = url;
+      anchor.setAttribute("download", "");
+
+      document.body.appendChild(anchor);
+
+      anchor.click();
+
+      document.body.removeChild(anchor);
+}
+
+const downloadPhysicalResource = () => {
+    let downloadData = props.book.physical_resources;
+    console.log(downloadData);
+    downloadData.forEach(data => {
+        downloadResource(data.url);
+    });
+}
+
+
 const clickBook = (versions) => {
     if (versions && versions.length > 0) {
         isDialogVisible.value = true;
@@ -132,7 +154,6 @@ onMounted(() => {
                         >
                             <VCard
                                 class="version-mini-card"
-                                @click="readVersion(book_version.id)"
                             >
                                 <div class="text-center">
                                     <span class="ruddy-bold versiontext">{{
@@ -140,6 +161,7 @@ onMounted(() => {
                                     }}</span>
                                 </div>
                                 <v-img
+                                    @click="readVersion(book_version.id)"
                                     :src="setImage(book)"
                                     class="mx-2"
                                     cover
@@ -148,6 +170,14 @@ onMounted(() => {
                                     <p class="original ml-2 mt-2">
                                         {{ book_version.description }}
                                     </p>
+                                    <p class="original ml-2 mt-2">
+                                        {{ book.description }}
+                                    </p>
+                                    <div class="px-4">
+                                        <a @click="downloadPhysicalResource()">
+                                            <v-btn variant="flat" class="physical-resource-btn" rounded color="#fff1ce">Download Physical Resource</v-btn>
+                                        </a>
+                                    </div>
                                 </div>
 
                                 <div class="ml-2 mt-9 mb-5">
@@ -206,5 +236,15 @@ onMounted(() => {
     border: 3px solid #000;
     background: #fff;
     height: 100%;
+}
+
+.physical-resource-btn{
+    font-size: 10px !important;
+    box-shadow: 2px 2px 2px rgb(0,0,0,0.3);
+}
+
+:deep(.physical-resource-btn .v-btn__content){
+    font-size: 9px !important;
+    color: #000 !important;
 }
 </style>

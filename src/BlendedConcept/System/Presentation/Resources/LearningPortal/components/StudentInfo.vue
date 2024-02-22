@@ -1,5 +1,6 @@
 <script setup>
 const props = defineProps(["studentInfo"]);
+console.log(props.studentInfo.img)
 </script>
 <template>
     <div class="d-flex flex-column justify-center align-center">

@@ -70,8 +70,8 @@ const formatDate = (dateString) => {
                 <v-col cols="12" md="6">
                     <v-img
                         :src="
-                            props.student.data.user.profile_pic == ''
-                                ? '/images/teacherimg.png'
+                            props.student.data.user.profile_pic == null
+                                ? 'https://ui-avatars.com/api/?size=128&name=' + props.student.data.user.full_name
                                 : props.student.data.user.profile_pic
                         "
                     />

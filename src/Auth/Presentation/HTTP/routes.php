@@ -69,7 +69,7 @@ Route::group([
      */
     Route::get('verification', [AuthController::class, 'verify'])->name('verification');
 
-    Route::post('free-plan', [AuthController::class, 'chooseFreePlan'])->name('choose-free-plan');
+Route::post('free-plan', [AuthController::class, 'chooseFreePlan'])->name('choose-free-plan');
     Route::post('paid-plan', [AuthController::class, 'choosePaidPlan'])->name('choose-paid-plan');
     Route::post('both-plan', [AuthController::class, 'chooseBothPlan'])->name('choose-both-plan');
     Route::post('/resend-email',[AuthController::class, 'resend'])->name('resend');

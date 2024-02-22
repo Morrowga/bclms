@@ -60,6 +60,8 @@ class AuthRepository implements AuthRepositoryInterface
     {
         DB::beginTransaction();
         try {
+            $parent_id = null;
+            $teacher_id = null;
             $user_type = $request->user_type;
             $userEloquent = (new UserEloquentModel());
             $userEloquent->first_name = $request->first_name;
@@ -87,6 +89,8 @@ class AuthRepository implements AuthRepositoryInterface
                 $b2cSubEloquent->teacher_id = $teacherEloquent->teacher_id;
                 $b2cSubEloquent->plan_id = 1;
                 $b2cSubEloquent->save();
+
+                $teacher_id = $teacherEloquent->teacher_id;
             } else {
                 $parentEloquent = (new ParentEloquentModel());
                 $parentEloquent->user_id = $userEloquent->id;
@@ -99,6 +103,34 @@ class AuthRepository implements AuthRepositoryInterface
                 $b2cSubEloquent->parent_id = $parentEloquent->parent_id;
                 $b2cSubEloquent->plan_id = 1;
                 $b2cSubEloquent->save();
+
+                $parent_id = $parentEloquent->parent_id;
+            }
+
+            $create_user_data = [
+                'first_name' => $request->child_first_name,
+                'last_name' => $request->child_last_name,
+                'role_id' => 6,
+                'password' => 'password'
+            ];
+
+            $childUserEloquent = UserEloquentModel::create($create_user_data);
+
+            $createStudentEloquent = StudentEloquentModel::create([
+                "first_name" => $request->child_first_name,
+                "last_name" => $request->child_last_name,
+                "education_level" => $request->child_education_level,
+                "dob" => $request->child_dob,
+                "user_id" => $childUserEloquent->id,
+                "gender" => $request->child_gender,
+                "parent_id" => $parent_id,
+                "num_gold_coins" => 0,
+                "num_silver_coins" => 0,
+                "student_code" => generateUniqueCode()
+            ]);
+
+            if($user_type == 'Teacher'){
+                $createStudentEloquent->teachers()->sync([$teacher_id]);
             }
 
             $bcstaff = UserEloquentModel::where('role_id', 3)->first();

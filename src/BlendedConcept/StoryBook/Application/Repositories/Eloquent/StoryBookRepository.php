@@ -466,7 +466,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             $query->where('storybook_assignments.student_id', $student_id);
         }, 'result'])->orderBy('id', 'desc')
             ->paginate($filters['perPage'] ?? 10);
-        return $books;
+    return $books;
     }
 
     public function getStudentPlaylists($filters)
