@@ -63,11 +63,11 @@ const onSubmit = () => {
                 >
                     <img src="/images/logoblack.png" width="200" height="55" />
                 </Link>
-                <VBtn color="primary" class="b-0 text-white">
+                <!-- <VBtn color="primary" class="b-0 text-white">
                     <Link :href="route('register')" class="text-white">
                         Register
                     </Link>
-                </VBtn>
+                </VBtn> -->
             </div>
         </div>
 
@@ -76,7 +76,7 @@ const onSubmit = () => {
                 sytemErrorMessage="Something is wrong"
                 v-if="form?.errors.length"
             />
-            <div class="login-card">
+            <div class="login-card mt-15">
                 <VRow class="h-100">
                     <VCol
                         cols="12"
@@ -86,9 +86,9 @@ const onSubmit = () => {
                     >
                         <div class="d-flex justify-center">
                             <div class="login-head-text">
-                                <h1 class="px-3 py-5">Login</h1>
+                                <h1 class="px-3 py-4">Login</h1>
                             </div>
-                            <div class="login-form pt-3" style="width: 50vh; height: 70vh;">
+                            <div class="login-form pt-3" style="width: 50vh; height: 40vh;">
                                 <VCardText>
                                     <VForm @submit.prevent="onSubmit">
                                         <VRow class="login-field">
@@ -164,7 +164,7 @@ const onSubmit = () => {
                                                             </VBtn>
                                                         </VCol>
                                                     </VRow>
-                                                    <VRow>
+                                                    <!-- <VRow>
                                                         <VCol cols="4">
                                                             <div class="divider-1 mt-3"></div>
                                                         </VCol>
@@ -198,7 +198,7 @@ const onSubmit = () => {
                                                                 Google
                                                             </VBtn>
                                                         </VCol>
-                                                    </VRow>
+                                                    </VRow> -->
                                             </VCol>
                                         </VRow>
                                     </VForm>
@@ -277,7 +277,7 @@ const onSubmit = () => {
     position: absolute;
     background: #fff !important;
     z-index: 1 !important;
-    top: 17.5%;
+    top: 25.5%;
 }
 
 .login-head-text > h1 {

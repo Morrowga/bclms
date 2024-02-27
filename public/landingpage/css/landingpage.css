@@ -1351,3 +1351,86 @@ font-size: 25px;
     }
 
 }
+@media all and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+    .section-one-img{
+        height: 40vh;
+    }
+
+    .display-4{
+        font-size: 30px;
+    }
+
+
+    .display-5{
+        font-size: 30px;
+    }
+
+    .fs-25, .footer-title{
+        font-size: 23px;
+    }
+
+    .footer-sub-title{
+        font-size: 19px;
+    }
+
+    .fs-35{
+        font-size: 25px;
+    }
+
+    .fs-30{
+        font-size: 13px;
+    }
+
+    .about-section-five-button{
+        width: 14vh;
+        height: 4vh;
+        font-size: 10px;
+    }
+
+    .six-about-margin{
+        margin-top: 0px;
+    }
+
+    .centered{
+        top: 60%;
+    }
+
+    .fs-20,.fs-23{
+        font-size: 20px;
+    }
+
+    .fs-footer{
+        font-size: 15px;
+    }
+
+    .section-three-footer-button{
+        width: 17vh;
+        height: 5vh;
+    }
+
+    .margin-horizontal{
+        margin-left: 4.3vh;
+        margin-right: 4.3vh;
+    }
+
+    .margin-horizontal-3{
+        margin-left: 1vh;
+        margin-right: 1vh;
+    }
+
+    .about-section-two-custom-font{
+        font-size: 35px;
+    }
+
+    .resource-section-one-centred{
+        bottom: 15px;
+        left: 28%;
+     }
+
+    .search-btn{
+        width: 13vh;
+        height: 6vh;
+        font-size: 15px;
+        margin-top: 4px;
+    }
+}
