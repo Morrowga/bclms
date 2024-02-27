@@ -358,6 +358,7 @@ body .bg-1{
     filter: blur(100px);
 }
 
+
 body .bg-2{
     width: 493px;
     height: 354px;
@@ -581,6 +582,14 @@ body .bg-7{
     background-color: #fff !important;
     color: #4066e4 !important;
     font-weight: bold !important;
+}
+
+.a-with-button{
+    text-decoration: none;
+}
+
+.a-with-button > button:hover{
+    color: #4066e4 !important;
 }
 
 .section-two-resource-jumbotron{
