@@ -24,7 +24,7 @@ let form = useForm({
  */
 
  const signUpRoute = () => {
-    router.get("/register");
+    window.location.href = 'https://forms.gle/Htu51mFVagzA2odBA';
  }
 
  const goMainPage = () => {
