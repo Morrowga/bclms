@@ -27,6 +27,10 @@ let form = useForm({
     router.get("/register");
  }
 
+ const goMainPage = () => {
+    window.location.href = '/bc/index';
+ }
+
 const onSubmit = () => {
     form.post(route(`${props?.tenant}login-post`), {
         onSuccess: () => {
@@ -58,7 +62,7 @@ const onSubmit = () => {
                 class="navbar-content-container d-flex justify-space-between px-10 py-5"
             >
                 <Link
-                    href="/"
+                    @click="goMainPage()"
                     class="d-none d-lg-flex align-center"
                 >
                     <img src="/images/logoblack.png" width="200" height="55" />

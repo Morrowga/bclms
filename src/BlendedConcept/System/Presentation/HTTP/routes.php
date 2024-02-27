@@ -10,7 +10,6 @@ use Src\BlendedConcept\System\Presentation\HTTP\SettingController;
 use Src\BlendedConcept\System\Presentation\HTTP\TechnicalSupportController;
 
 Route::get('/', function () {
-
     return redirect('/bc/index');
 });
 

@@ -584,6 +584,28 @@ body .bg-7{
     font-weight: bold !important;
 }
 
+.custom-collapse > .card{
+    background-color: #16cab6;
+    color: #fff;
+    line-height: 2;
+    border-radius: 25px;
+}
+
+.btn-collapse{
+    width: 100%;
+    padding: 0.4rem;
+    align-items: center;
+    background-color: transparent !important;
+    color: #000 !important;
+    font-weight: bold !important;
+    border-radius: 0 !important;
+    text-align: left !important;
+}
+
+.text-right{
+    text-align: right;
+}
+
 .a-with-button{
     text-decoration: none;
 }

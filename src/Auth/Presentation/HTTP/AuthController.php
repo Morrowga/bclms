@@ -15,6 +15,7 @@ use Src\Auth\Application\UseCases\Commands\AuthService;
 use Src\Auth\Domain\Repositories\AuthRepositoryInterface;
 use Src\BlendedConcept\Finance\Infrastructure\EloquentModels\PlanEloquentModel;
 use Src\BlendedConcept\Security\Infrastructure\EloquentModels\UserEloquentModel;
+use Src\BlendedConcept\System\Application\UseCases\Queries\GetUserProfilingSurvey;
 
 class AuthController extends Controller
 {
@@ -157,6 +158,10 @@ class AuthController extends Controller
                 setcookie('kidmode', 0, time() + (86400 * 30), "/");
                 // setcookie('teacher_id', auth()->user()->, time() + (86400 * 30), "/");
                 if (auth()->user()->role->name == 'BC Subscriber') {
+                    $profilingSurvey = (new GetUserProfilingSurvey())->handle();
+                    if($profilingSurvey != null){
+                        return redirect()->route('profilingSurvey');
+                    }
                     $parent = auth()->user()->parents;
                     if ($parent) {
                         if ($parent->type == 'B2C') {
