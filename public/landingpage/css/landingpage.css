@@ -570,6 +570,11 @@ body .bg-7{
     border: none;
 }
 
+.section-one-pilot-jumbotron-bg{
+    text-align: center;
+    border: none;
+}
+
 .learnmore-btn, .search-btn{
     width: 23vh;
     height: 6vh;
@@ -614,15 +619,37 @@ body .bg-7{
     color: #4066e4 !important;
 }
 
+.section-two-pilot-jumbotron{
+    background-color: #f4f4f4;
+    border-radius: 25px;
+}
+
+.section-three-pilot-jumbotron{
+    background-color: #ff6262;
+    border-radius: 25px;
+}
+
+.section-four-pilot-jumbotron{
+    background-color: transparent;
+    border-radius: 25px;
+}
+
+.section-four-pilot-container{
+    position: relative;
+    text-align: center;
+}
+
 .section-two-resource-jumbotron{
     background-color: #ff6262;
     border-radius: 25px;
 }
 
+
 .section-three-resource-jumbotron{
     background-color: #f4f4f4;
     border-radius: 25px;
 }
+
 
 .section-three-about-jumbotron-bg{
     border-radius: 25px;
@@ -744,6 +771,12 @@ body .bg-7{
     position: absolute;
     top: 7%;
     left: 7%;
+ }
+
+ .center-left-pilot{
+    position: absolute;
+    top: 7%;
+    padding: 10px
  }
 
  .line-2{
