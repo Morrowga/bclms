@@ -157,7 +157,7 @@ onMounted(() => {
                                 <v-img
                                     @click="readVersion(book_version.id)"
                                     :src="setImage(book)"
-                                    class="mx-2"
+                                    class="mx-2 my-2"
                                     cover
                                 ></v-img>
                                 <div class="text-left">
