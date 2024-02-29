@@ -3,6 +3,7 @@ import { router } from "@inertiajs/core";
 
 let props = defineProps(["book"]);
 const isDialogVisible = ref(false);
+const tags = ref('');
 const isClaimed = ref(false);
 const setImage = (book) => {
     return book.thumbnail_img == "" || !book.thumbnail_img
@@ -16,6 +17,8 @@ const userImage = (user) => {
         return "/images/profile/profilefive.png";
     }
 };
+
+console.log(props.book.tags)
 
 const downloadResource = (url) =>  {
       const anchor = document.createElement("a");
@@ -118,48 +121,39 @@ onMounted(() => {
             <!-- Activator -->
             <!-- Dialog Content -->
             <VCard class="version-card">
-                <VCardText>
-                    <span class="ruddy-bold versiontext"
-                        >Choose a version for {{ book.name }}</span
+               <VCardText>
+                    <v-img
+                        :src="setImage(book)"
+                        class="origin-book-img"
+                        height="350"
+                        cover
+                    ></v-img>
+               </VCardText>
+               <VCardText class="description-text-card">
+                    <p class="ruddy-bold text-dark fs-25">Title: {{ book.name  }}</p>
+                    <p class="my-2 text-dark">
+                        <strong class="pppangram-bold">Description</strong>: {{ book.description }}
+                    </p>
+                    <p class="my-1 text-dark">
+                        <strong class="pppangram-bold">Tags:</strong>
+                        {{ book.tags.map(tag => tag.name).join(', ') }}
+                    </p>
+                </VCardText>
+                <VCardText class="text-center my-3">
+                    <span class="ruddy-bold versiontext fs-50"
+                        >Choose your version</span
                     >
                 </VCardText>
                 <div class="px-7 my-6">
                     <VRow>
-                        <!-- <VCol cols="4">
-                            <VCard
-                                class="version-mini-card"
-                                @click="readOrginal()"
-                            >
-                                <div class="text-center">
-                                    <span class="ruddy-bold versiontext"
-                                        >Original</span
-                                    >
-                                </div>
-                                <v-img
-                                    :src="setImage(book)"
-                                    class="mx-2"
-                                    cover
-                                ></v-img>
-                                <div class="text-center">
-                                    <span class="original"
-                                        >The Original Copy</span
-                                    >
-                                </div>
-                            </VCard>
-                        </VCol> -->
                         <VCol
-                            cols="4"
+                            cols="6"
                             v-for="book_version in book.book_versions"
                             :key="book_version.id"
                         >
                             <VCard
                                 class="version-mini-card"
                             >
-                                <div class="text-center">
-                                    <span class="ruddy-bold versiontext">{{
-                                        book_version.name
-                                    }}</span>
-                                </div>
                                 <v-img
                                     @click="readVersion(book_version.id)"
                                     :src="setImage(book)"
@@ -167,20 +161,20 @@ onMounted(() => {
                                     cover
                                 ></v-img>
                                 <div class="text-left">
-                                    <p class="original ml-2 mt-2">
+                                    <p class="fs-20 text-dark ruddy-bold ml-2 mt-2">
+                                        {{ book_version.name }}
+                                    </p>
+                                    <p class="original ml-2 my-5">
                                         {{ book_version.description }}
                                     </p>
-                                    <p class="original ml-2 mt-2">
-                                        {{ book.description }}
-                                    </p>
-                                    <div class="px-4">
+                                    <div class="px-4 my-5 d-flex justify-center" v-if="book?.physical_resources?.length > 0">
                                         <a @click="downloadPhysicalResource()">
                                             <v-btn variant="flat" class="physical-resource-btn" rounded color="#fff1ce">Download Physical Resource</v-btn>
                                         </a>
                                     </div>
                                 </div>
 
-                                <div class="ml-2 mt-9 mb-5">
+                                <!-- <div class="ml-2 mt-9 mb-5">
                                     <v-avatar size="30">
                                         <v-img
                                             :src="
@@ -196,7 +190,7 @@ onMounted(() => {
                                             ? book_version.owner.user.full_name
                                             : "Blended Concept"
                                     }}</span>
-                                </div>
+                                </div> -->
                             </VCard>
                         </VCol>
                     </VRow>
@@ -219,17 +213,16 @@ onMounted(() => {
     color: #000 !important;
 }
 .original {
-    font-weight: bold !important;
     line-height: 1.5 !important;
     color: #000 !important;
-    font-size: 10px !important;
+    font-size: 15px !important;
 }
 .versiontext {
     color: #000 !important;
 }
 .version-card {
     border: 3px solid #000;
-    background: #fff2ce;
+    background: #fff;
 }
 
 .version-mini-card {
@@ -246,5 +239,26 @@ onMounted(() => {
 :deep(.physical-resource-btn .v-btn__content){
     font-size: 9px !important;
     color: #000 !important;
+}
+
+.fs-50{
+    font-size: 2rem !important;
+    color: #4461c4 !important;
+}
+
+.origin-book-img{
+    border-radius: 20px;
+}
+
+.title-book{
+    font-size: 0.5rem;
+}
+
+.description-text-card{
+    background-color: #f4f4f4;
+    border: 2px solid #f4f4f4;
+    border-radius: 20px;
+    margin: 1rem;
+    padding: 1rem !important;
 }
 </style>

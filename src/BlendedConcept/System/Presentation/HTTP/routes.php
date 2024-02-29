@@ -1,12 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Src\BlendedConcept\System\Presentation\HTTP\AnnouncementController;
-use Src\BlendedConcept\System\Presentation\HTTP\DashBoardController;
-use Src\BlendedConcept\System\Presentation\HTTP\LibraryController;
-use Src\BlendedConcept\System\Presentation\HTTP\NotificationController;
+use Src\BlendedConcept\System\Presentation\HTTP\UIController;
 use Src\BlendedConcept\System\Presentation\HTTP\ReportController;
+use Src\BlendedConcept\System\Presentation\HTTP\LibraryController;
 use Src\BlendedConcept\System\Presentation\HTTP\SettingController;
+use Src\BlendedConcept\System\Presentation\HTTP\DashBoardController;
+use Src\BlendedConcept\System\Presentation\HTTP\AnnouncementController;
+use Src\BlendedConcept\System\Presentation\HTTP\NotificationController;
 use Src\BlendedConcept\System\Presentation\HTTP\TechnicalSupportController;
 
 Route::get('/', function () {
@@ -17,6 +18,9 @@ Route::get('/admin', function () {
 
     return redirect('/home');
 });
+
+Route::post('/bc/sendemail-contact', [UIController::class, 'sendMail']);
+
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/home', [DashBoardController::class, 'superAdminDashboard'])->name('dashboard');
@@ -85,7 +89,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/reports/storybook-score', [ReportController::class, 'storybookExport'])->name('storybook.export');
 });
 
-Route::group(['middleware' => ['auth', 'isSuperAdmin']], function () {
+Route::group(['middleware' => ['auth','isSuperAdminnBcStaff']], function () {
 
     // handle pagebuilder asset requests
     Route::any(config('pagebuilder.general.assets_url') . '{any}', [DashBoardController::class, 'getAssertUrl'])
