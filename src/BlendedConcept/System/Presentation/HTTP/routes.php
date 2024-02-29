@@ -106,7 +106,7 @@ Route::group(['middleware' => ['auth','isSuperAdminnBcStaff']], function () {
 
         Route::any('/bc/{any}', [DashBoardController::class, 'UseRouter'])
             ->where('any', '.*')
-            ->withoutMiddleware(['auth', 'isSuperAdmin']);
+            ->withoutMiddleware(['auth', 'isSuperAdminnBcStaff']);
     }
 });
 
