@@ -23,7 +23,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
         <section>
             <div class="fixed-back-icon">
                 <img
-                    src="/images/back.png"
+                    src="/images/Back.png"
                     @click="() => router.get(route('student-games'))"
                     class="backarrow"
                     alt=""

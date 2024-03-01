@@ -22,7 +22,7 @@ onMounted(() => {
         <section class="book_view">
             <div class="">
                 <img
-                    src="/images/back.png"
+                    src="/images/Back.png"
                     @click="() => router.get(route('storybooks'))"
                     class="backarrow"
                     alt=""
@@ -35,7 +35,7 @@ onMounted(() => {
                     class="h5p-width"
                     ref="iframeRef"
                 ></iframe>
-                
+
             </div>
         </section>
     </StudentLayout>

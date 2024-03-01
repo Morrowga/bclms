@@ -112,7 +112,7 @@ onMounted(() => {
         <section>
             <div class="fixed-back-icon">
                 <img
-                    src="/images/back.png"
+                    src="/images/Back.png"
                     @click="() => router.get(route('storybooks'))"
                     class="backarrow"
                     alt=""

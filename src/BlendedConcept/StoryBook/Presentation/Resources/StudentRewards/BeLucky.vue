@@ -15,7 +15,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
             <VRow>
                 <VCol cols="1">
                     <img
-                        src="/images/back.png"
+                        src="/images/Back.png"
                         @click="() => router.get(route('reward-store'))"
                         class="backarrow ml-2"
                         alt=""

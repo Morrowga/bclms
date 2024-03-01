@@ -22,7 +22,7 @@ onMounted(() => {});
             <VRow>
                 <VCol cols="1">
                     <img
-                        src="/images/back.png"
+                        src="/images/Back.png"
                         @click="() => router.get(route('student-rewards'))"
                         class="backarrow ml-2"
                         alt=""

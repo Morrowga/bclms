@@ -149,7 +149,7 @@ onMounted(() => {
                 <VCol cols="1">
                     <div class="mx-5 mt-4">
                         <img
-                            src="/images/back.png"
+                            src="/images/Back.png"
                             @click="() => router.get(route('storybooks'))"
                             class="backarrow"
                             alt=""
