@@ -90,6 +90,7 @@ onBeforeUnmount(() => {
                 :src="iframeSrc"
                 frameborder="0"
                 allowfullscreen
+                scrolling="auto"
             ></iframe>
             <!-- <img :src="image" class="videoplayer" @click="isDialogVisible = true" alt=""> -->
         </div>
