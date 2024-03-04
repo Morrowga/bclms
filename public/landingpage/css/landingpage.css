@@ -1064,9 +1064,14 @@ font-size: 25px;
 
 .section-five-card{
     height: 30vh;
-    padding: 5vh;
     border-radius: 25px;
     border: none;
+}
+
+.section-five-card > .card-body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .five-card-1{
