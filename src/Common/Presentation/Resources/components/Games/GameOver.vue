@@ -114,6 +114,7 @@ onBeforeUnmount(() => {
 <style scoped>
 .html5-width {
     display: block;
+    overflow: scroll;
     width: 100%;
     min-height: calc(100vh - 0px);
 }
