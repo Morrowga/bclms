@@ -15,6 +15,7 @@ const active = ref("assigned");
 const activeTab = (name) => {
     active.value = name;
 };
+console.log(props.book)
 const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
 onMounted(() => {

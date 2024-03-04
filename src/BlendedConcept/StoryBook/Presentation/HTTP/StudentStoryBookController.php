@@ -52,7 +52,7 @@ class StudentStoryBookController extends Controller
     {
         try {
             $user_survey = (new GetUserSurveyByRole('BOOK_END', $book_version->id))->handle();
-
+            
             // Get the filters from the request, or initialize an empty array if they are not present
             return Inertia::render(config('route.storybook-version'), [
                 'book' => $book_version->load('storybook'),

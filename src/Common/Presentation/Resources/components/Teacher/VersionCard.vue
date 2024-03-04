@@ -1,10 +1,13 @@
 <script setup>
 import { router } from "@inertiajs/core";
+import { usePage } from "@inertiajs/vue3";
 
 let props = defineProps(["book"]);
 const isDialogVisible = ref(false);
 const tags = ref('');
 const isClaimed = ref(false);
+const app_url = computed(() => page?.props?.route_site_url);
+const page = usePage();
 const setImage = (book) => {
     return book.thumbnail_img == "" || !book.thumbnail_img
         ? "/images/defaults/organisation_logo.png"
@@ -53,8 +56,13 @@ const readOrginal = () => {
     router.get(route("storybooks.show", { book: props.book.id }));
 };
 
-const readVersion = (book_version_id) => {
-    router.get(route("storybooks.version", { book_version: book_version_id }));
+const readVersion = (book_version) => {
+    console.log(book_version);
+    if(props.book.type != 'H5P'){
+        window.open(app_url.value + '/book_html5/' + book_version.html5_file, '_blank');
+    } else {
+        router.get(route("storybooks.version", { book_version: book_version.id }));
+    }
 };
 const setIsClaimed = (student_assigns) => {
     // console.log(student_assigns);
@@ -155,7 +163,7 @@ onMounted(() => {
                                 class="version-mini-card"
                             >
                                 <v-img
-                                    @click="readVersion(book_version.id)"
+                                    @click="readVersion(book_version)"
                                     :src="setImage(book)"
                                     class="mx-2 my-2"
                                     cover
