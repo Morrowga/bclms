@@ -1057,6 +1057,7 @@ font-size: 25px;
 }
 
 .section-four-card{
+    height: 100%;
     padding: 5vh;
     border-radius: 25px;
 }
@@ -1081,6 +1082,7 @@ font-size: 25px;
 }
 
 .section-six-card{
+    height: 100%;
     border: none;
     border-radius: 25px;
 }
@@ -1259,6 +1261,9 @@ font-size: 25px;
         font-size: 12px;
     }
 
+    .exp-img-fluid-custom{
+        height: 17vh;
+    }
 }
 
 

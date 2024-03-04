@@ -364,8 +364,8 @@ $(document).ready(function () {
                   clearInterval(spendtimerobj);
                   accuracyRes = (7 / totalAttempts) * 100;
                   accuracyRes = accuracyRes.toFixed(2);
-                  localStorage.setItem('Percentage_correct', accuracyRes + '%');
-                  document.cookie = 'Percentage_correct=' + accuracyRes + '%';
+                  localStorage.setItem('Percentage_correct', accuracyRes);
+                  document.cookie = 'Percentage_correct=' + accuracyRes;
 
                 } else {
                   setTimeout(function () {

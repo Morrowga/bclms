@@ -69,6 +69,8 @@ props.devices.forEach((item) => {
 const toggleDialog = () => {
     dialog.value = !dialog.value;
 };
+
+console.log(props.datas.game_file)
 const formSubmit = useForm({
     name: props.datas.name,
     description: props.datas.description,
@@ -76,6 +78,8 @@ const formSubmit = useForm({
     devices: null,
     tags: tags.value,
     game: null,
+    game_file: props.datas.game_file,
+    thumbnail: props.datas.thumbnail,
     thumb: null,
     num_gold_coins: props.datas.num_gold_coins,
     num_silver_coins: props.datas.num_silver_coins,
