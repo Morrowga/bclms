@@ -422,9 +422,16 @@ onMounted(() => {
 @media only screen and (max-width: 600px) {
     .games {
         width: 100% !important;
+        height: auto !important;
     }
     .rewards {
         width: 100% !important;
+        height: auto !important;
+    }
+
+    .storybook{
+        width: 100% !important;
+        height: auto !important;
     }
 }
 /* Tablets in portrait mode */
