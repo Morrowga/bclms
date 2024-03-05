@@ -117,7 +117,7 @@ onBeforeMount(() => {
 });
 </script>
 <template>
-    <v-layout :class="isStudent ? 'std-layout layout-navbar-and-nav-container' : ''">
+    <v-layout :class="isStudent ? 'std-layout layout-navbar-and-nav-container' : 'layout-navbar-and-nav-container'">
         <VNavigation-drawer
             v-model="drawer"
             style="position: fixed"
