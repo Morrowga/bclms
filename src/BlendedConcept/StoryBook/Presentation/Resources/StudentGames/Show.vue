@@ -18,6 +18,8 @@ console.log(app_url.value + '/gamefiles/' + props.game.game_file)
 
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
+
+
 </script>
 
 <template>
