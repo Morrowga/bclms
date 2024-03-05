@@ -60,6 +60,10 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
     display: none !important;
 }
 
+:deep(.layout-navbar-and-nav-container > .std-head-bar) {
+    display: none !important;
+}
+
 .videoplayer {
     cursor: pointer;
 }
