@@ -139,10 +139,10 @@ onMounted(() => {
                </VCardText>
                <VCardText class="description-text-card">
                     <p class="ruddy-bold text-dark fs-25">Title: {{ book.name  }}</p>
-                    <p class="my-2 text-dark">
+                    <p class="my-2 text-dark pppangram-bold">
                         <strong class="pppangram-bold">Description</strong>: {{ book.description }}
                     </p>
-                    <p class="my-1 text-dark">
+                    <p class="my-1 text-dark pppangram-bold">
                         <strong class="pppangram-bold">Tags:</strong>
                         {{ book.tags.map(tag => tag.name).join(', ') }}
                     </p>
