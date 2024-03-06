@@ -1524,3 +1524,25 @@ font-size: 25px;
         margin-top: 4px;
     }
 }
+
+
+@media only screen
+  and (min-device-width: 1024px)
+  and (max-device-width: 1366px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+    .section-one-img{
+        height: 28vh;
+        margin-top: 10vh;
+    }
+
+    .exp-img-fluid-custom{
+        height: auto !important;
+    }
+
+    .section-three-img{
+        padding: 2vh;
+        height: auto;
+        width: 100%;
+}
+}

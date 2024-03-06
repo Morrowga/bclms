@@ -61,6 +61,8 @@
     "@vue/server-renderer": "^3.2.47",
     "@vueuse/core": "^9.13.0",
     "@vueuse/math": "9.11.0",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "animate.css": "^4.1.1",
     "apexcharts-clevision": "3.28.5",
     "axios": "1.2.3",

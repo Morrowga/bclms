@@ -21,7 +21,7 @@ const userImage = (user) => {
     }
 };
 
-console.log(props.book.tags)
+console.log(props.book)
 
 const downloadResource = (url) =>  {
       const anchor = document.createElement("a");
@@ -140,11 +140,16 @@ onMounted(() => {
                <VCardText class="description-text-card">
                     <p class="ruddy-bold text-dark fs-25">Title: {{ book.name  }}</p>
                     <p class="my-2 text-dark pppangram-bold">
-                        <strong class="pppangram-bold">Description</strong>: {{ book.description }}
+                        <strong class="pppangram-bold">Description</strong>:
+                        <span v-html="book.description"></span>
                     </p>
-                    <p class="my-1 text-dark pppangram-bold">
+                    <p class="my-1 text-dark pppangram-bold" v-if="book?.tags?.length > 0">
                         <strong class="pppangram-bold">Tags:</strong>
                         {{ book.tags.map(tag => tag.name).join(', ') }}
+                    </p>
+                    <p class="my-1 text-dark pppangram-bold" v-if="book?.learningneeds?.length > 0">
+                        <strong class="pppangram-bold">Learning Needs:</strong>
+                        {{ book.tags.map(learningneed => learningneed.name).join(', ') }}
                     </p>
                 </VCardText>
                 <VCardText class="text-center my-3">

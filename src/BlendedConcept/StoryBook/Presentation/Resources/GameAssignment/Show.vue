@@ -37,9 +37,8 @@ let tab = ref(false);
                         </VCol>
                         <VCol cols="12" md="6" class="text-end"> </VCol>
                     </VRow>
-                    <p class="text-subtitle-1 mt-10 mx-10">
-                        {{ props.game.description }}
-                    </p>
+                    <span v-html="props.game.description" class="text-subtitle-1 mt-10 mx-10">
+                    </span>
                     <br />
                     <div class="learning-tabs mt-10 mx-10">
                         <v-tabs v-model="tab">

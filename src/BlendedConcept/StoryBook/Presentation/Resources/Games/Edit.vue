@@ -6,6 +6,7 @@ import UploadThumbnail from "./components/UploadThumbnail.vue";
 import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
 import { format } from "date-fns";
+import WangEditor from './components/wangEditor.vue'
 
 const props = defineProps({
     datas: {
@@ -216,12 +217,14 @@ const setImage = () => {
                         </div>
                     </v-card-title>
                     <v-card-text class="px-10 py-0 pb-5">
-                        <div class="paragraph">
-                            <v-textarea
+                        <div class="paragraph my-3">
+                            <WangEditor
+                                v-model="formSubmit.description"
+                            />
+                            <!-- <v-textarea
                                 class="max-w-600"
                                 variant="outlined"
-                                v-model="formSubmit.description"
-                            ></v-textarea>
+                            ></v-textarea> -->
                         </div>
                         <br />
                         <div class="disability">

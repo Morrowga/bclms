@@ -71,7 +71,7 @@ onMounted(() => {
 
 <template>
     <section class="section-student-home">
-        <VRow>
+        <VRow class="tablet-resize">
             <!-- <VCol cols="12" sm="4" lg="3">
                 <VBtn
                 @click="menuOpener"
@@ -450,12 +450,61 @@ onMounted(() => {
 @media only screen and (min-width: 1025px) and (max-width: 1280px) {
     .games {
         width: 100% !important;
+        height: 34vh;
     }
     .rewards {
         width: 100% !important;
+        height: 34vh;
     }
     .margin-left {
         margin-left: 0 !important;
     }
+
+    .storybook{
+        height: auto;
+        width: 100%;
+    }
+
+    .tablet-resize{
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (-webkit-min-device-pixel-ratio: 1)
+  and (orientation: landscape) {
+    .tablet-resize{
+        display: flex;
+        justify-content: center;
+    }
+
+    .storybook{
+        width: 100%;
+    }
+}
+
+@media only screen
+  and (min-device-width: 1366px)
+  and (max-device-width: 1366px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+    .storybook {
+        width: 80%;
+        height: 57vh;
+    }
+
+    .games{
+        width: 52%;
+        height: 28vh;
+    }
+
+    .rewards{
+        width: 52%;
+        height: 28vh;
+    }
+  /* Styles for iPad Pro (12.9-inch) in landscape mode */
 }
 </style>

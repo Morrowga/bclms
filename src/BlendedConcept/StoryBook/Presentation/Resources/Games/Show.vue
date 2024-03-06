@@ -163,8 +163,8 @@ const download = async () => {
                     </div>
                 </v-card-title>
                 <v-card-text class="px-10 py-0 pb-5">
-                    <div class="paragraph">
-                        {{ data.description }}
+                    <div class="paragraph" v-html="data.description">
+
                     </div>
                     <br />
                     <div class="disability">

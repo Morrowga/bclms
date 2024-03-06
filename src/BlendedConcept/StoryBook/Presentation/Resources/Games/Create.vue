@@ -3,6 +3,8 @@ import { defineProps, ref } from "vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { SuccessDialog } from "@actions/useSuccess";
 import { FlashMessage } from "@actions/useFlashMessage";
+import WangEditor from './components/wangEditor.vue'
+
 import {
     emailValidator,
     requiredValidator,
@@ -216,11 +218,8 @@ const handleThumbFileInputClick = () => {
                                     <VLabel class="tiggie-label"
                                         >Game Description</VLabel
                                     >
-                                    <v-textarea
-                                        type="text"
-                                        v-model="form.description"
-                                        rows="5"
-                                        density="compact"
+                                    <WangEditor
+                                    v-model="form.description"
                                     />
                                 </v-col>
                             </v-col>
