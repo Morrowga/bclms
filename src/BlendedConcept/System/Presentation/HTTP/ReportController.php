@@ -33,6 +33,8 @@ class ReportController extends Controller
     {
         $data = (new ReportGameQuery())->handle();
 
+        return $data;
+
         return Excel::download(new ReportGameExport($data), 'game-reports.xlsx');
     }
 

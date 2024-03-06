@@ -45,7 +45,7 @@ const exportExcel = async () => {
         // Create an anchor element to trigger the download
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'reports.xlsx'; // Set the desired file name
+        a.download = 'excel-reports.xlsx'; // Set the desired file name
         a.style.display = 'none';
         document.body.appendChild(a);
         a.click();
@@ -71,7 +71,7 @@ const exportGame = async () => {
         // Create an anchor element to trigger the download
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'reports.xlsx'; // Set the desired file name
+        a.download = 'game-reports.xlsx'; // Set the desired file name
         a.style.display = 'none';
         document.body.appendChild(a);
         a.click();
@@ -97,7 +97,7 @@ const exportStorybook = async () => {
         // Create an anchor element to trigger the download
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'reports.xlsx'; // Set the desired file name
+        a.download = 'book-reports.xlsx'; // Set the desired file name
         a.style.display = 'none';
         document.body.appendChild(a);
         a.click();
