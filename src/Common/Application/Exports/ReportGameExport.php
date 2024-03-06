@@ -23,7 +23,7 @@ class ReportGameExport implements FromCollection, WithHeadings
         return [
             'Name',
             'Gender',
-            'Accessbility Devices Used',
+            'Device Used',
             'Game Name',
             'Score',
             'Accuracy',
