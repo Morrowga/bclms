@@ -23,8 +23,7 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 </script>
 
 <template>
-    <StudentLayout>
-        <section>
+        <section class="section-bg">
             <div class="fixed-back-icon">
                 <img
                     src="/images/Back.png"
@@ -43,7 +42,6 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
                 :data="props.user_survey"
             />
         </section>
-    </StudentLayout>
 </template>
 
 <style lang="scss" scoped>
@@ -66,6 +64,13 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 .videoplayer {
     cursor: pointer;
+}
+
+.section-bg{
+    background: url("/images/studentbg.webp") no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important;
 }
 
 .overlay-container {
