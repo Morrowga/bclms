@@ -6,6 +6,7 @@ import axios from "axios";
 let props = defineProps(["route", "count", "iframeSrc","game", "auth"]);
 
 const isDialogVisible = ref(false);
+const myIframe = ref(null);
 
 console.log(props.iframeSrc);
 
@@ -52,6 +53,11 @@ onMounted(() => {
     let path =  '/gamefiles/' + props.game.game_file.replace(/\/index\.html$/, '');
 
     setCookieInIframe('gameURL', props.iframeSrc, path);
+
+    if (myIframe.value) {
+        myIframe.value.contentWindow.focus();
+    }
+
 });
 
 const handleBeforeUnmount = () => {
@@ -77,6 +83,7 @@ const handleBeforeUnmount = () => {
   }
 };
 
+
 onBeforeUnmount(() => {
     handleBeforeUnmount()
 });
@@ -85,6 +92,7 @@ onBeforeUnmount(() => {
     <div>
         <div class="d-flex justify-center">
             <iframe
+                ref="myIframe"
                 id="gameiframe"
                 class="html5-width"
                 :src="iframeSrc"
