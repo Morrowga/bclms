@@ -113,10 +113,7 @@ let checkHide = computed(() => {
                     <VCol
                         v-for="book in props.books.data"
                         :key="book.id"
-                        cols="12"
-                        sm="6"
-                        md="4"
-                        lg="4"
+                        cols="4"
                     >
                         <VersionCard :key="book.id" :book="book" />
                     </VCol>
@@ -161,10 +158,10 @@ let checkHide = computed(() => {
                             v-for="play_book in playlist.storybooks"
                             :key="play_book.id"
                             cols="12"
-                            sm="6"
-                            md="4"
-                            lg="4"
                         >
+                            <!-- sm="6"
+                            md="4"
+                            lg="4" -->
                             <VersionCard
                                 :key="play_book.id"
                                 :book="play_book"
