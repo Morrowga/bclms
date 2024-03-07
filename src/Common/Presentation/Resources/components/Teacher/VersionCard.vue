@@ -58,11 +58,11 @@ const readOrginal = () => {
 
 const readVersion = (book_version) => {
     console.log(book_version);
-    if(props.book.type != 'H5P'){
-        window.open(app_url.value + '/book_html5/' + book_version.html5_file, '_blank');
-    } else {
+    // if(props.book.type != 'H5P'){
+    //     window.open(app_url.value + '/book_html5/' + book_version.html5_file, '_blank');
+    // } else {
         router.get(route("storybooks.version", { book_version: book_version.id }));
-    }
+    // }
 };
 const setIsClaimed = (student_assigns) => {
     // console.log(student_assigns);

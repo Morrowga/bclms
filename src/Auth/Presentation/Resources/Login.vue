@@ -59,7 +59,7 @@ const onSubmit = () => {
     <div class="login-bg">
         <div class="layout-navbar">
             <div
-                class="navbar-content-container d-flex justify-space-between px-10 py-5"
+                class="navbar-content-container d-flex justify-space-between px-2 py-1"
             >
                 <Link
                     @click="goMainPage()"
@@ -186,8 +186,8 @@ const onSubmit = () => {
     background: url("/public/images/Login_page.png") no-repeat;
     background-size: cover !important;
     background-position: center !important;
-    min-height: calc(100vh - 0px);
     width: 100%;
+    position: fixed;
 }
 
 :deep(.v-input__details > .v-messages > .v-messages__message) {
@@ -208,8 +208,7 @@ const onSubmit = () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 0px);
-    // height: 100vh; /* This ensures the container takes up the full height of the viewport */
+    height: calc(100vh - 0px);
 }
 
 .login-form {

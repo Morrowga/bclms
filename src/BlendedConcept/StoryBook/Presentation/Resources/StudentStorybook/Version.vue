@@ -9,7 +9,7 @@ import BookEndUserExperienceSurvey from "./components/BookEndUserExperienceSurve
 let props = defineProps(["book", "user_survey"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
-let iframeRef = ref("");
+let iframeRef = ref(null);
 const active = ref("assigned");
 
 const activeTab = (name) => {
@@ -19,6 +19,10 @@ console.log(props.book)
 const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
 onMounted(() => {
+    if (iframeRef.value) {
+        iframeRef.value.contentWindow.focus();
+    }
+    
     iframeRef.value.style.display = "none";
 
     iframeRef.value.addEventListener("load", (event) => {
@@ -109,7 +113,6 @@ onMounted(() => {
 });
 </script>
 <template>
-    <StudentLayout>
         <section>
             <div class="fixed-back-icon">
                 <img
@@ -142,7 +145,6 @@ onMounted(() => {
             v-if="props.user_survey ?? false"
             :data="props.user_survey"
         />
-    </StudentLayout>
 </template>
 
 <style lang="scss">
@@ -166,10 +168,12 @@ onMounted(() => {
     width: 100%;
     min-height: 105vh !important;
 }
+
 .html5-width {
     display: block;
+    overflow: hidden;
     width: 100%;
-    min-height: calc(100vh - 55px);
+    min-height: calc(100vh - 0px);
 }
 
 // .student .layout-page-content{
@@ -178,7 +182,8 @@ onMounted(() => {
 //     background-position: center !important;
 // }
 .videoplayer {
-    height: 600px;
+    width: 100%;
+    height: 120vh;
 }
 
 .app-user-search-filter {
