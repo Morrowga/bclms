@@ -194,5 +194,6 @@ onBeforeMount(() => {
     background-size: cover !important;
     background-position: center !important;
     background-attachment: fixed !important;
+    position: fixed;
 }
 </style>
