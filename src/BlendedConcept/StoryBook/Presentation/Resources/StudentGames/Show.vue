@@ -19,7 +19,19 @@ console.log(app_url.value + '/gamefiles/' + props.game.game_file)
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown);
+});
 
+// Remove event listeners when the component is unmounted
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeyDown);
+});
+
+const handleKeyDown = (event) => {
+    const iframe = document.getElementById('gameiframe'); // Assuming you have an iframe with id 'gameIframe'
+    iframe.contentWindow.postMessage({ type: 'keydown', keyCode: event.keyCode }, '*');
+};
 </script>
 
 <template>
