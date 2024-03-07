@@ -80,143 +80,101 @@ const onSubmit = () => {
                 sytemErrorMessage="Something is wrong"
                 v-if="form?.errors.length"
             />
-            <div class="login-card mt-15">
-                <VRow class="h-100">
-                    <VCol
-                        cols="12"
-                        sm="6"
-                        lg="6"
-                        class="bg-surface"
-                    >
-                        <div class="d-flex justify-center">
-                            <div class="login-head-text">
-                                <h1 class="px-3 py-4">Login</h1>
-                            </div>
-                            <div class="login-form pt-3" style="width: 50vh; height: 40vh;">
-                                <VCardText>
-                                    <VForm @submit.prevent="onSubmit">
-                                        <VRow class="login-field">
-                                            <VCol cols="12">
-                                                <VTextField
-                                                    variant="solo"
-                                                    v-model="form.email"
-                                                    :rules="[requiredValidator]"
-                                                    :error-messages="
-                                                        form?.errors?.email
-                                                    "
-                                                />
-                                            </VCol>
-                                            <VCol cols="12">
-                                                <VTextField
-                                                    variant="solo"
-                                                    v-model="form.password"
-                                                    :rules="[requiredValidator]"
-                                                    :type="
-                                                        isPasswordVisible
-                                                            ? 'text'
-                                                            : 'password'
-                                                    "
-                                                    :error-messages="
-                                                        form?.errors?.password
-                                                    "
-                                                    :append-inner-icon="
-                                                        isPasswordVisible
-                                                            ? 'mdi-eye-off-outline'
-                                                            : 'mdi-eye-outline'
-                                                    "
-                                                    @click:append-inner="
-                                                        isPasswordVisible =
-                                                            !isPasswordVisible
-                                                    "
-                                                />
+           <VRow>
+                <VCol cols="12" md="6" sm="6" lg="6">
+                    <div class="container">
+                        <fieldset class="text-center login-form px-5 mx-5">
+                            <legend class="login-head-text">
+                                Login
+                            </legend>
+                            <VCardText>
+                                <VForm @submit.prevent="onSubmit">
+                                    <VRow class="login-field">
+                                        <VCol cols="12">
+                                            <VTextField
+                                                variant="solo"
+                                                v-model="form.email"
+                                                :rules="[requiredValidator]"
+                                                :error-messages="
+                                                    form?.errors?.email
+                                                "
+                                            />
+                                        </VCol>
+                                        <VCol cols="12">
+                                            <VTextField
+                                                variant="solo"
+                                                v-model="form.password"
+                                                :rules="[requiredValidator]"
+                                                :type="
+                                                    isPasswordVisible
+                                                        ? 'text'
+                                                        : 'password'
+                                                "
+                                                :error-messages="
+                                                    form?.errors?.password
+                                                "
+                                                :append-inner-icon="
+                                                    isPasswordVisible
+                                                        ? 'mdi-eye-off-outline'
+                                                        : 'mdi-eye-outline'
+                                                "
+                                                @click:append-inner="
+                                                    isPasswordVisible =
+                                                        !isPasswordVisible
+                                                "
+                                            />
 
-                                                <span
-                                                    class="red-top"
-                                                    v-if="props?.errorMessage"
-                                                >
-                                                    {{ props?.errorMessage }}
-                                                </span>
-                                                <div
-                                                    class="d-flex align-center flex-wrap justify-space-between mt-1 mb-4"
-                                                >
-                                                    <VCheckbox
-                                                        class="text-black"
-                                                        v-model="rememberMe"
-                                                        label="Remember me"
-                                                    />
-                                                </div>
-                                                <VRow>
-                                                        <VCol cols="6">
-                                                            <v-btn
-                                                                block
-                                                                class="btn-linear"
-                                                                type="submit"
-                                                                rounded
-                                                            >
-                                                                Login
-                                                            </v-btn>
-                                                        </VCol>
-                                                        <VCol cols="6">
-                                                            <VBtn
-                                                                @click="signUpRoute"
-                                                                block
-                                                                class="bg-signup"
-                                                                type="button"
-                                                                rounded
-                                                            >
-                                                                Sign Up
-                                                            </VBtn>
-                                                        </VCol>
-                                                    </VRow>
-                                                    <!-- <VRow>
-                                                        <VCol cols="4">
-                                                            <div class="divider-1 mt-3"></div>
-                                                        </VCol>
-                                                        <VCol cols="4">
-                                                            <div class="text-center">
-                                                                <p class="fs-10">Or Login with social</p>
-                                                            </div>
-                                                        </VCol>
-                                                        <VCol cols="4">
-                                                            <div class="divider-1 mt-3"></div>
-                                                        </VCol>
-                                                    </VRow>
-                                                    <VRow>
-                                                        <VCol cols="12">
-                                                            <v-btn
-                                                                block
-                                                                class="social-btn"
-                                                                type="submit"
-                                                                prepend-icon="mdi-facebook"
-                                                            >
-                                                                Facebook
-                                                            </v-btn>
-                                                        </VCol>
-                                                        <VCol cols="12">
-                                                            <VBtn
-                                                                block
-                                                                class="social-btn"
-                                                                type="submit"
-                                                                prepend-icon="mdi-google"
-                                                            >
-                                                                Google
-                                                            </VBtn>
-                                                        </VCol>
-                                                    </VRow> -->
-                                            </VCol>
-                                        </VRow>
-                                    </VForm>
-                                </VCardText>
-                            </div>
-                        </div>
-                    </VCol>
-                    <!-- <VCol cols="12" sm="6" lg="6" class="d-flex justify-center bg-surface-variant">
-                        <div class="d-flex align-end mx-3">
-                            <img :src="'../images/logon-img.png'" width="360">
-                        </div>
-                    </VCol> -->
-                </VRow>
-            </div>
+                                            <span
+                                                class="red-top"
+                                                v-if="props?.errorMessage"
+                                            >
+                                                {{ props?.errorMessage }}
+                                            </span>
+                                            <div
+                                                class="d-flex align-center flex-wrap justify-space-between mt-1 mb-4"
+                                            >
+                                                <VCheckbox
+                                                    class="text-black"
+                                                    v-model="rememberMe"
+                                                    label="Remember me"
+                                                />
+                                            </div>
+                                            <VRow>
+                                                    <VCol cols="6">
+                                                        <v-btn
+                                                            block
+                                                            class="btn-linear"
+                                                            type="submit"
+                                                            rounded
+                                                        >
+                                                            Login
+                                                        </v-btn>
+                                                    </VCol>
+                                                    <VCol cols="6">
+                                                        <VBtn
+                                                            @click="signUpRoute"
+                                                            block
+                                                            class="bg-signup"
+                                                            type="button"
+                                                            rounded
+                                                        >
+                                                            Sign Up
+                                                        </VBtn>
+                                                    </VCol>
+                                                </VRow>
+                                        </VCol>
+                                    </VRow>
+                                </VForm>
+                            </VCardText>
+                        </fieldset>
+                    </div>
+                </VCol>
+           </VRow>
+            <!-- <div class="login-card">
+                <div class="d-flex align-center vh-100">
+
+                </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -225,10 +183,11 @@ const onSubmit = () => {
 @use "@styles/@core/template/pages/page-auth.scss";
 
 .login-bg {
-    background: url("/public/images/Login_page.png") 100% no-repeat;
+    background: url("/public/images/Login_page.png") no-repeat;
     background-size: cover !important;
     background-position: center !important;
     min-height: calc(100vh - 0px);
+    width: 100%;
 }
 
 :deep(.v-input__details > .v-messages > .v-messages__message) {
@@ -245,13 +204,24 @@ const onSubmit = () => {
     line-height: 45px !important;
 }
 
-.login-card{
-    padding-top: 10vh;
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 0px);
+    // height: 100vh; /* This ensures the container takes up the full height of the viewport */
+}
+
+.login-form {
+    max-width: 400px;
+    width: 100%;
 }
 
 .login-form{
     border-radius: 20px;
     padding: 5px;
+    max-width: 400px;
+    width: 100%;
     border: 4px solid;
     border-image: linear-gradient(45deg, #6ED7CF, #4066E4); /* Adjust colors as needed */
     border-image-slice: 1;
@@ -278,20 +248,14 @@ const onSubmit = () => {
 }
 
 .login-head-text{
-    position: absolute;
-    background: #fff !important;
-    z-index: 1 !important;
-    top: 25.5%;
-}
-
-.login-head-text > h1 {
-    font-size: 30px !important;
-    font-weight: bold;
-    background: linear-gradient(45deg, #6FD9D1, #4167E4); /* Adjust colors as needed */
-    -webkit-background-clip: text;
-    color: transparent;
-    background-clip: text;
-    display: inline-block; /* Ensures the gradient is applied only to the text */
+    color: #000 !important;
+    padding: 1vh;
+    background: linear-gradient(45deg, #6FD9D1, #4167E4) !important; /* Adjust colors as needed */
+    font-size: 2rem !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
+    background-clip: text !important;
+    // top: 25.5%;
 }
 
 .divider-1{
@@ -303,107 +267,4 @@ const onSubmit = () => {
     border: 4px solid #000;
     border-radius: 4px;
 }
-
 </style>
-
-
-<!-- <VRow class="h-100 auth-wrapper d-flex justify-start">
-                <VCol
-                    cols="6"
-                    sm="6"
-                    lg="5"
-                    class="auth-card-v2 d-flex align-center justify-center bg-surface"
-                >
-                    <div :max-width="500" class="h-100 login-card">
-                        <VCardText>
-                            <h5
-                                class="text-h4 text-center font-weight-semibold mb-1 primary lh-h"
-                            >
-                                Login
-                            </h5>
-                        </VCardText>
-                        <VCardText>
-                            <VForm @submit.prevent="onSubmit">
-                                <VRow class="login-field">
-                                    <VCol cols="12">
-                                        <label-input class="primary"
-                                            >Enter your work email</label-input
-                                        >
-                                        <VTextField
-                                            variant="solo"
-                                            v-model="form.email"
-                                            class="bg-primary"
-                                            :rules="[requiredValidator]"
-                                            :error-messages="
-                                                form?.errors?.email
-                                            "
-                                        />
-                                    </VCol>
-                                    <VCol cols="12">
-                                        <label-input class="primary"
-                                            >Enter your password</label-input
-                                        >
-                                        <VTextField
-                                            variant="solo"
-                                            v-model="form.password"
-                                            :rules="[requiredValidator]"
-                                            :type="
-                                                isPasswordVisible
-                                                    ? 'text'
-                                                    : 'password'
-                                            "
-                                            :error-messages="
-                                                form?.errors?.password
-                                            "
-                                            :append-inner-icon="
-                                                isPasswordVisible
-                                                    ? 'mdi-eye-off-outline'
-                                                    : 'mdi-eye-outline'
-                                            "
-                                            @click:append-inner="
-                                                isPasswordVisible =
-                                                    !isPasswordVisible
-                                            "
-                                        />
-
-                                        <span
-                                            class="red-top"
-                                            v-if="props?.errorMessage"
-                                        >
-                                            {{ props?.errorMessage }}
-                                        </span>
-                                        <div
-                                            class="d-flex align-center flex-wrap justify-space-between mt-1 mb-4"
-                                        >
-                                            <VCheckbox
-                                                class="text-black"
-                                                v-model="rememberMe"
-                                                label="Remember me"
-                                            />
-                                        </div>
-                                        <VBtn
-                                            block
-                                            class="bg-primary"
-                                            type="submit"
-                                        >
-                                            Login
-                                        </VBtn>
-                                    </VCol>
-                                    <VCol
-                                        cols="12"
-                                        class="text-base text-center primary"
-                                    >
-                                        <span>New on our platform?</span>
-                                        <Link
-                                            class="ms-2 text-decoration-underline"
-                                            :href="register"
-                                        >
-                                            Sign up
-                                        </Link>
-                                    </VCol>
-                                </VRow>
-                            </VForm>
-                        </VCardText>
-                    </div>
-                </VCol>
-            </VRow> -->
