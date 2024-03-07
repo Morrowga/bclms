@@ -318,31 +318,31 @@ onMounted(() => {
 
 .games {
     width: 40%;
-    height: 250px;
+    /* height: 250px; */
     cursor: pointer !important;
 }
 
 .rewards {
     cursor: pointer !important;
     width: 40%;
-    height: 250px;
+    /* height: 250px; */
 }
 .games-landscape {
     width: 100%;
-    height: 250px;
+    /* height: 250px; */
     cursor: pointer !important;
 }
 
 .rewards-landscape {
     cursor: pointer !important;
     width: 100%;
-    height: 250px;
+    /* height: 250px; */
 }
 
 .storybook {
     cursor: pointer !important;
     width: 65%;
-    height: 506px;
+    /* height: 506px; */
 }
 
 .card-student {
@@ -454,7 +454,7 @@ onMounted(() => {
     }
     .rewards {
         width: 100% !important;
-        height: 34vh;
+        /* height: 34vh; */
     }
     .margin-left {
         margin-left: 0 !important;
@@ -491,7 +491,7 @@ onMounted(() => {
   and (max-device-width: 1366px)
   and (-webkit-min-device-pixel-ratio: 2)
   and (orientation: landscape) {
-    .storybook {
+    /* .storybook {
         width: 80%;
         height: 57vh;
     }
@@ -504,7 +504,7 @@ onMounted(() => {
     .rewards{
         width: 52%;
         height: 28vh;
-    }
+    } */
   /* Styles for iPad Pro (12.9-inch) in landscape mode */
 }
 </style>
