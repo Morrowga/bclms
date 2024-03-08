@@ -59,8 +59,8 @@ const handleKeyDown = (event) => {
 <style lang="scss" scoped>
 .fixed-back-icon {
     position: absolute;
-    top: 20px;
-    left: 13px;
+    top: 5vh;
+    left: 2vh;
 }
 .app-user-search-filter {
     inline-size: 24.0625rem;
@@ -83,6 +83,11 @@ const handleKeyDown = (event) => {
     background-size: cover !important;
     background-position: center !important;
     background-attachment: fixed !important;
+    position: relative; /* Ensure the section is positioned relative to its containing block */
+    width: 100%; /* Set the width to 100% of the viewport */
+    height: 100vh; /* Set the height to 100% of the viewport height */
+    overflow: hidden; /* Hide overflow to prevent scrolling */
+
 }
 
 .overlay-container {

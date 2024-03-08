@@ -7,6 +7,7 @@ import { FlashMessage } from "@actions/useFlashMessage";
 import UploadThumbnail from "./components/UploadThumbnail.vue";
 import UploadPhysicalResources from "./components/UploadPhysicalResources.vue";
 import { integerValidator, requiredValidator } from "@validators";
+import WangEditor from './components/wangEditor.vue'
 const props = defineProps({
     datas: {
         type: Object,
@@ -418,11 +419,14 @@ onUpdated(() => {
                 </v-card-subtitle>
                 <v-card-text class="px-10 py-0 pb-5">
                     <div class="paragraph">
-                        <v-textarea
+                        <WangEditor
+                            v-model="form.description"
+                        />
+                        <!-- <v-textarea
                             class="max-w-edit-book"
                             variant="outlined"
                             v-model="form.description"
-                        ></v-textarea>
+                        ></v-textarea> -->
                     </div>
                     <div class="learning pt-2">
                         <span class="font-weight-black text-black"

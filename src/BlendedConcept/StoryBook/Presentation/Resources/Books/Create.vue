@@ -8,6 +8,7 @@ import PdfUpload from "./components/PdfUpload.vue";
 import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
+import WangEditor from './components/wangEditor.vue'
 import {
     emailValidator,
     requiredValidator,
@@ -273,12 +274,14 @@ onMounted(() => {
                         <VLabel class="tiggie-label"
                             >Storybook Description</VLabel
                         >
-                        <VTextarea
-                            v-model="form.description"
+                        <!-- <VTextarea
                             type="text"
                             rows="5"
                             density="compact"
                             :error-messages="form?.errors?.description"
+                        /> -->
+                        <WangEditor
+                            v-model="form.description"
                         />
                     </VCol>
                     <VCol cols="12" md="6">

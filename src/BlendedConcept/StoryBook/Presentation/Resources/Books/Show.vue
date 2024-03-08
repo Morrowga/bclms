@@ -241,9 +241,8 @@ onUpdated(() => {
                     </div>
                 </v-card-title>
                 <v-card-text class="px-10 py-0 pb-5">
-                    <div class="paragraph">
-                        {{ data.description }}
-                    </div>
+                    <span class="paragraph" v-html="data.description">
+                    </span>
 
                     <div class="learning pt-2">
                         <span class="font-weight-black text-black"

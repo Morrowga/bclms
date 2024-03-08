@@ -53,9 +53,8 @@ const getImage = (item) => {
                             />
                         </VCol>
                     </VRow>
-                    <p class="text-subtitle-1">
-                        {{ teacher_storybook.description }}
-                    </p>
+                    <span class="text-subtitle-1" v-html="teacher_storybook.description">
+                    </span>
                     <br />
                     <div class="learning-chip-group">
                         <v-chip

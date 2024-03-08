@@ -124,8 +124,14 @@ onBeforeUnmount(() => {
     display: block;
     overflow: scroll;
     width: 100%;
-    min-height: calc(100vh - 0px);
+    height: calc(100vh - 40px); /* Adjust 40px according to the height of the back arrow */
 }
+
+iframe{
+    width: 100%; /* Set the width to 100% */
+    height: 100%; /* Set the height to 100% */
+}
+
 .gameover-card {
     /* height: 400px; */
     background: url("/images/Game Pop Up.png") no-repeat;
@@ -134,7 +140,7 @@ onBeforeUnmount(() => {
 
 .videoplayer {
     width: 100%;
-    height: 120vh;
+    height: calc(100vh - 40px); /* Adjust 40px according to the height of the back arrow */
 }
 
 .gameoverimg {
