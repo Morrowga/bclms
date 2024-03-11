@@ -10,6 +10,7 @@ use Src\BlendedConcept\StoryBook\Presentation\HTTP\AssignRewardController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentGamesController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\GameAssignmentController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentRewardsController;
+use Src\BlendedConcept\StoryBook\Presentation\HTTP\Api\BookScoreApiController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\Api\GameScoreApiController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StoryBookVersionController;
 use Src\BlendedConcept\StoryBook\Presentation\HTTP\StudentStoryBookController;
@@ -55,6 +56,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('bookreview', [StoryBookVersionController::class, 'bookreview'])->name('bookreview');
     Route::post('game-score', [GameScoreApiController::class, 'gameScore']);
+    Route::post('book-score', [BookScoreApiController::class, 'bookScore']);
 
     Route::get('/assign_rewards', [AssignRewardController::class, 'index'])->name('assign_rewards.index');
     Route::get('/assign_rewards/create', [AssignRewardController::class, 'create'])->name('assign_rewards.create');

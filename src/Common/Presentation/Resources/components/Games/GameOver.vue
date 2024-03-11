@@ -8,8 +8,6 @@ let props = defineProps(["route", "count", "iframeSrc","game", "auth"]);
 const isDialogVisible = ref(false);
 const myIframe = ref(null);
 
-console.log(props.iframeSrc);
-
 const parseCookie = (cookieString) => {
   const cookies = {};
   cookieString.split(';').forEach(cookie => {
@@ -73,7 +71,7 @@ const handleBeforeUnmount = () => {
     const TotalSelection = parseInt(cookies.TotalSelection);
     const scoreData = {
         student_id:  props.auth.data.student.student_id,
-        game_id:  props.game.id,
+        id:  props.game.id,
         duration: Totaltime,
         accuracy: Percentage_correct,
         score: TotalSelection

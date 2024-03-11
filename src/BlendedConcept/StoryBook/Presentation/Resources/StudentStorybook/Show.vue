@@ -13,6 +13,7 @@ const activeTab = (name) => {
 };
 const page = usePage();
 const app_url = ref("");
+
 onMounted(() => {
     app_url.value = page?.props?.route_site_url;
 });
@@ -20,14 +21,14 @@ onMounted(() => {
 <template>
     <StudentLayout>
         <section class="book_view">
-            <div class="">
+            <!-- <div class="">
                 <img
                     src="/images/Back.png"
                     @click="() => router.get(route('storybooks'))"
                     class="backarrow"
                     alt=""
                 />
-            </div>
+            </div> -->
             <div class="d-flex justify-center">
                 <iframe
                     :src="`${app_url}/admin/h5p/h5p/${props.book.h5p_id}`"

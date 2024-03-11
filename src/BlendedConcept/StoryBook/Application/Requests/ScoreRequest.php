@@ -17,7 +17,7 @@ class ScoreRequest extends FormRequest
             'student_id' => [
                 'required',
             ],
-            'game_id' => [
+            'id' => [
                 'required',
             ],
             'score' => [

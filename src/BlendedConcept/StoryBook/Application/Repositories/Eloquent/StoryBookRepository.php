@@ -4,6 +4,7 @@ namespace Src\BlendedConcept\StoryBook\Application\Repositories\Eloquent;
 
 use File;
 use ZipArchive;
+use Illuminate\Http\Request;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +25,7 @@ use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\DisabilityTypeEl
 use Src\BlendedConcept\Organisation\Infrastructure\EloquentModels\OrganisationEloquentModel;
 use Src\BlendedConcept\Disability\Infrastructure\EloquentModels\SubLearningTypeEloquentModel;
 use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookVersionEloquentModel;
+use Src\BlendedConcept\StoryBook\Infrastructure\EloquentModels\StoryBookAssignmentEloquentModel;
 
 class StoryBookRepository implements StoryBookRepositoryInterface
 {
@@ -526,5 +528,26 @@ class StoryBookRepository implements StoryBookRepositoryInterface
 
         // index.html not found
         return null;
+    }
+
+    public function bookScore(Request $request){
+        DB::beginTransaction();
+        try {
+            $book = StoryBookAssignmentEloquentModel::where('storybook_version_id', $request->id)->where('student_id', $request->student_id)->first();
+            if(!empty($book)){
+                $book->update([
+                    'score' => $request->score,
+                    'accuracy' => $request->accuracy,
+                    'duration' => $request->duration,
+                ]);
+            }
+
+            DB::commit();
+        } catch (\Exception $error) {
+            DB::rollBack();
+            // config('app.env') == 'production'
+            //     ? throw new \Exception('Something Wrong! Please try again.')
+            throw new \Exception($error->getMessage());
+        }
     }
 }

@@ -308,7 +308,7 @@ class GameRepository implements GameRepositoryInterface
     public function gameScore(Request $request){
         DB::beginTransaction();
         try {
-            $game = GameAssignmentEloquentModel::where('game_id', $request->game_id)->where('student_id', $request->student_id)->first();
+            $game = GameAssignmentEloquentModel::where('game_id', $request->id)->where('student_id', $request->student_id)->first();
             if(!empty($game)){
                 $game->update([
                     'score' => $request->score,

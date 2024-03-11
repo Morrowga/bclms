@@ -20,6 +20,9 @@ class StoryBookAssignmentEloquentModel extends Model
         'student_id',
         'curr_timestamp',
         'completed_once',
+        'score',
+        'accuracy',
+        'duration'
     ];
 
     // public function scopeFilter($query, $filters)

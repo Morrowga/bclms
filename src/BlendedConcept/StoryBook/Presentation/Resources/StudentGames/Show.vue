@@ -4,6 +4,7 @@ import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
 import { computed, defineProps,onBeforeUnmount } from "vue";
 import GameOver from "@mainRoot/components/Games/GameOver.vue";
+import FullScreenComponent from "@Layouts/Dashboard/FullScreenComponent.vue";
 import JSZip from "jszip";
 import GameEndUserExperienceSurvey from "./components/GameEndUserExperienceSurvey.vue";
 
@@ -11,6 +12,7 @@ let props = defineProps(["flash", "auth", "game", "user_survey"]);
 
 console.log(props.game);
 
+let openDialog = ref(false);
 const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
 
@@ -21,6 +23,10 @@ let permissions = computed(() => usePage().props.auth.data.permissions);
 
 onMounted(() => {
   window.addEventListener('keydown', handleKeyDown);
+
+  handleOrientationChange();
+
+  window.addEventListener("resize", handleOrientationChange);
 });
 
 // Remove event listeners when the component is unmounted
@@ -32,18 +38,38 @@ const handleKeyDown = (event) => {
     const iframe = document.getElementById('gameiframe'); // Assuming you have an iframe with id 'gameIframe'
     iframe.contentWindow.postMessage({ type: 'keydown', keyCode: event.keyCode }, '*');
 };
+
+const handleOrientationChange = () => {
+    if (isPortrait()) {
+        openDialog.value = true;
+    } else {
+        openDialog.value = false;
+    }
+};
+
+const isPortrait = () => {
+    return window.innerHeight > window.innerWidth;
+};
+
+onUnmounted(() => {
+    window.removeEventListener("resize", handleOrientationChange);
+});
 </script>
 
 <template>
+        <FullScreenComponent
+            @close_orientation="openDialog = false"
+            :openDialog="openDialog"
+        />
         <section class="section-bg">
-            <div class="fixed-back-icon">
+            <!-- <div class="fixed-back-icon">
                 <img
                     src="/images/Back.png"
                     @click="() => router.get(route('student-games'))"
                     class="backarrow"
                     alt=""
                 />
-            </div>
+            </div> -->
             <GameOver
                 :iframeSrc="app_url + '/gamefiles/' + props.game.game_file"
                 :game="props.game"

@@ -2,14 +2,16 @@
 import StudentLayout from "@Layouts/Dashboard/StudentLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/core";
-import { computed, defineProps, ref } from "vue";
+import { computed, defineProps, ref, onBeforeUnmount } from "vue";
 import { onMounted, nextTick } from "vue";
+import axios from "axios";
 import BookEndUserExperienceSurvey from "./components/BookEndUserExperienceSurvey.vue";
 
-let props = defineProps(["book", "user_survey"]);
+let props = defineProps(["book", "user_survey", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 let iframeRef = ref(null);
+let htmliframeRef = ref(null);
 const active = ref("assigned");
 
 const activeTab = (name) => {
@@ -18,12 +20,58 @@ const activeTab = (name) => {
 console.log(props.book)
 const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
-onMounted(() => {
-    if (iframeRef.value) {
-        iframeRef.value.contentWindow.focus();
+
+const parseCookie = (cookieString) => {
+  const cookies = {};
+  cookieString.split(';').forEach(cookie => {
+    const [key, value] = cookie.trim().split('=');
+    try {
+      cookies[key] = decodeURIComponent(value);
+    } catch (error) {
+      console.error(`Error decoding value for cookie '${key}':`, error);
+      console.log("Value:", value);
     }
-    
-    iframeRef.value.style.display = "none";
+  });
+  return cookies;
+};
+
+
+const postData = async (postData) => {
+  try {
+    const response = await axios.post('book-score', postData);
+
+    console.log('Response:', response.data);
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
+};
+
+const setCookieInIframe = (cookieName, cookieValue, cookiePath) => {
+    // Get the iframe element
+    const iframe = document.getElementById('html5-frame');
+
+    // Construct the cookie string
+    const cookieString = `${cookieName}=${encodeURIComponent(cookieValue)}; path=${cookiePath}`;
+
+    // Access the contentDocument of the iframe
+    const iframeDocument = iframe.contentDocument;
+
+    // Set the cookie inside the iframe document
+    iframeDocument.cookie = cookieString;
+}
+
+
+onMounted(() => {
+    if (htmliframeRef.value) {
+        htmliframeRef.value.contentWindow.focus();
+    }
+
+    if(props.book.storybook.type == 'HTML5'){
+        let path =  '/book_html5/' + props.book.html5_file.replace(/\/index\.html$/, '');
+        let iframeSrc = app_url.value + '/book_html5/' + props.book.html5_file
+        setCookieInIframe('gameURL', iframeSrc, path);
+    } else {
+        iframeRef.value.style.display = "none";
 
     iframeRef.value.addEventListener("load", (event) => {
         iframeRef.value.style.display = "flex";
@@ -110,18 +158,50 @@ onMounted(() => {
             });
         });
     });
+    }
+
+
+});
+
+
+const handleBeforeUnmount = () => {
+  const leavePage = window.confirm('Are you sure you want to leave this page?');
+
+  if (!leavePage) {
+    throw new Error('User canceled leaving the page');
+  } else {
+    const iframeDocument = document.getElementById('html5-frame').contentDocument;
+    const cookies = parseCookie(iframeDocument.cookie);
+    const Totaltime = parseFloat(cookies.Totaltime);
+    // const Percentage_correct = parseFloat(cookies.Percentage_correct);
+    const TotalSelection = parseInt(cookies.TotalSelection);
+    const scoreData = {
+        student_id:  props.auth.data.student.student_id,
+        id:  props.book.id,
+        duration: Totaltime,
+        accuracy: 99,
+        score: TotalSelection
+    };
+
+    postData(scoreData);
+  }
+};
+
+
+onBeforeUnmount(() => {
+    handleBeforeUnmount()
 });
 </script>
 <template>
         <section>
-            <div class="fixed-back-icon">
+            <!-- <div class="fixed-back-icon">
                 <img
                     src="/images/Back.png"
                     @click="() => router.get(route('storybooks'))"
                     class="backarrow"
                     alt=""
                 />
-            </div>
+            </div> -->
             <div class="d-flex justify-center">
                 <iframe
                     v-if="props.book.storybook.type == 'H5P'"
@@ -136,8 +216,8 @@ onMounted(() => {
                     :src="`${app_url}/book_html5/${props.book.html5_file}`"
                     frameborder="0"
                     class="html5-width"
-                    ref="iframeRef"
-                    id="myIframe"
+                    ref="htmliframeRef"
+                    id="html5-frame"
                 ></iframe>
             </div>
         </section>
