@@ -9,6 +9,7 @@ import ImageDropFile from "@mainRoot/components/DropFile/ImageDropFile.vue";
 import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import WangEditor from './components/wangEditor.vue'
+
 import {
     emailValidator,
     requiredValidator,
@@ -33,7 +34,40 @@ const isFormValid = ref(false);
 const page = usePage();
 const app_url = computed(() => page?.props?.route_site_url);
 let flash = computed(() => page?.props?.flash);
-//this arrary describe as multiple select for each roles
+const editorConfig = ref({
+  toolbar: {
+    items: [
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      'underline',
+      'strikethrough',
+      'link',
+      '|',
+      'bulletedList',
+      'numberedList',
+      '|',
+      'alignment',
+      '|',
+      'undo',
+      'redo'
+    ]
+  },
+  language: 'en',
+  heading: {
+    options: [
+      { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+      { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+      { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+      { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
+    ]
+  },
+  alignment: {
+    options: ['left', 'center', 'right', 'justify']
+  }
+});
+
 const gameTag = ref("");
 const tagError = ref("");
 const thumbnailError = ref("");
@@ -274,12 +308,6 @@ onMounted(() => {
                         <VLabel class="tiggie-label"
                             >Storybook Description</VLabel
                         >
-                        <!-- <VTextarea
-                            type="text"
-                            rows="5"
-                            density="compact"
-                            :error-messages="form?.errors?.description"
-                        /> -->
                         <WangEditor
                             v-model="form.description"
                         />

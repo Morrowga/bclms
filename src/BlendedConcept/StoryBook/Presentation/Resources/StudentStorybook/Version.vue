@@ -233,9 +233,7 @@ onBeforeUnmount(() => {
     top: 100px;
     left: 30px;
 }
-.book_view {
-    // min-height: calc(100vh - 100px);
-}
+
 .backarrow {
     cursor: pointer;
     width: 40px !important;

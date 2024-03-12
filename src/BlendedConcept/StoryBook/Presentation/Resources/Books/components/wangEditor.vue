@@ -12,7 +12,7 @@
         :defaultConfig="editorConfig"
         v-model="defaultHtml"
         @on-change="handleChange"
-        style="height: 300px; overflow-y: hidden; border-radius: 20px;"
+        style="height: 300px; overflow-y: hidden;"
         :mode="mode"
         @on-created="handleCreated"
       />
@@ -47,11 +47,6 @@
     toolbarConfig: {} as IToolbarConfig,
     editorConfig: {
       placeholder: "Write something...",
-      customAlert: () => {},
-      scroll: true,
-      readOnly: false,
-      autoFocus: true,
-      hoverbarKeys: {},
     } as IEditorConfig,
     defaultHtml: props.modelValue,
     mode: "default",
@@ -76,4 +71,6 @@
   });
   </script>
 
-  <style src="@wangeditor/editor/dist/css/style.css"></style>
+<style scoped>
+    @import url('../../../../../../../node_modules/@wangeditor/editor/dist/css/style.css');
+</style>
