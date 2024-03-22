@@ -213,7 +213,7 @@ onBeforeUnmount(() => {
                 ></iframe>
                 <iframe
                     v-else
-                    :src="`${app_url}/book_html5/${props.book.html5_file}`"
+                    :src="`${app_url}/book_html5/${props.book.html5_file}${props.book.param}`"
                     frameborder="0"
                     class="html5-width"
                     ref="htmliframeRef"

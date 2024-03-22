@@ -1,0 +1,31 @@
+body {
+  margin: 0px;
+}
+
+div#_preload_div_ {
+  display: inline-block;
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  text-align: center;
+}
+
+.progressBar {
+  border: 2px solid;
+  border-radius: 20px;
+  color: #0000ff;
+  height: 22px;
+  width: 120px;
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.progressBarFill {
+  border-radius: inherit;
+  background: currentColor;
+  inset: 0 100% 0 0;
+  margin: 2px;
+  position: absolute;
+}

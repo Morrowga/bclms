@@ -82,7 +82,11 @@ const assignStudent = () => {
 };
 
 const handleSelectAll = () => {
-  form.student_ids = props.students.data.map(student => student.student_id);
+    const allStudentIds = props.students.data.map(student => student.student_id);
+
+    const uniqueStudentIds = allStudentIds.filter(id => !form.student_ids.includes(id));
+
+    form.student_ids = form.student_ids.concat(uniqueStudentIds);
 };
 
 

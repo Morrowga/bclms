@@ -91,7 +91,7 @@ const form = useForm({
     html_files: [],
     type: "",
 });
-const items = ref([{ name: "", file: null }]);
+const items = ref([{ name: "", file: null, param: "" }]);
 
 const addRow = () => {
     items.value.push({ name: "", file: null });
@@ -466,6 +466,13 @@ onMounted(() => {
                                 <VTextField
                                     v-model="item.name"
                                     :rules="[requiredValidator]"
+                                />
+
+                                <VLabel class="tiggie-label my-2"
+                                    >Extra Params</VLabel
+                                >
+                                <VTextField
+                                    v-model="item.param"
                                 />
 
                                 <VBtn

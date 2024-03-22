@@ -27,6 +27,7 @@ class StoryBookVersionEloquentModel extends Model
         'parent_id',
         'name',
         'description',
+        'param',
         'h5p_id'
     ];
     public function getOwnerAttribute()

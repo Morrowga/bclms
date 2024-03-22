@@ -16,7 +16,8 @@ class StoryBookVersionMapper
             teacher_id: $request->teacher_id,
             name: $request->name,
             description: $request->description,
-            h5p_id: $request->h5p_id
+            h5p_id: $request->h5p_id,
+            param: $request->param
         );
     }
 
@@ -33,6 +34,7 @@ class StoryBookVersionMapper
         $storyBookVersionEloquent->name = $storyBookVersion->name;
         $storyBookVersionEloquent->description = $storyBookVersion->description;
         $storyBookVersionEloquent->h5p_id = $storyBookVersion->h5p_id;
+        $storyBookVersionEloquent->param = $storyBookVersion->param;
         return $storyBookVersionEloquent;
     }
 }

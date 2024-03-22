@@ -140,6 +140,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                         $storybookVersion->teacher_id = null;
                         $storybookVersion->h5p_id = null;
                         $storybookVersion->name = $html_file['name'];
+                        $storybookVersion->param = $html_file['param'];
                         if ($indexPath) {
                             $relativePath = str_replace($bookDirectory . DIRECTORY_SEPARATOR, '', $indexPath);
                             $storybookVersion->html5_file = $desiredFolderName . '/' .  $relativePath;
@@ -147,7 +148,6 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                             $storybookVersion->html5_file = '';
                         }
                         // $storybookVersion->description = "Original Copy";
-                        $storybookVersion->storybook_id = $storybookEloquent->id;
                         $storybookVersion->storybook_id = $storybookEloquent->id;
                         $storybookVersion->save();
                     }
@@ -253,6 +253,7 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                 foreach ($existing_files as $existing_file) {
                     $storybookVersion = StoryBookVersionEloquentModel::find($existing_file['id']);
                     $storybookVersion->name = $existing_file['name'];
+                    $storybookVersion->param = $existing_file['param'];
                     $zipFile = $existing_file['file'];
                     if ($zipFile != null && file_exists($zipFile) && is_file($zipFile)) {
                         $storybookOldFile = str_replace('/index.html', '', $storybookVersion->html5_file);
@@ -319,8 +320,8 @@ class StoryBookRepository implements StoryBookRepositoryInterface
                         $storybookVersion->teacher_id = null;
                         $storybookVersion->h5p_id = null;
                         $storybookVersion->name = $html_file['name'];
+                        $storybookVersion->param = $html_file['param'];
                         $storybookVersion->description = "Original Copy";
-                        $storybookVersion->storybook_id = $updateStoryBookEloquent->id;
                         $storybookVersion->storybook_id = $updateStoryBookEloquent->id;
                         if ($indexPath) {
                             $relativePath = str_replace($bookDirectory . DIRECTORY_SEPARATOR, '', $indexPath);

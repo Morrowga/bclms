@@ -39,7 +39,7 @@ const form = useForm({
 const items = ref([]);
 
 const addRow = () => {
-    items.value.push({ name: "", file: null });
+    items.value.push({ name: "", file: null, param: "" });
 };
 const removeRow = (index) => {
     items.value.splice(index, 1);
@@ -82,6 +82,7 @@ onMounted(() => {
         return {
             id: book_version.id,
             name: book_version.name,
+            param: book_version.param,
             file: null,
         };
     });
@@ -110,6 +111,13 @@ onMounted(() => {
                                 <VTextField
                                     v-model="item.name"
                                     :rules="[requiredValidator]"
+                                />
+
+                                <VLabel class="tiggie-label"
+                                    >Extra Param</VLabel
+                                >
+                                <VTextField
+                                    v-model="item.param"
                                 />
 
                                 <VBtn
@@ -144,6 +152,13 @@ onMounted(() => {
                                     :rules="[requiredValidator]"
                                 />
 
+                                <VLabel class="tiggie-label"
+                                    >Extra Param</VLabel
+                                >
+                                <VTextField
+                                    v-model="item.param"
+                                />
+
                                 <VBtn
                                     class="mt-4"
                                     @click="removeRow(index)"
@@ -153,7 +168,7 @@ onMounted(() => {
                             </VCol>
                             <VCol cols="12" md="6">
                                 <VLabel class="tiggie-label required"
-                                    >Storybook File</VLabel
+                                >Storybook File</VLabel
                                 >
                                 <ImageDropFile
                                     memeType="zip"

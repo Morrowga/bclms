@@ -3,7 +3,7 @@ import AdminLayout from "@Layouts/Dashboard/AdminLayout.vue";
 import { usePage } from "@inertiajs/vue3";
 import { ref, onMounted,onBeforeUnmount } from 'vue';
 
-let props = defineProps(["version", "video", "type"]);
+let props = defineProps(["version", "video","param", "type"]);
 const is_interactive = ref(true);
 const videoSrc = ref(props.video);
 const h5pIframe = ref(null);
@@ -87,7 +87,7 @@ function getCookie(name) {
                     ></iframe>
                     <iframe v-else
                         ref="h5pIframe"
-                        :src="app_url + '/book_html5/' + props.video"
+                        :src="app_url + '/book_html5/' + props.video + props.param ?? ''"
                         frameborder="0"
                         scrolling="auto"
                         class="h5p-width"

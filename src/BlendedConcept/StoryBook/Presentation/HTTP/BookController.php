@@ -86,7 +86,6 @@ class BookController
      */
     public function update(UpdateStoryBookRequest $request, StoryBookEloquentModel $book)
     {
-        // dd($request->all());
         abort_if(authorize('update', BookPolicy::class), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {

@@ -20,6 +20,7 @@ class ConductLessonController
         $version = StoryBookVersionEloquentModel::with('storybook')->findOrFail($version_id);
         if($version->storybook && $version->storybook->type == 'HTML5'){
             $video = $version->html5_file;
+            $param = $version->param;
         } else {
             $h5p_contents = DB::table('h5p_contents')->where('id', $version->h5p_id)->first();
             $searchString = 'videos/';
@@ -43,6 +44,7 @@ class ConductLessonController
         return Inertia::render(config('route.conduct_lessons.show'), [
             "version" => $version,
             "video" => $video,
+            "param" => $param,
             "type" => $version->storybook != null ? $version->storybook->type : 'HTML5'
         ]);
     }

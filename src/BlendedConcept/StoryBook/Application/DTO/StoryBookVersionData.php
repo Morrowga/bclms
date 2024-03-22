@@ -12,7 +12,8 @@ class StoryBookVersionData
         public readonly ?int $teacher_id,
         public readonly string $name,
         public readonly string $description,
-        public readonly ?int $h5p_id
+        public readonly ?int $h5p_id,
+        public readonly ?string $param
     ) {
     }
 
@@ -24,7 +25,8 @@ class StoryBookVersionData
             teacher_id: $request->teacher_id,
             name: $request->name,
             description: $request->description,
-            h5p_id: $request->h5p_id
+            h5p_id: $request->h5p_id,
+            param: $request->param
         );
     }
 
@@ -36,7 +38,8 @@ class StoryBookVersionData
             'teacher_id' => $this->teacher_id,
             'name' => $this->name,
             'description' => $this->description,
-            'h5p_id' => $this->h5p_id
+            'h5p_id' => $this->h5p_id,
+            'param' => $this->param
         ];
     }
 }
