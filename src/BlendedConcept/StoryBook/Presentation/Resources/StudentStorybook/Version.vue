@@ -6,12 +6,14 @@ import { computed, defineProps, ref, onBeforeUnmount } from "vue";
 import { onMounted, nextTick } from "vue";
 import axios from "axios";
 import BookEndUserExperienceSurvey from "./components/BookEndUserExperienceSurvey.vue";
+import FullScreenComponent from "@Layouts/Dashboard/FullScreenComponent.vue";
 
 let props = defineProps(["book", "user_survey", "auth"]);
 let flash = computed(() => usePage().props.flash);
 let permissions = computed(() => usePage().props.auth.data.permissions);
 let iframeRef = ref(null);
 let htmliframeRef = ref(null);
+let openDialog = ref(false);
 const active = ref("assigned");
 
 const activeTab = (name) => {
@@ -35,6 +37,17 @@ const parseCookie = (cookieString) => {
   return cookies;
 };
 
+const handleOrientationChange = () => {
+    if (isPortrait()) {
+        openDialog.value = true;
+    } else {
+        openDialog.value = false;
+    }
+};
+
+const isPortrait = () => {
+    return window.innerHeight > window.innerWidth;
+};
 
 const postData = async (postData) => {
   try {
@@ -60,11 +73,22 @@ const setCookieInIframe = (cookieName, cookieValue, cookiePath) => {
     iframeDocument.cookie = cookieString;
 }
 
+const handleKeyDown = (event) => {
+    const iframe = document.getElementById('html5-frame'); // Assuming you have an iframe with id 'gameIframe'
+    iframe.contentWindow.postMessage({ type: 'keydown', keyCode: event.keyCode }, '*');
+};
+
 
 onMounted(() => {
     if (htmliframeRef.value) {
         htmliframeRef.value.contentWindow.focus();
     }
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    handleOrientationChange();
+
+    window.addEventListener("resize", handleOrientationChange);
 
     if(props.book.storybook.type == 'HTML5'){
         let path =  '/book_html5/' + props.book.html5_file.replace(/\/index\.html$/, '');
@@ -187,12 +211,15 @@ const handleBeforeUnmount = () => {
   }
 };
 
-
 onBeforeUnmount(() => {
     handleBeforeUnmount()
 });
 </script>
 <template>
+       <FullScreenComponent
+            @close_orientation="openDialog = false"
+            :openDialog="openDialog"
+        />
         <section>
             <!-- <div class="fixed-back-icon">
                 <img
@@ -213,7 +240,7 @@ onBeforeUnmount(() => {
                 ></iframe>
                 <iframe
                     v-else
-                    :src="`${app_url}/book_html5/${props.book.html5_file}${props.book.param}`"
+                    :src="`${app_url}/book_html5/${props.book.html5_file}${props.book.param ?? ''}`"
                     frameborder="0"
                     class="html5-width"
                     ref="htmliframeRef"
