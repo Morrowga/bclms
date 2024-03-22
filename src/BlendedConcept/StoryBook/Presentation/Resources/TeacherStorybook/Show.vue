@@ -40,7 +40,7 @@ const getImage = (item) => {
                 <v-col cols="12" md="6">
                     <VRow>
                         <VCol cols="12" md="9" class="d-flex align-center">
-                            <h1 class="tiggie-sub-subtitle ml-10 fs-40">
+                            <h1 class="tiggie-sub-subtitle ml-10 fs-40 my-3">
                                 {{ teacher_storybook.name }}
                             </h1>
                             <v-chip size="small" color="info" class="ml-2">
@@ -53,7 +53,7 @@ const getImage = (item) => {
                             />
                         </VCol>
                     </VRow>
-                    <span class="text-subtitle-1" v-html="teacher_storybook.description">
+                    <span class="text-subtitle-1 my-3" v-html="teacher_storybook.description">
                     </span>
                     <br />
                     <div class="learning-chip-group">

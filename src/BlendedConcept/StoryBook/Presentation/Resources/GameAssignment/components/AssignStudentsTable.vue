@@ -80,6 +80,12 @@ const assignStudent = () => {
         },
     });
 };
+
+const handleSelectAll = () => {
+  form.student_ids = props.students.data.map(student => student.student_id);
+};
+
+
 const getImage = (item) => {
     return item.thumbnail_img == "" || !item.thumbnail_img
         ? "/images/image8.png"
@@ -109,6 +115,11 @@ onMounted(() => {
                         align="center"
                     >
                         <VCol cols="3" class="d-flex justify-center">
+                            <VBtn
+                            variant="outlined"
+                            color="success"
+                            @click="handleSelectAll"
+                            class="mx-3">Select All</VBtn>
                             <VLabel class="tiggie-label"> Name </VLabel>
                             <VIcon icon="mdi-menu-down"></VIcon>
                         </VCol>

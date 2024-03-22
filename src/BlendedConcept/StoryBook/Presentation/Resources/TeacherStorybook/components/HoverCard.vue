@@ -21,10 +21,8 @@ const getImage = (item) => {
             <h1 class="font-weight-bold text-h6 text-center pb-4">
                 {{ dataItem.name }}
             </h1>
-            <p>
-                {{ dataItem.description }}
-            </p>
-            <div class="chip-group">
+            <span v-html="dataItem.description"></span>
+            <div class="chip-group my-3">
                 <GreenChip
                     v-for="item in dataItem.devices"
                     :title="item.name"

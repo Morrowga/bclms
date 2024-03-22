@@ -30,12 +30,10 @@ const getImage = (item) => {
                     </div>
                 </v-col>
                 <v-col cols="12" md="6">
-                    <h1 class="tiggie-sub-subtitle ml-10 fs-40">
+                    <h1 class="tiggie-sub-subtitle ml-10 fs-40 my-3">
                         {{ teacher_storybook.name }}
                     </h1>
-                    <p class="text-subtitle-1">
-                        {{ teacher_storybook.description }}
-                    </p>
+                    <span class="text-subtitle-1" v-html="teacher_storybook.description"></span>
                     <br />
                     <div class="learning-chip-group">
                         <v-chip

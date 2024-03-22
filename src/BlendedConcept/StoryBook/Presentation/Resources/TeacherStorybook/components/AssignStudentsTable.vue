@@ -88,6 +88,11 @@ const getImage = (item) => {
 const backHome = () => {
     router.get(route("teacher_storybook.show", props.storybook.id));
 };
+
+const handleSelectAll = () => {
+  form.student_ids = props.students.data.map(student => student.student_id);
+};
+
 const userImage = (user) =>
     user.profile_pic ?? "/images/profile/profilefive.png";
 
@@ -120,8 +125,13 @@ onMounted(() => {
                 <VDivider />
 
                 <VCol cols="12">
-                    <VRow class="bg-line mx-1 rounded pa-1 mb-5" align="center">
-                        <VCol cols="3" class="d-flex justify-center">
+                    <VRow class="bg-line mx-1 rounded pa-1 mb-5 mt-5" align="center">
+                        <VCol cols="3" class="d-flex justify-between">
+                            <VBtn
+                            variant="outlined"
+                            color="success"
+                            @click="handleSelectAll"
+                            class="mx-3">Select All</VBtn>
                             <VLabel class="tiggie-label"> Name </VLabel>
                             <VIcon icon="mdi-menu-down"></VIcon>
                         </VCol>

@@ -22,9 +22,7 @@ const setImage = () => {
                     <h1 class="tiggie-sub-subtitle ml-10 fs-40">
                         {{ storybook.name }}
                     </h1>
-                    <p class="text-subtitle-1">
-                        {{ storybook.description }}
-                    </p>
+                    <span class="text-subtitle-1" v-html="storybook.description"></span>
                     <br />
                     <div class="learning-chip-group">
                         <v-chip
