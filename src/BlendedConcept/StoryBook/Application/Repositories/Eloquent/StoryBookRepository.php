@@ -537,9 +537,9 @@ class StoryBookRepository implements StoryBookRepositoryInterface
             $book = StoryBookAssignmentEloquentModel::where('storybook_version_id', $request->id)->where('student_id', $request->student_id)->first();
             if(!empty($book)){
                 $book->update([
-                    'score' => $request->score,
-                    'accuracy' => $request->accuracy,
-                    'duration' => $request->duration,
+                    'score' => $request->score ?? 0,
+                    'accuracy' => $request->accuracy ?? 0,
+                    'duration' => $request->duration ?? 0,
                 ]);
             }
 

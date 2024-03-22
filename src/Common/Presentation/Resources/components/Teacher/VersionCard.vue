@@ -49,7 +49,7 @@ const clickBook = (versions) => {
     if (versions && versions.length > 0) {
         isDialogVisible.value = true;
     } else {
-        router.get(route("storybooks.show", { book: props.book.id }));
+        router.get(route("storybooks.show", { book: props.book.id ?? null }));
     }
 };
 const readOrginal = () => {

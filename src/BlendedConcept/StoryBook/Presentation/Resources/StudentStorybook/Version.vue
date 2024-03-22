@@ -211,6 +211,10 @@ const handleBeforeUnmount = () => {
   }
 };
 
+onUnmounted(() => {
+    window.removeEventListener("resize", handleOrientationChange);
+});
+
 onBeforeUnmount(() => {
     handleBeforeUnmount()
 });
