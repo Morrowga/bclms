@@ -136,12 +136,12 @@ password : password
 
 `Teacher Role`
 
-email : teachertwo@mail.com
+email : teacherone@mail.com
 password : password
 
 `Organisation Admin Role`
 
-email : hmm@gmail.com
+email : orgone@gmail.com
 password : password
 
 
